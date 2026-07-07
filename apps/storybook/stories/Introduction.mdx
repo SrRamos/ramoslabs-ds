@@ -2,26 +2,813 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Introduction" />
 
-# RamosLabs Design System
+<style>
+{`
+  /* ===== FONT IMPORTS ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
-A standalone design system where tokens are the single source of truth. The
-design decisions live as DTCG JSON in `@ramoslabs/tokens`, and Style Dictionary
-compiles them into CSS variables and TypeScript. Nothing here hardcodes a color,
-spacing, radius, or shadow; every value traces back to a token.
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
 
-## Brand
+  /* ===== HERO SECTION ===== */
+  .intro-hero {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8b5cf6 100%);
+    margin: -1rem -1rem 3rem -1rem;
+    padding: 4rem 3rem;
+    border-radius: 0 0 24px 24px;
+    position: relative;
+    overflow: hidden;
+  }
 
-The brand is mono-indigo. The primary is Indigo 600 (`#4f46e5`). There is no
-coral accent; the accent is the primary. Semantic colors (success, warning,
-error, info) reference their primitive scales through DTCG aliases.
+  .intro-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
 
-## Packages
+  .intro-hero-content {
+    position: relative;
+    z-index: 1;
+  }
 
-- `@ramoslabs/tokens`: the token source and its generated CSS, TS, and JSON.
-- `@ramoslabs/vue`: the Vue 3 component library. Components use the `SJ` prefix
-  and arrive in a later phase; F0 ships the scaffold only.
+  .intro-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
 
-## Foundations
+  .intro-hero-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: white;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    max-width: 640px;
+  }
 
-Browse the Foundations section for the live color and typography tokens, read
-straight from the generated CSS custom properties.
+  .intro-hero-subtitle {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  .intro-hero-version {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+  }
+
+  /* ===== VISION SECTION ===== */
+  .intro-vision {
+    margin-bottom: 4rem;
+  }
+
+  .intro-vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .intro-vision-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-vision-content h2 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .intro-vision-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .intro-vision-highlight {
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+    border-left: 4px solid #4f46e5;
+    padding: 1.5rem;
+    border-radius: 0 12px 12px 0;
+    margin-top: 1.5rem;
+  }
+
+  .intro-vision-quote {
+    color: #4f46e5;
+    font-weight: 500;
+    font-size: 1rem;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .intro-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .intro-stat {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid #e6e8eb;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .intro-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px -10px rgba(79, 70, 229, 0.2);
+    border-color: #c7d2fe;
+  }
+
+  .intro-stat-value {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .intro-stat-label {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  /* ===== PILLARS SECTION ===== */
+  .intro-section {
+    margin-bottom: 4rem;
+  }
+
+  .intro-section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .intro-section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #4f46e5;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+
+  .intro-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+  }
+
+  .intro-section-subtitle {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1.0625rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .intro-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .intro-pillars {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-pillar {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid #e6e8eb;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .intro-pillar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+  }
+
+  .intro-pillar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+
+  .intro-pillar.primary::before {
+    background: linear-gradient(90deg, #4f46e5, #6366f1);
+  }
+
+  .intro-pillar.deep::before {
+    background: linear-gradient(90deg, #4338ca, #4f46e5);
+  }
+
+  .intro-pillar.secondary::before {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  }
+
+  .intro-pillar-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .intro-pillar-icon.primary {
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    color: #4f46e5;
+  }
+
+  .intro-pillar-icon.deep {
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    color: #4338ca;
+  }
+
+  .intro-pillar-icon.secondary {
+    background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+    color: #8b5cf6;
+  }
+
+  .intro-pillar-icon .material-symbols-outlined {
+    font-size: 28px;
+  }
+
+  .intro-pillar-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+  }
+
+  .intro-pillar-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  /* ===== EXPLORE SECTION ===== */
+  .intro-explore-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 1100px) {
+    .intro-explore-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .intro-explore-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-explore-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .intro-explore-card:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+  }
+
+  .intro-explore-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 20px;
+  }
+
+  .intro-explore-icon.foundations {
+    background: #eef2ff;
+    color: #4f46e5;
+  }
+
+  .intro-explore-icon.patterns {
+    background: #f3e8ff;
+    color: #8b5cf6;
+  }
+
+  .intro-explore-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+
+  .intro-explore-desc {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #94a3b8;
+    font-size: 0.8125rem;
+  }
+
+  /* ===== GETTING STARTED ===== */
+  .intro-start {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 20px;
+    padding: 3rem;
+    margin-top: 1rem;
+  }
+
+  .intro-start-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .intro-start-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-start h2 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+
+  .intro-start-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .intro-start-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .intro-start-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .intro-start-step-num {
+    width: 28px;
+    height: 28px;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .intro-start-step-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #475569;
+    line-height: 1.5;
+    padding-top: 0.15rem;
+  }
+
+  .intro-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .intro-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .intro-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .intro-code-dot.red { background: #ef4444; }
+  .intro-code-dot.yellow { background: #f59e0b; }
+  .intro-code-dot.green { background: #22c55e; }
+
+  .intro-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .intro-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .intro-code .comment { color: #64748b; font-style: italic; }
+  .intro-code .selector { color: #fbbf24; }
+  .intro-code .property { color: #7dd3fc; }
+  .intro-code .value { color: #a5f3fc; }
+  .intro-code .function { color: #c4b5fd; }
+  .intro-code .punctuation { color: #94a3b8; }
+
+  /* ===== BRAND COLORS PREVIEW ===== */
+  .intro-colors {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .intro-color {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: white;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #e6e8eb;
+  }
+
+  .intro-color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+  }
+
+  .intro-color-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro-color-name {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #0f172a;
+  }
+
+  .intro-color-hex {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.6875rem;
+    color: #94a3b8;
+  }
+
+  /* ===== FOOTER ===== */
+  .intro-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e6e8eb;
+    text-align: center;
+  }
+
+  .intro-footer-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #94a3b8;
+    font-size: 0.875rem;
+  }
+
+  .intro-footer a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .intro-footer a:hover {
+    text-decoration: underline;
+  }
+`}
+</style>
+
+{/* ===== HERO ===== */}
+<div className="intro-hero">
+  <div className="intro-hero-content">
+    <div className="intro-hero-badge">
+      <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>auto_awesome</span>
+      Design System
+    </div>
+    <h1 className="intro-hero-title">Tokens Are the Source of Truth</h1>
+    <div className="intro-hero-subtitle">The RamosLabs Design System is a standalone foundation where every color, space, radius, and shadow traces back to a single token. Design decisions live as data, so the interface stays consistent everywhere it renders.</div>
+  </div>
+  <div className="intro-hero-version">v0.1</div>
+</div>
+
+{/* ===== VISION ===== */}
+<div className="intro-vision">
+  <div className="intro-vision-grid">
+    <div className="intro-vision-content">
+      <h2>Design That Stays Consistent</h2>
+      <div className="intro-vision-text">Nothing here hardcodes a value. Design tokens are authored once as DTCG JSON, and Style Dictionary compiles them into CSS variables and TypeScript. Change a token, and every surface updates in step.</div>
+      <div className="intro-vision-text">The system is intentionally small and mono-indigo. One accent carries the whole experience, so the interface never competes with the content it presents.</div>
+      <div className="intro-vision-highlight">
+        <div className="intro-vision-quote">"When the tokens are right, consistency stops being a chore and becomes the default."</div>
+      </div>
+    </div>
+    <div className="intro-stats">
+      <div className="intro-stat">
+        <div className="intro-stat-value">209</div>
+        <div className="intro-stat-label">Design Tokens</div>
+      </div>
+      <div className="intro-stat">
+        <div className="intro-stat-value">8px</div>
+        <div className="intro-stat-label">Base Unit Grid</div>
+      </div>
+      <div className="intro-stat">
+        <div className="intro-stat-value">AA</div>
+        <div className="intro-stat-label">WCAG Baseline</div>
+      </div>
+      <div className="intro-stat">
+        <div className="intro-stat-value">1</div>
+        <div className="intro-stat-label">Accent Color</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ===== PILLARS ===== */}
+<div className="intro-section">
+  <div className="intro-section-header">
+    <div className="intro-section-label">Core Principles</div>
+    <h2 className="intro-section-title">Built on Three Ideas</h2>
+    <div className="intro-section-subtitle">A small set of decisions keeps the system predictable, accessible, and easy to build on.</div>
+  </div>
+
+  <div className="intro-pillars">
+    <div className="intro-pillar primary">
+      <div className="intro-pillar-icon primary">
+        <span className="material-symbols-outlined">data_object</span>
+      </div>
+      <h3 className="intro-pillar-title">Tokens First</h3>
+      <div className="intro-pillar-text">Every value is a token. Colors, spacing, radii, and shadows are authored as data and compiled into CSS and TypeScript, so there is a single source of truth for the whole system.</div>
+    </div>
+    <div className="intro-pillar deep">
+      <div className="intro-pillar-icon deep">
+        <span className="material-symbols-outlined">accessibility_new</span>
+      </div>
+      <h3 className="intro-pillar-title">Accessible by Default</h3>
+      <div className="intro-pillar-text">WCAG 2.1 AA is the floor, AAA the goal. Contrast, focus, and keyboard reach are considered before a token or pattern is accepted, not bolted on afterward.</div>
+    </div>
+    <div className="intro-pillar secondary">
+      <div className="intro-pillar-icon secondary">
+        <span className="material-symbols-outlined">devices</span>
+      </div>
+      <h3 className="intro-pillar-title">Ready Anywhere</h3>
+      <div className="intro-pillar-text">Mobile-first layouts and a fluid type scale run from a phone to a wide desktop. The same tokens drive every breakpoint, so nothing drifts between screens.</div>
+    </div>
+  </div>
+</div>
+
+{/* ===== EXPLORE ===== */}
+<div className="intro-section">
+  <div className="intro-section-header">
+    <div className="intro-section-label">The Reference</div>
+    <h2 className="intro-section-title">Start Building</h2>
+    <div className="intro-section-subtitle">Everything you need to build consistent interfaces, organized, documented, and ready to use.</div>
+  </div>
+
+  <div className="intro-explore-grid">
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon foundations">
+        <span className="material-symbols-outlined">palette</span>
+      </div>
+      <div className="intro-explore-title">Colors</div>
+      <div className="intro-explore-desc">Mono-indigo palette & semantics</div>
+    </div>
+
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon foundations">
+        <span className="material-symbols-outlined">format_size</span>
+      </div>
+      <div className="intro-explore-title">Typography</div>
+      <div className="intro-explore-desc">Type scale & fonts</div>
+    </div>
+
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon foundations">
+        <span className="material-symbols-outlined">space_bar</span>
+      </div>
+      <div className="intro-explore-title">Spacing</div>
+      <div className="intro-explore-desc">8px grid system</div>
+    </div>
+
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon foundations">
+        <span className="material-symbols-outlined">rounded_corner</span>
+      </div>
+      <div className="intro-explore-title">Border Radius</div>
+      <div className="intro-explore-desc">Corner styles</div>
+    </div>
+
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon patterns">
+        <span className="material-symbols-outlined">touch_app</span>
+      </div>
+      <div className="intro-explore-title">Interactive</div>
+      <div className="intro-explore-desc">States & animations</div>
+    </div>
+
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon patterns">
+        <span className="material-symbols-outlined">accessibility</span>
+      </div>
+      <div className="intro-explore-title">Accessibility</div>
+      <div className="intro-explore-desc">WCAG guidelines</div>
+    </div>
+
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon patterns">
+        <span className="material-symbols-outlined">input</span>
+      </div>
+      <div className="intro-explore-title">Form Elements</div>
+      <div className="intro-explore-desc">Inputs & validation</div>
+    </div>
+
+    <div className="intro-explore-card">
+      <div className="intro-explore-icon foundations">
+        <span className="material-symbols-outlined">tag</span>
+      </div>
+      <div className="intro-explore-title">Token Reference</div>
+      <div className="intro-explore-desc">Every token, copyable</div>
+    </div>
+  </div>
+</div>
+
+{/* ===== GETTING STARTED ===== */}
+<div className="intro-section">
+  <div className="intro-start">
+    <div className="intro-start-grid">
+      <div>
+        <h2>Jump In</h2>
+        <div className="intro-start-text">Three steps to start building. Import the tokens, use the variables, follow the patterns, and you will ship consistent UI in minutes.</div>
+        <div className="intro-start-steps">
+          <div className="intro-start-step">
+            <div className="intro-start-step-num">1</div>
+            <div className="intro-start-step-text">Import the generated token stylesheet from @ramoslabs/tokens in your app entry point</div>
+          </div>
+          <div className="intro-start-step">
+            <div className="intro-start-step-num">2</div>
+            <div className="intro-start-step-text">Use the CSS custom properties (tokens) in your components, never raw hex or pixel values</div>
+          </div>
+          <div className="intro-start-step">
+            <div className="intro-start-step-num">3</div>
+            <div className="intro-start-step-text">Follow the patterns for consistency across every surface you build</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="intro-code">
+          <div className="intro-code-header">
+            <span className="intro-code-dot red"></span>
+            <span className="intro-code-dot yellow"></span>
+            <span className="intro-code-dot green"></span>
+            <span className="intro-code-lang">CSS</span>
+          </div>
+          <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Using design tokens in your CSS */</span>
+<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-surface)</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-6)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-lg)</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">1px</span> solid <span class="value">var(--color-border)</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-sm)</span><span class="punctuation">;</span>
+<span class="punctuation"> }</span>
+
+<span class="selector">.card__action</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-white)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ===== BRAND COLORS PREVIEW ===== */}
+<div className="intro-section">
+  <div className="intro-section-header">
+    <div className="intro-section-label">Visual Identity</div>
+    <h2 className="intro-section-title">Mono-Indigo, Zero Coral</h2>
+    <div className="intro-section-subtitle">One accent carries the brand. The indigo primary is the accent, supported by a single violet secondary for gradients and community surfaces.</div>
+  </div>
+
+  <div className="intro-colors" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
+    <div className="intro-color">
+      <div className="intro-color-swatch" style={{ background: '#4f46e5' }}></div>
+      <div className="intro-color-info">
+        <span className="intro-color-name">Primary (Indigo 600)</span>
+        <span className="intro-color-hex">#4f46e5</span>
+      </div>
+    </div>
+    <div className="intro-color">
+      <div className="intro-color-swatch" style={{ background: '#6366f1' }}></div>
+      <div className="intro-color-info">
+        <span className="intro-color-name">Primary Light (Indigo 500)</span>
+        <span className="intro-color-hex">#6366f1</span>
+      </div>
+    </div>
+    <div className="intro-color">
+      <div className="intro-color-swatch" style={{ background: '#8b5cf6' }}></div>
+      <div className="intro-color-info">
+        <span className="intro-color-name">Secondary (Violet 500)</span>
+        <span className="intro-color-hex">#8b5cf6</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ===== FOOTER ===== */}
+<div className="intro-footer">
+  <div className="intro-footer-text">Built so the tokens do the work.<br />Explore the Foundations and Patterns to see every decision in one place.</div>
+</div>

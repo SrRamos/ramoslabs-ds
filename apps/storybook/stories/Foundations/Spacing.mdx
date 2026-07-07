@@ -1,0 +1,437 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Spacing" />
+
+<style>
+{`
+  .spacing-header {
+    margin-bottom: 2rem;
+  }
+
+  .spacing-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .spacing-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .spacing-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+    margin-bottom: 2rem;
+  }
+
+  .spacing-visual {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .spacing-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .spacing-bar {
+    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+    border: 1px solid #f87171;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spacing-label {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .spacing-name {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+  }
+
+  .spacing-example {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+
+  .spacing-example-content {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .spacing-example-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background: #e2e8f0;
+  }
+
+  .spacing-example-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .spacing-example-line {
+    background: #e2e8f0;
+    border-radius: 4px;
+  }
+
+  .spacing-example-label {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    text-align: center;
+    margin-top: 0.75rem;
+  }
+
+  .spacing-section {
+    margin-top: 2.5rem;
+  }
+
+  .spacing-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .spacing-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .spacing-table th,
+  .spacing-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .spacing-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+  }
+
+  .spacing-table td {
+    font-size: 0.875rem;
+  }
+
+  .spacing-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+  }
+
+  .spacing-preview {
+    display: inline-block;
+    background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+    border-radius: 2px;
+    height: 1rem;
+    vertical-align: middle;
+  }
+
+  .spacing-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .spacing-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .spacing-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .spacing-code-dot.red { background: #ef4444; }
+  .spacing-code-dot.yellow { background: #f59e0b; }
+  .spacing-code-dot.green { background: #22c55e; }
+
+  .spacing-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .spacing-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .spacing-code .comment { color: #64748b; font-style: italic; }
+  .spacing-code .selector { color: #fbbf24; }
+  .spacing-code .property { color: #7dd3fc; }
+  .spacing-code .value { color: #a5f3fc; }
+  .spacing-code .function { color: #c4b5fd; }
+  .spacing-code .punctuation { color: #94a3b8; }
+`}
+</style>
+
+<div className="spacing-header">
+  <h1 className="spacing-title">The Breathing Room</h1>
+  <p className="spacing-description">
+    Space is as important as content. Our 8px grid creates rhythm, clarity, and room for experiences to breathe.
+  </p>
+</div>
+
+<div className="spacing-card">
+  <div className="spacing-visual">
+    <div className="spacing-item">
+      <div className="spacing-bar" style={{ width: '8px', height: '32px' }}></div>
+      <span className="spacing-label">8px</span>
+      <span className="spacing-name">XS</span>
+    </div>
+
+    <div className="spacing-item">
+      <div className="spacing-bar" style={{ width: '16px', height: '64px' }}></div>
+      <span className="spacing-label">16px</span>
+      <span className="spacing-name">SM</span>
+    </div>
+
+    <div className="spacing-item">
+      <div className="spacing-bar" style={{ width: '24px', height: '96px' }}></div>
+      <span className="spacing-label">24px</span>
+      <span className="spacing-name">MD</span>
+    </div>
+
+    <div className="spacing-item">
+      <div className="spacing-bar" style={{ width: '32px', height: '128px' }}></div>
+      <span className="spacing-label">32px</span>
+      <span className="spacing-name">LG</span>
+    </div>
+
+    <div className="spacing-example" style={{ marginLeft: '1rem', marginTop: 0 }}>
+      <div className="spacing-example-content">
+        <div className="spacing-example-avatar"></div>
+        <div className="spacing-example-text">
+          <div className="spacing-example-line" style={{ width: '128px', height: '16px' }}></div>
+          <div className="spacing-example-line" style={{ width: '80px', height: '12px' }}></div>
+        </div>
+      </div>
+      <div className="spacing-example-label">Applied: 24px Gap</div>
+    </div>
+  </div>
+</div>
+
+<div className="spacing-section">
+  <h2 className="spacing-section-title">Spacing Scale</h2>
+
+  <table className="spacing-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Preview</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--space-0</code></td>
+        <td>0</td>
+        <td></td>
+        <td>Reset</td>
+      </tr>
+      <tr>
+        <td><code>--space-1</code></td>
+        <td>4px</td>
+        <td><span className="spacing-preview" style={{ width: '4px' }}></span></td>
+        <td>Tight spacing, icon gaps</td>
+      </tr>
+      <tr>
+        <td><code>--space-2</code></td>
+        <td>8px</td>
+        <td><span className="spacing-preview" style={{ width: '8px' }}></span></td>
+        <td>Small gaps, inline spacing</td>
+      </tr>
+      <tr>
+        <td><code>--space-3</code></td>
+        <td>12px</td>
+        <td><span className="spacing-preview" style={{ width: '12px' }}></span></td>
+        <td>Input padding, small margins</td>
+      </tr>
+      <tr>
+        <td><code>--space-4</code></td>
+        <td>16px</td>
+        <td><span className="spacing-preview" style={{ width: '16px' }}></span></td>
+        <td>Standard padding, card padding</td>
+      </tr>
+      <tr>
+        <td><code>--space-5</code></td>
+        <td>20px</td>
+        <td><span className="spacing-preview" style={{ width: '20px' }}></span></td>
+        <td>Large input padding</td>
+      </tr>
+      <tr>
+        <td><code>--space-6</code></td>
+        <td>24px</td>
+        <td><span className="spacing-preview" style={{ width: '24px' }}></span></td>
+        <td>Section spacing</td>
+      </tr>
+      <tr>
+        <td><code>--space-8</code></td>
+        <td>32px</td>
+        <td><span className="spacing-preview" style={{ width: '32px' }}></span></td>
+        <td>Large section spacing</td>
+      </tr>
+      <tr>
+        <td><code>--space-10</code></td>
+        <td>40px</td>
+        <td><span className="spacing-preview" style={{ width: '40px' }}></span></td>
+        <td>Component separation</td>
+      </tr>
+      <tr>
+        <td><code>--space-12</code></td>
+        <td>48px</td>
+        <td><span className="spacing-preview" style={{ width: '48px' }}></span></td>
+        <td>Major section breaks</td>
+      </tr>
+      <tr>
+        <td><code>--space-16</code></td>
+        <td>64px</td>
+        <td><span className="spacing-preview" style={{ width: '64px' }}></span></td>
+        <td>Page sections</td>
+      </tr>
+      <tr>
+        <td><code>--space-20</code></td>
+        <td>80px</td>
+        <td><span className="spacing-preview" style={{ width: '80px' }}></span></td>
+        <td>Large page sections, major breaks</td>
+      </tr>
+      <tr>
+        <td><code>--space-24</code></td>
+        <td>96px</td>
+        <td><span className="spacing-preview" style={{ width: '96px' }}></span></td>
+        <td>Section divisions, feature blocks</td>
+      </tr>
+      <tr>
+        <td><code>--space-32</code></td>
+        <td>128px</td>
+        <td><span className="spacing-preview" style={{ width: '128px' }}></span></td>
+        <td>Hero spacing, the grand entrance, room for the headliner</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="spacing-section">
+  <h2 className="spacing-section-title">Named Aliases</h2>
+
+  <table className="spacing-table">
+    <thead>
+      <tr>
+        <th>Alias</th>
+        <th>Maps To</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--space-xs</code></td>
+        <td><code>--space-2</code></td>
+        <td>8px</td>
+      </tr>
+      <tr>
+        <td><code>--space-sm</code></td>
+        <td><code>--space-4</code></td>
+        <td>16px</td>
+      </tr>
+      <tr>
+        <td><code>--space-md</code></td>
+        <td><code>--space-6</code></td>
+        <td>24px</td>
+      </tr>
+      <tr>
+        <td><code>--space-lg</code></td>
+        <td><code>--space-8</code></td>
+        <td>32px</td>
+      </tr>
+      <tr>
+        <td><code>--space-xl</code></td>
+        <td><code>--space-10</code></td>
+        <td>40px</td>
+      </tr>
+      <tr>
+        <td><code>--space-2xl</code></td>
+        <td><code>--space-12</code></td>
+        <td>48px</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="spacing-section">
+  <h2 className="spacing-section-title">Usage Example</h2>
+
+  <div className="spacing-code">
+    <div className="spacing-code-header">
+      <span className="spacing-code-dot red"></span>
+      <span className="spacing-code-dot yellow"></span>
+      <span className="spacing-code-dot green"></span>
+      <span className="spacing-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>           <span class="comment">/* 16px */</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">var(--space-6)</span><span class="punctuation">;</span>     <span class="comment">/* 24px */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.button</span> <span class="punctuation">{</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-3)</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>  <span class="comment">/* 12px 16px */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.section</span> <span class="punctuation">{</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-8)</span> <span class="value">0</span><span class="punctuation">;</span>         <span class="comment">/* 32px top/bottom */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.icon-text</span> <span class="punctuation">{</span>
+    <span class="property">gap</span><span class="punctuation">:</span> <span class="value">var(--space-2)</span><span class="punctuation">;</span>               <span class="comment">/* 8px gap */</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>

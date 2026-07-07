@@ -1,0 +1,959 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Accessibility" />
+
+<style>
+{`
+  /* ===== FONT IMPORTS ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .a11y-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .a11y-icon {
+    padding: 0.75rem;
+    background: #dcfce7;
+    color: #15803d;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  .a11y-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .a11y-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 42rem;
+  }
+
+  .a11y-section {
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .a11y-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .a11y-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+  }
+
+  .a11y-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .a11y-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .a11y-section-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 48rem;
+  }
+
+  .a11y-section-text strong {
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  .a11y-section-text code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4f46e5;
+  }
+
+  .a11y-helpers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .a11y-helper {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .a11y-helper-name {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.875rem;
+    color: #4f46e5;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .a11y-helper-desc {
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  .a11y-see-code {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    color: #4f46e5;
+    font-weight: 500;
+  }
+
+  .a11y-see-code .material-symbols-outlined {
+    font-size: 1rem;
+  }
+
+  .a11y-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .a11y-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border: 1px solid #e6e8eb;
+  }
+
+  .a11y-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #4f46e5;
+  }
+
+  .a11y-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.375rem;
+  }
+
+  .a11y-card-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .a11y-contrast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .a11y-contrast-item {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .a11y-contrast-preview {
+    padding: 1.25rem 1rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .a11y-contrast-info {
+    padding: 0.5rem 0.75rem;
+    background: #f8fafc;
+    border-top: 1px solid #e6e8eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .a11y-contrast-ratio {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.6875rem;
+    color: #64748b;
+  }
+
+  .a11y-pass {
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .a11y-checklist {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+
+  .a11y-checklist-item {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid #e6e8eb;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .a11y-checklist-item:last-child {
+    border-bottom: none;
+  }
+
+  .a11y-check {
+    width: 1.125rem;
+    height: 1.125rem;
+    background: #4f46e5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .a11y-check-icon {
+    color: white;
+    font-size: 0.875rem;
+  }
+
+  .a11y-checklist-text {
+    font-size: 0.8125rem;
+    color: #0f172a;
+  }
+
+  /* ===== CODE REFERENCE SECTION ===== */
+  .a11y-code-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #4f46e5;
+  }
+
+  .a11y-code-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+  }
+
+  .a11y-code-section-desc {
+    color: #64748b;
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+  }
+
+  .a11y-code-block {
+    margin-bottom: 2rem;
+  }
+
+  .a11y-code-block-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .a11y-code-block-title .material-symbols-outlined {
+    font-size: 1.25rem;
+    color: #4f46e5;
+  }
+
+  .a11y-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .a11y-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .a11y-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .a11y-code-dot.red { background: #ef4444; }
+  .a11y-code-dot.yellow { background: #f59e0b; }
+  .a11y-code-dot.green { background: #22c55e; }
+
+  .a11y-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .a11y-code pre {
+    margin: 0;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .a11y-code .comment { color: #64748b; font-style: italic; }
+  .a11y-code .selector { color: #fbbf24; }
+  .a11y-code .property { color: #7dd3fc; }
+  .a11y-code .value { color: #a5f3fc; }
+  .a11y-code .tag { color: #f472b6; }
+  .a11y-code .attr { color: #fbbf24; }
+  .a11y-code .string { color: #a5f3fc; }
+  .a11y-code .punctuation { color: #94a3b8; }
+
+  /* Screen reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Dark mode section styles */
+  .a11y-dark-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .a11y-dark-preview {
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .a11y-dark-preview.light {
+    background: #ffffff;
+    border: 1px solid #e6e8eb;
+  }
+
+  .a11y-dark-preview.dark {
+    background: #1e293b;
+    border: 1px solid #334155;
+  }
+
+  .a11y-dark-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .a11y-dark-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+`}
+</style>
+
+{/* ============================================ */}
+{/* THE STORY BEGINS                             */}
+{/* ============================================ */}
+
+<div className="a11y-header">
+  <div className="a11y-icon">
+    <span className="material-symbols-outlined" style={{ fontSize: '1.5rem' }} aria-hidden="true">verified_user</span>
+  </div>
+  <div>
+    <h1 className="a11y-title">Design for Every Fan</h1>
+    <p className="a11y-description">
+      Great experiences should be for everyone. <strong style={{ color: '#0f172a' }}>WCAG 2.2 AA</strong> compliance isn't a checkbox, it's a commitment to inclusion. This guide tells the story of how we build accessible interfaces.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 1: THE PRINCIPLES                    */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">1</span>
+    <h2 className="a11y-section-title">The Principles We Live By</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Before writing a single line of code, internalize these five commitments. They're not features, they're the foundation of everything we build.
+  </p>
+
+  <div className="a11y-card-grid">
+    <div className="a11y-card">
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">contrast</span>
+      <h3 className="a11y-card-title">Color Contrast</h3>
+      <p className="a11y-card-text">4.5:1 minimum for text. 3:1 for large text. No exceptions.</p>
+    </div>
+    <div className="a11y-card">
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">touch_app</span>
+      <h3 className="a11y-card-title">Touch Targets</h3>
+      <p className="a11y-card-text">24×24px minimum (AA). 44×44px recommended (AAA).</p>
+    </div>
+    <div className="a11y-card">
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">keyboard</span>
+      <h3 className="a11y-card-title">Keyboard First</h3>
+      <p className="a11y-card-text">If it's clickable, it must be focusable and operable via keyboard.</p>
+    </div>
+    <div className="a11y-card">
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">record_voice_over</span>
+      <h3 className="a11y-card-title">Screen Reader Ready</h3>
+      <p className="a11y-card-text">Semantic HTML first. ARIA only when native elements can't do the job.</p>
+    </div>
+    <div className="a11y-card">
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">motion_photos_pause</span>
+      <h3 className="a11y-card-title">Motion Respect</h3>
+      <p className="a11y-card-text">Honor prefers-reduced-motion. Some users get physically ill from animations.</p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 2: VISUAL CLARITY                    */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">2</span>
+    <h2 className="a11y-section-title">Visual Clarity</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Users need to <strong>see</strong> what's happening. Color contrast ensures readability for users with low vision or color blindness. Focus states tell keyboard users exactly where they are. And for users who experience motion sickness, we disable animations entirely.
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    All our brand colors pass WCAG AA contrast requirements:
+  </p>
+
+  <div className="a11y-contrast-grid">
+    <div className="a11y-contrast-item">
+      <div className="a11y-contrast-preview" style={{ background: '#ffffff', color: '#0f172a' }}>Dark on White</div>
+      <div className="a11y-contrast-info">
+        <span className="a11y-contrast-ratio">15.95:1</span>
+        <span className="a11y-pass">AA Pass</span>
+      </div>
+    </div>
+    <div className="a11y-contrast-item">
+      <div className="a11y-contrast-preview" style={{ background: '#ffffff', color: '#64748b' }}>Muted on White</div>
+      <div className="a11y-contrast-info">
+        <span className="a11y-contrast-ratio">4.54:1</span>
+        <span className="a11y-pass">AA Pass</span>
+      </div>
+    </div>
+    <div className="a11y-contrast-item">
+      <div className="a11y-contrast-preview" style={{ background: '#4f46e5', color: '#ffffff' }}>White on Primary</div>
+      <div className="a11y-contrast-info">
+        <span className="a11y-contrast-ratio">6.06:1</span>
+        <span className="a11y-pass">AA Pass</span>
+      </div>
+    </div>
+    <div className="a11y-contrast-item">
+      <div className="a11y-contrast-preview" style={{ background: '#8b5cf6', color: '#ffffff' }}>White on Secondary</div>
+      <div className="a11y-contrast-info">
+        <span className="a11y-contrast-ratio">4.23:1</span>
+        <span className="a11y-pass">AA Large</span>
+      </div>
+    </div>
+  </div>
+
+  <p className="a11y-section-text" style={{ marginTop: '1.25rem' }}>
+    <strong>Dark mode matters.</strong> Some users prefer dark interfaces to reduce eye strain, save battery, or because it's easier for them to read. Our design system fully supports <code>prefers-color-scheme</code> with carefully tested contrast ratios in both modes.
+  </p>
+
+  <div className="a11y-dark-demo">
+    <div className="a11y-dark-preview light">
+      <div className="a11y-dark-label" style={{ color: '#94a3b8' }}>Light Mode</div>
+      <div className="a11y-dark-text" style={{ color: '#0f172a' }}>Heading text</div>
+      <div className="a11y-dark-text" style={{ color: '#64748b' }}>Body text on white surface</div>
+    </div>
+    <div className="a11y-dark-preview dark">
+      <div className="a11y-dark-label" style={{ color: '#64748b' }}>Dark Mode</div>
+      <div className="a11y-dark-text" style={{ color: '#f1f5f9' }}>Heading text</div>
+      <div className="a11y-dark-text" style={{ color: '#94a3b8' }}>Body text on dark surface</div>
+    </div>
+  </div>
+
+  <p className="a11y-section-text" style={{ marginTop: '1.25rem' }}>
+    We provide CSS helpers for focus states and motion preferences that you can apply globally:
+  </p>
+
+  <div className="a11y-helpers">
+    <div className="a11y-helper">
+      <div className="a11y-helper-name">.focus-ring</div>
+      <div className="a11y-helper-desc">Custom focus indicator with outline + shadow</div>
+    </div>
+    <div className="a11y-helper">
+      <div className="a11y-helper-name">.no-motion</div>
+      <div className="a11y-helper-desc">Disables all animations on element and children</div>
+    </div>
+  </div>
+
+  <div className="a11y-see-code">
+    <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
+    See CSS: Focus States & Motion Preferences
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 3: KEYBOARD NAVIGATION               */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">3</span>
+    <h2 className="a11y-section-title">Keyboard Navigation</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Many users navigate entirely with a keyboard, whether due to motor impairments, repetitive strain injuries, or simply preference. Every interactive element must be reachable via <strong>Tab</strong>, activatable via <strong>Enter</strong> or <strong>Space</strong>, and dismissable via <strong>Escape</strong> when appropriate.
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    <strong>Skip links</strong> are essential. Imagine having to tab through 50 navigation links on every page just to reach the main content. Skip links let keyboard users jump directly to what matters.
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    Sometimes you need content visible only to screen readers, like "(required)" after a form label, or descriptive text for an icon button. The <code>.sr-only</code> class hides content visually while keeping it in the accessibility tree.
+  </p>
+
+  <div className="a11y-helpers">
+    <div className="a11y-helper">
+      <div className="a11y-helper-name">.skip-link</div>
+      <div className="a11y-helper-desc">Hidden link that appears on focus, jumps to main content</div>
+    </div>
+    <div className="a11y-helper">
+      <div className="a11y-helper-name">.sr-only</div>
+      <div className="a11y-helper-desc">Visually hidden but accessible to screen readers</div>
+    </div>
+    <div className="a11y-helper">
+      <div className="a11y-helper-name">.touch-target</div>
+      <div className="a11y-helper-desc">Ensures minimum 44×44px clickable area</div>
+    </div>
+  </div>
+
+  <div className="a11y-see-code">
+    <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
+    See CSS: Skip Links & Screen Reader Utilities
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 4: SCREEN READERS & ARIA             */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">4</span>
+    <h2 className="a11y-section-title">Screen Readers & ARIA</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Screen readers interpret your HTML. Use <strong>semantic elements first</strong>: <code>&lt;button&gt;</code> not <code>&lt;div onclick&gt;</code>, <code>&lt;nav&gt;</code> not <code>&lt;div class="nav"&gt;</code>. Native HTML comes with built-in accessibility, roles, keyboard handling, focus management. Don't reinvent what the browser gives you for free.
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    <strong>ARIA Live Regions</strong> announce dynamic changes to screen reader users. When the cart count updates, when a form shows an error, when search results load, these moments need to be announced. Use <code>role="alert"</code> for urgent errors (interrupts immediately) and <code>role="status"</code> for polite updates (waits for a pause).
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    The golden rule: <strong>No ARIA is better than bad ARIA</strong>. If you're unsure, stick with semantic HTML. A <code>&lt;button&gt;</code> is always better than <code>&lt;div role="button" tabindex="0"&gt;</code>.
+  </p>
+
+  <div className="a11y-see-code">
+    <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
+    See HTML: ARIA Live Regions
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 5: COMPONENT PATTERNS                */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">5</span>
+    <h2 className="a11y-section-title">Component Patterns</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Forms and modals are where accessibility gets tricky, and where it matters most.
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    <strong>Accessible forms</strong> connect every input to a visible label via <code>for</code>/<code>id</code>. Error messages link to inputs with <code>aria-describedby</code> and announce themselves with <code>role="alert"</code>. Required fields use both visual indicators (*) and programmatic ones (<code>aria-required</code>). And <code>autocomplete</code> attributes help users fill forms faster.
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    <strong>Accessible modals</strong> trap focus inside (Tab cycles only within the modal), close on Escape, return focus to the trigger element when closed, and use <code>inert</code> to prevent interaction with background content.
+  </p>
+
+  <div className="a11y-see-code">
+    <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
+    See HTML: Forms & Modals
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 6: THE CHECKLIST                     */}
+{/* ============================================ */}
+
+<div className="a11y-section" style={{ borderBottom: 'none', paddingBottom: '1rem' }}>
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">6</span>
+    <h2 className="a11y-section-title">Before You Ship</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Run through this checklist before every PR. It takes 5 minutes and catches 90% of issues.
+  </p>
+
+  <ul className="a11y-checklist" role="list" aria-label="Accessibility checklist">
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Semantic HTML elements (button, nav, main, header, article)</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Color contrast: 4.5:1 normal text, 3:1 large text</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Visible focus indicators on all interactive elements</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>aria-label on icon-only buttons</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Labels connected to form inputs (for/id)</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Touch targets: 24×24px (AA) or 44×44px (AAA)</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>ARIA live regions for dynamic content</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>prefers-reduced-motion respected</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Keyboard test: Tab, Enter, Escape all work</span>
+    </li>
+    <li className="a11y-checklist-item">
+      <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Screen reader test (VoiceOver or NVDA)</span>
+    </li>
+  </ul>
+</div>
+
+{/* ============================================ */}
+{/* CODE REFERENCE SECTION                       */}
+{/* ============================================ */}
+
+<div className="a11y-code-section">
+  <h2 className="a11y-code-section-title">Code Reference</h2>
+  <p className="a11y-code-section-desc">
+    Copy these patterns into your codebase. All helpers are designed to be added to <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>main.css</code>.
+  </p>
+
+  {/* ----- FOCUS STATES ----- */}
+  <div className="a11y-code-block">
+    <h3 className="a11y-code-block-title">
+      <span className="material-symbols-outlined" aria-hidden="true">visibility</span>
+      Focus States & Motion Preferences
+    </h3>
+    <div className="a11y-code">
+      <div className="a11y-code-header">
+        <span className="a11y-code-dot red" aria-hidden="true"></span>
+        <span className="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span className="a11y-code-dot green" aria-hidden="true"></span>
+        <span className="a11y-code-lang">CSS</span>
+      </div>
+      <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Global focus ring - applies to all focusable elements */</span>
+<span class="selector">:focus-visible</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">2px solid var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">outline-offset</span><span class="punctuation">:</span> <span class="value">2px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Custom focus ring utility */</span>
+<span class="selector">.focus-ring:focus-visible</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">2px solid var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">outline-offset</span><span class="punctuation">:</span> <span class="value">2px</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 4px rgba(79, 70, 229, 0.15)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Respect motion preferences globally */</span>
+<span class="selector">@media (prefers-reduced-motion: reduce)</span> <span class="punctuation">{</span>
+    <span class="selector">*,
+    *::before,
+    *::after</span> <span class="punctuation">{</span>
+        <span class="property">animation-duration</span><span class="punctuation">:</span> <span class="value">0.01ms !important</span><span class="punctuation">;</span>
+        <span class="property">animation-iteration-count</span><span class="punctuation">:</span> <span class="value">1 !important</span><span class="punctuation">;</span>
+        <span class="property">transition-duration</span><span class="punctuation">:</span> <span class="value">0.01ms !important</span><span class="punctuation">;</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Manual motion disable (for JS toggle) */</span>
+<span class="selector">.no-motion,
+.no-motion *</span> <span class="punctuation">{</span>
+    <span class="property">animation</span><span class="punctuation">:</span> <span class="value">none !important</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">none !important</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Dark mode - automatic based on system preference */</span>
+<span class="selector">@media (prefers-color-scheme: dark)</span> <span class="punctuation">{</span>
+    <span class="selector">:root</span> <span class="punctuation">{</span>
+        <span class="property">--color-text-heading</span><span class="punctuation">:</span> <span class="value">#f1f5f9</span><span class="punctuation">;</span>
+        <span class="property">--color-text-body</span><span class="punctuation">:</span> <span class="value">#94a3b8</span><span class="punctuation">;</span>
+        <span class="property">--color-surface</span><span class="punctuation">:</span> <span class="value">#1e293b</span><span class="punctuation">;</span>
+        <span class="property">--color-background</span><span class="punctuation">:</span> <span class="value">#0f172a</span><span class="punctuation">;</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Manual dark mode toggle (via class or data attr) */</span>
+<span class="selector">.dark, [data-theme="dark"]</span> <span class="punctuation">{</span>
+    <span class="property">--color-text-heading</span><span class="punctuation">:</span> <span class="value">#f1f5f9</span><span class="punctuation">;</span>
+    <span class="property">--color-text-body</span><span class="punctuation">:</span> <span class="value">#94a3b8</span><span class="punctuation">;</span>
+    <span class="comment">/* ... all dark tokens ... */</span>
+<span class="punctuation">}</span>`}} />
+    </div>
+  </div>
+
+  {/* ----- SKIP LINKS ----- */}
+  <div className="a11y-code-block">
+    <h3 className="a11y-code-block-title">
+      <span className="material-symbols-outlined" aria-hidden="true">keyboard_tab</span>
+      Skip Links & Screen Reader Utilities
+    </h3>
+    <div className="a11y-code">
+      <div className="a11y-code-header">
+        <span className="a11y-code-dot red" aria-hidden="true"></span>
+        <span className="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span className="a11y-code-dot green" aria-hidden="true"></span>
+        <span className="a11y-code-lang">CSS</span>
+      </div>
+      <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Skip link - hidden until focused */</span>
+<span class="selector">.skip-link</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
+    <span class="property">top</span><span class="punctuation">:</span> <span class="value">-100%</span><span class="punctuation">;</span>
+    <span class="property">left</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">1rem 1.5rem</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-md)</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">600</span><span class="punctuation">;</span>
+    <span class="property">text-decoration</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">z-index</span><span class="punctuation">:</span> <span class="value">9999</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.skip-link:focus</span> <span class="punctuation">{</span>
+    <span class="property">top</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Screen reader only - visually hidden but accessible */</span>
+<span class="selector">.sr-only</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">1px</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1px</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">margin</span><span class="punctuation">:</span> <span class="value">-1px</span><span class="punctuation">;</span>
+    <span class="property">overflow</span><span class="punctuation">:</span> <span class="value">hidden</span><span class="punctuation">;</span>
+    <span class="property">clip</span><span class="punctuation">:</span> <span class="value">rect(0, 0, 0, 0)</span><span class="punctuation">;</span>
+    <span class="property">white-space</span><span class="punctuation">:</span> <span class="value">nowrap</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Touch target - ensures minimum clickable area */</span>
+<span class="selector">.touch-target</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">relative</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.touch-target::after</span> <span class="punctuation">{</span>
+    <span class="property">content</span><span class="punctuation">:</span> <span class="value">''</span><span class="punctuation">;</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
+    <span class="property">top</span><span class="punctuation">:</span> <span class="value">50%</span><span class="punctuation">;</span>
+    <span class="property">left</span><span class="punctuation">:</span> <span class="value">50%</span><span class="punctuation">;</span>
+    <span class="property">transform</span><span class="punctuation">:</span> <span class="value">translate(-50%, -50%)</span><span class="punctuation">;</span>
+    <span class="property">min-width</span><span class="punctuation">:</span> <span class="value">44px</span><span class="punctuation">;</span>
+    <span class="property">min-height</span><span class="punctuation">:</span> <span class="value">44px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+    </div>
+  </div>
+
+  {/* ----- ARIA LIVE REGIONS ----- */}
+  <div className="a11y-code-block">
+    <h3 className="a11y-code-block-title">
+      <span className="material-symbols-outlined" aria-hidden="true">campaign</span>
+      ARIA Live Regions
+    </h3>
+    <div className="a11y-code">
+      <div className="a11y-code-header">
+        <span className="a11y-code-dot red" aria-hidden="true"></span>
+        <span className="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span className="a11y-code-dot green" aria-hidden="true"></span>
+        <span className="a11y-code-lang">HTML</span>
+      </div>
+      <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">&lt;!-- Error - interrupts immediately --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"alert"</span><span class="tag">&gt;</span>
+    Payment failed. Please try again.
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Status - waits for pause in speech --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"status"</span><span class="tag">&gt;</span>
+    3 items in cart
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Loading state --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"status"</span> <span class="attr">aria-busy</span><span class="punctuation">=</span><span class="string">"true"</span><span class="tag">&gt;</span>
+    Loading events...
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Search results - announces full content --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">aria-live</span><span class="punctuation">=</span><span class="string">"polite"</span> <span class="attr">aria-atomic</span><span class="punctuation">=</span><span class="string">"true"</span><span class="tag">&gt;</span>
+    Showing 24 events
+<span class="tag">&lt;/div&gt;</span>`}} />
+    </div>
+  </div>
+
+  {/* ----- FORMS & MODALS ----- */}
+  <div className="a11y-code-block">
+    <h3 className="a11y-code-block-title">
+      <span className="material-symbols-outlined" aria-hidden="true">edit_note</span>
+      Accessible Forms
+    </h3>
+    <div className="a11y-code">
+      <div className="a11y-code-header">
+        <span className="a11y-code-dot red" aria-hidden="true"></span>
+        <span className="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span className="a11y-code-dot green" aria-hidden="true"></span>
+        <span className="a11y-code-lang">HTML</span>
+      </div>
+      <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="tag">&lt;div</span> <span class="attr">class</span><span class="punctuation">=</span><span class="string">"form-field"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="punctuation">=</span><span class="string">"email"</span><span class="tag">&gt;</span>
+        Email <span class="tag">&lt;span</span> <span class="attr">aria-hidden</span><span class="punctuation">=</span><span class="string">"true"</span><span class="tag">&gt;</span>*<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class</span><span class="punctuation">=</span><span class="string">"sr-only"</span><span class="tag">&gt;</span>(required)<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/label&gt;</span>
+
+    <span class="tag">&lt;input</span>
+        <span class="attr">type</span><span class="punctuation">=</span><span class="string">"email"</span>
+        <span class="attr">id</span><span class="punctuation">=</span><span class="string">"email"</span>
+        <span class="attr">autocomplete</span><span class="punctuation">=</span><span class="string">"email"</span>
+        <span class="attr">aria-required</span><span class="punctuation">=</span><span class="string">"true"</span>
+        <span class="attr">aria-describedby</span><span class="punctuation">=</span><span class="string">"email-error"</span>
+    <span class="tag">/&gt;</span>
+
+    <span class="tag">&lt;p</span> <span class="attr">id</span><span class="punctuation">=</span><span class="string">"email-error"</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"alert"</span> <span class="attr">hidden</span><span class="tag">&gt;</span>
+        Enter a valid email
+    <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>`}} />
+    </div>
+  </div>
+
+  <div className="a11y-code-block">
+    <h3 className="a11y-code-block-title">
+      <span className="material-symbols-outlined" aria-hidden="true">open_in_new</span>
+      Accessible Modals
+    </h3>
+    <div className="a11y-code">
+      <div className="a11y-code-header">
+        <span className="a11y-code-dot red" aria-hidden="true"></span>
+        <span className="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span className="a11y-code-dot green" aria-hidden="true"></span>
+        <span className="a11y-code-lang">HTML</span>
+      </div>
+      <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">&lt;!-- Modal dialog --&gt;</span>
+<span class="tag">&lt;div</span>
+    <span class="attr">role</span><span class="punctuation">=</span><span class="string">"dialog"</span>
+    <span class="attr">aria-modal</span><span class="punctuation">=</span><span class="string">"true"</span>
+    <span class="attr">aria-labelledby</span><span class="punctuation">=</span><span class="string">"modal-title"</span>
+<span class="tag">&gt;</span>
+    <span class="tag">&lt;h2</span> <span class="attr">id</span><span class="punctuation">=</span><span class="string">"modal-title"</span><span class="tag">&gt;</span>Confirm Purchase<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Buy 2 tickets for $150?<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;button&gt;</span>Cancel<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">autofocus</span><span class="tag">&gt;</span>Confirm<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Background becomes inert --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">id</span><span class="punctuation">=</span><span class="string">"app"</span> <span class="attr">inert</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>`}} />
+    </div>
+  </div>
+
+</div>

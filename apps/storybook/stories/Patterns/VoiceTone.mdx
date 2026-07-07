@@ -1,0 +1,843 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Voice & Tone" />
+
+<style>
+{`
+  /* ===== FONT IMPORTS ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .voice-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .voice-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .voice-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  /* ===== PERSONALITY SECTION ===== */
+  .voice-section {
+    margin-top: 3rem;
+  }
+
+  .voice-section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #4f46e5;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+
+  .voice-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+  }
+
+  .voice-section-subtitle {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+  }
+
+  /* ===== PERSONALITY CARDS ===== */
+  .personality-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 800px) {
+    .personality-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .personality-card {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .personality-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+
+  .personality-card.energetic::before {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  }
+
+  .personality-card.expert::before {
+    background: linear-gradient(90deg, #4f46e5, #6366f1);
+  }
+
+  .personality-card.precise::before {
+    background: linear-gradient(90deg, #8B5CF6, #a78bfa);
+  }
+
+  .personality-card.inclusive::before {
+    background: linear-gradient(90deg, #10b981, #34d399);
+  }
+
+  .personality-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .personality-card-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  /* ===== DO/DON'T TABLE ===== */
+  .dodont-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 800px) {
+    .dodont-container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .dodont-column {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+    overflow: hidden;
+  }
+
+  .dodont-header {
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dodont-header.do {
+    background: #dcfce7;
+    color: #15803d;
+    border-bottom: 1px solid #bbf7d0;
+  }
+
+  .dodont-header.dont {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-bottom: 1px solid #fecaca;
+  }
+
+  .dodont-list {
+    padding: 1rem 1.5rem;
+  }
+
+  .dodont-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed #e6e8eb;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .dodont-item:last-child {
+    border-bottom: none;
+  }
+
+  .dodont-item code {
+    background: #f1f5f9;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.8125rem;
+  }
+
+  /* ===== CONTEXT ADAPTATION ===== */
+  .context-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .context-card {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .context-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .context-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .context-card-icon.motorsports {
+    background: #fef3c7;
+    color: #d97706;
+  }
+
+  .context-card-icon.music {
+    background: #e0e7ff;
+    color: #4f46e5;
+  }
+
+  .context-card-icon.workshop {
+    background: #fae8ff;
+    color: #a855f7;
+  }
+
+  .context-card-icon.gala {
+    background: #fce7f3;
+    color: #db2777;
+  }
+
+  .context-card-icon.generic {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+
+  .context-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+  }
+
+  .context-card-subtitle {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+
+  .context-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .context-example {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #475569;
+    padding: 0.5rem 0.75rem;
+    background: #f8fafc;
+    border-radius: 6px;
+    border-left: 3px solid #e6e8eb;
+  }
+
+  /* ===== CATCHPHRASES ===== */
+  .catchphrase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .catchphrase-card {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8B5CF6 100%);
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: white;
+  }
+
+  .catchphrase-text {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .catchphrase-usage {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* ===== MICROCOPY LIBRARY ===== */
+  .microcopy-section {
+    margin-top: 1.5rem;
+  }
+
+  .microcopy-category {
+    margin-bottom: 2rem;
+  }
+
+  .microcopy-category-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .microcopy-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e6e8eb;
+  }
+
+  .microcopy-table th,
+  .microcopy-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e6e8eb;
+    font-family: 'Rubik', system-ui, sans-serif;
+  }
+
+  .microcopy-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .microcopy-table td {
+    font-size: 0.875rem;
+  }
+
+  .microcopy-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .microcopy-table .context {
+    color: #64748b;
+    font-size: 0.75rem;
+  }
+
+  .microcopy-table .copy {
+    color: #0f172a;
+    font-weight: 500;
+  }
+
+  .microcopy-table .copy.primary {
+    color: #4f46e5;
+  }
+
+  .microcopy-table .copy.accent {
+    color: #8b5cf6;
+  }
+`}
+</style>
+
+{/* ===== HEADER ===== */}
+<div className="voice-header">
+  <h1 className="voice-title">Voice & Tone</h1>
+  <p className="voice-description">
+    How the RamosLabs Design System speaks, across every surface, every state, every moment.
+    This guide keeps the product sounding like itself, whether it is confirming an action or explaining an error.
+  </p>
+</div>
+
+{/* ===== PERSONALITY ===== */}
+<div className="voice-section">
+  <div className="voice-section-label">Brand Personality</div>
+  <h2 className="voice-section-title">Who We Are When We Speak</h2>
+  <p className="voice-section-subtitle">
+    Four attributes that define how RamosLabs communicates. Every piece of copy should embody at least one.
+  </p>
+
+  <div className="personality-grid">
+    <div className="personality-card energetic">
+      <h3 className="personality-card-title">
+        <span className="material-symbols-outlined" style={{ color: '#8b5cf6', fontSize: '20px' }}>bolt</span>
+        Energetic but Accessible
+      </h3>
+      <p className="personality-card-text">
+        We match the excitement of the events we power, but we're never overwhelming. 
+        Our energy invites, it doesn't exhaust. Think "the friend who gets you pumped" not "the hype man who won't stop."
+      </p>
+    </div>
+
+    <div className="personality-card expert">
+      <h3 className="personality-card-title">
+        <span className="material-symbols-outlined" style={{ color: '#4f46e5', fontSize: '20px' }}>workspace_premium</span>
+        Expert but Enthusiastic
+      </h3>
+      <p className="personality-card-text">
+        We know ticketing, events, and experiences inside out, but we're not above getting excited about a great lineup 
+        or a well-organized rally. Knowledge meets passion.
+      </p>
+    </div>
+
+    <div className="personality-card precise">
+      <h3 className="personality-card-title">
+        <span className="material-symbols-outlined" style={{ color: '#8B5CF6', fontSize: '20px' }}>target</span>
+        Precise but Passionate
+      </h3>
+      <p className="personality-card-text">
+        Every detail matters, dates, times, ticket counts, seat numbers. But we never let precision become coldness. 
+        We care about getting it right because we care about the experience.
+      </p>
+    </div>
+
+    <div className="personality-card inclusive">
+      <h3 className="personality-card-title">
+        <span className="material-symbols-outlined" style={{ color: '#10b981', fontSize: '20px' }}>groups</span>
+        Inclusive by Design
+      </h3>
+      <p className="personality-card-text">
+        Rally organizer or concert promoter, first-time user or power seller, everyone gets the same respect. 
+        We speak to our users as partners, not customers.
+      </p>
+    </div>
+  </div>
+</div>
+
+{/* ===== DO / DON'T ===== */}
+<div className="voice-section">
+  <div className="voice-section-label">Writing Guidelines</div>
+  <h2 className="voice-section-title">How We Write</h2>
+  <p className="voice-section-subtitle">
+    Practical examples of the RamosLabs voice in action. When in doubt, check here.
+  </p>
+
+  <div className="dodont-container">
+    <div className="dodont-column">
+      <div className="dodont-header do">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>check_circle</span>
+        Do This
+      </div>
+      <div className="dodont-list">
+        <div className="dodont-item">
+          <code>"You're in!"</code> - Celebrate the moment
+        </div>
+        <div className="dodont-item">
+          <code>"Secure your spot"</code> - Action with urgency
+        </div>
+        <div className="dodont-item">
+          <code>"5 minutes left to complete"</code> - Clear, specific
+        </div>
+        <div className="dodont-item">
+          <code>"Let's try again"</code> - We're in this together
+        </div>
+        <div className="dodont-item">
+          <code>"See you there"</code> - Warm, personal closing
+        </div>
+        <div className="dodont-item">
+          <code>"Your crew is growing"</code> - Community language
+        </div>
+        <div className="dodont-item">
+          <code>"Something worth showing up for"</code> - Evocative
+        </div>
+        <div className="dodont-item">
+          <code>"Check your email"</code> - Direct, helpful
+        </div>
+      </div>
+    </div>
+
+    <div className="dodont-column">
+      <div className="dodont-header dont">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>cancel</span>
+        Avoid This
+      </div>
+      <div className="dodont-list">
+        <div className="dodont-item">
+          <code>"Transaction complete"</code> - Cold, transactional
+        </div>
+        <div className="dodont-item">
+          <code>"Purchase ticket"</code> - Boring, generic
+        </div>
+        <div className="dodont-item">
+          <code>"Session will expire"</code> - Passive, unclear
+        </div>
+        <div className="dodont-item">
+          <code>"An error occurred"</code> - Robotic, unhelpful
+        </div>
+        <div className="dodont-item">
+          <code>"Thank you for your purchase"</code> - Formal, distant
+        </div>
+        <div className="dodont-item">
+          <code>"Attendee count: 47"</code> - Data without soul
+        </div>
+        <div className="dodont-item">
+          <code>"Quality events"</code> - Vague marketing speak
+        </div>
+        <div className="dodont-item">
+          <code>"Please check inbox"</code> - Overly formal
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ===== CONTEXT ADAPTATION ===== */}
+<div className="voice-section">
+  <div className="voice-section-label">Flexibility</div>
+  <h2 className="voice-section-title">Same Voice, Different Stages</h2>
+  <p className="voice-section-subtitle">
+    Our tone stays consistent, but examples and references adapt to context. Here's how the same message might feel across different event types.
+  </p>
+
+  <div className="context-grid">
+    <div className="context-card">
+      <div className="context-card-header">
+        <div className="context-card-icon motorsports">
+          <span className="material-symbols-outlined">sports_motorsports</span>
+        </div>
+        <div>
+          <div className="context-card-title">Rally & Motorsports</div>
+          <div className="context-card-subtitle">Enduro, offroad, track days</div>
+        </div>
+      </div>
+      <div className="context-examples">
+        <div className="context-example">"Your starting position is confirmed"</div>
+        <div className="context-example">"Registration closes in 5 minutes"</div>
+        <div className="context-example">"See you at the starting line"</div>
+      </div>
+    </div>
+
+    <div className="context-card">
+      <div className="context-card-header">
+        <div className="context-card-icon music">
+          <span className="material-symbols-outlined">music_note</span>
+        </div>
+        <div>
+          <div className="context-card-title">Concerts & Festivals</div>
+          <div className="context-card-subtitle">Live music, shows, tours</div>
+        </div>
+      </div>
+      <div className="context-examples">
+        <div className="context-example">"Your spot in the crowd is secured"</div>
+        <div className="context-example">"Tickets selling fast, don't miss out"</div>
+        <div className="context-example">"See you at the show"</div>
+      </div>
+    </div>
+
+    <div className="context-card">
+      <div className="context-card-header">
+        <div className="context-card-icon workshop">
+          <span className="material-symbols-outlined">school</span>
+        </div>
+        <div>
+          <div className="context-card-title">Workshops & Conferences</div>
+          <div className="context-card-subtitle">Learning, networking</div>
+        </div>
+      </div>
+      <div className="context-examples">
+        <div className="context-example">"Your seat is reserved"</div>
+        <div className="context-example">"Limited spots remaining"</div>
+        <div className="context-example">"See you in the session"</div>
+      </div>
+    </div>
+
+    <div className="context-card">
+      <div className="context-card-header">
+        <div className="context-card-icon gala">
+          <span className="material-symbols-outlined">volunteer_activism</span>
+        </div>
+        <div>
+          <div className="context-card-title">Galas & Fundraisers</div>
+          <div className="context-card-subtitle">Charity, causes, formal events</div>
+        </div>
+      </div>
+      <div className="context-examples">
+        <div className="context-example">"Your place at the table awaits"</div>
+        <div className="context-example">"Join us in making a difference"</div>
+        <div className="context-example">"Thank you for your support"</div>
+      </div>
+    </div>
+
+    <div className="context-card">
+      <div className="context-card-header">
+        <div className="context-card-icon generic">
+          <span className="material-symbols-outlined">confirmation_number</span>
+        </div>
+        <div>
+          <div className="context-card-title">Universal / Default</div>
+          <div className="context-card-subtitle">When context is unknown</div>
+        </div>
+      </div>
+      <div className="context-examples">
+        <div className="context-example">"You're in"</div>
+        <div className="context-example">"Secure your spot"</div>
+        <div className="context-example">"See you there"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ===== CATCHPHRASES ===== */}
+<div className="voice-section">
+  <div className="voice-section-label">Brand Language</div>
+  <h2 className="voice-section-title">Our Catchphrases</h2>
+  <p className="voice-section-subtitle">
+    Memorable phrases that capture the RamosLabs voice. Use them in onboarding and key moments.
+  </p>
+
+  <div className="catchphrase-grid">
+    <div className="catchphrase-card">
+      <div className="catchphrase-text">"Where passion finds its place"</div>
+      <div className="catchphrase-usage">Primary tagline - Use in hero sections, marketing</div>
+    </div>
+
+    <div className="catchphrase-card">
+      <div className="catchphrase-text">"The ticket is just the beginning"</div>
+      <div className="catchphrase-usage">Experience philosophy - Post-purchase, onboarding</div>
+    </div>
+
+    <div className="catchphrase-card">
+      <div className="catchphrase-text">"Different stages, same heartbeat"</div>
+      <div className="catchphrase-usage">Inclusivity message - About pages, diversity content</div>
+    </div>
+
+    <div className="catchphrase-card">
+      <div className="catchphrase-text">"Built for moments that matter"</div>
+      <div className="catchphrase-usage">Product positioning - Features, capabilities</div>
+    </div>
+
+    <div className="catchphrase-card">
+      <div className="catchphrase-text">"From anticipation to action"</div>
+      <div className="catchphrase-usage">User journey - Conversion points, CTAs</div>
+    </div>
+  </div>
+</div>
+
+{/* ===== MICROCOPY LIBRARY ===== */}
+<div className="voice-section">
+  <div className="voice-section-label">Reference</div>
+  <h2 className="voice-section-title">Microcopy Library</h2>
+  <p className="voice-section-subtitle">
+    Ready-to-use copy for common UI patterns. Copy these directly or use them as inspiration.
+  </p>
+
+  <div className="microcopy-section">
+    <div className="microcopy-category">
+      <h3 className="microcopy-category-title">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#8b5cf6' }}>smart_button</span>
+        Buttons & CTAs
+      </h3>
+      <table className="microcopy-table">
+        <thead>
+          <tr>
+            <th>Context</th>
+            <th>Recommended Copy</th>
+            <th>Avoid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="context">Primary purchase action</td>
+            <td className="copy accent">Secure Your Spot</td>
+            <td className="copy">Buy Tickets</td>
+          </tr>
+          <tr>
+            <td className="context">Secondary action</td>
+            <td className="copy primary">Tell Me More</td>
+            <td className="copy">Learn More</td>
+          </tr>
+          <tr>
+            <td className="context">Registration</td>
+            <td className="copy accent">Count Me In</td>
+            <td className="copy">Register</td>
+          </tr>
+          <tr>
+            <td className="context">Form submission</td>
+            <td className="copy accent">Let's Go</td>
+            <td className="copy">Submit</td>
+          </tr>
+          <tr>
+            <td className="context">Event discovery</td>
+            <td className="copy primary">Explore Events</td>
+            <td className="copy">View All</td>
+          </tr>
+          <tr>
+            <td className="context">Share action</td>
+            <td className="copy primary">Spread the Word</td>
+            <td className="copy">Share</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="microcopy-category">
+      <h3 className="microcopy-category-title">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#10b981' }}>notifications</span>
+        Alerts & Notifications
+      </h3>
+      <table className="microcopy-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="context">Success</td>
+            <td className="copy">You're In!</td>
+            <td>Check your email, confirmation is on its way.</td>
+          </tr>
+          <tr>
+            <td className="context">Warning</td>
+            <td className="copy">Your Spot is Held</td>
+            <td>5 minutes left to complete. Don't miss out.</td>
+          </tr>
+          <tr>
+            <td className="context">Error</td>
+            <td className="copy">That Didn't Work</td>
+            <td>Let's try again. Check your details or try a different method.</td>
+          </tr>
+          <tr>
+            <td className="context">Info</td>
+            <td className="copy">Good to Know</td>
+            <td>Here's something that might help you out.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="microcopy-category">
+      <h3 className="microcopy-category-title">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#64748b' }}>inbox</span>
+        Empty States
+      </h3>
+      <table className="microcopy-table">
+        <thead>
+          <tr>
+            <th>Context</th>
+            <th>Headline</th>
+            <th>Supporting Text</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="context">No upcoming events</td>
+            <td className="copy">Your Calendar is Wide Open</td>
+            <td>Time to find your next adventure.</td>
+          </tr>
+          <tr>
+            <td className="context">No search results</td>
+            <td className="copy">Nothing Here Yet</td>
+            <td>Try different keywords or browse what's trending.</td>
+          </tr>
+          <tr>
+            <td className="context">No past events</td>
+            <td className="copy">Your Story Starts Now</td>
+            <td>Every great memory begins with a first event.</td>
+          </tr>
+          <tr>
+            <td className="context">No saved events</td>
+            <td className="copy">Nothing Saved Yet</td>
+            <td>Tap the heart on events you're interested in.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="microcopy-category">
+      <h3 className="microcopy-category-title">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#8B5CF6' }}>celebration</span>
+        Confirmations
+      </h3>
+      <table className="microcopy-table">
+        <thead>
+          <tr>
+            <th>Context</th>
+            <th>Headline</th>
+            <th>Closing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="context">Ticket purchase</td>
+            <td className="copy">You're Going!</td>
+            <td>See you there. It's going to be great.</td>
+          </tr>
+          <tr>
+            <td className="context">Event creation</td>
+            <td className="copy">Your Event is Live!</td>
+            <td>Now let's fill those spots.</td>
+          </tr>
+          <tr>
+            <td className="context">Profile update</td>
+            <td className="copy">All Set</td>
+            <td>Your changes have been saved.</td>
+          </tr>
+          <tr>
+            <td className="context">Password change</td>
+            <td className="copy">Locked and Loaded</td>
+            <td>Your new password is ready to go.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

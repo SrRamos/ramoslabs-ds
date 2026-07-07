@@ -1,0 +1,316 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Border Radius" />
+
+<style>
+{`
+  .radius-header {
+    margin-bottom: 2rem;
+  }
+
+  .radius-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .radius-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .radius-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .radius-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .radius-box {
+    width: 6rem;
+    height: 6rem;
+    background: white;
+    border: 2px solid #4f46e5;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .radius-value {
+    font-weight: 700;
+    color: #4f46e5;
+  }
+
+  .radius-label {
+    text-align: center;
+  }
+
+  .radius-label-usage {
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  .radius-section {
+    margin-top: 2.5rem;
+  }
+
+  .radius-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .radius-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e6e8eb;
+  }
+
+  .radius-table th,
+  .radius-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .radius-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .radius-table td {
+    font-size: 0.875rem;
+  }
+
+  .radius-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .radius-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+  }
+
+  .radius-preview {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+    border: 1px solid #4f46e5;
+  }
+
+  .radius-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .radius-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .radius-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .radius-code-dot.red { background: #ef4444; }
+  .radius-code-dot.yellow { background: #f59e0b; }
+  .radius-code-dot.green { background: #22c55e; }
+
+  .radius-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .radius-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .radius-code .comment { color: #64748b; font-style: italic; }
+  .radius-code .selector { color: #fbbf24; }
+  .radius-code .property { color: #7dd3fc; }
+  .radius-code .value { color: #a5f3fc; }
+  .radius-code .punctuation { color: #94a3b8; }
+`}
+</style>
+
+<div className="radius-header">
+  <h1 className="radius-title">Shaping the Experience</h1>
+  <p className="radius-description">
+    Corners communicate purpose. Sharp for precision, soft for invitation. Every radius has a reason.
+  </p>
+</div>
+
+<div className="radius-grid">
+  <div className="radius-item">
+    <div className="radius-box" style={{ borderRadius: '8px' }}>
+      <span className="radius-value">8px</span>
+    </div>
+    <div className="radius-label">
+      <div className="radius-label-usage">Standard Cards<br />Inputs</div>
+    </div>
+  </div>
+
+  <div className="radius-item">
+    <div className="radius-box" style={{ borderRadius: '12px' }}>
+      <span className="radius-value">12px</span>
+    </div>
+    <div className="radius-label">
+      <div className="radius-label-usage">Large Cards<br />Modals</div>
+    </div>
+  </div>
+
+  <div className="radius-item">
+    <div className="radius-box" style={{ borderRadius: '16px' }}>
+      <span className="radius-value">16px</span>
+    </div>
+    <div className="radius-label">
+      <div className="radius-label-usage">Hero Elements<br />Containers</div>
+    </div>
+  </div>
+
+  <div className="radius-item">
+    <div className="radius-box" style={{ borderRadius: '9999px', width: '100%', maxWidth: '10rem', height: '6rem' }}>
+      <span className="radius-value">Full</span>
+    </div>
+    <div className="radius-label">
+      <div className="radius-label-usage">Buttons<br />Pills / Badges</div>
+    </div>
+  </div>
+</div>
+
+<div className="radius-section">
+  <h2 className="radius-section-title">Token Reference</h2>
+
+  <table className="radius-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Preview</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--radius-none</code></td>
+        <td>0</td>
+        <td><span className="radius-preview" style={{ borderRadius: '0' }}></span></td>
+        <td>Square corners</td>
+      </tr>
+      <tr>
+        <td><code>--radius-sm</code></td>
+        <td>4px</td>
+        <td><span className="radius-preview" style={{ borderRadius: '4px' }}></span></td>
+        <td>Checkboxes, small elements</td>
+      </tr>
+      <tr>
+        <td><code>--radius-md</code></td>
+        <td>8px</td>
+        <td><span className="radius-preview" style={{ borderRadius: '8px' }}></span></td>
+        <td>Buttons, inputs, cards</td>
+      </tr>
+      <tr>
+        <td><code>--radius-lg</code></td>
+        <td>12px</td>
+        <td><span className="radius-preview" style={{ borderRadius: '12px' }}></span></td>
+        <td>Large cards, modals</td>
+      </tr>
+      <tr>
+        <td><code>--radius-xl</code></td>
+        <td>16px</td>
+        <td><span className="radius-preview" style={{ borderRadius: '16px' }}></span></td>
+        <td>Hero sections</td>
+      </tr>
+      <tr>
+        <td><code>--radius-2xl</code></td>
+        <td>20px</td>
+        <td><span className="radius-preview" style={{ borderRadius: '20px' }}></span></td>
+        <td>Feature cards</td>
+      </tr>
+      <tr>
+        <td><code>--radius-full</code></td>
+        <td>9999px</td>
+        <td><span className="radius-preview" style={{ borderRadius: '9999px' }}></span></td>
+        <td>Pills, avatars, buttons</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="radius-section">
+  <h2 className="radius-section-title">Usage Example</h2>
+
+  <div className="radius-code">
+    <div className="radius-code-header">
+      <span className="radius-code-dot red"></span>
+      <span className="radius-code-dot yellow"></span>
+      <span className="radius-code-dot green"></span>
+      <span className="radius-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-lg)</span><span class="punctuation">;</span>    <span class="comment">/* 12px */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.button</span> <span class="punctuation">{</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>  <span class="comment">/* pill shape */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.input</span> <span class="punctuation">{</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-md)</span><span class="punctuation">;</span>    <span class="comment">/* 8px */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.modal</span> <span class="punctuation">{</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-xl)</span><span class="punctuation">;</span>    <span class="comment">/* 16px */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.avatar</span> <span class="punctuation">{</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>  <span class="comment">/* circle */</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>

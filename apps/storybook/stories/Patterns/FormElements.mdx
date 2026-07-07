@@ -1,0 +1,498 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Form Elements" />
+
+<style>
+{`
+  /* ===== FONT IMPORTS ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .forms-header {
+    margin-bottom: 2rem;
+  }
+
+  .forms-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .forms-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 800px) {
+    .forms-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .forms-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+  }
+
+  .forms-card-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+  }
+
+  .forms-field {
+    margin-bottom: 1.5rem;
+  }
+
+  .forms-field:last-child {
+    margin-bottom: 0;
+  }
+
+  .forms-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+
+  .forms-input {
+    width: 100%;
+    background: white;
+    border: 1px solid #64748b;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #0f172a;
+    font-family: 'Rubik', sans-serif;
+    transition: all 0.2s ease;
+  }
+
+  .forms-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .forms-input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px #4f46e5, 0 0 0 4px white;
+  }
+
+  .forms-input-focus {
+    width: 100%;
+    background: white;
+    border: 2px solid #4f46e5;
+    border-radius: 8px;
+    padding: calc(0.75rem - 1px) calc(1rem - 1px);
+    font-size: 1rem;
+    color: #0f172a;
+    font-family: 'Rubik', sans-serif;
+    box-shadow: 0 0 0 2px #4f46e5, 0 0 0 4px white;
+  }
+
+  .forms-input-error {
+    width: 100%;
+    background: white;
+    border: 1px solid #ef4444;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #0f172a;
+    font-family: 'Rubik', sans-serif;
+  }
+
+  .forms-error-text {
+    font-size: 0.875rem;
+    color: #ef4444;
+    margin-top: 0.25rem;
+  }
+
+  .forms-select-wrapper {
+    position: relative;
+  }
+
+  .forms-select {
+    width: 100%;
+    background: white;
+    border: 1px solid #64748b;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #0f172a;
+    font-family: 'Rubik', sans-serif;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .forms-select:focus {
+    outline: none;
+    border-color: #4f46e5;
+  }
+
+  .forms-select-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4f46e5;
+    pointer-events: none;
+  }
+
+  .forms-search-wrapper {
+    position: relative;
+  }
+
+  .forms-search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+  }
+
+  .forms-search-input {
+    width: 100%;
+    background: white;
+    border: 1px solid #64748b;
+    border-radius: 8px;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    font-size: 1rem;
+    color: #0f172a;
+    font-family: 'Rubik', sans-serif;
+  }
+
+  .forms-search-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .forms-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .forms-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .forms-checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    background: #4f46e5;
+    border: 1px solid #4f46e5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .forms-checkbox-unchecked {
+    width: 1.25rem;
+    height: 1.25rem;
+    background: white;
+    border: 1px solid #4f46e5;
+    border-radius: 4px;
+  }
+
+  .forms-checkbox-icon {
+    color: white;
+    font-size: 1rem;
+  }
+
+  .forms-checkbox-label {
+    color: #0f172a;
+    font-size: 0.875rem;
+  }
+
+  .forms-toggle {
+    width: 2.75rem;
+    height: 1.5rem;
+    background: #4f46e5;
+    border-radius: 9999px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .forms-toggle-knob {
+    position: absolute;
+    right: 0.25rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    background: white;
+    border-radius: 9999px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
+  }
+
+  .forms-section {
+    margin-top: 2.5rem;
+  }
+
+  .forms-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .forms-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .forms-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .forms-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .forms-code-dot.red { background: #ef4444; }
+  .forms-code-dot.yellow { background: #f59e0b; }
+  .forms-code-dot.green { background: #22c55e; }
+
+  .forms-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .forms-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .forms-code .comment { color: #64748b; font-style: italic; }
+  .forms-code .selector { color: #fbbf24; }
+  .forms-code .property { color: #7dd3fc; }
+  .forms-code .value { color: #a5f3fc; }
+  .forms-code .punctuation { color: #94a3b8; }
+`}
+</style>
+
+<div className="forms-header">
+  <h1 className="forms-title">Forms That Guide</h1>
+  <p className="forms-description">
+    Every field is a conversation. Clear labels, helpful validation, and feedback that guides users to success.
+  </p>
+</div>
+
+<div className="forms-grid">
+  <div className="forms-card">
+    <h4 className="forms-card-title">Text Fields</h4>
+
+    <div className="forms-field">
+      <label className="forms-label">Event Name</label>
+      <input className="forms-input" type="text" placeholder="e.g. Summer Jazz Festival" />
+    </div>
+
+    <div className="forms-field">
+      <label className="forms-label">Focus State</label>
+      <div className="forms-input-focus">Active input...</div>
+    </div>
+
+    <div className="forms-field">
+      <label className="forms-label">Email Address</label>
+      <input className="forms-input-error" type="text" defaultValue="invalid-email" />
+      <span className="forms-error-text">Please enter a valid email address.</span>
+    </div>
+  </div>
+
+  <div className="forms-card">
+    <h4 className="forms-card-title">Selection Controls</h4>
+
+    <div className="forms-field">
+      <label className="forms-label">Category</label>
+      <div className="forms-select-wrapper">
+        <select className="forms-select">
+          <option>Music Concert</option>
+          <option>Conference</option>
+        </select>
+        <span className="material-symbols-outlined forms-select-icon">expand_more</span>
+      </div>
+    </div>
+
+    <div className="forms-field">
+      <label className="forms-label">Search Events</label>
+      <div className="forms-search-wrapper">
+        <span className="material-symbols-outlined forms-search-icon">search</span>
+        <input className="forms-search-input" type="text" placeholder="Search..." />
+      </div>
+    </div>
+
+    <div className="forms-controls">
+      <div className="forms-checkbox-row">
+        <div className="forms-checkbox">
+          <span className="material-symbols-outlined forms-checkbox-icon">check</span>
+        </div>
+        <span className="forms-checkbox-label">Checked option</span>
+      </div>
+
+      <div className="forms-checkbox-row">
+        <div className="forms-checkbox-unchecked"></div>
+        <span className="forms-checkbox-label">Unchecked option</span>
+      </div>
+
+      <div className="forms-checkbox-row" style={{ paddingTop: '0.5rem' }}>
+        <div className="forms-toggle">
+          <div className="forms-toggle-knob"></div>
+        </div>
+        <span className="forms-checkbox-label">Toggle On</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="forms-section">
+  <h2 className="forms-section-title">Input CSS</h2>
+
+  <div className="forms-code">
+    <div className="forms-code-header">
+      <span className="forms-code-dot red"></span>
+      <span className="forms-code-dot yellow"></span>
+      <span className="forms-code-dot green"></span>
+      <span className="forms-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.input</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-surface)</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">1px solid var(--color-text-body)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-md)</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-3) var(--space-4)</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">var(--text-base)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-text-heading)</span><span class="punctuation">;</span>
+    <span class="property">font-family</span><span class="punctuation">:</span> <span class="value">var(--font-primary)</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">all var(--transition-fast)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.input::placeholder</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-text-muted)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.input:focus</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 2px var(--color-primary), 0 0 0 4px white</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.input.error</span> <span class="punctuation">{</span>
+    <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">var(--color-accent)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.error-text</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">var(--text-sm)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-accent)</span><span class="punctuation">;</span>
+    <span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">var(--space-1)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>
+
+<div className="forms-section">
+  <h2 className="forms-section-title">Checkbox & Toggle CSS</h2>
+
+  <div className="forms-code">
+    <div className="forms-code-header">
+      <span className="forms-code-dot red"></span>
+      <span className="forms-code-dot yellow"></span>
+      <span className="forms-code-dot green"></span>
+      <span className="forms-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.checkbox</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">1.25rem</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1.25rem</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">1px solid var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-sm)</span><span class="punctuation">;</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span>
+    <span class="property">align-items</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span>
+    <span class="property">justify-content</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span>
+    <span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.checkbox.checked</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.toggle</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">2.75rem</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1.5rem</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-text-muted)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">relative</span><span class="punctuation">;</span>
+    <span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">background var(--transition-fast)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.toggle.active</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.toggle-knob</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
+    <span class="property">top</span><span class="punctuation">:</span> <span class="value">0.25rem</span><span class="punctuation">;</span>
+    <span class="property">left</span><span class="punctuation">:</span> <span class="value">0.25rem</span><span class="punctuation">;</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">transform var(--transition-fast)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.toggle.active .toggle-knob</span> <span class="punctuation">{</span>
+    <span class="property">transform</span><span class="punctuation">:</span> <span class="value">translateX(1.25rem)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>

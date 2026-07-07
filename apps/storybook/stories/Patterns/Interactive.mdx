@@ -1,0 +1,357 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Interactive" />
+
+<style>
+{`
+  .interactive-header {
+    margin-bottom: 2rem;
+  }
+
+  .interactive-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .interactive-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .interactive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .interactive-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .interactive-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+  }
+
+  .interactive-card-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .interactive-item {
+    margin-bottom: 2rem;
+  }
+
+  .interactive-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .interactive-item-label {
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .interactive-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .interactive-note {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-style: italic;
+  }
+
+  .btn-primary {
+    background: linear-gradient(to right, #4f46e5, #6366f1);
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(to right, #ff5530, #ff7a5c);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #4f46e5;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    border: 2px solid #4f46e5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    background: #4f46e5;
+    color: white;
+  }
+
+  .hover-card {
+    width: 100%;
+    max-width: 280px;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .hover-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  }
+
+  .hover-card-image {
+    height: 6rem;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .hover-card-line {
+    background: #f1f5f9;
+    border-radius: 4px;
+  }
+
+  .focus-button {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 0 2px #4f46e5, 0 0 0 4px white;
+  }
+
+  .focus-note {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.75rem;
+  }
+
+  .interactive-section {
+    margin-top: 2.5rem;
+  }
+
+  .interactive-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .interactive-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .interactive-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .interactive-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .interactive-code-dot.red { background: #ef4444; }
+  .interactive-code-dot.yellow { background: #f59e0b; }
+  .interactive-code-dot.green { background: #22c55e; }
+
+  .interactive-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .interactive-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .interactive-code .comment { color: #64748b; font-style: italic; }
+  .interactive-code .selector { color: #fbbf24; }
+  .interactive-code .property { color: #7dd3fc; }
+  .interactive-code .value { color: #a5f3fc; }
+  .interactive-code .function { color: #c4b5fd; }
+  .interactive-code .punctuation { color: #94a3b8; }
+`}
+</style>
+
+<div className="interactive-header">
+  <h1 className="interactive-title">Elements That Invite Action</h1>
+  <p className="interactive-description">
+    Every button, every hover, every tap, designed to feel responsive, trustworthy, and ready for the moment of decision.
+  </p>
+</div>
+
+<div className="interactive-grid">
+  <div className="interactive-card">
+    <div className="interactive-item">
+      <h4 className="interactive-item-label">Primary Button</h4>
+      <div className="interactive-row">
+        <button className="btn-primary">Confirm Action</button>
+        <span className="interactive-note">Primary indigo, for actions that matter</span>
+      </div>
+    </div>
+
+    <div className="interactive-item">
+      <h4 className="interactive-item-label">Secondary Button</h4>
+      <div className="interactive-row">
+        <button className="btn-secondary">Learn More</button>
+        <span className="interactive-note">Indigo outline, for exploration</span>
+      </div>
+    </div>
+  </div>
+
+  <div className="interactive-card">
+    <div className="interactive-item">
+      <h4 className="interactive-item-label">Hover Effects (Cards)</h4>
+      <div className="hover-card">
+        <div className="hover-card-image"></div>
+        <div className="hover-card-line" style={{ height: '1rem', width: '75%', marginBottom: '0.5rem' }}></div>
+        <div className="hover-card-line" style={{ height: '0.75rem', width: '50%' }}></div>
+      </div>
+      <p className="focus-note">
+        Properties: <code style={{ background: '#f1f5f9', padding: '0.125rem 0.25rem', borderRadius: '4px', fontSize: '0.75rem' }}>transform: translateY(-4px)</code>, <code style={{ background: '#f1f5f9', padding: '0.125rem 0.25rem', borderRadius: '4px', fontSize: '0.75rem' }}>shadow-lg</code>
+      </p>
+    </div>
+
+    <div className="interactive-item">
+      <h4 className="interactive-item-label">Focus State</h4>
+      <button className="focus-button">Keyboard Accessible</button>
+      <p className="focus-note">2px Indigo ring with 2px offset</p>
+    </div>
+  </div>
+</div>
+
+<div className="interactive-section">
+  <h2 className="interactive-section-title">Button Styles CSS</h2>
+
+  <div className="interactive-code">
+    <div className="interactive-code-header">
+      <span className="interactive-code-dot red"></span>
+      <span className="interactive-code-dot yellow"></span>
+      <span className="interactive-code-dot green"></span>
+      <span className="interactive-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Primary Button - Indigo CTA */</span>
+<span class="selector">.btn-primary</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="function">linear-gradient</span><span class="punctuation">(</span>to right<span class="punctuation">,</span> <span class="value">var(--color-primary)</span><span class="punctuation">,</span> <span class="value">var(--color-primary-light)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+    <span class="property">font-family</span><span class="punctuation">:</span> <span class="value">var(--font-primary)</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">var(--font-medium)</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-3)</span> <span class="value">var(--space-6)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-md)</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> all <span class="value">var(--transition-fast)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.btn-primary:hover</span> <span class="punctuation">{</span>
+    <span class="property">filter</span><span class="punctuation">:</span> <span class="function">brightness</span><span class="punctuation">(</span><span class="value">1.1</span><span class="punctuation">)</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-lg)</span><span class="punctuation">;</span>
+    <span class="property">transform</span><span class="punctuation">:</span> <span class="function">translateY</span><span class="punctuation">(</span><span class="value">-1px</span><span class="punctuation">)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Secondary Button - Indigo Outline */</span>
+<span class="selector">.btn-secondary</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">transparent</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">font-family</span><span class="punctuation">:</span> <span class="value">var(--font-primary)</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">var(--font-medium)</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="function">calc</span><span class="punctuation">(</span><span class="value">var(--space-3)</span> - <span class="value">2px</span><span class="punctuation">)</span> <span class="value">var(--space-6)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">2px</span> solid <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> all <span class="value">var(--transition-fast)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.btn-secondary:hover</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Focus State */</span>
+<span class="selector">*:focus-visible</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 2px</span> <span class="value">var(--color-primary)</span><span class="punctuation">,</span> <span class="value">0 0 0 4px</span> <span class="value">white</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>
+
+<div className="interactive-section">
+  <h2 className="interactive-section-title">Card Hover CSS</h2>
+
+  <div className="interactive-code">
+    <div className="interactive-code-header">
+      <span className="interactive-code-dot red"></span>
+      <span className="interactive-code-dot yellow"></span>
+      <span className="interactive-code-dot green"></span>
+      <span className="interactive-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-surface)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-lg)</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">1px</span> solid <span class="value">var(--color-border)</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-sm)</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> all <span class="value">0.3s</span> ease<span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.card:hover</span> <span class="punctuation">{</span>
+    <span class="property">transform</span><span class="punctuation">:</span> <span class="function">translateY</span><span class="punctuation">(</span><span class="value">-4px</span><span class="punctuation">)</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-lg)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>

@@ -1,0 +1,432 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Shadows" />
+
+<style>
+{`
+  .shadows-header {
+    margin-bottom: 2rem;
+  }
+
+  .shadows-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .shadows-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .shadows-section {
+    margin-top: 2.5rem;
+  }
+
+  .shadows-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .shadows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .shadow-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #f1f5f9;
+  }
+
+  .shadow-preview {
+    width: 100%;
+    height: 80px;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shadow-info {
+    text-align: center;
+    width: 100%;
+  }
+
+  .shadow-name {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+
+  .shadow-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .shadow-usage {
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  .shadows-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+
+  .shadows-table th,
+  .shadows-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .shadows-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .shadows-table td {
+    font-size: 0.875rem;
+  }
+
+  .shadows-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .shadows-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+  }
+
+  .shadow-value {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.7rem;
+    color: #64748b;
+    word-break: break-all;
+  }
+
+  .shadows-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .shadows-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .shadows-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .shadows-code-dot.red { background: #ef4444; }
+  .shadows-code-dot.yellow { background: #f59e0b; }
+  .shadows-code-dot.green { background: #22c55e; }
+
+  .shadows-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .shadows-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .shadows-code .comment { color: #64748b; font-style: italic; }
+  .shadows-code .selector { color: #fbbf24; }
+  .shadows-code .property { color: #7dd3fc; }
+  .shadows-code .value { color: #a5f3fc; }
+  .shadows-code .punctuation { color: #94a3b8; }
+`}
+</style>
+
+<div className="shadows-header">
+  <h1 className="shadows-title">Elevating the Moment</h1>
+  <p className="shadows-description">
+    Like stage lighting that draws eyes to the performer, our shadows guide attention to what matters.
+    From the subtle glow of a ticket card to the dramatic lift of a confirmation modal, every shadow tells the fan where to look next.
+  </p>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Shadow Scale</h2>
+
+  <div className="shadows-grid">
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 1px 2px rgb(0 0 0 / 0.05)' }}>
+        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Subtle</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Small - Ambient Light</div>
+        <code className="shadow-token">--shadow-sm</code>
+        <p className="shadow-usage">Event cards at rest, buttons waiting to be clicked</p>
+      </div>
+    </div>
+
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}>
+        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Default</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Medium - Soft Spotlight</div>
+        <code className="shadow-token">--shadow-md</code>
+        <p className="shadow-usage">Hovered cards saying "look at me!", dropdowns revealing options</p>
+      </div>
+    </div>
+
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' }}>
+        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Elevated</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Large - Center Stage</div>
+        <code className="shadow-token">--shadow-lg</code>
+        <p className="shadow-usage">Date pickers, seat selectors, floating menus</p>
+      </div>
+    </div>
+
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)' }}>
+        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Prominent</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Extra Large - Main Event</div>
+        <code className="shadow-token">--shadow-xl</code>
+        <p className="shadow-usage">Purchase confirmations, critical dialogs, the big moment</p>
+      </div>
+    </div>
+
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }}>
+        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Dramatic</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">2XL - The Standing Ovation</div>
+        <code className="shadow-token">--shadow-2xl</code>
+        <p className="shadow-usage">Hero images, full-screen modals, festival posters</p>
+      </div>
+    </div>
+
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 0 0 3px rgba(79, 70, 229, 0.15)', border: '2px solid #4f46e5' }}>
+        <span style={{ color: '#4f46e5', fontSize: '0.875rem' }}>Focused</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Focus Ring - The Spotlight of A11Y</div>
+        <code className="shadow-token">--shadow-focus</code>
+        <p className="shadow-usage">Keyboard navigation, ensuring every fan can find their way</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Token Reference</h2>
+
+  <table className="shadows-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--shadow-sm</code></td>
+        <td className="shadow-value">0 1px 2px rgb(0 0 0 / 0.05)</td>
+        <td>Subtle depth for buttons and inputs</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-md</code></td>
+        <td className="shadow-value">0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)</td>
+        <td>Default cards and interactive elements</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-lg</code></td>
+        <td className="shadow-value">0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)</td>
+        <td>Popovers and floating UI</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-xl</code></td>
+        <td className="shadow-value">0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)</td>
+        <td>Modals and prominent overlays</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-2xl</code></td>
+        <td className="shadow-value">0 25px 50px -12px rgb(0 0 0 / 0.25)</td>
+        <td>Hero elements, dramatic overlays</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-focus</code></td>
+        <td className="shadow-value">0 0 0 3px rgba(79, 70, 229, 0.15)</td>
+        <td>Focus states for accessibility</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Interactive Shadows - Brand Tinted</h2>
+
+  <p className="shadows-description" style={{ marginBottom: '1rem' }}>
+    When a card rises to meet the cursor, it glows in the brand indigo. These tinted shadows add depth and personality to hover states while staying mono-indigo.
+  </p>
+
+  <div className="shadows-grid">
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 8px 25px -5px rgba(79, 70, 229, 0.25)' }}>
+        <span style={{ color: '#4f46e5', fontSize: '0.875rem' }}>Primary Glow</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Primary Hover - The Journey</div>
+        <code className="shadow-token">--shadow-primary-hover</code>
+        <p className="shadow-usage">Event cards, navigation links, feature sections</p>
+      </div>
+    </div>
+
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 8px 25px -5px rgba(67, 56, 202, 0.25)' }}>
+        <span style={{ color: '#4338ca', fontSize: '0.875rem' }}>Deep Glow</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Deep Hover</div>
+        <code className="shadow-token">--shadow-primary-deep-hover</code>
+        <p className="shadow-usage">Primary CTA buttons, emphasized actions</p>
+      </div>
+    </div>
+
+    <div className="shadow-card">
+      <div className="shadow-preview" style={{ boxShadow: '0 8px 25px -5px rgba(139, 92, 246, 0.25)' }}>
+        <span style={{ color: '#8B5CF6', fontSize: '0.875rem' }}>Secondary Glow</span>
+      </div>
+      <div className="shadow-info">
+        <div className="shadow-name">Secondary Hover - The Community</div>
+        <code className="shadow-token">--shadow-secondary-hover</code>
+        <p className="shadow-usage">Social actions, share buttons, community features</p>
+      </div>
+    </div>
+  </div>
+
+  <table className="shadows-table" style={{ marginTop: '1.5rem' }}>
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--shadow-primary-hover</code></td>
+        <td className="shadow-value">0 8px 25px -5px rgba(79, 70, 229, 0.25)</td>
+        <td>Indigo-tinted hover for primary elements</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-primary-deep-hover</code></td>
+        <td className="shadow-value">0 8px 25px -5px rgba(67, 56, 202, 0.25)</td>
+        <td>Deep indigo hover for primary CTAs</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-secondary-hover</code></td>
+        <td className="shadow-value">0 8px 25px -5px rgba(139, 92, 246, 0.25)</td>
+        <td>Purple-tinted hover for secondary actions</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Usage Example</h2>
+
+  <div className="shadows-code">
+    <div className="shadows-code-header">
+      <span className="shadows-code-dot red"></span>
+      <span className="shadows-code-dot yellow"></span>
+      <span className="shadows-code-dot green"></span>
+      <span className="shadows-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Event card: subtle at rest, glows on hover */</span>
+<span class="selector">.event-card</span> <span class="punctuation">{</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-sm)</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">box-shadow var(--transition-normal),
+                transform var(--transition-normal)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.event-card:hover</span> <span class="punctuation">{</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-primary-hover)</span><span class="punctuation">;</span>  <span class="comment">/* Brand glow */</span>
+    <span class="property">transform</span><span class="punctuation">:</span> <span class="value">translateY(-4px)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* CTA button: deep indigo glow rises to meet the click */</span>
+<span class="selector">.btn-cta:hover</span> <span class="punctuation">{</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-primary-deep-hover)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Purchase confirmation: the main event */</span>
+<span class="selector">.confirm-modal</span> <span class="punctuation">{</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-2xl)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Ticket quantity input: visible to keyboard users */</span>
+<span class="selector">.ticket-input:focus</span> <span class="punctuation">{</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-focus)</span><span class="punctuation">;</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>

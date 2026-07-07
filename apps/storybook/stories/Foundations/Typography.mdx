@@ -1,0 +1,469 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Typography" />
+
+<style>
+{`
+  .typo-header {
+    margin-bottom: 2rem;
+  }
+
+  .typo-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .typo-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .typo-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .typo-card-header {
+    background: #f1f5f9;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e6e8eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .typo-card-label {
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.05em;
+  }
+
+  .typo-card-font {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #e6e8eb;
+    color: #64748b;
+  }
+
+  .typo-card-body {
+    padding: 2rem;
+  }
+
+  .typo-sample {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed #e6e8eb;
+    margin-bottom: 1.5rem;
+  }
+
+  .typo-sample:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .typo-h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .typo-h2 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .typo-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #64748b;
+    line-height: 1.6;
+    max-width: 42rem;
+  }
+
+  .typo-meta {
+    display: flex;
+    gap: 1rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+  }
+
+  .typo-meta span {
+    background: #f8fafc;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .typo-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .typo-scale-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-radius: 8px;
+  }
+
+  .typo-scale-label {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    color: #64748b;
+    min-width: 80px;
+  }
+
+  .typo-scale-sample {
+    flex: 1;
+  }
+
+  .typo-section {
+    margin-top: 2.5rem;
+  }
+
+  .typo-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .typo-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .typo-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .typo-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .typo-code-dot.red { background: #ef4444; }
+  .typo-code-dot.yellow { background: #f59e0b; }
+  .typo-code-dot.green { background: #22c55e; }
+
+  .typo-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .typo-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .typo-code .comment { color: #64748b; font-style: italic; }
+  .typo-code .property { color: #7dd3fc; }
+  .typo-code .value { color: #fbbf24; }
+  .typo-code .string { color: #a5f3fc; }
+  .typo-code .unit { color: #c4b5fd; }
+  .typo-code .punctuation { color: #94a3b8; }
+`}
+</style>
+
+<div className="typo-header">
+  <h1 className="typo-title">Type That Moves People</h1>
+  <p className="typo-description">
+    Bold headlines that stop the scroll. Clear body text that guides the journey. Typography designed to move people, to the starting line, the front row, or the checkout.
+  </p>
+</div>
+
+<div className="typo-card">
+  <div className="typo-card-header">
+    <span className="typo-card-label">Headings</span>
+    <span className="typo-card-font">font-family: 'Red Hat Display'</span>
+  </div>
+  <div className="typo-card-body">
+    <div className="typo-sample">
+      <h1 className="typo-h1">Your Next Adventure Starts Here</h1>
+      <div className="typo-meta">
+        <span>Heading 1</span>
+        <span>Bold (700/900)</span>
+        <span>2rem - 4rem (responsive)</span>
+      </div>
+    </div>
+    <div className="typo-sample">
+      <h2 className="typo-h2">Upcoming Experiences</h2>
+      <div className="typo-meta">
+        <span>Section Title</span>
+        <span>Bold (700)</span>
+        <span>1.875rem (30px)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="typo-card">
+  <div className="typo-card-header">
+    <span className="typo-card-label">Body & UI</span>
+    <span className="typo-card-font">font-family: 'Rubik'</span>
+  </div>
+  <div className="typo-card-body">
+    <p className="typo-body">
+      Good typography is invisible. It carries meaning without calling attention to itself, holds a long paragraph together, and lets the reader move through the content without friction. The RamosLabs type scale is built to do exactly that at every size.
+    </p>
+    <div className="typo-meta" style={{ marginTop: '1rem' }}>
+      <span>Body Regular</span>
+      <span>Regular (400)</span>
+      <span>1rem (16px)</span>
+      <span>Line-height: 1.6</span>
+    </div>
+  </div>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">Font Size Scale</h2>
+
+  <div className="typo-scale">
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-xs</span>
+      <span className="typo-scale-sample" style={{ fontSize: '0.75rem' }}>12px - Timestamps, metadata ("2 spots left!")</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-sm</span>
+      <span className="typo-scale-sample" style={{ fontSize: '0.875rem' }}>14px - Helper text, form labels</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-base</span>
+      <span className="typo-scale-sample" style={{ fontSize: '1rem' }}>16px - Event descriptions, UI copy</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-lg</span>
+      <span className="typo-scale-sample" style={{ fontSize: '1.125rem' }}>18px - Featured content, intros</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-xl</span>
+      <span className="typo-scale-sample" style={{ fontSize: '1.25rem' }}>20px - Card titles, section headers</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-2xl</span>
+      <span className="typo-scale-sample" style={{ fontSize: '1.5rem' }}>24px - Page sections, modal headers</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-3xl</span>
+      <span className="typo-scale-sample" style={{ fontSize: '1.875rem' }}>30px - Major headings</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-4xl</span>
+      <span className="typo-scale-sample" style={{ fontSize: '2.25rem' }}>36px - Hero headlines</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-5xl</span>
+      <span className="typo-scale-sample" style={{ fontSize: '3rem' }}>48px - Landing page heroes, marquee moments</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--text-6xl</span>
+      <span className="typo-scale-sample" style={{ fontSize: '3.75rem' }}>60px - The headliner, festival names, main stage titles</span>
+    </div>
+  </div>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">Font Weights</h2>
+
+  <div className="typo-scale">
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-light</span>
+      <span className="typo-scale-sample" style={{ fontWeight: 300 }}>Light (300) - Subtle text</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-normal</span>
+      <span className="typo-scale-sample" style={{ fontWeight: 400 }}>Regular (400) - Body text</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-medium</span>
+      <span className="typo-scale-sample" style={{ fontWeight: 500 }}>Medium (500) - Buttons, emphasis</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-semibold</span>
+      <span className="typo-scale-sample" style={{ fontWeight: 600 }}>Semibold (600) - Subheadings</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-bold</span>
+      <span className="typo-scale-sample" style={{ fontWeight: 700 }}>Bold (700) - Headings</span>
+    </div>
+  </div>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">Line Heights</h2>
+
+  <div className="typo-scale">
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--leading-none</span>
+      <span className="typo-scale-sample">1 - The encore moment, stacked display text, logo lockups</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--leading-tight</span>
+      <span className="typo-scale-sample">1.1 - Main stage headlines, hero titles that command attention</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--leading-snug</span>
+      <span className="typo-scale-sample">1.25 - Subheadings, section titles with room to breathe</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--leading-normal</span>
+      <span className="typo-scale-sample">1.5 - Body text, paragraphs</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--leading-relaxed</span>
+      <span className="typo-scale-sample">1.625 - Long-form content, readability</span>
+    </div>
+  </div>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">Letter Spacing - The Voice</h2>
+
+  <div className="typo-scale">
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--tracking-tighter</span>
+      <span className="typo-scale-sample" style={{ letterSpacing: '-0.05em' }}>-0.05em - Display text that whispers close, festival names that hit hard</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--tracking-tight</span>
+      <span className="typo-scale-sample" style={{ letterSpacing: '-0.025em' }}>-0.025em - Headlines with presence, hero titles that pull fans in</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--tracking-normal</span>
+      <span className="typo-scale-sample" style={{ letterSpacing: '0' }}>0 - Body text at its natural rhythm</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--tracking-wide</span>
+      <span className="typo-scale-sample" style={{ letterSpacing: '0.025em', textTransform: 'uppercase', fontSize: '0.75rem' }}>0.025em - UPPERCASE LABELS, SECTION MARKERS, VENUE DETAILS</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--tracking-wider</span>
+      <span className="typo-scale-sample" style={{ letterSpacing: '0.05em', textTransform: 'uppercase', fontSize: '0.75rem' }}>0.05em - SMALL CAPS, BADGES, STATUS INDICATORS</span>
+    </div>
+  </div>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">Fluid Headings</h2>
+
+  <div className="typo-scale">
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--heading-1</span>
+      <span className="typo-scale-sample">clamp(1.75rem, 4vw + 1rem, 3rem) - Hero titles</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--heading-2</span>
+      <span className="typo-scale-sample">clamp(1.5rem, 3vw + 0.75rem, 2.25rem) - Page sections</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--heading-3</span>
+      <span className="typo-scale-sample">clamp(1.25rem, 2vw + 0.5rem, 1.75rem) - Card headers</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--heading-4</span>
+      <span className="typo-scale-sample">clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem) - Subsections</span>
+    </div>
+  </div>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">CSS Tokens</h2>
+
+  <div className="typo-code">
+    <div className="typo-code-header">
+      <span className="typo-code-dot red"></span>
+      <span className="typo-code-dot yellow"></span>
+      <span className="typo-code-dot green"></span>
+      <span className="typo-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Font Families */</span>
+<span class="property">--font-sans</span><span class="punctuation">:</span> <span class="string">'Rubik'</span><span class="punctuation">,</span> system-ui<span class="punctuation">,</span> sans-serif<span class="punctuation">;</span>
+<span class="property">--font-display</span><span class="punctuation">:</span> <span class="string">'Red Hat Display'</span><span class="punctuation">,</span> system-ui<span class="punctuation">,</span> sans-serif<span class="punctuation">;</span>
+<span class="property">--font-primary</span><span class="punctuation">:</span> var(--font-sans)<span class="punctuation">;</span>      <span class="comment">/* alias */</span>
+<span class="property">--font-secondary</span><span class="punctuation">:</span> var(--font-display)<span class="punctuation">;</span>  <span class="comment">/* alias */</span>
+
+<span class="comment">/* Font Sizes */</span>
+<span class="property">--text-xs</span><span class="punctuation">:</span> <span class="value">0.75</span><span class="unit">rem</span><span class="punctuation">;</span>    <span class="comment">/* 12px */</span>
+<span class="property">--text-sm</span><span class="punctuation">:</span> <span class="value">0.875</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 14px */</span>
+<span class="property">--text-base</span><span class="punctuation">:</span> <span class="value">1</span><span class="unit">rem</span><span class="punctuation">;</span>      <span class="comment">/* 16px */</span>
+<span class="property">--text-lg</span><span class="punctuation">:</span> <span class="value">1.125</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 18px */</span>
+<span class="property">--text-xl</span><span class="punctuation">:</span> <span class="value">1.25</span><span class="unit">rem</span><span class="punctuation">;</span>    <span class="comment">/* 20px */</span>
+<span class="property">--text-2xl</span><span class="punctuation">:</span> <span class="value">1.5</span><span class="unit">rem</span><span class="punctuation">;</span>    <span class="comment">/* 24px */</span>
+<span class="property">--text-3xl</span><span class="punctuation">:</span> <span class="value">1.875</span><span class="unit">rem</span><span class="punctuation">;</span>  <span class="comment">/* 30px */</span>
+<span class="property">--text-4xl</span><span class="punctuation">:</span> <span class="value">2.25</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 36px */</span>
+<span class="property">--text-5xl</span><span class="punctuation">:</span> <span class="value">3</span><span class="unit">rem</span><span class="punctuation">;</span>      <span class="comment">/* 48px */</span>
+<span class="property">--text-6xl</span><span class="punctuation">:</span> <span class="value">3.75</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 60px */</span>
+
+<span class="comment">/* Font Weights */</span>
+<span class="property">--font-light</span><span class="punctuation">:</span> <span class="value">300</span><span class="punctuation">;</span>
+<span class="property">--font-normal</span><span class="punctuation">:</span> <span class="value">400</span><span class="punctuation">;</span>
+<span class="property">--font-medium</span><span class="punctuation">:</span> <span class="value">500</span><span class="punctuation">;</span>
+<span class="property">--font-semibold</span><span class="punctuation">:</span> <span class="value">600</span><span class="punctuation">;</span>
+<span class="property">--font-bold</span><span class="punctuation">:</span> <span class="value">700</span><span class="punctuation">;</span>
+
+<span class="comment">/* Line Heights */</span>
+<span class="property">--leading-none</span><span class="punctuation">:</span> <span class="value">1</span><span class="punctuation">;</span>
+<span class="property">--leading-tight</span><span class="punctuation">:</span> <span class="value">1.1</span><span class="punctuation">;</span>       <span class="comment">/* Headlines */</span>
+<span class="property">--leading-snug</span><span class="punctuation">:</span> <span class="value">1.25</span><span class="punctuation">;</span>      <span class="comment">/* Subheadings */</span>
+<span class="property">--leading-normal</span><span class="punctuation">:</span> <span class="value">1.5</span><span class="punctuation">;</span>     <span class="comment">/* Body text */</span>
+<span class="property">--leading-relaxed</span><span class="punctuation">:</span> <span class="value">1.625</span><span class="punctuation">;</span>  <span class="comment">/* Long-form */</span>
+
+<span class="comment">/* Letter Spacing */</span>
+<span class="property">--tracking-tighter</span><span class="punctuation">:</span> <span class="value">-0.05em</span><span class="punctuation">;</span>  <span class="comment">/* Display text */</span>
+<span class="property">--tracking-tight</span><span class="punctuation">:</span> <span class="value">-0.025em</span><span class="punctuation">;</span>  <span class="comment">/* Headlines */</span>
+<span class="property">--tracking-normal</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+<span class="property">--tracking-wide</span><span class="punctuation">:</span> <span class="value">0.025em</span><span class="punctuation">;</span>   <span class="comment">/* Uppercase labels */</span>
+<span class="property">--tracking-wider</span><span class="punctuation">:</span> <span class="value">0.05em</span><span class="punctuation">;</span>   <span class="comment">/* Small caps */</span>
+
+<span class="comment">/* Fluid Headings */</span>
+<span class="property">--heading-1</span><span class="punctuation">:</span> clamp(1.75rem, 4vw + 1rem, 3rem)<span class="punctuation">;</span>
+<span class="property">--heading-2</span><span class="punctuation">:</span> clamp(1.5rem, 3vw + 0.75rem, 2.25rem)<span class="punctuation">;</span>
+<span class="property">--heading-3</span><span class="punctuation">:</span> clamp(1.25rem, 2vw + 0.5rem, 1.75rem)<span class="punctuation">;</span>
+<span class="property">--heading-4</span><span class="punctuation">:</span> clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem)<span class="punctuation">;</span>`}} />
+  </div>
+</div>

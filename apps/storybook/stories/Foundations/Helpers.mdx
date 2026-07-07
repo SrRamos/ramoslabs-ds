@@ -1,0 +1,655 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Helpers" />
+
+<style>
+{`
+  .helpers-header {
+    margin-bottom: 2rem;
+  }
+
+  .helpers-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .helpers-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .helpers-section {
+    margin-top: 2.5rem;
+  }
+
+  .helpers-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .helpers-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+
+  .helpers-table th,
+  .helpers-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .helpers-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .helpers-table td {
+    font-size: 0.875rem;
+  }
+
+  .helpers-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .helpers-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+  }
+
+  .helpers-table .class-name {
+    color: #4f46e5;
+    font-weight: 500;
+  }
+
+  .helpers-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .helpers-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .helpers-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .helpers-code-dot.red { background: #ef4444; }
+  .helpers-code-dot.yellow { background: #f59e0b; }
+  .helpers-code-dot.green { background: #22c55e; }
+
+  .helpers-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .helpers-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .helpers-code .comment { color: #64748b; font-style: italic; }
+  .helpers-code .selector { color: #fbbf24; }
+  .helpers-code .property { color: #7dd3fc; }
+  .helpers-code .value { color: #a5f3fc; }
+  .helpers-code .punctuation { color: #94a3b8; }
+
+  .helper-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: #f1f5f9;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 1rem;
+  }
+
+  .two-column-helpers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .two-column-helpers {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .usage-note {
+    background: #eff6ff;
+    border: 1px solid #3b82f6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .usage-note-icon {
+    color: #3b82f6;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .usage-note-content {
+    font-size: 0.875rem;
+    color: #1e40af;
+    line-height: 1.5;
+  }
+
+  .usage-note-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+`}
+</style>
+
+<div className="helpers-header">
+  <h1 className="helpers-title">The Stagehands</h1>
+  <p className="helpers-description">
+    Behind every great performance, there's a crew making the magic happen. These utility classes are our stagehands, invisible to the audience but essential to the show. Quick layout fixes, text adjustments, spacing tweaks, they handle the details so the main act can shine.
+  </p>
+</div>
+
+<div className="two-column-helpers">
+  <div>
+    <div className="helpers-section">
+      <h2 className="helpers-section-title">Display</h2>
+
+      <table className="helpers-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>CSS Property</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code className="class-name">.d-none</code></td>
+            <td><code>display: none</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.d-block</code></td>
+            <td><code>display: block</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.d-inline</code></td>
+            <td><code>display: inline</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.d-inline-block</code></td>
+            <td><code>display: inline-block</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.d-flex</code></td>
+            <td><code>display: flex</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.d-inline-flex</code></td>
+            <td><code>display: inline-flex</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.d-grid</code></td>
+            <td><code>display: grid</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="helpers-section">
+      <h2 className="helpers-section-title">Flexbox</h2>
+
+      <table className="helpers-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>CSS Property</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code className="class-name">.flex-row</code></td>
+            <td><code>flex-direction: row</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.flex-col</code></td>
+            <td><code>flex-direction: column</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.flex-wrap</code></td>
+            <td><code>flex-wrap: wrap</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.flex-nowrap</code></td>
+            <td><code>flex-wrap: nowrap</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.flex-1</code></td>
+            <td><code>flex: 1 1 0%</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.flex-auto</code></td>
+            <td><code>flex: 1 1 auto</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.flex-none</code></td>
+            <td><code>flex: none</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="helpers-section">
+      <h2 className="helpers-section-title">Alignment</h2>
+
+      <table className="helpers-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>CSS Property</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code className="class-name">.items-start</code></td>
+            <td><code>align-items: flex-start</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.items-center</code></td>
+            <td><code>align-items: center</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.items-end</code></td>
+            <td><code>align-items: flex-end</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.items-stretch</code></td>
+            <td><code>align-items: stretch</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.justify-start</code></td>
+            <td><code>justify-content: flex-start</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.justify-center</code></td>
+            <td><code>justify-content: center</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.justify-end</code></td>
+            <td><code>justify-content: flex-end</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.justify-between</code></td>
+            <td><code>justify-content: space-between</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.justify-around</code></td>
+            <td><code>justify-content: space-around</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <div className="helpers-section">
+      <h2 className="helpers-section-title">Gap</h2>
+
+      <table className="helpers-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code className="class-name">.gap-1</code></td>
+            <td><code>4px</code> (var(--space-1))</td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.gap-2</code></td>
+            <td><code>8px</code> (var(--space-2))</td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.gap-3</code></td>
+            <td><code>12px</code> (var(--space-3))</td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.gap-4</code></td>
+            <td><code>16px</code> (var(--space-4))</td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.gap-6</code></td>
+            <td><code>24px</code> (var(--space-6))</td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.gap-8</code></td>
+            <td><code>32px</code> (var(--space-8))</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="helpers-section">
+      <h2 className="helpers-section-title">Typography</h2>
+
+      <table className="helpers-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Property</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code className="class-name">.text-left</code></td>
+            <td><code>text-align: left</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-center</code></td>
+            <td><code>text-align: center</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-right</code></td>
+            <td><code>text-align: right</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-xs</code></td>
+            <td><code>font-size: 0.75rem</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-sm</code></td>
+            <td><code>font-size: 0.875rem</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-base</code></td>
+            <td><code>font-size: 1rem</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-lg</code></td>
+            <td><code>font-size: 1.125rem</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-xl</code></td>
+            <td><code>font-size: 1.25rem</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.text-2xl</code></td>
+            <td><code>font-size: 1.5rem</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="helpers-section">
+      <h2 className="helpers-section-title">Font Weight</h2>
+
+      <table className="helpers-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code className="class-name">.font-light</code></td>
+            <td><code>300</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.font-normal</code></td>
+            <td><code>400</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.font-medium</code></td>
+            <td><code>500</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.font-semibold</code></td>
+            <td><code>600</code></td>
+          </tr>
+          <tr>
+            <td><code className="class-name">.font-bold</code></td>
+            <td><code>700</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div className="helpers-section">
+  <h2 className="helpers-section-title">Text Colors</h2>
+
+  <table className="helpers-table">
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Token</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code className="class-name">.text-primary</code></td>
+        <td><code>var(--color-text)</code></td>
+        <td>Main text, headings</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.text-secondary</code></td>
+        <td><code>var(--color-text-secondary)</code></td>
+        <td>Secondary text, descriptions</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.text-muted</code></td>
+        <td><code>var(--color-text-muted)</code></td>
+        <td>Muted text, captions</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.text-disabled</code></td>
+        <td><code>var(--color-text-disabled)</code></td>
+        <td>Disabled states</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.text-error</code></td>
+        <td><code>var(--color-error)</code></td>
+        <td>Error messages</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.text-success</code></td>
+        <td><code>var(--color-success)</code></td>
+        <td>Success messages</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="helpers-section">
+  <h2 className="helpers-section-title">Border Radius</h2>
+
+  <table className="helpers-table">
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code className="class-name">.rounded-none</code></td>
+        <td><code>0</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.rounded-sm</code></td>
+        <td><code>4px</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.rounded-md</code></td>
+        <td><code>8px</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.rounded-lg</code></td>
+        <td><code>12px</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.rounded-xl</code></td>
+        <td><code>16px</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.rounded-full</code></td>
+        <td><code>9999px</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="helpers-section">
+  <h2 className="helpers-section-title">Utility Classes</h2>
+
+  <table className="helpers-table">
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code className="class-name">.w-full</code></td>
+        <td><code>width: 100%</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.h-full</code></td>
+        <td><code>height: 100%</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.min-w-0</code></td>
+        <td><code>min-width: 0</code> - Fixes flex child overflow</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.min-h-0</code></td>
+        <td><code>min-height: 0</code> - Fixes flex child overflow</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.overflow-hidden</code></td>
+        <td><code>overflow: hidden</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.overflow-auto</code></td>
+        <td><code>overflow: auto</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.truncate</code></td>
+        <td>Truncate text with ellipsis</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.sr-only</code></td>
+        <td>Visually hidden, screen reader only</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.focus-ring</code></td>
+        <td>Adds focus ring on :focus-visible</td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.cursor-pointer</code></td>
+        <td><code>cursor: pointer</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.cursor-not-allowed</code></td>
+        <td><code>cursor: not-allowed</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.pointer-events-none</code></td>
+        <td><code>pointer-events: none</code></td>
+      </tr>
+      <tr>
+        <td><code className="class-name">.pointer-events-auto</code></td>
+        <td><code>pointer-events: auto</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="helpers-section">
+  <h2 className="helpers-section-title">Usage Example</h2>
+
+  <div className="helpers-code">
+    <div className="helpers-code-header">
+      <span className="helpers-code-dot red"></span>
+      <span className="helpers-code-dot yellow"></span>
+      <span className="helpers-code-dot green"></span>
+      <span className="helpers-code-lang">HTML</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">&lt;!-- Ticket status row: label on left, status on right --&gt;</span>
+&lt;div class="<span class="value">d-flex items-center justify-between gap-4</span>"&gt;
+    &lt;span class="<span class="value">text-muted text-sm</span>"&gt;Ticket Status&lt;/span&gt;
+    &lt;span class="<span class="value">font-semibold text-success</span>"&gt;Confirmed&lt;/span&gt;
+&lt;/div&gt;
+
+<span class="comment">&lt;!-- Event card with artist image --&gt;</span>
+&lt;div class="<span class="value">rounded-lg overflow-hidden</span>"&gt;
+    &lt;img src="artist-photo.jpg" class="<span class="value">w-full</span>" /&gt;
+&lt;/div&gt;
+
+<span class="comment">&lt;!-- Accessible close button for modals --&gt;</span>
+&lt;button class="<span class="value">d-flex items-center gap-2 cursor-pointer focus-ring</span>"&gt;
+    &lt;span class="<span class="value">sr-only</span>"&gt;Close ticket details&lt;/span&gt;
+    &lt;svg&gt;...&lt;/svg&gt;
+&lt;/button&gt;`}} />
+  </div>
+</div>
+
+<div className="usage-note">
+  <span className="usage-note-icon">💡</span>
+  <div className="usage-note-content">
+    <div className="usage-note-title">When the Stagehands Shine</div>
+    Reach for helpers when you need a quick fix, aligning a ticket counter, spacing event cards, truncating a long venue name. For the main act (complex components like event cards or checkout flows), use scoped component styles so the markup stays clean and the performance runs smoothly.
+  </div>
+</div>

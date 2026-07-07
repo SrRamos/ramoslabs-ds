@@ -1,0 +1,472 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Responsive" />
+
+<style>
+{`
+  .responsive-header {
+    margin-bottom: 2rem;
+  }
+
+  .responsive-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .responsive-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .responsive-section {
+    margin-top: 2.5rem;
+  }
+
+  .responsive-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .breakpoint-visual {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .breakpoint-bar {
+    display: flex;
+    align-items: stretch;
+    height: 60px;
+    background: #f8fafc;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .breakpoint-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-right: 2px dashed #cbd5e1;
+    position: relative;
+  }
+
+  .breakpoint-segment:last-child {
+    border-right: none;
+  }
+
+  .breakpoint-label {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .breakpoint-value {
+    font-size: 0.625rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+
+  .responsive-table th,
+  .responsive-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .responsive-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .responsive-table td {
+    font-size: 0.875rem;
+  }
+
+  .responsive-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .responsive-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+  }
+
+  .device-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .device-icon svg {
+    width: 16px;
+    height: 16px;
+    color: #64748b;
+  }
+
+  .responsive-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .responsive-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .responsive-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .responsive-code-dot.red { background: #ef4444; }
+  .responsive-code-dot.yellow { background: #f59e0b; }
+  .responsive-code-dot.green { background: #22c55e; }
+
+  .responsive-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .responsive-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .responsive-code .comment { color: #64748b; font-style: italic; }
+  .responsive-code .selector { color: #fbbf24; }
+  .responsive-code .property { color: #7dd3fc; }
+  .responsive-code .value { color: #a5f3fc; }
+  .responsive-code .mixin { color: #c4b5fd; }
+  .responsive-code .punctuation { color: #94a3b8; }
+
+  .principle-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .principle-card-title {
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .principle-card-content {
+    font-size: 0.875rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  .container-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .container-card {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .container-name {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    color: #4f46e5;
+    margin-bottom: 0.25rem;
+  }
+
+  .container-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+`}
+</style>
+
+<div className="responsive-header">
+  <h1 className="responsive-title">Every Screen, Every Fan</h1>
+  <p className="responsive-description">
+    The next unforgettable concert might be discovered on a phone during a commute, planned on a tablet at lunch,
+    or booked on a laptop at home. Our responsive system ensures every fan finds their moment, no matter the screen.
+  </p>
+</div>
+
+<div className="responsive-section">
+  <h2 className="responsive-section-title">Breakpoint Scale</h2>
+
+  <div className="breakpoint-visual">
+    <div className="breakpoint-bar">
+      <div className="breakpoint-segment" style={{ flex: '320', background: '#ef4444' }}>
+        <span className="breakpoint-label">xs</span>
+        <span className="breakpoint-value">320px</span>
+      </div>
+      <div className="breakpoint-segment" style={{ flex: '256', background: '#f59e0b' }}>
+        <span className="breakpoint-label">sm</span>
+        <span className="breakpoint-value">576px</span>
+      </div>
+      <div className="breakpoint-segment" style={{ flex: '192', background: '#22c55e' }}>
+        <span className="breakpoint-label">md</span>
+        <span className="breakpoint-value">768px</span>
+      </div>
+      <div className="breakpoint-segment" style={{ flex: '224', background: '#3b82f6' }}>
+        <span className="breakpoint-label">lg</span>
+        <span className="breakpoint-value">992px</span>
+      </div>
+      <div className="breakpoint-segment" style={{ flex: '166', background: '#8b5cf6' }}>
+        <span className="breakpoint-label">xl</span>
+        <span className="breakpoint-value">1200px</span>
+      </div>
+      <div className="breakpoint-segment" style={{ flex: '166', background: '#4f46e5' }}>
+        <span className="breakpoint-label">2xl</span>
+        <span className="breakpoint-value">1366px</span>
+      </div>
+    </div>
+  </div>
+
+  <table className="responsive-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Min Width</th>
+        <th>The Fan Context</th>
+        <th>SCSS Mixin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>xs</code></td>
+        <td>320px</td>
+        <td>🚶 <em>Fan on the move</em> - Quick glances, one-handed scrolling</td>
+        <td><code>@include breakpoint('xs')</code></td>
+      </tr>
+      <tr>
+        <td><code>sm</code></td>
+        <td>576px</td>
+        <td>📱 <em>Fan discovering</em> - Browsing events in line, on the bus</td>
+        <td><code>@include breakpoint('sm')</code></td>
+      </tr>
+      <tr>
+        <td><code>md</code></td>
+        <td>768px</td>
+        <td>📋 <em>Fan planning</em> - Comparing dates, checking details at lunch</td>
+        <td><code>@include breakpoint('md')</code></td>
+      </tr>
+      <tr>
+        <td><code>lg</code></td>
+        <td>992px</td>
+        <td>💳 <em>Fan committing</em> - Ready to book, wants full info</td>
+        <td><code>@include breakpoint('lg')</code></td>
+      </tr>
+      <tr>
+        <td><code>xl</code></td>
+        <td>1200px</td>
+        <td>🎯 <em>Fan exploring</em> - Deep dive into artists, venues, reviews</td>
+        <td><code>@include breakpoint('xl')</code></td>
+      </tr>
+      <tr>
+        <td><code>2xl</code></td>
+        <td>1366px</td>
+        <td>🖥️ <em>Fan immersed</em> - Full experience, multiple tabs open</td>
+        <td><code>@include breakpoint('2xl')</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="responsive-section">
+  <h2 className="responsive-section-title">Container Widths</h2>
+
+  <div className="container-grid">
+    <div className="container-card">
+      <div className="container-name">$container-sm</div>
+      <div className="container-value">640px</div>
+    </div>
+    <div className="container-card">
+      <div className="container-name">$container-md</div>
+      <div className="container-value">768px</div>
+    </div>
+    <div className="container-card">
+      <div className="container-name">$container-lg</div>
+      <div className="container-value">1024px</div>
+    </div>
+    <div className="container-card">
+      <div className="container-name">$container-xl</div>
+      <div className="container-value">1280px</div>
+    </div>
+  </div>
+</div>
+
+<div className="responsive-section">
+  <h2 className="responsive-section-title">SCSS Mixins</h2>
+
+  <table className="responsive-table">
+    <thead>
+      <tr>
+        <th>Mixin</th>
+        <th>Description</th>
+        <th>Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>@include breakpoint('md')</code></td>
+        <td>Min-width media query</td>
+        <td><code>@media (min-width: 768px)</code></td>
+      </tr>
+      <tr>
+        <td><code>@include breakpoint-down('md')</code></td>
+        <td>Max-width media query</td>
+        <td><code>@media (max-width: 767px)</code></td>
+      </tr>
+      <tr>
+        <td><code>@include breakpoint-between('sm', 'lg')</code></td>
+        <td>Range media query</td>
+        <td><code>@media (min-width: 576px) and (max-width: 991px)</code></td>
+      </tr>
+      <tr>
+        <td><code>@include mobile-only</code></td>
+        <td>Mobile devices only</td>
+        <td><code>@media (max-width: 767px)</code></td>
+      </tr>
+      <tr>
+        <td><code>@include tablet-up</code></td>
+        <td>Tablet and larger</td>
+        <td><code>@media (min-width: 768px)</code></td>
+      </tr>
+      <tr>
+        <td><code>@include desktop-up</code></td>
+        <td>Desktop and larger</td>
+        <td><code>@media (min-width: 992px)</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="responsive-section">
+  <h2 className="responsive-section-title">Design Principles</h2>
+
+  <div className="principle-card">
+    <div className="principle-card-title">
+      📱 Mobile First - Because Fans Discover on the Go
+    </div>
+    <div className="principle-card-content">
+      Most fans first see an event on their phone, waiting in line, scrolling before bed, or checking a friend's share.
+      Start with mobile, then enhance. The excitement should hit just as hard on a 5-inch screen.
+    </div>
+  </div>
+
+  <div className="principle-card">
+    <div className="principle-card-title">
+      🎯 Intrinsic Sizing - Let Content Breathe
+    </div>
+    <div className="principle-card-content">
+      Use <code>min()</code>, <code>max()</code>, <code>clamp()</code>, and <code>auto-fit</code> before reaching for media queries.
+      Event cards, artist names, venue details, let them find their natural rhythm. Less breakpoints, more flow.
+    </div>
+  </div>
+
+  <div className="principle-card">
+    <div className="principle-card-title">
+      📐 Major Shifts Only - Don't Interrupt the Journey
+    </div>
+    <div className="principle-card-content">
+      Only use breakpoints for major layout changes (sidebar → stacked, grid → single column).
+      A fan scrolling through events shouldn't notice the design working, they should just feel it working.
+    </div>
+  </div>
+</div>
+
+<div className="responsive-section">
+  <h2 className="responsive-section-title">Usage Examples</h2>
+
+  <div className="responsive-code">
+    <div className="responsive-code-header">
+      <span className="responsive-code-dot red"></span>
+      <span className="responsive-code-dot yellow"></span>
+      <span className="responsive-code-dot green"></span>
+      <span className="responsive-code-lang">SCSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Event cards: stack on mobile, expand as screen grows */</span>
+<span class="selector">.event-grid</span> <span class="punctuation">{</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="value">grid</span><span class="punctuation">;</span>
+    <span class="property">gap</span><span class="punctuation">:</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>
+    <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">1fr</span><span class="punctuation">;</span>  <span class="comment">/* Fan on phone: one event at a time */</span>
+
+    <span class="mixin">@include tablet-up</span> <span class="punctuation">{</span>
+        <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">repeat(2, 1fr)</span><span class="punctuation">;</span>  <span class="comment">/* Planning mode: compare options */</span>
+    <span class="punctuation">}</span>
+
+    <span class="mixin">@include desktop-up</span> <span class="punctuation">{</span>
+        <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">repeat(3, 1fr)</span><span class="punctuation">;</span>  <span class="comment">/* Full exploration */</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Artist cards: let them find their own rhythm */</span>
+<span class="selector">.artist-grid</span> <span class="punctuation">{</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="value">grid</span><span class="punctuation">;</span>
+    <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">repeat(auto-fit, minmax(280px, 1fr))</span><span class="punctuation">;</span>
+    <span class="property">gap</span><span class="punctuation">:</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Hero titles that scale with the moment */</span>
+<span class="selector">.hero-title</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">var(--heading-1)</span><span class="punctuation">;</span>  <span class="comment">/* clamp(1.75rem, 4vw + 1rem, 3rem) */</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>

@@ -1,0 +1,510 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/AI Insights" />
+
+<style>
+{`
+  .ai-header {
+    margin-bottom: 2rem;
+  }
+
+  .ai-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .ai-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  .ai-section {
+    margin-top: 2.5rem;
+  }
+
+  .ai-section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #4f46e5;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+  }
+
+  .ai-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+  }
+
+  .ai-section-subtitle {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.9375rem;
+    margin-bottom: 1.25rem;
+    max-width: 600px;
+  }
+
+  /* ===== CONFIDENCE BADGES ===== */
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .badge-card {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    min-width: 200px;
+    flex: 1;
+  }
+
+  .badge-label {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    color: #94a3b8;
+  }
+
+  .badge-example {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.875rem;
+  }
+
+  .badge-example.high {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  .badge-example.medium {
+    background: #fefce8;
+    color: #a16207;
+  }
+
+  .badge-example.low {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .badge-dot.high { background: #10b981; }
+  .badge-dot.medium { background: #f59e0b; }
+  .badge-dot.low { background: #64748b; }
+
+  .badge-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .badge-hex {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #94a3b8;
+  }
+
+  /* ===== COPY TABLE ===== */
+  .copy-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e6e8eb;
+  }
+
+  .copy-table th,
+  .copy-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e6e8eb;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+  }
+
+  .copy-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    background: #f8fafc;
+  }
+
+  .copy-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .copy-table .use {
+    color: #15803d;
+    font-weight: 500;
+  }
+
+  .copy-table .avoid {
+    color: #b91c1c;
+    font-weight: 500;
+  }
+
+  .copy-table .note {
+    color: #64748b;
+    font-size: 0.8125rem;
+  }
+
+  .check-icon {
+    display: inline-block;
+    margin-right: 0.25rem;
+  }
+
+  /* ===== RULE CALLOUT ===== */
+  .rule-callout {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-left: 4px solid #ef4444;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .rule-callout-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #b91c1c;
+    margin-bottom: 0.375rem;
+  }
+
+  .rule-callout-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #7f1d1d;
+    line-height: 1.55;
+  }
+
+  .rule-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    margin-top: 1rem;
+  }
+
+  .rule-example-row {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+  }
+
+  .rule-example-row .arrow {
+    color: #94a3b8;
+    flex-shrink: 0;
+  }
+
+  .rule-example-row .bad {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    text-decoration: line-through;
+  }
+
+  .rule-example-row .good {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  /* ===== COMPONENT INVENTORY ===== */
+  .component-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e6e8eb;
+  }
+
+  .component-table th,
+  .component-table td {
+    padding: 0.875rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e6e8eb;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+  }
+
+  .component-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    background: #f8fafc;
+  }
+
+  .component-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .component-name {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    background: #f1f5f9;
+    color: #4f46e5;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .component-desc {
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .component-prefix {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    background: #ede9fe;
+    color: #6d28d9;
+    letter-spacing: 0.03em;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: 860px) {
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+    .badge-row {
+      flex-direction: column;
+    }
+  }
+`}
+</style>
+
+<div className="ai-header">
+  <h1 className="ai-title">AI Insights - Design Patterns</h1>
+  <p className="ai-description">
+    The RamosLabs organizer copilot surfaces data-driven suggestions and projections. This page documents the visual tokens, copy rules, and component inventory for those surfaces. Read it before building or modifying any insights UI.
+  </p>
+</div>
+
+{/* ===== CONFIDENCE BADGE TOKENS ===== */}
+<div className="ai-section">
+  <div className="ai-section-label">Visual Tokens</div>
+  <h2 className="ai-section-title">Confidence Badge Colors</h2>
+  <p className="ai-section-subtitle">
+    Three confidence levels, each mapped to a semantic token. Never use raw hex in component code - reference the token so the value can change globally.
+  </p>
+
+  <div className="badge-row">
+    <div className="badge-card">
+      <div className="badge-label">High confidence</div>
+      <div className="badge-example high">
+        <span className="badge-dot high"></span>
+        Alta confianza
+      </div>
+      <span className="badge-token">var(--color-success)</span>
+      <span className="badge-hex">#10b981 - Emerald 500</span>
+    </div>
+
+    <div className="badge-card">
+      <div className="badge-label">Medium confidence</div>
+      <div className="badge-example medium">
+        <span className="badge-dot medium"></span>
+        Confianza media
+      </div>
+      <span className="badge-token">var(--color-warning)</span>
+      <span className="badge-hex">#f59e0b - Amber 500</span>
+    </div>
+
+    <div className="badge-card">
+      <div className="badge-label">Low confidence</div>
+      <div className="badge-example low">
+        <span className="badge-dot low"></span>
+        Datos limitados
+      </div>
+      <span className="badge-token">var(--color-text-muted)</span>
+      <span className="badge-hex">#64748b - Slate 500</span>
+    </div>
+  </div>
+</div>
+
+{/* ===== COPY GUIDELINES ===== */}
+<div className="ai-section">
+  <div className="ai-section-label">Copy Guidelines</div>
+  <h2 className="ai-section-title">"Basado en datos" - Label Language</h2>
+  <p className="ai-section-subtitle">
+    All suggestion labels must frame the output as statistical inference over historical event data - not as system opinion or automation. Use the approved phrases below.
+  </p>
+
+  <table className="copy-table">
+    <thead>
+      <tr>
+        <th>Contexto</th>
+        <th><span className="check-icon">✅</span> Usar</th>
+        <th><span className="check-icon">❌</span> Evitar</th>
+        <th>Razón</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td className="note">Etiqueta de sugerencia</td>
+        <td className="use">Sugerencia</td>
+        <td className="avoid">Recomendado por el sistema</td>
+        <td className="note">Neutral, sin atribuir agencia al sistema</td>
+      </tr>
+      <tr>
+        <td className="note">Origen del dato</td>
+        <td className="use">Basado en datos de eventos similares</td>
+        <td className="avoid">Calculado automáticamente</td>
+        <td className="note">Transparencia sobre la fuente del valor</td>
+      </tr>
+      <tr>
+        <td className="note">Proyección de ventas</td>
+        <td className="use">Proyección estadística</td>
+        <td className="avoid">Predicción</td>
+        <td className="note">"Predicción" implica certeza; "proyección" es honesto</td>
+      </tr>
+      <tr>
+        <td className="note">Precio sugerido</td>
+        <td className="use">Sugerido · Basado en eventos similares</td>
+        <td className="avoid">Precio óptimo calculado por IA</td>
+        <td className="note">Ver regla global sobre "IA" abajo</td>
+      </tr>
+      <tr>
+        <td className="note">Resumen de panel</td>
+        <td className="use">Datos de los últimos 90 días</td>
+        <td className="avoid">Análisis en tiempo real</td>
+        <td className="note">Ser específico sobre el período; no exagerar</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{/* ===== NEVER USE IA ===== */}
+<div className="ai-section">
+  <div className="ai-section-label">Regla Global</div>
+  <h2 className="ai-section-title">Nunca usar "IA" en copy de usuario</h2>
+
+  <div className="rule-callout">
+    <div className="rule-callout-title">Prohibición absoluta - aplica a toda la plataforma</div>
+    <div className="rule-callout-text">
+      RamosLabs no usa "IA", "inteligencia artificial", "AI", ni "machine learning" en ninguna superficie de usuario, ni en labels, tooltips, emails, onboarding, ni marketing. El sistema es algorítmico y basado en datos históricos. Describir el output como tal es más preciso y más honesto.
+    </div>
+  </div>
+
+  <div className="rule-examples">
+    <div className="rule-example-row">
+      <span className="bad">Sugerido por IA</span>
+      <span className="arrow">→</span>
+      <span className="good">Sugerido</span>
+    </div>
+    <div className="rule-example-row">
+      <span className="bad">Precio calculado con IA</span>
+      <span className="arrow">→</span>
+      <span className="good">Precio sugerido · Basado en eventos similares</span>
+    </div>
+    <div className="rule-example-row">
+      <span className="bad">Etiquetas generadas por inteligencia artificial</span>
+      <span className="arrow">→</span>
+      <span className="good">Sugerido</span>
+    </div>
+    <div className="rule-example-row">
+      <span className="bad">Análisis de ML</span>
+      <span className="arrow">→</span>
+      <span className="good">Análisis estadístico</span>
+    </div>
+    <div className="rule-example-row">
+      <span className="bad">Copiloto de IA</span>
+      <span className="arrow">→</span>
+      <span className="good">Copiloto de datos</span>
+    </div>
+  </div>
+</div>
+
+{/* ===== COMPONENT INVENTORY ===== */}
+<div className="ai-section">
+  <div className="ai-section-label">Referencia</div>
+  <h2 className="ai-section-title">Componentes de AI Insights</h2>
+  <p className="ai-section-subtitle">
+    Todos los componentes de este feature viven en el directorio de componentes bajo su prefijo correspondiente. Antes de crear algo nuevo, verifica si ya existe aquí.
+  </p>
+
+  <table className="component-table">
+    <thead>
+      <tr>
+        <th>Componente</th>
+        <th>Prefijo</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span className="component-name">SJInsightsPanel</span></td>
+        <td><span className="component-prefix">SJ</span></td>
+        <td className="component-desc">Panel de sugerencias del copiloto de organizadores. Muestra tarjetas de recomendación con badges de confianza y copy "Basado en datos".</td>
+      </tr>
+      <tr>
+        <td><span className="component-name">SJCVICard</span></td>
+        <td><span className="component-prefix">SJ</span></td>
+        <td className="component-desc">Tarjeta del Conversational Value Index. Muestra el score CVI del evento con su contexto estadístico y franja de confianza.</td>
+      </tr>
+      <tr>
+        <td><span className="component-name">SJReferralLinkWidget</span></td>
+        <td><span className="component-prefix">SJ</span></td>
+        <td className="component-desc">Widget de enlace de referido para asistentes. Genera y copia el link personalizado; muestra estadísticas de conversión del enlace.</td>
+      </tr>
+      <tr>
+        <td><span className="component-name">SJSimulatorPanel</span></td>
+        <td><span className="component-prefix">SJ</span></td>
+        <td className="component-desc">Panel de resultados del simulador de eventos. Proyecta ingresos estimados a partir de parámetros del evento usando datos históricos comparables.</td>
+      </tr>
+      <tr>
+        <td><span className="component-name">SJAITagEditor</span></td>
+        <td><span className="component-prefix">SJ</span></td>
+        <td className="component-desc">Editor de tags con badges "Sugerido". Permite al organizador aceptar, rechazar o editar etiquetas propuestas a partir de datos del evento.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

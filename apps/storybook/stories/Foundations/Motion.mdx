@@ -1,0 +1,537 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Motion" />
+
+<style>
+{`
+  .motion-header {
+    margin-bottom: 2rem;
+  }
+
+  .motion-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .motion-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .motion-section {
+    margin-top: 2.5rem;
+  }
+
+  .motion-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .motion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .motion-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .motion-preview {
+    height: 80px;
+    background: #f8fafc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+
+  .motion-demo-box {
+    width: 40px;
+    height: 40px;
+    background: #4f46e5;
+    border-radius: 8px;
+  }
+
+  .motion-card:hover .demo-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+
+  .motion-card:hover .demo-slide-up {
+    animation: slide-up 0.5s ease-out forwards;
+  }
+
+  .motion-card:hover .demo-scale-in {
+    animation: scale-in 0.5s ease-out forwards;
+  }
+
+  .demo-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .demo-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .motion-info {
+    text-align: center;
+  }
+
+  .motion-name {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+
+  .motion-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .motion-usage {
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  .motion-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+
+  .motion-table th,
+  .motion-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .motion-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .motion-table td {
+    font-size: 0.875rem;
+  }
+
+  .motion-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .motion-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #64748b;
+  }
+
+  .motion-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .motion-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .motion-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .motion-code-dot.red { background: #ef4444; }
+  .motion-code-dot.yellow { background: #f59e0b; }
+  .motion-code-dot.green { background: #22c55e; }
+
+  .motion-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .motion-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .motion-code .comment { color: #64748b; font-style: italic; }
+  .motion-code .selector { color: #fbbf24; }
+  .motion-code .property { color: #7dd3fc; }
+  .motion-code .value { color: #a5f3fc; }
+  .motion-code .punctuation { color: #94a3b8; }
+
+  .a11y-note {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .a11y-note-icon {
+    color: #f59e0b;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .a11y-note-content {
+    font-size: 0.875rem;
+    color: #92400e;
+    line-height: 1.5;
+  }
+
+  .a11y-note-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+`}
+</style>
+
+<div className="motion-header">
+  <h1 className="motion-title">Motion That Feels Alive</h1>
+  <p className="motion-description">
+    Like the electric hum before venue doors open, our motion is calibrated to feel energetic yet purposeful.
+    Fast transitions for the instant gratification of securing tickets, slow reveals for the dramatic moment of purchase confirmation, every animation echoes the rhythm of live events.
+  </p>
+</div>
+
+<div className="motion-section">
+  <h2 className="motion-section-title">Transitions</h2>
+
+  <table className="motion-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Duration</th>
+        <th>Easing</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--transition-fast</code></td>
+        <td>150ms</td>
+        <td>ease</td>
+        <td>The click that confirms your ticket, instant gratification</td>
+      </tr>
+      <tr>
+        <td><code>--transition-normal</code></td>
+        <td>200ms</td>
+        <td>ease</td>
+        <td>Event cards responding to curiosity, seats highlighting on hover</td>
+      </tr>
+      <tr>
+        <td><code>--transition-slow</code></td>
+        <td>300ms</td>
+        <td>ease</td>
+        <td>The grand reveal of purchase confirmation, the dramatic modal entrance</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="motion-section">
+  <h2 className="motion-section-title">Easing Functions - The Feel</h2>
+
+  <p className="motion-description" style={{ marginBottom: '1rem' }}>
+    Every motion has a personality. Linear feels mechanical, like turnstiles at the gate. Spring feels alive, like the crowd bouncing when the bass drops.
+  </p>
+
+  <table className="motion-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Curve</th>
+        <th>When to Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--ease-linear</code></td>
+        <td><code>linear</code></td>
+        <td>Spinners, progress bars, mechanical, predictable motion</td>
+      </tr>
+      <tr>
+        <td><code>--ease-in</code></td>
+        <td><code>cubic-bezier(0.4, 0, 1, 1)</code></td>
+        <td>Elements exiting the stage, slow start, fast finish</td>
+      </tr>
+      <tr>
+        <td><code>--ease-out</code></td>
+        <td><code>cubic-bezier(0, 0, 0.2, 1)</code></td>
+        <td>Elements entering, the reveal, fast start then graceful landing</td>
+      </tr>
+      <tr>
+        <td><code>--ease-in-out</code></td>
+        <td><code>cubic-bezier(0.4, 0, 0.2, 1)</code></td>
+        <td>State changes, hover effects, smooth start and finish</td>
+      </tr>
+      <tr>
+        <td><code>--ease-spring</code></td>
+        <td><code>cubic-bezier(0.34, 1.56, 0.64, 1)</code></td>
+        <td>The bounce, button clicks, successful actions, playful moments</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="motion-section">
+  <h2 className="motion-section-title">Animations</h2>
+
+  <div className="motion-grid">
+    <div className="motion-card">
+      <div className="motion-preview">
+        <div className="motion-demo-box demo-fade-in" style={{ opacity: 0.3 }}></div>
+      </div>
+      <div className="motion-info">
+        <div className="motion-name">Fade In - The Curtain Rise</div>
+        <code className="motion-token">.animate-fade-in</code>
+        <p className="motion-usage">Event details materializing, artist images loading</p>
+      </div>
+    </div>
+
+    <div className="motion-card">
+      <div className="motion-preview">
+        <div className="motion-demo-box demo-slide-up" style={{ opacity: 0.3, transform: 'translateY(10px)' }}></div>
+      </div>
+      <div className="motion-info">
+        <div className="motion-name">Slide Up - The Announcement</div>
+        <code className="motion-token">.animate-slide-up</code>
+        <p className="motion-usage">"Tickets secured!" toasts, new event alerts</p>
+      </div>
+    </div>
+
+    <div className="motion-card">
+      <div className="motion-preview">
+        <div className="motion-demo-box demo-scale-in" style={{ opacity: 0.3, transform: 'scale(0.95)' }}></div>
+      </div>
+      <div className="motion-info">
+        <div className="motion-name">Scale In - The Spotlight</div>
+        <code className="motion-token">.animate-scale-in</code>
+        <p className="motion-usage">Purchase confirmation modal, seat selection popup</p>
+      </div>
+    </div>
+
+    <div className="motion-card">
+      <div className="motion-preview">
+        <div className="motion-demo-box demo-spin"></div>
+      </div>
+      <div className="motion-info">
+        <div className="motion-name">Spin - The Anticipation</div>
+        <code className="motion-token">.animate-spin</code>
+        <p className="motion-usage">Securing your seats, processing payment</p>
+      </div>
+    </div>
+
+    <div className="motion-card">
+      <div className="motion-preview">
+        <div className="motion-demo-box demo-pulse"></div>
+      </div>
+      <div className="motion-info">
+        <div className="motion-name">Pulse - The Heartbeat</div>
+        <code className="motion-token">.animate-pulse</code>
+        <p className="motion-usage">Event countdown, loading ticket details</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="motion-section">
+  <h2 className="motion-section-title">Keyframes Available</h2>
+
+  <table className="motion-table">
+    <thead>
+      <tr>
+        <th>Keyframe</th>
+        <th>Effect</th>
+        <th>Class</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>fade-in</code></td>
+        <td>Opacity 0 → 1</td>
+        <td><code>.animate-fade-in</code></td>
+      </tr>
+      <tr>
+        <td><code>fade-out</code></td>
+        <td>Opacity 1 → 0</td>
+        <td>, </td>
+      </tr>
+      <tr>
+        <td><code>slide-up</code></td>
+        <td>Y +10px → 0 with fade</td>
+        <td><code>.animate-slide-up</code></td>
+      </tr>
+      <tr>
+        <td><code>slide-down</code></td>
+        <td>Y -10px → 0 with fade</td>
+        <td><code>.animate-slide-down</code></td>
+      </tr>
+      <tr>
+        <td><code>scale-in</code></td>
+        <td>Scale 0.95 → 1 with fade</td>
+        <td><code>.animate-scale-in</code></td>
+      </tr>
+      <tr>
+        <td><code>spin</code></td>
+        <td>Rotate 0° → 360° (infinite)</td>
+        <td><code>.animate-spin</code></td>
+      </tr>
+      <tr>
+        <td><code>pulse</code></td>
+        <td>Opacity 1 → 0.5 → 1 (infinite)</td>
+        <td><code>.animate-pulse</code></td>
+      </tr>
+      <tr>
+        <td><code>shimmer</code></td>
+        <td>Background position sweep</td>
+        <td>, </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="motion-section">
+  <h2 className="motion-section-title">Usage Examples</h2>
+
+  <div className="motion-code">
+    <div className="motion-code-header">
+      <span className="motion-code-dot red"></span>
+      <span className="motion-code-dot yellow"></span>
+      <span className="motion-code-dot green"></span>
+      <span className="motion-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Buy button: instant feedback like the click of a turnstile */</span>
+<span class="selector">.buy-button</span> <span class="punctuation">{</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">background-color var(--transition-fast)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Event card: rises to meet the fan's curiosity */</span>
+<span class="selector">.event-card</span> <span class="punctuation">{</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">box-shadow var(--transition-normal),
+                transform var(--transition-normal)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Confirmation modal: the dramatic reveal of "You're going!" */</span>
+<span class="selector">.confirm-modal</span> <span class="punctuation">{</span>
+    <span class="property">animation</span><span class="punctuation">:</span> <span class="value">scale-in var(--transition-slow) ease-out</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Processing: building anticipation while securing seats */</span>
+<span class="selector">.processing-spinner</span> <span class="punctuation">{</span>
+    <span class="property">animation</span><span class="punctuation">:</span> <span class="value">spin 1s linear infinite</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>
+
+<div className="a11y-note">
+  <span className="a11y-note-icon">⚠️</span>
+  <div className="a11y-note-content">
+    <div className="a11y-note-title">Every Fan Experiences Motion Differently</div>
+    All animations respect <code>prefers-reduced-motion: reduce</code>. For fans who prefer calmer experiences, animations gracefully step aside, the excitement of the event doesn't need extra visual energy for everyone.
+  </div>
+</div>
+
+<div className="motion-section">
+  <h2 className="motion-section-title">Global Reduced Motion</h2>
+
+  <div className="motion-code">
+    <div className="motion-code-header">
+      <span className="motion-code-dot red"></span>
+      <span className="motion-code-dot yellow"></span>
+      <span className="motion-code-dot green"></span>
+      <span className="motion-code-lang">CSS</span>
+    </div>
+    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* This is already implemented globally in main.css */</span>
+<span class="comment">/* No additional work needed, every animation automatically respects user preferences */</span>
+
+<span class="selector">@media (prefers-reduced-motion: reduce)</span> <span class="punctuation">{</span>
+    <span class="selector">*,
+    *::before,
+    *::after</span> <span class="punctuation">{</span>
+        <span class="property">animation-duration</span><span class="punctuation">:</span> <span class="value">0.01ms</span> <span class="value">!important</span><span class="punctuation">;</span>
+        <span class="property">animation-iteration-count</span><span class="punctuation">:</span> <span class="value">1</span> <span class="value">!important</span><span class="punctuation">;</span>
+        <span class="property">transition-duration</span><span class="punctuation">:</span> <span class="value">0.01ms</span> <span class="value">!important</span><span class="punctuation">;</span>
+        <span class="property">scroll-behavior</span><span class="punctuation">:</span> <span class="value">auto</span> <span class="value">!important</span><span class="punctuation">;</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>`}} />
+  </div>
+</div>
