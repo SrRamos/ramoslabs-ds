@@ -72,7 +72,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 900;
     line-height: 1.05;
     margin-bottom: 1.5rem;
-    max-width: 640px;
+    max-width: 680px;
   }
 
   .intro-hero-subtitle {
@@ -81,7 +81,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 1.25rem;
     font-weight: 300;
     line-height: 1.6;
-    max-width: 560px;
+    max-width: 600px;
   }
 
   .intro-hero-version {
@@ -188,7 +188,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 500;
   }
 
-  /* ===== PILLARS SECTION ===== */
+  /* ===== SECTION SCAFFOLD ===== */
   .intro-section {
     margin-bottom: 4rem;
   }
@@ -219,10 +219,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'Rubik', system-ui, sans-serif;
     color: #64748b;
     font-size: 1.0625rem;
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto;
   }
 
+  /* ===== PILLARS SECTION ===== */
   .intro-pillars {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -243,6 +244,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .intro-pillar:hover {
@@ -313,78 +316,292 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #64748b;
     font-size: 0.9375rem;
     line-height: 1.6;
+    flex: 1;
   }
 
-  /* ===== EXPLORE SECTION ===== */
-  .intro-explore-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+  .intro-cite {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 1rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4f46e5;
+    text-decoration: none;
+    border-top: 1px solid #eef2ff;
+    padding-top: 0.85rem;
+  }
+
+  .intro-cite:hover {
+    text-decoration: underline;
+  }
+
+  .intro-cite .material-symbols-outlined {
+    font-size: 14px;
+  }
+
+  /* ===== TAXONOMY / TIERS ===== */
+  .tax-tiers {
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
+    margin-top: 1.5rem;
   }
 
-  @media (max-width: 1100px) {
-    .intro-explore-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .tax-tier {
+    position: relative;
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem 1.5rem 2rem;
+    overflow: hidden;
   }
 
-  @media (max-width: 600px) {
-    .intro-explore-grid {
+  .tax-tier::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+  }
+
+  .tax-tier.t1::before { background: linear-gradient(180deg, #4f46e5, #6366f1); }
+  .tax-tier.t2::before { background: linear-gradient(180deg, #4338ca, #4f46e5); }
+  .tax-tier.t3::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
+
+  .tax-tier-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tax-tier-level {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #4f46e5;
+    background: #eef2ff;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .tax-tier-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #0f172a;
+  }
+
+  .tax-tier-desc {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .tax-tier-meta {
+    margin-top: 0.6rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+
+  .tax-rule-callout {
+    margin-top: 1.25rem;
+    background: #eef2ff;
+    border-left: 4px solid #4f46e5;
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.25rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #3730a3;
+    line-height: 1.6;
+  }
+
+  .tax-rule-callout strong {
+    color: #312e81;
+  }
+
+  /* ===== NAMING TABLE ===== */
+  .tax-table-wrap {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+  }
+
+  .tax-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'Rubik', system-ui, sans-serif;
+    min-width: 640px;
+  }
+
+  .tax-table th {
+    text-align: left;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .tax-table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.9rem;
+    color: #475569;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .tax-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .tax-table code {
+    background: #eef2ff;
+    color: #4338ca;
+    padding: 0.125rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+  }
+
+  /* ===== DECISION LADDER ===== */
+  .tax-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .tax-rule {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+  }
+
+  .tax-rule-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #eef2ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+  }
+
+  .tax-rule-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #475569;
+    line-height: 1.55;
+    padding-top: 0.2rem;
+  }
+
+  .tax-rule-text code {
+    background: #f1f5f9;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    color: #4338ca;
+  }
+
+  /* ===== DO / DONT ===== */
+  .dodont-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 800px) {
+    .dodont-container {
       grid-template-columns: 1fr;
     }
   }
 
-  .intro-explore-card {
+  .dodont-column {
     background: white;
-    padding: 1.5rem;
     border-radius: 12px;
     border: 1px solid #e6e8eb;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
+    overflow: hidden;
   }
 
-  .intro-explore-card:hover {
-    border-color: #4f46e5;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
-  }
-
-  .intro-explore-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
+  .dodont-header {
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 20px;
-  }
-
-  .intro-explore-icon.foundations {
-    background: #eef2ff;
-    color: #4f46e5;
-  }
-
-  .intro-explore-icon.patterns {
-    background: #f3e8ff;
-    color: #8b5cf6;
-  }
-
-  .intro-explore-title {
+    gap: 0.5rem;
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    color: #0f172a;
-    margin-bottom: 0.25rem;
   }
 
-  .intro-explore-desc {
+  .dodont-header.do {
+    background: #dcfce7;
+    color: #15803d;
+    border-bottom: 1px solid #bbf7d0;
+  }
+
+  .dodont-header.dont {
+    background: #e0e7ff;
+    color: #3730a3;
+    border-bottom: 1px solid #c7d2fe;
+  }
+
+  .dodont-list {
+    padding: 1rem 1.5rem;
+  }
+
+  .dodont-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed #e6e8eb;
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #94a3b8;
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
+    color: #475569;
+    line-height: 1.5;
   }
 
-  /* ===== GETTING STARTED ===== */
+  .dodont-item:last-child {
+    border-bottom: none;
+  }
+
+  .dodont-item code {
+    background: #f1f5f9;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    color: #4338ca;
+  }
+
+  /* ===== QUICKSTART / GETTING STARTED ===== */
   .intro-start {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     border-radius: 20px;
@@ -455,6 +672,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding-top: 0.15rem;
   }
 
+  .intro-start-step-text code {
+    background: #e0e7ff;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    color: #3730a3;
+  }
+
   .intro-code {
     background: #1e293b;
     border-radius: 12px;
@@ -504,7 +730,202 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .intro-code .property { color: #7dd3fc; }
   .intro-code .value { color: #a5f3fc; }
   .intro-code .function { color: #c4b5fd; }
+  .intro-code .keyword { color: #c084fc; }
   .intro-code .punctuation { color: #94a3b8; }
+
+  /* ===== BOOK MAP ===== */
+  .book-group {
+    margin-bottom: 2.5rem;
+  }
+
+  .book-group-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .book-group-tier {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #4f46e5;
+    background: #eef2ff;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .book-group-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #0f172a;
+  }
+
+  .book-group-count {
+    margin-left: auto;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #94a3b8;
+  }
+
+  .intro-explore-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 1100px) {
+    .intro-explore-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .intro-explore-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-explore-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: block;
+  }
+
+  .intro-explore-card:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+  }
+
+  .intro-explore-card.soon {
+    background: #f8fafc;
+    opacity: 0.8;
+  }
+
+  .intro-explore-card.soon:hover {
+    border-color: #e6e8eb;
+    box-shadow: none;
+  }
+
+  .intro-explore-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 20px;
+  }
+
+  .intro-explore-icon.foundations {
+    background: #eef2ff;
+    color: #4f46e5;
+  }
+
+  .intro-explore-icon.patterns {
+    background: #e0e7ff;
+    color: #4338ca;
+  }
+
+  .intro-explore-icon.components {
+    background: #f3e8ff;
+    color: #8b5cf6;
+  }
+
+  .intro-explore-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+
+  .intro-explore-desc {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #94a3b8;
+    font-size: 0.8125rem;
+  }
+
+  .intro-explore-soon-badge {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6d28d9;
+    background: #f3e8ff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    font-family: 'Rubik', system-ui, sans-serif;
+  }
+
+  /* ===== GOVERNANCE ===== */
+  .gov-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .gov-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .gov-card {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+
+  .gov-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .gov-card h3 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+  }
+
+  .gov-card p {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .gov-card p code {
+    background: #f1f5f9;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.78rem;
+    color: #4338ca;
+  }
 
   /* ===== BRAND COLORS PREVIEW ===== */
   .intro-colors {
@@ -542,9 +963,59 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .intro-color-hex {
-    font-family: 'SF Mono', monospace;
+    font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
     color: #94a3b8;
+  }
+
+  /* ===== REFERENCES ===== */
+  .intro-refs {
+    margin-top: 3rem;
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .intro-refs h3 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+
+  .intro-refs ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2rem;
+  }
+
+  @media (max-width: 700px) {
+    .intro-refs ul {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-refs li {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eef2ff;
+    line-height: 1.5;
+  }
+
+  .intro-refs a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .intro-refs a:hover {
+    text-decoration: underline;
   }
 
   /* ===== FOOTER ===== */
@@ -577,11 +1048,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="intro-hero">
   <div className="intro-hero-content">
     <div className="intro-hero-badge">
-      <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>auto_awesome</span>
-      Design System
+      <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>menu_book</span>
+      Design System · Taxonomy Book
     </div>
-    <h1 className="intro-hero-title">Tokens Are the Source of Truth</h1>
-    <div className="intro-hero-subtitle">The RamosLabs Design System is a standalone foundation where every color, space, radius, and shadow traces back to a single token. Design decisions live as data, so the interface stays consistent everywhere it renders.</div>
+    <h1 className="intro-hero-title">A Taxonomy for Building Reusable UI</h1>
+    <div className="intro-hero-subtitle">RamosLabs is a documentation-first design system: a mono-indigo taxonomy book that shows how to build a consistent, reusable component library from a single token contract. It ships decisions as data, not a bundle of components you import.</div>
   </div>
   <div className="intro-hero-version">v0.1</div>
 </div>
@@ -590,9 +1061,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="intro-vision">
   <div className="intro-vision-grid">
     <div className="intro-vision-content">
-      <h2>Design That Stays Consistent</h2>
-      <div className="intro-vision-text">Nothing here hardcodes a value. Design tokens are authored once as DTCG JSON, and Style Dictionary compiles them into CSS variables and TypeScript. Change a token, and every surface updates in step.</div>
-      <div className="intro-vision-text">The system is intentionally small and mono-indigo. One accent carries the whole experience, so the interface never competes with the content it presents.</div>
+      <h2>A Book, Not a Bundle</h2>
+      <div className="intro-vision-text">RamosLabs does not export components. It documents the taxonomy, the tokens, the patterns, and the naming rules you follow to build your own library, one that stays consistent as it grows.</div>
+      <div className="intro-vision-text">Every value is authored once as DTCG JSON, then Style Dictionary compiles it into CSS variables and TypeScript. Change a token, and every surface that references it updates in step. The tokens are the contract; the rest of this book explains how to honor it.</div>
       <div className="intro-vision-highlight">
         <div className="intro-vision-quote">"When the tokens are right, consistency stops being a chore and becomes the default."</div>
       </div>
@@ -603,12 +1074,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="intro-stat-label">Design Tokens</div>
       </div>
       <div className="intro-stat">
-        <div className="intro-stat-value">8px</div>
-        <div className="intro-stat-label">Base Unit Grid</div>
+        <div className="intro-stat-value">3</div>
+        <div className="intro-stat-label">Taxonomy Tiers</div>
       </div>
       <div className="intro-stat">
         <div className="intro-stat-value">AA</div>
-        <div className="intro-stat-label">WCAG Baseline</div>
+        <div className="intro-stat-label">WCAG Floor</div>
       </div>
       <div className="intro-stat">
         <div className="intro-stat-value">1</div>
@@ -618,12 +1089,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 </div>
 
-{/* ===== PILLARS ===== */}
+{/* ===== PRINCIPLES ===== */}
 <div className="intro-section">
   <div className="intro-section-header">
-    <div className="intro-section-label">Core Principles</div>
-    <h2 className="intro-section-title">Built on Three Ideas</h2>
-    <div className="intro-section-subtitle">A small set of decisions keeps the system predictable, accessible, and easy to build on.</div>
+    <div className="intro-section-label">Guiding Principles</div>
+    <h2 className="intro-section-title">Six Ideas the System Stands On</h2>
+    <div className="intro-section-subtitle">Each principle is a decision we hold to, and each reflects how the wider design-systems field works today.</div>
   </div>
 
   <div className="intro-pillars">
@@ -631,120 +1102,246 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="intro-pillar-icon primary">
         <span className="material-symbols-outlined">data_object</span>
       </div>
-      <h3 className="intro-pillar-title">Tokens First</h3>
-      <div className="intro-pillar-text">Every value is a token. Colors, spacing, radii, and shadows are authored as data and compiled into CSS and TypeScript, so there is a single source of truth for the whole system.</div>
+      <h3 className="intro-pillar-title">Tokens Are the Contract</h3>
+      <div className="intro-pillar-text">Every value is a token authored once as DTCG JSON, then compiled to CSS and TypeScript. A token is a promise about a design decision, so the same decision renders identically everywhere it is used.</div>
+      <a className="intro-cite" href="https://www.designtokens.org/TR/drafts/format/" target="_blank" rel="noreferrer">
+        <span className="material-symbols-outlined">open_in_new</span>
+        W3C Design Tokens Format Module
+      </a>
     </div>
+
     <div className="intro-pillar deep">
       <div className="intro-pillar-icon deep">
+        <span className="material-symbols-outlined">stacks</span>
+      </div>
+      <h3 className="intro-pillar-title">Three Tiers, One Direction</h3>
+      <div className="intro-pillar-text">Primitives hold raw values, semantics name intent, components consume semantics. Values stay free to change while meaning stays stable, which is exactly how tiered token systems are meant to be layered.</div>
+      <a className="intro-cite" href="https://medium.com/eightshapes-llc/reimagining-a-token-taxonomy-462d35b2b033" target="_blank" rel="noreferrer">
+        <span className="material-symbols-outlined">open_in_new</span>
+        Curtis, Reimagining a Token Taxonomy
+      </a>
+    </div>
+
+    <div className="intro-pillar secondary">
+      <div className="intro-pillar-icon secondary">
+        <span className="material-symbols-outlined">inventory_2</span>
+      </div>
+      <h3 className="intro-pillar-title">The System Is a Product</h3>
+      <div className="intro-pillar-text">This library is versioned, released, and maintained like software, not a one-off deliverable. It serves the products that consume it, and it earns trust by staying stable across releases.</div>
+      <a className="intro-cite" href="https://medium.com/eightshapes-llc/a-design-system-isn-t-a-project-it-s-a-product-serving-products-74dcfffef935" target="_blank" rel="noreferrer">
+        <span className="material-symbols-outlined">open_in_new</span>
+        Curtis, A Product Serving Products
+      </a>
+    </div>
+
+    <div className="intro-pillar primary">
+      <div className="intro-pillar-icon primary">
+        <span className="material-symbols-outlined">account_tree</span>
+      </div>
+      <h3 className="intro-pillar-title">Taxonomy Over Invention</h3>
+      <div className="intro-pillar-text">Interfaces are composed from a small, named vocabulary. Foundations combine into patterns, patterns into components. Naming the levels makes the whole system searchable, teachable, and hard to drift from.</div>
+      <a className="intro-cite" href="https://atomicdesign.bradfrost.com/chapter-2/" target="_blank" rel="noreferrer">
+        <span className="material-symbols-outlined">open_in_new</span>
+        Frost, Atomic Design
+      </a>
+    </div>
+
+    <div className="intro-pillar deep">
+      <div className="intro-pillar-icon deep">
+        <span className="material-symbols-outlined">code_blocks</span>
+      </div>
+      <h3 className="intro-pillar-title">You Own the Code</h3>
+      <div className="intro-pillar-text">Components are meant to be read, copied, and adapted in your own repository, never hidden behind a runtime you cannot change. Open code keeps the team in control of its own UI, with the tokens as the shared constraint.</div>
+      <a className="intro-cite" href="https://ui.shadcn.com/docs" target="_blank" rel="noreferrer">
+        <span className="material-symbols-outlined">open_in_new</span>
+        shadcn/ui, Open Code Philosophy
+      </a>
+    </div>
+
+    <div className="intro-pillar secondary">
+      <div className="intro-pillar-icon secondary">
         <span className="material-symbols-outlined">accessibility_new</span>
       </div>
       <h3 className="intro-pillar-title">Accessible by Default</h3>
-      <div className="intro-pillar-text">WCAG 2.1 AA is the floor, AAA the goal. Contrast, focus, and keyboard reach are considered before a token or pattern is accepted, not bolted on afterward.</div>
-    </div>
-    <div className="intro-pillar secondary">
-      <div className="intro-pillar-icon secondary">
-        <span className="material-symbols-outlined">devices</span>
-      </div>
-      <h3 className="intro-pillar-title">Ready Anywhere</h3>
-      <div className="intro-pillar-text">Mobile-first layouts and a fluid type scale run from a phone to a wide desktop. The same tokens drive every breakpoint, so nothing drifts between screens.</div>
+      <div className="intro-pillar-text">WCAG 2.1 AA is the floor, AAA the goal. Contrast, focus, and keyboard reach are decided before a token or pattern is accepted, never bolted on later. Accessibility is a property of the contract, not an afterthought.</div>
+      <a className="intro-cite" href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noreferrer">
+        <span className="material-symbols-outlined">open_in_new</span>
+        W3C, WCAG 2.1
+      </a>
     </div>
   </div>
 </div>
 
-{/* ===== EXPLORE ===== */}
+{/* ===== TAXONOMY / ADOPTION ===== */}
 <div className="intro-section">
   <div className="intro-section-header">
-    <div className="intro-section-label">The Reference</div>
-    <h2 className="intro-section-title">Start Building</h2>
-    <div className="intro-section-subtitle">Everything you need to build consistent interfaces, organized, documented, and ready to use.</div>
+    <div className="intro-section-label">The Taxonomy</div>
+    <h2 className="intro-section-title">How the System Is Layered</h2>
+    <div className="intro-section-subtitle">Three tiers, read in one direction. Each tier may reference the tier below it, never the tier above. This is the rule that keeps the system coherent as it scales.</div>
   </div>
 
-  <div className="intro-explore-grid">
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon foundations">
-        <span className="material-symbols-outlined">palette</span>
+  <div className="tax-tiers">
+    <div className="tax-tier t1">
+      <div className="tax-tier-head">
+        <span className="tax-tier-level">Tier 1</span>
+        <span className="tax-tier-name">Foundations</span>
       </div>
-      <div className="intro-explore-title">Colors</div>
-      <div className="intro-explore-desc">Mono-indigo palette & semantics</div>
+      <p className="tax-tier-desc">The token contract. Color, typography, spacing, radius, shadow, motion, breakpoints, and z-index, authored as DTCG JSON and compiled to CSS variables. Start here; everything else references these.</p>
+      <div className="tax-tier-meta">references: primitives only</div>
     </div>
 
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon foundations">
-        <span className="material-symbols-outlined">format_size</span>
+    <div className="tax-tier t2">
+      <div className="tax-tier-head">
+        <span className="tax-tier-level">Tier 2</span>
+        <span className="tax-tier-name">Patterns</span>
       </div>
-      <div className="intro-explore-title">Typography</div>
-      <div className="intro-explore-desc">Type scale & fonts</div>
+      <p className="tax-tier-desc">Reusable recipes and rules built from foundations: interactive states, form behavior, accessibility, voice and tone, AI insights. Patterns describe how tokens combine into consistent behavior before any component exists.</p>
+      <div className="tax-tier-meta">references: foundations</div>
     </div>
 
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon foundations">
-        <span className="material-symbols-outlined">space_bar</span>
+    <div className="tax-tier t3">
+      <div className="tax-tier-head">
+        <span className="tax-tier-level">Tier 3</span>
+        <span className="tax-tier-name">Components</span>
       </div>
-      <div className="intro-explore-title">Spacing</div>
-      <div className="intro-explore-desc">8px grid system</div>
+      <p className="tax-tier-desc">Named, reusable UI built only from foundations and patterns. This is the library you assemble in your own project using the naming convention below. Documented components arrive in a later release of the book.</p>
+      <div className="tax-tier-meta">references: patterns, foundations</div>
     </div>
+  </div>
 
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon foundations">
-        <span className="material-symbols-outlined">rounded_corner</span>
-      </div>
-      <div className="intro-explore-title">Border Radius</div>
-      <div className="intro-explore-desc">Corner styles</div>
+  <div className="tax-rule-callout">
+    <strong>The one rule:</strong> never skip a tier. A component pulls from patterns and foundations; a pattern pulls from foundations; a foundation references only primitives. Reach up the ladder and the taxonomy starts to fray.
+  </div>
+</div>
+
+{/* ===== NAMING CONVENTION ===== */}
+<div className="intro-section">
+  <div className="intro-section-header">
+    <div className="intro-section-label">Naming Convention</div>
+    <h2 className="intro-section-title">Names Carry the Meaning</h2>
+    <div className="intro-section-subtitle">A prefix tells you what a thing is and where it belongs before you read a line of its code. Two prefixes for UI, one shape for tokens.</div>
+  </div>
+
+  <div className="tax-table-wrap">
+    <table className="tax-table">
+      <thead>
+        <tr>
+          <th>Prefix or shape</th>
+          <th>Scope</th>
+          <th>Example</th>
+          <th>Rule</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>SJ</code></td>
+          <td>Reusable, domain-agnostic component</td>
+          <td><code>SJButton</code>, <code>SJInput</code>, <code>SJState</code></td>
+          <td>Lives in the shared library. No business logic. Built only from tokens and patterns.</td>
+        </tr>
+        <tr>
+          <td><code>W</code></td>
+          <td>Domain widget, app-specific</td>
+          <td><code>WEventCard</code>, <code>WCheckoutSummary</code></td>
+          <td>Composes SJ components. May hold domain logic. Never re-styles with raw values.</td>
+        </tr>
+        <tr>
+          <td><code>--color-</code>, <code>--space-</code>, <code>--radius-</code></td>
+          <td>Token custom properties</td>
+          <td><code>var(--color-primary)</code>, <code>var(--space-6)</code></td>
+          <td>The only source of color, spacing, radius, shadow, and type. Never a raw hex or pixel in a component.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{/* ===== DECISION LADDER ===== */}
+<div className="intro-section">
+  <div className="intro-section-header">
+    <div className="intro-section-label">Decision Rules</div>
+    <h2 className="intro-section-title">What to Reach for First</h2>
+    <div className="intro-section-subtitle">When you build a surface, walk this ladder from the top. Stop at the first rung that applies.</div>
+  </div>
+
+  <div className="tax-ladder">
+    <div className="tax-rule">
+      <div className="tax-rule-num">1</div>
+      <div className="tax-rule-text">Is there a token for this value? Use the token. Never a raw hex or pixel.</div>
     </div>
-
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon patterns">
-        <span className="material-symbols-outlined">touch_app</span>
-      </div>
-      <div className="intro-explore-title">Interactive</div>
-      <div className="intro-explore-desc">States & animations</div>
+    <div className="tax-rule">
+      <div className="tax-rule-num">2</div>
+      <div className="tax-rule-text">Is there a semantic token for the intent? Prefer <code>var(--color-primary)</code> over <code>var(--color-indigo-600)</code>, so meaning survives a value change.</div>
     </div>
-
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon patterns">
-        <span className="material-symbols-outlined">accessibility</span>
-      </div>
-      <div className="intro-explore-title">Accessibility</div>
-      <div className="intro-explore-desc">WCAG guidelines</div>
+    <div className="tax-rule">
+      <div className="tax-rule-num">3</div>
+      <div className="tax-rule-text">Does a Pattern already describe this behavior? Follow the pattern instead of reinventing states, spacing, or focus handling.</div>
     </div>
-
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon patterns">
-        <span className="material-symbols-outlined">input</span>
-      </div>
-      <div className="intro-explore-title">Form Elements</div>
-      <div className="intro-explore-desc">Inputs & validation</div>
+    <div className="tax-rule">
+      <div className="tax-rule-num">4</div>
+      <div className="tax-rule-text">Is it reusable and domain-free? Build it as an <code>SJ</code> component, composed from tokens and patterns.</div>
     </div>
+    <div className="tax-rule">
+      <div className="tax-rule-num">5</div>
+      <div className="tax-rule-text">Is it app-specific? Build it as a <code>W</code> widget that composes SJ components and holds the domain logic.</div>
+    </div>
+    <div className="tax-rule">
+      <div className="tax-rule-num">6</div>
+      <div className="tax-rule-text">Missing a token or pattern? Propose it to the contract first, then use it. Never fork the taxonomy silently.</div>
+    </div>
+  </div>
 
-    <div className="intro-explore-card">
-      <div className="intro-explore-icon foundations">
-        <span className="material-symbols-outlined">tag</span>
+  <div className="dodont-container">
+    <div className="dodont-column">
+      <div className="dodont-header do">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>check_circle</span>
+        Do
       </div>
-      <div className="intro-explore-title">Token Reference</div>
-      <div className="intro-explore-desc">Every token, copyable</div>
+      <div className="dodont-list">
+        <div className="dodont-item">Reference tokens with <code>var(--color-primary)</code>, <code>var(--space-6)</code>, and the rest of the contract.</div>
+        <div className="dodont-item">Compose <code>SJ</code> components into <code>W</code> widgets, not the other way around.</div>
+        <div className="dodont-item">Extend the DTCG JSON when a value is genuinely missing.</div>
+        <div className="dodont-item">Keep contrast at AA or better on every text and control.</div>
+      </div>
+    </div>
+    <div className="dodont-column">
+      <div className="dodont-header dont">
+        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>cancel</span>
+        Don't
+      </div>
+      <div className="dodont-list">
+        <div className="dodont-item">Hardcode a hex or pixel value inside a component.</div>
+        <div className="dodont-item">Put business logic in an <code>SJ</code> component.</div>
+        <div className="dodont-item">Skip a tier, for example a component reaching for a primitive.</div>
+        <div className="dodont-item">Introduce a second accent color. One indigo carries the brand.</div>
+      </div>
     </div>
   </div>
 </div>
 
-{/* ===== GETTING STARTED ===== */}
+{/* ===== ADOPTION QUICKSTART ===== */}
 <div className="intro-section">
   <div className="intro-start">
     <div className="intro-start-grid">
       <div>
-        <h2>Jump In</h2>
-        <div className="intro-start-text">Three steps to start building. Import the tokens, use the variables, follow the patterns, and you will ship consistent UI in minutes.</div>
+        <h2>Adopt It in a New Project</h2>
+        <div className="intro-start-text">Four steps to bring the taxonomy into a fresh codebase. Install the contract, load it once, build against it, and contribute back when something is missing.</div>
         <div className="intro-start-steps">
           <div className="intro-start-step">
             <div className="intro-start-step-num">1</div>
-            <div className="intro-start-step-text">Import the generated token stylesheet from @ramoslabs/tokens in your app entry point</div>
+            <div className="intro-start-step-text">Add <code>@ramoslabs/tokens</code> to the consuming project as a dependency.</div>
           </div>
           <div className="intro-start-step">
             <div className="intro-start-step-num">2</div>
-            <div className="intro-start-step-text">Use the CSS custom properties (tokens) in your components, never raw hex or pixel values</div>
+            <div className="intro-start-step-text">Import <code>@ramoslabs/tokens/css</code> once at the app entry point so the CSS variables load globally.</div>
           </div>
           <div className="intro-start-step">
             <div className="intro-start-step-num">3</div>
-            <div className="intro-start-step-text">Follow the patterns for consistency across every surface you build</div>
+            <div className="intro-start-step-text">Build UI against the variables and the <code>SJ</code> naming convention, following the Patterns for behavior.</div>
+          </div>
+          <div className="intro-start-step">
+            <div className="intro-start-step-num">4</div>
+            <div className="intro-start-step-text">Need something new? Add it to the token JSON or propose a pattern, then rebuild. The DTCG source stays the single source of truth.</div>
           </div>
         </div>
       </div>
@@ -754,23 +1351,169 @@ import { Meta } from '@storybook/addon-docs/blocks';
             <span className="intro-code-dot red"></span>
             <span className="intro-code-dot yellow"></span>
             <span className="intro-code-dot green"></span>
-            <span className="intro-code-lang">CSS</span>
+            <span className="intro-code-lang">TS / CSS</span>
           </div>
-          <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Using design tokens in your CSS */</span>
-<span class="selector">.card</span> <span class="punctuation">{</span>
+          <pre dangerouslySetInnerHTML={{__html: `<span class="comment">// app entry, once</span>
+<span class="keyword">import</span> <span class="value">'@ramoslabs/tokens/css'</span><span class="punctuation">;</span>
+
+<span class="comment">/* then build against the contract */</span>
+<span class="selector">.sj-card</span> <span class="punctuation">{</span>
     <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-surface)</span><span class="punctuation">;</span>
     <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-6)</span><span class="punctuation">;</span>
     <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-lg)</span><span class="punctuation">;</span>
     <span class="property">border</span><span class="punctuation">:</span> <span class="value">1px</span> solid <span class="value">var(--color-border)</span><span class="punctuation">;</span>
     <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-sm)</span><span class="punctuation">;</span>
-<span class="punctuation"> }</span>
+<span class="punctuation">}</span>
 
-<span class="selector">.card__action</span> <span class="punctuation">{</span>
+<span class="selector">.sj-card__action</span> <span class="punctuation">{</span>
     <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
     <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-white)</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>`}} />
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+{/* ===== BOOK MAP ===== */}
+<div className="intro-section">
+  <div className="intro-section-header">
+    <div className="intro-section-label">Navigate the Book</div>
+    <h2 className="intro-section-title">Foundations, Patterns, and What Comes Next</h2>
+    <div className="intro-section-subtitle">The book is organized by tier. Read the foundations to learn the contract, the patterns to learn the behavior, and watch this space for the component library.</div>
+  </div>
+
+  <div className="book-group">
+    <div className="book-group-head">
+      <span className="book-group-tier">Tier 1</span>
+      <span className="book-group-name">Foundations</span>
+      <span className="book-group-count">The token contract</span>
+    </div>
+    <div className="intro-explore-grid">
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">palette</span></div>
+        <div className="intro-explore-title">Colors</div>
+        <div className="intro-explore-desc">Mono-indigo palette and semantics</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">format_size</span></div>
+        <div className="intro-explore-title">Typography</div>
+        <div className="intro-explore-desc">Type scale and families</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">space_bar</span></div>
+        <div className="intro-explore-title">Spacing</div>
+        <div className="intro-explore-desc">8px base unit grid</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">rounded_corner</span></div>
+        <div className="intro-explore-title">Border Radius</div>
+        <div className="intro-explore-desc">Corner scale</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">layers</span></div>
+        <div className="intro-explore-title">Shadows</div>
+        <div className="intro-explore-desc">Elevation scale</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">animation</span></div>
+        <div className="intro-explore-title">Motion</div>
+        <div className="intro-explore-desc">Duration and easing</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">devices</span></div>
+        <div className="intro-explore-title">Responsive</div>
+        <div className="intro-explore-desc">Breakpoints and layout</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon foundations"><span className="material-symbols-outlined">tag</span></div>
+        <div className="intro-explore-title">Token Reference</div>
+        <div className="intro-explore-desc">Every token, copyable</div>
+      </div>
+    </div>
+  </div>
+
+  <div className="book-group">
+    <div className="book-group-head">
+      <span className="book-group-tier">Tier 2</span>
+      <span className="book-group-name">Patterns</span>
+      <span className="book-group-count">Behavior built from tokens</span>
+    </div>
+    <div className="intro-explore-grid">
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon patterns"><span className="material-symbols-outlined">touch_app</span></div>
+        <div className="intro-explore-title">Interactive</div>
+        <div className="intro-explore-desc">States and feedback</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon patterns"><span className="material-symbols-outlined">accessibility</span></div>
+        <div className="intro-explore-title">Accessibility</div>
+        <div className="intro-explore-desc">WCAG guidelines</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon patterns"><span className="material-symbols-outlined">input</span></div>
+        <div className="intro-explore-title">Form Elements</div>
+        <div className="intro-explore-desc">Inputs and validation</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon patterns"><span className="material-symbols-outlined">record_voice_over</span></div>
+        <div className="intro-explore-title">Voice and Tone</div>
+        <div className="intro-explore-desc">Copy and microcopy</div>
+      </div>
+      <div className="intro-explore-card">
+        <div className="intro-explore-icon patterns"><span className="material-symbols-outlined">insights</span></div>
+        <div className="intro-explore-title">AI Insights</div>
+        <div className="intro-explore-desc">Generated content patterns</div>
+      </div>
+    </div>
+  </div>
+
+  <div className="book-group">
+    <div className="book-group-head">
+      <span className="book-group-tier">Tier 3</span>
+      <span className="book-group-name">Components</span>
+      <span className="book-group-count">Coming next</span>
+    </div>
+    <div className="intro-explore-grid">
+      <div className="intro-explore-card soon">
+        <div className="intro-explore-icon components"><span className="material-symbols-outlined">smart_button</span></div>
+        <div className="intro-explore-title">SJ Component Library</div>
+        <div className="intro-explore-desc">Reusable, domain-free UI</div>
+        <span className="intro-explore-soon-badge">Soon</span>
+      </div>
+      <div className="intro-explore-card soon">
+        <div className="intro-explore-icon components"><span className="material-symbols-outlined">dashboard_customize</span></div>
+        <div className="intro-explore-title">W Domain Widgets</div>
+        <div className="intro-explore-desc">App-specific compositions</div>
+        <span className="intro-explore-soon-badge">Soon</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ===== GOVERNANCE ===== */}
+<div className="intro-section">
+  <div className="intro-section-header">
+    <div className="intro-section-label">Governance</div>
+    <h2 className="intro-section-title">How the System Evolves</h2>
+    <div className="intro-section-subtitle">The contract changes on purpose, in one place, with a version attached. That is what makes a design system safe to depend on.</div>
+  </div>
+
+  <div className="gov-grid">
+    <div className="gov-card">
+      <div className="gov-card-icon"><span className="material-symbols-outlined">database</span></div>
+      <h3>Single Source</h3>
+      <p>The DTCG JSON in <code>packages/tokens/src</code> is the one place values live. Style Dictionary compiles it to CSS, TypeScript, and JSON. Nothing downstream is edited by hand, so the outputs can never drift from the source.</p>
+    </div>
+    <div className="gov-card">
+      <div className="gov-card-icon"><span className="material-symbols-outlined">tag</span></div>
+      <h3>Semantic Versioning</h3>
+      <p>The token contract is versioned like software. Renaming or removing a token is a breaking change; adding one is a minor release. Consumers upgrade on their own schedule and read the changelog to know what moved.</p>
+    </div>
+    <div className="gov-card">
+      <div className="gov-card-icon"><span className="material-symbols-outlined">rule</span></div>
+      <h3>Contribution</h3>
+      <p>New values and patterns enter through the JSON source and a review, never a private fork. The taxonomy stays coherent as it grows because every addition passes through the same gate as the rest of the book.</p>
     </div>
   </div>
 </div>
@@ -806,6 +1549,21 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </div>
     </div>
   </div>
+</div>
+
+{/* ===== REFERENCES ===== */}
+<div className="intro-refs">
+  <h3>Sources and further reading</h3>
+  <ul>
+    <li><a href="https://www.designtokens.org/TR/drafts/format/" target="_blank" rel="noreferrer">W3C Design Tokens Format Module</a>, the DTCG spec our JSON follows.</li>
+    <li><a href="https://www.designtokens.org/" target="_blank" rel="noreferrer">Design Tokens Community Group</a>, the group defining the token standard.</li>
+    <li><a href="https://medium.com/eightshapes-llc/reimagining-a-token-taxonomy-462d35b2b033" target="_blank" rel="noreferrer">Nathan Curtis, Reimagining a Token Taxonomy</a> (EightShapes).</li>
+    <li><a href="https://medium.com/eightshapes-llc/a-design-system-isn-t-a-project-it-s-a-product-serving-products-74dcfffef935" target="_blank" rel="noreferrer">Nathan Curtis, A Design System Isn't a Project, It's a Product</a> (EightShapes).</li>
+    <li><a href="https://atomicdesign.bradfrost.com/chapter-2/" target="_blank" rel="noreferrer">Brad Frost, Atomic Design</a>, the taxonomy of levels.</li>
+    <li><a href="https://ui.shadcn.com/docs" target="_blank" rel="noreferrer">shadcn/ui</a>, open code and ownership as a distribution model.</li>
+    <li><a href="https://m3.material.io/foundations" target="_blank" rel="noreferrer">Material 3 Foundations</a>, a reference for structuring principles.</li>
+    <li><a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noreferrer">W3C WCAG 2.1</a>, the accessibility floor we build to.</li>
+  </ul>
 </div>
 
 {/* ===== FOOTER ===== */}

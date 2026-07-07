@@ -12,135 +12,18 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'Red Hat Display', system-ui, sans-serif;
     color: #0f172a;
     font-size: 1.875rem;
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
     margin-bottom: 0.75rem;
   }
 
   .typo-description {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-
-  .typo-card {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e6e8eb;
-    overflow: hidden;
-    margin-bottom: 2rem;
-  }
-
-  .typo-card-header {
-    background: #f1f5f9;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #e6e8eb;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .typo-card-label {
-    font-weight: 700;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    color: #64748b;
-    letter-spacing: 0.05em;
-  }
-
-  .typo-card-font {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    background: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #e6e8eb;
-    color: #64748b;
-  }
-
-  .typo-card-body {
-    padding: 2rem;
-  }
-
-  .typo-sample {
-    padding-bottom: 1.5rem;
-    border-bottom: 1px dashed #e6e8eb;
-    margin-bottom: 1.5rem;
-  }
-
-  .typo-sample:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
-  .typo-h1 {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    color: #0f172a;
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
-  }
-
-  .typo-h2 {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #0f172a;
-    line-height: 1.2;
-    margin-bottom: 0.5rem;
-  }
-
-  .typo-body {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    color: #64748b;
-    line-height: 1.6;
-    max-width: 42rem;
-  }
-
-  .typo-meta {
-    display: flex;
-    gap: 1rem;
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    color: #64748b;
-    margin-top: 0.5rem;
-  }
-
-  .typo-meta span {
-    background: #f8fafc;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-  }
-
-  .typo-scale {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .typo-scale-item {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 0.75rem;
-    background: #f8fafc;
-    border-radius: 8px;
-  }
-
-  .typo-scale-label {
-    font-family: 'SF Mono', monospace;
-    font-size: 0.75rem;
-    color: #64748b;
-    min-width: 80px;
-  }
-
-  .typo-scale-sample {
-    flex: 1;
+    color: #475569;
+    font-size: 1.125rem;
+    line-height: 1.625;
+    max-width: 66ch;
   }
 
   .typo-section {
@@ -153,7 +36,401 @@ import { Meta } from '@storybook/addon-docs/blocks';
     text-transform: uppercase;
     color: #94a3b8;
     letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .typo-section-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.625;
+    max-width: 70ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .typo-family-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .typo-family-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+    overflow: hidden;
+  }
+
+  .typo-family-card-header {
+    background: #f1f5f9;
+    padding: 0.875rem 1.5rem;
+    border-bottom: 1px solid #e6e8eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .typo-family-role {
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #4f46e5;
+    letter-spacing: 0.08em;
+  }
+
+  .typo-family-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #e6e8eb;
+    color: #64748b;
+  }
+
+  .typo-family-body {
+    padding: 1.5rem;
+  }
+
+  .typo-family-specimen {
+    color: #0f172a;
+    font-size: 2.25rem;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  .typo-family-glyphs {
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .typo-family-note {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    max-width: 68ch;
+  }
+
+  .typo-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e6e8eb;
+    margin-top: 1rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+  }
+
+  .typo-table th,
+  .typo-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eef0f2;
+    vertical-align: top;
+  }
+
+  .typo-table th {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.06em;
+    background: #f8fafc;
+  }
+
+  .typo-table td {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .typo-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .typo-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  .typo-role-name {
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .typo-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .typo-scale-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 8px;
+  }
+
+  .typo-scale-label {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    color: #4f46e5;
+    min-width: 150px;
+    flex-shrink: 0;
+  }
+
+  .typo-scale-role {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #7c3aed;
+    background: #f5f3ff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    min-width: 74px;
+    text-align: center;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .typo-scale-sample {
+    flex: 1;
+    color: #0f172a;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .typo-rule-card {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-left: 3px solid #4f46e5;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
     margin-bottom: 1rem;
+  }
+
+  .typo-rule-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 1rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .typo-rule-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.6;
+    max-width: 72ch;
+  }
+
+  .typo-rule-body code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    background: #f1f5f9;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  .typo-measure {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .typo-measure-good {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.625;
+    color: #0f172a;
+    max-width: 66ch;
+    border-left: 3px solid #4f46e5;
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .typo-measure-bad {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.625;
+    color: #64748b;
+    max-width: 120ch;
+    border-left: 3px solid #cbd5e1;
+    padding-left: 1rem;
+  }
+
+  .typo-measure-tag {
+    display: inline-block;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  .typo-measure-tag.good { background: #eef2ff; color: #4f46e5; }
+  .typo-measure-tag.bad { background: #f1f5f9; color: #64748b; }
+
+  .typo-a11y-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .typo-a11y-card {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .typo-a11y-crit {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.6875rem;
+    color: #4f46e5;
+    background: #eef2ff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .typo-a11y-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.9375rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .typo-a11y-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .typo-a11y-body code {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    color: #4f46e5;
+  }
+
+  .typo-dodont {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .typo-do,
+  .typo-dont {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .typo-do { border-top: 3px solid #4f46e5; }
+  .typo-dont { border-top: 3px solid #94a3b8; }
+
+  .typo-do-head,
+  .typo-dont-head {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+
+  .typo-do-head { color: #4f46e5; }
+  .typo-dont-head { color: #64748b; }
+
+  .typo-do ul,
+  .typo-dont ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: #475569;
+  }
+
+  .typo-do li,
+  .typo-dont li {
+    padding-left: 1.4rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  .typo-do li:last-child,
+  .typo-dont li:last-child { margin-bottom: 0; }
+
+  .typo-do li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #4f46e5;
+    font-weight: 700;
+  }
+
+  .typo-dont li::before {
+    content: '✗';
+    position: absolute;
+    left: 0;
+    color: #94a3b8;
+    font-weight: 700;
+  }
+
+  .typo-decision {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .typo-decision ol {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #475569;
+  }
+
+  .typo-decision li { margin-bottom: 0.5rem; }
+  .typo-decision li:last-child { margin-bottom: 0; }
+  .typo-decision strong { color: #0f172a; }
+  .typo-decision code {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.8125rem;
+    color: #4f46e5;
   }
 
   .typo-code {
@@ -178,9 +455,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-radius: 50%;
   }
 
-  .typo-code-dot.red { background: #ef4444; }
-  .typo-code-dot.yellow { background: #f59e0b; }
-  .typo-code-dot.green { background: #22c55e; }
+  .typo-code-dot.d1 { background: #6366f1; }
+  .typo-code-dot.d2 { background: #8b5cf6; }
+  .typo-code-dot.d3 { background: #a78bfa; }
 
   .typo-code-lang {
     margin-left: auto;
@@ -193,7 +470,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .typo-code pre {
     margin: 0;
-    padding: 1.25rem;
+    padding: 1.5rem;
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
     font-size: 0.8125rem;
     line-height: 1.7;
@@ -201,212 +478,454 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
 
-  .typo-code .comment { color: #64748b; font-style: italic; }
-  .typo-code .property { color: #7dd3fc; }
-  .typo-code .value { color: #fbbf24; }
-  .typo-code .string { color: #a5f3fc; }
-  .typo-code .unit { color: #c4b5fd; }
+  .typo-code .comment { color: #94a3b8; font-style: italic; }
+  .typo-code .property { color: #a5b4fc; }
+  .typo-code .value { color: #c4b5fd; }
+  .typo-code .string { color: #ddd6fe; }
   .typo-code .punctuation { color: #94a3b8; }
+
+  .typo-refs {
+    margin-top: 1rem;
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+  }
+
+  .typo-refs ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #475569;
+  }
+
+  .typo-refs li { margin-bottom: 0.4rem; }
+  .typo-refs a { color: #4f46e5; text-decoration: none; }
+  .typo-refs a:hover { text-decoration: underline; }
+  .typo-refs strong { color: #0f172a; }
+
+  @media (max-width: 640px) {
+    .typo-scale-item { flex-wrap: wrap; }
+    .typo-scale-label { min-width: 0; }
+  }
 `}
 </style>
 
 <div className="typo-header">
   <h1 className="typo-title">Type That Moves People</h1>
   <p className="typo-description">
-    Bold headlines that stop the scroll. Clear body text that guides the journey. Typography designed to move people, to the starting line, the front row, or the checkout.
+    Typography is the interface. Ninety-five percent of the web is text, so the type system carries most of the
+    experience: what people read first, how fast they understand it, and whether they can read it at all. This page is
+    the taxonomy, three families, one scale, and a set of rules grounded in current readability and accessibility
+    research, so any new RamosLabs surface starts from the same foundation instead of inventing sizes.
   </p>
 </div>
 
-<div className="typo-card">
-  <div className="typo-card-header">
-    <span className="typo-card-label">Headings</span>
-    <span className="typo-card-font">font-family: 'Red Hat Display'</span>
-  </div>
-  <div className="typo-card-body">
-    <div className="typo-sample">
-      <h1 className="typo-h1">Your Next Adventure Starts Here</h1>
-      <div className="typo-meta">
-        <span>Heading 1</span>
-        <span>Bold (700/900)</span>
-        <span>2rem - 4rem (responsive)</span>
+<div className="typo-section">
+  <h2 className="typo-section-title">The Three Voices</h2>
+  <p className="typo-section-lede">
+    A durable type system rarely needs more than two families plus a fallback: one voice with personality for headings,
+    one quiet workhorse for everything the reader actually reads, and a safe fallback for constrained contexts. Ours
+    pairs a geometric display face with a humanist UI face, a contrast that reads as intentional rather than accidental.
+  </p>
+
+  <div className="typo-family-grid">
+    <div className="typo-family-card">
+      <div className="typo-family-card-header">
+        <span className="typo-family-role">Display and Headings</span>
+        <span className="typo-family-token">--font-family-display</span>
+      </div>
+      <div className="typo-family-body">
+        <div className="typo-family-specimen" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontWeight: 800, letterSpacing: '-0.025em' }}>
+          Red Hat Display
+        </div>
+        <div className="typo-family-glyphs" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif" }}>
+          AaBbCc 0123456789 &amp; Your Next Adventure Starts Here
+        </div>
+        <p className="typo-family-note">
+          A low-contrast geometric sans built for confident, large-format text. It has presence at 36px and up, which is
+          exactly where headlines live. Reserve it for the Display and Headline roles. Below the Title role its
+          personality stops helping and starts costing legibility.
+        </p>
       </div>
     </div>
-    <div className="typo-sample">
-      <h2 className="typo-h2">Upcoming Experiences</h2>
-      <div className="typo-meta">
-        <span>Section Title</span>
-        <span>Bold (700)</span>
-        <span>1.875rem (30px)</span>
+
+    <div className="typo-family-card">
+      <div className="typo-family-card-header">
+        <span className="typo-family-role">Body and UI</span>
+        <span className="typo-family-token">--font-family-sans</span>
       </div>
+      <div className="typo-family-body">
+        <div className="typo-family-specimen" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontWeight: 500 }}>
+          Rubik
+        </div>
+        <div className="typo-family-glyphs" style={{ fontFamily: "'Rubik', system-ui, sans-serif" }}>
+          AaBbCc 0123456789 &amp; Good typography is invisible and lets the reader keep moving.
+        </div>
+        <p className="typo-family-note">
+          A humanist sans with a large x-height and open apertures, which is what keeps letters distinct at small sizes
+          on real screens. This is the default for the whole product: body copy, labels, form fields, tables, buttons.
+          If you are not sure which family to use, it is this one.
+        </p>
+      </div>
+    </div>
+
+    <div className="typo-family-card">
+      <div className="typo-family-card-header">
+        <span className="typo-family-role">Fallback and Alt</span>
+        <span className="typo-family-token">--font-family-alt</span>
+      </div>
+      <div className="typo-family-body">
+        <div className="typo-family-specimen" style={{ fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 500 }}>
+          Roboto
+        </div>
+        <div className="typo-family-glyphs" style={{ fontFamily: "'Roboto', system-ui, sans-serif" }}>
+          AaBbCc 0123456789 &amp; A safe, familiar face for constrained surfaces.
+        </div>
+        <p className="typo-family-note">
+          The alternate face for contexts where Rubik is not appropriate or not available: dense system UI, embedded
+          documents, or a metric-compatible fallback while the web fonts load. Do not mix it with Rubik in the same
+          block. It is a substitute, not a third accent.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div className="typo-rule-card" style={{ marginTop: '1.25rem' }}>
+    <div className="typo-rule-title">Why the pairing works</div>
+    <div className="typo-rule-body">
+      Good pairing needs enough contrast to feel deliberate and enough shared DNA to feel like one system. Red Hat
+      Display is geometric and slightly condensed, so it compresses into a headline and holds a tight tracking. Rubik is
+      humanist and open, so it stays comfortable across a long paragraph. They share a sans, sans-serif skeleton and
+      similar proportions, so a Red Hat Display headline sitting directly above a Rubik paragraph reads as a considered
+      hierarchy, not two unrelated fonts fighting for attention. The rule of thumb holds: pair by role, not by taste,
+      one display face, one text face, and let size and weight do the rest.
     </div>
   </div>
 </div>
 
-<div className="typo-card">
-  <div className="typo-card-header">
-    <span className="typo-card-label">Body & UI</span>
-    <span className="typo-card-font">font-family: 'Rubik'</span>
+<div className="typo-section">
+  <h2 className="typo-section-title">Type Roles</h2>
+  <p className="typo-section-lede">
+    Sizes are not chosen per screen. Every piece of text is assigned a semantic role, and the role owns the family,
+    size, weight, line-height and tracking. This mirrors the Material 3 type-scale model of five role groups (Display,
+    Headline, Title, Body, Label), mapped onto our real token scale. Design and build against the role, never against a
+    raw pixel value.
+  </p>
+
+  <table className="typo-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>What it is for</th>
+        <th>Size token</th>
+        <th>Family</th>
+        <th>Weight</th>
+        <th>Leading</th>
+        <th>Tracking</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span className="typo-role-name">Display</span></td>
+        <td>The single loudest moment on a page: hero titles, marquee headliners. One per view, at most.</td>
+        <td><code>--font-size-6xl</code> / <code>5xl</code> / <code>4xl</code></td>
+        <td>Display</td>
+        <td><code>bold</code> / <code>extrabold</code></td>
+        <td><code>--leading-none</code> / <code>tight</code></td>
+        <td><code>--tracking-tighter</code> / <code>tight</code></td>
+      </tr>
+      <tr>
+        <td><span className="typo-role-name">Headline</span></td>
+        <td>High-emphasis section openers and page titles that structure the page below the hero.</td>
+        <td><code>--font-size-3xl</code> / <code>2xl</code></td>
+        <td>Display</td>
+        <td><code>bold</code></td>
+        <td><code>--leading-tight</code> / <code>snug</code></td>
+        <td><code>--tracking-tight</code></td>
+      </tr>
+      <tr>
+        <td><span className="typo-role-name">Title</span></td>
+        <td>Card titles, modal headers, list-group headers. The workhorse of medium emphasis.</td>
+        <td><code>--font-size-xl</code> / <code>lg</code></td>
+        <td>Display or Sans</td>
+        <td><code>semibold</code></td>
+        <td><code>--leading-snug</code></td>
+        <td><code>--tracking-normal</code></td>
+      </tr>
+      <tr>
+        <td><span className="typo-role-name">Body</span></td>
+        <td>Everything the reader actually reads: paragraphs, descriptions, UI copy. The default.</td>
+        <td><code>--font-size-base</code> / <code>sm</code></td>
+        <td>Sans</td>
+        <td><code>normal</code></td>
+        <td><code>--leading-normal</code> / <code>relaxed</code></td>
+        <td><code>--tracking-normal</code></td>
+      </tr>
+      <tr>
+        <td><span className="typo-role-name">Label</span></td>
+        <td>Buttons, tabs, form labels, chips, eyebrows, metadata. Short, functional, often uppercase.</td>
+        <td><code>--font-size-sm</code> / <code>xs</code></td>
+        <td>Sans</td>
+        <td><code>medium</code> / <code>semibold</code></td>
+        <td><code>--leading-none</code> / <code>snug</code></td>
+        <td><code>--tracking-wide</code> / <code>wider</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">The Size Scale</h2>
+  <p className="typo-section-lede">
+    Ten steps, built as a modular scale so the ratio between neighbours stays roughly constant and the jumps feel
+    harmonious rather than arbitrary. The lower steps sit near a 1.125 to 1.25 ratio for fine UI control; the display
+    steps open up toward 1.25 and above for dramatic contrast. The bottom of the scale is 16px (<code>--font-size-base</code>),
+    the accepted floor for comfortable body reading on screens. Only these ten values are legal. Everything on a surface
+    resolves to one of them.
+  </p>
+
+  <div className="typo-scale">
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-6xl</span>
+      <span className="typo-scale-role">Display</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '3.75rem', fontWeight: 800, letterSpacing: '-0.025em' }}>3.75rem 60px</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-5xl</span>
+      <span className="typo-scale-role">Display</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '3rem', fontWeight: 800, letterSpacing: '-0.025em' }}>3rem 48px</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-4xl</span>
+      <span className="typo-scale-role">Display</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '2.25rem', fontWeight: 700 }}>2.25rem 36px</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-3xl</span>
+      <span className="typo-scale-role">Headline</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '1.875rem', fontWeight: 700 }}>1.875rem 30px</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-2xl</span>
+      <span className="typo-scale-role">Headline</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '1.5rem', fontWeight: 700 }}>1.5rem 24px</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-xl</span>
+      <span className="typo-scale-role">Title</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '1.25rem', fontWeight: 600 }}>1.25rem 20px</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-lg</span>
+      <span className="typo-scale-role">Title</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '1.125rem', fontWeight: 600 }}>1.125rem 18px</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-base</span>
+      <span className="typo-scale-role">Body</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '1rem', fontWeight: 400 }}>1rem 16px, the body reading floor</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-sm</span>
+      <span className="typo-scale-role">Label</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '0.875rem', fontWeight: 500 }}>0.875rem 14px, helper and labels</span>
+    </div>
+    <div className="typo-scale-item">
+      <span className="typo-scale-label">--font-size-xs</span>
+      <span className="typo-scale-role">Label</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '0.75rem', fontWeight: 500 }}>0.75rem 12px, metadata only</span>
+    </div>
   </div>
-  <div className="typo-card-body">
-    <p className="typo-body">
-      Good typography is invisible. It carries meaning without calling attention to itself, holds a long paragraph together, and lets the reader move through the content without friction. The RamosLabs type scale is built to do exactly that at every size.
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">Weight, Line Height and Tracking</h2>
+  <p className="typo-section-lede">
+    These three axes carry hierarchy without adding a single new size. Used well they let one family cover Display down
+    to Label. Used carelessly they are the fastest way to break legibility.
+  </p>
+
+  <div className="typo-rule-card">
+    <div className="typo-rule-title">Weight: eight steps, a working range of five</div>
+    <div className="typo-rule-body">
+      The scale runs <code>--font-weight-thin</code> (100) to <code>--font-weight-extrabold</code> (800). In practice
+      the product lives in five: <code>normal</code> (400) for body, <code>medium</code> (500) for labels and buttons,
+      <code>semibold</code> (600) for titles, <code>bold</code> (700) for headlines, and <code>extrabold</code> (800)
+      reserved for large Display. The three light weights (<code>thin</code>, <code>extralight</code>, <code>light</code>)
+      are display-only. Never set body or any text at or below 16px in a light weight: thin strokes lower the effective
+      contrast against the background and fail readers with low vision.
+    </div>
+  </div>
+
+  <div className="typo-rule-card">
+    <div className="typo-rule-title">Line height: inverse to size</div>
+    <div className="typo-rule-body">
+      Big text needs less leading, small text needs more. Display and Headline use <code>--leading-none</code> (1) to
+      <code>--leading-tight</code> (1.1) so multi-line titles hold together. Titles use <code>--leading-snug</code>
+      (1.25). Body must use at least <code>--leading-normal</code> (1.5), because WCAG 1.4.12 requires a line-height of
+      at least 1.5 times the font size within paragraphs; long-form copy moves to <code>--leading-relaxed</code> (1.625)
+      for easier line tracking. Setting a paragraph tighter than 1.5 is an accessibility regression, not a style choice.
+    </div>
+  </div>
+
+  <div className="typo-rule-card">
+    <div className="typo-rule-title">Tracking: negative for big, positive for caps</div>
+    <div className="typo-rule-body">
+      Default body tracking is <code>--tracking-normal</code> (0em); the font is already spaced for reading, so leave it
+      alone. Large Display can tighten to <code>--tracking-tight</code> (-0.025em) or <code>--tracking-tighter</code>
+      (-0.05em) to close the optical gaps that open up at big sizes. Positive tracking, <code>--tracking-wide</code>
+      (0.025em) and <code>--tracking-wider</code> (0.05em), is only for uppercase Labels and small caps, where extra
+      space between letters restores the legibility that all-caps removes. Never track lowercase body text, positive or
+      negative.
+    </div>
+  </div>
+</div>
+
+<div className="typo-section">
+  <h2 className="typo-section-title">Readability and Accessibility</h2>
+  <p className="typo-section-lede">
+    The scale exists so text is comfortable to read and legible to everyone, including readers who zoom, override
+    spacing, or have low vision. These are the non-negotiable floors, not aspirations.
+  </p>
+
+  <div className="typo-measure">
+    <span className="typo-measure-tag good">measure 45 to 75ch</span>
+    <p className="typo-measure-good">
+      Line length, the measure, is set by capping the container in <code>ch</code> units, not by font size. Around 66
+      characters per line is the comfortable target, and anything from roughly 45 to 75 characters reads well. At this
+      width the eye finds the next line without effort and the paragraph feels calm. Cap body columns with
+      <code> max-width</code> in <code>ch</code>, never leave running text at full container width.
     </p>
-    <div className="typo-meta" style={{ marginTop: '1rem' }}>
-      <span>Body Regular</span>
-      <span>Regular (400)</span>
-      <span>1rem (16px)</span>
-      <span>Line-height: 1.6</span>
+    <span className="typo-measure-tag bad">too wide, over 75ch</span>
+    <p className="typo-measure-bad">
+      When a line runs much past seventy-five characters the reader has to travel too far to the start of the next line, loses their place, and rereads. Long measures are the single most common readability failure in dashboards and admin tools, where a paragraph is dropped into a wide container and simply allowed to stretch edge to edge. The words are fine. The width is the bug. This line is deliberately set to a 120ch cap so the discomfort is visible: notice how much more work it takes to get from the end of one line back to the beginning of the next compared with the constrained column above it.
+    </p>
+  </div>
+
+  <div className="typo-a11y-grid">
+    <div className="typo-a11y-card">
+      <span className="typo-a11y-crit">WCAG 1.4.4 AA</span>
+      <div className="typo-a11y-name">Resize text to 200%</div>
+      <div className="typo-a11y-body">
+        Text must scale to 200% without loss of content or function. This is why the scale is defined in
+        <code> rem</code>, not <code>px</code>: rem-based type respects the user's browser font-size and zoom. Never
+        pin a font size in px, and never lock layouts so enlarged text is clipped or overlaps.
+      </div>
+    </div>
+
+    <div className="typo-a11y-card">
+      <span className="typo-a11y-crit">WCAG 1.4.12 AA</span>
+      <div className="typo-a11y-name">Text spacing overrides</div>
+      <div className="typo-a11y-body">
+        Content must survive user-applied spacing: line-height 1.5x font size, paragraph spacing 2x, letter-spacing
+        0.12x, word-spacing 0.16x. Use flexible containers and spacing tokens so nothing is cut off when a reader
+        overrides these values.
+      </div>
+    </div>
+
+    <div className="typo-a11y-card">
+      <span className="typo-a11y-crit">WCAG 1.4.8 AAA</span>
+      <div className="typo-a11y-name">Visual presentation</div>
+      <div className="typo-a11y-body">
+        The AAA target we aim for on long-form: line width no wider than 80 characters, line-height at least 1.5 in
+        blocks of text, and no fully justified alignment. Our 45 to 75ch measure and <code>--leading-relaxed</code>
+        body already clear this bar.
+      </div>
+    </div>
+
+    <div className="typo-a11y-card">
+      <span className="typo-a11y-crit">Typographic contrast</span>
+      <div className="typo-a11y-name">Never rely on size alone</div>
+      <div className="typo-a11y-body">
+        Hierarchy and meaning must survive in one color. Distinguish levels with size, weight and space, and pair every
+        color contrast (headings and body use tokens meeting at least 4.5:1) with a real weight or size difference, so
+        the structure holds for readers who cannot perceive the color shift.
+      </div>
     </div>
   </div>
 </div>
 
 <div className="typo-section">
-  <h2 className="typo-section-title">Font Size Scale</h2>
+  <h2 className="typo-section-title">Fluid Type</h2>
+  <p className="typo-section-lede">
+    Large text should not jump at breakpoints; it should flow. Instead of redefining a heading at every media query, we
+    interpolate between two real scale steps with a single <code>clamp()</code>. The pattern is
+    <code> clamp(MIN, PREFERRED, MAX)</code>: MIN is the scale step for small screens, MAX is the scale step for large
+    screens, and the PREFERRED term is a viewport-relative expression that carries the size smoothly between them.
+  </p>
 
-  <div className="typo-scale">
+  <div className="typo-decision">
+    <ol>
+      <li><strong>Pick two real scale steps.</strong> The min and max of any fluid value must both be legal tokens. A Display that goes from <code>--font-size-4xl</code> (36px) up to <code>--font-size-6xl</code> (60px) stays on-scale at every width, it just moves between two steps you already sanctioned.</li>
+      <li><strong>Choose the min and max viewport.</strong> We anchor the small end at 375px (mobile) and the large end at 1280px (desktop). Below and above those, <code>clamp()</code> holds the min and max flat.</li>
+      <li><strong>Let the tool compute the middle.</strong> The PREFERRED term is <code>base-rem + slope-vw</code>, a linear interpolation between the two anchors. Compute it with Utopia or the web.dev clamp method rather than by hand, and keep a <code>rem</code> component in the expression so the text still responds to browser zoom (protecting WCAG 1.4.4).</li>
+      <li><strong>Only Display, Headline and Title go fluid.</strong> Body and Label stay fixed at their token size. Fluid body copy changes measure unpredictably and fights the 45 to 75ch rule.</li>
+    </ol>
+  </div>
+
+  <div className="typo-scale" style={{ marginTop: '1.25rem' }}>
     <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-xs</span>
-      <span className="typo-scale-sample" style={{ fontSize: '0.75rem' }}>12px - Timestamps, metadata ("2 spots left!")</span>
+      <span className="typo-scale-label">Display fluid</span>
+      <span className="typo-scale-role">Display</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.8125rem', color: '#475569', whiteSpace: 'normal' }}>clamp(2.25rem, 1.63rem + 2.65vw, 3.75rem) &nbsp; 4xl to 6xl</span>
     </div>
     <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-sm</span>
-      <span className="typo-scale-sample" style={{ fontSize: '0.875rem' }}>14px - Helper text, form labels</span>
+      <span className="typo-scale-label">Headline fluid</span>
+      <span className="typo-scale-role">Headline</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.8125rem', color: '#475569', whiteSpace: 'normal' }}>clamp(1.5rem, 1.19rem + 1.33vw, 2.25rem) &nbsp; 2xl to 4xl</span>
     </div>
     <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-base</span>
-      <span className="typo-scale-sample" style={{ fontSize: '1rem' }}>16px - Event descriptions, UI copy</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-lg</span>
-      <span className="typo-scale-sample" style={{ fontSize: '1.125rem' }}>18px - Featured content, intros</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-xl</span>
-      <span className="typo-scale-sample" style={{ fontSize: '1.25rem' }}>20px - Card titles, section headers</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-2xl</span>
-      <span className="typo-scale-sample" style={{ fontSize: '1.5rem' }}>24px - Page sections, modal headers</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-3xl</span>
-      <span className="typo-scale-sample" style={{ fontSize: '1.875rem' }}>30px - Major headings</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-4xl</span>
-      <span className="typo-scale-sample" style={{ fontSize: '2.25rem' }}>36px - Hero headlines</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-5xl</span>
-      <span className="typo-scale-sample" style={{ fontSize: '3rem' }}>48px - Landing page heroes, marquee moments</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--text-6xl</span>
-      <span className="typo-scale-sample" style={{ fontSize: '3.75rem' }}>60px - The headliner, festival names, main stage titles</span>
+      <span className="typo-scale-label">Title fluid</span>
+      <span className="typo-scale-role">Title</span>
+      <span className="typo-scale-sample" style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.8125rem', color: '#475569', whiteSpace: 'normal' }}>clamp(1.25rem, 1.15rem + 0.44vw, 1.5rem) &nbsp; xl to 2xl</span>
     </div>
   </div>
 </div>
 
 <div className="typo-section">
-  <h2 className="typo-section-title">Font Weights</h2>
+  <h2 className="typo-section-title">Implementation Rules</h2>
+  <p className="typo-section-lede">
+    The taxonomy for applying type on a new RamosLabs surface. When these are followed, every screen inherits the same
+    reading experience for free.
+  </p>
 
-  <div className="typo-scale">
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--font-light</span>
-      <span className="typo-scale-sample" style={{ fontWeight: 300 }}>Light (300) - Subtle text</span>
+  <div className="typo-dodont">
+    <div className="typo-do">
+      <div className="typo-do-head">Do</div>
+      <ul>
+        <li>Assign a role (Display, Headline, Title, Body, Label) first, then take its family, weight, leading and tracking from the role table.</li>
+        <li>Reference tokens: <code>var(--font-size-lg)</code>, <code>var(--leading-normal)</code>, never a raw px or a magic number.</li>
+        <li>Cap running text at a 45 to 75ch measure with <code>max-width</code>.</li>
+        <li>Keep heading levels strict and sequential: h1 then h2 then h3, no skipped levels, size comes from the role, not the tag.</li>
+        <li>Make large headings fluid by interpolating between two real scale steps with <code>clamp()</code>.</li>
+      </ul>
     </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--font-normal</span>
-      <span className="typo-scale-sample" style={{ fontWeight: 400 }}>Regular (400) - Body text</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--font-medium</span>
-      <span className="typo-scale-sample" style={{ fontWeight: 500 }}>Medium (500) - Buttons, emphasis</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--font-semibold</span>
-      <span className="typo-scale-sample" style={{ fontWeight: 600 }}>Semibold (600) - Subheadings</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--font-bold</span>
-      <span className="typo-scale-sample" style={{ fontWeight: 700 }}>Bold (700) - Headings</span>
+    <div className="typo-dont">
+      <div className="typo-dont-head">Don't</div>
+      <ul>
+        <li>Invent a size outside the ten-step scale, or nudge one with <code>font-size: 17px</code>.</li>
+        <li>Set body or small text in a light weight, or track lowercase body text.</li>
+        <li>Let a paragraph stretch to full container width, or set body line-height below 1.5.</li>
+        <li>Pick a heading tag for its default size, or jump from h1 to h4 to get a look.</li>
+        <li>Use Red Hat Display for body, or mix Roboto and Rubik in the same block.</li>
+      </ul>
     </div>
   </div>
-</div>
 
-<div className="typo-section">
-  <h2 className="typo-section-title">Line Heights</h2>
-
-  <div className="typo-scale">
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--leading-none</span>
-      <span className="typo-scale-sample">1 - The encore moment, stacked display text, logo lockups</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--leading-tight</span>
-      <span className="typo-scale-sample">1.1 - Main stage headlines, hero titles that command attention</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--leading-snug</span>
-      <span className="typo-scale-sample">1.25 - Subheadings, section titles with room to breathe</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--leading-normal</span>
-      <span className="typo-scale-sample">1.5 - Body text, paragraphs</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--leading-relaxed</span>
-      <span className="typo-scale-sample">1.625 - Long-form content, readability</span>
-    </div>
-  </div>
-</div>
-
-<div className="typo-section">
-  <h2 className="typo-section-title">Letter Spacing - The Voice</h2>
-
-  <div className="typo-scale">
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--tracking-tighter</span>
-      <span className="typo-scale-sample" style={{ letterSpacing: '-0.05em' }}>-0.05em - Display text that whispers close, festival names that hit hard</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--tracking-tight</span>
-      <span className="typo-scale-sample" style={{ letterSpacing: '-0.025em' }}>-0.025em - Headlines with presence, hero titles that pull fans in</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--tracking-normal</span>
-      <span className="typo-scale-sample" style={{ letterSpacing: '0' }}>0 - Body text at its natural rhythm</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--tracking-wide</span>
-      <span className="typo-scale-sample" style={{ letterSpacing: '0.025em', textTransform: 'uppercase', fontSize: '0.75rem' }}>0.025em - UPPERCASE LABELS, SECTION MARKERS, VENUE DETAILS</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--tracking-wider</span>
-      <span className="typo-scale-sample" style={{ letterSpacing: '0.05em', textTransform: 'uppercase', fontSize: '0.75rem' }}>0.05em - SMALL CAPS, BADGES, STATUS INDICATORS</span>
-    </div>
-  </div>
-</div>
-
-<div className="typo-section">
-  <h2 className="typo-section-title">Fluid Headings</h2>
-
-  <div className="typo-scale">
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--heading-1</span>
-      <span className="typo-scale-sample">clamp(1.75rem, 4vw + 1rem, 3rem) - Hero titles</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--heading-2</span>
-      <span className="typo-scale-sample">clamp(1.5rem, 3vw + 0.75rem, 2.25rem) - Page sections</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--heading-3</span>
-      <span className="typo-scale-sample">clamp(1.25rem, 2vw + 0.5rem, 1.75rem) - Card headers</span>
-    </div>
-    <div className="typo-scale-item">
-      <span className="typo-scale-label">--heading-4</span>
-      <span className="typo-scale-sample">clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem) - Subsections</span>
+  <div className="typo-rule-card" style={{ marginTop: '1rem' }}>
+    <div className="typo-rule-title">Naming a new type token</div>
+    <div className="typo-rule-body">
+      Before adding one, check the decision ladder: does an existing scale step plus weight and leading already express
+      it? Almost always yes. If a genuinely new token is needed, follow the existing namespaces exactly, the categorical
+      prefix then a scale name: the <code>--font-size</code> namespace (t-shirt scale), <code>--font-weight</code>
+      (named weights), <code>--leading</code> and <code>--tracking</code> (semantic steps). New size steps keep the
+      t-shirt convention (a hypothetical <code>--font-size-7xl</code>), not a raw number. Never introduce composite
+      aliases like <code>--font-primary</code> or a per-component <code>--heading-1</code>; those hide the scale and
+      drift out of sync. Add the token to <code>packages/tokens</code> so it regenerates into CSS, the JSON source is
+      the single source of truth, and this page reads from it.
     </div>
   </div>
 </div>
@@ -416,54 +935,72 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="typo-code">
     <div className="typo-code-header">
-      <span className="typo-code-dot red"></span>
-      <span className="typo-code-dot yellow"></span>
-      <span className="typo-code-dot green"></span>
+      <span className="typo-code-dot d1"></span>
+      <span className="typo-code-dot d2"></span>
+      <span className="typo-code-dot d3"></span>
       <span className="typo-code-lang">CSS</span>
     </div>
-    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Font Families */</span>
-<span class="property">--font-sans</span><span class="punctuation">:</span> <span class="string">'Rubik'</span><span class="punctuation">,</span> system-ui<span class="punctuation">,</span> sans-serif<span class="punctuation">;</span>
-<span class="property">--font-display</span><span class="punctuation">:</span> <span class="string">'Red Hat Display'</span><span class="punctuation">,</span> system-ui<span class="punctuation">,</span> sans-serif<span class="punctuation">;</span>
-<span class="property">--font-primary</span><span class="punctuation">:</span> var(--font-sans)<span class="punctuation">;</span>      <span class="comment">/* alias */</span>
-<span class="property">--font-secondary</span><span class="punctuation">:</span> var(--font-display)<span class="punctuation">;</span>  <span class="comment">/* alias */</span>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Font families */</span>
+<span class="property">--font-family-sans</span><span class="punctuation">:</span> <span class="string">Rubik</span><span class="punctuation">,</span> system-ui<span class="punctuation">,</span> sans-serif<span class="punctuation">;</span>          <span class="comment">/* body and UI */</span>
+<span class="property">--font-family-display</span><span class="punctuation">:</span> <span class="string">'Red Hat Display'</span><span class="punctuation">,</span> system-ui<span class="punctuation">,</span> sans-serif<span class="punctuation">;</span>  <span class="comment">/* display and headings */</span>
+<span class="property">--font-family-alt</span><span class="punctuation">:</span> <span class="string">Roboto</span><span class="punctuation">,</span> system-ui<span class="punctuation">,</span> sans-serif<span class="punctuation">;</span>          <span class="comment">/* fallback and alt */</span>
 
-<span class="comment">/* Font Sizes */</span>
-<span class="property">--text-xs</span><span class="punctuation">:</span> <span class="value">0.75</span><span class="unit">rem</span><span class="punctuation">;</span>    <span class="comment">/* 12px */</span>
-<span class="property">--text-sm</span><span class="punctuation">:</span> <span class="value">0.875</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 14px */</span>
-<span class="property">--text-base</span><span class="punctuation">:</span> <span class="value">1</span><span class="unit">rem</span><span class="punctuation">;</span>      <span class="comment">/* 16px */</span>
-<span class="property">--text-lg</span><span class="punctuation">:</span> <span class="value">1.125</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 18px */</span>
-<span class="property">--text-xl</span><span class="punctuation">:</span> <span class="value">1.25</span><span class="unit">rem</span><span class="punctuation">;</span>    <span class="comment">/* 20px */</span>
-<span class="property">--text-2xl</span><span class="punctuation">:</span> <span class="value">1.5</span><span class="unit">rem</span><span class="punctuation">;</span>    <span class="comment">/* 24px */</span>
-<span class="property">--text-3xl</span><span class="punctuation">:</span> <span class="value">1.875</span><span class="unit">rem</span><span class="punctuation">;</span>  <span class="comment">/* 30px */</span>
-<span class="property">--text-4xl</span><span class="punctuation">:</span> <span class="value">2.25</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 36px */</span>
-<span class="property">--text-5xl</span><span class="punctuation">:</span> <span class="value">3</span><span class="unit">rem</span><span class="punctuation">;</span>      <span class="comment">/* 48px */</span>
-<span class="property">--text-6xl</span><span class="punctuation">:</span> <span class="value">3.75</span><span class="unit">rem</span><span class="punctuation">;</span>   <span class="comment">/* 60px */</span>
+<span class="comment">/* Font sizes, ten-step modular scale */</span>
+<span class="property">--font-size-xs</span><span class="punctuation">:</span> <span class="value">0.75rem</span><span class="punctuation">;</span>    <span class="comment">/* 12px, metadata */</span>
+<span class="property">--font-size-sm</span><span class="punctuation">:</span> <span class="value">0.875rem</span><span class="punctuation">;</span>   <span class="comment">/* 14px, labels, helper */</span>
+<span class="property">--font-size-base</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>      <span class="comment">/* 16px, body floor */</span>
+<span class="property">--font-size-lg</span><span class="punctuation">:</span> <span class="value">1.125rem</span><span class="punctuation">;</span>   <span class="comment">/* 18px, title */</span>
+<span class="property">--font-size-xl</span><span class="punctuation">:</span> <span class="value">1.25rem</span><span class="punctuation">;</span>    <span class="comment">/* 20px, title */</span>
+<span class="property">--font-size-2xl</span><span class="punctuation">:</span> <span class="value">1.5rem</span><span class="punctuation">;</span>    <span class="comment">/* 24px, headline */</span>
+<span class="property">--font-size-3xl</span><span class="punctuation">:</span> <span class="value">1.875rem</span><span class="punctuation">;</span>  <span class="comment">/* 30px, headline */</span>
+<span class="property">--font-size-4xl</span><span class="punctuation">:</span> <span class="value">2.25rem</span><span class="punctuation">;</span>   <span class="comment">/* 36px, display */</span>
+<span class="property">--font-size-5xl</span><span class="punctuation">:</span> <span class="value">3rem</span><span class="punctuation">;</span>      <span class="comment">/* 48px, display */</span>
+<span class="property">--font-size-6xl</span><span class="punctuation">:</span> <span class="value">3.75rem</span><span class="punctuation">;</span>   <span class="comment">/* 60px, display */</span>
 
-<span class="comment">/* Font Weights */</span>
-<span class="property">--font-light</span><span class="punctuation">:</span> <span class="value">300</span><span class="punctuation">;</span>
-<span class="property">--font-normal</span><span class="punctuation">:</span> <span class="value">400</span><span class="punctuation">;</span>
-<span class="property">--font-medium</span><span class="punctuation">:</span> <span class="value">500</span><span class="punctuation">;</span>
-<span class="property">--font-semibold</span><span class="punctuation">:</span> <span class="value">600</span><span class="punctuation">;</span>
-<span class="property">--font-bold</span><span class="punctuation">:</span> <span class="value">700</span><span class="punctuation">;</span>
+<span class="comment">/* Font weights */</span>
+<span class="property">--font-weight-thin</span><span class="punctuation">:</span> <span class="value">100</span><span class="punctuation">;</span>        <span class="comment">/* display only */</span>
+<span class="property">--font-weight-extralight</span><span class="punctuation">:</span> <span class="value">200</span><span class="punctuation">;</span>  <span class="comment">/* display only */</span>
+<span class="property">--font-weight-light</span><span class="punctuation">:</span> <span class="value">300</span><span class="punctuation">;</span>       <span class="comment">/* display only */</span>
+<span class="property">--font-weight-normal</span><span class="punctuation">:</span> <span class="value">400</span><span class="punctuation">;</span>      <span class="comment">/* body */</span>
+<span class="property">--font-weight-medium</span><span class="punctuation">:</span> <span class="value">500</span><span class="punctuation">;</span>      <span class="comment">/* labels, buttons */</span>
+<span class="property">--font-weight-semibold</span><span class="punctuation">:</span> <span class="value">600</span><span class="punctuation">;</span>    <span class="comment">/* titles */</span>
+<span class="property">--font-weight-bold</span><span class="punctuation">:</span> <span class="value">700</span><span class="punctuation">;</span>        <span class="comment">/* headlines */</span>
+<span class="property">--font-weight-extrabold</span><span class="punctuation">:</span> <span class="value">800</span><span class="punctuation">;</span>   <span class="comment">/* large display */</span>
 
-<span class="comment">/* Line Heights */</span>
-<span class="property">--leading-none</span><span class="punctuation">:</span> <span class="value">1</span><span class="punctuation">;</span>
-<span class="property">--leading-tight</span><span class="punctuation">:</span> <span class="value">1.1</span><span class="punctuation">;</span>       <span class="comment">/* Headlines */</span>
-<span class="property">--leading-snug</span><span class="punctuation">:</span> <span class="value">1.25</span><span class="punctuation">;</span>      <span class="comment">/* Subheadings */</span>
-<span class="property">--leading-normal</span><span class="punctuation">:</span> <span class="value">1.5</span><span class="punctuation">;</span>     <span class="comment">/* Body text */</span>
-<span class="property">--leading-relaxed</span><span class="punctuation">:</span> <span class="value">1.625</span><span class="punctuation">;</span>  <span class="comment">/* Long-form */</span>
+<span class="comment">/* Line heights, inverse to size */</span>
+<span class="property">--leading-none</span><span class="punctuation">:</span> <span class="value">1</span><span class="punctuation">;</span>          <span class="comment">/* stacked display */</span>
+<span class="property">--leading-tight</span><span class="punctuation">:</span> <span class="value">1.1</span><span class="punctuation">;</span>       <span class="comment">/* headlines */</span>
+<span class="property">--leading-snug</span><span class="punctuation">:</span> <span class="value">1.25</span><span class="punctuation">;</span>      <span class="comment">/* titles */</span>
+<span class="property">--leading-normal</span><span class="punctuation">:</span> <span class="value">1.5</span><span class="punctuation">;</span>     <span class="comment">/* body, WCAG 1.4.12 floor */</span>
+<span class="property">--leading-relaxed</span><span class="punctuation">:</span> <span class="value">1.625</span><span class="punctuation">;</span>  <span class="comment">/* long-form */</span>
 
-<span class="comment">/* Letter Spacing */</span>
-<span class="property">--tracking-tighter</span><span class="punctuation">:</span> <span class="value">-0.05em</span><span class="punctuation">;</span>  <span class="comment">/* Display text */</span>
-<span class="property">--tracking-tight</span><span class="punctuation">:</span> <span class="value">-0.025em</span><span class="punctuation">;</span>  <span class="comment">/* Headlines */</span>
-<span class="property">--tracking-normal</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
-<span class="property">--tracking-wide</span><span class="punctuation">:</span> <span class="value">0.025em</span><span class="punctuation">;</span>   <span class="comment">/* Uppercase labels */</span>
-<span class="property">--tracking-wider</span><span class="punctuation">:</span> <span class="value">0.05em</span><span class="punctuation">;</span>   <span class="comment">/* Small caps */</span>
+<span class="comment">/* Letter spacing, tracking */</span>
+<span class="property">--tracking-tighter</span><span class="punctuation">:</span> <span class="value">-0.05em</span><span class="punctuation">;</span>  <span class="comment">/* large display */</span>
+<span class="property">--tracking-tight</span><span class="punctuation">:</span> <span class="value">-0.025em</span><span class="punctuation">;</span>  <span class="comment">/* headlines */</span>
+<span class="property">--tracking-normal</span><span class="punctuation">:</span> <span class="value">0em</span><span class="punctuation">;</span>       <span class="comment">/* body */</span>
+<span class="property">--tracking-wide</span><span class="punctuation">:</span> <span class="value">0.025em</span><span class="punctuation">;</span>    <span class="comment">/* uppercase labels */</span>
+<span class="property">--tracking-wider</span><span class="punctuation">:</span> <span class="value">0.05em</span><span class="punctuation">;</span>    <span class="comment">/* small caps, badges */</span>`}} />
+  </div>
+</div>
 
-<span class="comment">/* Fluid Headings */</span>
-<span class="property">--heading-1</span><span class="punctuation">:</span> clamp(1.75rem, 4vw + 1rem, 3rem)<span class="punctuation">;</span>
-<span class="property">--heading-2</span><span class="punctuation">:</span> clamp(1.5rem, 3vw + 0.75rem, 2.25rem)<span class="punctuation">;</span>
-<span class="property">--heading-3</span><span class="punctuation">:</span> clamp(1.25rem, 2vw + 0.5rem, 1.75rem)<span class="punctuation">;</span>
-<span class="property">--heading-4</span><span class="punctuation">:</span> clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem)<span class="punctuation">;</span>`}} />
+<div className="typo-section">
+  <h2 className="typo-section-title">References</h2>
+  <p className="typo-section-lede">
+    The rules on this page are grounded in current primary sources on type systems, readability and accessibility.
+  </p>
+
+  <div className="typo-refs">
+    <ul>
+      <li><strong>Material Design 3, Type scale and tokens</strong> (Display, Headline, Title, Body, Label roles). <a href="https://m3.material.io/styles/typography/type-scale-tokens">m3.material.io/styles/typography/type-scale-tokens</a> and <a href="https://m3.material.io/styles/typography/applying-type">applying-type</a></li>
+      <li><strong>Butterick, Practical Typography, Line length</strong> (aim for 45 to 90 characters; 2 to 3 alphabets). <a href="https://practicaltypography.com/line-length.html">practicaltypography.com/line-length.html</a></li>
+      <li><strong>Baymard Institute, Line Length Readability</strong> (optimal body measure 50 to 75 characters, citing WCAG's 80-character cap). <a href="https://baymard.com/blog/line-length-readability">baymard.com/blog/line-length-readability</a></li>
+      <li><strong>Utopia, Fluid type scales with clamp()</strong> (interpolate between two anchors). <a href="https://utopia.fyi/type/calculator/">utopia.fyi/type/calculator</a></li>
+      <li><strong>web.dev, min(), max(), and clamp()</strong> (the fluid typography method). <a href="https://web.dev/articles/min-max-clamp">web.dev/articles/min-max-clamp</a></li>
+      <li><strong>WCAG 2.1, 1.4.4 Resize Text (AA)</strong> (200% without loss). <a href="https://www.w3.org/WAI/WCAG21/Understanding/resize-text.html">w3.org/WAI/WCAG21/Understanding/resize-text</a></li>
+      <li><strong>WCAG 2.1, 1.4.12 Text Spacing (AA)</strong> (1.5x line-height, 2x paragraph, 0.12x letter, 0.16x word). <a href="https://www.w3.org/WAI/WCAG21/Understanding/text-spacing.html">w3.org/WAI/WCAG21/Understanding/text-spacing</a></li>
+      <li><strong>WCAG 2.1, 1.4.8 Visual Presentation (AAA)</strong> (80-character width, 1.5 line-height, no justify). <a href="https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html">w3.org/WAI/WCAG21/Understanding/visual-presentation</a></li>
+      <li><strong>web.dev, Prevent layout shifts and flashes with font-display</strong> and <strong>Introduction to variable fonts</strong>. <a href="https://web.dev/articles/font-best-practices">web.dev/articles/font-best-practices</a>, <a href="https://web.dev/articles/variable-fonts">web.dev/articles/variable-fonts</a></li>
+      <li><strong>Type Scale, modular scale ratios</strong> (ratio-based scales such as 1.125, 1.25). <a href="https://typescale.com/">typescale.com</a></li>
+    </ul>
   </div>
 </div>

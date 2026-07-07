@@ -4,171 +4,531 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <style>
 {`
-  .spacing-header {
+  .sp-doc {
+    --sp-ink: #0f172a;
+    --sp-muted: #64748b;
+    --sp-faint: #94a3b8;
+    --sp-line: #e2e8f0;
+    --sp-line-soft: #e6e8eb;
+    --sp-surface: #ffffff;
+    --sp-wash: #f8fafc;
+    --sp-wash-2: #f1f5f9;
+    --sp-indigo: #4f46e5;
+    --sp-indigo-700: #4338ca;
+    --sp-indigo-600: #4f46e5;
+    --sp-indigo-500: #6366f1;
+    --sp-indigo-400: #818cf8;
+    --sp-indigo-300: #a5b4fc;
+    --sp-indigo-200: #c7d2fe;
+    --sp-indigo-100: #e0e7ff;
+    --sp-indigo-50: #eef2ff;
+    --sp-ink-code: #1e293b;
+    --sp-ink-code-bar: #334155;
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: var(--sp-ink);
+  }
+
+  .sp-header {
     margin-bottom: 2rem;
   }
 
-  .spacing-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
-    font-size: 1.875rem;
+  .sp-eyebrow {
+    font-size: 0.75rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--sp-indigo);
     margin-bottom: 0.75rem;
   }
 
-  .spacing-description {
+  .sp-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: var(--sp-ink);
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .sp-lede {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
-    font-size: 1rem;
+    color: var(--sp-muted);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    max-width: 60ch;
+  }
+
+  .sp-section {
+    margin-top: 3rem;
+  }
+
+  .sp-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--sp-faint);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .sp-prose {
+    font-size: 0.9375rem;
+    color: var(--sp-muted);
+    line-height: 1.7;
+    max-width: 68ch;
+    margin-bottom: 1rem;
+  }
+
+  .sp-prose strong {
+    color: var(--sp-ink);
+    font-weight: 600;
+  }
+
+  .sp-prose code,
+  .sp-inline-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    background: var(--sp-wash-2);
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    color: var(--sp-indigo-700);
+  }
+
+  .sp-callout {
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    background: var(--sp-indigo-50);
+    border: 1px solid var(--sp-indigo-200);
+    border-radius: 12px;
+    padding: 1.125rem 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .sp-callout-mark {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: var(--sp-indigo);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+  }
+
+  .sp-callout-body {
+    font-size: 0.875rem;
+    color: #3730a3;
     line-height: 1.6;
   }
 
-  .spacing-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid #e6e8eb;
-    margin-bottom: 2rem;
+  .sp-callout-title {
+    font-weight: 700;
+    color: var(--sp-indigo-700);
+    margin-bottom: 0.25rem;
   }
 
-  .spacing-visual {
+  /* Base grid visual */
+  .sp-grid-card {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-line);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-top: 1rem;
+  }
+
+  .sp-grid-strip {
     display: flex;
-    flex-wrap: wrap;
     align-items: flex-end;
-    gap: 2rem;
+    gap: 0;
+    height: 96px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--sp-indigo-50) 0,
+        var(--sp-indigo-50) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+    border: 1px solid var(--sp-line);
+    border-radius: 10px;
+    padding: 0.75rem;
   }
 
-  .spacing-item {
+  .sp-grid-block {
+    background: linear-gradient(180deg, var(--sp-indigo-400), var(--sp-indigo-600));
+    border-radius: 4px 4px 0 0;
+    align-self: flex-end;
+  }
+
+  .sp-grid-caption {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: var(--sp-muted);
+  }
+
+  /* Scale ladder visual */
+  .sp-ladder {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-line);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 0.5rem;
   }
 
-  .spacing-bar {
-    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
-    border: 1px solid #f87171;
-    border-radius: 2px;
+  .sp-ladder-row {
+    display: grid;
+    grid-template-columns: 5.5rem 3.5rem 1fr;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .sp-ladder-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: var(--sp-indigo-700);
+  }
+
+  .sp-ladder-value {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: var(--sp-faint);
+    text-align: right;
+  }
+
+  .sp-ladder-bar {
+    height: 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--sp-indigo-500), var(--sp-indigo-300));
+  }
+
+  /* Tables */
+  .sp-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--sp-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--sp-line);
+    margin-top: 1rem;
+  }
+
+  .sp-table th,
+  .sp-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--sp-line);
+    vertical-align: middle;
+  }
+
+  .sp-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--sp-faint);
+    letter-spacing: 0.05em;
+    background: var(--sp-wash);
+  }
+
+  .sp-table td {
+    font-size: 0.875rem;
+    color: var(--sp-muted);
+  }
+
+  .sp-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .sp-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: var(--sp-wash-2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: var(--sp-indigo-700);
+  }
+
+  .sp-table .sp-num {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: var(--sp-ink);
+  }
+
+  .sp-preview {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--sp-indigo-500), var(--sp-indigo-300));
+    border-radius: 3px;
+    height: 0.875rem;
+    vertical-align: middle;
+  }
+
+  /* Concept cards */
+  .sp-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .sp-concept {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-line);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .sp-concept-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sp-indigo);
+    background: var(--sp-indigo-50);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .sp-concept-name {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--sp-ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .sp-concept-body {
+    font-size: 0.8125rem;
+    color: var(--sp-muted);
+    line-height: 1.55;
+  }
+
+  /* Touch target visual */
+  .sp-target-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.5rem;
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-line);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-top: 1rem;
+  }
+
+  .sp-target {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .sp-target-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+
+  .sp-target-box.min {
+    background: repeating-linear-gradient(45deg, var(--sp-indigo-200), var(--sp-indigo-200) 6px, var(--sp-indigo-100) 6px, var(--sp-indigo-100) 12px);
+    border: 1.5px dashed var(--sp-indigo-400);
+    color: var(--sp-indigo-700);
+  }
+
+  .sp-target-box.apple {
+    background: var(--sp-indigo-500);
+  }
+
+  .sp-target-box.material {
+    background: var(--sp-indigo-700);
+  }
+
+  .sp-target-meta {
+    text-align: center;
+  }
+
+  .sp-target-label {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: var(--sp-ink);
+  }
+
+  .sp-target-sub {
+    font-size: 0.6875rem;
+    color: var(--sp-faint);
+    margin-top: 0.15rem;
+  }
+
+  /* Do / Don't */
+  .sp-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .sp-rule-col {
+    border-radius: 14px;
+    border: 1px solid var(--sp-line);
+    background: var(--sp-surface);
+    overflow: hidden;
+  }
+
+  .sp-rule-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.125rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .sp-rule-head.do {
+    background: var(--sp-indigo-50);
+    color: var(--sp-indigo-700);
+    border-bottom: 1px solid var(--sp-indigo-200);
+  }
+
+  .sp-rule-head.dont {
+    background: var(--sp-wash);
+    color: var(--sp-muted);
+    border-bottom: 1px solid var(--sp-line);
+  }
+
+  .sp-rule-mark {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8125rem;
+    line-height: 1;
+  }
+
+  .sp-rule-mark.do { background: var(--sp-indigo); color: #ffffff; }
+  .sp-rule-mark.dont { background: var(--sp-faint); color: #ffffff; }
+
+  .sp-rule-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 1.125rem 1rem;
+  }
+
+  .sp-rule-list li {
+    font-size: 0.8125rem;
+    color: var(--sp-muted);
+    line-height: 1.55;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--sp-line);
+  }
+
+  .sp-rule-list li:last-child { border-bottom: none; }
+
+  .sp-rule-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: var(--sp-wash-2);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: var(--sp-indigo-700);
+  }
+
+  /* Decision flow */
+  .sp-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .sp-flow-step {
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-line);
+    border-left: 3px solid var(--sp-indigo);
+    border-radius: 10px;
+    padding: 0.875rem 1.125rem;
+  }
+
+  .sp-flow-num {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background: var(--sp-indigo);
+    color: #ffffff;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .spacing-label {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    color: #64748b;
-  }
-
-  .spacing-name {
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    color: #94a3b8;
-    letter-spacing: 0.05em;
-  }
-
-  .spacing-example {
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-top: 2rem;
-  }
-
-  .spacing-example-content {
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .spacing-example-avatar {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 9999px;
-    background: #e2e8f0;
-  }
-
-  .spacing-example-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .spacing-example-line {
-    background: #e2e8f0;
-    border-radius: 4px;
-  }
-
-  .spacing-example-label {
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    color: #94a3b8;
-    text-align: center;
-    margin-top: 0.75rem;
-  }
-
-  .spacing-section {
-    margin-top: 2.5rem;
-  }
-
-  .spacing-section-title {
+  .sp-flow-text {
     font-size: 0.875rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #94a3b8;
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
+    color: var(--sp-muted);
+    line-height: 1.55;
   }
 
-  .spacing-table {
-    width: 100%;
-    border-collapse: collapse;
+  .sp-flow-text strong { color: var(--sp-ink); font-weight: 600; }
+
+  /* Sources */
+  .sp-sources {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
   }
 
-  .spacing-table th,
-  .spacing-table td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #e6e8eb;
+  .sp-sources li {
+    font-size: 0.8125rem;
+    color: var(--sp-muted);
+    line-height: 1.55;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--sp-line);
   }
 
-  .spacing-table th {
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: #94a3b8;
-    letter-spacing: 0.05em;
+  .sp-sources li:last-child { border-bottom: none; }
+
+  .sp-sources a {
+    color: var(--sp-indigo);
+    text-decoration: none;
+    word-break: break-word;
   }
 
-  .spacing-table td {
-    font-size: 0.875rem;
-  }
+  .sp-sources a:hover { text-decoration: underline; }
 
-  .spacing-table code {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    background: #f1f5f9;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    color: #64748b;
-  }
-
-  .spacing-preview {
-    display: inline-block;
-    background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
-    border-radius: 2px;
-    height: 1rem;
-    vertical-align: middle;
-  }
-
-  .spacing-code {
-    background: #1e293b;
+  /* Code block */
+  .sp-code {
+    background: var(--sp-ink-code);
     border-radius: 12px;
     overflow: hidden;
     margin-top: 1rem;
   }
 
-  .spacing-code-header {
-    background: #334155;
+  .sp-code-header {
+    background: var(--sp-ink-code-bar);
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
@@ -176,17 +536,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-bottom: 1px solid #475569;
   }
 
-  .spacing-code-dot {
+  .sp-code-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
   }
 
-  .spacing-code-dot.red { background: #ef4444; }
-  .spacing-code-dot.yellow { background: #f59e0b; }
-  .spacing-code-dot.green { background: #22c55e; }
+  .sp-code-dot.a { background: #cbd5e1; }
+  .sp-code-dot.b { background: #94a3b8; }
+  .sp-code-dot.c { background: #64748b; }
 
-  .spacing-code-lang {
+  .sp-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
@@ -195,9 +555,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.05em;
   }
 
-  .spacing-code pre {
+  .sp-code pre {
     margin: 0;
-    padding: 1.25rem;
+    padding: 1.5rem;
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
     font-size: 0.8125rem;
     line-height: 1.7;
@@ -205,233 +565,495 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
 
-  .spacing-code .comment { color: #64748b; font-style: italic; }
-  .spacing-code .selector { color: #fbbf24; }
-  .spacing-code .property { color: #7dd3fc; }
-  .spacing-code .value { color: #a5f3fc; }
-  .spacing-code .function { color: #c4b5fd; }
-  .spacing-code .punctuation { color: #94a3b8; }
+  .sp-code .comment { color: #94a3b8; font-style: italic; }
+  .sp-code .selector { color: #c7d2fe; }
+  .sp-code .property { color: #a5b4fc; }
+  .sp-code .value { color: #e0e7ff; }
+  .sp-code .punctuation { color: #94a3b8; }
 `}
 </style>
 
-<div className="spacing-header">
-  <h1 className="spacing-title">The Breathing Room</h1>
-  <p className="spacing-description">
-    Space is as important as content. Our 8px grid creates rhythm, clarity, and room for experiences to breathe.
+<div className="sp-doc">
+
+<div className="sp-header">
+  <div className="sp-eyebrow">Foundations</div>
+  <h1 className="sp-title">Spacing: the invisible grid</h1>
+  <p className="sp-lede">
+    Spacing is the quietest decision in an interface and the one users feel most. A single systematic scale, built on one small base unit, turns a thousand arbitrary pixel choices into a handful of deliberate ones. Consistent space creates rhythm, groups what belongs together, and gives every layout room to breathe.
   </p>
 </div>
 
-<div className="spacing-card">
-  <div className="spacing-visual">
-    <div className="spacing-item">
-      <div className="spacing-bar" style={{ width: '8px', height: '32px' }}></div>
-      <span className="spacing-label">8px</span>
-      <span className="spacing-name">XS</span>
-    </div>
-
-    <div className="spacing-item">
-      <div className="spacing-bar" style={{ width: '16px', height: '64px' }}></div>
-      <span className="spacing-label">16px</span>
-      <span className="spacing-name">SM</span>
-    </div>
-
-    <div className="spacing-item">
-      <div className="spacing-bar" style={{ width: '24px', height: '96px' }}></div>
-      <span className="spacing-label">24px</span>
-      <span className="spacing-name">MD</span>
-    </div>
-
-    <div className="spacing-item">
-      <div className="spacing-bar" style={{ width: '32px', height: '128px' }}></div>
-      <span className="spacing-label">32px</span>
-      <span className="spacing-name">LG</span>
-    </div>
-
-    <div className="spacing-example" style={{ marginLeft: '1rem', marginTop: 0 }}>
-      <div className="spacing-example-content">
-        <div className="spacing-example-avatar"></div>
-        <div className="spacing-example-text">
-          <div className="spacing-example-line" style={{ width: '128px', height: '16px' }}></div>
-          <div className="spacing-example-line" style={{ width: '80px', height: '12px' }}></div>
-        </div>
-      </div>
-      <div className="spacing-example-label">Applied: 24px Gap</div>
+<div className="sp-section">
+  <h2 className="sp-section-title">Why a scale, not pixels</h2>
+  <p className="sp-prose">
+    When spacing is chosen ad hoc, values drift: a <span className="sp-inline-code">13px</span> here, a <span className="sp-inline-code">15px</span> there, gaps that almost match but never quite do. The eye reads the inconsistency as sloppiness even when it cannot name it. A spacing scale removes the guesswork by offering a <strong>constrained set of values that all share a common factor</strong>, so any two measurements in the system relate to each other cleanly.
+  </p>
+  <p className="sp-prose">
+    Refactoring UI makes the case bluntly: pick values in advance and only use those, because when every measurement is a multiple of a base unit, spacing decisions become fast and the result stays visually coherent. Material Design encodes the same idea as a layout grid: components and spacing align to a repeating measure so that composition is predictable across every screen.
+  </p>
+  <div className="sp-callout">
+    <div className="sp-callout-mark">i</div>
+    <div className="sp-callout-body">
+      <div className="sp-callout-title">The core principle</div>
+      A good spacing system does not ask "how many pixels here?" It asks "how many steps of the base unit?" Fewer choices, more consistency.
     </div>
   </div>
 </div>
 
-<div className="spacing-section">
-  <h2 className="spacing-section-title">Spacing Scale</h2>
+<div className="sp-section">
+  <h2 className="sp-section-title">The base grid: 4px unit, 8pt rhythm</h2>
+  <p className="sp-prose">
+    Our scale is built on a <strong>4px base unit</strong> with an <strong>8px primary rhythm</strong>. The base of 4 gives fine control for small, dense adjustments (icon gaps, input insets), while the dominant steps land on multiples of 8. Eight is the workhorse because most screen densities divide it cleanly, so an 8px measure renders crisply from a 1x phone to a 3x display without landing on a half pixel.
+  </p>
+  <p className="sp-prose">
+    This is the widely adopted "8pt grid": Material Design aligns layout to an 8dp measure (with a 4dp sub-grid for iconography and small type), and the practice is documented across Refactoring UI and mainstream design-system guidance. The payoff is compounding, spacing, component sizes, and line boxes all snap to the same underlying beat.
+  </p>
+  <div className="sp-grid-card">
+    <div className="sp-grid-strip">
+      <div className="sp-grid-block" style={{ width: '8px', height: '24px', marginRight: '8px' }}></div>
+      <div className="sp-grid-block" style={{ width: '16px', height: '40px', marginRight: '16px' }}></div>
+      <div className="sp-grid-block" style={{ width: '24px', height: '56px', marginRight: '24px' }}></div>
+      <div className="sp-grid-block" style={{ width: '32px', height: '72px' }}></div>
+    </div>
+    <div className="sp-grid-caption">
+      <span>each column of the wash = 8px</span>
+      <span>blocks: 8 / 16 / 24 / 32</span>
+    </div>
+  </div>
+</div>
 
-  <table className="spacing-table">
+<div className="sp-section">
+  <h2 className="sp-section-title">The scale: 14 tokens</h2>
+  <p className="sp-prose">
+    Fourteen steps cover the full range from a hairline gap to a hero break. Every value is a multiple of the 4px base; from <span className="sp-inline-code">--space-6</span> upward the steps widen (skipping 7, 9, 11, and so on) because at larger sizes the eye needs a bigger jump to perceive a real difference. Tokens are stored in <span className="sp-inline-code">rem</span> so spacing scales with the user's root font size.
+  </p>
+
+  <div className="sp-ladder">
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-1</span>
+      <span className="sp-ladder-value">4px</span>
+      <span className="sp-ladder-bar" style={{ width: '4px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-2</span>
+      <span className="sp-ladder-value">8px</span>
+      <span className="sp-ladder-bar" style={{ width: '8px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-3</span>
+      <span className="sp-ladder-value">12px</span>
+      <span className="sp-ladder-bar" style={{ width: '12px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-4</span>
+      <span className="sp-ladder-value">16px</span>
+      <span className="sp-ladder-bar" style={{ width: '16px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-5</span>
+      <span className="sp-ladder-value">20px</span>
+      <span className="sp-ladder-bar" style={{ width: '20px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-6</span>
+      <span className="sp-ladder-value">24px</span>
+      <span className="sp-ladder-bar" style={{ width: '24px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-8</span>
+      <span className="sp-ladder-value">32px</span>
+      <span className="sp-ladder-bar" style={{ width: '32px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-10</span>
+      <span className="sp-ladder-value">40px</span>
+      <span className="sp-ladder-bar" style={{ width: '40px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-12</span>
+      <span className="sp-ladder-value">48px</span>
+      <span className="sp-ladder-bar" style={{ width: '48px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-16</span>
+      <span className="sp-ladder-value">64px</span>
+      <span className="sp-ladder-bar" style={{ width: '64px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-20</span>
+      <span className="sp-ladder-value">80px</span>
+      <span className="sp-ladder-bar" style={{ width: '80px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-24</span>
+      <span className="sp-ladder-value">96px</span>
+      <span className="sp-ladder-bar" style={{ width: '96px' }}></span>
+    </div>
+    <div className="sp-ladder-row">
+      <span className="sp-ladder-token">--space-32</span>
+      <span className="sp-ladder-value">128px</span>
+      <span className="sp-ladder-bar" style={{ width: '128px' }}></span>
+    </div>
+  </div>
+
+  <table className="sp-table">
     <thead>
       <tr>
         <th>Token</th>
-        <th>Value</th>
-        <th>Preview</th>
-        <th>Usage</th>
+        <th>rem</th>
+        <th>px</th>
+        <th>Base steps (&times;4px)</th>
+        <th>Typical use</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><code>--space-0</code></td>
-        <td>0</td>
-        <td></td>
-        <td>Reset</td>
+        <td className="sp-num">0</td>
+        <td className="sp-num">0</td>
+        <td className="sp-num">0</td>
+        <td>Reset, collapse a gap</td>
       </tr>
       <tr>
         <td><code>--space-1</code></td>
-        <td>4px</td>
-        <td><span className="spacing-preview" style={{ width: '4px' }}></span></td>
-        <td>Tight spacing, icon gaps</td>
+        <td className="sp-num">0.25rem</td>
+        <td className="sp-num">4px</td>
+        <td className="sp-num">1</td>
+        <td>Hairline gaps, icon-to-label</td>
       </tr>
       <tr>
         <td><code>--space-2</code></td>
-        <td>8px</td>
-        <td><span className="spacing-preview" style={{ width: '8px' }}></span></td>
-        <td>Small gaps, inline spacing</td>
+        <td className="sp-num">0.5rem</td>
+        <td className="sp-num">8px</td>
+        <td className="sp-num">2</td>
+        <td>Tight inline spacing, chip padding</td>
       </tr>
       <tr>
         <td><code>--space-3</code></td>
-        <td>12px</td>
-        <td><span className="spacing-preview" style={{ width: '12px' }}></span></td>
-        <td>Input padding, small margins</td>
+        <td className="sp-num">0.75rem</td>
+        <td className="sp-num">12px</td>
+        <td className="sp-num">3</td>
+        <td>Compact input padding, small gaps</td>
       </tr>
       <tr>
         <td><code>--space-4</code></td>
-        <td>16px</td>
-        <td><span className="spacing-preview" style={{ width: '16px' }}></span></td>
-        <td>Standard padding, card padding</td>
+        <td className="sp-num">1rem</td>
+        <td className="sp-num">16px</td>
+        <td className="sp-num">4</td>
+        <td>Default padding, card interior, list gap</td>
       </tr>
       <tr>
         <td><code>--space-5</code></td>
-        <td>20px</td>
-        <td><span className="spacing-preview" style={{ width: '20px' }}></span></td>
-        <td>Large input padding</td>
+        <td className="sp-num">1.25rem</td>
+        <td className="sp-num">20px</td>
+        <td className="sp-num">5</td>
+        <td>Roomy control padding</td>
       </tr>
       <tr>
         <td><code>--space-6</code></td>
-        <td>24px</td>
-        <td><span className="spacing-preview" style={{ width: '24px' }}></span></td>
-        <td>Section spacing</td>
+        <td className="sp-num">1.5rem</td>
+        <td className="sp-num">24px</td>
+        <td className="sp-num">6</td>
+        <td>Gap between related components</td>
       </tr>
       <tr>
         <td><code>--space-8</code></td>
-        <td>32px</td>
-        <td><span className="spacing-preview" style={{ width: '32px' }}></span></td>
-        <td>Large section spacing</td>
+        <td className="sp-num">2rem</td>
+        <td className="sp-num">32px</td>
+        <td className="sp-num">8</td>
+        <td>Block separation, generous card padding</td>
       </tr>
       <tr>
         <td><code>--space-10</code></td>
-        <td>40px</td>
-        <td><span className="spacing-preview" style={{ width: '40px' }}></span></td>
-        <td>Component separation</td>
+        <td className="sp-num">2.5rem</td>
+        <td className="sp-num">40px</td>
+        <td className="sp-num">10</td>
+        <td>Group separation</td>
       </tr>
       <tr>
         <td><code>--space-12</code></td>
-        <td>48px</td>
-        <td><span className="spacing-preview" style={{ width: '48px' }}></span></td>
-        <td>Major section breaks</td>
+        <td className="sp-num">3rem</td>
+        <td className="sp-num">48px</td>
+        <td className="sp-num">12</td>
+        <td>Section padding on mobile</td>
       </tr>
       <tr>
         <td><code>--space-16</code></td>
-        <td>64px</td>
-        <td><span className="spacing-preview" style={{ width: '64px' }}></span></td>
-        <td>Page sections</td>
+        <td className="sp-num">4rem</td>
+        <td className="sp-num">64px</td>
+        <td className="sp-num">16</td>
+        <td>Between-section rhythm</td>
       </tr>
       <tr>
         <td><code>--space-20</code></td>
-        <td>80px</td>
-        <td><span className="spacing-preview" style={{ width: '80px' }}></span></td>
-        <td>Large page sections, major breaks</td>
+        <td className="sp-num">5rem</td>
+        <td className="sp-num">80px</td>
+        <td className="sp-num">20</td>
+        <td>Large section breaks</td>
       </tr>
       <tr>
         <td><code>--space-24</code></td>
-        <td>96px</td>
-        <td><span className="spacing-preview" style={{ width: '96px' }}></span></td>
-        <td>Section divisions, feature blocks</td>
+        <td className="sp-num">6rem</td>
+        <td className="sp-num">96px</td>
+        <td className="sp-num">24</td>
+        <td>Feature blocks, desktop section padding</td>
       </tr>
       <tr>
         <td><code>--space-32</code></td>
-        <td>128px</td>
-        <td><span className="spacing-preview" style={{ width: '128px' }}></span></td>
-        <td>Hero spacing, the grand entrance, room for the headliner</td>
+        <td className="sp-num">8rem</td>
+        <td className="sp-num">128px</td>
+        <td className="sp-num">32</td>
+        <td>Hero spacing, the grand entrance</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<div className="spacing-section">
-  <h2 className="spacing-section-title">Named Aliases</h2>
-
-  <table className="spacing-table">
+<div className="sp-section">
+  <h2 className="sp-section-title">Named aliases (t-shirt scale)</h2>
+  <p className="sp-prose">
+    The numeric scale is precise but anonymous. A parallel <strong>t-shirt naming</strong> (xs to 2xl) maps intent-carrying names onto the six most common steps, so a designer can reach for <span className="sp-inline-code">--space-md</span> without memorizing that it resolves to 24px. Numeric tokens stay the source of truth; aliases are convenience pointers into the same scale.
+  </p>
+  <table className="sp-table">
     <thead>
       <tr>
         <th>Alias</th>
-        <th>Maps To</th>
+        <th>Maps to</th>
         <th>Value</th>
+        <th>Reads as</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--space-xs</code></td><td><code>--space-2</code></td><td className="sp-num">8px</td><td>Tight</td></tr>
+      <tr><td><code>--space-sm</code></td><td><code>--space-4</code></td><td className="sp-num">16px</td><td>Default</td></tr>
+      <tr><td><code>--space-md</code></td><td><code>--space-6</code></td><td className="sp-num">24px</td><td>Comfortable</td></tr>
+      <tr><td><code>--space-lg</code></td><td><code>--space-8</code></td><td className="sp-num">32px</td><td>Roomy</td></tr>
+      <tr><td><code>--space-xl</code></td><td><code>--space-10</code></td><td className="sp-num">40px</td><td>Spacious</td></tr>
+      <tr><td><code>--space-2xl</code></td><td><code>--space-12</code></td><td className="sp-num">48px</td><td>Section</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div className="sp-section">
+  <h2 className="sp-section-title">Applying space: padding, margin, gap</h2>
+  <p className="sp-prose">
+    The same token behaves differently depending on which property carries it. Choosing the right property is what keeps a layout robust as content changes.
+  </p>
+  <div className="sp-grid-3">
+    <div className="sp-concept">
+      <span className="sp-concept-tag">inside</span>
+      <div className="sp-concept-name">Padding</div>
+      <div className="sp-concept-body">Space <strong>within</strong> an element, between its border and its content. Owns the breathing room inside cards, buttons, and inputs. Padding belongs to the component and travels with it.</div>
+    </div>
+    <div className="sp-concept">
+      <span className="sp-concept-tag">between</span>
+      <div className="sp-concept-name">Margin</div>
+      <div className="sp-concept-body">Space <strong>outside</strong> an element, pushing neighbors away. Use it sparingly and in one direction (prefer a single <span className="sp-inline-code">margin-bottom</span> flow) to avoid collapsing-margin surprises.</div>
+    </div>
+    <div className="sp-concept">
+      <span className="sp-concept-tag">layout</span>
+      <div className="sp-concept-name">Gap</div>
+      <div className="sp-concept-body">Space <strong>distributed</strong> by a flex or grid container between its children. One declaration on the parent spaces every child evenly, with no leftover margin on the last item. Prefer <span className="sp-inline-code">gap</span> for lists, toolbars, and grids.</div>
+    </div>
+  </div>
+  <p className="sp-prose" style={{ marginTop: '1.25rem' }}>
+    <strong>Vertical rhythm.</strong> Stacked content reads best when the vertical gaps are themselves multiples of the base unit and relate to the type's line height. Keep the space between a heading and its body tighter than the space before the next heading, so proximity signals grouping. As a rule of thumb, the gap that separates two groups should be visibly larger than any gap inside a group.
+  </p>
+  <p className="sp-prose">
+    <strong>Sections and components.</strong> Scale spacing up with the size of the boundary. Inside a component use the small steps (<span className="sp-inline-code">--space-2</span> to <span className="sp-inline-code">--space-4</span>); between components use the medium steps (<span className="sp-inline-code">--space-6</span> to <span className="sp-inline-code">--space-10</span>); between full page sections use the large steps (<span className="sp-inline-code">--space-16</span> and up). The jump in magnitude is what makes structure legible at a glance.
+  </p>
+</div>
+
+<div className="sp-section">
+  <h2 className="sp-section-title">Touch targets and mobile</h2>
+  <p className="sp-prose">
+    Spacing is also an accessibility contract. On touch screens, an element is only usable if the finger can hit it reliably. Three numbers anchor the system, and they are non-negotiable floors, not suggestions.
+  </p>
+  <div className="sp-target-row">
+    <div className="sp-target">
+      <div className="sp-target-box min" style={{ width: '48px', height: '48px' }}>24</div>
+      <div className="sp-target-meta">
+        <div className="sp-target-label">24 &times; 24px</div>
+        <div className="sp-target-sub">WCAG 2.2 floor (AA)</div>
+      </div>
+    </div>
+    <div className="sp-target">
+      <div className="sp-target-box apple" style={{ width: '88px', height: '88px' }}>44</div>
+      <div className="sp-target-meta">
+        <div className="sp-target-label">44 &times; 44pt</div>
+        <div className="sp-target-sub">Apple HIG target</div>
+      </div>
+    </div>
+    <div className="sp-target">
+      <div className="sp-target-box material" style={{ width: '96px', height: '96px' }}>48</div>
+      <div className="sp-target-meta">
+        <div className="sp-target-label">48 &times; 48dp</div>
+        <div className="sp-target-sub">Material target</div>
+      </div>
+    </div>
+  </div>
+  <p className="sp-prose" style={{ marginTop: '1.25rem' }}>
+    <strong>The floor.</strong> WCAG 2.2 Success Criterion 2.5.8, Target Size (Minimum), requires interactive targets to be at least <strong>24 by 24 CSS pixels</strong> at conformance level AA (with spacing exceptions when targets are smaller). This is the absolute minimum for a compliant interface.
+  </p>
+  <p className="sp-prose">
+    <strong>The target.</strong> Platform guidance sets a more comfortable bar. Apple's Human Interface Guidelines recommend a minimum tappable area of <strong>44 by 44 points</strong>; Material Design specifies a minimum touch target of <strong>48 by 48 dp</strong>. Design primary actions to the 44 to 48 range and reserve the 24px floor only for dense, secondary controls that also satisfy the WCAG spacing exception. Note the units differ: WCAG counts CSS pixels, Apple counts points, Material counts density-independent pixels, but in practice all three converge near the same physical size.
+  </p>
+  <p className="sp-prose">
+    <strong>Safe areas.</strong> On modern phones the usable rectangle is inset by notches, rounded corners, and the home indicator. Apple's layout guidance calls this the safe area; on the web, honor it with the CSS <span className="sp-inline-code">env(safe-area-inset-&#42;)</span> variables (paired with <span className="sp-inline-code">viewport-fit=cover</span>) so sticky bars and primary CTAs never sit under a system gesture zone. Add your scale token to the inset rather than replacing it: <span className="sp-inline-code">padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom))</span>.
+  </p>
+  <div className="sp-callout">
+    <div className="sp-callout-mark">!</div>
+    <div className="sp-callout-body">
+      <div className="sp-callout-title">Hit area is not visual size</div>
+      A 20px icon can still meet the target floor: expand its tappable area with padding or a pseudo-element so the finger target reaches 44 to 48px even when the glyph stays small.
+    </div>
+  </div>
+</div>
+
+<div className="sp-section">
+  <h2 className="sp-section-title">Density: comfortable by default</h2>
+  <p className="sp-prose">
+    Density is how tightly the same components pack together. Material Design frames it as an adjustable property: a <strong>comfortable</strong> default suits touch and reading, while a <strong>compact</strong> mode fits more information on screen for expert, data-dense, pointer-driven contexts. Density is applied by reducing the spacing step, not by inventing new off-scale values.
+  </p>
+  <table className="sp-table">
+    <thead>
+      <tr>
+        <th>Mode</th>
+        <th>Interior step</th>
+        <th>When to apply</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><code>--space-xs</code></td>
-        <td><code>--space-2</code></td>
-        <td>8px</td>
+        <td><strong>Comfortable</strong> (default)</td>
+        <td><code>--space-4</code> / <code>--space-6</code></td>
+        <td>Touch-first screens, marketing, reading, onboarding. The safe default for anything a first-time user touches.</td>
       </tr>
       <tr>
-        <td><code>--space-sm</code></td>
-        <td><code>--space-4</code></td>
-        <td>16px</td>
-      </tr>
-      <tr>
-        <td><code>--space-md</code></td>
-        <td><code>--space-6</code></td>
-        <td>24px</td>
-      </tr>
-      <tr>
-        <td><code>--space-lg</code></td>
-        <td><code>--space-8</code></td>
-        <td>32px</td>
-      </tr>
-      <tr>
-        <td><code>--space-xl</code></td>
-        <td><code>--space-10</code></td>
-        <td>40px</td>
-      </tr>
-      <tr>
-        <td><code>--space-2xl</code></td>
-        <td><code>--space-12</code></td>
-        <td>48px</td>
+        <td><strong>Compact</strong></td>
+        <td><code>--space-2</code> / <code>--space-3</code></td>
+        <td>Data tables, dashboards, admin tools, and pointer-driven power-user views where scanning many rows matters more than roominess.</td>
       </tr>
     </tbody>
   </table>
+  <p className="sp-prose" style={{ marginTop: '1rem' }}>
+    Even in compact mode the touch-target floor still applies: shrink the padding, never the hit area below 24px. Density lowers visual whitespace, it does not lower accessibility.
+  </p>
 </div>
 
-<div className="spacing-section">
-  <h2 className="spacing-section-title">Usage Example</h2>
-
-  <div className="spacing-code">
-    <div className="spacing-code-header">
-      <span className="spacing-code-dot red"></span>
-      <span className="spacing-code-dot yellow"></span>
-      <span className="spacing-code-dot green"></span>
-      <span className="spacing-code-lang">CSS</span>
+<div className="sp-section">
+  <h2 className="sp-section-title">Taxonomy: rules for a new project</h2>
+  <p className="sp-prose">
+    When you start a project on this system, these rules turn the scale into consistent output. Follow them and spacing stops being a per-screen negotiation.
+  </p>
+  <div className="sp-rules">
+    <div className="sp-rule-col">
+      <div className="sp-rule-head do">
+        <span className="sp-rule-mark do">&#10003;</span> Do
+      </div>
+      <ul className="sp-rule-list">
+        <li>Use only values from the scale. Every gap resolves to a <code>--space-&#42;</code> token.</li>
+        <li>Prefer <code>gap</code> on flex and grid parents over margins on children. One declaration, no orphan spacing.</li>
+        <li>Flow margins in one direction (for example <code>margin-bottom</code> only) to avoid collapsing-margin bugs.</li>
+        <li>Size interactive targets to 44 to 48px; keep 24px as the hard floor.</li>
+        <li>Scale spacing up on larger viewports: small steps on mobile, larger section steps on desktop.</li>
+        <li>Add safe-area insets to sticky and bottom-anchored elements with <code>env(safe-area-inset-&#42;)</code>.</li>
+      </ul>
     </div>
-    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.card</span> <span class="punctuation">{</span>
-    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>           <span class="comment">/* 16px */</span>
-    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">var(--space-6)</span><span class="punctuation">;</span>     <span class="comment">/* 24px */</span>
+    <div className="sp-rule-col">
+      <div className="sp-rule-head dont">
+        <span className="sp-rule-mark dont">&#10007;</span> Don't
+      </div>
+      <ul className="sp-rule-list">
+        <li>Hardcode arbitrary pixels (<code>13px</code>, <code>15px</code>, <code>margin: 7px</code>). If it is not on the scale, it does not ship.</li>
+        <li>Stack margins from both neighbors to fake a gap; use the parent's <code>gap</code> instead.</li>
+        <li>Shrink a hit area below 24px to save space, even in compact density.</li>
+        <li>Invent a one-off value because two scale steps feel almost right; pick the nearer step.</li>
+        <li>Let a sticky CTA sit under the home indicator by ignoring safe-area insets.</li>
+        <li>Mix numeric and alias tokens for the same measurement in one component.</li>
+      </ul>
+    </div>
+  </div>
+  <p className="sp-prose" style={{ marginTop: '1.5rem' }}>
+    <strong>Decision ladder.</strong> Stop at the first step that answers the question.
+  </p>
+  <div className="sp-flow">
+    <div className="sp-flow-step">
+      <span className="sp-flow-num">1</span>
+      <span className="sp-flow-text"><strong>Is this space inside, between, or distributed?</strong> Inside a component uses padding, between two elements uses margin or a parent gap, across many children uses <code>gap</code>.</span>
+    </div>
+    <div className="sp-flow-step">
+      <span className="sp-flow-num">2</span>
+      <span className="sp-flow-text"><strong>How large is the boundary?</strong> Within a component reach for <code>--space-2</code> to <code>--space-4</code>; between components <code>--space-6</code> to <code>--space-10</code>; between page sections <code>--space-16</code> and up.</span>
+    </div>
+    <div className="sp-flow-step">
+      <span className="sp-flow-num">3</span>
+      <span className="sp-flow-text"><strong>Is it interactive?</strong> If so, verify the hit area meets the 44 to 48px target (24px hard floor) before finalizing the padding.</span>
+    </div>
+    <div className="sp-flow-step">
+      <span className="sp-flow-num">4</span>
+      <span className="sp-flow-text"><strong>Is it anchored to a screen edge?</strong> Add the matching <code>env(safe-area-inset-&#42;)</code> to the chosen token so it clears system chrome.</span>
+    </div>
+  </div>
+</div>
+
+<div className="sp-section">
+  <h2 className="sp-section-title">In code</h2>
+  <div className="sp-code">
+    <div className="sp-code-header">
+      <span className="sp-code-dot a"></span>
+      <span className="sp-code-dot b"></span>
+      <span className="sp-code-dot c"></span>
+      <span className="sp-code-lang">CSS</span>
+    </div>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Inside a component: padding from the small steps */</span>
+<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>              <span class="comment">/* 16px interior */</span>
 <span class="punctuation">}</span>
 
-<span class="selector">.button</span> <span class="punctuation">{</span>
-    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-3)</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>  <span class="comment">/* 12px 16px */</span>
+<span class="comment">/* Distributed spacing: gap on the parent, never child margins */</span>
+<span class="selector">.toolbar</span> <span class="punctuation">{</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span>
+    <span class="property">gap</span><span class="punctuation">:</span> <span class="value">var(--space-2)</span><span class="punctuation">;</span>                 <span class="comment">/* 8px between items */</span>
 <span class="punctuation">}</span>
 
+<span class="comment">/* Interactive: hit area meets the target, not just the glyph */</span>
+<span class="selector">.icon-button</span> <span class="punctuation">{</span>
+    <span class="property">min-width</span><span class="punctuation">:</span> <span class="value">2.75rem</span><span class="punctuation">;</span>             <span class="comment">/* 44px target */</span>
+    <span class="property">min-height</span><span class="punctuation">:</span> <span class="value">2.75rem</span><span class="punctuation">;</span>            <span class="comment">/* 44px target */</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-3)</span><span class="punctuation">;</span>              <span class="comment">/* 12px */</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Between page sections: the large steps, scaled by viewport */</span>
 <span class="selector">.section</span> <span class="punctuation">{</span>
-    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-8)</span> <span class="value">0</span><span class="punctuation">;</span>         <span class="comment">/* 32px top/bottom */</span>
+    <span class="property">padding-block</span><span class="punctuation">:</span> <span class="value">var(--space-12)</span><span class="punctuation">;</span>       <span class="comment">/* 48px on mobile */</span>
+<span class="punctuation">}</span>
+<span class="selector">@media (min-width: 768px)</span> <span class="punctuation">{</span>
+    <span class="selector">.section</span> <span class="punctuation">{</span> <span class="property">padding-block</span><span class="punctuation">:</span> <span class="value">var(--space-24)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* 96px */</span>
 <span class="punctuation">}</span>
 
-<span class="selector">.icon-text</span> <span class="punctuation">{</span>
-    <span class="property">gap</span><span class="punctuation">:</span> <span class="value">var(--space-2)</span><span class="punctuation">;</span>               <span class="comment">/* 8px gap */</span>
+<span class="comment">/* Screen-anchored: add the safe-area inset to the token */</span>
+<span class="selector">.sticky-cta</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">sticky</span><span class="punctuation">;</span>
+    <span class="property">bottom</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">padding-bottom</span><span class="punctuation">:</span> <span class="value">calc(var(--space-4) + env(safe-area-inset-bottom))</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>`}} />
   </div>
+</div>
+
+<div className="sp-section">
+  <h2 className="sp-section-title">Sources</h2>
+  <ul className="sp-sources">
+    <li>WCAG 2.2, Success Criterion 2.5.8 Target Size (Minimum), 24 by 24 CSS pixels, level AA. W3C Recommendation. <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">w3.org/WAI/WCAG22/Understanding/target-size-minimum.html</a></li>
+    <li>WCAG 2.2, Success Criterion 2.5.5 Target Size (Enhanced), 44 by 44 CSS pixels, level AAA. <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html">w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html</a></li>
+    <li>Apple Human Interface Guidelines, Buttons: a hit region of at least 44 by 44 points. <a href="https://developer.apple.com/design/human-interface-guidelines/buttons">developer.apple.com/design/human-interface-guidelines/buttons</a></li>
+    <li>Apple Human Interface Guidelines, Layout and the safe area. <a href="https://developer.apple.com/design/human-interface-guidelines/layout">developer.apple.com/design/human-interface-guidelines/layout</a></li>
+    <li>Material Design, accessible design: touch targets at least 48 by 48 dp. <a href="https://m3.material.io/foundations/accessible-design">m3.material.io/foundations/accessible-design</a></li>
+    <li>Material Design, layout spacing and the 8dp grid. <a href="https://m3.material.io/foundations/layout/understanding-layout/spacing">m3.material.io/foundations/layout/understanding-layout/spacing</a></li>
+    <li>Material Design, layout density (default, comfortable, compact). <a href="https://m3.material.io/foundations/layout/understanding-layout/density">m3.material.io/foundations/layout/understanding-layout/density</a></li>
+    <li>MDN Web Docs, CSS env() and safe-area-inset-&#42; variables. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/env">developer.mozilla.org/en-US/docs/Web/CSS/env</a></li>
+    <li>Refactoring UI, Adam Wathan and Steve Schoger, defining a spacing and sizing system. <a href="https://www.refactoringui.com/">refactoringui.com</a></li>
+  </ul>
+</div>
+
 </div>

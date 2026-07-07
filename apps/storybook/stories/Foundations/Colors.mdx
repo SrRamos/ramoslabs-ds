@@ -4,304 +4,1119 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <style>
 {`
-  .colors-header {
-    margin-bottom: 2rem;
-  }
+  .col-header { margin-bottom: 2.5rem; }
 
-  .colors-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
-    font-size: 1.875rem;
-    font-weight: 700;
+  .col-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #4f46e5;
     margin-bottom: 0.75rem;
   }
 
-  .colors-description {
+  .col-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: clamp(2rem, 4vw + 1rem, 2.75rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .col-lead {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
-    font-size: 1rem;
+    color: #475569;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    max-width: 46rem;
+  }
+
+  .col-lead strong { color: #0f172a; font-weight: 700; }
+
+  .col-thesis {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+    border: 1px solid #e0e7ff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .col-thesis-chip {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 14px;
+    background: #4f46e5;
+    box-shadow: 0 8px 20px rgba(79,70,229,0.35), inset 0 0 0 1px rgba(0,0,0,0.06);
+  }
+
+  .col-thesis-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #334155;
+    font-size: 0.9375rem;
     line-height: 1.6;
   }
+  .col-thesis-text strong { color: #312e81; }
 
-  .colors-section {
-    margin-top: 2.5rem;
+  .col-section { margin-top: 3.5rem; }
+
+  .col-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
   }
 
-  .colors-section-title {
-    font-size: 0.875rem;
+  .col-section-intro {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .col-kicker {
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     letter-spacing: 0.1em;
-    margin-bottom: 1rem;
+    margin: 2rem 0 1rem;
   }
 
-  .color-card {
+  /* Primitive scale ramps */
+  .col-ramp { margin-bottom: 1.25rem; }
+
+  .col-ramp-head {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: white;
-    padding: 0.75rem;
-    border-radius: 12px;
-    border: 1px solid #e6e8eb;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
-    margin-bottom: 1rem;
-  }
-
-  .color-swatch {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 8px;
-    flex-shrink: 0;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
-  }
-
-  .color-info {
-    flex: 1;
-  }
-
-  .color-name-row {
-    display: flex;
+    align-items: baseline;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
   }
 
-  .color-name {
+  .col-ramp-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
+    font-size: 0.9375rem;
     color: #0f172a;
-    font-size: 1rem;
   }
 
-  .color-hex {
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-    font-size: 0.75rem;
-    background: #f1f5f9;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    color: #64748b;
-  }
-
-  .color-token {
+  .col-ramp-role {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
     color: #94a3b8;
-    margin-top: 0.25rem;
   }
 
-  .color-usage {
-    font-size: 0.875rem;
-    color: #64748b;
-    line-height: 1.4;
-  }
-
-  .color-grid {
+  .col-ramp-strip {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  .color-grid-card {
-    background: white;
-    padding: 1rem;
-    border-radius: 12px;
+    grid-template-columns: repeat(11, 1fr);
+    border-radius: 10px;
+    overflow: hidden;
     border: 1px solid #e6e8eb;
   }
 
-  .color-grid-swatch {
-    height: 3rem;
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
+  .col-ramp-cell {
+    aspect-ratio: 1 / 1.4;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.375rem 0.25rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.5625rem;
+    line-height: 1.2;
   }
 
-  .color-grid-name {
+  .col-ramp-step { font-weight: 700; }
+  .col-ramp-hex { opacity: 0.75; }
+
+  @media (max-width: 700px) {
+    .col-ramp-strip { grid-template-columns: repeat(11, 1fr); }
+    .col-ramp-cell { font-size: 0; padding: 0; aspect-ratio: 1 / 1.6; }
+  }
+
+  /* Semantic role cards */
+  .col-roles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .col-role {
+    background: #ffffff;
+    border: 1px solid #e6e8eb;
+    border-radius: 14px;
+    padding: 1rem;
+  }
+
+  .col-role-swatch {
+    height: 3rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+  }
+
+  .col-role-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: #0f172a;
   }
 
-  .color-grid-hex {
+  .col-role-token {
     font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    color: #64748b;
+    font-size: 0.6875rem;
+    color: #4f46e5;
+    margin: 0.25rem 0 0.5rem;
   }
 
-  .color-grid-token {
+  .col-role-desc {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  .col-role-map {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #94a3b8;
+    margin-top: 0.625rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #e6e8eb;
+  }
+
+  /* Feedback triads */
+  .col-triad {
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 1px solid #e6e8eb;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .col-triad-row {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    align-items: stretch;
+  }
+
+  .col-triad-solid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+
+  .col-triad-body {
+    padding: 0.875rem 1rem;
+    background: #ffffff;
+  }
+
+  .col-triad-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.125rem;
+  }
+
+  .col-triad-desc {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  .col-triad-tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.5rem;
+  }
+
+  .col-chip {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    padding: 0.125rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+
+  /* Contrast table */
+  .col-table-wrap { overflow-x: auto; border: 1px solid #e6e8eb; border-radius: 14px; }
+
+  .col-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    min-width: 640px;
+  }
+
+  .col-table thead th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .col-table tbody td {
+    padding: 0.625rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+  }
+
+  .col-table tbody tr:last-child td { border-bottom: none; }
+
+  .col-swatch-pair {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 1.75rem;
+    border-radius: 6px;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+  }
+
+  .col-ratio {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .col-badge {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 0.125rem 0.4rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .col-badge--aaa { background: #dcfce7; color: #166534; }
+  .col-badge--aa { background: #d1fae5; color: #047857; }
+  .col-badge--large { background: #fef3c7; color: #92400e; }
+  .col-badge--fail { background: #fee2e2; color: #991b1b; }
+
+  /* Do / Don't */
+  .col-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .col-rule {
+    border-radius: 14px;
+    padding: 1.25rem;
+    border: 1px solid;
+  }
+  .col-rule--do { background: #f0fdf4; border-color: #bbf7d0; }
+  .col-rule--dont { background: #fef2f2; border-color: #fecaca; }
+
+  .col-rule-head {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .col-rule--do .col-rule-head { color: #166534; }
+  .col-rule--dont .col-rule-head { color: #991b1b; }
+
+  .col-rule ul { margin: 0; padding-left: 1.1rem; }
+  .col-rule li {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: #334155;
+    margin-bottom: 0.5rem;
+  }
+  .col-rule li:last-child { margin-bottom: 0; }
+  .col-rule code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: rgba(15,23,42,0.06);
+    padding: 0.05rem 0.3rem;
+    border-radius: 3px;
+  }
+
+  /* Callout */
+  .col-callout {
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 1rem;
+    background: #eff6ff;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .col-callout-bar { background: #3b82f6; border-radius: 4px; }
+  .col-callout-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #1e40af;
+  }
+  .col-callout-body strong { color: #1e3a8a; }
+
+  /* Dark mode ladder */
+  .col-dark {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+  .col-dark-cell {
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    font-family: 'Rubik', system-ui, sans-serif;
+  }
+  .col-dark-name { font-weight: 700; font-size: 0.8125rem; color: #f8fafc; }
+  .col-dark-hex {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
     color: #94a3b8;
     margin-top: 0.125rem;
   }
+  .col-dark-note { font-size: 0.75rem; color: #cbd5e1; margin-top: 0.5rem; line-height: 1.4; }
 
-  .color-grid-usage {
+  /* CSS token dump */
+  .col-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+  .col-code-head {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+  .col-code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .col-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .col-code pre {
+    margin: 0;
+    padding: 1.5rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+  .col-code .c { color: #64748b; font-style: italic; }
+  .col-code .p { color: #7dd3fc; }
+  .col-code .v { color: #fbbf24; }
+  .col-code .n { color: #94a3b8; }
+
+  /* References */
+  .col-refs {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.6;
     color: #64748b;
-    margin-top: 0.375rem;
   }
-
-  .two-column {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-  }
-
-  @media (max-width: 900px) {
-    .two-column {
-      grid-template-columns: 1fr;
-    }
-    .color-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
+  .col-refs ol { padding-left: 1.25rem; margin: 0; }
+  .col-refs li { margin-bottom: 0.5rem; }
+  .col-refs a { color: #4f46e5; word-break: break-word; }
 `}
 </style>
 
-<div className="colors-header">
-  <h1 className="colors-title">Colors That Build Anticipation</h1>
-  <p className="colors-description">
-    Every color carries meaning, from calm surfaces to decisive actions. Here is the mono-indigo palette that powers the RamosLabs Design System.
+<div className="col-header">
+  <div className="col-eyebrow">Foundations / Color</div>
+  <h1 className="col-title">One accent. Indigo.</h1>
+  <p className="col-lead">
+    RamosLabs runs on a <strong>single brand accent</strong>. Indigo carries every intentional action across the interface, and everything else is a disciplined neutral or a reserved feedback signal. This page is the taxonomy: the primitive scales, the semantic roles built on top of them, the contrast floors every pairing must clear, and the rules for applying color in a new project without drifting off-system.
   </p>
+
+  <div className="col-thesis">
+    <div className="col-thesis-chip"></div>
+    <p className="col-thesis-text">
+      <strong>Why mono-accent?</strong> A single saturated hue means color always <em>means</em> something. When only one color can say "act here," users learn it in seconds and every screen stays calm. This is restraint by design, not a lack of range: the depth comes from a wide neutral ramp and semantic feedback colors, not from competing brand hues. The accent is <strong>Indigo 600 (#4f46e5)</strong> and there is no rainbow, no second voice fighting for attention.
+    </p>
+  </div>
 </div>
 
-<div className="two-column">
-  <div className="colors-section">
-    <h2 className="colors-section-title">Brand Colors</h2>
+<div className="col-section">
+  <h2 className="col-section-title">1. Primitive palette</h2>
+  <p className="col-section-intro">
+    Primitives are the raw material: fixed hue ramps from <code>50</code> (lightest) to <code>950</code> (darkest), lifted from the Tailwind scale so every step is a deliberate, tested lightness [10]. They are named by hue, never by meaning. <strong>Never reference a primitive directly in product code</strong>. They exist only to be assigned to semantic roles, so the whole system can be re-themed by moving role assignments, not by hunting hex values across a codebase.
+  </p>
 
-    <div className="color-card">
-      <div className="color-swatch" style={{ background: '#4f46e5' }}></div>
-      <div className="color-info">
-        <div className="color-name-row">
-          <span className="color-name">The Journey - Indigo</span>
-          <span className="color-hex">#4f46e5</span>
+  <div className="col-kicker">Brand ramp: Indigo</div>
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Indigo</span>
+      <span className="col-ramp-role">--color-indigo-* · the one accent</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#eef2ff', color: '#312e81' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">eef2ff</span></div>
+      <div className="col-ramp-cell" style={{ background: '#e0e7ff', color: '#312e81' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">e0e7ff</span></div>
+      <div className="col-ramp-cell" style={{ background: '#c7d2fe', color: '#312e81' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">c7d2fe</span></div>
+      <div className="col-ramp-cell" style={{ background: '#a5b4fc', color: '#312e81' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">a5b4fc</span></div>
+      <div className="col-ramp-cell" style={{ background: '#818cf8', color: '#1e1b4b' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">818cf8</span></div>
+      <div className="col-ramp-cell" style={{ background: '#6366f1', color: '#ffffff' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">6366f1</span></div>
+      <div className="col-ramp-cell" style={{ background: '#4f46e5', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">4f46e5</span></div>
+      <div className="col-ramp-cell" style={{ background: '#4338ca', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">4338ca</span></div>
+      <div className="col-ramp-cell" style={{ background: '#3730a3', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">3730a3</span></div>
+      <div className="col-ramp-cell" style={{ background: '#312e81', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">312e81</span></div>
+      <div className="col-ramp-cell" style={{ background: '#1e1b4b', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">1e1b4b</span></div>
+    </div>
+  </div>
+
+  <div className="col-kicker">Neutral ramp: Slate</div>
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Slate</span>
+      <span className="col-ramp-role">--color-slate-* · text, surfaces, borders</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#f8fafc', color: '#0f172a' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">f8fafc</span></div>
+      <div className="col-ramp-cell" style={{ background: '#f1f5f9', color: '#0f172a' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">f1f5f9</span></div>
+      <div className="col-ramp-cell" style={{ background: '#e2e8f0', color: '#0f172a' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">e2e8f0</span></div>
+      <div className="col-ramp-cell" style={{ background: '#cbd5e1', color: '#0f172a' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">cbd5e1</span></div>
+      <div className="col-ramp-cell" style={{ background: '#94a3b8', color: '#0f172a' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">94a3b8</span></div>
+      <div className="col-ramp-cell" style={{ background: '#64748b', color: '#ffffff' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">64748b</span></div>
+      <div className="col-ramp-cell" style={{ background: '#475569', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">475569</span></div>
+      <div className="col-ramp-cell" style={{ background: '#334155', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">334155</span></div>
+      <div className="col-ramp-cell" style={{ background: '#1e293b', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">1e293b</span></div>
+      <div className="col-ramp-cell" style={{ background: '#0f172a', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">0f172a</span></div>
+      <div className="col-ramp-cell" style={{ background: '#020617', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">020617</span></div>
+    </div>
+  </div>
+
+  <div className="col-kicker">Feedback ramps: reserved for state, not decoration</div>
+
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Emerald</span>
+      <span className="col-ramp-role">--color-emerald-* · success solid</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#ecfdf5', color: '#064e3b' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">ecfdf5</span></div>
+      <div className="col-ramp-cell" style={{ background: '#d1fae5', color: '#064e3b' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">d1fae5</span></div>
+      <div className="col-ramp-cell" style={{ background: '#a7f3d0', color: '#064e3b' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">a7f3d0</span></div>
+      <div className="col-ramp-cell" style={{ background: '#6ee7b7', color: '#064e3b' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">6ee7b7</span></div>
+      <div className="col-ramp-cell" style={{ background: '#34d399', color: '#064e3b' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">34d399</span></div>
+      <div className="col-ramp-cell" style={{ background: '#10b981', color: '#ffffff' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">10b981</span></div>
+      <div className="col-ramp-cell" style={{ background: '#059669', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">059669</span></div>
+      <div className="col-ramp-cell" style={{ background: '#047857', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">047857</span></div>
+      <div className="col-ramp-cell" style={{ background: '#065f46', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">065f46</span></div>
+      <div className="col-ramp-cell" style={{ background: '#064e3b', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">064e3b</span></div>
+      <div className="col-ramp-cell" style={{ background: '#022c22', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">022c22</span></div>
+    </div>
+  </div>
+
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Green</span>
+      <span className="col-ramp-role">--color-green-* · success surface &amp; text</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#f0fdf4', color: '#14532d' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">f0fdf4</span></div>
+      <div className="col-ramp-cell" style={{ background: '#dcfce7', color: '#14532d' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">dcfce7</span></div>
+      <div className="col-ramp-cell" style={{ background: '#bbf7d0', color: '#14532d' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">bbf7d0</span></div>
+      <div className="col-ramp-cell" style={{ background: '#86efac', color: '#14532d' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">86efac</span></div>
+      <div className="col-ramp-cell" style={{ background: '#4ade80', color: '#14532d' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">4ade80</span></div>
+      <div className="col-ramp-cell" style={{ background: '#22c55e', color: '#ffffff' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">22c55e</span></div>
+      <div className="col-ramp-cell" style={{ background: '#16a34a', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">16a34a</span></div>
+      <div className="col-ramp-cell" style={{ background: '#15803d', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">15803d</span></div>
+      <div className="col-ramp-cell" style={{ background: '#166534', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">166534</span></div>
+      <div className="col-ramp-cell" style={{ background: '#14532d', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">14532d</span></div>
+      <div className="col-ramp-cell" style={{ background: '#052e16', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">052e16</span></div>
+    </div>
+  </div>
+
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Amber</span>
+      <span className="col-ramp-role">--color-amber-* · warning</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#fffbeb', color: '#78350f' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">fffbeb</span></div>
+      <div className="col-ramp-cell" style={{ background: '#fef3c7', color: '#78350f' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">fef3c7</span></div>
+      <div className="col-ramp-cell" style={{ background: '#fde68a', color: '#78350f' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">fde68a</span></div>
+      <div className="col-ramp-cell" style={{ background: '#fcd34d', color: '#78350f' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">fcd34d</span></div>
+      <div className="col-ramp-cell" style={{ background: '#fbbf24', color: '#78350f' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">fbbf24</span></div>
+      <div className="col-ramp-cell" style={{ background: '#f59e0b', color: '#0f172a' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">f59e0b</span></div>
+      <div className="col-ramp-cell" style={{ background: '#d97706', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">d97706</span></div>
+      <div className="col-ramp-cell" style={{ background: '#b45309', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">b45309</span></div>
+      <div className="col-ramp-cell" style={{ background: '#92400e', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">92400e</span></div>
+      <div className="col-ramp-cell" style={{ background: '#78350f', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">78350f</span></div>
+      <div className="col-ramp-cell" style={{ background: '#451a03', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">451a03</span></div>
+    </div>
+  </div>
+
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Red</span>
+      <span className="col-ramp-role">--color-red-* · error</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#fef2f2', color: '#7f1d1d' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">fef2f2</span></div>
+      <div className="col-ramp-cell" style={{ background: '#fee2e2', color: '#7f1d1d' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">fee2e2</span></div>
+      <div className="col-ramp-cell" style={{ background: '#fecaca', color: '#7f1d1d' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">fecaca</span></div>
+      <div className="col-ramp-cell" style={{ background: '#fca5a5', color: '#7f1d1d' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">fca5a5</span></div>
+      <div className="col-ramp-cell" style={{ background: '#f87171', color: '#7f1d1d' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">f87171</span></div>
+      <div className="col-ramp-cell" style={{ background: '#ef4444', color: '#ffffff' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">ef4444</span></div>
+      <div className="col-ramp-cell" style={{ background: '#dc2626', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">dc2626</span></div>
+      <div className="col-ramp-cell" style={{ background: '#b91c1c', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">b91c1c</span></div>
+      <div className="col-ramp-cell" style={{ background: '#991b1b', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">991b1b</span></div>
+      <div className="col-ramp-cell" style={{ background: '#7f1d1d', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">7f1d1d</span></div>
+      <div className="col-ramp-cell" style={{ background: '#450a0a', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">450a0a</span></div>
+    </div>
+  </div>
+
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Blue</span>
+      <span className="col-ramp-role">--color-blue-* · info</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#eff6ff', color: '#1e3a8a' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">eff6ff</span></div>
+      <div className="col-ramp-cell" style={{ background: '#dbeafe', color: '#1e3a8a' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">dbeafe</span></div>
+      <div className="col-ramp-cell" style={{ background: '#bfdbfe', color: '#1e3a8a' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">bfdbfe</span></div>
+      <div className="col-ramp-cell" style={{ background: '#93c5fd', color: '#1e3a8a' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">93c5fd</span></div>
+      <div className="col-ramp-cell" style={{ background: '#60a5fa', color: '#1e3a8a' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">60a5fa</span></div>
+      <div className="col-ramp-cell" style={{ background: '#3b82f6', color: '#ffffff' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">3b82f6</span></div>
+      <div className="col-ramp-cell" style={{ background: '#2563eb', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">2563eb</span></div>
+      <div className="col-ramp-cell" style={{ background: '#1d4ed8', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">1d4ed8</span></div>
+      <div className="col-ramp-cell" style={{ background: '#1e40af', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">1e40af</span></div>
+      <div className="col-ramp-cell" style={{ background: '#1e3a8a', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">1e3a8a</span></div>
+      <div className="col-ramp-cell" style={{ background: '#172554', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">172554</span></div>
+    </div>
+  </div>
+
+  <div className="col-ramp">
+    <div className="col-ramp-head">
+      <span className="col-ramp-name">Violet</span>
+      <span className="col-ramp-role">--color-violet-* · reserved support only</span>
+    </div>
+    <div className="col-ramp-strip">
+      <div className="col-ramp-cell" style={{ background: '#f5f3ff', color: '#4c1d95' }}><span className="col-ramp-step">50</span><span className="col-ramp-hex">f5f3ff</span></div>
+      <div className="col-ramp-cell" style={{ background: '#ede9fe', color: '#4c1d95' }}><span className="col-ramp-step">100</span><span className="col-ramp-hex">ede9fe</span></div>
+      <div className="col-ramp-cell" style={{ background: '#ddd6fe', color: '#4c1d95' }}><span className="col-ramp-step">200</span><span className="col-ramp-hex">ddd6fe</span></div>
+      <div className="col-ramp-cell" style={{ background: '#c4b5fd', color: '#4c1d95' }}><span className="col-ramp-step">300</span><span className="col-ramp-hex">c4b5fd</span></div>
+      <div className="col-ramp-cell" style={{ background: '#a78bfa', color: '#2e1065' }}><span className="col-ramp-step">400</span><span className="col-ramp-hex">a78bfa</span></div>
+      <div className="col-ramp-cell" style={{ background: '#8b5cf6', color: '#ffffff' }}><span className="col-ramp-step">500</span><span className="col-ramp-hex">8b5cf6</span></div>
+      <div className="col-ramp-cell" style={{ background: '#7c3aed', color: '#ffffff' }}><span className="col-ramp-step">600</span><span className="col-ramp-hex">7c3aed</span></div>
+      <div className="col-ramp-cell" style={{ background: '#6d28d9', color: '#ffffff' }}><span className="col-ramp-step">700</span><span className="col-ramp-hex">6d28d9</span></div>
+      <div className="col-ramp-cell" style={{ background: '#5b21b6', color: '#ffffff' }}><span className="col-ramp-step">800</span><span className="col-ramp-hex">5b21b6</span></div>
+      <div className="col-ramp-cell" style={{ background: '#4c1d95', color: '#ffffff' }}><span className="col-ramp-step">900</span><span className="col-ramp-hex">4c1d95</span></div>
+      <div className="col-ramp-cell" style={{ background: '#2e1065', color: '#ffffff' }}><span className="col-ramp-step">950</span><span className="col-ramp-hex">2e1065</span></div>
+    </div>
+  </div>
+
+  <div className="col-callout">
+    <div className="col-callout-bar"></div>
+    <p className="col-callout-body">
+      <strong>Violet is not a second brand color.</strong> It is a reserved support hue (<code>--color-secondary</code>) kept only for rare decorative moments such as a gradient endpoint. It never competes with indigo for "act here" and it is never used to signal state. If you are reaching for violet to make something stand out, reach for indigo instead.
+    </p>
+  </div>
+</div>
+
+<div className="col-section">
+  <h2 className="col-section-title">2. Semantic roles</h2>
+  <p className="col-section-intro">
+    Roles are the layer product code actually consumes. A role names a <em>job</em> ("primary action", "error surface", "body text") and points at a primitive step. This is the same principle behind Material 3's color roles, where components bind to role tokens like <code>primary</code> / <code>on-primary</code> / <code>surface</code> rather than to raw tonal values [3]. Swap a role's target and the whole product follows.
+  </p>
+
+  <div className="col-kicker">Brand / primary family</div>
+  <div className="col-roles">
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#4f46e5' }}></div>
+      <div className="col-role-name">Primary</div>
+      <div className="col-role-token">--color-primary</div>
+      <div className="col-role-desc">The one accent. Every deliberate action: submit, confirm, continue, primary links, active nav, selection.</div>
+      <div className="col-role-map">indigo 600 · maps to M3 primary</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#4338ca' }}></div>
+      <div className="col-role-name">Primary dark</div>
+      <div className="col-role-token">--color-primary-dark</div>
+      <div className="col-role-desc">Hover and pressed states of primary. One step down the ramp, so interaction reads as "the same thing, engaged".</div>
+      <div className="col-role-map">indigo 700 · hover / active</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#6366f1' }}></div>
+      <div className="col-role-name">Primary light</div>
+      <div className="col-role-token">--color-primary-light</div>
+      <div className="col-role-desc">Lighter accent for large fills or dark-surface accents where 600 would sit too heavy.</div>
+      <div className="col-role-map">indigo 500</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#eef2ff', boxShadow: 'inset 0 0 0 1px #e0e7ff' }}></div>
+      <div className="col-role-name">Primary surface</div>
+      <div className="col-role-token">--color-primary-surface</div>
+      <div className="col-role-desc">Tinted background for selected rows, active chips, and subtle accent zones. Pair with primary text, never white.</div>
+      <div className="col-role-map">indigo 50 · maps to M3 primary-container</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#ffffff', boxShadow: 'inset 0 0 0 2px #4f46e5' }}></div>
+      <div className="col-role-name">Focus</div>
+      <div className="col-role-token">--color-focus</div>
+      <div className="col-role-desc">The keyboard focus ring, aliased to the accent so focus is unmistakable and on-brand. Never remove focus without an equal or stronger replacement.</div>
+      <div className="col-role-map">indigo 600 · 6.29:1 on white ✓ 1.4.11</div>
+    </div>
+  </div>
+
+  <div className="col-kicker">Feedback roles: each is a full triad</div>
+  <p className="col-section-intro">
+    Every feedback color ships as a triad: a <strong>solid</strong> for icons and emphasis, a tinted <strong>surface</strong> for the background of a message, and a dark <strong>text</strong> tone guaranteed to pass on that surface. Using the triad, not the raw hue, is what keeps status messages readable. Note the deliberate split: the <code>success</code> solid comes from Emerald while its surface and text come from Green, because Green's darker steps hit AAA on the tinted background.
+  </p>
+
+  <div className="col-triad">
+    <div className="col-triad-row">
+      <div className="col-triad-solid" style={{ background: '#10b981', color: '#ffffff' }}>Success</div>
+      <div className="col-triad-body">
+        <div className="col-triad-title">Success</div>
+        <div className="col-triad-desc">Confirmed, saved, completed. Solid for the check icon; surface + text for the confirmation banner.</div>
+        <div className="col-triad-tokens">
+          <span className="col-chip" style={{ background: '#10b981', color: '#fff', borderColor: '#10b981' }}>--color-success</span>
+          <span className="col-chip" style={{ background: '#f0fdf4', color: '#166534', borderColor: '#bbf7d0' }}>--color-success-surface</span>
+          <span className="col-chip" style={{ background: '#f0fdf4', color: '#166534', borderColor: '#bbf7d0' }}>--color-success-text</span>
+          <span className="col-chip" style={{ background: '#fff', color: '#166534', borderColor: '#bbf7d0' }}>--color-success-border</span>
         </div>
-        <p className="color-usage">The system runs on a single accent. Indigo carries the whole interface, from calm defaults to the moment of decision. Use it for navigation, links, trust signals, and every action that changes something: submit, confirm, continue.</p>
-        <div className="color-token">--color-primary</div>
       </div>
     </div>
+  </div>
 
-    <div className="color-card">
-      <div className="color-swatch" style={{ background: '#8b5cf6' }}></div>
-      <div className="color-info">
-        <div className="color-name-row">
-          <span className="color-name">The Community - Purple</span>
-          <span className="color-hex">#8b5cf6</span>
+  <div className="col-triad">
+    <div className="col-triad-row">
+      <div className="col-triad-solid" style={{ background: '#f59e0b', color: '#0f172a' }}>Warning</div>
+      <div className="col-triad-body">
+        <div className="col-triad-title">Warning</div>
+        <div className="col-triad-desc">Needs attention, not yet broken. The solid amber is bright, so it always carries <strong>dark</strong> text, never white.</div>
+        <div className="col-triad-tokens">
+          <span className="col-chip" style={{ background: '#f59e0b', color: '#0f172a', borderColor: '#f59e0b' }}>--color-warning</span>
+          <span className="col-chip" style={{ background: '#fffbeb', color: '#78350f', borderColor: '#fde68a' }}>--color-warning-surface</span>
+          <span className="col-chip" style={{ background: '#fffbeb', color: '#78350f', borderColor: '#fde68a' }}>--color-warning-text</span>
+          <span className="col-chip" style={{ background: '#fff', color: '#78350f', borderColor: '#fde68a' }}>--color-warning-border</span>
         </div>
-        <p className="color-usage">Every event is a gathering. Riders who speak the same language. Fans who know every lyric. Use for social and community features.</p>
-        <div className="color-token">--color-secondary</div>
       </div>
     </div>
   </div>
 
-  <div className="colors-section">
-    <h2 className="colors-section-title">Neutrals & Text</h2>
-
-    <div className="color-grid">
-      <div className="color-grid-card">
-        <div className="color-grid-swatch" style={{ background: '#0f172a' }}></div>
-        <div className="color-grid-name">Dark Slate</div>
-        <div className="color-grid-hex">#0f172a</div>
-        <div className="color-grid-token">--color-text-heading</div>
-        <div className="color-grid-usage">Headlines that demand attention</div>
+  <div className="col-triad">
+    <div className="col-triad-row">
+      <div className="col-triad-solid" style={{ background: '#ef4444', color: '#ffffff' }}>Error</div>
+      <div className="col-triad-body">
+        <div className="col-triad-title">Error</div>
+        <div className="col-triad-desc">Something failed or is invalid. The plain <code>--color-error</code> (red 500) is for icons and borders. For a red <strong>button with white text</strong>, use <code>--color-error-strong</code> (red 600) which clears AA.</div>
+        <div className="col-triad-tokens">
+          <span className="col-chip" style={{ background: '#ef4444', color: '#fff', borderColor: '#ef4444' }}>--color-error</span>
+          <span className="col-chip" style={{ background: '#dc2626', color: '#fff', borderColor: '#dc2626' }}>--color-error-strong</span>
+          <span className="col-chip" style={{ background: '#fef2f2', color: '#991b1b', borderColor: '#fecaca' }}>--color-error-surface</span>
+          <span className="col-chip" style={{ background: '#fef2f2', color: '#991b1b', borderColor: '#fecaca' }}>--color-error-text</span>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <div className="color-grid-card">
-        <div className="color-grid-swatch" style={{ background: '#64748b' }}></div>
-        <div className="color-grid-name">Muted Slate</div>
-        <div className="color-grid-hex">#64748b</div>
-        <div className="color-grid-token">--color-text-muted</div>
-        <div className="color-grid-usage">The voice of clarity</div>
+  <div className="col-triad">
+    <div className="col-triad-row">
+      <div className="col-triad-solid" style={{ background: '#3b82f6', color: '#ffffff' }}>Info</div>
+      <div className="col-triad-body">
+        <div className="col-triad-title">Info</div>
+        <div className="col-triad-desc">Neutral, helpful context. Kept visibly distinct from indigo so an informational note never reads as a call to action.</div>
+        <div className="col-triad-tokens">
+          <span className="col-chip" style={{ background: '#3b82f6', color: '#fff', borderColor: '#3b82f6' }}>--color-info</span>
+          <span className="col-chip" style={{ background: '#eff6ff', color: '#1e40af', borderColor: '#bfdbfe' }}>--color-info-surface</span>
+          <span className="col-chip" style={{ background: '#eff6ff', color: '#1e40af', borderColor: '#bfdbfe' }}>--color-info-text</span>
+          <span className="col-chip" style={{ background: '#fff', color: '#1e40af', borderColor: '#bfdbfe' }}>--color-info-border</span>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <div className="color-grid-card">
-        <div className="color-grid-swatch" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}></div>
-        <div className="color-grid-name">Light Bg</div>
-        <div className="color-grid-hex">#f8fafc</div>
-        <div className="color-grid-token">--color-background</div>
-        <div className="color-grid-usage">The canvas for experiences</div>
-      </div>
+  <div className="col-kicker">Text ramp: one neutral hue, six jobs</div>
+  <div className="col-roles">
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#0f172a' }}></div>
+      <div className="col-role-name">Text heading</div>
+      <div className="col-role-token">--color-text-heading</div>
+      <div className="col-role-desc">Titles and headings. Maximum weight on the page.</div>
+      <div className="col-role-map">slate 900 · 17.85:1 on white · AAA</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#1e293b' }}></div>
+      <div className="col-role-name">Text strong</div>
+      <div className="col-role-token">--color-text-strong</div>
+      <div className="col-role-desc">Emphasized body, labels, high-priority values.</div>
+      <div className="col-role-map">slate 800 · 14.63:1 · AAA</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#475569' }}></div>
+      <div className="col-role-name">Text secondary</div>
+      <div className="col-role-token">--color-text-secondary</div>
+      <div className="col-role-desc">Supporting copy that must still read comfortably.</div>
+      <div className="col-role-map">slate 600 · 7.58:1 · AAA</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#64748b' }}></div>
+      <div className="col-role-name">Text body / muted</div>
+      <div className="col-role-token">--color-text-body</div>
+      <div className="col-role-desc">Default paragraph and muted metadata. The lightest tone still allowed for normal-size text.</div>
+      <div className="col-role-map">slate 500 · 4.76:1 · AA</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#cbd5e1' }}></div>
+      <div className="col-role-name">Text disabled</div>
+      <div className="col-role-token">--color-text-disabled</div>
+      <div className="col-role-desc">Disabled labels only. Intentionally below the contrast floor, so it must never carry information a user needs to read and act on.</div>
+      <div className="col-role-map">slate 300 · 1.48:1 · non-content only</div>
+    </div>
+  </div>
 
-      <div className="color-grid-card">
-        <div className="color-grid-swatch" style={{ background: '#ffffff', border: '1px solid #e2e8f0' }}></div>
-        <div className="color-grid-name">White</div>
-        <div className="color-grid-hex">#ffffff</div>
-        <div className="color-grid-token">--color-surface</div>
-        <div className="color-grid-usage">Where content breathes</div>
-      </div>
+  <div className="col-kicker">Surfaces &amp; borders</div>
+  <div className="col-roles">
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#ffffff', boxShadow: 'inset 0 0 0 1px #e6e8eb' }}></div>
+      <div className="col-role-name">Surface</div>
+      <div className="col-role-token">--color-surface</div>
+      <div className="col-role-desc">Cards, modals, menus. The raised plane content sits on.</div>
+      <div className="col-role-map">white · maps to M3 surface</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#f8fafc', boxShadow: 'inset 0 0 0 1px #e6e8eb' }}></div>
+      <div className="col-role-name">Background</div>
+      <div className="col-role-token">--color-background</div>
+      <div className="col-role-desc">The page canvas behind all surfaces. Also <code>--color-surface-secondary</code>.</div>
+      <div className="col-role-map">slate 50</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#f1f5f9', boxShadow: 'inset 0 0 0 1px #e6e8eb' }}></div>
+      <div className="col-role-name">Surface hover</div>
+      <div className="col-role-token">--color-surface-hover</div>
+      <div className="col-role-desc">Hover state for rows, list items, ghost buttons.</div>
+      <div className="col-role-map">slate 100</div>
+    </div>
+    <div className="col-role">
+      <div className="col-role-swatch" style={{ background: '#ffffff', boxShadow: 'inset 0 0 0 2px #e6e8eb' }}></div>
+      <div className="col-role-name">Border</div>
+      <div className="col-role-token">--color-border</div>
+      <div className="col-role-desc">Default dividers and card outlines. Lighter variants: <code>--color-border-light</code>, <code>--color-border-subtle</code>.</div>
+      <div className="col-role-map">#e6e8eb · decorative, not a UI-state boundary</div>
     </div>
   </div>
 </div>
 
-<div className="colors-section">
-  <h2 className="colors-section-title">Semantic Colors</h2>
+<div className="col-section">
+  <h2 className="col-section-title">3. Contrast &amp; accessibility</h2>
+  <p className="col-section-intro">
+    Contrast is a floor, not a finish. WCAG 2.2 SC 1.4.3 requires <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text (18pt / 24px, or 14pt / 18.66px bold) at level AA; SC 1.4.6 raises that to <strong>7:1</strong> / 4.5:1 at AAA [1][1a]. SC 1.4.11 requires <strong>3:1</strong> for interactive component boundaries and meaningful graphics [2]. Every pairing below is measured with the WCAG 2.x relative-luminance formula, the same math the Color Picker story uses.
+  </p>
 
-  <div className="color-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-    <div className="color-grid-card">
-      <div className="color-grid-swatch" style={{ background: '#10b981' }}></div>
-      <div className="color-grid-name">Success</div>
-      <div className="color-grid-hex">#10b981</div>
-      <div className="color-grid-token">--color-success</div>
-      <div className="color-grid-usage">You're in. Confirmed. Done.</div>
+  <div className="col-table-wrap">
+    <table className="col-table">
+      <thead>
+        <tr>
+          <th>Sample</th>
+          <th>Foreground / background</th>
+          <th>Ratio</th>
+          <th>Normal text</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#ffffff', color: '#4f46e5' }}>Aa</span></td>
+          <td>Primary on white</td>
+          <td><span className="col-ratio">6.29:1</span></td>
+          <td><span className="col-badge col-badge--aa">AA</span></td>
+          <td>Accent text and links on surface. AAA for large text.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#4f46e5', color: '#ffffff' }}>Aa</span></td>
+          <td>White on primary</td>
+          <td><span className="col-ratio">6.29:1</span></td>
+          <td><span className="col-badge col-badge--aa">AA</span></td>
+          <td>The default primary button. Safe at any text size.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#4338ca', color: '#ffffff' }}>Aa</span></td>
+          <td>White on primary-dark</td>
+          <td><span className="col-ratio">7.90:1</span></td>
+          <td><span className="col-badge col-badge--aaa">AAA</span></td>
+          <td>Hover / pressed primary. Contrast improves on interaction.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#ffffff', color: '#0f172a' }}>Aa</span></td>
+          <td>Heading on white</td>
+          <td><span className="col-ratio">17.85:1</span></td>
+          <td><span className="col-badge col-badge--aaa">AAA</span></td>
+          <td>slate 900. The strongest text tone.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#ffffff', color: '#475569' }}>Aa</span></td>
+          <td>Text secondary on white</td>
+          <td><span className="col-ratio">7.58:1</span></td>
+          <td><span className="col-badge col-badge--aaa">AAA</span></td>
+          <td>slate 600. Comfortable supporting copy.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#ffffff', color: '#64748b' }}>Aa</span></td>
+          <td>Body / muted on white</td>
+          <td><span className="col-ratio">4.76:1</span></td>
+          <td><span className="col-badge col-badge--aa">AA</span></td>
+          <td>slate 500. The lightest tone allowed for normal text. On the slate-50 background it is 4.55:1, still AA.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#dc2626', color: '#ffffff' }}>Aa</span></td>
+          <td>White on error-strong</td>
+          <td><span className="col-ratio">4.83:1</span></td>
+          <td><span className="col-badge col-badge--aa">AA</span></td>
+          <td>Use for destructive buttons.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#ef4444', color: '#ffffff' }}>Aa</span></td>
+          <td>White on error (red 500)</td>
+          <td><span className="col-ratio">3.76:1</span></td>
+          <td><span className="col-badge col-badge--large">Large only</span></td>
+          <td>Fails AA for body text. This is exactly why <code>--color-error-strong</code> exists.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#f59e0b', color: '#ffffff' }}>Aa</span></td>
+          <td>White on warning (amber 500)</td>
+          <td><span className="col-ratio">2.15:1</span></td>
+          <td><span className="col-badge col-badge--fail">Fail</span></td>
+          <td>Never put white text on amber.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#f59e0b', color: '#0f172a' }}>Aa</span></td>
+          <td>Dark text on warning</td>
+          <td><span className="col-ratio">8.31:1</span></td>
+          <td><span className="col-badge col-badge--aaa">AAA</span></td>
+          <td>The correct pairing for amber: slate 900 on the solid.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#f0fdf4', color: '#166534' }}>Aa</span></td>
+          <td>Success text on success surface</td>
+          <td><span className="col-ratio">6.81:1</span></td>
+          <td><span className="col-badge col-badge--aa">AA</span></td>
+          <td>The triad pairing. Near AAA.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#fef2f2', color: '#991b1b' }}>Aa</span></td>
+          <td>Error text on error surface</td>
+          <td><span className="col-ratio">7.60:1</span></td>
+          <td><span className="col-badge col-badge--aaa">AAA</span></td>
+          <td>Triad pairing.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#eff6ff', color: '#1e40af' }}>Aa</span></td>
+          <td>Info text on info surface</td>
+          <td><span className="col-ratio">8.01:1</span></td>
+          <td><span className="col-badge col-badge--aaa">AAA</span></td>
+          <td>Triad pairing.</td>
+        </tr>
+        <tr>
+          <td><span className="col-swatch-pair" style={{ background: '#cbd5e1', color: '#ffffff' }}>Aa</span></td>
+          <td>Text disabled on white</td>
+          <td><span className="col-ratio">1.48:1</span></td>
+          <td><span className="col-badge col-badge--fail">Fail</span></td>
+          <td>By design. Disabled is a state, never content a user must read.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="col-callout">
+    <div className="col-callout-bar"></div>
+    <p className="col-callout-body">
+      <strong>On the horizon: APCA.</strong> The WCAG 2.x ratio treats contrast as a simple luminance division, which is known to misjudge readability at the extremes (it is over-strict on dark text and over-lenient on light text). The <strong>Accessible Perceptual Contrast Algorithm (APCA)</strong>, drafted for WCAG 3.0, models perceived lightness, text weight, and polarity instead, producing an Lc value from roughly -108 to 108 [4]. WCAG 3.0 is still an early W3C Working Draft and APCA is not yet a normative requirement [4b], so <strong>WCAG 2.2 remains the floor we certify against</strong>. We track APCA now so the palette is ready when it lands.
+    </p>
+  </div>
+
+  <div className="col-callout" style={{ background: '#fffbeb' }}>
+    <div className="col-callout-bar" style={{ background: '#f59e0b' }}></div>
+    <p className="col-callout-body" style={{ color: '#78350f' }}>
+      <strong style={{ color: '#78350f' }}>Never signal by color alone.</strong> WCAG 2.2 SC 1.4.1 is explicit: color must not be the <em>only</em> visual means of conveying information, indicating an action, or distinguishing an element [5]. Every status pairs its color with an icon and a label; every error field gets text, not just a red border; the focus ring is a ring, not a hue shift. Color is reinforcement, never the sole channel.
+    </p>
+  </div>
+</div>
+
+<div className="col-section">
+  <h2 className="col-section-title">4. Dark mode taxonomy</h2>
+  <p className="col-section-intro">
+    The current token set is light-first. Dark mode is not shipped as values yet, so the rules below are the <strong>taxonomy for how it will extend</strong>, drawn from primary guidance, so a future dark theme stays inside the system. Roles do not change; only what each role points at changes, behind a <code>[data-theme="dark"]</code> selector.
+  </p>
+
+  <div className="col-dark" style={{ background: '#0f172a', padding: '1rem', borderRadius: '14px' }}>
+    <div className="col-dark-cell" style={{ background: '#121212' }}>
+      <div className="col-dark-name">No pure black</div>
+      <div className="col-dark-hex">background ≈ #0f172a / #121212</div>
+      <div className="col-dark-note">Material advises a dark grey base, not #000, to cut eye strain and let shadows read [6].</div>
     </div>
-
-    <div className="color-grid-card">
-      <div className="color-grid-swatch" style={{ background: '#f59e0b' }}></div>
-      <div className="color-grid-name">Warning</div>
-      <div className="color-grid-hex">#f59e0b</div>
-      <div className="color-grid-token">--color-warning</div>
-      <div className="color-grid-usage">Time's ticking. Act now.</div>
+    <div className="col-dark-cell" style={{ background: '#1e293b' }}>
+      <div className="col-dark-name">Elevation = lighter surface</div>
+      <div className="col-dark-hex">surface ≈ slate 800</div>
+      <div className="col-dark-note">In the dark, higher surfaces get lighter, not darker. Elevation is expressed by tone, not just shadow [6][7].</div>
     </div>
-
-    <div className="color-grid-card">
-      <div className="color-grid-swatch" style={{ background: '#ef4444' }}></div>
-      <div className="color-grid-name">Error</div>
-      <div className="color-grid-hex">#ef4444</div>
-      <div className="color-grid-token">--color-error</div>
-      <div className="color-grid-usage">Let's fix this together.</div>
+    <div className="col-dark-cell" style={{ background: '#334155' }}>
+      <div className="col-dark-name">Desaturate the accent</div>
+      <div className="col-dark-hex">primary ≈ indigo 400 (#818cf8)</div>
+      <div className="col-dark-note">Saturated indigo 600 vibrates on dark. Step up the ramp to a lighter, calmer accent [6].</div>
     </div>
-
-    <div className="color-grid-card">
-      <div className="color-grid-swatch" style={{ background: '#3b82f6' }}></div>
-      <div className="color-grid-name">Info</div>
-      <div className="color-grid-hex">#3b82f6</div>
-      <div className="color-grid-token">--color-info</div>
-      <div className="color-grid-usage">Here's something useful.</div>
+    <div className="col-dark-cell" style={{ background: '#1e293b' }}>
+      <div className="col-dark-name">Re-derive text tones</div>
+      <div className="col-dark-hex">text ≈ slate 100 → slate 400</div>
+      <div className="col-dark-note">Flip the neutral ramp: light text on dark, and keep the same 4.5:1 / 7:1 floors.</div>
+    </div>
+    <div className="col-dark-cell" style={{ background: '#1e293b' }}>
+      <div className="col-dark-name">Honor the OS</div>
+      <div className="col-dark-hex">@media (prefers-color-scheme: dark)</div>
+      <div className="col-dark-note">Respect the user's system setting by default, then allow an explicit in-app override [8].</div>
+    </div>
+    <div className="col-dark-cell" style={{ background: '#1e293b' }}>
+      <div className="col-dark-name">Recheck every triad</div>
+      <div className="col-dark-hex">surface + text re-paired</div>
+      <div className="col-dark-note">Feedback surfaces invert to deep tints (e.g. green 950) with light text; each pair is re-measured, never assumed.</div>
     </div>
   </div>
 </div>
 
-<div className="colors-section">
-  <h2 className="colors-section-title">CSS Tokens</h2>
+<div className="col-section">
+  <h2 className="col-section-title">5. Applying color: the rules</h2>
+  <p className="col-section-intro">
+    A decision framework for a new project. Follow the 60-30-10 balance, indigo as the 10% accent, neutrals as the 60% + 30%, so the accent keeps its meaning [9]. Then obey these rules.
+  </p>
 
-  <div style={{ background: '#1e293b', borderRadius: '12px', overflow: 'hidden' }}>
-    <div style={{ background: '#334155', padding: '0.75rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1px solid #475569' }}>
-      <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }}></span>
-      <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }}></span>
-      <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#22c55e' }}></span>
-      <span style={{ marginLeft: 'auto', fontFamily: "'SF Mono', monospace", fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>CSS</span>
+  <div className="col-rules">
+    <div className="col-rule col-rule--do">
+      <div className="col-rule-head">Do</div>
+      <ul>
+        <li>Consume <strong>semantic roles</strong> in product code: <code>var(--color-primary)</code>, <code>var(--color-error-surface)</code>. Roles are the contract.</li>
+        <li>Derive interaction states by walking the ramp: rest = <code>--color-primary</code> (600), hover / active = <code>--color-primary-dark</code> (700), tinted zone = <code>--color-primary-surface</code> (50).</li>
+        <li>Use the full <strong>feedback triad</strong> (solid + surface + text) for every status message, and pair it with an icon and a label.</li>
+        <li>Keep normal text at <strong>4.5:1+</strong> and UI boundaries / meaningful icons at <strong>3:1+</strong>. Verify with the Color Picker story before shipping.</li>
+        <li>Reach for <code>--color-error-strong</code> when white text sits on red; reach for <strong>dark</strong> text on amber.</li>
+        <li>Name any new token <code>--color-&lt;role&gt;[-&lt;variant&gt;]</code>, where variant is one of <code>surface</code> / <code>border</code> / <code>text</code> / <code>strong</code> / <code>light</code> / <code>dark</code> / <code>hover</code>.</li>
+      </ul>
     </div>
-    <pre style={{ margin: 0, padding: '2rem', fontFamily: "'SF Mono', 'Monaco', monospace", fontSize: '0.8125rem', lineHeight: 1.7, color: '#e2e8f0', overflowX: 'auto' }} dangerouslySetInnerHTML={{__html: `<span style="color: #64748b; font-style: italic">/* Brand Colors */</span>
-<span style="color: #7dd3fc">--color-primary</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#4f46e5</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-primary-light</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#6366f1</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-primary-dark</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#4338ca</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-secondary</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#8b5cf6</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-secondary-light</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#a78bfa</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-secondary-dark</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#7c3aed</span><span style="color: #94a3b8">;</span>
+    <div className="col-rule col-rule--dont">
+      <div className="col-rule-head">Don't</div>
+      <ul>
+        <li>Hardcode a hex or reference a <strong>primitive</strong> (<code>--color-indigo-600</code>) in a component. Primitives feed roles, not UI.</li>
+        <li>Introduce a second accent hue to "add energy". If it needs to stand out, it is indigo. Violet is decorative support only.</li>
+        <li>Signal state with color alone, or remove the focus ring without a stronger replacement (violates 1.4.1 / 1.4.11).</li>
+        <li>Put white text on <code>--color-warning</code> (2.15:1) or <code>--color-error</code> red 500 for body copy (3.76:1).</li>
+        <li>Repurpose <code>--color-info</code> as a call to action. Info is context; indigo is action. Keeping them distinct is the point.</li>
+        <li>Use <code>--color-text-disabled</code> for anything a user must read. It sits below the floor on purpose.</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-<span style="color: #64748b; font-style: italic">/* Text Colors */</span>
-<span style="color: #7dd3fc">--color-text-heading</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#0f172a</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-text-body</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#64748b</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-text-muted</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#64748b</span><span style="color: #94a3b8">;</span>
+<div className="col-section">
+  <h2 className="col-section-title">CSS tokens</h2>
+  <p className="col-section-intro">The semantic layer as generated by <code>@ramoslabs/tokens</code>. These are the variables product code should use.</p>
 
-<span style="color: #64748b; font-style: italic">/* Surface Colors */</span>
-<span style="color: #7dd3fc">--color-surface</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#ffffff</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-background</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#f8fafc</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-border</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#e6e8eb</span><span style="color: #94a3b8">;</span>
+  <div className="col-code">
+    <div className="col-code-head">
+      <span className="col-code-dot" style={{ background: '#ef4444' }}></span>
+      <span className="col-code-dot" style={{ background: '#f59e0b' }}></span>
+      <span className="col-code-dot" style={{ background: '#22c55e' }}></span>
+      <span className="col-code-lang">CSS</span>
+    </div>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="c">/* Brand / primary: the one accent */</span>
+<span class="p">--color-primary</span><span class="n">:</span> <span class="v">#4f46e5</span><span class="n">;</span>          <span class="c">/* indigo 600 */</span>
+<span class="p">--color-primary-light</span><span class="n">:</span> <span class="v">#6366f1</span><span class="n">;</span>
+<span class="p">--color-primary-dark</span><span class="n">:</span> <span class="v">#4338ca</span><span class="n">;</span>    <span class="c">/* hover / active */</span>
+<span class="p">--color-primary-surface</span><span class="n">:</span> <span class="v">#eef2ff</span><span class="n">;</span>
+<span class="p">--color-focus</span><span class="n">:</span> <span class="v">#4f46e5</span><span class="n">;</span>            <span class="c">/* accent = focus ring */</span>
 
-<span style="color: #64748b; font-style: italic">/* Semantic Colors */</span>
-<span style="color: #7dd3fc">--color-success</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#10b981</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-warning</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#f59e0b</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-error</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#ef4444</span><span style="color: #94a3b8">;</span>
-<span style="color: #7dd3fc">--color-info</span><span style="color: #94a3b8">:</span> <span style="color: #fbbf24">#3b82f6</span><span style="color: #94a3b8">;</span>`}} />
+<span class="c">/* Reserved support: decorative only */</span>
+<span class="p">--color-secondary</span><span class="n">:</span> <span class="v">#8b5cf6</span><span class="n">;</span>        <span class="c">/* violet 500 */</span>
+<span class="p">--color-secondary-surface</span><span class="n">:</span> <span class="v">#f5f3ff</span><span class="n">;</span>
+
+<span class="c">/* Text ramp: slate */</span>
+<span class="p">--color-text-heading</span><span class="n">:</span> <span class="v">#0f172a</span><span class="n">;</span>     <span class="c">/* 17.85:1 AAA */</span>
+<span class="p">--color-text-strong</span><span class="n">:</span> <span class="v">#1e293b</span><span class="n">;</span>      <span class="c">/* 14.63:1 AAA */</span>
+<span class="p">--color-text-secondary</span><span class="n">:</span> <span class="v">#475569</span><span class="n">;</span>   <span class="c">/* 7.58:1 AAA */</span>
+<span class="p">--color-text-body</span><span class="n">:</span> <span class="v">#64748b</span><span class="n">;</span>        <span class="c">/* 4.76:1 AA */</span>
+<span class="p">--color-text-muted</span><span class="n">:</span> <span class="v">#64748b</span><span class="n">;</span>
+<span class="p">--color-text-disabled</span><span class="n">:</span> <span class="v">#cbd5e1</span><span class="n">;</span>    <span class="c">/* state only */</span>
+
+<span class="c">/* Surfaces &amp; borders */</span>
+<span class="p">--color-surface</span><span class="n">:</span> <span class="v">#ffffff</span><span class="n">;</span>
+<span class="p">--color-surface-secondary</span><span class="n">:</span> <span class="v">#f8fafc</span><span class="n">;</span>
+<span class="p">--color-surface-hover</span><span class="n">:</span> <span class="v">#f1f5f9</span><span class="n">;</span>
+<span class="p">--color-background</span><span class="n">:</span> <span class="v">#f8fafc</span><span class="n">;</span>
+<span class="p">--color-border</span><span class="n">:</span> <span class="v">#e6e8eb</span><span class="n">;</span>
+<span class="p">--color-border-light</span><span class="n">:</span> <span class="v">#e2e8f0</span><span class="n">;</span>
+<span class="p">--color-border-subtle</span><span class="n">:</span> <span class="v">#f1f5f9</span><span class="n">;</span>
+
+<span class="c">/* Feedback: full triads */</span>
+<span class="p">--color-success</span><span class="n">:</span> <span class="v">#10b981</span><span class="n">;</span>
+<span class="p">--color-success-surface</span><span class="n">:</span> <span class="v">#f0fdf4</span><span class="n">;</span>
+<span class="p">--color-success-border</span><span class="n">:</span> <span class="v">#bbf7d0</span><span class="n">;</span>
+<span class="p">--color-success-text</span><span class="n">:</span> <span class="v">#166534</span><span class="n">;</span>
+<span class="p">--color-warning</span><span class="n">:</span> <span class="v">#f59e0b</span><span class="n">;</span>          <span class="c">/* dark text only */</span>
+<span class="p">--color-warning-surface</span><span class="n">:</span> <span class="v">#fffbeb</span><span class="n">;</span>
+<span class="p">--color-warning-border</span><span class="n">:</span> <span class="v">#fde68a</span><span class="n">;</span>
+<span class="p">--color-warning-text</span><span class="n">:</span> <span class="v">#78350f</span><span class="n">;</span>
+<span class="p">--color-error</span><span class="n">:</span> <span class="v">#ef4444</span><span class="n">;</span>            <span class="c">/* icons / borders */</span>
+<span class="p">--color-error-strong</span><span class="n">:</span> <span class="v">#dc2626</span><span class="n">;</span>     <span class="c">/* white text, AA */</span>
+<span class="p">--color-error-surface</span><span class="n">:</span> <span class="v">#fef2f2</span><span class="n">;</span>
+<span class="p">--color-error-border</span><span class="n">:</span> <span class="v">#fecaca</span><span class="n">;</span>
+<span class="p">--color-error-text</span><span class="n">:</span> <span class="v">#991b1b</span><span class="n">;</span>
+<span class="p">--color-info</span><span class="n">:</span> <span class="v">#3b82f6</span><span class="n">;</span>
+<span class="p">--color-info-surface</span><span class="n">:</span> <span class="v">#eff6ff</span><span class="n">;</span>
+<span class="p">--color-info-border</span><span class="n">:</span> <span class="v">#bfdbfe</span><span class="n">;</span>
+<span class="p">--color-info-text</span><span class="n">:</span> <span class="v">#1e40af</span><span class="n">;</span>`}} />
+  </div>
+</div>
+
+<div className="col-section">
+  <h2 className="col-section-title">References</h2>
+  <div className="col-refs">
+    <ol>
+      <li id="ref-1">WCAG 2.2, SC 1.4.3 Contrast (Minimum), AA 4.5:1 / large text 3:1. <a href="https://www.w3.org/TR/WCAG22/#contrast-minimum">w3.org/TR/WCAG22/#contrast-minimum</a>. Also <span id="ref-1a">Understanding 1.4.3 (large text = 18pt / 14pt bold): <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">w3.org/WAI/WCAG22/Understanding/contrast-minimum.html</a></span></li>
+      <li id="ref-2">WCAG 2.2, SC 1.4.11 Non-text Contrast, 3:1 for UI components and graphical objects. <a href="https://www.w3.org/TR/WCAG22/#non-text-contrast">w3.org/TR/WCAG22/#non-text-contrast</a></li>
+      <li id="ref-1b">WCAG 2.2, SC 1.4.6 Contrast (Enhanced), AAA 7:1 / large 4.5:1. <a href="https://www.w3.org/TR/WCAG22/#contrast-enhanced">w3.org/TR/WCAG22/#contrast-enhanced</a></li>
+      <li id="ref-3">Material Design 3: Color roles and system. <a href="https://m3.material.io/styles/color/roles">m3.material.io/styles/color/roles</a></li>
+      <li id="ref-4">APCA: S-LUV Advanced Predictive Color (SAPC-APCA), perceptual polarity-aware contrast; still Beta / not normative. <a href="https://github.com/Myndex/SAPC-APCA">github.com/Myndex/SAPC-APCA</a> · <span id="ref-4b">WCAG 3.0 Working Draft status ("a work in progress"): <a href="https://www.w3.org/TR/wcag-3.0/">w3.org/TR/wcag-3.0/</a></span></li>
+      <li id="ref-5">WCAG 2.2, SC 1.4.1 Use of Color. <a href="https://www.w3.org/TR/WCAG22/#use-of-color">w3.org/TR/WCAG22/#use-of-color</a></li>
+      <li id="ref-6">Material Design: Dark theme (dark grey base #121212 not pure black, elevation via lighter surface overlays, desaturated accents). <a href="https://m2.material.io/design/color/dark-theme.html">m2.material.io/design/color/dark-theme.html</a></li>
+      <li id="ref-7">Apple Human Interface Guidelines: Dark Mode (base vs elevated backgrounds, semantic colors). <a href="https://developer.apple.com/design/human-interface-guidelines/dark-mode">developer.apple.com/design/human-interface-guidelines/dark-mode</a></li>
+      <li id="ref-8">MDN: prefers-color-scheme. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">developer.mozilla.org/.../prefers-color-scheme</a></li>
+      <li id="ref-9">Nielsen Norman Group: Using Color to Enhance Your Design (the 60-30-10 balance, an adopted design heuristic, not a standard). <a href="https://www.nngroup.com/articles/color-enhance-design/">nngroup.com/articles/color-enhance-design</a></li>
+      <li id="ref-10">Refactoring UI (Adam Wathan &amp; Steve Schoger). Building Your Color Palette: numbered scales and role assignment over one-off hex. <a href="https://www.refactoringui.com/">refactoringui.com</a></li>
+    </ol>
   </div>
 </div>
