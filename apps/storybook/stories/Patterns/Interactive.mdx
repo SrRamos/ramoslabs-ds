@@ -248,7 +248,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .ix-btn:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.45);
+    box-shadow: var(--shadow-focus);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -320,7 +320,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .ix-card:focus-visible {
     outline: none;
     border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.45);
+    box-shadow: var(--shadow-focus);
   }
 
   .ix-card-image {
@@ -353,7 +353,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
   .ix-scale-txt b { color: #0f172a; }
 
-  /* ===== FOCUS RING COMPARISON ===== */
+  /* ===== FOCUS RING ON ANY SURFACE ===== */
   .ix-ring-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -363,14 +363,38 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   @media (max-width: 560px) { .ix-ring-grid { grid-template-columns: 1fr; } }
 
-  .ix-ring-cell {
-    background: #4338ca;
+  .ix-ring-surface {
     border-radius: 10px;
-    padding: 1.75rem 1rem;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .ix-ring-surface.light { background: #eef2ff; border: 1px solid #e0e7ff; }
+  .ix-ring-surface.brand { background: #4f46e5; }
+
+  .ix-ring-surface-label {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .ix-ring-surface.light .ix-ring-surface-label { color: #475569; }
+  .ix-ring-surface.brand .ix-ring-surface-label { color: #c7d2fe; }
+
+  .ix-ring-pair {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ix-ring-slot {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.625rem;
   }
 
   .ix-ring-btn {
@@ -379,30 +403,29 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
     border-radius: 6px;
-    border: none;
-    background: #eef2ff;
-    color: #0f172a;
   }
 
-  .ix-ring-btn.broken { box-shadow: 0 0 0 2px #4f46e5, 0 0 0 4px white; }
-  .ix-ring-btn.fixed { box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.55); }
+  .ix-ring-surface.light .ix-ring-btn { background: #ffffff; color: #0f172a; border: 1px solid #e2e8f0; }
+  .ix-ring-surface.brand .ix-ring-btn { background: #4f46e5; color: #ffffff; border: 1px solid #6366f1; }
 
-  .ix-ring-caption { font-size: 0.75rem; font-weight: 500; }
+  /* One color only clears 3:1 where the surface differs from the ring. */
+  .ix-ring-surface.light .ix-ring-btn.mono { box-shadow: 0 0 0 3px #ffffff; }
+  .ix-ring-surface.brand .ix-ring-btn.mono { box-shadow: 0 0 0 3px #4f46e5; }
 
-  .ix-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.625rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.125rem 0.5rem;
-    border-radius: 9999px;
+  /* Two-tone token: whichever layer meets the surface, the other one still reads. */
+  .ix-ring-btn.duo { box-shadow: var(--shadow-focus); }
+
+  .ix-ring-caption {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-align: center;
   }
-
-  .ix-badge.bad { background: #fee2e2; color: #991b1b; }
-  .ix-badge.good { background: #dcfce7; color: #166534; }
+  .ix-ring-surface.light .ix-ring-caption { color: #475569; }
+  .ix-ring-surface.brand .ix-ring-caption { color: #e0e7ff; }
+  .ix-ring-caption b { font-weight: 700; }
+  .ix-ring-surface.light .ix-ring-caption b { color: #0f172a; }
+  .ix-ring-surface.brand .ix-ring-caption b { color: #ffffff; }
 
   /* ===== DO / DON'T ===== */
   .ix-dodont {
@@ -708,26 +731,46 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="ix-text">
-    Style <code>:focus-visible</code>, not <code>:focus</code>: the ring shows for the keyboard and hides after a plain click. Color it with <code>--shadow-focus</code>, an indigo ring that reads on any surface. A white ring vanishes the moment the background is not white.
+    Style <code>:focus-visible</code>, not <code>:focus</code>: the ring shows for the keyboard and stays hidden after a plain click. The harder half is making it survive every surface. A focus indicator has to clear <strong>3:1 against whatever sits behind it</strong>, and one flat color cannot promise that. White dissolves on a light page; indigo dissolves on an indigo button. <code>--shadow-focus</code> is two-tone for exactly this reason, a white gap inside an indigo edge, so whichever layer meets the surface, the other one still reads.
   </p>
 
   <div className="ix-ring-grid">
-    <div className="ix-ring-cell">
-      <span className="ix-badge bad"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">close</span>Don't</span>
-      <button className="ix-ring-btn broken" type="button" tabIndex={-1}>White ring</button>
-      <span className="ix-ring-caption" style={{ color: '#c7d2fe' }}>Vanishes on indigo</span>
+    <div className="ix-ring-surface light">
+      <span className="ix-ring-surface-label">On a light surface</span>
+      <div className="ix-ring-pair">
+        <div className="ix-ring-slot">
+          <button className="ix-ring-btn mono" type="button" tabIndex={-1}>One color</button>
+          <span className="ix-ring-caption">White ring, <b>gone</b></span>
+        </div>
+        <div className="ix-ring-slot">
+          <button className="ix-ring-btn duo" type="button" tabIndex={-1}>Two-tone</button>
+          <span className="ix-ring-caption">Indigo edge <b>reads</b></span>
+        </div>
+      </div>
     </div>
-    <div className="ix-ring-cell">
-      <span className="ix-badge good"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">check</span>Do</span>
-      <button className="ix-ring-btn fixed" type="button" tabIndex={-1}>Indigo ring</button>
-      <span className="ix-ring-caption" style={{ color: '#e0e7ff' }}>Reads on any background</span>
+    <div className="ix-ring-surface brand">
+      <span className="ix-ring-surface-label">On an indigo button</span>
+      <div className="ix-ring-pair">
+        <div className="ix-ring-slot">
+          <button className="ix-ring-btn mono" type="button" tabIndex={-1}>One color</button>
+          <span className="ix-ring-caption">Indigo ring, <b>gone</b></span>
+        </div>
+        <div className="ix-ring-slot">
+          <button className="ix-ring-btn duo" type="button" tabIndex={-1}>Two-tone</button>
+          <span className="ix-ring-caption">White gap <b>reads</b></span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <p className="ix-text" style={{ marginTop: '1.25rem' }}>
+    An <code>outline</code> with <code>outline-offset</code> earns the same guarantee a different way: the offset opens a transparent gap so the page shows through, and the outline rides just outside it. Either shape works. The real mistake is <code>outline: none</code> with nothing put back, or a single-color ring that quietly fades into a matching surface.
+  </p>
 
   <div className="ix-callout">
     <span className="ix-material" aria-hidden="true">verified</span>
     <p className="ix-callout-text">
-      <strong>WCAG 2.2.</strong> SC 2.4.11 Focus Not Obscured (AA) keeps the focused control visible; SC 2.4.13 Focus Appearance (AAA) sets its size and contrast. A 3px indigo ring clears both.
+      <strong>WCAG 2.2.</strong> A focus indicator has to be visible (SC 2.4.7 Focus Visible, AA) and clear <strong>3:1 against its adjacent colors</strong> (SC 1.4.11 Non-text Contrast, AA). SC 2.4.13 Focus Appearance (AAA) adds a floor: an area at least a 2px perimeter thick and a 3:1 change between the unfocused and focused states. The two-tone ring is 4px of indicator and one layer always crosses 3:1, so it clears all three on light and on brand.
     </p>
   </div>
 
@@ -738,13 +781,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <span className="ix-code-dot green" aria-hidden="true"></span>
       <span className="ix-code-lang">CSS</span>
     </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Do: keyboard-only ring, indigo token, reads everywhere. */</span>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Do: keyboard-only ring, two-tone token, reads on any surface. */</span>
 <span class="selector">.control:focus-visible</span> <span class="punctuation">{</span>
     <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
-    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-focus)</span><span class="punctuation">;</span> <span class="comment">/* 0 0 0 3px rgba(79,70,229,.45) */</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-focus)</span><span class="punctuation">;</span> <span class="comment">/* 0 0 0 2px #fff, 0 0 0 4px #4f46e5 */</span>
 <span class="punctuation">}</span>
-<span class="comment">/* Don't: fires on clicks, and white disappears off white. */</span>
-<span class="selector">.control:focus</span> <span class="punctuation">{</span> <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 2px var(--color-primary), 0 0 0 4px white</span><span class="punctuation">;</span> <span class="punctuation">}</span>`}} />
+<span class="comment">/* Also fine: an outline with an offset gap does the same job. */</span>
+<span class="selector">.control:focus-visible</span> <span class="punctuation">{</span> <span class="property">outline</span><span class="punctuation">:</span> <span class="value">2px solid var(--color-primary)</span><span class="punctuation">;</span> <span class="property">outline-offset</span><span class="punctuation">:</span> <span class="value">2px</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="comment">/* Don't: remove the outline with nothing put back, or ring in
+   one color that vanishes into a surface of the same color. */</span>
+<span class="selector">.control:focus-visible</span> <span class="punctuation">{</span> <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span> <span class="punctuation">}</span>`}} />
   </div>
 </div>
 
@@ -783,7 +829,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <li>Leave hover ungated. It sticks after a tap.</li>
         <li>Lift a card or swap its shadow to signal hover. Shadow is elevation, not state.</li>
         <li>Style <code>:focus</code> when you mean <code>:focus-visible</code>.</li>
-        <li>Ring in <code>white</code>. It vanishes off a white surface.</li>
+        <li>Ring in one flat color. White fades on light, indigo fades on brand. Make it two-tone.</li>
         <li>Put a pill radius on a wide button.</li>
       </ul>
     </div>
@@ -797,6 +843,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="ix-refs">
   <p className="ix-refs-h">Sources</p>
   <p>
-    State layers after Material 3 (<a href="https://m3.material.io/foundations/interaction/states/state-layers">m3.material.io</a>). The hover and pointer media features and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible">:focus-visible</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">prefers-reduced-motion</a> per MDN (<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover">hover</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer">pointer</a>). Immediate press feedback from Apple Human Interface Guidelines (<a href="https://developer.apple.com/design/human-interface-guidelines/feedback">developer.apple.com</a>). Focus floors SC 2.4.11 and SC 2.4.13, WCAG 2.2 (<a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html">2.4.11</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">2.4.13</a>).
+    State layers after Material 3 (<a href="https://m3.material.io/foundations/interaction/states/state-layers">m3.material.io</a>). The hover and pointer media features and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible">:focus-visible</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">prefers-reduced-motion</a> per MDN (<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover">hover</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer">pointer</a>). Immediate press feedback from Apple Human Interface Guidelines (<a href="https://developer.apple.com/design/human-interface-guidelines/feedback">developer.apple.com</a>). Focus floors from WCAG 2.2: visible focus (<a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html">SC 2.4.7</a>), 3:1 non-text contrast against adjacent colors (<a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html">SC 1.4.11</a>), and focus appearance size and change (<a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">SC 2.4.13</a>). The two-tone gap pattern follows GOV.UK focus styles and MDN <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset">outline-offset</a>.
   </p>
 </div>

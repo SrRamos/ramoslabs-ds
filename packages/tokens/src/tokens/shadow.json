@@ -23,11 +23,11 @@
       "$description": "Floating. Modals, sheets, command palettes. The elevation ceiling. Nothing sits higher."
     },
     "focus": {
-      "$value": {
-        "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "3px",
-        "color": "rgba(79, 70, 229, 0.45)"
-      },
-      "$description": "Focus ring. Pairs with :focus-visible. Not an elevation level, never decorative."
+      "$value": [
+        { "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "2px", "color": "#ffffff" },
+        { "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "4px", "color": "#4f46e5" }
+      ],
+      "$description": "Focus ring. Pairs with :focus-visible. A two-tone ring, a 2px white gap inside a 2px indigo edge, so one layer always clears 3:1 against the surface behind it, light or brand. Not an elevation level, never decorative."
     }
   }
 }
