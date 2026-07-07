@@ -32,7 +32,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
   }
@@ -53,7 +53,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: #eef2ff;
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: #4338ca;
   }
 
   /* The scale */
@@ -83,7 +83,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     justify-content: center;
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
-    color: #4f46e5;
+    color: #4338ca;
     font-size: 0.9375rem;
   }
 
@@ -118,7 +118,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #4f46e5;
+    color: #4338ca;
     margin-bottom: 0.6rem;
   }
 
@@ -145,7 +145,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: white;
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: #4338ca;
   }
 
   /* Button-vs-pill demo */
@@ -191,8 +191,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     text-align: center;
   }
 
-  .pill-demo-card.good .pill-demo-caption { color: #4f46e5; }
-  .pill-demo-card.bad .pill-demo-caption { color: #64748b; }
+  .pill-demo-card.good .pill-demo-caption { color: #3730a3; }
+  .pill-demo-card.bad .pill-demo-caption { color: #475569; }
 
   .pill-demo-verdict {
     font-weight: 700;
@@ -201,10 +201,22 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.06em;
   }
 
-  .pill-demo-card.good .pill-demo-verdict { color: #4f46e5; }
-  .pill-demo-card.bad .pill-demo-verdict { color: #94a3b8; }
+  .pill-demo-card.good .pill-demo-verdict { color: #4338ca; }
+  .pill-demo-card.bad .pill-demo-verdict { color: #475569; }
 
   /* Concentric nesting */
+  .formula {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.9rem;
+    color: #3730a3;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0 1.25rem;
+  }
+
   .concentric-stage {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -215,15 +227,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .concentric-outer {
     background: #eef2ff;
     border: 1px solid #c7d2fe;
-    padding: 12px;
-  }
-
-  .concentric-outer.right {
-    border-radius: var(--radius-lg);
-  }
-
-  .concentric-outer.wrong {
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
+    padding: 8px;
   }
 
   .concentric-inner {
@@ -240,11 +245,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding: 0 0.75rem;
   }
 
-  /* inner = outer(12) - gap(12) = 0 would be square; use outer 16 - 8 = 8 for a nicer demo */
-  .concentric-outer.right { border-radius: var(--radius-xl); padding: 8px; }
   .concentric-outer.right .concentric-inner { border-radius: var(--radius-md); }
-
-  .concentric-outer.wrong { border-radius: var(--radius-xl); padding: 8px; }
   .concentric-outer.wrong .concentric-inner { border-radius: var(--radius-xl); }
 
   .concentric-label {
@@ -254,22 +255,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-top: 0.75rem;
   }
 
-  .concentric-label.right { color: #4f46e5; }
-  .concentric-label.wrong { color: #64748b; }
+  .concentric-label.right { color: #3730a3; }
+  .concentric-label.wrong { color: #475569; }
 
   .concentric-label strong { display: block; margin-bottom: 0.2rem; }
-
-  .formula {
-    display: inline-block;
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.9rem;
-    color: #3730a3;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
-    border-radius: 8px;
-    padding: 0.6rem 1rem;
-    margin: 0.5rem 0 1.25rem;
-  }
 
   /* Squircle */
   .squircle-stage {
@@ -292,13 +281,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
     height: 96px;
     margin: 0 auto 1rem;
     background: #4f46e5;
-  }
-
-  .squircle-shape.arc {
-    border-radius: var(--radius-2xl);
-  }
-
-  .squircle-shape.continuous {
     border-radius: var(--radius-2xl);
   }
 
@@ -328,7 +310,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: #eef2ff;
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: #4338ca;
   }
 
   /* Real-scale specimen row */
@@ -361,7 +343,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     justify-content: center;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #64748b;
   }
 
   .specimen-surface.chip {
@@ -371,7 +353,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-radius: var(--radius-pill);
     background: #eef2ff;
     border-color: #c7d2fe;
-    color: #4f46e5;
+    color: #4338ca;
     font-weight: 600;
   }
 
@@ -406,61 +388,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .specimen-token {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
-    color: #64748b;
-  }
-
-  /* Tables */
-  .radius-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #e2e8f0;
-    margin-top: 1rem;
-  }
-
-  .radius-table th,
-  .radius-table td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
-    vertical-align: middle;
-  }
-
-  .radius-table th {
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: #94a3b8;
-    letter-spacing: 0.05em;
-    background: #f8fafc;
-  }
-
-  .radius-table td {
-    font-size: 0.875rem;
     color: #475569;
-  }
-
-  .radius-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .radius-table code {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    background: #eef2ff;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    color: #4f46e5;
-  }
-
-  .radius-preview {
-    display: inline-block;
-    width: 2.25rem;
-    height: 2.25rem;
-    background: #4f46e5;
-    vertical-align: middle;
   }
 
   /* Callout */
@@ -491,137 +419,61 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: white;
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: #4338ca;
   }
 
-  /* Do / Don't */
-  .rules-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .rules-col {
+  /* Table */
+  .radius-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
     border-radius: 12px;
+    overflow: hidden;
     border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    padding: 1.5rem;
-  }
-
-  .rules-col-title {
-    font-weight: 700;
-    font-size: 0.8125rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .rules-col.do .rules-col-title { color: #4f46e5; }
-  .rules-col.dont .rules-col-title { color: #64748b; }
-
-  .rules-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  .rules-col.do .rules-badge { background: #4f46e5; color: white; }
-  .rules-col.dont .rules-badge { background: #e2e8f0; color: #64748b; }
-
-  .rules-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    color: #475569;
-    line-height: 1.55;
-  }
-
-  .rules-list li {
-    padding-left: 1.25rem;
-    position: relative;
-    margin-bottom: 0.6rem;
-  }
-
-  .rules-list li::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-weight: 700;
-  }
-
-  .rules-list code {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.72rem;
-    background: #eef2ff;
-    padding: 0.05rem 0.35rem;
-    border-radius: 4px;
-    color: #4f46e5;
-  }
-
-  .rules-col.do .rules-list li::before { content: '+'; color: #4f46e5; }
-  .rules-col.dont .rules-list li::before { content: 'x'; color: #94a3b8; }
-
-  /* Decision ladder */
-  .decision {
-    counter-reset: step;
     margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
   }
 
-  .decision-step {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+  .radius-table th,
+  .radius-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+
+  .radius-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.05em;
     background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
   }
 
-  .decision-step::before {
-    counter-increment: step;
-    content: counter(step);
-    flex-shrink: 0;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #4f46e5;
-    color: white;
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .decision-text {
+  .radius-table td {
     font-size: 0.875rem;
-    color: #334155;
-    line-height: 1.5;
+    color: #475569;
   }
 
-  .decision-text strong { color: #0f172a; }
+  .radius-table tr:last-child td {
+    border-bottom: none;
+  }
 
-  .decision-text code {
+  .radius-table code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
     background: #eef2ff;
-    padding: 0.1rem 0.4rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: #4338ca;
+  }
+
+  .radius-preview {
+    display: inline-block;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: #4f46e5;
+    vertical-align: middle;
   }
 
   /* Sources */
@@ -637,7 +489,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .sources-list li {
     padding: 0.6rem 0;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
   }
 
   .sources-list li:last-child { border-bottom: none; }
@@ -650,7 +502,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: #eef2ff;
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: #4338ca;
   }
 
   .source-spa {
@@ -659,85 +511,26 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #4f46e5;
+    color: #4338ca;
     background: #eef2ff;
     border-radius: 4px;
     padding: 0.05rem 0.35rem;
     margin-left: 0.35rem;
   }
-
-  /* Code */
-  .radius-code {
-    background: #1e293b;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 1rem;
-  }
-
-  .radius-code-header {
-    background: #334155;
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-bottom: 1px solid #475569;
-  }
-
-  .radius-code-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-  }
-
-  .radius-code-dot.red { background: #ef4444; }
-  .radius-code-dot.yellow { background: #f59e0b; }
-  .radius-code-dot.green { background: #22c55e; }
-
-  .radius-code-lang {
-    margin-left: auto;
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .radius-code pre {
-    margin: 0;
-    padding: 1.25rem;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    color: #e2e8f0;
-    overflow-x: auto;
-  }
-
-  .radius-code .comment { color: #64748b; font-style: italic; }
-  .radius-code .selector { color: #fbbf24; }
-  .radius-code .property { color: #7dd3fc; }
-  .radius-code .value { color: #a5f3fc; }
-  .radius-code .punctuation { color: #94a3b8; }
 `}
 </style>
 
 <div className="radius-header">
   <h1 className="radius-title">Shape, With Intent</h1>
   <p className="radius-description">
-    A corner is a decision about personality. Sharp reads precise and technical, fully round reads soft and playful, and the space in between reads considered. Premium products almost never live at the extremes. They pick one moderate signature radius, apply it with discipline, and let a small scale handle everything else. This system does the same: a <code>6px</code> signature on every control, a short ladder up to hero surfaces, and the fully round pill kept back as an accent, never a default.
-  </p>
-</div>
-
-<div className="radius-section">
-  <h2 className="radius-section-title">Why 6px Is the Signature</h2>
-  <p className="radius-lede">
-    Rounder is not more premium. What reads as expensive is consistency and restraint: a single control radius repeated everywhere, and shape that scales with the size of the surface. So <code>6px</code> is the signature control radius on every button, input, and select, the same value the Vercel Geist system uses on its controls, and the fully round pill stays an accent rather than a default. When shape tracks the role and size of a surface, the whole interface reads as one intentional system.
+    A corner sets personality. Sharp reads technical, fully round reads playful, and the considered middle reads premium. This system commits to one <code>6px</code> signature on every control, a short ladder up to hero surfaces, and keeps the fully round pill as an accent, never a default.
   </p>
 </div>
 
 <div className="radius-section">
   <h2 className="radius-section-title">The Radius Scale</h2>
   <p className="radius-lede">
-    Eight tokens, each with a role. The four middle steps do almost all the work in a real interface. Every box below is rendered with the real <code>var(--radius-*)</code> token, so what you see is what ships.
+    Eight tokens, each with a role. The four middle steps do almost all the work in a real interface. Every box below renders with its real <code>var(--radius-*)</code> token, so what you see is what ships.
   </p>
 
   <div className="scale-grid">
@@ -806,10 +599,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="golden">
     <div className="golden-kicker">Read this before you round anything</div>
     <div className="golden-headline">
-      The pill is an accent, not a default. Buttons are not pills. Scale the radius to the size and role of the element.
+      The pill is an accent, not a default. Buttons are not pills. Scale the radius to the size and role of the surface.
     </div>
     <p className="golden-body">
-      A fully rounded corner is a strong statement, and a statement repeated everywhere stops meaning anything. Reserve <code>--radius-pill</code> for small, single-line elements where the round shape is the point: chips, tags, avatars, toggles, icon buttons, one-line status badges. A standard button gets the <code>6px</code> signature, not the pill. Beyond that, bigger surfaces earn bigger radii: a card is not shaped like a button, and a modal is not shaped like a card. When shape tracks size, the whole interface reads as one intentional system.
+      A fully round corner is a strong statement, and a statement repeated everywhere stops meaning anything. Reserve <code>--radius-pill</code> for small, single-line elements where the round shape is the point: chips, tags, avatars, toggles, status badges. Every button, input, and select takes the <code>6px</code> signature. Beyond that, bigger surfaces earn bigger radii: a card is not shaped like a button, and a modal is not shaped like a card.
     </p>
   </div>
 
@@ -818,14 +611,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <button className="demo-button signature">Get started</button>
       <div className="pill-demo-caption">
         <div className="pill-demo-verdict">Do</div>
-        Wide button at <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>--radius-sm</code>, the 6px signature. Calm, precise, unmistakably a control.
+        Wide button at <code>--radius-sm</code>, the 6px signature. Calm, precise, unmistakably a control.
       </div>
     </div>
     <div className="pill-demo-card bad">
       <button className="demo-button wrong">Get started</button>
       <div className="pill-demo-caption">
         <div className="pill-demo-verdict">Don't</div>
-        The same wide button forced to a pill. The far larger corners read as a toy, not a product.
+        The same button forced to a pill. The larger corners read as a toy, not a product.
       </div>
     </div>
   </div>
@@ -834,18 +627,18 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="radius-section">
   <h2 className="radius-section-title">The Law of Concentric Corners</h2>
   <p className="radius-lede">
-    When one rounded element sits inside another, the corners should be concentric: parallel curves that share a center, like the gap between a phone screen and its housing. The rule is simple arithmetic. The inner radius equals the outer radius minus the padding between them.
+    Nest one rounded element inside another and the corners must stay concentric: parallel curves sharing a center, like a screen inside its housing. The inner radius equals the outer radius minus the padding between them.
   </p>
 
-  <div className="formula">inner radius = outer radius &minus; padding</div>
+  <div className="formula">inner radius = outer radius - padding</div>
 
   <p className="radius-lede">
-    This is not folklore. Apple formalized it in SwiftUI with <code>ConcentricRectangle</code> and the <code>containerShape</code> modifier, where a nested shape derives its radius from the container and the padding automatically. Skip the math and the inner corner either bulges past the outer curve or leaves an awkward pinch where the two arcs fight. Below, both cards use <code>--radius-xl</code> (16px) on the outside with 8px of padding. On the left the inner surface is set to <code>--radius-md</code> (16 minus 8), so the corners run parallel. On the right the inner surface keeps the full 16px and the curves collide.
+    Both cards below use <code>--radius-xl</code> (16px) outside with 8px of padding. On the left the inner surface is set to <code>--radius-md</code> (16 minus 8), so the corners run parallel. On the right it keeps the full 16px and the arcs collide. Apple ships this rule as a first-class API: <code>ConcentricRectangle</code> and <code>containerShape</code> in SwiftUI.
   </p>
 
   <div className="concentric-stage">
     <div className="concentric-outer right">
-      <div className="concentric-inner">inner 8px = 16px &minus; 8px padding</div>
+      <div className="concentric-inner">inner 8px = 16px - 8px padding</div>
     </div>
     <div className="concentric-label right">
       <strong>Concentric</strong>
@@ -864,10 +657,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="radius-section">
   <h2 className="radius-section-title">Continuous Corners, When the Browser Allows</h2>
   <p className="radius-lede">
-    A standard CSS rounded corner is a quarter of a circle: the straight edge meets the arc abruptly, and the curvature jumps from zero to its maximum at a single point. Apple's interfaces round corners a different way. A <code>RoundedRectangle(cornerRadius:style:.continuous)</code> in SwiftUI draws a squircle, where the curvature eases in and out so the transition from edge to corner is smooth. The eye reads that gradual onset as softer and more refined, even when the nominal radius is identical. It is a large part of why native Apple surfaces feel expensive.
-  </p>
-  <p className="radius-lede">
-    The web is catching up. The CSS <code>corner-shape</code> property lets a corner follow a superellipse instead of a circular arc, and <code>corner-shape: squircle</code> is defined as equivalent to <code>superellipse(2)</code>. We adopt it as progressive enhancement: every element ships a normal <code>border-radius</code> that works everywhere, and where the browser supports it we upgrade the corner to a squircle inside an <code>@supports</code> query. No fallback is ever broken, and supporting browsers get the smoother curve for free.
+    A plain CSS corner is a quarter circle: the curvature jumps from zero to its maximum at a single point. Apple rounds corners as a squircle instead, where the curvature eases in and out, and the eye reads that gradual onset as softer at the same nominal radius. The CSS <code>corner-shape</code> property brings it to the web, with <code>corner-shape: squircle</code> defined as <code>superellipse(2)</code>. We ship it as progressive enhancement inside an <code>@supports</code> query, so the base <code>border-radius</code> works everywhere and supporting browsers get the smoother curve for free.
   </p>
 
   <div className="squircle-stage">
@@ -886,7 +676,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="radius-note">
     <div className="radius-note-title">Honest about support</div>
     <div className="radius-note-body">
-      <code>corner-shape</code> is new and support is limited today, landing first in recent Chromium. That is exactly why it is an enhancement and not a requirement. Never gate layout, hit targets, or legibility on it. The base <code>border-radius</code> carries the design, and the squircle is a quiet reward for browsers that can render it.
+      <code>corner-shape</code> is new, landing first in recent Chromium. That is exactly why it is an enhancement, not a requirement. Never gate layout, hit targets, or legibility on it. The base <code>border-radius</code> carries the design, and the squircle is a quiet reward for browsers that can render it.
     </div>
   </div>
 </div>
@@ -894,7 +684,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="radius-section">
   <h2 className="radius-section-title">The Scale at Real Size</h2>
   <p className="radius-lede">
-    The same philosophy, shown on real components. A chip stays a pill because it is small and one line. A button takes the 6px signature. A card steps up to 12px, and a modal to 16px. Each surface is rendered with its actual token so the size-to-shape relationship is visible at a glance.
+    The same philosophy on real components. A chip stays a pill because it is small and one line. A button takes the 6px signature. A card steps up to 12px, and a modal to 16px. Each surface renders with its actual token, so the size-to-shape relationship is visible at a glance.
   </p>
 
   <div className="specimen">
@@ -925,55 +715,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="specimen-role">Modal</div>
         <div className="specimen-token">--radius-xl, 16px</div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div className="radius-section">
-  <h2 className="radius-section-title">Rules of Implementation</h2>
-
-  <div className="rules-grid">
-    <div className="rules-col do">
-      <div className="rules-col-title"><span className="rules-badge">+</span> Do</div>
-      <ul className="rules-list">
-        <li>Give every button, input, and select the <code>sm</code> signature, 6px.</li>
-        <li>Use <code>lg</code> (12px) for cards, menus, and popovers.</li>
-        <li>Use <code>xl</code> (16px) for modals and sheets.</li>
-        <li>Reserve <code>pill</code> for small one-line accents: chips, tags, avatars, toggles.</li>
-        <li>Scale radius up with surface size, so shape tracks role.</li>
-        <li>Compute nested corners as <code>inner = outer - padding</code>.</li>
-        <li>Reference the tokens by name; never hardcode a pixel radius.</li>
-      </ul>
-    </div>
-    <div className="rules-col dont">
-      <div className="rules-col-title"><span className="rules-badge">x</span> Don't</div>
-      <ul className="rules-list">
-        <li>Shape a wide button or a card as a pill.</li>
-        <li>Use a radius that is not on the scale.</li>
-        <li>Reuse one radius on every surface regardless of size.</li>
-        <li>Leave a nested inner corner at the outer radius.</li>
-        <li>Treat rounder as automatically more premium.</li>
-        <li>Gate layout or hit targets on <code>corner-shape</code> support.</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div className="radius-section">
-  <h2 className="radius-section-title">Which Radius, in Four Questions</h2>
-
-  <div className="decision">
-    <div className="decision-step">
-      <div className="decision-text">Is it a small, single-line accent, a chip, tag, avatar, toggle, or icon button? Use <strong><code>--radius-pill</code></strong>. This is the only place the pill belongs.</div>
-    </div>
-    <div className="decision-step">
-      <div className="decision-text">Is it a control the user acts on, a button, input, or select? Use <strong><code>--radius-sm</code></strong>, the 6px signature. Reach for <code>--radius-md</code> only when a control needs to feel deliberately softer.</div>
-    </div>
-    <div className="decision-step">
-      <div className="decision-text">Is it a container that groups content, a card, menu, or popover? Use <strong><code>--radius-lg</code></strong>. Step to <code>--radius-xl</code> for modals and sheets, and <code>--radius-2xl</code> for hero panels.</div>
-    </div>
-    <div className="decision-step">
-      <div className="decision-text">Is it nested inside another rounded surface? Compute <strong><code>inner = outer - padding</code></strong> and pick the token closest to that value. When in doubt, square it with <code>--radius-none</code> rather than fight the outer curve.</div>
     </div>
   </div>
 </div>
@@ -1041,77 +782,25 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </tr>
     </tbody>
   </table>
-
-  <div className="radius-note">
-    <div className="radius-note-title">Signature and accent</div>
-    <div className="radius-note-body">
-      <code>--radius-sm</code> at <code>6px</code> is the signature control radius: buttons, inputs, and selects all take it. <code>--radius-pill</code> is an accent for small, one-line elements, never a button or card shape. When a control needs a radius, reach for <code>--radius-sm</code>.
-    </div>
-  </div>
-</div>
-
-<div className="radius-section">
-  <h2 className="radius-section-title">Usage</h2>
-
-  <div className="radius-code">
-    <div className="radius-code-header">
-      <span className="radius-code-dot red"></span>
-      <span className="radius-code-dot yellow"></span>
-      <span className="radius-code-dot green"></span>
-      <span className="radius-code-lang">CSS</span>
-    </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Controls: the 6px signature, never a pill */</span>
-<span class="selector">.button</span><span class="punctuation">,</span>
-<span class="selector">.input</span><span class="punctuation">,</span>
-<span class="selector">.select</span> <span class="punctuation">{</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-sm)</span><span class="punctuation">;</span>  <span class="comment">/* 6px */</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Containers scale up with size */</span>
-<span class="selector">.card</span> <span class="punctuation">{</span> <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-lg)</span><span class="punctuation">;</span> <span class="punctuation">}</span>   <span class="comment">/* 12px */</span>
-<span class="selector">.modal</span> <span class="punctuation">{</span> <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-xl)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* 16px */</span>
-
-<span class="comment">/* Pill: accent only, small one-line elements */</span>
-<span class="selector">.chip</span><span class="punctuation">,</span>
-<span class="selector">.avatar</span> <span class="punctuation">{</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-pill)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Concentric nesting: inner = outer minus padding */</span>
-<span class="selector">.tile</span> <span class="punctuation">{</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-xl)</span><span class="punctuation">;</span>  <span class="comment">/* outer 16px */</span>
-    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-<span class="selector">.tile > .inner</span> <span class="punctuation">{</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-md)</span><span class="punctuation">;</span>  <span class="comment">/* 16 - 8 = 8px */</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Continuous corners as progressive enhancement */</span>
-<span class="selector">@supports (corner-shape: squircle)</span> <span class="punctuation">{</span>
-    <span class="selector">.card</span> <span class="punctuation">{</span>
-        <span class="property">corner-shape</span><span class="punctuation">:</span> <span class="value">squircle</span><span class="punctuation">;</span>  <span class="comment">/* equals superellipse(2) */</span>
-    <span class="punctuation">}</span>
-<span class="punctuation">}</span>`}} />
-  </div>
 </div>
 
 <div className="radius-section">
   <h2 className="radius-section-title">Sources</h2>
   <ul className="sources-list">
     <li>
-      <strong>Material 3, Shape scale.</strong> A named shape scale, none 0dp, extra-small 4dp, small 8dp, medium 12dp, large 16dp, extra-large (28dp in the current spec, 24dp in older samples), and full for pills and circular elements. The idea of shape as a role-based scale, rather than a single global radius, informs this system, though our step values are tuned to this brand. m3.material.io/styles/shape
+      <strong>Material 3, Shape scale.</strong> Shape as a role-based scale rather than one global radius. Our step values are tuned to this brand. m3.material.io/styles/shape
     </li>
     <li>
-      <strong>Vercel Geist.</strong> The Geist design system uses a <code>6px</code> radius as its default control shape on buttons and inputs, a concrete example of a moderate signature radius reading as premium. vercel.com/geist
+      <strong>Vercel Geist.</strong> Uses a <code>6px</code> control radius on buttons and inputs, a concrete example of a moderate signature reading as premium. vercel.com/geist
     </li>
     <li>
-      <strong>Apple, SwiftUI continuous corners.</strong> <code>RoundedRectangle(cornerRadius:style:.continuous)</code> draws a squircle whose curvature eases in and out, the smoother corner seen across Apple hardware and software. Apple does not publish exact corner-radius values for its components. <span className="source-spa">SPA</span> developer.apple.com/documentation/swiftui/roundedrectangle
+      <strong>Apple, SwiftUI.</strong> <code>RoundedRectangle(style: .continuous)</code> draws the squircle, and <code>ConcentricRectangle</code> with <code>containerShape</code> formalizes concentric nesting. Apple does not publish exact corner-radius values. <span className="source-spa">SPA</span> developer.apple.com/documentation/swiftui/roundedrectangle
     </li>
     <li>
-      <strong>CSS corner-shape and superellipse.</strong> The CSS Backgrounds and Borders draft defines <code>corner-shape</code>, where <code>squircle</code> is equivalent to <code>superellipse(2)</code>, letting a corner follow a superellipse instead of a circular arc. Support is limited and landing first in recent Chromium, so we treat it as progressive enhancement. developer.mozilla.org/en-US/docs/Web/CSS/corner-shape and drafts.csswg.org/css-borders-4
+      <strong>CSS corner-shape.</strong> The CSS Borders draft defines <code>corner-shape</code>, where <code>squircle</code> equals <code>superellipse(2)</code>. Support is limited and landing first in recent Chromium, so we treat it as progressive enhancement. developer.mozilla.org/en-US/docs/Web/CSS/corner-shape
     </li>
     <li>
-      <strong>Concentric corners.</strong> The rule that a nested inner radius equals the outer radius minus the padding is standard practice for concentric rounded corners, matching how a device screen nests inside its rounded housing. Apple formalized it as a first-class API with <code>ConcentricRectangle</code> and <code>containerShape</code> in SwiftUI. The "inner equals outer minus padding" phrasing itself is design-community convention, not an Apple-published formula. <span className="source-spa">SPA</span> developer.apple.com/documentation/swiftui/concentricrectangle. The exact token mapping, the reading of the pill as accent-only, and the 6px signature are house rules specific to this system.
+      The token mapping, the pill-as-accent reading, and the 6px signature are house rules specific to this system. <span className="source-spa">SPA</span>
     </li>
   </ul>
 </div>

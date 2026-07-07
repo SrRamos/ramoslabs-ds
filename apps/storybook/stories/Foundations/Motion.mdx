@@ -56,6 +56,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     max-width: 68ch;
   }
 
+  .mo-description strong { color: #0f172a; }
+
   /* ===== Section shell ===== */
   .mo-section { margin-top: 2.75rem; }
 
@@ -63,7 +65,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
   }
@@ -117,7 +119,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 0.75rem;
   }
 
@@ -231,7 +233,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .mo-hint {
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #64748b;
     margin-top: 0.75rem;
     display: flex;
     align-items: center;
@@ -319,7 +321,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 600;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 0.05em;
     background: #f8fafc;
   }
@@ -360,7 +362,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .mo-part { position: relative; padding-bottom: 0.15rem; }
-  .mo-part .mo-brace { color: #4f46e5; }
   .mo-part.prop { color: #7dd3fc; }
   .mo-part.dur { color: #a5b4fc; }
   .mo-part.ease { color: #c4b5fd; }
@@ -424,7 +425,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .mo-perf-head .mo-symbol { font-size: 20px; color: #4f46e5; }
-  .mo-perf-card:not(.cheap) .mo-perf-head .mo-symbol { color: #94a3b8; }
+  .mo-perf-card:not(.cheap) .mo-perf-head .mo-symbol { color: #64748b; }
 
   .mo-perf-props {
     display: flex;
@@ -450,42 +451,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.8125rem;
     color: #475569;
     line-height: 1.55;
-  }
-
-  /* ===== Callout ===== */
-  .mo-note {
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    margin-top: 1.5rem;
-    display: flex;
-    gap: 0.85rem;
-    align-items: flex-start;
-  }
-
-  .mo-note .mo-symbol { color: #4f46e5; font-size: 22px; flex-shrink: 0; }
-
-  .mo-note-title {
-    font-weight: 700;
-    font-size: 0.875rem;
-    color: #3730a3;
-    margin-bottom: 0.4rem;
-  }
-
-  .mo-note-body {
-    font-size: 0.8125rem;
-    color: #475569;
-    line-height: 1.6;
-  }
-
-  .mo-note-body code {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.72rem;
-    background: white;
-    padding: 0.1rem 0.4rem;
-    border-radius: 4px;
-    color: #4f46e5;
   }
 
   /* ===== Do / Don't ===== */
@@ -514,7 +479,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .mo-rules-col.do .mo-rules-col-title { color: #4f46e5; }
-  .mo-rules-col.dont .mo-rules-col-title { color: #64748b; }
+  .mo-rules-col.dont .mo-rules-col-title { color: #475569; }
 
   .mo-rules-badge {
     display: inline-flex;
@@ -528,7 +493,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .mo-rules-col.do .mo-rules-badge { background: #4f46e5; color: white; }
-  .mo-rules-col.dont .mo-rules-badge { background: #e2e8f0; color: #64748b; }
+  .mo-rules-col.dont .mo-rules-badge { background: #e2e8f0; color: #475569; }
 
   .mo-rules-list {
     margin: 0;
@@ -554,66 +519,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .mo-rules-col.do .mo-rules-list li::before { content: '+'; color: #4f46e5; }
-  .mo-rules-col.dont .mo-rules-list li::before { content: 'x'; color: #94a3b8; }
+  .mo-rules-col.dont .mo-rules-list li::before { content: 'x'; color: #64748b; }
 
   .mo-rules-list code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
     background: #eef2ff;
     padding: 0.1rem 0.35rem;
-    border-radius: 4px;
-    color: #4f46e5;
-  }
-
-  /* ===== Decision ladder ===== */
-  .mo-decision {
-    counter-reset: step;
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .mo-decision-step {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-  }
-
-  .mo-decision-step::before {
-    counter-increment: step;
-    content: counter(step);
-    flex-shrink: 0;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #4f46e5;
-    color: white;
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mo-decision-text {
-    font-size: 0.875rem;
-    color: #334155;
-    line-height: 1.5;
-  }
-
-  .mo-decision-text strong { color: #0f172a; }
-
-  .mo-decision-text code {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.72rem;
-    background: #eef2ff;
-    padding: 0.1rem 0.4rem;
     border-radius: 4px;
     color: #4f46e5;
   }
@@ -644,7 +556,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #cbd5e1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -659,7 +571,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
 
-  .mo-code .comment { color: #64748b; font-style: italic; }
+  .mo-code .comment { color: #94a3b8; font-style: italic; }
   .mo-code .selector { color: #fbbf24; }
   .mo-code .property { color: #7dd3fc; }
   .mo-code .value { color: #a5f3fc; }
@@ -713,7 +625,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div>
     <h1 className="mo-title">Motion With a Job to Do</h1>
     <p className="mo-description">
-      Motion in this system is a tool, not a garnish. Every animation exists to answer one of three questions for the person using the product: where did that come from, how are these two states related, and did my action register. If a movement cannot claim one of those jobs, it does not ship. The whole system is small on purpose: three durations and five easings, each with a defined role, so that motion stays consistent, fast, and quiet.
+      Every animation here earns its place by answering one question for the person using the product: <strong>where did that come from, are these the same thing, did my tap register.</strong> No job, no motion. The system is deliberately small, three durations and five easings, so the whole product moves at one tempo: fast, and quiet.
     </p>
   </div>
 </div>
@@ -721,24 +633,24 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="mo-section">
   <h2 className="mo-section-title">Purposeful, Not Decorative</h2>
   <p className="mo-lede">
-    Good motion orients the user. It carries the eye from a tapped button to the panel that opened, it shows that a list item slid rather than teleported, and it confirms that a request was received. That is motion doing informational work: orientation, continuity, and feedback. Decorative motion does none of this. It draws attention to itself, delays the interface, and costs the same battery and main-thread time as motion that means something. The rule is simple: motion earns its place by clarifying a change, never by dressing one up.
+    Good motion orients. It carries the eye from a tap to the panel that opened, shows a row slid instead of teleported, confirms a request landed. Decoration does none of that and costs the same frame time. Motion earns its place by clarifying a change, never by dressing one up.
   </p>
 
   <div className="mo-purpose">
     <div className="mo-purpose-card keep">
-      <div className="mo-purpose-tag"><span className="mo-symbol">check_circle</span> Motion that has a job</div>
+      <div className="mo-purpose-tag"><span className="mo-symbol">check_circle</span> Motion with a job</div>
       <ul className="mo-purpose-list">
-        <li><strong>Orientation.</strong> A menu grows from the button that opened it, so the eye knows where it came from.</li>
-        <li><strong>Continuity.</strong> A row animates to its new position instead of jumping, so the change reads as one object moving.</li>
-        <li><strong>Feedback.</strong> A control settles after a tap, confirming the press was received.</li>
+        <li><strong>Orientation.</strong> A menu grows from the button that opened it.</li>
+        <li><strong>Continuity.</strong> A row animates to its new spot instead of jumping.</li>
+        <li><strong>Feedback.</strong> A control settles after a tap, confirming the press.</li>
       </ul>
     </div>
     <div className="mo-purpose-card">
       <div className="mo-purpose-tag"><span className="mo-symbol">cancel</span> Motion to cut</div>
       <ul className="mo-purpose-list">
-        <li>Entrances that animate for their own sake with nothing to orient.</li>
+        <li>Entrances that animate with nothing to orient.</li>
         <li>Looping, attention-grabbing movement with no status behind it.</li>
-        <li>Long, cinematic reveals that make the interface wait on the animation.</li>
+        <li>Long, cinematic reveals that make the interface wait.</li>
       </ul>
     </div>
   </div>
@@ -747,7 +659,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="mo-section">
   <h2 className="mo-section-title">The Three Durations</h2>
   <p className="mo-lede">
-    Duration is matched to the size of the change, not chosen by taste. A small, local change should feel instant. A surface taking over the screen earns a beat so the eye can follow it. The system carries exactly three durations, and nothing runs longer than <span className="mo-inline-code">300ms</span>. Past that, an interface stops feeling responsive and starts feeling slow. Hover any card to feel its duration.
+    Match the duration to the size of the change. A small, local change should feel instant; a surface taking over the screen earns a beat. Nothing runs past <span className="mo-inline-code">300ms</span>, where responsive starts to feel slow. Hover a card to feel each one.
   </p>
 
   <div className="mo-durations">
@@ -760,7 +672,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="mo-duration-value">150ms</div>
         <div className="mo-duration-name">Fast</div>
         <code className="mo-token">--duration-fast</code>
-        <p className="mo-duration-usage">Small, local state on a single control the user is already looking at: a hover tint, a focus ring appearing, an icon toggling, a checkbox filling.</p>
+        <p className="mo-duration-usage">Local state on a control the user is already watching: a hover tint, a focus ring, an icon toggling, a checkbox filling.</p>
       </div>
     </div>
 
@@ -773,7 +685,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="mo-duration-value">200ms</div>
         <div className="mo-duration-name">Normal</div>
         <code className="mo-token">--duration-normal</code>
-        <p className="mo-duration-usage">The default. Elements entering, leaving, or moving a short distance: a dropdown opening, a tooltip, a tab indicator sliding, an accordion expanding.</p>
+        <p className="mo-duration-usage">The default. Things entering, leaving, or moving a short way: a dropdown, a tooltip, a tab indicator, an accordion.</p>
       </div>
     </div>
 
@@ -786,18 +698,18 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="mo-duration-value">300ms</div>
         <div className="mo-duration-name">Slow</div>
         <code className="mo-token">--duration-slow</code>
-        <p className="mo-duration-usage">A large surface or long travel that takes over the view and needs a beat to be understood: a modal, a bottom sheet, a full-screen overlay entering.</p>
+        <p className="mo-duration-usage">A large surface that takes over the view and needs a beat to read: a modal, a bottom sheet, a full-screen overlay.</p>
       </div>
     </div>
   </div>
 
-  <p className="mo-hint"><span className="mo-symbol">straighten</span> Larger surface or longer travel, longer duration. The ceiling is 300ms, and most motion lives at 200ms.</p>
+  <p className="mo-hint"><span className="mo-symbol" aria-hidden="true">straighten</span> Larger surface or longer travel, longer duration. The ceiling is 300ms, and most motion lives at 200ms.</p>
 </div>
 
 <div className="mo-section">
-  <h2 className="mo-section-title">The Five Easings, and When Each One Fits</h2>
+  <h2 className="mo-section-title">Five Easings, Five Jobs</h2>
   <p className="mo-lede">
-    Easing is the shape of the speed over time, and it is where motion communicates. A curve that starts fast and settles reads as something arriving. A curve that starts slow and accelerates reads as something leaving. Choosing the wrong one is not a matter of polish, it makes the interface feel laggy or mechanical. Each easing below has one job.
+    Easing is the shape of speed over time, and it is where motion says something. Fast then settling reads as arriving; slow then accelerating reads as leaving. Pick the wrong one and the interface feels laggy or mechanical. Each curve below has one job.
   </p>
 
   <div className="mo-easings">
@@ -812,7 +724,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <div className="mo-bezier">cubic-bezier(0, 0, 1, 1)</div>
         </div>
       </div>
-      <p className="mo-easing-role"><code className="mo-inline-code">--easing-linear</code> Constant speed, no start or finish to dramatize. Use it <strong>only for continuous, looping motion</strong>: spinners, indeterminate progress. On anything with a beginning and an end it feels robotic.</p>
+      <p className="mo-easing-role"><code className="mo-inline-code">--easing-linear</code> Constant speed, no start or finish to shape. <strong>Only for continuous loops</strong>: spinners, indeterminate progress. On anything that begins and ends it feels robotic.</p>
     </div>
 
     <div className="mo-easing-card">
@@ -826,7 +738,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <div className="mo-bezier">cubic-bezier(0, 0, 0.2, 1)</div>
         </div>
       </div>
-      <p className="mo-easing-role"><code className="mo-inline-code">--easing-out</code> Quick start, gentle landing. The <strong>default for anything entering</strong> the screen or responding to a tap. It moves immediately, which is why it feels responsive, then decelerates into place.</p>
+      <p className="mo-easing-role"><code className="mo-inline-code">--easing-out</code> Quick start, gentle landing. The <strong>default for anything entering</strong> or answering a tap. It moves at once, which reads as responsive, then decelerates into place.</p>
     </div>
 
     <div className="mo-easing-card">
@@ -840,7 +752,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <div className="mo-bezier">cubic-bezier(0.4, 0, 1, 1)</div>
         </div>
       </div>
-      <p className="mo-easing-role"><code className="mo-inline-code">--easing-in</code> Slow start, accelerating finish. For elements <strong>leaving</strong> the screen, they gather speed and get out of the way. Never use it for entrances, a slow start there reads as lag.</p>
+      <p className="mo-easing-role"><code className="mo-inline-code">--easing-in</code> Slow start, accelerating exit. For elements <strong>leaving</strong> the screen, they gather speed and get out of the way. Never for entrances, a slow start there reads as lag.</p>
     </div>
 
     <div className="mo-easing-card">
@@ -854,7 +766,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <div className="mo-bezier">cubic-bezier(0.4, 0, 0.2, 1)</div>
         </div>
       </div>
-      <p className="mo-easing-role"><code className="mo-inline-code">--easing-in-out</code> Symmetric ease on both ends. For elements <strong>moving between two on-screen positions</strong>, both visible the whole time: a reordering row, a toggle thumb sliding, a tab indicator traveling.</p>
+      <p className="mo-easing-role"><code className="mo-inline-code">--easing-in-out</code> Eased on both ends. For an element <strong>moving between two on-screen positions</strong>, both visible the whole time: a reordering row, a toggle thumb, a tab indicator.</p>
     </div>
 
     <div className="mo-easing-card">
@@ -868,7 +780,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <div className="mo-bezier">cubic-bezier(0.34, 1.56, 0.64, 1)</div>
         </div>
       </div>
-      <p className="mo-easing-role"><code className="mo-inline-code">--easing-spring</code> Overshoots the target, then settles. Reserved for a <strong>small, discrete, successful action</strong> you want to feel alive: a checkmark, a like, a badge popping in. Comfort, not information, so gate it behind reduced motion and keep it off large surfaces.</p>
+      <p className="mo-easing-role"><code className="mo-inline-code">--easing-spring</code> Overshoots, then settles. Reserved for a <strong>small, discrete success</strong> you want to feel alive: a checkmark, a like, a badge popping in. Comfort not information, so gate it behind reduced motion and keep it off large surfaces.</p>
     </div>
   </div>
 </div>
@@ -876,7 +788,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="mo-section">
   <h2 className="mo-section-title">Anatomy of a Transition</h2>
   <p className="mo-lede">
-    A transition in this system is always three named things: the property that changes, a duration token, and an easing token. Naming the property matters, blanket <span className="mo-inline-code">transition: all</span> animates properties you never meant to touch and quietly costs performance. Reference the tokens rather than hardcoding milliseconds, so the whole product moves at the same tempo.
+    Every transition names three things: the property, a duration token, an easing token. Name the property, never <span className="mo-inline-code">transition: all</span>, which animates things you never meant to touch. Reference the tokens instead of hardcoding milliseconds, so the whole product keeps one tempo.
   </p>
 
   <div className="mo-anatomy">
@@ -890,11 +802,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="mo-anatomy-legend">
       <div className="mo-legend-item prop">
         <div className="mo-legend-key">property</div>
-        <div className="mo-legend-text">What changes. Prefer <span style={{ fontFamily: "'SF Mono', monospace" }}>transform</span> and <span style={{ fontFamily: "'SF Mono', monospace" }}>opacity</span>. Name it explicitly, never <span style={{ fontFamily: "'SF Mono', monospace" }}>all</span>.</div>
+        <div className="mo-legend-text">What changes. Prefer <span style={{ fontFamily: "'SF Mono', monospace" }}>transform</span> and <span style={{ fontFamily: "'SF Mono', monospace" }}>opacity</span>. Name it, never <span style={{ fontFamily: "'SF Mono', monospace" }}>all</span>.</div>
       </div>
       <div className="mo-legend-item dur">
         <div className="mo-legend-key">duration</div>
-        <div className="mo-legend-text">How long. 150ms for local state, 200ms to enter or leave, 300ms for a takeover.</div>
+        <div className="mo-legend-text">How long. 150ms local, 200ms to enter or leave, 300ms for a takeover.</div>
       </div>
       <div className="mo-legend-item ease">
         <div className="mo-legend-key">easing</div>
@@ -902,74 +814,25 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </div>
     </div>
   </div>
-
-  <table className="mo-table">
-    <thead>
-      <tr>
-        <th>Kind of change</th>
-        <th>Duration</th>
-        <th>Easing</th>
-        <th>Animate</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Local state on one control (hover, focus, toggle)</td>
-        <td><code>--duration-fast</code></td>
-        <td><code>--easing-out</code> or <code>--easing-in-out</code></td>
-        <td><code>opacity</code>, color</td>
-      </tr>
-      <tr>
-        <td>Something entering the screen (menu, tooltip, sheet)</td>
-        <td><code>--duration-normal</code></td>
-        <td><code>--easing-out</code></td>
-        <td><code>opacity</code>, <code>transform</code></td>
-      </tr>
-      <tr>
-        <td>Something leaving the screen</td>
-        <td><code>--duration-normal</code></td>
-        <td><code>--easing-in</code></td>
-        <td><code>opacity</code>, <code>transform</code></td>
-      </tr>
-      <tr>
-        <td>Moving between two visible positions</td>
-        <td><code>--duration-normal</code></td>
-        <td><code>--easing-in-out</code></td>
-        <td><code>transform</code></td>
-      </tr>
-      <tr>
-        <td>A large surface taking over the view</td>
-        <td><code>--duration-slow</code></td>
-        <td><code>--easing-out</code></td>
-        <td><code>opacity</code>, <code>transform</code></td>
-      </tr>
-      <tr>
-        <td>Continuous loop (spinner, indeterminate bar)</td>
-        <td>1s or more, per cycle</td>
-        <td><code>--easing-linear</code></td>
-        <td><code>transform</code></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
 
 <div className="mo-section">
   <h2 className="mo-section-title">Performance Is Part of the Contract</h2>
   <p className="mo-lede">
-    A frame budget at 60fps is about 16ms. Miss it and motion visibly stutters. The browser can animate two properties, <span className="mo-inline-code">transform</span> and <span className="mo-inline-code">opacity</span>, on the compositor thread, off the main thread, without recalculating layout or repainting. Animating geometry instead, <span className="mo-inline-code">width</span>, <span className="mo-inline-code">height</span>, <span className="mo-inline-code">top</span>, <span className="mo-inline-code">left</span>, or <span className="mo-inline-code">margin</span>, forces the browser to recompute layout on every frame. That is layout thrash, and it is the usual cause of janky animation. This is not a preference, it is how the rendering pipeline works, so the system animates transform and opacity by default and treats anything else as a decision that needs a reason.
+    A frame at 60fps is about 16ms. The browser can animate two properties, <span className="mo-inline-code">transform</span> and <span className="mo-inline-code">opacity</span>, on the compositor, off the main thread, with no layout and no repaint. Animating geometry recomputes layout every frame, and that layout thrash is the usual cause of jank. This is how the rendering pipeline works, not a preference, so the system animates transform and opacity by default.
   </p>
 
   <div className="mo-perf">
     <div className="mo-perf-card cheap">
-      <div className="mo-perf-head"><span className="mo-symbol">bolt</span> Compositor cheap</div>
+      <div className="mo-perf-head"><span className="mo-symbol" aria-hidden="true">bolt</span> Compositor cheap</div>
       <div className="mo-perf-props">
         <span className="mo-chip">transform</span>
         <span className="mo-chip">opacity</span>
       </div>
-      <p className="mo-perf-text">Handled on the compositor, off the main thread. No layout, no paint. To move, scale, or fade, reach for these. A slide is <span style={{ fontFamily: "'SF Mono', monospace" }}>translateY</span>, not a change to <span style={{ fontFamily: "'SF Mono', monospace" }}>top</span>.</p>
+      <p className="mo-perf-text">Handled on the compositor, off the main thread. No layout, no paint. A slide is <span style={{ fontFamily: "'SF Mono', monospace" }}>translateY</span>, not a change to <span style={{ fontFamily: "'SF Mono', monospace" }}>top</span>.</p>
     </div>
     <div className="mo-perf-card">
-      <div className="mo-perf-head"><span className="mo-symbol">warning</span> Forces layout</div>
+      <div className="mo-perf-head"><span className="mo-symbol" aria-hidden="true">warning</span> Forces layout</div>
       <div className="mo-perf-props">
         <span className="mo-chip">width</span>
         <span className="mo-chip">height</span>
@@ -977,28 +840,18 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <span className="mo-chip">left</span>
         <span className="mo-chip">margin</span>
       </div>
-      <p className="mo-perf-text">Each animated frame recomputes layout for the page, then repaints. On a long list or a weak device this drops frames. Avoid animating these, express the same motion with transform.</p>
-    </div>
-  </div>
-
-  <div className="mo-note">
-    <span className="mo-symbol" aria-hidden="true">tips_and_updates</span>
-    <div>
-      <div className="mo-note-title">Use will-change sparingly</div>
-      <div className="mo-note-body">
-        <code>will-change: transform</code> can hint the browser to promote an element to its own layer before it animates, but a layer costs memory. Apply it just before the animation and remove it after, and never blanket it across many elements. If you are already animating transform and opacity, you rarely need it at all.
-      </div>
+      <p className="mo-perf-text">Each frame recomputes layout, then repaints. On a long list or a weak device this drops frames. Express the same motion with transform.</p>
     </div>
   </div>
 </div>
 
 <div className="mo-section">
-  <h2 className="mo-section-title">Reduced Motion Is the Floor, Not a Feature</h2>
+  <h2 className="mo-section-title">Reduced Motion Is the Floor</h2>
   <p className="mo-lede">
-    Some people feel physically ill from movement on a screen. Their operating system carries a setting for this, and the browser exposes it as <span className="mo-inline-code">prefers-reduced-motion: reduce</span>. A value of <span className="mo-inline-code">reduce</span> is a firm request to hold still, and honoring it is a baseline every animation clears, never an enhancement bolted on later. This aligns with WCAG 2.1: <strong>2.3.3 Animation from Interactions</strong> asks that motion triggered by interaction can be disabled, and <strong>2.2.2 Pause, Stop, Hide</strong> covers looping motion.
+    Some people feel physically ill from on-screen movement. The browser exposes their OS setting as <span className="mo-inline-code">prefers-reduced-motion: reduce</span>, a firm request to hold still that every animation honors. It aligns with WCAG 2.1: <strong>2.3.3</strong> asks that interaction-triggered motion can be disabled, and <strong>2.2.2</strong> covers looping motion.
   </p>
   <p className="mo-lede">
-    Honoring it does not mean deleting meaning. Because information rides on color, opacity, and the final state rather than on the movement itself, the interface stays fully legible without motion. Collapse the animated part, keep the destination. And keep a spinner turning slowly rather than freezing it, a stopped spinner reads as a hung app. Reduce the motion, do not remove the signal.
+    Honoring it does not mean deleting meaning. Because information rides on color, opacity, and the final state, the interface stays legible without movement: collapse the animation, keep the destination. And keep a spinner turning slowly rather than freezing it, a stopped spinner reads as a hung app.
   </p>
 
   <div className="mo-code">
@@ -1039,8 +892,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <li>Name the property, a duration token, and an easing token explicitly.</li>
         <li>Match duration to the change: <code>fast</code> local, <code>normal</code> to enter or leave, <code>slow</code> for a takeover.</li>
         <li>Ease <code>out</code> to enter, <code>in</code> to leave, <code>in-out</code> to move, <code>linear</code> to loop.</li>
-        <li>Reserve <code>spring</code> for a small, discrete success, and gate it behind reduced motion.</li>
-        <li>Honor <code>prefers-reduced-motion</code> as a floor: collapse the motion, keep the meaning.</li>
+        <li>Reserve <code>spring</code> for a small success, and gate it behind reduced motion.</li>
+        <li>Honor <code>prefers-reduced-motion</code>: collapse the motion, keep the meaning.</li>
       </ul>
     </div>
     <div className="mo-rules-col dont">
@@ -1054,44 +907,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <li>Spring a large surface. An overshooting modal looks broken.</li>
         <li>Let motion alone carry meaning. It must survive reduced motion.</li>
       </ul>
-    </div>
-  </div>
-</div>
-
-<div className="mo-section">
-  <h2 className="mo-section-title">Which Easing, in Five Questions</h2>
-
-  <div className="mo-decision">
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Does it loop forever with no beginning or end, a spinner or an indeterminate bar? Use <strong><code>--easing-linear</code></strong>.</div>
-    </div>
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Is it leaving the screen for good? Use <strong><code>--easing-in</code></strong>, so it accelerates out of the way.</div>
-    </div>
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Is it entering the screen or answering a tap? Use <strong><code>--easing-out</code></strong>, the responsive default.</div>
-    </div>
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Is it moving between two positions that stay visible the whole time? Use <strong><code>--easing-in-out</code></strong>.</div>
-    </div>
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Is it a small, celebratory, discrete success you want to feel bouncy? Use <strong><code>--easing-spring</code></strong>, gated behind <code>prefers-reduced-motion</code>. Never on a large surface.</div>
-    </div>
-  </div>
-</div>
-
-<div className="mo-section">
-  <h2 className="mo-section-title">Which Duration, in Three Questions</h2>
-
-  <div className="mo-decision">
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Is it small, local state on a single control the user is already watching? Use <strong><code>--duration-fast</code></strong>, 150ms.</div>
-    </div>
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Is something entering, leaving, or moving a short distance? Use <strong><code>--duration-normal</code></strong>, 200ms, the default.</div>
-    </div>
-    <div className="mo-decision-step">
-      <div className="mo-decision-text">Is a large surface taking over the view and asking the eye to follow it? Use <strong><code>--duration-slow</code></strong>, 300ms, the ceiling. If you want longer, rethink the interaction instead.</div>
     </div>
   </div>
 </div>
@@ -1153,69 +968,25 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 <div className="mo-section">
-  <h2 className="mo-section-title">Usage</h2>
-
-  <div className="mo-code">
-    <div className="mo-code-header">
-      <span className="mo-code-dot red" aria-hidden="true"></span>
-      <span className="mo-code-dot yellow" aria-hidden="true"></span>
-      <span className="mo-code-dot green" aria-hidden="true"></span>
-      <span className="mo-code-lang">CSS</span>
-    </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Local state: fast, and on a compositor-cheap property. */</span>
-<span class="selector">.button</span> <span class="punctuation">{</span>
-    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">background-color var(--duration-fast) var(--easing-in-out)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Entering: fade and rise with a translate, never with top. */</span>
-<span class="selector">.dropdown</span> <span class="punctuation">{</span>
-    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">opacity var(--duration-normal) var(--easing-out),
-                transform var(--duration-normal) var(--easing-out)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-<span class="selector">.dropdown[data-closed]</span> <span class="punctuation">{</span>
-    <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
-    <span class="property">transform</span><span class="punctuation">:</span> <span class="function">translateY</span><span class="punctuation">(</span><span class="value">-4px</span><span class="punctuation">)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Takeover surface: the slow duration earns the beat. */</span>
-<span class="selector">.modal</span> <span class="punctuation">{</span>
-    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">opacity var(--duration-slow) var(--easing-out),
-                transform var(--duration-slow) var(--easing-out)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Continuous loop: linear, because there is no start to shape. */</span>
-<span class="selector">.spinner</span> <span class="punctuation">{</span>
-    <span class="property">animation</span><span class="punctuation">:</span> <span class="value">spin 1s var(--easing-linear) infinite</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>`}} />
-  </div>
-</div>
-
-<div className="mo-section">
   <h2 className="mo-section-title">Sources</h2>
   <ul className="mo-sources-list">
     <li>
-      <strong>Material 3, Motion (easing and duration).</strong> Motion tokens split into duration buckets (short, medium, long) and easing sets, with emphasized easing reserved for prominent, expressive transitions and standard easing for small, utility-focused motion. Motion should orient the user by showing how elements in a transition relate, maintain continuity, and give timely feedback. <a href="https://m3.material.io/styles/motion/easing-and-duration/tokens-specs" target="_blank" rel="noreferrer">m3.material.io/styles/motion/easing-and-duration</a>
+      <strong>Material 3, Motion.</strong> Duration buckets and easing sets; motion orients the user, maintains continuity, and gives timely feedback. <a href="https://m3.material.io/styles/motion/easing-and-duration/tokens-specs" target="_blank" rel="noreferrer">m3.material.io/styles/motion</a>
     </li>
     <li>
-      <strong>Apple Human Interface Guidelines, Motion.</strong> Motion should be purposeful, communicate status, provide feedback, and maintain continuity, while gratuitous animation is discouraged and the Reduce Motion accessibility setting must be respected. <a href="https://developer.apple.com/design/human-interface-guidelines/motion" target="_blank" rel="noreferrer">developer.apple.com/design/human-interface-guidelines/motion</a>
+      <strong>Apple Human Interface Guidelines, Motion.</strong> Motion should be purposeful and communicate status; gratuitous animation is discouraged and Reduce Motion must be respected. <a href="https://developer.apple.com/design/human-interface-guidelines/motion" target="_blank" rel="noreferrer">developer.apple.com/.../motion</a>
     </li>
     <li>
-      <strong>web.dev, Animations and performance.</strong> Stick to animating <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>transform</span> and <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>opacity</span> so animation stays on the compositing stage, without triggering layout or paint, and use <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>will-change</span> sparingly because every promoted layer costs memory. <a href="https://web.dev/articles/stick-to-compositor-only-properties-and-manage-layer-count" target="_blank" rel="noreferrer">web.dev/articles/stick-to-compositor-only-properties</a> and <a href="https://web.dev/articles/animations-guide" target="_blank" rel="noreferrer">animations-guide</a>
+      <strong>web.dev and MDN, animation performance.</strong> Animate transform and opacity to stay on the compositor without layout or paint; use will-change sparingly because each promoted layer costs memory. <a href="https://web.dev/articles/animations-guide" target="_blank" rel="noreferrer">web.dev/articles/animations-guide</a>
     </li>
     <li>
-      <strong>MDN, CSS and JavaScript animation performance.</strong> Animating transform can run on the GPU off the main thread as long as the animated properties do not trigger reflow or repaint, which is why geometry properties are avoided. <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/CSS_JavaScript_animation_performance" target="_blank" rel="noreferrer">developer.mozilla.org/.../CSS_JavaScript_animation_performance</a>
+      <strong>MDN, prefers-reduced-motion.</strong> A device-level preference to minimize non-essential motion, mapping to the OS accessibility setting. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noreferrer">developer.mozilla.org/.../prefers-reduced-motion</a>
     </li>
     <li>
-      <strong>MDN, prefers-reduced-motion.</strong> The media feature detects a device-level preference to minimize non-essential motion, with values <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>no-preference</span> and <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>reduce</span>, mapping to the OS accessibility setting on macOS, iOS, Windows, and Android. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noreferrer">developer.mozilla.org/.../prefers-reduced-motion</a>
+      <strong>W3C WCAG 2.1.</strong> 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A) target vestibular symptoms such as dizziness and nausea. <a href="https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html" target="_blank" rel="noreferrer">w3.org/WAI/WCAG21/.../animation-from-interactions</a>
     </li>
     <li>
-      <strong>W3C WCAG 2.1.</strong> Success Criterion 2.3.3 Animation from Interactions (Level AAA) asks that interaction-triggered motion can be disabled unless essential, and 2.2.2 Pause, Stop, Hide (Level A) covers looping and auto-updating motion. Both target vestibular symptoms such as dizziness and nausea. <a href="https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html" target="_blank" rel="noreferrer">w3.org/WAI/WCAG21/Understanding/animation-from-interactions</a>
-    </li>
-    <li>
-      <strong>Nielsen Norman Group, Animation for Attention and Comprehension.</strong> Animation should draw attention to and explain changes on the page and show how an element relates to others, while gratuitous animation without a functional purpose is discouraged. <a href="https://www.nngroup.com/articles/animation-usability/" target="_blank" rel="noreferrer">nngroup.com/articles/animation-usability</a>
-    </li>
-    <li>
-      The three duration values (150ms, 200ms, 300ms), the five named easings, the 300ms ceiling, and the rule that spring is gated behind reduced motion are specific to this system's tokens. <span className="mo-spa">SPA</span> They are house decisions consistent with, but not dictated by, the cited sources.
+      The three durations (150ms, 200ms, 300ms), the five named easings, the 300ms ceiling, and gating spring behind reduced motion are specific to this system's tokens. <span className="mo-spa">SPA</span> House decisions, consistent with but not dictated by the cited sources.
     </li>
   </ul>
 </div>
