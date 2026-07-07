@@ -4,11 +4,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <style>
 {`
-  .responsive-header {
+  .rs-header {
     margin-bottom: 2rem;
   }
 
-  .responsive-title {
+  .rs-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
     color: #0f172a;
     font-size: 1.875rem;
@@ -16,71 +16,164 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-bottom: 0.75rem;
   }
 
-  .responsive-description {
+  .rs-description {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
+    color: #475569;
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.65;
+    max-width: 68ch;
   }
 
-  .responsive-section {
-    margin-top: 2.5rem;
+  .rs-section {
+    margin-top: 2.75rem;
   }
 
-  .responsive-section-title {
+  .rs-section-title {
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .breakpoint-visual {
-    background: white;
+  .rs-section-title .material-symbols-outlined {
+    font-size: 1.125rem;
+    color: #4f46e5;
+  }
+
+  .rs-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .rs-lede code,
+  .rs-inline-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8em;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  .rs-lede strong { color: #0f172a; }
+
+  /* Editorial: content-first principle cards */
+  .rs-editorial {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .rs-editorial-card {
     border-radius: 12px;
     border: 1px solid #e2e8f0;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .breakpoint-bar {
-    display: flex;
-    align-items: stretch;
-    height: 60px;
     background: #f8fafc;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
+    padding: 1.5rem;
   }
 
-  .breakpoint-segment {
+  .rs-editorial-card.now {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+
+  .rs-editorial-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #e2e8f0;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .rs-editorial-icon .material-symbols-outlined {
+    color: #4f46e5;
+    font-size: 22px;
+  }
+
+  .rs-editorial-card.now .rs-editorial-icon { border-color: #c7d2fe; }
+
+  .rs-editorial-label {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.4rem;
+  }
+
+  .rs-editorial-text {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  /* Breakpoint scale, mono-indigo ramp */
+  .rs-scale {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    padding: 2rem;
+  }
+
+  .rs-scale-bar {
+    display: flex;
+    align-items: stretch;
+    height: 22px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .rs-scale-seg { position: relative; }
+  .rs-scale-seg.base { background: #e2e8f0; }
+  .rs-scale-seg.sm { background: #c7d2fe; }
+  .rs-scale-seg.md { background: #a5b4fc; }
+  .rs-scale-seg.lg { background: #818cf8; }
+  .rs-scale-seg.xl { background: #6366f1; }
+  .rs-scale-seg.xxl { background: #4f46e5; }
+
+  .rs-scale-labels {
+    display: flex;
+    margin-top: 0.75rem;
+  }
+
+  .rs-scale-tick {
+    display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    border-right: 2px dashed #cbd5e1;
-    position: relative;
+    gap: 0.1rem;
+    border-left: 1px solid #e2e8f0;
+    padding-left: 0.5rem;
   }
 
-  .breakpoint-segment:last-child {
-    border-right: none;
-  }
+  .rs-scale-tick.first { border-left: none; padding-left: 0; }
 
-  .breakpoint-label {
+  .rs-scale-name {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    font-weight: 600;
-    color: white;
+    font-weight: 700;
+    color: #4f46e5;
   }
 
-  .breakpoint-value {
-    font-size: 0.625rem;
-    color: rgba(255, 255, 255, 0.8);
+  .rs-scale-name.muted { color: #94a3b8; }
+
+  .rs-scale-val {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #64748b;
   }
 
-  .responsive-table {
+  /* Tables */
+  .rs-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -90,14 +183,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-top: 1rem;
   }
 
-  .responsive-table th,
-  .responsive-table td {
+  .rs-table th,
+  .rs-table td {
     padding: 0.75rem 1rem;
     text-align: left;
     border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
   }
 
-  .responsive-table th {
+  .rs-table th {
     font-weight: 600;
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -106,43 +200,407 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: #f8fafc;
   }
 
-  .responsive-table td {
+  .rs-table td {
     font-size: 0.875rem;
+    color: #475569;
   }
 
-  .responsive-table tr:last-child td {
-    border-bottom: none;
-  }
+  .rs-table tr:last-child td { border-bottom: none; }
 
-  .responsive-table code {
+  .rs-table code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    background: #f1f5f9;
+    background: #eef2ff;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    color: #64748b;
+    color: #4f46e5;
   }
 
-  .device-icon {
+  .rs-table .rs-role {
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  /* Two-technique compare: media query vs container query */
+  .rs-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .rs-compare-col {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 1.5rem;
+  }
+
+  .rs-compare-col.modern {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+
+  .rs-compare-tag {
     display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    margin-bottom: 0.75rem;
+  }
+
+  .rs-compare-col.modern .rs-compare-tag { color: #4f46e5; }
+
+  .rs-compare-tag .material-symbols-outlined { font-size: 1rem; }
+
+  .rs-compare-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+  }
+
+  .rs-compare-q {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 0.9rem;
+  }
+
+  .rs-compare-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .rs-compare-list li { margin-bottom: 0.4rem; }
+
+  /* Intrinsic / fluid live demo */
+  .rs-demo {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .rs-demo-caption {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 1rem;
+    line-height: 1.55;
+  }
+
+  .rs-demo-caption code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  .rs-fluid-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .rs-fluid-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rs-fluid-card .material-symbols-outlined {
+    color: #4f46e5;
+    font-size: 24px;
+  }
+
+  .rs-fluid-card-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #0f172a;
+  }
+
+  .rs-fluid-card-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  .rs-fluid-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.15;
+    font-size: clamp(1.5rem, 3vw + 1rem, 2.75rem);
+    margin: 0;
+  }
+
+  /* Safe area diagram */
+  .rs-safearea {
+    display: grid;
+    grid-template-columns: minmax(220px, 260px) 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .rs-phone {
+    position: relative;
+    aspect-ratio: 9 / 17;
+    max-width: 220px;
+    margin: 0 auto;
+    border: 10px solid #0f172a;
+    border-radius: 34px;
+    background: #eef2ff;
+    overflow: hidden;
+  }
+
+  .rs-phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44%;
+    height: 20px;
+    background: #0f172a;
+    border-radius: 0 0 12px 12px;
+    z-index: 2;
+  }
+
+  .rs-phone-safe {
+    position: absolute;
+    inset: 26px 10px 34px;
+    border: 2px dashed #6366f1;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    color: #4f46e5;
+    padding: 0.5rem;
+  }
+
+  .rs-phone-cta {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 38px;
+    height: 30px;
+    border-radius: 8px;
+    background: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    z-index: 1;
+  }
+
+  .rs-phone-indicator {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36%;
+    height: 4px;
+    border-radius: 999px;
+    background: #94a3b8;
+    z-index: 2;
+  }
+
+  /* Do / Don't */
+  .rs-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .rs-rules-col {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.5rem;
+  }
+
+  .rs-rules-col-title {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
   }
 
-  .device-icon svg {
-    width: 16px;
-    height: 16px;
-    color: #64748b;
+  .rs-rules-col.do .rs-rules-col-title { color: #4f46e5; }
+  .rs-rules-col.dont .rs-rules-col-title { color: #64748b; }
+
+  .rs-rules-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
   }
 
-  .responsive-code {
+  .rs-rules-col.do .rs-rules-badge { background: #4f46e5; color: white; }
+  .rs-rules-col.dont .rs-rules-badge { background: #e2e8f0; color: #64748b; }
+
+  .rs-rules-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .rs-rules-list li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  .rs-rules-list li::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+  }
+
+  .rs-rules-col.do .rs-rules-list li::before { content: '+'; color: #4f46e5; }
+  .rs-rules-col.dont .rs-rules-list li::before { content: 'x'; color: #94a3b8; }
+
+  .rs-rules-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Decision ladder */
+  .rs-decision {
+    counter-reset: step;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .rs-decision-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+
+  .rs-decision-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rs-decision-text {
+    font-size: 0.875rem;
+    color: #334155;
+    line-height: 1.5;
+  }
+
+  .rs-decision-text strong { color: #0f172a; }
+
+  .rs-decision-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Callout */
+  .rs-note {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .rs-note-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #3730a3;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .rs-note-title .material-symbols-outlined { font-size: 1.125rem; }
+
+  .rs-note-body {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .rs-note-body code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Code block */
+  .rs-code {
     background: #1e293b;
     border-radius: 12px;
     overflow: hidden;
     margin-top: 1rem;
   }
 
-  .responsive-code-header {
+  .rs-code-header {
     background: #334155;
     padding: 0.75rem 1rem;
     display: flex;
@@ -151,17 +609,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-bottom: 1px solid #475569;
   }
 
-  .responsive-code-dot {
+  .rs-code-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
   }
 
-  .responsive-code-dot.red { background: #ef4444; }
-  .responsive-code-dot.yellow { background: #f59e0b; }
-  .responsive-code-dot.green { background: #22c55e; }
+  .rs-code-dot.red { background: #ef4444; }
+  .rs-code-dot.yellow { background: #f59e0b; }
+  .rs-code-dot.green { background: #22c55e; }
 
-  .responsive-code-lang {
+  .rs-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
@@ -170,7 +628,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.05em;
   }
 
-  .responsive-code pre {
+  .rs-code pre {
     margin: 0;
     padding: 1.25rem;
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
@@ -180,293 +638,390 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
 
-  .responsive-code .comment { color: #64748b; font-style: italic; }
-  .responsive-code .selector { color: #fbbf24; }
-  .responsive-code .property { color: #7dd3fc; }
-  .responsive-code .value { color: #a5f3fc; }
-  .responsive-code .mixin { color: #c4b5fd; }
-  .responsive-code .punctuation { color: #94a3b8; }
+  .rs-code .comment { color: #64748b; font-style: italic; }
+  .rs-code .selector { color: #fbbf24; }
+  .rs-code .property { color: #7dd3fc; }
+  .rs-code .value { color: #a5f3fc; }
+  .rs-code .atrule { color: #c4b5fd; }
+  .rs-code .punctuation { color: #94a3b8; }
 
-  .principle-card {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .principle-card-title {
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .principle-card-content {
-    font-size: 0.875rem;
-    color: #64748b;
+  /* Sources */
+  .rs-sources {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
     line-height: 1.6;
   }
 
-  .container-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+  .rs-sources li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
   }
 
-  .container-card {
-    background: #f8fafc;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-  }
+  .rs-sources li:last-child { border-bottom: none; }
 
-  .container-name {
-    font-family: 'SF Mono', monospace;
-    font-size: 0.75rem;
+  .rs-sources strong { color: #0f172a; }
+
+  .rs-sources a {
     color: #4f46e5;
-    margin-bottom: 0.25rem;
+    text-decoration: none;
   }
 
-  .container-value {
-    font-size: 1.25rem;
+  .rs-sources a:hover { text-decoration: underline; }
+
+  .rs-spa {
+    display: inline-block;
+    font-size: 0.625rem;
     font-weight: 700;
-    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
   }
 `}
 </style>
 
-<div className="responsive-header">
-  <h1 className="responsive-title">Every Screen, Every Fan</h1>
-  <p className="responsive-description">
-    The next unforgettable concert might be discovered on a phone during a commute, planned on a tablet at lunch,
-    or booked on a laptop at home. Our responsive system ensures every fan finds their moment, no matter the screen.
+<div className="rs-header">
+  <h1 className="rs-title">Design for the Content, Not the Device</h1>
+  <p className="rs-description">
+    There is no fixed set of screens to design for anymore, and there never really was. A layout that only works at a handful of famous device widths is a layout that breaks the moment someone opens a split-view window, rotates a foldable, or reads at 200 percent zoom. This system takes the opposite stance: start from the smallest reasonable screen, let the content decide where it needs to change, and reach for a fixed breakpoint last, not first.
   </p>
 </div>
 
-<div className="responsive-section">
-  <h2 className="responsive-section-title">Breakpoint Scale</h2>
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">smartphone</span>Mobile First, Content First</h2>
+  <p className="rs-lede">
+    Mobile first is not a phone rule, it is a discipline. Designing the small screen first forces the hardest question early: what is genuinely essential here. Everything that survives that constraint is the core of the experience, and everything a wider screen adds is a progressive enhancement layered on top of a base that already works. Starting wide and squeezing down does the reverse: it treats the small screen as an afterthought, and the afterthought is where most people actually are.
+  </p>
 
-  <div className="breakpoint-visual">
-    <div className="breakpoint-bar">
-      <div className="breakpoint-segment" style={{ flex: '320', background: '#ef4444' }}>
-        <span className="breakpoint-label">xs</span>
-        <span className="breakpoint-value">320px</span>
+  <div className="rs-editorial">
+    <div className="rs-editorial-card">
+      <div className="rs-editorial-icon"><span className="material-symbols-outlined">vertical_align_bottom</span></div>
+      <div className="rs-editorial-label">Base is the floor</div>
+      <p className="rs-editorial-text">Write the small-screen layout with no media query at all. That is the default every browser gets, and it must stand on its own before a single breakpoint is added.</p>
+    </div>
+    <div className="rs-editorial-card">
+      <div className="rs-editorial-icon"><span className="material-symbols-outlined">trending_up</span></div>
+      <div className="rs-editorial-label">Enhance upward</div>
+      <p className="rs-editorial-text">Each min-width query only adds. More columns, more density, a sidebar that was stacked. Never subtract from wide to reach narrow. Enhancement, not repair.</p>
+    </div>
+    <div className="rs-editorial-card now">
+      <div className="rs-editorial-icon"><span className="material-symbols-outlined">crop_free</span></div>
+      <div className="rs-editorial-label">Content sets the line</div>
+      <p className="rs-editorial-text">Add a breakpoint where the layout actually strains, when a line gets too long or a card too cramped, not where a popular phone happens to end.</p>
+    </div>
+  </div>
+</div>
+
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">straighten</span>The Five Breakpoints and Their Roles</h2>
+  <p className="rs-lede">
+    The system publishes exactly five named breakpoints as design tokens. They are min-width thresholds: below the first one is the base, the no-query mobile layout. Treat these as the coarse structural moves of the interface, the points where the whole shape of a page is allowed to shift. They are ceilings for major layout changes, not a grid you place every element against.
+  </p>
+
+  <div className="rs-scale">
+    <div className="rs-scale-bar" aria-hidden="true">
+      <div className="rs-scale-seg base" style={{ flex: '576' }}></div>
+      <div className="rs-scale-seg sm" style={{ flex: '193' }}></div>
+      <div className="rs-scale-seg md" style={{ flex: '223' }}></div>
+      <div className="rs-scale-seg lg" style={{ flex: '208' }}></div>
+      <div className="rs-scale-seg xl" style={{ flex: '166' }}></div>
+      <div className="rs-scale-seg xxl" style={{ flex: '220' }}></div>
+    </div>
+    <div className="rs-scale-labels">
+      <div className="rs-scale-tick first" style={{ flex: '576' }}>
+        <span className="rs-scale-name muted">base</span>
+        <span className="rs-scale-val">0</span>
       </div>
-      <div className="breakpoint-segment" style={{ flex: '256', background: '#f59e0b' }}>
-        <span className="breakpoint-label">sm</span>
-        <span className="breakpoint-value">576px</span>
+      <div className="rs-scale-tick" style={{ flex: '193' }}>
+        <span className="rs-scale-name">sm</span>
+        <span className="rs-scale-val">576px</span>
       </div>
-      <div className="breakpoint-segment" style={{ flex: '192', background: '#22c55e' }}>
-        <span className="breakpoint-label">md</span>
-        <span className="breakpoint-value">768px</span>
+      <div className="rs-scale-tick" style={{ flex: '223' }}>
+        <span className="rs-scale-name">md</span>
+        <span className="rs-scale-val">769px</span>
       </div>
-      <div className="breakpoint-segment" style={{ flex: '224', background: '#3b82f6' }}>
-        <span className="breakpoint-label">lg</span>
-        <span className="breakpoint-value">992px</span>
+      <div className="rs-scale-tick" style={{ flex: '208' }}>
+        <span className="rs-scale-name">lg</span>
+        <span className="rs-scale-val">992px</span>
       </div>
-      <div className="breakpoint-segment" style={{ flex: '166', background: '#8b5cf6' }}>
-        <span className="breakpoint-label">xl</span>
-        <span className="breakpoint-value">1200px</span>
+      <div className="rs-scale-tick" style={{ flex: '166' }}>
+        <span className="rs-scale-name">xl</span>
+        <span className="rs-scale-val">1200px</span>
       </div>
-      <div className="breakpoint-segment" style={{ flex: '166', background: '#4f46e5' }}>
-        <span className="breakpoint-label">2xl</span>
-        <span className="breakpoint-value">1366px</span>
+      <div className="rs-scale-tick" style={{ flex: '220' }}>
+        <span className="rs-scale-name">2xl</span>
+        <span className="rs-scale-val">1366px</span>
       </div>
     </div>
   </div>
 
-  <table className="responsive-table">
+  <table className="rs-table">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Min Width</th>
-        <th>The Fan Context</th>
-        <th>SCSS Mixin</th>
+        <th>Token</th>
+        <th>Min width</th>
+        <th>Structural role</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><code>xs</code></td>
-        <td>320px</td>
-        <td>🚶 <em>Fan on the move</em> - Quick glances, one-handed scrolling</td>
-        <td><code>@include breakpoint('xs')</code></td>
+        <td><code>base</code></td>
+        <td>0</td>
+        <td><span className="rs-role">The default.</span> Single column, one thing at a time, thumb-reachable. Written with no media query. Everything else enhances this.</td>
       </tr>
       <tr>
-        <td><code>sm</code></td>
+        <td><code>--breakpoint-sm</code></td>
         <td>576px</td>
-        <td>📱 <em>Fan discovering</em> - Browsing events in line, on the bus</td>
-        <td><code>@include breakpoint('sm')</code></td>
+        <td><span className="rs-role">Large phones and up.</span> Room for a two-up grid, side-by-side form fields, a little more density.</td>
       </tr>
       <tr>
-        <td><code>md</code></td>
-        <td>768px</td>
-        <td>📋 <em>Fan planning</em> - Comparing dates, checking details at lunch</td>
-        <td><code>@include breakpoint('md')</code></td>
+        <td><code>--breakpoint-md</code></td>
+        <td>769px</td>
+        <td><span className="rs-role">Tablets and up.</span> The first real layout shift. A stacked shell can become a two-pane view; navigation can move inline.</td>
       </tr>
       <tr>
-        <td><code>lg</code></td>
+        <td><code>--breakpoint-lg</code></td>
         <td>992px</td>
-        <td>💳 <em>Fan committing</em> - Ready to book, wants full info</td>
-        <td><code>@include breakpoint('lg')</code></td>
+        <td><span className="rs-role">Laptops and up.</span> Persistent sidebars, three-column grids, the full desktop chrome.</td>
       </tr>
       <tr>
-        <td><code>xl</code></td>
+        <td><code>--breakpoint-xl</code></td>
         <td>1200px</td>
-        <td>🎯 <em>Fan exploring</em> - Deep dive into artists, venues, reviews</td>
-        <td><code>@include breakpoint('xl')</code></td>
+        <td><span className="rs-role">Wide desktops.</span> Content is comfortable, not stretched. A good place to cap line length and center the shell.</td>
       </tr>
       <tr>
-        <td><code>2xl</code></td>
+        <td><code>--breakpoint-2xl</code></td>
         <td>1366px</td>
-        <td>🖥️ <em>Fan immersed</em> - Full experience, multiple tabs open</td>
-        <td><code>@include breakpoint('2xl')</code></td>
+        <td><span className="rs-role">Very wide displays.</span> The top of the scale. Add breathing room and max-widths, not more columns for their own sake.</td>
       </tr>
     </tbody>
   </table>
-</div>
 
-<div className="responsive-section">
-  <h2 className="responsive-section-title">Container Widths</h2>
-
-  <div className="container-grid">
-    <div className="container-card">
-      <div className="container-name">$container-sm</div>
-      <div className="container-value">640px</div>
-    </div>
-    <div className="container-card">
-      <div className="container-name">$container-md</div>
-      <div className="container-value">768px</div>
-    </div>
-    <div className="container-card">
-      <div className="container-name">$container-lg</div>
-      <div className="container-value">1024px</div>
-    </div>
-    <div className="container-card">
-      <div className="container-name">$container-xl</div>
-      <div className="container-value">1280px</div>
+  <div className="rs-note">
+    <div className="rs-note-title"><span className="material-symbols-outlined">bolt</span>These are the only breakpoints</div>
+    <div className="rs-note-body">
+      Five tokens, published as CSS custom properties: <code>--breakpoint-sm</code> through <code>--breakpoint-2xl</code>. There is no <code>xs</code> token, because the base layout below <code>sm</code> needs no query to name it. Do not invent a sixth threshold for one stubborn component; solve that component with fluid sizing or a container query instead. Note that a media condition cannot read a custom property, so a query uses the literal pixel value, for example <code>@media (min-width: 769px)</code>, while the token remains the single source of truth those numbers come from.
     </div>
   </div>
 </div>
 
-<div className="responsive-section">
-  <h2 className="responsive-section-title">SCSS Mixins</h2>
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">devices</span>Media Queries or Container Queries</h2>
+  <p className="rs-lede">
+    For a decade a media query was the only tool, so it did every job: it asked how wide the whole viewport was and changed everything based on the answer. That works for the page shell, but it is the wrong question for a component. A card does not care how wide the window is; it cares how much room it was given. A container query lets an element respond to the size of its own container instead of the viewport, so the same card lays out one way in a narrow sidebar and another way in a wide main column, with no knowledge of the page around it. This is the shift from page-level to component-level responsiveness, and it is the modern default for anything reusable. Container queries are Baseline as of 2023 and safe to use in current browsers.
+  </p>
 
-  <table className="responsive-table">
-    <thead>
-      <tr>
-        <th>Mixin</th>
-        <th>Description</th>
-        <th>Output</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>@include breakpoint('md')</code></td>
-        <td>Min-width media query</td>
-        <td><code>@media (min-width: 768px)</code></td>
-      </tr>
-      <tr>
-        <td><code>@include breakpoint-down('md')</code></td>
-        <td>Max-width media query</td>
-        <td><code>@media (max-width: 767px)</code></td>
-      </tr>
-      <tr>
-        <td><code>@include breakpoint-between('sm', 'lg')</code></td>
-        <td>Range media query</td>
-        <td><code>@media (min-width: 576px) and (max-width: 991px)</code></td>
-      </tr>
-      <tr>
-        <td><code>@include mobile-only</code></td>
-        <td>Mobile devices only</td>
-        <td><code>@media (max-width: 767px)</code></td>
-      </tr>
-      <tr>
-        <td><code>@include tablet-up</code></td>
-        <td>Tablet and larger</td>
-        <td><code>@media (min-width: 768px)</code></td>
-      </tr>
-      <tr>
-        <td><code>@include desktop-up</code></td>
-        <td>Desktop and larger</td>
-        <td><code>@media (min-width: 992px)</code></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div className="responsive-section">
-  <h2 className="responsive-section-title">Design Principles</h2>
-
-  <div className="principle-card">
-    <div className="principle-card-title">
-      📱 Mobile First - Because Fans Discover on the Go
+  <div className="rs-compare">
+    <div className="rs-compare-col">
+      <div className="rs-compare-tag"><span className="material-symbols-outlined">fullscreen</span>Viewport level</div>
+      <div className="rs-compare-name">Media query</div>
+      <div className="rs-compare-q">@media (min-width: 992px)</div>
+      <ul className="rs-compare-list">
+        <li>Asks about the whole viewport.</li>
+        <li>Right for the page shell: global grid, top navigation, where the sidebar lives.</li>
+        <li>Also the home of preference and capability queries: <code style={{ fontFamily: "'SF Mono', monospace" }}>prefers-color-scheme</code>, <code style={{ fontFamily: "'SF Mono', monospace" }}>prefers-reduced-motion</code>, <code style={{ fontFamily: "'SF Mono', monospace" }}>pointer</code>, <code style={{ fontFamily: "'SF Mono', monospace" }}>hover</code>.</li>
+        <li>Keyed to the five breakpoint tokens.</li>
+      </ul>
     </div>
-    <div className="principle-card-content">
-      Most fans first see an event on their phone, waiting in line, scrolling before bed, or checking a friend's share.
-      Start with mobile, then enhance. The excitement should hit just as hard on a 5-inch screen.
+    <div className="rs-compare-col modern">
+      <div className="rs-compare-tag"><span className="material-symbols-outlined">responsive_layout</span>Component level</div>
+      <div className="rs-compare-name">Container query</div>
+      <div className="rs-compare-q">@container (min-width: 24rem)</div>
+      <ul className="rs-compare-list">
+        <li>Asks how much space this element was actually given.</li>
+        <li>Right for reusable components: cards, tiles, media objects, widgets that appear in many slots.</li>
+        <li>The parent opts in with <code style={{ fontFamily: "'SF Mono', monospace" }}>container-type</code>; children can size to <code style={{ fontFamily: "'SF Mono', monospace" }}>cqw</code> units.</li>
+        <li>The component becomes portable: drop it anywhere and it adapts to the slot.</li>
+      </ul>
     </div>
   </div>
 
-  <div className="principle-card">
-    <div className="principle-card-title">
-      🎯 Intrinsic Sizing - Let Content Breathe
-    </div>
-    <div className="principle-card-content">
-      Use <code>min()</code>, <code>max()</code>, <code>clamp()</code>, and <code>auto-fit</code> before reaching for media queries.
-      Event cards, artist names, venue details, let them find their natural rhythm. Less breakpoints, more flow.
-    </div>
-  </div>
-
-  <div className="principle-card">
-    <div className="principle-card-title">
-      📐 Major Shifts Only - Don't Interrupt the Journey
-    </div>
-    <div className="principle-card-content">
-      Only use breakpoints for major layout changes (sidebar → stacked, grid → single column).
-      A fan scrolling through events shouldn't notice the design working, they should just feel it working.
+  <div className="rs-note">
+    <div className="rs-note-title"><span className="material-symbols-outlined">lightbulb</span>The dividing line</div>
+    <div className="rs-note-body">
+      Ask what the thing responds to. If it is the page as a whole, use a media query against a breakpoint token. If it is a component that must work in more than one slot, give its wrapper a container and let it respond to its own width. A capability or preference, dark mode, reduced motion, coarse pointer, is always a media query, never a container query.
     </div>
   </div>
 </div>
 
-<div className="responsive-section">
-  <h2 className="responsive-section-title">Usage Examples</h2>
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">waves</span>Fluid and Intrinsic Layouts</h2>
+  <p className="rs-lede">
+    The best breakpoint is the one you never had to write. Between the structural thresholds, layout should flow, not jump. Intrinsic web design, Jen Simmons' name for this way of working, leans on what CSS can already do on its own: a grid that fits as many columns as will comfortably fit, type and spacing that scale smoothly with the viewport, sizes expressed as a range rather than a fixed number. The result adapts at every width, not just at five of them, and it needs far fewer media queries to do it.
+  </p>
 
-  <div className="responsive-code">
-    <div className="responsive-code-header">
-      <span className="responsive-code-dot red"></span>
-      <span className="responsive-code-dot yellow"></span>
-      <span className="responsive-code-dot green"></span>
-      <span className="responsive-code-lang">SCSS</span>
+  <div className="rs-demo">
+    <div className="rs-fluid-grid">
+      <div className="rs-fluid-card"><span className="material-symbols-outlined">confirmation_number</span><span className="rs-fluid-card-title">Reflow</span><span className="rs-fluid-card-text">Cards wrap on their own as space allows.</span></div>
+      <div className="rs-fluid-card"><span className="material-symbols-outlined">grid_view</span><span className="rs-fluid-card-title">auto-fit</span><span className="rs-fluid-card-text">Column count follows the container width.</span></div>
+      <div className="rs-fluid-card"><span className="material-symbols-outlined">width</span><span className="rs-fluid-card-title">minmax</span><span className="rs-fluid-card-text">Each column stays between a floor and a fair share.</span></div>
+      <div className="rs-fluid-card"><span className="material-symbols-outlined">done_all</span><span className="rs-fluid-card-title">Zero queries</span><span className="rs-fluid-card-text">No breakpoint wrote this. The grid did.</span></div>
     </div>
-    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Event cards: stack on mobile, expand as screen grows */</span>
+    <p className="rs-demo-caption">
+      Live example. One rule, no media query: <code>grid-template-columns: repeat(auto-fit, minmax(160px, 1fr))</code>. Narrow the docs panel and the columns reflow on their own. This is the first tool to reach for, before any breakpoint.
+    </p>
+  </div>
+
+  <div className="rs-demo" style={{ marginTop: '1.25rem' }}>
+    <p className="rs-fluid-title">Fluid type scales with the screen</p>
+    <p className="rs-demo-caption">
+      This heading uses <code>clamp(1.5rem, 3vw + 1rem, 2.75rem)</code>. It grows and shrinks smoothly with the viewport, held between a minimum and a maximum so it never gets too small to read or too large to sit comfortably. Use <code>clamp()</code>, <code>min()</code>, and <code>max()</code> for type, spacing, and measure to erase the small step changes a stack of breakpoints would otherwise cause.
+    </p>
+  </div>
+</div>
+
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">crop_din</span>Safe Areas and Notches</h2>
+  <p className="rs-lede">
+    On modern phones the screen is not a clean rectangle. Notches, rounded corners, and the home indicator carve into it, and a layout that draws all the way to the physical edge can hide a primary action underneath a system gesture zone. The browser exposes these insets through the <code>env(safe-area-inset-&#42;)</code> environment variables, unlocked by <code>viewport-fit=cover</code> on the viewport meta tag. Honor them for anything anchored to a screen edge: sticky bars, floating buttons, bottom-fixed CTAs. Add the inset to your spacing token rather than replacing it, so the padding is correct on a phone with a notch and unchanged on a screen without one.
+  </p>
+
+  <div className="rs-safearea">
+    <div className="rs-phone" aria-hidden="true">
+      <div className="rs-phone-notch"></div>
+      <div className="rs-phone-safe">safe area</div>
+      <div className="rs-phone-cta">Get tickets</div>
+      <div className="rs-phone-indicator"></div>
+    </div>
+    <div>
+      <p className="rs-lede" style={{ marginBottom: '0.75rem' }}>
+        The dashed inset is the safe area. The primary button sits above the home indicator because its padding is <code>calc(var(--space-4) + env(safe-area-inset-bottom))</code>, not a bare token. On a device with no inset, <code>env()</code> resolves to zero and the button keeps its normal spacing.
+      </p>
+      <p className="rs-lede" style={{ margin: 0, fontSize: '0.8125rem', color: '#64748b' }}>
+        Spacing and thumb-reach ergonomics for these anchored elements live in Foundations / Spacing. This page only claims the responsibility: never let a screen-anchored control fall under system chrome.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">touch_app</span>Adapt to the Input, Not Just the Size</h2>
+  <p className="rs-lede">
+    Screen width is only half of responsive. The other half is how the person is touching the interface. A wide screen might be a laptop with a precise mouse or a tablet with a blunt fingertip, and those want different hit areas and different feedback. CSS answers this with interaction media features, <code>pointer</code>, <code>hover</code>, <code>any-pointer</code>, and <code>any-hover</code>, which describe the input rather than the size. Never assume a large viewport means a mouse. The full model for state by input modality, including why hover must never be the only signal, lives in <strong>Patterns / Interactive</strong>.
+  </p>
+</div>
+
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">rule</span>Rules of the System</h2>
+
+  <div className="rs-rules-grid">
+    <div className="rs-rules-col do">
+      <div className="rs-rules-col-title"><span className="rs-rules-badge">+</span> Do</div>
+      <ul className="rs-rules-list">
+        <li>Write the base layout mobile first, with no media query, and enhance upward from there.</li>
+        <li>Reach for fluid sizing first: <code>clamp()</code>, <code>min()</code>, <code>max()</code>, and <code>auto-fit</code> grids.</li>
+        <li>Use container queries for any component that must work in more than one slot.</li>
+        <li>Keep media queries for the page shell and for capability or preference queries.</li>
+        <li>Key every media query to one of the five breakpoint tokens.</li>
+        <li>Add <code>env(safe-area-inset-&#42;)</code> to anything anchored to a screen edge.</li>
+      </ul>
+    </div>
+    <div className="rs-rules-col dont">
+      <div className="rs-rules-col-title"><span className="rs-rules-badge">x</span> Don't</div>
+      <ul className="rs-rules-list">
+        <li>Design wide first and squeeze down to fit a phone.</li>
+        <li>Add a breakpoint at a device width when nothing in the content is actually breaking.</li>
+        <li>Invent a sixth breakpoint, an <code>xs</code>, or a one-off pixel value outside the token set.</li>
+        <li>Use a viewport media query to lay out a reusable component that a container query should own.</li>
+        <li>Assume a wide viewport means a mouse, or a narrow one means touch.</li>
+        <li>Let a sticky bar or bottom CTA sit under the notch or home indicator.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">account_tree</span>Which Tool, in Order</h2>
+  <p className="rs-lede">
+    Responsiveness is a ladder, not a switch. Start at the top and stop at the first rung that solves the problem. Most layout adapts long before you reach a breakpoint.
+  </p>
+
+  <div className="rs-decision">
+    <div className="rs-decision-step">
+      <div className="rs-decision-text">Can the element simply <strong>flow</strong>? Reach for <strong>intrinsic layout</strong> first: an <code>auto-fit</code> grid with <code>minmax()</code>, flex with wrapping, or a <code>clamp()</code> size. No breakpoint needed and it adapts at every width.</div>
+    </div>
+    <div className="rs-decision-step">
+      <div className="rs-decision-text">Does a <strong>reusable component</strong> need to change based on the space it was given, not the page? Give its wrapper a <strong>container</strong> and write a <code>@container</code> query. Now it is portable across every slot.</div>
+    </div>
+    <div className="rs-decision-step">
+      <div className="rs-decision-text">Is this a change to the <strong>page shell as a whole</strong>, the global grid, navigation, or where the sidebar lives? Use a <strong>media query</strong> keyed to a breakpoint token, for example <code>@media (min-width: 992px)</code>.</div>
+    </div>
+    <div className="rs-decision-step">
+      <div className="rs-decision-text">Is it about a <strong>capability or preference</strong> rather than size, dark mode, reduced motion, a coarse pointer? Use the matching <strong>media feature</strong>: <code>prefers-color-scheme</code>, <code>prefers-reduced-motion</code>, <code>pointer</code>.</div>
+    </div>
+  </div>
+</div>
+
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">code</span>Usage</h2>
+
+  <div className="rs-code">
+    <div className="rs-code-header">
+      <span className="rs-code-dot red"></span>
+      <span className="rs-code-dot yellow"></span>
+      <span className="rs-code-dot green"></span>
+      <span className="rs-code-lang">CSS</span>
+    </div>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* 1. Intrinsic first: the grid adapts with no breakpoint at all */</span>
 <span class="selector">.event-grid</span> <span class="punctuation">{</span>
     <span class="property">display</span><span class="punctuation">:</span> <span class="value">grid</span><span class="punctuation">;</span>
     <span class="property">gap</span><span class="punctuation">:</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>
-    <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">1fr</span><span class="punctuation">;</span>  <span class="comment">/* Fan on phone: one event at a time */</span>
-
-    <span class="mixin">@include tablet-up</span> <span class="punctuation">{</span>
-        <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">repeat(2, 1fr)</span><span class="punctuation">;</span>  <span class="comment">/* Planning mode: compare options */</span>
-    <span class="punctuation">}</span>
-
-    <span class="mixin">@include desktop-up</span> <span class="punctuation">{</span>
-        <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">repeat(3, 1fr)</span><span class="punctuation">;</span>  <span class="comment">/* Full exploration */</span>
-    <span class="punctuation">}</span>
+    <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">repeat(auto-fit, minmax(16rem, 1fr))</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>
 
-<span class="comment">/* Artist cards: let them find their own rhythm */</span>
-<span class="selector">.artist-grid</span> <span class="punctuation">{</span>
-    <span class="property">display</span><span class="punctuation">:</span> <span class="value">grid</span><span class="punctuation">;</span>
-    <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">repeat(auto-fit, minmax(280px, 1fr))</span><span class="punctuation">;</span>
-    <span class="property">gap</span><span class="punctuation">:</span> <span class="value">var(--space-4)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Hero titles that scale with the moment */</span>
+<span class="comment">/* 2. Fluid type: one value covers the whole range */</span>
 <span class="selector">.hero-title</span> <span class="punctuation">{</span>
-    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">var(--heading-1)</span><span class="punctuation">;</span>  <span class="comment">/* clamp(1.75rem, 4vw + 1rem, 3rem) */</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">clamp(1.5rem, 3vw + 1rem, 2.75rem)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* 3. Container query: this card responds to its slot, not the page */</span>
+<span class="selector">.card-slot</span> <span class="punctuation">{</span>
+    <span class="property">container-type</span><span class="punctuation">:</span> <span class="value">inline-size</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+<span class="atrule">@container</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">24rem</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+    <span class="selector">.card</span> <span class="punctuation">{</span> <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">auto 1fr</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* 4. Media query: the page shell, keyed to a breakpoint token (lg = 992px) */</span>
+<span class="atrule">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">992px</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+    <span class="selector">.app-shell</span> <span class="punctuation">{</span> <span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">280px 1fr</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* 5. Safe area: add the inset to the token, never replace it */</span>
+<span class="selector">.sticky-cta</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">sticky</span><span class="punctuation">;</span>
+    <span class="property">bottom</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">padding-bottom</span><span class="punctuation">:</span> <span class="value">calc(var(--space-4) + env(safe-area-inset-bottom))</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* 6. Preference, not size: this is always a media query */</span>
+<span class="atrule">@media</span> <span class="punctuation">(</span><span class="property">prefers-reduced-motion</span><span class="punctuation">:</span> <span class="value">reduce</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+    <span class="selector">*</span> <span class="punctuation">{</span> <span class="property">animation-duration</span><span class="punctuation">:</span> <span class="value">0.01ms</span><span class="punctuation">;</span> <span class="punctuation">}</span>
 <span class="punctuation">}</span>`}} />
   </div>
+</div>
+
+<div className="rs-section">
+  <h2 className="rs-section-title"><span className="material-symbols-outlined">menu_book</span>Sources</h2>
+  <ul className="rs-sources">
+    <li><strong>Luke Wroblewski, Mobile First.</strong> The argument for designing the small screen before the large one, so constraints sharpen focus and wider screens become progressive enhancement. <a href="https://www.lukew.com/ff/entry.asp?933=">lukew.com/ff/entry.asp?933</a></li>
+    <li><strong>Ethan Marcotte, Responsive Web Design.</strong> The founding article: fluid grids, flexible images, and media queries as one adaptive layout rather than separate device sites. A List Apart. <a href="https://alistapart.com/article/responsive-web-design/">alistapart.com/article/responsive-web-design</a></li>
+    <li><strong>web.dev, Responsive web design basics (Pete LePage, Rachel Andrew).</strong> Do not define breakpoints by device class; let the content decide where the layout should change. <a href="https://web.dev/articles/responsive-web-design-basics">web.dev/articles/responsive-web-design-basics</a></li>
+    <li><strong>MDN Web Docs, Using container queries.</strong> Query an element by the size of its container instead of the viewport, with <code style={{ fontFamily: "'SF Mono', monospace" }}>container-type</code> and <code style={{ fontFamily: "'SF Mono', monospace" }}>cqw</code> units, so a component can be reused without knowing where it sits. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries">developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries</a></li>
+    <li><strong>web.dev, Container queries land in all stable browsers (Una Kravets).</strong> The shift from viewport-level to component-level responsiveness, Baseline stable since 2023. <a href="https://web.dev/blog/cq-stable">web.dev/blog/cq-stable</a></li>
+    <li><strong>Jen Simmons, Designing Intrinsic Layouts.</strong> Letting content and modern CSS (grid, flexbox, intrinsic sizing) drive layout, with fewer explicit breakpoints. <a href="https://talks.jensimmons.com/15TjNW">talks.jensimmons.com/15TjNW</a> <span className="rs-spa">SPA</span> intrinsic web design is Simmons' coinage, not a spec term.</li>
+    <li><strong>MDN Web Docs, clamp().</strong> Fluid sizing as a range so type and spacing scale smoothly between a floor and a ceiling in one declaration. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clamp">developer.mozilla.org/en-US/docs/Web/CSS/clamp</a></li>
+    <li><strong>MDN Web Docs, CSS grid layout, auto-fit and minmax().</strong> The <code style={{ fontFamily: "'SF Mono', monospace" }}>repeat(auto-fit, minmax(...))</code> pattern that reflows column count to the available space with no media query. <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Grids">developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Grids</a></li>
+    <li><strong>MDN Web Docs, env() and safe-area-inset-&#42;.</strong> Environment variables for device insets, paired with <code style={{ fontFamily: "'SF Mono', monospace" }}>viewport-fit=cover</code>. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/env">developer.mozilla.org/en-US/docs/Web/CSS/env</a></li>
+    <li><strong>Apple Human Interface Guidelines, Layout.</strong> Respecting the safe area so controls stay clear of the notch, Dynamic Island, and home indicator. <a href="https://developer.apple.com/design/human-interface-guidelines/layout">developer.apple.com/design/human-interface-guidelines/layout</a></li>
+    <li><strong>MDN Web Docs, pointer and hover media features.</strong> Adapting to the input device, coarse versus fine pointer, hover capability, rather than to screen size. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer">developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer</a></li>
+    <li>The five breakpoint values and the reading of them as coarse structural ceilings are specific to this system's tokens. <span className="rs-spa">SPA</span> The tool-order ladder is a house rule, not a rule from the cited sources.</li>
+  </ul>
 </div>
