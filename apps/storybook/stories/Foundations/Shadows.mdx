@@ -595,33 +595,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 <div className="shadows-section">
-  <h2 className="shadows-section-title">A Change of Philosophy</h2>
+  <h2 className="shadows-section-title">Three Original Tokens, Tinted Indigo</h2>
   <p className="shadows-lede">
-    The previous scale had six shadows cloned from a utility framework: single-layer, pure-black, escalating into drama at <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>xl</code> and <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>2xl</code>. Those two, and every <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>*-hover</code> shadow, are gone. The new set is three original tokens, tinted indigo, built from two soft layers each.
+    Every elevation in the system is one of three tokens, each built from two soft, indigo-tinted layers rather than a single hard black drop. Three levels are enough to build every overlay a product needs. Elevation is a quiet fact here, never a spectacle, and shadow always means height, never state.
   </p>
-
-  <div className="shadows-compare">
-    <div className="compare-card">
-      <div className="compare-tag">Before</div>
-      <div className="compare-swatch" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>heavy black drop</div>
-      <ul className="compare-list">
-        <li>Six levels, borrowed and generic</li>
-        <li>One hard layer, pure black</li>
-        <li>Elevation as spectacle</li>
-        <li>Shadows swapped on hover to fake motion</li>
-      </ul>
-    </div>
-    <div className="compare-card now">
-      <div className="compare-tag">Now</div>
-      <div className="compare-swatch" style={{ boxShadow: 'var(--shadow-lg)' }}>soft indigo lift</div>
-      <ul className="compare-list">
-        <li>Three levels, original to this system</li>
-        <li>Two soft layers, indigo tinted</li>
-        <li>Elevation as a quiet fact</li>
-        <li>Shadow means height, never state</li>
-      </ul>
-    </div>
-  </div>
 </div>
 
 <div className="shadows-section">
@@ -784,7 +761,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <li>Pair shadow changes with <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>transform</code> hover effects.</li>
         <li>Invent a fourth or fifth level for extra drama.</li>
         <li>Use pure-black or single-layer shadows.</li>
-        <li>Reach for the removed <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>xl</code>, <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>2xl</code>, or <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>*-hover</code> tokens. They no longer exist.</li>
+        <li>Invent an <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>xl</code>, <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>2xl</code>, or <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>*-hover</code> shadow. The scale stops at three plus focus.</li>
         <li>Use the focus ring as decoration.</li>
       </ul>
     </div>
@@ -846,9 +823,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </table>
 
   <div className="shadows-note">
-    <div className="shadows-note-title">Removed tokens</div>
+    <div className="shadows-note-title">The full set</div>
     <div className="shadows-note-body">
-      <code>--shadow-xl</code>, <code>--shadow-2xl</code>, <code>--shadow-primary-hover</code>, <code>--shadow-primary-deep-hover</code>, and <code>--shadow-secondary-hover</code> were deleted. If you find a reference to any of them, migrate it: elevation maps to <code>sm</code>, <code>md</code>, or <code>lg</code>; hover feedback moves to color per Patterns / Interactive.
+      These four tokens are the whole system: <code>sm</code>, <code>md</code>, and <code>lg</code> for elevation, plus <code>focus</code> for the keyboard ring. There is no separate hover shadow. Hover feedback is carried by color, per Patterns / Interactive.
     </div>
   </div>
 </div>

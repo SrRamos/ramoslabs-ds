@@ -797,37 +797,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 <div className="radius-section">
-  <h2 className="radius-section-title">A Change of Philosophy</h2>
+  <h2 className="radius-section-title">Why 6px Is the Signature</h2>
   <p className="radius-lede">
-    The previous scale leaned on the fully rounded pill as if roundness alone signaled quality, and it mislabeled the small step as <code>4px</code> for buttons and inputs. Rounder is not more premium. What reads as expensive is consistency and restraint: a single control radius repeated everywhere, and shape that scales with the size of the surface. The new scale makes <code>6px</code> the signature control radius, the same value the Vercel Geist system uses on its buttons and inputs, and demotes the pill to an accent role.
+    Rounder is not more premium. What reads as expensive is consistency and restraint: a single control radius repeated everywhere, and shape that scales with the size of the surface. So <code>6px</code> is the signature control radius on every button, input, and select, the same value the Vercel Geist system uses on its controls, and the fully round pill stays an accent rather than a default. When shape tracks the role and size of a surface, the whole interface reads as one intentional system.
   </p>
-
-  <div className="radius-compare">
-    <div className="compare-card">
-      <div className="compare-tag">Before</div>
-      <div className="compare-demo">
-        <button className="compare-btn before">Pill button</button>
-      </div>
-      <ul className="compare-list">
-        <li>Pill used as the default button shape</li>
-        <li>Small step mislabeled as 4px for controls</li>
-        <li>Roundness treated as a quality signal</li>
-        <li>One shape reused regardless of surface size</li>
-      </ul>
-    </div>
-    <div className="compare-card now">
-      <div className="compare-tag">Now</div>
-      <div className="compare-demo">
-        <button className="compare-btn after">Signature button</button>
-      </div>
-      <ul className="compare-list">
-        <li>6px signature on every control</li>
-        <li>Pill reserved for small, one-line accents</li>
-        <li>Restraint and consistency signal quality</li>
-        <li>Radius scales with the size of the surface</li>
-      </ul>
-    </div>
-  </div>
 </div>
 
 <div className="radius-section">
@@ -1139,9 +1112,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </table>
 
   <div className="radius-note">
-    <div className="radius-note-title">Renamed and re-roled tokens</div>
+    <div className="radius-note-title">Signature and accent</div>
     <div className="radius-note-body">
-      The old <code>--radius-full</code> is now <code>--radius-pill</code>, and it is an accent, not a button shape. The old <code>--radius-sm</code> at 4px is now <code>--radius-xs</code>; the signature <code>--radius-sm</code> is 6px. If you find a button on <code>--radius-full</code> or a control hardcoded to 4px, migrate it to <code>--radius-sm</code>.
+      <code>--radius-sm</code> at <code>6px</code> is the signature control radius: buttons, inputs, and selects all take it. <code>--radius-pill</code> is an accent for small, one-line elements, never a button or card shape. When a control needs a radius, reach for <code>--radius-sm</code>.
     </div>
   </div>
 </div>

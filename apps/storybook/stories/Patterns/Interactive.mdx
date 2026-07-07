@@ -924,17 +924,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </p>
 
   <p className="ix-text">
-    The ring color matters more than it looks. The old version of this page hardcoded the outer ring in <code>white</code>. On a white page that is invisible padding, and on any colored surface the ring simply <strong>disappears</strong>. Use the token: <code>--shadow-focus</code> is an indigo ring that reads on light and dark alike.
+    The ring color matters more than it looks. Hardcoding the outer ring in <code>white</code> is a trap: on a white page that is invisible padding, and on any colored surface the ring simply <strong>disappears</strong>. Use the token: <code>--shadow-focus</code> is an indigo ring that reads on light and dark alike.
   </p>
 
   <div className="ix-ring-grid">
     <div className="ix-ring-cell on-indigo">
-      <span className="ix-badge bad"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">close</span>Before</span>
+      <span className="ix-badge bad"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">close</span>Don't</span>
       <button className="ix-ring-btn broken" type="button" tabIndex={-1}>White ring</button>
       <span className="ix-ring-caption" style={{ color: '#c7d2fe' }}>Vanishes on indigo</span>
     </div>
     <div className="ix-ring-cell on-indigo">
-      <span className="ix-badge good"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">check</span>After</span>
+      <span className="ix-badge good"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">check</span>Do</span>
       <button className="ix-ring-btn fixed" type="button" tabIndex={-1}>Indigo ring</button>
       <span className="ix-ring-caption" style={{ color: '#e0e7ff' }}>Reads on any background</span>
     </div>
@@ -1043,7 +1043,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="ix-text">
-    The old card raised itself on hover, floating up a few pixels under a dramatic drop shadow. It felt slick on a desktop and did three wrong things at once: it used shadow (which means <strong>elevation</strong>, how high a surface sits) to mean hover (a transient input state), it moved layout under the pointer, and on touch it did nothing at all because there was no hover to trigger it.
+    A tempting pattern is to raise a card on hover, floating it up a few pixels under a dramatic drop shadow. It feels slick on a desktop and does three wrong things at once: it uses shadow (which means <strong>elevation</strong>, how high a surface sits) to mean hover (a transient input state), it moves layout under the pointer, and on touch it does nothing at all because there is no hover to trigger it.
   </p>
 
   <p className="ix-text">
@@ -1063,13 +1063,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </p>
     </div>
     <div className="ix-demo">
-      <div className="ix-demo-label">What we removed</div>
+      <div className="ix-demo-label">What to avoid</div>
       <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
-        <li className="ix-demo-note" style={{ marginTop: '0.25rem' }}>The upward lift on hover (layout moved under the pointer).</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>The heavy drop shadow standing in for a hover state.</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>The pill radius on buttons. Controls are 6px, <code>--radius-sm</code>.</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>Ungated hover, which stuck on touch. Now it is pointer-only.</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>The white focus ring, which vanished off-white. Now indigo.</li>
+        <li className="ix-demo-note" style={{ marginTop: '0.25rem' }}>An upward lift on hover, which moves layout under the pointer.</li>
+        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>A heavy drop shadow standing in for a hover state.</li>
+        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>A pill radius on buttons. Controls are 6px, <code>--radius-sm</code>.</li>
+        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>Ungated hover, which sticks on touch. Keep it pointer-only.</li>
+        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>A white focus ring, which vanishes off-white. Use indigo.</li>
       </ul>
     </div>
   </div>
