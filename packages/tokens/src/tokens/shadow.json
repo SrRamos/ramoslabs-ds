@@ -2,41 +2,32 @@
   "shadow": {
     "$type": "shadow",
     "sm": {
-      "$value": {
-        "offsetX": "0", "offsetY": "1px", "blur": "2px", "spread": "0",
-        "color": "rgba(0, 0, 0, 0.05)"
-      }
+      "$value": [
+        { "offsetX": "0", "offsetY": "1px", "blur": "2px", "spread": "0", "color": "rgba(79, 70, 229, 0.06)" },
+        { "offsetX": "0", "offsetY": "1px", "blur": "3px", "spread": "0", "color": "rgba(15, 23, 42, 0.04)" }
+      ],
+      "$description": "Raised. Buttons and resting cards. A whisper of lift, not a drop shadow."
     },
     "md": {
-      "$value": {
-        "offsetX": "0", "offsetY": "4px", "blur": "6px", "spread": "-1px",
-        "color": "rgba(0, 0, 0, 0.1)"
-      }
+      "$value": [
+        { "offsetX": "0", "offsetY": "2px", "blur": "4px", "spread": "-1px", "color": "rgba(79, 70, 229, 0.06)" },
+        { "offsetX": "0", "offsetY": "8px", "blur": "16px", "spread": "-4px", "color": "rgba(79, 70, 229, 0.10)" }
+      ],
+      "$description": "Overlay. Dropdowns, popovers, menus. Two soft indigo layers, no pure black."
     },
     "lg": {
-      "$value": {
-        "offsetX": "0", "offsetY": "10px", "blur": "15px", "spread": "-3px",
-        "color": "rgba(0, 0, 0, 0.1)"
-      }
-    },
-    "xl": {
-      "$value": {
-        "offsetX": "0", "offsetY": "20px", "blur": "25px", "spread": "-5px",
-        "color": "rgba(0, 0, 0, 0.1)"
-      }
-    },
-    "2xl": {
-      "$value": {
-        "offsetX": "0", "offsetY": "25px", "blur": "50px", "spread": "-12px",
-        "color": "rgba(0, 0, 0, 0.25)"
-      }
+      "$value": [
+        { "offsetX": "0", "offsetY": "4px", "blur": "8px", "spread": "-2px", "color": "rgba(79, 70, 229, 0.06)" },
+        { "offsetX": "0", "offsetY": "16px", "blur": "32px", "spread": "-8px", "color": "rgba(79, 70, 229, 0.12)" }
+      ],
+      "$description": "Floating. Modals, sheets, command palettes. The elevation ceiling. Nothing sits higher."
     },
     "focus": {
       "$value": {
         "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "3px",
-        "color": "rgba(79, 70, 229, 0.15)"
+        "color": "rgba(79, 70, 229, 0.45)"
       },
-      "$description": "Brand-tinted focus ring."
+      "$description": "Focus ring. Pairs with :focus-visible. Not an elevation level, never decorative."
     }
   }
 }

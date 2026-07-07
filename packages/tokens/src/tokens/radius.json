@@ -1,12 +1,13 @@
 {
   "radius": {
     "$type": "dimension",
-    "none": { "$value": "0" },
-    "sm": { "$value": "0.25rem" },
-    "md": { "$value": "0.5rem" },
-    "lg": { "$value": "0.75rem" },
-    "xl": { "$value": "1rem" },
-    "2xl": { "$value": "1.25rem" },
-    "full": { "$value": "9999rem" }
+    "none": { "$value": "0", "$description": "Square. Tables, full-bleed media, section dividers." },
+    "xs": { "$value": "0.25rem", "$description": "4px. Nested inner corners, tight inline elements." },
+    "sm": { "$value": "0.375rem", "$description": "6px. Signature control radius. Buttons, inputs, selects, small pressables." },
+    "md": { "$value": "0.5rem", "$description": "8px. Comfortable controls, small badges, compact containers." },
+    "lg": { "$value": "0.75rem", "$description": "12px. Cards, menus, popovers, dropdowns." },
+    "xl": { "$value": "1rem", "$description": "16px. Modals, sheets, large surfaces." },
+    "2xl": { "$value": "1.25rem", "$description": "20px. Hero panels, feature surfaces." },
+    "pill": { "$value": "9999px", "$description": "Fully rounded. ACCENT ONLY: chips, tags, avatars, toggles, icon buttons, one-line status. Never on wide buttons or cards." }
   }
 }

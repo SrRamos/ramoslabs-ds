@@ -1,0 +1,9 @@
+{
+  "state": {
+    "$type": "number",
+    "hover": { "$value": 0.08, "$description": "State-layer opacity for hover. Pointer devices only, gate with @media (hover: hover)." },
+    "focus": { "$value": 0.1, "$description": "State-layer opacity for focus-visible (keyboard)." },
+    "pressed": { "$value": 0.1, "$description": "State-layer opacity for active/press. The universal base state, primary feedback on touch." },
+    "dragged": { "$value": 0.16, "$description": "State-layer opacity while dragging." }
+  }
+}
