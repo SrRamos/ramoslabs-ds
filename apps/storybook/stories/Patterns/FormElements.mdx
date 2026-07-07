@@ -7,11 +7,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
   /* ===== FONT IMPORTS ===== */
   @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
-  .material-symbols-outlined {
+  .fe-material {
     font-family: 'Material Symbols Outlined';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
@@ -23,11 +22,23 @@ import { Meta } from '@storybook/addon-docs/blocks';
     -webkit-font-smoothing: antialiased;
   }
 
-  .forms-header {
+  /* ===== HEADER ===== */
+  .fe-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
     margin-bottom: 2rem;
   }
 
-  .forms-title {
+  .fe-header-icon {
+    padding: 0.75rem;
+    background: #e0e7ff;
+    color: #4338ca;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .fe-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
     color: #0f172a;
     font-size: 1.875rem;
@@ -35,219 +46,401 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-bottom: 0.75rem;
   }
 
-  .forms-description {
+  .fe-description {
     font-family: 'Rubik', system-ui, sans-serif;
     color: #64748b;
     font-size: 1rem;
     line-height: 1.6;
+    max-width: 44rem;
   }
 
-  .forms-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-top: 1.5rem;
+  /* ===== SECTIONS ===== */
+  .fe-section {
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
   }
 
-  @media (max-width: 800px) {
-    .forms-grid {
-      grid-template-columns: 1fr;
-    }
+  .fe-section:last-of-type { border-bottom: none; }
+
+  .fe-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
   }
 
-  .forms-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid #e6e8eb;
-  }
-
-  .forms-card-title {
-    font-weight: 700;
+  .fe-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
     font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .fe-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .fe-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 48rem;
+  }
+
+  .fe-text + .fe-text { margin-top: 1rem; }
+
+  .fe-text strong { color: #0f172a; font-weight: 600; }
+
+  .fe-text code, .fe-inline-code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  .fe-cite {
+    color: #4f46e5;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .fe-cite:hover { text-decoration: underline; }
+
+  /* ===== CALLOUT ===== */
+  .fe-callout {
+    display: flex;
+    gap: 0.75rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+
+  .fe-callout .fe-material {
+    color: #4338ca;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .fe-callout-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #3730a3;
+  }
+
+  .fe-callout-text strong { color: #312e81; font-weight: 700; }
+
+  /* ===== LAB / DEMO ===== */
+  .fe-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-demo {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .fe-demo-label {
+    font-weight: 700;
+    font-size: 0.6875rem;
     text-transform: uppercase;
     color: #94a3b8;
-    letter-spacing: 0.05em;
-    margin-bottom: 1.5rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
   }
 
-  .forms-field {
-    margin-bottom: 1.5rem;
+  .fe-demo-note {
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-top: 0.875rem;
   }
 
-  .forms-field:last-child {
-    margin-bottom: 0;
-  }
+  /* ===== FIELD PRIMITIVES ===== */
+  .fe-field { margin-bottom: 1.25rem; }
+  .fe-field:last-child { margin-bottom: 0; }
 
-  .forms-label {
+  .fe-label {
     display: block;
+    font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
     font-weight: 500;
     color: #0f172a;
     margin-bottom: 0.25rem;
   }
 
-  .forms-input {
-    width: 100%;
-    background: white;
-    border: 1px solid #64748b;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    color: #0f172a;
-    font-family: 'Rubik', sans-serif;
-    transition: all 0.2s ease;
-  }
-
-  .forms-input::placeholder {
+  .fe-label .fe-req { color: #dc2626; margin-left: 0.15rem; }
+  .fe-label .fe-opt {
     color: #94a3b8;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    margin-left: 0.35rem;
   }
 
-  .forms-input:focus {
-    outline: none;
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 2px #4f46e5, 0 0 0 4px white;
-  }
-
-  .forms-input-focus {
-    width: 100%;
-    background: white;
-    border: 2px solid #4f46e5;
-    border-radius: 8px;
-    padding: calc(0.75rem - 1px) calc(1rem - 1px);
-    font-size: 1rem;
-    color: #0f172a;
-    font-family: 'Rubik', sans-serif;
-    box-shadow: 0 0 0 2px #4f46e5, 0 0 0 4px white;
-  }
-
-  .forms-input-error {
-    width: 100%;
-    background: white;
-    border: 1px solid #ef4444;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    color: #0f172a;
-    font-family: 'Rubik', sans-serif;
-  }
-
-  .forms-error-text {
-    font-size: 0.875rem;
-    color: #ef4444;
-    margin-top: 0.25rem;
-  }
-
-  .forms-select-wrapper {
-    position: relative;
-  }
-
-  .forms-select {
-    width: 100%;
-    background: white;
-    border: 1px solid #64748b;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    color: #0f172a;
-    font-family: 'Rubik', sans-serif;
-    appearance: none;
-    cursor: pointer;
-  }
-
-  .forms-select:focus {
-    outline: none;
-    border-color: #4f46e5;
-  }
-
-  .forms-select-icon {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #4f46e5;
-    pointer-events: none;
-  }
-
-  .forms-search-wrapper {
-    position: relative;
-  }
-
-  .forms-search-icon {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
+  .fe-help {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
     color: #64748b;
+    margin-top: 0.3rem;
+    line-height: 1.5;
   }
 
-  .forms-search-input {
+  .fe-input {
     width: 100%;
+    box-sizing: border-box;
     background: white;
     border: 1px solid #64748b;
     border-radius: 8px;
-    padding: 0.75rem 1rem 0.75rem 3rem;
+    padding: 0.75rem 1rem;
     font-size: 1rem;
     color: #0f172a;
     font-family: 'Rubik', sans-serif;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .forms-search-input::placeholder {
-    color: #94a3b8;
+  .fe-input::placeholder { color: #94a3b8; }
+
+  .fe-input:focus-visible {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.45);
   }
 
-  .forms-controls {
+  .fe-input.error {
+    border-color: #ef4444;
+  }
+
+  .fe-input.error:focus-visible {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
+  }
+
+  .fe-input.success { border-color: #10b981; }
+
+  .fe-error {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-top: 0.5rem;
+    align-items: flex-start;
+    gap: 0.35rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #991b1b;
+    margin-top: 0.35rem;
+    line-height: 1.45;
   }
 
-  .forms-checkbox-row {
+  .fe-error .fe-material { font-size: 1rem; color: #dc2626; flex-shrink: 0; margin-top: 0.05rem; }
+
+  .fe-success-text {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #166534;
+    margin-top: 0.35rem;
+  }
+
+  .fe-success-text .fe-material { font-size: 1rem; color: #059669; }
+
+  /* ===== ANATOMY ===== */
+  .fe-anatomy {
+    position: relative;
+    background: #f8fafc;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-anatomy-part {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  @media (max-width: 560px) {
+    .fe-anatomy-part { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+
+  .fe-anatomy-tag {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4338ca;
+    background: #e0e7ff;
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+    align-self: start;
+  }
+
+  /* ===== TABLE ===== */
+  .fe-table-scroll {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+  }
+
+  .fe-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    min-width: 680px;
+  }
+
+  .fe-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #e6e8eb;
+    white-space: nowrap;
+  }
+
+  .fe-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+    vertical-align: top;
+  }
+
+  .fe-table tr:last-child td { border-bottom: none; }
+
+  .fe-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: #4338ca;
+    background: #eef2ff;
+    padding: 1px 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .fe-table .fe-kbd {
+    font-weight: 600;
+    color: #0f172a;
+    white-space: nowrap;
+  }
+
+  /* ===== TIMELINE (validation) ===== */
+  .fe-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-tl-step {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .fe-tl-when {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .fe-tl-title {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 0.3rem;
+  }
+
+  .fe-tl-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  /* ===== CONTROLS (checkbox / toggle) ===== */
+  .fe-controls { display: flex; flex-direction: column; gap: 1rem; }
+
+  .fe-control-row {
     display: flex;
     align-items: center;
     gap: 0.75rem;
   }
 
-  .forms-checkbox {
-    width: 1.25rem;
-    height: 1.25rem;
+  .fe-checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
     background: #4f46e5;
     border: 1px solid #4f46e5;
-    border-radius: 4px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
 
-  .forms-checkbox-unchecked {
-    width: 1.25rem;
-    height: 1.25rem;
+  .fe-checkbox-off {
+    width: 1.5rem;
+    height: 1.5rem;
     background: white;
-    border: 1px solid #4f46e5;
-    border-radius: 4px;
+    border: 1px solid #64748b;
+    border-radius: 6px;
+    flex-shrink: 0;
   }
 
-  .forms-checkbox-icon {
-    color: white;
-    font-size: 1rem;
-  }
+  .fe-checkbox .fe-material { color: white; font-size: 1.05rem; }
 
-  .forms-checkbox-label {
-    color: #0f172a;
-    font-size: 0.875rem;
-  }
+  .fe-control-label { color: #0f172a; font-size: 0.9375rem; font-family: 'Rubik', system-ui, sans-serif; }
 
-  .forms-toggle {
+  .fe-toggle {
     width: 2.75rem;
     height: 1.5rem;
     background: #4f46e5;
     border-radius: 9999px;
     position: relative;
-    cursor: pointer;
+    flex-shrink: 0;
   }
 
-  .forms-toggle-knob {
+  .fe-toggle-knob {
     position: absolute;
     right: 0.25rem;
     top: 0.25rem;
@@ -255,30 +448,144 @@ import { Meta } from '@storybook/addon-docs/blocks';
     height: 1rem;
     background: white;
     border-radius: 9999px;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
   }
 
-  .forms-section {
-    margin-top: 2.5rem;
+  /* ===== DO / DON'T ===== */
+  .fe-dodont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
   }
 
-  .forms-section-title {
-    font-size: 0.875rem;
+  @media (max-width: 700px) {
+    .fe-dodont { grid-template-columns: 1fr; }
+  }
+
+  .fe-list {
+    border-radius: 12px;
+    padding: 1.25rem;
+    border: 1px solid #e6e8eb;
+  }
+
+  .fe-list.do { background: #f0fdf4; border-color: #bbf7d0; }
+  .fe-list.dont { background: #fef2f2; border-color: #fecaca; }
+
+  .fe-list-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
-    text-transform: uppercase;
-    color: #94a3b8;
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+    margin-bottom: 0.75rem;
   }
 
-  .forms-code {
+  .fe-list.do .fe-list-head { color: #166534; }
+  .fe-list.dont .fe-list-head { color: #991b1b; }
+
+  .fe-list ul { margin: 0; padding: 0; list-style: none; }
+
+  .fe-list li {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #334155;
+    padding: 0.375rem 0 0.375rem 1.25rem;
+    position: relative;
+  }
+
+  .fe-list li::before {
+    position: absolute;
+    left: 0;
+    top: 0.375rem;
+    font-weight: 700;
+  }
+
+  .fe-list.do li::before { content: '+'; color: #16a34a; }
+  .fe-list.dont li::before { content: '\\00d7'; color: #dc2626; }
+
+  .fe-list code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #334155;
+  }
+
+  /* ===== LADDER ===== */
+  .fe-ladder {
+    counter-reset: fe-step;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+
+  .fe-ladder-step {
+    display: flex;
+    gap: 0.875rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+
+  .fe-ladder-step:last-child { border-bottom: none; }
+
+  .fe-ladder-step::before {
+    counter-increment: fe-step;
+    content: counter(fe-step);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #eef2ff;
+    color: #4338ca;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .fe-ladder-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #334155;
+  }
+
+  .fe-ladder-text strong { color: #0f172a; }
+
+  /* ===== CROSS-LINK CHIP ===== */
+  .fe-xlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #4338ca;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    margin-top: 1rem;
+    text-decoration: none;
+  }
+
+  .fe-xlink:hover { background: #e0e7ff; }
+  .fe-xlink .fe-material { font-size: 1rem; }
+
+  /* ===== CODE BLOCKS ===== */
+  .fe-code {
     background: #1e293b;
     border-radius: 12px;
     overflow: hidden;
-    margin-top: 1rem;
+    margin: 1rem 0 0;
   }
 
-  .forms-code-header {
+  .fe-code-header {
     background: #334155;
     padding: 0.75rem 1rem;
     display: flex;
@@ -287,17 +594,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-bottom: 1px solid #475569;
   }
 
-  .forms-code-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-  }
+  .fe-code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .fe-code-dot.red { background: #ef4444; }
+  .fe-code-dot.yellow { background: #f59e0b; }
+  .fe-code-dot.green { background: #22c55e; }
 
-  .forms-code-dot.red { background: #ef4444; }
-  .forms-code-dot.yellow { background: #f59e0b; }
-  .forms-code-dot.green { background: #22c55e; }
-
-  .forms-code-lang {
+  .fe-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
@@ -306,9 +608,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.05em;
   }
 
-  .forms-code pre {
+  .fe-code pre {
     margin: 0;
-    padding: 1.25rem;
+    padding: 1.5rem;
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
     font-size: 0.8125rem;
     line-height: 1.7;
@@ -316,183 +618,566 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
 
-  .forms-code .comment { color: #64748b; font-style: italic; }
-  .forms-code .selector { color: #fbbf24; }
-  .forms-code .property { color: #7dd3fc; }
-  .forms-code .value { color: #a5f3fc; }
-  .forms-code .punctuation { color: #94a3b8; }
+  .fe-code .comment { color: #64748b; font-style: italic; }
+  .fe-code .selector { color: #fbbf24; }
+  .fe-code .tag { color: #f472b6; }
+  .fe-code .attr { color: #7dd3fc; }
+  .fe-code .property { color: #7dd3fc; }
+  .fe-code .value { color: #a5f3fc; }
+  .fe-code .punctuation { color: #94a3b8; }
+
+  /* ===== SOURCES ===== */
+  .fe-sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .fe-sources-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .fe-sources-list li:last-child { border-bottom: none; }
+  .fe-sources-list strong { color: #0f172a; }
+
+  .fe-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
 `}
 </style>
 
-<div className="forms-header">
-  <h1 className="forms-title">Forms That Guide</h1>
-  <p className="forms-description">
-    Every field is a conversation. Clear labels, helpful validation, and feedback that guides users to success.
+{/* ============================================ */}
+{/* HEADER                                       */}
+{/* ============================================ */}
+
+<div className="fe-header">
+  <div className="fe-header-icon">
+    <span className="fe-material" style={{ fontSize: '1.5rem' }} aria-hidden="true">edit_note</span>
+  </div>
+  <div>
+    <h1 className="fe-title">Forms Are Where the Conversion Is Decided</h1>
+    <p className="fe-description">
+      Every other screen persuades. The form is where the user finally acts, and it is the single place a design most reliably loses the people it worked so hard to earn. A field that hides its label, a keyboard that fights the thumb, an error that only says <strong style={{ color: '#0f172a' }}>"invalid"</strong>. Each of these is a small tax, and forms are where small taxes compound into abandonment. This page treats a field as a conversation: a visible question, an honest input, help before the mistake, and a fix after it.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 1: ANATOMY OF A FIELD                 */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">1</span>
+    <h2 className="fe-section-title">The Anatomy of a Field</h2>
+  </div>
+
+  <p className="fe-text">
+    A field is never just an input box. It is four parts working together, and dropping any of them shifts load onto the user. The <strong>label</strong> asks the question and stays visible for the life of the field. The <strong>control</strong> takes the answer. <strong>Help text</strong> pre-empts the mistake before it happens. The <strong>error</strong> appears only when something is wrong, and it says exactly how to make it right.
   </p>
-</div>
 
-<div className="forms-grid">
-  <div className="forms-card">
-    <h4 className="forms-card-title">Text Fields</h4>
-
-    <div className="forms-field">
-      <label className="forms-label">Event Name</label>
-      <input className="forms-input" type="text" placeholder="e.g. Summer Jazz Festival" />
+  <div className="fe-anatomy">
+    <div className="fe-anatomy-part">
+      <span className="fe-anatomy-tag">Label</span>
+      <label className="fe-label" htmlFor="fe-anatomy-input">Email address <span className="fe-req" aria-hidden="true">*</span></label>
     </div>
-
-    <div className="forms-field">
-      <label className="forms-label">Focus State</label>
-      <div className="forms-input-focus">Active input...</div>
+    <div className="fe-anatomy-part">
+      <span className="fe-anatomy-tag">Control</span>
+      <input id="fe-anatomy-input" className="fe-input" type="email" autoComplete="email" placeholder="you@example.com" aria-describedby="fe-anatomy-help" />
     </div>
-
-    <div className="forms-field">
-      <label className="forms-label">Email Address</label>
-      <input className="forms-input-error" type="text" defaultValue="invalid-email" />
-      <span className="forms-error-text">Please enter a valid email address.</span>
+    <div className="fe-anatomy-part">
+      <span className="fe-anatomy-tag">Help</span>
+      <span id="fe-anatomy-help" className="fe-help">We send your tickets and receipts here. Never shared.</span>
+    </div>
+    <div className="fe-anatomy-part">
+      <span className="fe-anatomy-tag">Error</span>
+      <span className="fe-error"><span className="fe-material" aria-hidden="true">error</span> Enter an email like name@domain.com so we can reach you.</span>
     </div>
   </div>
 
-  <div className="forms-card">
-    <h4 className="forms-card-title">Selection Controls</h4>
+  <p className="fe-text">
+    <strong>The label is always visible, above the field, never inside it.</strong> The tempting shortcut is to delete the label and let a placeholder stand in for it. It looks clean and it breaks the moment the user starts typing: the question vanishes exactly when they need to check what was asked, people with memory or attention differences lose the prompt entirely, and screen readers treat placeholder text as unreliable. <a className="fe-cite" href="https://www.nngroup.com/articles/form-design-placeholders/" target="_blank" rel="noreferrer">NN/g</a> is unambiguous that placeholders are not a substitute for labels. A persistent top-aligned label is also the fastest layout to scan, because the eye travels straight down a single column from question to answer, which is why <a className="fe-cite" href="https://baymard.com/blog/avoid-multi-column-forms" target="_blank" rel="noreferrer">Baymard</a> finds single-column forms are completed faster and with fewer skipped fields than multicolumn ones.
+  </p>
 
-    <div className="forms-field">
-      <label className="forms-label">Category</label>
-      <div className="forms-select-wrapper">
-        <select className="forms-select">
-          <option>Music Concert</option>
-          <option>Conference</option>
-        </select>
-        <span className="material-symbols-outlined forms-select-icon">expand_more</span>
+  <div className="fe-callout">
+    <span className="fe-material" aria-hidden="true">lightbulb</span>
+    <p className="fe-callout-text">
+      <strong>Mark what is required, but mark the rarer one.</strong> If most fields are required, label the few <em>optional</em> ones in words; if most are optional, mark the required ones. An asterisk alone is not an accessible signal, so pair it with text or an <code>aria-label</code>, and state the convention once at the top of the form.
+    </p>
+  </div>
+
+  <div className="fe-lab">
+    <div className="fe-demo">
+      <div className="fe-demo-label">Do: label above, help visible</div>
+      <div className="fe-field">
+        <label className="fe-label" htmlFor="fe-good">Event name</label>
+        <input id="fe-good" className="fe-input" type="text" placeholder="Summer Jazz Festival" aria-describedby="fe-good-help" />
+        <span id="fe-good-help" className="fe-help">Shown on the public page and on every ticket.</span>
       </div>
     </div>
-
-    <div className="forms-field">
-      <label className="forms-label">Search Events</label>
-      <div className="forms-search-wrapper">
-        <span className="material-symbols-outlined forms-search-icon">search</span>
-        <input className="forms-search-input" type="text" placeholder="Search..." />
-      </div>
-    </div>
-
-    <div className="forms-controls">
-      <div className="forms-checkbox-row">
-        <div className="forms-checkbox">
-          <span className="material-symbols-outlined forms-checkbox-icon">check</span>
-        </div>
-        <span className="forms-checkbox-label">Checked option</span>
-      </div>
-
-      <div className="forms-checkbox-row">
-        <div className="forms-checkbox-unchecked"></div>
-        <span className="forms-checkbox-label">Unchecked option</span>
-      </div>
-
-      <div className="forms-checkbox-row" style={{ paddingTop: '0.5rem' }}>
-        <div className="forms-toggle">
-          <div className="forms-toggle-knob"></div>
-        </div>
-        <span className="forms-checkbox-label">Toggle On</span>
+    <div className="fe-demo">
+      <div className="fe-demo-label">Don't: placeholder as the label</div>
+      <div className="fe-field">
+        <input className="fe-input" type="text" placeholder="Event name" aria-label="Event name (placeholder-as-label anti-pattern)" />
+        <span className="fe-help">The question disappears the instant the user types, and there is nowhere to put help.</span>
       </div>
     </div>
   </div>
 </div>
 
-<div className="forms-section">
-  <h2 className="forms-section-title">Input CSS</h2>
+{/* ============================================ */}
+{/* CHAPTER 2: INPUT TYPES & MOBILE KEYBOARDS     */}
+{/* ============================================ */}
 
-  <div className="forms-code">
-    <div className="forms-code-header">
-      <span className="forms-code-dot red"></span>
-      <span className="forms-code-dot yellow"></span>
-      <span className="forms-code-dot green"></span>
-      <span className="forms-code-lang">CSS</span>
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">2</span>
+    <h2 className="fe-section-title">Pick the Type, Get the Right Keyboard</h2>
+  </div>
+
+  <p className="fe-text">
+    On a phone the biggest usability lever in the whole form is the <code>type</code> attribute. It is not decoration and it is not only validation. The type tells the operating system which on-screen keyboard to raise, so <code>type="email"</code> surfaces the @ key, <code>type="tel"</code> raises the big numeric dial pad, and <code>type="url"</code> puts <em>.com</em> a tap away. Choosing the wrong type does not just look wrong, it forces the user to hunt across keyboard layouts on every single field.
+  </p>
+
+  <p className="fe-text">
+    Two attributes refine it further. <a className="fe-cite" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inputmode" target="_blank" rel="noreferrer"><code>inputmode</code></a> tunes the keyboard without changing the field's semantics, so <code>inputmode="numeric"</code> gives a digit pad to a one-time code that is still logically text. And <a className="fe-cite" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete" target="_blank" rel="noreferrer"><code>autocomplete</code></a> lets the browser fill the field from the user's saved profile, which is the difference between typing a full address and tapping it in once. Google's <a className="fe-cite" href="https://web.dev/articles/payment-and-address-form-best-practices" target="_blank" rel="noreferrer">form best-practice guidance</a> treats correct autocomplete tokens as table stakes for checkout.
+  </p>
+
+  <div className="fe-table-scroll">
+    <table className="fe-table">
+      <thead>
+        <tr>
+          <th>You are asking for</th>
+          <th>Use</th>
+          <th>Keyboard raised</th>
+          <th>Autofill token</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="fe-kbd">Email</td>
+          <td><code>type="email"</code></td>
+          <td>Text with a visible @ and no shift needed</td>
+          <td><code>autocomplete="email"</code></td>
+        </tr>
+        <tr>
+          <td className="fe-kbd">Phone</td>
+          <td><code>type="tel"</code></td>
+          <td>Large numeric dial pad</td>
+          <td><code>autocomplete="tel"</code></td>
+        </tr>
+        <tr>
+          <td className="fe-kbd">Website</td>
+          <td><code>type="url"</code></td>
+          <td>Text with .com and / shortcuts</td>
+          <td><code>autocomplete="url"</code></td>
+        </tr>
+        <tr>
+          <td className="fe-kbd">One-time code</td>
+          <td><code>inputmode="numeric"</code></td>
+          <td>Digits only, text semantics kept</td>
+          <td><code>autocomplete="one-time-code"</code></td>
+        </tr>
+        <tr>
+          <td className="fe-kbd">Quantity of tickets</td>
+          <td><code>type="number"</code></td>
+          <td>Number pad with stepper</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td className="fe-kbd">Full name</td>
+          <td><code>type="text"</code></td>
+          <td>Standard, with autocapitalized words</td>
+          <td><code>autocomplete="name"</code></td>
+        </tr>
+        <tr>
+          <td className="fe-kbd">Event date</td>
+          <td><code>type="date"</code></td>
+          <td>Native date picker, no free typing</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td className="fe-kbd">Search</td>
+          <td><code>type="search"</code></td>
+          <td>Text with a Search / Go return key</td>
+          <td>None</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="fe-callout">
+    <span className="fe-material" aria-hidden="true">smartphone</span>
+    <p className="fe-callout-text">
+      <strong>Reach for the native control before you build one.</strong> <code>type="date"</code>, <code>type="time"</code> and a real <code>&lt;select&gt;</code> already carry a picker, keyboard behaviour and accessibility that a hand-built widget has to re-earn from scratch. Build a custom control only when the native one genuinely cannot express what you need.
+    </p>
+  </div>
+
+  <div className="fe-code">
+    <div className="fe-code-header">
+      <span className="fe-code-dot red" aria-hidden="true"></span>
+      <span className="fe-code-dot yellow" aria-hidden="true"></span>
+      <span className="fe-code-dot green" aria-hidden="true"></span>
+      <span className="fe-code-lang">HTML</span>
     </div>
-    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.input</span> <span class="punctuation">{</span>
-    <span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span>
-    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-surface)</span><span class="punctuation">;</span>
-    <span class="property">border</span><span class="punctuation">:</span> <span class="value">1px solid var(--color-text-body)</span><span class="punctuation">;</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-md)</span><span class="punctuation">;</span>
-    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">var(--space-3) var(--space-4)</span><span class="punctuation">;</span>
-    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">var(--text-base)</span><span class="punctuation">;</span>
-    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-text-heading)</span><span class="punctuation">;</span>
-    <span class="property">font-family</span><span class="punctuation">:</span> <span class="value">var(--font-primary)</span><span class="punctuation">;</span>
-    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">all var(--transition-fast)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">&lt;!-- The right type raises the right keyboard and enables autofill. --&gt;</span>
+<span class="punctuation">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punctuation">=</span><span class="value">"phone"</span><span class="punctuation">&gt;</span>Phone<span class="punctuation">&lt;/</span><span class="tag">label</span><span class="punctuation">&gt;</span>
+<span class="punctuation">&lt;</span><span class="tag">input</span>
+    <span class="attr">id</span><span class="punctuation">=</span><span class="value">"phone"</span>
+    <span class="attr">type</span><span class="punctuation">=</span><span class="value">"tel"</span>
+    <span class="attr">autocomplete</span><span class="punctuation">=</span><span class="value">"tel"</span>
+    <span class="attr">inputmode</span><span class="punctuation">=</span><span class="value">"tel"</span> <span class="punctuation">/&gt;</span>
 
-<span class="selector">.input::placeholder</span> <span class="punctuation">{</span>
-    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-text-muted)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
+<span class="comment">&lt;!-- One-time code: numeric pad, text semantics, SMS autofill. --&gt;</span>
+<span class="punctuation">&lt;</span><span class="tag">input</span>
+    <span class="attr">type</span><span class="punctuation">=</span><span class="value">"text"</span>
+    <span class="attr">inputmode</span><span class="punctuation">=</span><span class="value">"numeric"</span>
+    <span class="attr">autocomplete</span><span class="punctuation">=</span><span class="value">"one-time-code"</span> <span class="punctuation">/&gt;</span>`}} />
+  </div>
+</div>
 
-<span class="selector">.input:focus</span> <span class="punctuation">{</span>
-    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
-    <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
-    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 2px var(--color-primary), 0 0 0 4px white</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
+{/* ============================================ */}
+{/* CHAPTER 3: VALIDATION                          */}
+{/* ============================================ */}
 
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">3</span>
+    <h2 className="fe-section-title">Validate at the Right Moment, in the Right Words</h2>
+  </div>
+
+  <p className="fe-text">
+    Validation has two questions: <strong>when</strong> to check, and <strong>what</strong> to say. Get the timing wrong and you either nag someone mid-keystroke or ambush them at submit. The reliable rule, from the classic <a className="fe-cite" href="https://www.smashingmagazine.com/2022/09/inline-validation-web-forms-ux/" target="_blank" rel="noreferrer">inline-validation study by Mihael Konjević</a>, is <strong>reward early, punish late</strong>: confirm a field as valid while the user types if you can, but do not show an error until they have left the field. Validating on every keystroke means the first character of an email is flagged as a broken email, which is technically true and deeply unhelpful.
+  </p>
+
+  <div className="fe-timeline">
+    <div className="fe-tl-step">
+      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">keyboard</span> While typing</span>
+      <div className="fe-tl-title">Reward, never punish</div>
+      <div className="fe-tl-body">Show a success tick the moment input becomes valid. Hold every error back, because an incomplete field is not yet a wrong one.</div>
+    </div>
+    <div className="fe-tl-step">
+      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">logout</span> On blur</span>
+      <div className="fe-tl-title">Now you may correct</div>
+      <div className="fe-tl-body">When focus leaves the field, the answer is final enough to judge. This is the moment to surface an inline error, right under the field.</div>
+    </div>
+    <div className="fe-tl-step">
+      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">send</span> On submit</span>
+      <div className="fe-tl-title">Catch the rest</div>
+      <div className="fe-tl-body">Re-check everything, move focus to the first error, and summarise. Never let a form fail silently or scroll the user nowhere.</div>
+    </div>
+  </div>
+
+  <p className="fe-text">
+    A good error message does three things at once, per <a className="fe-cite" href="https://www.nngroup.com/articles/error-message-guidelines/" target="_blank" rel="noreferrer">NN/g's error-message guidelines</a>: it is <strong>visible and specific</strong> (next to the field, not a generic banner), it says <strong>what went wrong in plain language</strong>, and it tells the user <strong>how to fix it</strong>. "Invalid input" fails all three. "Enter a date after today, the event cannot start in the past" passes all three. And because <a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noreferrer">WCAG 3.3.1</a> requires errors to be identified in text, never lean on a red border alone. The colour is an enhancement, the words are the message.
+  </p>
+
+  <div className="fe-lab">
+    <div className="fe-demo">
+      <div className="fe-demo-label">Reward: valid while typing</div>
+      <div className="fe-field">
+        <label className="fe-label" htmlFor="fe-ok">Email address</label>
+        <input id="fe-ok" className="fe-input success" type="email" defaultValue="ana@ramoslabs.co" aria-describedby="fe-ok-msg" />
+        <span id="fe-ok-msg" className="fe-success-text"><span className="fe-material" aria-hidden="true">check_circle</span> Looks good.</span>
+      </div>
+    </div>
+    <div className="fe-demo">
+      <div className="fe-demo-label">Punish late: actionable error on blur</div>
+      <div className="fe-field">
+        <label className="fe-label" htmlFor="fe-bad">Email address</label>
+        <input id="fe-bad" className="fe-input error" type="email" defaultValue="ana@ramoslabs" aria-invalid="true" aria-describedby="fe-bad-msg" />
+        <span id="fe-bad-msg" className="fe-error"><span className="fe-material" aria-hidden="true">error</span> Add the domain ending, like .co or .com, so the address can receive mail.</span>
+      </div>
+    </div>
+  </div>
+
+  <div className="fe-callout">
+    <span className="fe-material" aria-hidden="true">palette</span>
+    <p className="fe-callout-text">
+      <strong>Error colour is <code>--color-error</code>, and it is the only warm colour on the page.</strong> Everything interactive stays indigo; the single job of red here is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so that when it appears the user knows it means something is wrong.
+    </p>
+  </div>
+
+  <div className="fe-code">
+    <div className="fe-code-header">
+      <span className="fe-code-dot red" aria-hidden="true"></span>
+      <span className="fe-code-dot yellow" aria-hidden="true"></span>
+      <span className="fe-code-dot green" aria-hidden="true"></span>
+      <span className="fe-code-lang">CSS</span>
+    </div>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* The error state: red border plus a text message, never colour alone. */</span>
 <span class="selector">.input.error</span> <span class="punctuation">{</span>
     <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">var(--color-error)</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>
 
 <span class="selector">.error-text</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-error-text)</span><span class="punctuation">;</span> <span class="comment">/* AA-safe on white */</span>
     <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">var(--text-sm)</span><span class="punctuation">;</span>
-    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-error)</span><span class="punctuation">;</span>
     <span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">var(--space-1)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>`}} />
+<span class="punctuation">}</span>
+
+<span class="comment">/* Reward path: the same field, confirmed valid. */</span>
+<span class="selector">.input.success</span> <span class="punctuation">{</span> <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">var(--color-success)</span><span class="punctuation">;</span> <span class="punctuation">}</span>`}} />
   </div>
 </div>
 
-<div className="forms-section">
-  <h2 className="forms-section-title">Checkbox & Toggle CSS</h2>
+{/* ============================================ */}
+{/* CHAPTER 4: FIELD STATES                        */}
+{/* ============================================ */}
 
-  <div className="forms-code">
-    <div className="forms-code-header">
-      <span className="forms-code-dot red"></span>
-      <span className="forms-code-dot yellow"></span>
-      <span className="forms-code-dot green"></span>
-      <span className="forms-code-lang">CSS</span>
-    </div>
-    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="selector">.checkbox</span> <span class="punctuation">{</span>
-    <span class="property">width</span><span class="punctuation">:</span> <span class="value">1.25rem</span><span class="punctuation">;</span>
-    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1.25rem</span><span class="punctuation">;</span>
-    <span class="property">border</span><span class="punctuation">:</span> <span class="value">1px solid var(--color-primary)</span><span class="punctuation">;</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-sm)</span><span class="punctuation">;</span>
-    <span class="property">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span>
-    <span class="property">align-items</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span>
-    <span class="property">justify-content</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span>
-    <span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="selector">.checkbox.checked</span> <span class="punctuation">{</span>
-    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="selector">.toggle</span> <span class="punctuation">{</span>
-    <span class="property">width</span><span class="punctuation">:</span> <span class="value">2.75rem</span><span class="punctuation">;</span>
-    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1.5rem</span><span class="punctuation">;</span>
-    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-text-muted)</span><span class="punctuation">;</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>
-    <span class="property">position</span><span class="punctuation">:</span> <span class="value">relative</span><span class="punctuation">;</span>
-    <span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span>
-    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">background var(--transition-fast)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="selector">.toggle.active</span> <span class="punctuation">{</span>
-    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="selector">.toggle-knob</span> <span class="punctuation">{</span>
-    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
-    <span class="property">top</span><span class="punctuation">:</span> <span class="value">0.25rem</span><span class="punctuation">;</span>
-    <span class="property">left</span><span class="punctuation">:</span> <span class="value">0.25rem</span><span class="punctuation">;</span>
-    <span class="property">width</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
-    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
-    <span class="property">background</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-full)</span><span class="punctuation">;</span>
-    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">transform var(--transition-fast)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="selector">.toggle.active .toggle-knob</span> <span class="punctuation">{</span>
-    <span class="property">transform</span><span class="punctuation">:</span> <span class="value">translateX(1.25rem)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>`}} />
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">4</span>
+    <h2 className="fe-section-title">Every Field Has States</h2>
   </div>
+
+  <p className="fe-text">
+    A field is default, then focused, then filled, sometimes disabled, sometimes in error. These are not styling whims, they are the same modality-driven state model every control in the system follows. Focus is shown with the indigo ring token, not a colour that vanishes on a coloured surface; the press and hover of the checkbox and toggle are tonal indigo layers, gated to the devices that can produce them. Rather than restate that model here, the field inherits it.
+  </p>
+
+  <div className="fe-lab">
+    <div className="fe-demo">
+      <div className="fe-demo-label">Input states</div>
+      <div className="fe-field">
+        <label className="fe-label" htmlFor="fe-s1">Default</label>
+        <input id="fe-s1" className="fe-input" type="text" placeholder="Tap or click to focus" />
+      </div>
+      <div className="fe-field">
+        <label className="fe-label">Disabled</label>
+        <input className="fe-input" type="text" defaultValue="Locked while saving" disabled />
+      </div>
+    </div>
+    <div className="fe-demo">
+      <div className="fe-demo-label">Selection controls</div>
+      <div className="fe-controls">
+        <div className="fe-control-row">
+          <div className="fe-checkbox"><span className="fe-material" aria-hidden="true">check</span></div>
+          <span className="fe-control-label">Send me event reminders</span>
+        </div>
+        <div className="fe-control-row">
+          <div className="fe-checkbox-off"></div>
+          <span className="fe-control-label">Add me to the newsletter</span>
+        </div>
+        <div className="fe-control-row">
+          <div className="fe-toggle"><div className="fe-toggle-knob"></div></div>
+          <span className="fe-control-label">Publish immediately</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p className="fe-text">
+    Note the defaults above: the pre-checked box is the reminder the user almost certainly wants, and the newsletter, which costs them attention, is left off. That is not an accident of layout, it is a deliberate, honest default, which is its own discipline.
+  </p>
+
+  <a className="fe-xlink" href="./?path=/docs/patterns-interactive--docs">
+    <span className="fe-material" aria-hidden="true">arrow_forward</span>
+    See Patterns / Interactive for the full state model: focus-visible, press, hover gating
+  </a>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 5: SMART DEFAULTS                       */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">5</span>
+    <h2 className="fe-section-title">The Fastest Field Is the One Already Filled</h2>
+  </div>
+
+  <p className="fe-text">
+    The best way to reduce the cost of a field is to remove it, and the next best is to answer it in advance. A smart default (the country pre-selected from locale, the event date defaulting to the next weekend, the quantity starting at one) turns an act of typing into an act of confirming. Defaults are powerful precisely because most people accept them, which is exactly why they carry an ethical weight: the default must be the choice the user would most likely make with full attention, and it must always stay editable.
+  </p>
+
+  <p className="fe-text">
+    That line, between a helpful default and a manipulative one, is not a form-styling question, it is a persuasion question. A default that quietly opts the user into a paid add-on is the same mechanism pointed the wrong way. The design-system rule is simple: pre-fill to save effort, never to extract a choice the user did not mean to make.
+  </p>
+
+  <a className="fe-xlink" href="./?path=/docs/patterns-persuasion--docs">
+    <span className="fe-material" aria-hidden="true">arrow_forward</span>
+    See Patterns / Persuasion for the ethics of defaults and the truth-and-reversibility test
+  </a>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 6: ACCESSIBILITY                        */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">6</span>
+    <h2 className="fe-section-title">A Form Is Only Done When It Is Accessible</h2>
+  </div>
+
+  <p className="fe-text">
+    Accessible forms are not a separate build, they are the same build done correctly. Three WCAG success criteria govern most of it, and each one maps directly to a habit from the chapters above.
+  </p>
+
+  <div className="fe-table-scroll">
+    <table className="fe-table">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th>Level</th>
+          <th>What it requires</th>
+          <th>How the field meets it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html" target="_blank" rel="noreferrer">3.3.2 Labels or Instructions</a></td>
+          <td>A</td>
+          <td>Every control has a visible label or instruction.</td>
+          <td>A persistent <code>&lt;label for&gt;</code> above each field; help text linked with <code>aria-describedby</code>.</td>
+        </tr>
+        <tr>
+          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noreferrer">3.3.1 Error Identification</a></td>
+          <td>A</td>
+          <td>Errors are identified and described in text.</td>
+          <td>An inline text message, <code>aria-invalid="true"</code>, red as reinforcement not as the sole signal.</td>
+        </tr>
+        <tr>
+          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html" target="_blank" rel="noreferrer">3.3.3 Error Suggestion</a></td>
+          <td>AA</td>
+          <td>When a fix is known, suggest it.</td>
+          <td>The message says how to correct the value, not only that it is wrong.</td>
+        </tr>
+        <tr>
+          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noreferrer">2.5.8 Target Size</a></td>
+          <td>AA</td>
+          <td>Interactive targets are at least 24 by 24 CSS pixels.</td>
+          <td>Checkboxes and toggles clear 24px; the comfortable target is 44px, per AAA 2.5.5.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="fe-callout">
+    <span className="fe-material" aria-hidden="true">accessibility_new</span>
+    <p className="fe-callout-text">
+      <strong>The label is the click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input's <code>id</code> both names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. Wrapping or associating is not optional polish, it is the accessible default.
+    </p>
+  </div>
+
+  <a className="fe-xlink" href="./?path=/docs/patterns-accessibility--docs">
+    <span className="fe-material" aria-hidden="true">arrow_forward</span>
+    See Patterns / Accessibility for focus order, live-region announcements and contrast
+  </a>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 7: TAXONOMY RULES                       */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">7</span>
+    <h2 className="fe-section-title">Rules of the Form</h2>
+  </div>
+
+  <div className="fe-dodont">
+    <div className="fe-list do">
+      <div className="fe-list-head">
+        <span className="fe-material" style={{ fontSize: '1.25rem' }} aria-hidden="true">check_circle</span>
+        Do
+      </div>
+      <ul>
+        <li>Keep the label visible above every field, always.</li>
+        <li>One field per line. A single column reads top to bottom.</li>
+        <li>Match <code>type</code> and <code>inputmode</code> to the answer, so the right keyboard appears.</li>
+        <li>Add the <code>autocomplete</code> token so the browser can fill it.</li>
+        <li>Reward valid input while typing, surface errors on blur.</li>
+        <li>Write errors that say how to fix the problem, in text.</li>
+        <li>Use <code>--color-error</code> for errors and nothing else.</li>
+        <li>Reach for the native control before building a custom one.</li>
+      </ul>
+    </div>
+    <div className="fe-list dont">
+      <div className="fe-list-head">
+        <span className="fe-material" style={{ fontSize: '1.25rem' }} aria-hidden="true">cancel</span>
+        Don't
+      </div>
+      <ul>
+        <li>Use a placeholder as the label. It vanishes on the first keystroke.</li>
+        <li>Put two fields side by side to look compact.</li>
+        <li>Leave everything <code>type="text"</code> and force a keyboard hunt on mobile.</li>
+        <li>Validate on every keystroke and flag half-typed input as wrong.</li>
+        <li>Ship "Invalid" or "Error" with no way to recover.</li>
+        <li>Signal an error with a red border and no words.</li>
+        <li>Tint unrelated UI red, or introduce any second accent colour.</li>
+        <li>Rebuild a date picker or select the platform already ships.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p className="fe-text" style={{ marginTop: '1.5rem' }}>
+    <strong>Decision ladder.</strong> Adding a field? Stop at the first rung that resolves it.
+  </p>
+
+  <div className="fe-ladder">
+    <div className="fe-ladder-step">
+      <p className="fe-ladder-text"><strong>Does this field need to exist?</strong> Every field is a cost. If you can infer it, default it, or drop it, do that before you style anything.</p>
+    </div>
+    <div className="fe-ladder-step">
+      <p className="fe-ladder-text"><strong>Can a native control answer it?</strong> A <code>&lt;select&gt;</code>, <code>type="date"</code>, a checkbox. Use it, and the keyboard and accessibility come built in.</p>
+    </div>
+    <div className="fe-ladder-step">
+      <p className="fe-ladder-text"><strong>What is the answer's shape?</strong> Pick the <code>type</code> and <code>inputmode</code> that raise the matching keyboard, and add the <code>autocomplete</code> token.</p>
+    </div>
+    <div className="fe-ladder-step">
+      <p className="fe-ladder-text"><strong>What can go wrong, and how is it fixed?</strong> Write the help text and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.</p>
+    </div>
+    <div className="fe-ladder-step">
+      <p className="fe-ladder-text"><strong>Only now, assemble it</strong> from the primitives above: visible label, control, help, error, in one column, states inherited from Patterns / Interactive.</p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* SOURCES                                       */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <h2 className="fe-section-title">Sources</h2>
+  <ul className="fe-sources-list">
+    <li>
+      <strong>Nielsen Norman Group, "Placeholders in Form Fields Are Harmful."</strong> Why placeholder text cannot replace a label: it disappears on input, strains memory, and hurts error recovery. nngroup.com/articles/form-design-placeholders
+    </li>
+    <li>
+      <strong>Nielsen Norman Group, "Error-Message Guidelines."</strong> Errors must be visible, human-readable, specific, and constructive about how to recover. nngroup.com/articles/error-message-guidelines
+    </li>
+    <li>
+      <strong>Mihael Konjević, "Inline Validation in Web Forms: A UX Designer's Guide" (Smashing Magazine, 2022).</strong> Source of the "reward early, punish late" principle: validate to a positive while typing, but hold errors until the user leaves the field. smashingmagazine.com/2022/09/inline-validation-web-forms-ux
+    </li>
+    <li>
+      <strong>Baymard Institute, form-field usability research.</strong> "Avoid Extensive Multicolumn Layouts" on single-column forms (baymard.com/blog/avoid-multi-column-forms), "Never Use Inline Labels" on keeping the label visible (baymard.com/blog/mobile-forms-avoid-inline-labels), and "Usability Testing of Inline Form Validation" on validating on blur and clearing the error the instant it is fixed (baymard.com/blog/inline-form-validation).
+    </li>
+    <li>
+      <strong>web.dev, "Payment and address form best practices" and the Learn Forms course.</strong> Correct <code>type</code>, <code>inputmode</code>, and <code>autocomplete</code> tokens for mobile keyboards and browser autofill. web.dev/articles/payment-and-address-form-best-practices · web.dev/learn/forms
+    </li>
+    <li>
+      <strong>MDN Web Docs.</strong> The <code>inputmode</code> global attribute and the <code>autocomplete</code> attribute token list (given-name, email, tel, one-time-code, and the rest). developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inputmode · .../Attributes/autocomplete
+    </li>
+    <li>
+      <strong>W3C, Understanding WCAG 2.2.</strong> SC 3.3.2 Labels or Instructions (A), 3.3.1 Error Identification (A), 3.3.3 Error Suggestion (AA), 2.5.8 Target Size Minimum (AA), 2.5.5 Target Size Enhanced (AAA). w3.org/WAI/WCAG22/Understanding
+    </li>
+    <li>
+      Approximate landing URLs are given for each source; a specific article path may shift over time. <span className="fe-spa">SPA</span> The exact timing thresholds (reward-while-typing, punish-on-blur) and the strict single-accent, error-only use of <code>--color-error</code> are this system's house doctrine layered on top of the cited guidance, not verbatim claims from the authors.
+    </li>
+  </ul>
 </div>

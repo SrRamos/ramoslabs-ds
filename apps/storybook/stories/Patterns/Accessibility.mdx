@@ -276,6 +276,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #0f172a;
   }
 
+  .a11y-check-sc {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    color: #94a3b8;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+  }
+
   /* ===== CODE REFERENCE SECTION ===== */
   .a11y-code-section {
     margin-top: 3rem;
@@ -418,6 +426,272 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.875rem;
     line-height: 1.5;
   }
+
+  /* ===== POUR pillar tags ===== */
+  .a11y-card-tag {
+    display: inline-block;
+    margin-top: 0.625rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.03em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.15rem 0.4rem;
+  }
+
+  /* ===== Cross reference links ===== */
+  .a11y-xref {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0.25rem;
+  }
+
+  .a11y-xref-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #4f46e5;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .a11y-xref-chip .material-symbols-outlined {
+    font-size: 0.9rem;
+  }
+
+  /* ===== Numbered rule list (five rules of ARIA) ===== */
+  .a11y-numbered {
+    counter-reset: rule;
+    list-style: none;
+    margin: 1.25rem 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .a11y-numbered li {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .a11y-numbered li::before {
+    counter-increment: rule;
+    content: counter(rule);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .a11y-numbered li strong { color: #0f172a; }
+
+  .a11y-numbered li code {
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+    color: #4f46e5;
+    font-family: 'SF Mono', monospace;
+  }
+
+  /* ===== Do / Don't rule columns ===== */
+  .a11y-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .a11y-rules-col {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .a11y-rules-col-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .a11y-rules-col.do .a11y-rules-col-title { color: #4f46e5; }
+  .a11y-rules-col.dont .a11y-rules-col-title { color: #64748b; }
+
+  .a11y-rules-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .a11y-rules-col.do .a11y-rules-badge { background: #4f46e5; color: white; }
+  .a11y-rules-col.dont .a11y-rules-badge { background: #e2e8f0; color: #64748b; }
+
+  .a11y-rules-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .a11y-rules-list li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  .a11y-rules-list li:last-child { margin-bottom: 0; }
+
+  .a11y-rules-list li::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+  }
+
+  .a11y-rules-col.do .a11y-rules-list li::before { content: '+'; color: #4f46e5; }
+  .a11y-rules-col.dont .a11y-rules-list li::before { content: 'x'; color: #94a3b8; }
+
+  .a11y-rules-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* ===== Decision ladder ===== */
+  .a11y-ladder {
+    counter-reset: step;
+    margin: 1.25rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .a11y-ladder-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .a11y-ladder-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .a11y-ladder-step strong { color: #0f172a; }
+
+  .a11y-ladder-step code {
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+    color: #4f46e5;
+    font-family: 'SF Mono', monospace;
+  }
+
+  /* ===== Inline SC / spec reference ===== */
+  .a11y-ref {
+    font-size: 0.7em;
+    vertical-align: super;
+    line-height: 0;
+    color: #4f46e5;
+    font-weight: 600;
+  }
+
+  .a11y-spa {
+    display: inline-block;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    vertical-align: middle;
+  }
+
+  /* ===== Sources ===== */
+  .a11y-sources-list {
+    margin: 1.25rem 0 0;
+    padding-left: 1.25rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .a11y-sources-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eef1f4;
+  }
+
+  .a11y-sources-list li:last-child { border-bottom: none; }
+  .a11y-sources-list strong { color: #0f172a; }
+  .a11y-sources-list a { color: #4f46e5; text-decoration: none; word-break: break-word; }
+  .a11y-sources-list a:hover { text-decoration: underline; }
 `}
 </style>
 
@@ -432,7 +706,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div>
     <h1 className="a11y-title">Design for Every Fan</h1>
     <p className="a11y-description">
-      Great experiences should be for everyone. <strong style={{ color: '#0f172a' }}>WCAG 2.2 AA</strong> compliance isn't a checkbox, it's a commitment to inclusion. This guide tells the story of how we build accessible interfaces.
+      Accessibility is the floor, not an option you switch on late. Around one in six people lives with a disability<span className="a11y-ref">[1]</span>, and the same techniques that serve them serve everyone: keyboard users, bright sunlight, a cracked screen, a noisy room. Our floor is <strong style={{ color: '#0f172a' }}>WCAG 2.2 Level AA</strong> on every surface. Where a pattern lets us reach <strong style={{ color: '#0f172a' }}>Level AAA</strong> without hurting the experience, we take it. This page is the taxonomy: the principles, the order of operations, and the rules that keep the floor level.
     </p>
   </div>
 </div>
@@ -444,58 +718,93 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="a11y-section">
   <div className="a11y-section-header">
     <span className="a11y-section-number">1</span>
-    <h2 className="a11y-section-title">The Principles We Live By</h2>
+    <h2 className="a11y-section-title">The Four Pillars: POUR</h2>
   </div>
 
   <p className="a11y-section-text">
-    Before writing a single line of code, internalize these five commitments. They're not features, they're the foundation of everything we build.
+    Every WCAG success criterion hangs off four principles<span className="a11y-ref">[2]</span>. Learn them once and the rest of the standard reads as detail rather than trivia. Content has to be <strong>Perceivable</strong>, <strong>Operable</strong>, <strong>Understandable</strong>, and <strong>Robust</strong>. Miss one pillar and the interface fails a real person, not an audit.
   </p>
 
   <div className="a11y-card-grid">
     <div className="a11y-card">
-      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">contrast</span>
-      <h3 className="a11y-card-title">Color Contrast</h3>
-      <p className="a11y-card-text">4.5:1 minimum for text. 3:1 for large text. No exceptions.</p>
-    </div>
-    <div className="a11y-card">
-      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">touch_app</span>
-      <h3 className="a11y-card-title">Touch Targets</h3>
-      <p className="a11y-card-text">24×24px minimum (AA). 44×44px recommended (AAA).</p>
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">visibility</span>
+      <h3 className="a11y-card-title">Perceivable</h3>
+      <p className="a11y-card-text">Information reaches every sense. Text alternatives for images, captions for audio, contrast that survives low vision, and layout that never relies on color alone.</p>
+      <span className="a11y-card-tag">SC 1.1 to 1.4</span>
     </div>
     <div className="a11y-card">
       <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">keyboard</span>
-      <h3 className="a11y-card-title">Keyboard First</h3>
-      <p className="a11y-card-text">If it's clickable, it must be focusable and operable via keyboard.</p>
+      <h3 className="a11y-card-title">Operable</h3>
+      <p className="a11y-card-text">Everything works from a keyboard, nothing traps focus, targets are large enough to hit, and motion can be turned down. A pointer is one input, not the only input.</p>
+      <span className="a11y-card-tag">SC 2.1 to 2.5</span>
     </div>
     <div className="a11y-card">
-      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">record_voice_over</span>
-      <h3 className="a11y-card-title">Screen Reader Ready</h3>
-      <p className="a11y-card-text">Semantic HTML first. ARIA only when native elements can't do the job.</p>
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">psychology</span>
+      <h3 className="a11y-card-title">Understandable</h3>
+      <p className="a11y-card-text">Text is readable, behavior is predictable, and errors explain themselves. Labels stay put, forms guide instead of scold, and nothing surprises the user on focus or input.</p>
+      <span className="a11y-card-tag">SC 3.1 to 3.3</span>
     </div>
     <div className="a11y-card">
-      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">motion_photos_pause</span>
-      <h3 className="a11y-card-title">Motion Respect</h3>
-      <p className="a11y-card-text">Honor prefers-reduced-motion. Some users get physically ill from animations.</p>
+      <span className="material-symbols-outlined a11y-card-icon" aria-hidden="true">build</span>
+      <h3 className="a11y-card-title">Robust</h3>
+      <p className="a11y-card-text">Markup is valid and every control exposes a name, a role, and a value that assistive technology can read. Build on the platform and it keeps working as tools evolve.</p>
+      <span className="a11y-card-tag">SC 4.1</span>
     </div>
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 2: VISUAL CLARITY                    */}
+{/* CHAPTER 2: SEMANTIC HTML BEFORE ARIA         */}
 {/* ============================================ */}
 
 <div className="a11y-section">
   <div className="a11y-section-header">
     <span className="a11y-section-number">2</span>
-    <h2 className="a11y-section-title">Visual Clarity</h2>
+    <h2 className="a11y-section-title">Semantic HTML Before ARIA</h2>
   </div>
 
   <p className="a11y-section-text">
-    Users need to <strong>see</strong> what's happening. Color contrast ensures readability for users with low vision or color blindness. Focus states tell keyboard users exactly where they are. And for users who experience motion sickness, we disable animations entirely.
+    The order of operations matters. Reach for the native element first: <code>&lt;button&gt;</code> over <code>&lt;div onclick&gt;</code>, <code>&lt;nav&gt;</code> over <code>&lt;div class="nav"&gt;</code>, <code>&lt;a href&gt;</code> for anything that navigates. Native elements ship with a role, a name, keyboard behavior, and focus management already wired in. ARIA adds none of that on its own: it changes what assistive technology announces, but you still have to build the keyboard support and state by hand<span className="a11y-ref">[3]</span>. This is why the first rule of ARIA is to not use ARIA.
   </p>
 
   <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
-    All our brand colors pass WCAG AA contrast requirements:
+    The <strong>five rules of ARIA</strong><span className="a11y-ref">[4]</span> keep that discipline honest:
+  </p>
+
+  <ol className="a11y-numbered">
+    <li>If a native HTML element or attribute already gives you the semantics and behavior you need, use it instead of repurposing an element and adding an ARIA role. A real <code>&lt;button&gt;</code> beats <code>&lt;div role="button" tabindex="0"&gt;</code> every time.</li>
+    <li>Do not change native semantics unless you truly have to. Wrapping a heading in <code>role="tab"</code> hides the heading from users who navigate by headings. Nest a real element inside instead.</li>
+    <li>Every interactive ARIA control must be operable from the keyboard. If you add <code>role="button"</code>, you own <code>Enter</code>, <code>Space</code>, focus, and the visible focus ring.</li>
+    <li>Never put <code>role="presentation"</code> or <code>aria-hidden="true"</code> on a focusable element. A control that is focusable but hidden from the accessibility tree strands screen reader users on nothing.</li>
+    <li>Every interactive element needs an accessible name. A visible <code>&lt;label&gt;</code>, the element's text, <code>aria-label</code>, or <code>aria-labelledby</code>, in that order of preference.</li>
+  </ol>
+
+  <p className="a11y-section-text">
+    The takeaway is blunt: <strong>no ARIA is better than bad ARIA</strong><span className="a11y-ref">[4]</span>. If you are unsure, drop to semantic HTML and you will almost always be more accessible, not less.
+  </p>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 3: CONTRAST, COLOR, AND DARK MODE    */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">3</span>
+    <h2 className="a11y-section-title">Contrast, Color, and Dark Mode</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Contrast is the most-failed criterion on the web, and the easiest to get right. <strong>WCAG 2.2 SC 1.4.3</strong> asks for <strong>4.5:1</strong> on normal text and <strong>3:1</strong> on large text (18pt, or 14pt bold) at Level AA<span className="a11y-ref">[5]</span>; <strong>SC 1.4.11</strong> asks for <strong>3:1</strong> on interactive boundaries and meaningful graphics<span className="a11y-ref">[6]</span>. Color is never the only signal: <strong>SC 1.4.1</strong> means an error is red <em>and</em> carries an icon and text<span className="a11y-ref">[7]</span>.
+  </p>
+
+  <div className="a11y-xref">
+    <span className="a11y-xref-chip"><span className="material-symbols-outlined" aria-hidden="true">palette</span>Measure pairings in <strong>&nbsp;Foundations / Color Picker</strong></span>
+    <span className="a11y-xref-chip"><span className="material-symbols-outlined" aria-hidden="true">contrast</span>Token ratios in <strong>&nbsp;Foundations / Colors</strong></span>
+  </div>
+
+  <p className="a11y-section-text" style={{ marginTop: '1.25rem' }}>
+    Every brand pairing clears its floor, most of them with AAA headroom:
   </p>
 
   <div className="a11y-contrast-grid">
@@ -546,90 +855,109 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
   </div>
 
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    Both modes are tuned by hand, and both clear the floor. See the ramps and the exact ratios in the color foundations.
+  </p>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 4: KEYBOARD AND FOCUS                */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">4</span>
+    <h2 className="a11y-section-title">Keyboard and Focus</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Many users navigate entirely with a keyboard, whether from a motor impairment, a repetitive strain injury, a screen reader, or plain preference. <strong>WCAG 2.2 SC 2.1.1</strong> means every interactive element is reachable with <strong>Tab</strong>, activatable with <strong>Enter</strong> or <strong>Space</strong>, and dismissable with <strong>Escape</strong> where a layer is open<span className="a11y-ref">[8]</span>. And focus can never be a trap: if <code>Tab</code> takes you in, <code>Tab</code> or <code>Escape</code> must take you out.
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    Focus has to be <strong>visible</strong> (<strong>SC 2.4.7</strong>), and WCAG 2.2 raises the bar: the focused control must not be hidden behind sticky headers or toolbars (<strong>SC 2.4.11 Focus Not Obscured</strong>), and the focus indicator itself needs enough area and contrast to be seen (<strong>SC 2.4.13 Focus Appearance</strong>)<span className="a11y-ref">[9]</span>. Never remove the outline without a stronger replacement.
+  </p>
+
+  <div className="a11y-xref">
+    <span className="a11y-xref-chip"><span className="material-symbols-outlined" aria-hidden="true">ads_click</span>Full focus, hover, and press states in <strong>&nbsp;Patterns / Interactive</strong></span>
+  </div>
+
   <p className="a11y-section-text" style={{ marginTop: '1.25rem' }}>
-    We provide CSS helpers for focus states and motion preferences that you can apply globally:
+    <strong>Skip links</strong> are essential. Rather than tabbing through fifty navigation links to reach the content, a keyboard user hits one link and lands on <code>&lt;main&gt;</code>. And when content should exist for screen readers but not on screen, like "(required)" after a label or a name for an icon button, the <code>.sr-only</code> class keeps it in the accessibility tree while hiding it visually.
   </p>
 
   <div className="a11y-helpers">
     <div className="a11y-helper">
       <div className="a11y-helper-name">.focus-ring</div>
-      <div className="a11y-helper-desc">Custom focus indicator with outline + shadow</div>
+      <div className="a11y-helper-desc">Visible focus indicator: outline plus offset plus soft ring</div>
     </div>
-    <div className="a11y-helper">
-      <div className="a11y-helper-name">.no-motion</div>
-      <div className="a11y-helper-desc">Disables all animations on element and children</div>
-    </div>
-  </div>
-
-  <div className="a11y-see-code">
-    <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
-    See CSS: Focus States & Motion Preferences
-  </div>
-</div>
-
-{/* ============================================ */}
-{/* CHAPTER 3: KEYBOARD NAVIGATION               */}
-{/* ============================================ */}
-
-<div className="a11y-section">
-  <div className="a11y-section-header">
-    <span className="a11y-section-number">3</span>
-    <h2 className="a11y-section-title">Keyboard Navigation</h2>
-  </div>
-
-  <p className="a11y-section-text">
-    Many users navigate entirely with a keyboard, whether due to motor impairments, repetitive strain injuries, or simply preference. Every interactive element must be reachable via <strong>Tab</strong>, activatable via <strong>Enter</strong> or <strong>Space</strong>, and dismissable via <strong>Escape</strong> when appropriate.
-  </p>
-
-  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
-    <strong>Skip links</strong> are essential. Imagine having to tab through 50 navigation links on every page just to reach the main content. Skip links let keyboard users jump directly to what matters.
-  </p>
-
-  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
-    Sometimes you need content visible only to screen readers, like "(required)" after a form label, or descriptive text for an icon button. The <code>.sr-only</code> class hides content visually while keeping it in the accessibility tree.
-  </p>
-
-  <div className="a11y-helpers">
     <div className="a11y-helper">
       <div className="a11y-helper-name">.skip-link</div>
       <div className="a11y-helper-desc">Hidden link that appears on focus, jumps to main content</div>
     </div>
     <div className="a11y-helper">
       <div className="a11y-helper-name">.sr-only</div>
-      <div className="a11y-helper-desc">Visually hidden but accessible to screen readers</div>
-    </div>
-    <div className="a11y-helper">
-      <div className="a11y-helper-name">.touch-target</div>
-      <div className="a11y-helper-desc">Ensures minimum 44×44px clickable area</div>
+      <div className="a11y-helper-desc">Visually hidden but present in the accessibility tree</div>
     </div>
   </div>
 
   <div className="a11y-see-code">
     <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
-    See CSS: Skip Links & Screen Reader Utilities
+    See CSS: Focus States, Skip Links, and Screen Reader Utilities
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 4: SCREEN READERS & ARIA             */}
+{/* CHAPTER 5: TARGET SIZE AND MOTION            */}
 {/* ============================================ */}
 
 <div className="a11y-section">
   <div className="a11y-section-header">
-    <span className="a11y-section-number">4</span>
-    <h2 className="a11y-section-title">Screen Readers & ARIA</h2>
+    <span className="a11y-section-number">5</span>
+    <h2 className="a11y-section-title">Target Size and Motion</h2>
   </div>
 
   <p className="a11y-section-text">
-    Screen readers interpret your HTML. Use <strong>semantic elements first</strong>: <code>&lt;button&gt;</code> not <code>&lt;div onclick&gt;</code>, <code>&lt;nav&gt;</code> not <code>&lt;div class="nav"&gt;</code>. Native HTML comes with built-in accessibility, roles, keyboard handling, focus management. Don't reinvent what the browser gives you for free.
+    A control has to be big enough to hit. <strong>WCAG 2.2 SC 2.5.8</strong> sets a floor of <strong>24 by 24 CSS pixels</strong> at Level AA, with spacing exceptions for inline links<span className="a11y-ref">[10]</span>. We aim higher: <strong>44 by 44</strong> for primary touch targets, the size Apple and the WCAG AAA criterion 2.5.5 both recommend<span className="a11y-ref">[11]</span>. When a control looks smaller, the <code>.touch-target</code> helper pads its hit area without changing the visual.
   </p>
 
   <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
-    <strong>ARIA Live Regions</strong> announce dynamic changes to screen reader users. When the cart count updates, when a form shows an error, when search results load, these moments need to be announced. Use <code>role="alert"</code> for urgent errors (interrupts immediately) and <code>role="status"</code> for polite updates (waits for a pause).
+    Motion is the other half of Operable. Some users feel physically ill from parallax, zoom, and large slides, so <strong>SC 2.3.3</strong> lets interaction-triggered motion be turned down, and <strong>SC 2.2.2</strong> governs anything that loops or auto-updates<span className="a11y-ref">[12]</span>. Honor <code>prefers-reduced-motion</code> as a floor: collapse the motion, keep the meaning. The <code>.no-motion</code> helper is the manual switch for a JS toggle.
+  </p>
+
+  <div className="a11y-xref">
+    <span className="a11y-xref-chip"><span className="material-symbols-outlined" aria-hidden="true">straighten</span>Target and spacing scale in <strong>&nbsp;Foundations / Spacing</strong></span>
+    <span className="a11y-xref-chip"><span className="material-symbols-outlined" aria-hidden="true">animation</span>Reduced-motion tokens in <strong>&nbsp;Foundations / Motion</strong></span>
+  </div>
+
+  <div className="a11y-helpers">
+    <div className="a11y-helper">
+      <div className="a11y-helper-name">.touch-target</div>
+      <div className="a11y-helper-desc">Pads the hit area to a minimum 44 by 44px without changing the visual</div>
+    </div>
+    <div className="a11y-helper">
+      <div className="a11y-helper-name">.no-motion</div>
+      <div className="a11y-helper-desc">Disables animation and transition on an element and its children</div>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* CHAPTER 6: SCREEN READERS, NAME/ROLE/VALUE   */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <span className="a11y-section-number">6</span>
+    <h2 className="a11y-section-title">Screen Readers: Name, Role, and Value</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    A screen reader reads three things off every control, and <strong>WCAG 2.2 SC 4.1.2</strong> requires all three<span className="a11y-ref">[13]</span>. The <strong>name</strong> is what it is called ("Search"). The <strong>role</strong> is what kind of thing it is (button, checkbox, tab). The <strong>value</strong> or state is where it stands right now (checked, expanded, "3 of 10"). A native <code>&lt;input type="checkbox"&gt;</code> with a label supplies all three for free. A <code>&lt;div&gt;</code> styled to look like a checkbox supplies none, so a custom widget must set <code>role</code>, an accessible name, and <code>aria-checked</code> by hand and keep the value in sync.
   </p>
 
   <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
-    The golden rule: <strong>No ARIA is better than bad ARIA</strong>. If you're unsure, stick with semantic HTML. A <code>&lt;button&gt;</code> is always better than <code>&lt;div role="button" tabindex="0"&gt;</code>.
+    <strong>Live regions</strong> announce changes that happen away from focus: a cart count ticking up, a validation error, search results loading. Use <code>role="alert"</code> (assertive) for urgent messages that should interrupt, and <code>role="status"</code> or <code>aria-live="polite"</code> for updates that can wait for a pause<span className="a11y-ref">[14]</span>. Add <code>aria-atomic="true"</code> when the whole message must be read, not just the changed word.
   </p>
 
   <div className="a11y-see-code">
@@ -639,13 +967,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 5: COMPONENT PATTERNS                */}
+{/* CHAPTER 7: COMPONENT PATTERNS                */}
 {/* ============================================ */}
 
 <div className="a11y-section">
   <div className="a11y-section-header">
-    <span className="a11y-section-number">5</span>
-    <h2 className="a11y-section-title">Component Patterns</h2>
+    <span className="a11y-section-number">7</span>
+    <h2 className="a11y-section-title">Accessible Components: Forms and Modals</h2>
   </div>
 
   <p className="a11y-section-text">
@@ -667,61 +995,126 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 6: THE CHECKLIST                     */}
+{/* CHAPTER 8: THE CHECKLIST                     */}
 {/* ============================================ */}
 
 <div className="a11y-section" style={{ borderBottom: 'none', paddingBottom: '1rem' }}>
   <div className="a11y-section-header">
-    <span className="a11y-section-number">6</span>
+    <span className="a11y-section-number">8</span>
     <h2 className="a11y-section-title">Before You Ship</h2>
   </div>
 
   <p className="a11y-section-text">
-    Run through this checklist before every PR. It takes 5 minutes and catches 90% of issues.
+    Run this before every PR. It catches most issues in a few minutes, and each item names the criterion it protects so a failure points straight at the fix.
   </p>
 
   <ul className="a11y-checklist" role="list" aria-label="Accessibility checklist">
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Semantic HTML elements (button, nav, main, header, article)</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Semantic HTML elements (button, nav, main, header, article)<span className="a11y-check-sc">SC 1.3.1</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Color contrast: 4.5:1 normal text, 3:1 large text</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Color contrast: 4.5:1 normal text, 3:1 large text and UI<span className="a11y-check-sc">SC 1.4.3 / 1.4.11</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Visible focus indicators on all interactive elements</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Visible focus, never obscured behind sticky UI<span className="a11y-check-sc">SC 2.4.7 / 2.4.11</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>aria-label on icon-only buttons</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Accessible name on every control, including icon-only buttons<span className="a11y-check-sc">SC 4.1.2</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Labels connected to form inputs (for/id)</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Labels connected to form inputs (for/id)<span className="a11y-check-sc">SC 3.3.2</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Touch targets: 24×24px (AA) or 44×44px (AAA)</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Touch targets: 24×24px floor (AA), 44×44px target (AAA)<span className="a11y-check-sc">SC 2.5.8</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>ARIA live regions for dynamic content</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Live regions announce dynamic status messages<span className="a11y-check-sc">SC 4.1.3</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>prefers-reduced-motion respected</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>prefers-reduced-motion respected<span className="a11y-check-sc">SC 2.3.3</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Keyboard test: Tab, Enter, Escape all work</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Keyboard test: Tab, Enter, Space, Escape all work, no trap<span className="a11y-check-sc">SC 2.1.1 / 2.1.2</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Screen reader test (VoiceOver or NVDA)</span>
+      <span className="a11y-checklist-text"><span className="sr-only">Required: </span>Screen reader test (VoiceOver or NVDA)<span className="a11y-check-sc">4.1.2</span></span>
     </li>
   </ul>
+</div>
+
+{/* ============================================ */}
+{/* TAXONOMY: RULES                              */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <h2 className="a11y-section-title">Rules of Accessibility</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    The whole page compresses to two columns. When a review is tight, read these.
+  </p>
+
+  <div className="a11y-rules-grid">
+    <div className="a11y-rules-col do">
+      <div className="a11y-rules-col-title"><span className="a11y-rules-badge">+</span> Do</div>
+      <ul className="a11y-rules-list">
+        <li>Start from the native element. Add ARIA only to fill a real gap.</li>
+        <li>Give every control a <strong>name</strong>, a <strong>role</strong>, and a current <strong>value</strong> or state.</li>
+        <li>Keep the visible focus ring, and make sure the focused control is never covered.</li>
+        <li>Pair every color signal with an icon and text, and clear <code>4.5:1</code> on text.</li>
+        <li>Label every input, link errors with <code>aria-describedby</code>, announce with <code>role="alert"</code>.</li>
+        <li>Trap focus in an open modal, close on <code>Escape</code>, return focus to the trigger.</li>
+        <li>Honor <code>prefers-reduced-motion</code> as a floor: collapse the motion, keep the meaning.</li>
+        <li>Test with the keyboard and one screen reader before you call it done.</li>
+      </ul>
+    </div>
+    <div className="a11y-rules-col dont">
+      <div className="a11y-rules-col-title"><span className="a11y-rules-badge">x</span> Don't</div>
+      <ul className="a11y-rules-list">
+        <li>Fake a control with <code>&lt;div onclick&gt;</code> and a bolted-on <code>tabindex</code>.</li>
+        <li>Put <code>aria-hidden</code> or <code>role="presentation"</code> on anything focusable.</li>
+        <li>Remove the outline without a stronger replacement.</li>
+        <li>Signal state with color alone. It disappears for many users.</li>
+        <li>Use placeholder text as the only label. It vanishes on input.</li>
+        <li>Trap focus behind a modal with no <code>Escape</code> and no return path.</li>
+        <li>Autoplay motion the user cannot stop, or ignore reduced motion.</li>
+        <li>Ship on "it renders." Rendering is not operability.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* TAXONOMY: DECISION LADDER                    */}
+{/* ============================================ */}
+
+<div className="a11y-section">
+  <div className="a11y-section-header">
+    <h2 className="a11y-section-title">Which Element, in Five Questions</h2>
+  </div>
+
+  <p className="a11y-section-text">
+    Stop at the first question that resolves. It walks you from the free, native answer toward the expensive, custom one, which is the direction accessibility should always travel.
+  </p>
+
+  <div className="a11y-ladder">
+    <div className="a11y-ladder-step">Does a native element already do this: <code>&lt;button&gt;</code>, <code>&lt;a href&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;details&gt;</code>, <code>&lt;dialog&gt;</code>? <strong>Use it and stop.</strong> You inherit role, keyboard, and focus for free.</div>
+    <div className="a11y-ladder-step">Does that native element lack a name from visible text? Add a <code>&lt;label&gt;</code>, <code>aria-label</code>, or <code>aria-labelledby</code>, then <strong>stop</strong>.</div>
+    <div className="a11y-ladder-step">Is there genuinely no native element for this widget: tabs, combobox, tree? Follow the matching <strong>ARIA Authoring Practices</strong> pattern<span className="a11y-ref">[15]</span>, with its roles, states, and full keyboard support.</div>
+    <div className="a11y-ladder-step">Are you building interaction on a non-native element? You now own <code>Enter</code>, <code>Space</code>, focus, the visible ring, and every state. If that is more than you want to maintain, return to question 1.</div>
+    <div className="a11y-ladder-step">Does something change away from focus: a toast, an error, a result count? Announce it through a <strong>live region</strong>: <code>role="alert"</code> to interrupt, <code>role="status"</code> to wait.</div>
+  </div>
 </div>
 
 {/* ============================================ */}
@@ -956,4 +1349,41 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
   </div>
 
+</div>
+
+{/* ============================================ */}
+{/* SOURCES                                      */}
+{/* ============================================ */}
+
+<div className="a11y-code-section">
+  <h2 className="a11y-code-section-title">Sources</h2>
+  <p className="a11y-code-section-desc">
+    Every claim on this page traces to a primary source: the WCAG 2.2 Recommendation, the W3C ARIA guidance, and platform documentation. Numbers in brackets above map to this list.
+  </p>
+
+  <ol className="a11y-sources-list">
+    <li id="a11y-ref-1"><strong>World Health Organization, Disability.</strong> An estimated 1.3 billion people, about 16 percent of the world, live with a significant disability. <a href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" target="_blank" rel="noreferrer">who.int/news-room/fact-sheets/detail/disability-and-health</a></li>
+    <li id="a11y-ref-2"><strong>W3C WAI, Accessibility Principles (POUR).</strong> Content must be Perceivable, Operable, Understandable, and Robust; every WCAG success criterion sits under one of the four. <a href="https://www.w3.org/WAI/fundamentals/accessibility-principles/" target="_blank" rel="noreferrer">w3.org/WAI/fundamentals/accessibility-principles</a></li>
+    <li id="a11y-ref-3"><strong>MDN, ARIA.</strong> ARIA changes only what assistive technology reports; it adds no keyboard behavior or focus management on its own, so those remain the author's responsibility. <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" target="_blank" rel="noreferrer">developer.mozilla.org/.../Accessibility/ARIA</a></li>
+    <li id="a11y-ref-4"><strong>W3C, Using ARIA: the five rules and "No ARIA is better than bad ARIA."</strong> Prefer native HTML, do not override native semantics, keep ARIA controls keyboard operable, never hide a focusable element from the tree, and give every interactive element an accessible name. <a href="https://www.w3.org/TR/using-aria/" target="_blank" rel="noreferrer">w3.org/TR/using-aria</a></li>
+    <li id="a11y-ref-5"><strong>WCAG 2.2, SC 1.4.3 Contrast (Minimum), AA.</strong> 4.5:1 for normal text, 3:1 for large text (18pt, or 14pt bold). <a href="https://www.w3.org/TR/WCAG22/#contrast-minimum" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#contrast-minimum</a></li>
+    <li id="a11y-ref-6"><strong>WCAG 2.2, SC 1.4.11 Non-text Contrast, AA.</strong> 3:1 for UI component boundaries and meaningful graphics. <a href="https://www.w3.org/TR/WCAG22/#non-text-contrast" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#non-text-contrast</a></li>
+    <li id="a11y-ref-7"><strong>WCAG 2.2, SC 1.4.1 Use of Color, A.</strong> Color is never the only means of conveying information or marking a control. <a href="https://www.w3.org/TR/WCAG22/#use-of-color" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#use-of-color</a></li>
+    <li id="a11y-ref-8"><strong>WCAG 2.2, SC 2.1.1 Keyboard, A, and 2.1.2 No Keyboard Trap, A.</strong> All functionality is operable from a keyboard, and focus can always move away again. <a href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#keyboard</a></li>
+    <li id="a11y-ref-9"><strong>WCAG 2.2, focus criteria.</strong> SC 2.4.7 Focus Visible (AA), plus the two added in 2.2: SC 2.4.11 Focus Not Obscured (Minimum, AA) and SC 2.4.13 Focus Appearance (AAA). <a href="https://www.w3.org/TR/WCAG22/#focus-not-obscured-minimum" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#focus-not-obscured-minimum</a> · <a href="https://www.w3.org/TR/WCAG22/#focus-appearance" target="_blank" rel="noreferrer">#focus-appearance</a></li>
+    <li id="a11y-ref-10"><strong>WCAG 2.2, SC 2.5.8 Target Size (Minimum), AA.</strong> Pointer targets are at least 24 by 24 CSS pixels, with defined spacing and inline exceptions. New in 2.2. <a href="https://www.w3.org/TR/WCAG22/#target-size-minimum" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#target-size-minimum</a></li>
+    <li id="a11y-ref-11"><strong>WCAG 2.2, SC 2.5.5 Target Size (Enhanced), AAA, and Apple HIG.</strong> AAA raises the target to 44 by 44 CSS pixels; Apple recommends a 44 by 44 pt minimum for touch controls. <a href="https://www.w3.org/TR/WCAG22/#target-size-enhanced" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#target-size-enhanced</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility" target="_blank" rel="noreferrer">developer.apple.com/design/human-interface-guidelines/accessibility</a></li>
+    <li id="a11y-ref-12"><strong>WCAG 2.2, SC 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A).</strong> Interaction-triggered motion can be disabled unless essential; looping or auto-updating motion can be paused. Both target vestibular symptoms. <a href="https://www.w3.org/TR/WCAG22/#animation-from-interactions" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#animation-from-interactions</a></li>
+    <li id="a11y-ref-13"><strong>WCAG 2.2, SC 4.1.2 Name, Role, Value, A.</strong> For every UI component, the name and role are programmatically determinable and states, properties, and values can be set and read by assistive technology. <a href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#name-role-value</a></li>
+    <li id="a11y-ref-14"><strong>WCAG 2.2, SC 4.1.3 Status Messages (AA), and MDN Live Regions.</strong> Status changes reach assistive technology without moving focus; <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>role="alert"</span> is assertive, <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>role="status"</span> and <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>aria-live="polite"</span> are polite. <a href="https://www.w3.org/TR/WCAG22/#status-messages" target="_blank" rel="noreferrer">w3.org/TR/WCAG22/#status-messages</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions" target="_blank" rel="noreferrer">developer.mozilla.org/.../ARIA_Live_Regions</a></li>
+    <li id="a11y-ref-15"><strong>W3C, ARIA Authoring Practices Guide (APG).</strong> Reference patterns for widgets with no native element (tabs, combobox, tree), each with the roles, states, and keyboard interactions to implement. <a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" rel="noreferrer">w3.org/WAI/ARIA/apg/patterns</a></li>
+  </ol>
+
+  <p className="a11y-section-text" style={{ marginTop: '1.25rem' }}>
+    <strong>Further reading.</strong> WebAIM, Contrast and Color Accessibility, a working guide to the 1.4.3 math and tooling (<a href="https://webaim.org/articles/contrast/" target="_blank" rel="noreferrer">webaim.org/articles/contrast</a>). Microsoft Inclusive Design, the "solve for one, extend to many" toolkit and the permanent, temporary, and situational disability spectrum that frames why this work serves everyone (<a href="https://inclusive.microsoft.design/" target="_blank" rel="noreferrer">inclusive.microsoft.design</a>).
+  </p>
+
+  <p className="a11y-section-text" style={{ marginTop: '1rem' }}>
+    The 44px target aim, the AAA-where-possible posture, and the token color values are house decisions <span className="a11y-spa">SPA</span> consistent with, but not mandated by, Level AA. The criteria themselves are normative.
+  </p>
 </div>
