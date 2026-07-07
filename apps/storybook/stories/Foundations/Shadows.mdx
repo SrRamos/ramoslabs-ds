@@ -18,13 +18,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .shadows-description {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
+    color: #475569;
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.65;
+    max-width: 68ch;
   }
 
   .shadows-section {
-    margin-top: 2.5rem;
+    margin-top: 2.75rem;
   }
 
   .shadows-section-title {
@@ -36,62 +37,225 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-bottom: 1rem;
   }
 
+  .shadows-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Editorial: old vs new elevation philosophy */
+  .shadows-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .compare-card {
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+
+  .compare-card.now {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+
+  .compare-tag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    margin-bottom: 0.75rem;
+  }
+
+  .compare-card.now .compare-tag {
+    color: #4f46e5;
+  }
+
+  .compare-swatch {
+    height: 72px;
+    border-radius: 10px;
+    background: white;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+
+  .compare-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .compare-list li { margin-bottom: 0.35rem; }
+
+  /* Elevation ladder */
+  .ladder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+  }
+
+  .ladder-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1 1 140px;
+  }
+
+  .ladder-chip {
+    width: 100%;
+    max-width: 150px;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: #4f46e5;
+    font-size: 0.9375rem;
+  }
+
+  .ladder-chip.level-0 { height: 60px; color: #94a3b8; border: 1px dashed #cbd5e1; }
+  .ladder-chip.level-1 { height: 68px; box-shadow: var(--shadow-sm); }
+  .ladder-chip.level-2 { height: 84px; box-shadow: var(--shadow-md); }
+  .ladder-chip.level-3 { height: 104px; box-shadow: var(--shadow-lg); }
+
+  .ladder-meta { text-align: center; }
+
+  .ladder-role {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #0f172a;
+  }
+
+  .ladder-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #64748b;
+  }
+
+  /* Detail cards for the three levels */
   .shadows-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
   }
 
   .shadow-card {
-    background: white;
+    background: #f8fafc;
     padding: 1.5rem;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
-    border: 1px solid #f1f5f9;
+    border: 1px solid #e2e8f0;
   }
 
   .shadow-preview {
     width: 100%;
-    height: 80px;
+    height: 96px;
     background: white;
-    border-radius: 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #94a3b8;
+    font-size: 0.8125rem;
   }
 
-  .shadow-info {
-    text-align: center;
-    width: 100%;
+  .shadow-preview.sm { box-shadow: var(--shadow-sm); }
+  .shadow-preview.md { box-shadow: var(--shadow-md); }
+  .shadow-preview.lg { box-shadow: var(--shadow-lg); }
+  .shadow-preview.focus {
+    box-shadow: var(--shadow-focus);
+    color: #4f46e5;
   }
 
   .shadow-name {
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: #0f172a;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
   }
 
   .shadow-token {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    background: #f1f5f9;
+    background: #eef2ff;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    color: #64748b;
+    color: #4f46e5;
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
 
   .shadow-usage {
-    font-size: 0.75rem;
-    color: #64748b;
-    line-height: 1.4;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
   }
 
+  /* Multilayer anatomy */
+  .anatomy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .anatomy-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .anatomy-swatch {
+    height: 80px;
+    border-radius: 10px;
+    background: white;
+    margin-bottom: 1rem;
+  }
+
+  .anatomy-swatch.near { box-shadow: 0 1px 2px rgba(79, 70, 229, 0.06); }
+  .anatomy-swatch.far { box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.10); }
+  .anatomy-swatch.both { box-shadow: var(--shadow-md); }
+
+  .anatomy-label {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+
+  .anatomy-text {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  /* Tables */
   .shadows-table {
     width: 100%;
     border-collapse: collapse;
@@ -107,6 +271,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding: 0.75rem 1rem;
     text-align: left;
     border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
   }
 
   .shadows-table th {
@@ -120,6 +285,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .shadows-table td {
     font-size: 0.875rem;
+    color: #475569;
   }
 
   .shadows-table tr:last-child td {
@@ -129,19 +295,245 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .shadows-table code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    background: #f1f5f9;
+    background: #eef2ff;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    color: #64748b;
+    color: #4f46e5;
   }
 
   .shadow-value {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.7rem;
     color: #64748b;
-    word-break: break-all;
+    word-break: break-word;
   }
 
+  /* Callout */
+  .shadows-note {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .shadows-note-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #3730a3;
+    margin-bottom: 0.5rem;
+  }
+
+  .shadows-note-body {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .shadows-note-body code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Tonal elevation, dark surface demo */
+  .tonal-stage {
+    background: #0f172a;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .tonal-chip {
+    flex: 1 1 90px;
+    max-width: 120px;
+    height: 96px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #c7d2fe;
+    border: 1px solid rgba(199, 210, 254, 0.12);
+  }
+
+  /* Dark surface tinted progressively lighter with indigo, no shadow */
+  .tonal-chip.t0 { background: #0f172a; }
+  .tonal-chip.t1 { background: #1a1f3d; }
+  .tonal-chip.t2 { background: #242a52; }
+  .tonal-chip.t3 { background: #2f3668; }
+
+  .tonal-level {
+    font-weight: 700;
+    color: #e0e7ff;
+    font-size: 0.75rem;
+  }
+
+  /* Do / Don't */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .rules-col {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.5rem;
+  }
+
+  .rules-col-title {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .rules-col.do .rules-col-title { color: #4f46e5; }
+  .rules-col.dont .rules-col-title { color: #64748b; }
+
+  .rules-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .rules-col.do .rules-badge { background: #4f46e5; color: white; }
+  .rules-col.dont .rules-badge { background: #e2e8f0; color: #64748b; }
+
+  .rules-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .rules-list li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  .rules-list li::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+  }
+
+  .rules-col.do .rules-list li::before { content: '+'; color: #4f46e5; }
+  .rules-col.dont .rules-list li::before { content: 'x'; color: #94a3b8; }
+
+  /* Decision ladder */
+  .decision {
+    counter-reset: step;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .decision-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+
+  .decision-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .decision-text {
+    font-size: 0.875rem;
+    color: #334155;
+    line-height: 1.5;
+  }
+
+  .decision-text strong { color: #0f172a; }
+
+  .decision-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Sources */
+  .sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .sources-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .sources-list li:last-child { border-bottom: none; }
+
+  .sources-list strong { color: #0f172a; }
+
+  .source-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
+
+  /* Code */
   .shadows-code {
     background: #1e293b;
     border-radius: 12px;
@@ -196,81 +588,224 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </style>
 
 <div className="shadows-header">
-  <h1 className="shadows-title">Elevating the Moment</h1>
+  <h1 className="shadows-title">Elevation, Kept Quiet</h1>
   <p className="shadows-description">
-    Like stage lighting that draws eyes to the performer, our shadows guide attention to what matters.
-    From the subtle glow of a ticket card to the dramatic lift of a confirmation modal, every shadow tells the fan where to look next.
+    Premium elevation is almost nothing. A surface that floats above another should say so with a soft, tinted, multilayer shadow, not a hard black drop that shouts. This system carries exactly three elevation levels plus a focus ring. Three is enough to build every overlay a product needs, and refusing the fourth is the point.
   </p>
 </div>
 
 <div className="shadows-section">
-  <h2 className="shadows-section-title">Shadow Scale</h2>
+  <h2 className="shadows-section-title">A Change of Philosophy</h2>
+  <p className="shadows-lede">
+    The previous scale had six shadows cloned from a utility framework: single-layer, pure-black, escalating into drama at <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>xl</code> and <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>2xl</code>. Those two, and every <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>*-hover</code> shadow, are gone. The new set is three original tokens, tinted indigo, built from two soft layers each.
+  </p>
+
+  <div className="shadows-compare">
+    <div className="compare-card">
+      <div className="compare-tag">Before</div>
+      <div className="compare-swatch" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>heavy black drop</div>
+      <ul className="compare-list">
+        <li>Six levels, borrowed and generic</li>
+        <li>One hard layer, pure black</li>
+        <li>Elevation as spectacle</li>
+        <li>Shadows swapped on hover to fake motion</li>
+      </ul>
+    </div>
+    <div className="compare-card now">
+      <div className="compare-tag">Now</div>
+      <div className="compare-swatch" style={{ boxShadow: 'var(--shadow-lg)' }}>soft indigo lift</div>
+      <ul className="compare-list">
+        <li>Three levels, original to this system</li>
+        <li>Two soft layers, indigo tinted</li>
+        <li>Elevation as a quiet fact</li>
+        <li>Shadow means height, never state</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">The Elevation Ladder</h2>
+  <p className="shadows-lede">
+    Every floating surface sits at one of three heights. The taller it reads, the higher it is. Nothing in the system rises above <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>lg</code>.
+  </p>
+
+  <div className="ladder">
+    <div className="ladder-step">
+      <div className="ladder-chip level-0">flat</div>
+      <div className="ladder-meta">
+        <div className="ladder-role">On the page</div>
+        <div className="ladder-token">no shadow</div>
+      </div>
+    </div>
+    <div className="ladder-step">
+      <div className="ladder-chip level-1">sm</div>
+      <div className="ladder-meta">
+        <div className="ladder-role">Raised</div>
+        <div className="ladder-token">--shadow-sm</div>
+      </div>
+    </div>
+    <div className="ladder-step">
+      <div className="ladder-chip level-2">md</div>
+      <div className="ladder-meta">
+        <div className="ladder-role">Overlay</div>
+        <div className="ladder-token">--shadow-md</div>
+      </div>
+    </div>
+    <div className="ladder-step">
+      <div className="ladder-chip level-3">lg</div>
+      <div className="ladder-meta">
+        <div className="ladder-role">Floating (ceiling)</div>
+        <div className="ladder-token">--shadow-lg</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">The Three Levels</h2>
 
   <div className="shadows-grid">
     <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 1px 2px rgb(0 0 0 / 0.05)' }}>
-        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Subtle</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Small - Ambient Light</div>
+      <div className="shadow-preview sm">sm</div>
+      <div>
+        <div className="shadow-name">Raised</div>
         <code className="shadow-token">--shadow-sm</code>
-        <p className="shadow-usage">Event cards at rest, buttons waiting to be clicked</p>
+        <p className="shadow-usage">Buttons and cards at rest. A whisper of lift that separates an element from the page without drawing attention to itself.</p>
       </div>
     </div>
 
     <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}>
-        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Default</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Medium - Soft Spotlight</div>
+      <div className="shadow-preview md">md</div>
+      <div>
+        <div className="shadow-name">Overlay</div>
         <code className="shadow-token">--shadow-md</code>
-        <p className="shadow-usage">Hovered cards saying "look at me!", dropdowns revealing options</p>
+        <p className="shadow-usage">Dropdowns, popovers, and menus. Content that opens on top of the current view and closes again. Two soft indigo layers, no pure black.</p>
       </div>
     </div>
 
     <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' }}>
-        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Elevated</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Large - Center Stage</div>
+      <div className="shadow-preview lg">lg</div>
+      <div>
+        <div className="shadow-name">Floating (ceiling)</div>
         <code className="shadow-token">--shadow-lg</code>
-        <p className="shadow-usage">Date pickers, seat selectors, floating menus</p>
+        <p className="shadow-usage">Modals, sheets, and command palettes. The highest surface in the system. If something needs to feel higher than this, the answer is a scrim, not a bigger shadow.</p>
       </div>
     </div>
 
     <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)' }}>
-        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Prominent</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Extra Large - Main Event</div>
-        <code className="shadow-token">--shadow-xl</code>
-        <p className="shadow-usage">Purchase confirmations, critical dialogs, the big moment</p>
-      </div>
-    </div>
-
-    <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)' }}>
-        <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Dramatic</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">2XL - The Standing Ovation</div>
-        <code className="shadow-token">--shadow-2xl</code>
-        <p className="shadow-usage">Hero images, full-screen modals, festival posters</p>
-      </div>
-    </div>
-
-    <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 0 0 3px rgba(79, 70, 229, 0.15)', border: '2px solid #4f46e5' }}>
-        <span style={{ color: '#4f46e5', fontSize: '0.875rem' }}>Focused</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Focus Ring - The Spotlight of A11Y</div>
+      <div className="shadow-preview focus">focus</div>
+      <div>
+        <div className="shadow-name">Focus ring</div>
         <code className="shadow-token">--shadow-focus</code>
-        <p className="shadow-usage">Keyboard navigation, ensuring every fan can find their way</p>
+        <p className="shadow-usage">Not an elevation level. A 3px indigo ring that pairs with <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>:focus-visible</code> to show keyboard position. Accessibility, never decoration.</p>
       </div>
+    </div>
+  </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Why Two Layers, and Why Indigo</h2>
+  <p className="shadows-lede">
+    A single hard shadow is a shortcut that light does not take. Real cast shadows are two things at once: a small, near, crisp contact shadow directly under the object, and a large, far, diffuse shadow that fades into the surface. Stacking one soft layer close and one soft layer far reproduces that falloff, so the surface reads as genuinely lifted rather than pasted on. This is the layered, or smooth, shadow technique popularized by Tobias Ahlin, and it is the same falloff logic Material 3 uses for its elevation shadows.
+  </p>
+  <p className="shadows-lede">
+    The tint matters just as much. Pure black shadows sit on top of a colored brand like a stain. Tinting the shadow with the brand indigo (<code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>rgba(79, 70, 229, ...)</code>) lets the shadow belong to the surface it falls on. It is the same instinct behind Material 3 surface tint, where elevation is expressed through a tint of the primary color rather than heavier ink, and behind Apple's preference for soft, minimal shadows that suggest depth without demanding it.
+  </p>
+
+  <div className="anatomy">
+    <div className="anatomy-card">
+      <div className="anatomy-swatch near"></div>
+      <div className="anatomy-label">Near layer</div>
+      <p className="anatomy-text">Short offset, tight blur. The crisp contact shadow that grounds the object.</p>
+    </div>
+    <div className="anatomy-card">
+      <div className="anatomy-swatch far"></div>
+      <div className="anatomy-label">Far layer</div>
+      <p className="anatomy-text">Long offset, wide blur, negative spread. The soft ambient shadow that gives height.</p>
+    </div>
+    <div className="anatomy-card">
+      <div className="anatomy-swatch both"></div>
+      <div className="anatomy-label">Both, tinted indigo</div>
+      <p className="anatomy-text">The two combined and tinted. This is <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>--shadow-md</code>.</p>
+    </div>
+  </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">The One Rule: Shadow Is Height, Not State</h2>
+  <p className="shadows-lede">
+    A shadow means one thing only: this surface is physically above another. Use it when something actually floats, a menu over the page, a modal over a scrim, a resting card over the canvas. Never reach for a shadow to signal that an element is hovered, pressed, or selected. The dated pattern of a card that grows a dramatic shadow on hover, usually paired with a <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.75rem' }}>translateY</code> lift, fakes physics the element does not have, and it collides with this system's rule against transform-based hover effects.
+  </p>
+  <div className="shadows-note">
+    <div className="shadows-note-title">State feedback lives elsewhere</div>
+    <div className="shadows-note-body">
+      Hover, press, and selection are communicated with color and state layers, not elevation. See <strong>Patterns / Interactive</strong> for the state-layer model. Keep the two channels separate: color answers "what is happening to this control", shadow answers "how high does this surface sit". When they blur together, both get noisy.
+    </div>
+  </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Elevation by Color, Not Only Shadow</h2>
+  <p className="shadows-lede">
+    Shadow is not the only way to say "higher". Material 3 also uses tonal elevation: as a surface rises, it takes on a stronger tint of the primary color and, in dark themes, becomes lighter. In dark mode a drop shadow is nearly invisible against a dark background, so leaning on a lighter, more tinted surface is the more legible signal. Prefer surface tint for elevation in dark themes, and treat shadow as the light-theme workhorse. The two can also combine: a subtle shadow plus a tinted surface reads as height from any angle.
+  </p>
+
+  <div className="tonal-stage">
+    <div className="tonal-chip t0"><span className="tonal-level">L0</span>base</div>
+    <div className="tonal-chip t1"><span className="tonal-level">L1</span>+tint</div>
+    <div className="tonal-chip t2"><span className="tonal-level">L2</span>+tint</div>
+    <div className="tonal-chip t3"><span className="tonal-level">L3</span>+tint</div>
+  </div>
+  <p className="shadows-lede" style={{ marginTop: '0.9rem', fontSize: '0.8125rem', color: '#64748b' }}>
+    Dark surface rising through indigo-tinted levels with no shadow at all. Height reads from lightness, not from ink.
+  </p>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Rules of Implementation</h2>
+
+  <div className="rules-grid">
+    <div className="rules-col do">
+      <div className="rules-col-title"><span className="rules-badge">+</span> Do</div>
+      <ul className="rules-list">
+        <li>Use shadow only for real elevation, a surface floating above another.</li>
+        <li>Stay within three levels: <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>sm</code>, <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>md</code>, <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>lg</code>.</li>
+        <li>Treat <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>lg</code> as the ceiling. Add a scrim, not more blur.</li>
+        <li>Keep the indigo tint. Reference the tokens, never hand-roll black shadows.</li>
+        <li>In dark mode, prefer a lighter, tinted surface over a heavier shadow.</li>
+        <li>Reserve <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>focus</code> for <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>:focus-visible</code> only.</li>
+      </ul>
+    </div>
+    <div className="rules-col dont">
+      <div className="rules-col-title"><span className="rules-badge">x</span> Don't</div>
+      <ul className="rules-list">
+        <li>Grow a shadow on hover to fake a lift.</li>
+        <li>Pair shadow changes with <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>transform</code> hover effects.</li>
+        <li>Invent a fourth or fifth level for extra drama.</li>
+        <li>Use pure-black or single-layer shadows.</li>
+        <li>Reach for the removed <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>xl</code>, <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>2xl</code>, or <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>*-hover</code> tokens. They no longer exist.</li>
+        <li>Use the focus ring as decoration.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Which Level, in Four Questions</h2>
+
+  <div className="decision">
+    <div className="decision-step">
+      <div className="decision-text">Is this element actually floating above another surface? If not, use <strong>no shadow</strong>. Keep it flat on the page.</div>
+    </div>
+    <div className="decision-step">
+      <div className="decision-text">Is it a resting element, a button or a card, that just needs to separate from the background? Use <strong><code>--shadow-sm</code></strong>.</div>
+    </div>
+    <div className="decision-step">
+      <div className="decision-text">Does it open on top of the current view and close again, a dropdown, popover, or menu? Use <strong><code>--shadow-md</code></strong>.</div>
+    </div>
+    <div className="decision-step">
+      <div className="decision-text">Does it take over the view behind a scrim, a modal, sheet, or command palette? Use <strong><code>--shadow-lg</code></strong>, the ceiling. There is no level above it.</div>
     </div>
   </div>
 </div>
@@ -282,117 +817,44 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <thead>
       <tr>
         <th>Token</th>
+        <th>Role</th>
         <th>Value</th>
-        <th>Usage</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><code>--shadow-sm</code></td>
-        <td className="shadow-value">0 1px 2px rgb(0 0 0 / 0.05)</td>
-        <td>Subtle depth for buttons and inputs</td>
+        <td>Raised, buttons and resting cards</td>
+        <td className="shadow-value">0 1px 2px rgba(79, 70, 229, .06), 0 1px 3px rgba(15, 23, 42, .04)</td>
       </tr>
       <tr>
         <td><code>--shadow-md</code></td>
-        <td className="shadow-value">0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)</td>
-        <td>Default cards and interactive elements</td>
+        <td>Overlay, dropdowns and popovers</td>
+        <td className="shadow-value">0 2px 4px -1px rgba(79, 70, 229, .06), 0 8px 16px -4px rgba(79, 70, 229, .10)</td>
       </tr>
       <tr>
         <td><code>--shadow-lg</code></td>
-        <td className="shadow-value">0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)</td>
-        <td>Popovers and floating UI</td>
-      </tr>
-      <tr>
-        <td><code>--shadow-xl</code></td>
-        <td className="shadow-value">0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)</td>
-        <td>Modals and prominent overlays</td>
-      </tr>
-      <tr>
-        <td><code>--shadow-2xl</code></td>
-        <td className="shadow-value">0 25px 50px -12px rgb(0 0 0 / 0.25)</td>
-        <td>Hero elements, dramatic overlays</td>
+        <td>Floating ceiling, modals and sheets</td>
+        <td className="shadow-value">0 4px 8px -2px rgba(79, 70, 229, .06), 0 16px 32px -8px rgba(79, 70, 229, .12)</td>
       </tr>
       <tr>
         <td><code>--shadow-focus</code></td>
-        <td className="shadow-value">0 0 0 3px rgba(79, 70, 229, 0.15)</td>
-        <td>Focus states for accessibility</td>
+        <td>Focus ring, pairs with :focus-visible</td>
+        <td className="shadow-value">0 0 0 3px rgba(79, 70, 229, .45)</td>
       </tr>
     </tbody>
   </table>
-</div>
 
-<div className="shadows-section">
-  <h2 className="shadows-section-title">Interactive Shadows - Brand Tinted</h2>
-
-  <p className="shadows-description" style={{ marginBottom: '1rem' }}>
-    When a card rises to meet the cursor, it glows in the brand indigo. These tinted shadows add depth and personality to hover states while staying mono-indigo.
-  </p>
-
-  <div className="shadows-grid">
-    <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 8px 25px -5px rgba(79, 70, 229, 0.25)' }}>
-        <span style={{ color: '#4f46e5', fontSize: '0.875rem' }}>Primary Glow</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Primary Hover - The Journey</div>
-        <code className="shadow-token">--shadow-primary-hover</code>
-        <p className="shadow-usage">Event cards, navigation links, feature sections</p>
-      </div>
-    </div>
-
-    <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 8px 25px -5px rgba(67, 56, 202, 0.25)' }}>
-        <span style={{ color: '#4338ca', fontSize: '0.875rem' }}>Deep Glow</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Deep Hover</div>
-        <code className="shadow-token">--shadow-primary-deep-hover</code>
-        <p className="shadow-usage">Primary CTA buttons, emphasized actions</p>
-      </div>
-    </div>
-
-    <div className="shadow-card">
-      <div className="shadow-preview" style={{ boxShadow: '0 8px 25px -5px rgba(139, 92, 246, 0.25)' }}>
-        <span style={{ color: '#8B5CF6', fontSize: '0.875rem' }}>Secondary Glow</span>
-      </div>
-      <div className="shadow-info">
-        <div className="shadow-name">Secondary Hover - The Community</div>
-        <code className="shadow-token">--shadow-secondary-hover</code>
-        <p className="shadow-usage">Social actions, share buttons, community features</p>
-      </div>
+  <div className="shadows-note">
+    <div className="shadows-note-title">Removed tokens</div>
+    <div className="shadows-note-body">
+      <code>--shadow-xl</code>, <code>--shadow-2xl</code>, <code>--shadow-primary-hover</code>, <code>--shadow-primary-deep-hover</code>, and <code>--shadow-secondary-hover</code> were deleted. If you find a reference to any of them, migrate it: elevation maps to <code>sm</code>, <code>md</code>, or <code>lg</code>; hover feedback moves to color per Patterns / Interactive.
     </div>
   </div>
-
-  <table className="shadows-table" style={{ marginTop: '1.5rem' }}>
-    <thead>
-      <tr>
-        <th>Token</th>
-        <th>Value</th>
-        <th>Usage</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>--shadow-primary-hover</code></td>
-        <td className="shadow-value">0 8px 25px -5px rgba(79, 70, 229, 0.25)</td>
-        <td>Indigo-tinted hover for primary elements</td>
-      </tr>
-      <tr>
-        <td><code>--shadow-primary-deep-hover</code></td>
-        <td className="shadow-value">0 8px 25px -5px rgba(67, 56, 202, 0.25)</td>
-        <td>Deep indigo hover for primary CTAs</td>
-      </tr>
-      <tr>
-        <td><code>--shadow-secondary-hover</code></td>
-        <td className="shadow-value">0 8px 25px -5px rgba(139, 92, 246, 0.25)</td>
-        <td>Purple-tinted hover for secondary actions</td>
-      </tr>
-    </tbody>
-  </table>
 </div>
 
 <div className="shadows-section">
-  <h2 className="shadows-section-title">Usage Example</h2>
+  <h2 className="shadows-section-title">Usage</h2>
 
   <div className="shadows-code">
     <div className="shadows-code-header">
@@ -401,32 +863,54 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <span className="shadows-code-dot green"></span>
       <span className="shadows-code-lang">CSS</span>
     </div>
-    <pre style={{ padding: '2rem' }} dangerouslySetInnerHTML={{__html: `<span class="comment">/* Event card: subtle at rest, glows on hover */</span>
-<span class="selector">.event-card</span> <span class="punctuation">{</span>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Resting card: a whisper of lift, and it stays put on hover */</span>
+<span class="selector">.card</span> <span class="punctuation">{</span>
     <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-sm)</span><span class="punctuation">;</span>
-    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">box-shadow var(--transition-normal),
-                transform var(--transition-normal)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+<span class="selector">.card:hover</span> <span class="punctuation">{</span>
+    <span class="comment">/* State feedback is color, not elevation. No shadow swap, no transform. */</span>
+    <span class="property">background-color</span><span class="punctuation">:</span> <span class="value">var(--color-surface-hover)</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>
 
-<span class="selector">.event-card:hover</span> <span class="punctuation">{</span>
-    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-primary-hover)</span><span class="punctuation">;</span>  <span class="comment">/* Brand glow */</span>
-    <span class="property">transform</span><span class="punctuation">:</span> <span class="value">translateY(-4px)</span><span class="punctuation">;</span>
+<span class="comment">/* Dropdown: an overlay that floats over the page */</span>
+<span class="selector">.dropdown-menu</span> <span class="punctuation">{</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-md)</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>
 
-<span class="comment">/* CTA button: deep indigo glow rises to meet the click */</span>
-<span class="selector">.btn-cta:hover</span> <span class="punctuation">{</span>
-    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-primary-deep-hover)</span><span class="punctuation">;</span>
+<span class="comment">/* Modal: the elevation ceiling, behind a scrim */</span>
+<span class="selector">.modal</span> <span class="punctuation">{</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-lg)</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>
 
-<span class="comment">/* Purchase confirmation: the main event */</span>
-<span class="selector">.confirm-modal</span> <span class="punctuation">{</span>
-    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-2xl)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Ticket quantity input: visible to keyboard users */</span>
-<span class="selector">.ticket-input:focus</span> <span class="punctuation">{</span>
+<span class="comment">/* Keyboard focus: the ring, never removed without a replacement */</span>
+<span class="selector">.button:focus-visible</span> <span class="punctuation">{</span>
     <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-focus)</span><span class="punctuation">;</span>
     <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Dark theme: let a lighter, tinted surface carry the elevation */</span>
+<span class="selector">@media (prefers-color-scheme: dark)</span> <span class="punctuation">{</span>
+    <span class="selector">.dropdown-menu</span> <span class="punctuation">{</span>
+        <span class="property">background-color</span><span class="punctuation">:</span> <span class="value">var(--color-surface-raised)</span><span class="punctuation">;</span>
+    <span class="punctuation">}</span>
 <span class="punctuation">}</span>`}} />
   </div>
+</div>
+
+<div className="shadows-section">
+  <h2 className="shadows-section-title">Sources</h2>
+  <ul className="sources-list">
+    <li>
+      <strong>Material 3, Elevation and tonal elevation.</strong> Elevation levels and the surface-tint approach, where a tint of the primary color expresses height, and dark surfaces lighten as they rise. m3.material.io/styles/elevation
+    </li>
+    <li>
+      <strong>Tobias Ahlin, layered smooth shadows.</strong> Stacking several soft box-shadow layers instead of one hard shadow for a more natural falloff. tobiasahlin.com/blog/layered-smooth-box-shadows
+    </li>
+    <li>
+      <strong>Apple Human Interface Guidelines, Materials.</strong> Favoring soft, minimal shadows and translucency for depth rather than heavy drop shadows. developer.apple.com/design/human-interface-guidelines/materials
+    </li>
+    <li>
+      Exact rgba layer values and level count are specific to this system's tokens. <span className="source-spa">SPA</span> The reading of <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.72rem' }}>lg</code> as an absolute ceiling is a house rule, not a rule from the cited sources.
+    </li>
+  </ul>
 </div>
