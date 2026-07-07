@@ -1,0 +1,1143 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Persuasion" />
+
+<style>
+{`
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+  .pers-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Header ===== */
+  .pers-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .pers-icon {
+    padding: 0.75rem;
+    background: #eef2ff;
+    color: #4f46e5;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    display: flex;
+  }
+
+  .pers-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .pers-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 68ch;
+  }
+
+  .pers-description strong { color: #0f172a; font-weight: 600; }
+
+  /* ===== Intro doctrine band ===== */
+  .pers-doctrine {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  .pers-doctrine-card {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.25rem 1.35rem;
+  }
+
+  .pers-doctrine-card.accent {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+
+  .pers-doctrine-icon {
+    color: #4f46e5;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pers-doctrine-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+  }
+
+  .pers-doctrine-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  /* ===== Principle sections ===== */
+  .pers-principle {
+    margin-top: 2.75rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .pers-principle-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .pers-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pers-principle-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .pers-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 68ch;
+  }
+
+  .pers-lede strong { color: #0f172a; font-weight: 600; }
+
+  .pers-lede code, .pers-doctrine-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125em;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  .pers-sub {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    margin: 1.4rem 0 0.6rem;
+  }
+
+  /* Evidence callout */
+  .pers-evidence {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 1.1rem 1.35rem;
+    margin: 1.1rem 0;
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+
+  .pers-evidence .pers-material {
+    color: #4f46e5;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .pers-evidence-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .pers-evidence-body strong { color: #3730a3; }
+
+  .pers-cite {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.7rem;
+    color: #64748b;
+    display: block;
+    margin-top: 0.4rem;
+    word-break: break-word;
+  }
+
+  .pers-caveat {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 0.05rem 0.4rem;
+    margin-right: 0.4rem;
+  }
+
+  /* Apply-in-product block */
+  .pers-apply {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    margin: 1.1rem 0;
+  }
+
+  .pers-apply-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #0f172a;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .pers-apply-title .pers-material { color: #4f46e5; font-size: 1.15rem; }
+
+  .pers-apply-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .pers-apply-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125em;
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Demos */
+  .pers-demo {
+    margin-top: 1rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .pers-field-label {
+    display: block;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.35rem;
+  }
+
+  .pers-field {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #0f172a;
+    background: white;
+    margin-bottom: 0.9rem;
+  }
+
+  .pers-field.filled {
+    border-color: #4f46e5;
+    background: #f5f6ff;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10);
+  }
+
+  .pers-hint {
+    font-size: 0.6875rem;
+    color: #64748b;
+    margin: -0.6rem 0 0.9rem;
+  }
+
+  /* Progress demo */
+  .pers-progress-track {
+    height: 10px;
+    border-radius: 9999px;
+    background: #e2e8f0;
+    overflow: hidden;
+    margin: 0.35rem 0;
+  }
+
+  .pers-progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    background: #4f46e5;
+  }
+
+  .pers-progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .pers-steps {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+  }
+
+  .pers-step {
+    flex: 1;
+    height: 6px;
+    border-radius: 9999px;
+    background: #e2e8f0;
+  }
+
+  .pers-step.done { background: #4f46e5; }
+
+  /* Pricing / contrast demo */
+  .pers-price-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 520px) {
+    .pers-price-row { grid-template-columns: 1fr; }
+  }
+
+  .pers-price-anchor {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .pers-price-offer {
+    background: #eef2ff;
+    border: 1px solid #4f46e5;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .pers-price-cap {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #94a3b8;
+    margin-bottom: 0.35rem;
+  }
+
+  .pers-price-offer .pers-price-cap { color: #4f46e5; }
+
+  .pers-price-value {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #0f172a;
+  }
+
+  .pers-price-note {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+
+  /* Legitimate vs dark pattern */
+  .pers-line {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.1rem;
+  }
+
+  .pers-line-col {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 1.15rem 1.35rem;
+    background: #f8fafc;
+  }
+
+  .pers-line-col.ok { border-color: #c7d2fe; background: #eef2ff; }
+
+  .pers-line-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.6rem;
+  }
+
+  .pers-line-col.ok .pers-line-tag { color: #4f46e5; }
+  .pers-line-col.avoid .pers-line-tag { color: #64748b; }
+
+  .pers-line-tag .pers-material { font-size: 1.05rem; }
+
+  .pers-line-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .pers-line-text strong { color: #0f172a; }
+
+  /* Ethics band */
+  .pers-ethics {
+    margin-top: 2.75rem;
+    background: #0f172a;
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+  }
+
+  .pers-ethics-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #e0e7ff;
+    margin-bottom: 0.6rem;
+  }
+
+  .pers-ethics-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #c7d2fe;
+    line-height: 1.7;
+    max-width: 68ch;
+  }
+
+  .pers-ethics-lede strong { color: #ffffff; }
+
+  .pers-ethics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .pers-ethics-card {
+    background: #1a1f3d;
+    border: 1px solid rgba(199, 210, 254, 0.14);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .pers-ethics-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #e0e7ff;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .pers-ethics-card-title .pers-material { font-size: 1.05rem; color: #a5b4fc; }
+
+  .pers-ethics-card-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: #a5b4fc;
+    line-height: 1.55;
+  }
+
+  /* Section shell (rules, ladder, sources) */
+  .pers-section { margin-top: 2.75rem; }
+
+  .pers-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  /* Do / Don't */
+  .pers-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pers-rules-col {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.5rem;
+  }
+
+  .pers-rules-col-title {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pers-rules-col.do .pers-rules-col-title { color: #4f46e5; }
+  .pers-rules-col.dont .pers-rules-col-title { color: #64748b; }
+
+  .pers-rules-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .pers-rules-col.do .pers-rules-badge { background: #4f46e5; color: white; }
+  .pers-rules-col.dont .pers-rules-badge { background: #e2e8f0; color: #64748b; }
+
+  .pers-rules-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .pers-rules-list li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  .pers-rules-list li::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+  }
+
+  .pers-rules-col.do .pers-rules-list li::before { content: '+'; color: #4f46e5; }
+  .pers-rules-col.dont .pers-rules-list li::before { content: 'x'; color: #94a3b8; }
+
+  /* Decision ladder */
+  .pers-decision {
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .pers-decision-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+
+  .pers-decision-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pers-decision-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #334155;
+    line-height: 1.55;
+  }
+
+  .pers-decision-text strong { color: #0f172a; }
+
+  /* Sources */
+  .pers-sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .pers-sources-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .pers-sources-list li:last-child { border-bottom: none; }
+
+  .pers-sources-list strong { color: #0f172a; }
+
+  .pers-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
+
+  .pers-xlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #4f46e5;
+    margin-top: 0.9rem;
+  }
+
+  .pers-xlink .pers-material { font-size: 1rem; }
+`}
+</style>
+
+{/* ============================================ */}
+{/* HEADER                                       */}
+{/* ============================================ */}
+
+<div className="pers-header">
+  <div className="pers-icon">
+    <span className="pers-material" style={{ fontSize: '1.5rem' }} aria-hidden="true">handshake</span>
+  </div>
+  <div>
+    <h1 className="pers-title">Persuasion, In the User's Favor</h1>
+    <p className="pers-description">
+      Behavioral design is real and it works, which is exactly why it carries an obligation. A well-placed default, an honest progress bar, or a price shown next to its true reference can lower the friction between a person and something they genuinely want. The same mechanisms, pointed the other way, become <strong>dark patterns</strong>. This system uses six behavioral principles and draws a hard line under each one: honest persuasion that serves the user's own goal, never manipulation that extracts against it.
+    </p>
+  </div>
+</div>
+
+<div className="pers-doctrine">
+  <div className="pers-doctrine-card accent">
+    <span className="pers-material pers-doctrine-icon" aria-hidden="true">volunteer_activism</span>
+    <div className="pers-doctrine-title">Serve the user's goal</div>
+    <p className="pers-doctrine-text">Every technique here is legitimate only when it moves a person toward an outcome they already want. If it works only because the user does not notice, it is out.</p>
+  </div>
+  <div className="pers-doctrine-card">
+    <span className="pers-material pers-doctrine-icon" aria-hidden="true">visibility</span>
+    <div className="pers-doctrine-title">Nothing hidden</div>
+    <p className="pers-doctrine-text">Reversible, transparent, and true. A default is a starting point the user can change, not a trap. A number on screen matches reality.</p>
+  </div>
+  <div className="pers-doctrine-card">
+    <span className="pers-material pers-doctrine-icon" aria-hidden="true">block</span>
+    <div className="pers-doctrine-title">Dark patterns are banned</div>
+    <p className="pers-doctrine-text">Fake scarcity, false countdowns, confirmshaming, and inflated anchor prices are prohibited in this system, not merely discouraged.</p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 1. SMART DEFAULTS                            */}
+{/* ============================================ */}
+
+<div className="pers-principle">
+  <div className="pers-principle-head">
+    <span className="pers-num">1</span>
+    <h2 className="pers-principle-title">Smart Defaults</h2>
+  </div>
+
+  <p className="pers-lede">
+    A blank form is a pile of decisions handed to someone who came to do one thing. Every empty field is a small tax, and the total is friction and abandonment. A <strong>smart default</strong> pre-selects the most common, most sensible choice so the path of least resistance is also the good path. The user is never locked in: the default is a visible, editable starting point, not a decision made for them.
+  </p>
+
+  <div className="pers-evidence">
+    <span className="pers-material" aria-hidden="true">science</span>
+    <div className="pers-evidence-body">
+      <strong>Defaults are among the most powerful levers in choice architecture.</strong> Johnson and Goldstein showed that whether organ donation is opt-in or opt-out swings participation from single digits to over 90 percent, holding everything else constant. Thaler and Sunstein generalized this into the "nudge": the default option is chosen far more often simply because it is the default. Nielsen Norman Group extends the same finding to forms, where smart defaults measurably cut completion time and error rates.
+      <span className="pers-cite">Johnson &amp; Goldstein, "Do Defaults Save Lives?" Science 302 (2003) · Thaler &amp; Sunstein, Nudge (2008) · nngroup.com, form design</span>
+    </div>
+  </div>
+
+  <p className="pers-lede">
+    <span className="pers-caveat">Caveat</span>
+    Two honest notes. First, the mechanism is effort-avoidance and status-quo bias, not "decision fatigue": the ego-depletion account behind that popular phrase failed a large multi-lab replication, so we do not lean on it. <span className="pers-spa">SPA</span> Second, a default is influential precisely because many people never change it, so an unsuitable default does real harm. The test is whether the pre-filled choice is the one the user would most likely pick with full attention. When there is no such majority choice, or the decision is high-stakes and personal, leave it unset and ask.
+  </p>
+
+  <div className="pers-apply">
+    <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">edit_note</span> In a RamosLabs product</div>
+    <p className="pers-apply-text">
+      Pre-fill the field the way the data already points. Detect country and currency, select the most common plan, default the quantity to <code>1</code>, and pre-check the option most people keep. Style the pre-filled state so it is obviously changeable, never a locked value. See <strong>Patterns / Form Elements</strong> for the input and select primitives that carry these defaults.
+    </p>
+    <div className="pers-demo">
+      <label className="pers-field-label" htmlFor="pers-country">Country</label>
+      <input id="pers-country" className="pers-field filled" defaultValue="Colombia" aria-describedby="pers-country-hint" />
+      <p id="pers-country-hint" className="pers-hint">Detected from your connection. Change it any time.</p>
+      <label className="pers-field-label" htmlFor="pers-plan">Plan</label>
+      <input id="pers-plan" className="pers-field filled" defaultValue="Standard, monthly" />
+    </div>
+  </div>
+
+  <div className="pers-line">
+    <div className="pers-line-col ok">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <p className="pers-line-text">Default to the option a typical user would choose anyway, clearly labelled and one tap to change. <strong>The default saves effort on a choice the user still owns.</strong></p>
+    </div>
+    <div className="pers-line-col avoid">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <p className="pers-line-text">Pre-checking a paid add-on, a marketing opt-in, or an insurance upsell the user did not ask for, so inattention becomes revenue. <strong>Preselection is banned wherever it costs the user money or privacy.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 2. GOAL GRADIENT                             */}
+{/* ============================================ */}
+
+<div className="pers-principle">
+  <div className="pers-principle-head">
+    <span className="pers-num">2</span>
+    <h2 className="pers-principle-title">Goal Gradient Effect</h2>
+  </div>
+
+  <p className="pers-lede">
+    Effort accelerates as a goal comes into view. People push harder on the last stretch than the first, so a progress indicator that starts at a true, non-zero point ("2 of 6 done" rather than a cold zero) makes the finish feel reachable and pulls the user forward. The rule is not to inflate the number, it is to <strong>count the real work already behind them</strong> so the bar never opens empty.
+  </p>
+
+  <div className="pers-evidence">
+    <span className="pers-material" aria-hidden="true">science</span>
+    <div className="pers-evidence-body">
+      <strong>Motivation rises the closer a goal appears.</strong> Hull first measured the goal gradient in 1932. Kivetz, Urminsky, and Zheng revived it for consumer behavior in 2006, showing purchases accelerate as a loyalty reward nears. The specific "start above zero" recommendation comes from a separate study, the <strong>endowed progress effect</strong>: Nunes and Drèze gave a car-wash card two stamps toward a ten-stamp reward, versus a blank card needing eight, the same eight washes either way. The pre-credited card reached completion far more often (34 percent versus 19 percent). A true head start pulls people forward.
+      <span className="pers-cite">Hull, Psychological Review (1932) · Kivetz, Urminsky &amp; Zheng, J. Marketing Research 43 (2006) · Nunes &amp; Drèze, "The Endowed Progress Effect," J. Consumer Research 32 (2006)</span>
+    </div>
+  </div>
+
+  <p className="pers-lede">
+    <span className="pers-caveat">Caveat</span>
+    The endowed-progress result depends on giving the head start an honest reason. In the study, the extra stamps were framed as a bonus, not invented from nothing. A progress bar that claims steps the user never took reads as a trick the moment it is noticed. Only count real progress: a confirmed email, a saved draft, a completed step.
+  </p>
+
+  <div className="pers-apply">
+    <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">trending_up</span> In a RamosLabs product</div>
+    <p className="pers-apply-text">
+      A multi-step flow should open with the first step already credited when the user has, in fact, done something (arrived with an account, verified an email, imported a file). Show a step meter and a labelled bar. The fill uses <code>--color-primary</code> on a <code>--color-border</code> track. See <strong>Patterns / Interactive</strong> for progress and stepper states.
+    </p>
+    <div className="pers-demo">
+      <div className="pers-progress-meta"><span>Set up your workspace</span><span>Step 2 of 6</span></div>
+      <div className="pers-progress-track"><div className="pers-progress-fill" style={{ width: '33%' }}></div></div>
+      <div className="pers-steps">
+        <div className="pers-step done"></div>
+        <div className="pers-step done"></div>
+        <div className="pers-step"></div>
+        <div className="pers-step"></div>
+        <div className="pers-step"></div>
+        <div className="pers-step"></div>
+      </div>
+    </div>
+  </div>
+
+  <div className="pers-line">
+    <div className="pers-line-col ok">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <p className="pers-line-text">Credit steps the user genuinely completed and show how near the finish is. <strong>The head start is real, and the destination is something the user chose to reach.</strong></p>
+    </div>
+    <div className="pers-line-col avoid">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <p className="pers-line-text">A "90 percent complete" bar that only fills once payment or personal data is handed over, or endless artificial steps that manufacture sunk cost. <strong>Progress that does not reflect real progress is a lie with a nice animation.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 3. RECIPROCITY                               */}
+{/* ============================================ */}
+
+<div className="pers-principle">
+  <div className="pers-principle-head">
+    <span className="pers-num">3</span>
+    <h2 className="pers-principle-title">Reciprocity</h2>
+  </div>
+
+  <p className="pers-lede">
+    People feel an obligation to return a favor. Deliver something genuinely useful first, a result, an insight, a working preview, and the ask that follows lands on willing ground rather than a cold wall. The honest version gives real value with no strings, then makes a fair request. The user owes nothing they did not already want to give.
+  </p>
+
+  <div className="pers-evidence">
+    <span className="pers-material" aria-hidden="true">science</span>
+    <div className="pers-evidence-body">
+      <strong>An unsolicited gift creates a felt obligation to reciprocate.</strong> Cialdini documents reciprocity as one of the core principles of influence, backed by field and lab work. Regan's 1971 experiment is the classic demonstration: participants given a small unrequested favor later agreed to a larger request far more often than a control group.
+      <span className="pers-cite">Cialdini, Influence: The Psychology of Persuasion (1984) · Regan, J. Experimental Social Psychology 7 (1971)</span>
+    </div>
+  </div>
+
+  <p className="pers-lede">
+    <span className="pers-caveat">Caveat</span>
+    Regan's effect is well established for offline, interpersonal compliance. The direct translation to "value-first content raises product sign-ups" is a sound-but-untested extrapolation, not something Regan or Cialdini measured. <span className="pers-spa">SPA</span> Use it as a design instinct, not a guaranteed lift.
+  </p>
+
+  <div className="pers-apply">
+    <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">redeem</span> In a RamosLabs product</div>
+    <p className="pers-apply-text">
+      Let the product prove itself before it asks. Return a real analysis, a rendered result, or a usable draft, then invite the user to save it by creating an account. The value is delivered whether or not they sign up. The request comes after the gift, never as a toll gate in front of it.
+    </p>
+  </div>
+
+  <div className="pers-line">
+    <div className="pers-line-col ok">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <p className="pers-line-text">Give a genuinely useful result up front, then ask to save or continue. <strong>The gift is real and keeps its value even if the user declines the ask.</strong></p>
+    </div>
+    <div className="pers-line-col avoid">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <p className="pers-line-text">A hollow "free" gift that is really a hook, a preview that vanishes unless you pay, or manufactured guilt for accepting help. <strong>If the value evaporates the moment the user hesitates, it was bait, not a gift.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 4. IKEA / ENDOWMENT EFFECT                   */}
+{/* ============================================ */}
+
+<div className="pers-principle">
+  <div className="pers-principle-head">
+    <span className="pers-num">4</span>
+    <h2 className="pers-principle-title">The IKEA and Endowment Effect</h2>
+  </div>
+
+  <p className="pers-lede">
+    We value what we build and what we own more than the identical thing untouched by us. Invite a person to shape something, name a project, arrange a layout, tune a setting, and it becomes theirs in their mind before it is theirs in fact. That felt ownership makes the last step, saving or signing up, feel like keeping something they already have rather than starting from scratch.
+  </p>
+
+  <div className="pers-evidence">
+    <span className="pers-material" aria-hidden="true">science</span>
+    <div className="pers-evidence-body">
+      <strong>Labor and ownership both inflate perceived value.</strong> Norton, Mochon, and Ariely named the "IKEA effect": people price self-assembled items above identical pre-made ones, purely because they built them. The related endowment effect, measured by Kahneman, Knetsch, and Thaler with their mug experiments, shows owners demand more to give up an object than others will pay for it.
+      <span className="pers-cite">Norton, Mochon &amp; Ariely, J. Consumer Psychology 22 (2012) · Kahneman, Knetsch &amp; Thaler, J. Political Economy 98 (1990)</span>
+    </div>
+  </div>
+
+  <p className="pers-lede">
+    <span className="pers-caveat">Caveat</span>
+    Norton and colleagues found the effect needs <strong>successful completion</strong>: unfinished or failed building does not raise valuation, and a task that is trivially easy or punishingly hard weakens it. And whether self-customization specifically lowers sign-up abandonment (rather than just raising how much people value what they made) is an inferential step beyond these studies. <span className="pers-spa">SPA</span> Keep the customization real and completable.
+  </p>
+
+  <div className="pers-apply">
+    <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">build</span> In a RamosLabs product</div>
+    <p className="pers-apply-text">
+      Let the user personalize before the gate. Configure the dashboard, draft the first document, pick a theme, all before an account exists. Preserve that work through sign-up so nothing they made is lost. Investment the user chose to make is legitimate; investment tricked out of them is not.
+    </p>
+  </div>
+
+  <div className="pers-line">
+    <div className="pers-line-col ok">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <p className="pers-line-text">Offer real customization the user wants, and carry their work intact across the sign-up boundary. <strong>They keep exactly what they built.</strong></p>
+    </div>
+    <div className="pers-line-col avoid">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <p className="pers-line-text">Forcing busywork purely to manufacture sunk cost, then holding the user's own work hostage behind a paywall or deleting it if they leave. <strong>Effort must never become a hostage.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 5. LOSS AVERSION                             */}
+{/* ============================================ */}
+
+<div className="pers-principle">
+  <div className="pers-principle-head">
+    <span className="pers-num">5</span>
+    <h2 className="pers-principle-title">Loss Aversion</h2>
+  </div>
+
+  <p className="pers-lede">
+    A loss tends to weigh heavier than an equivalent gain. Framing a choice around what a person stands to lose can therefore focus attention more sharply than the same fact framed as a gain. The honest use is a truthful reminder of real value at stake: an unsaved draft, an expiring credit the user actually earned, a benefit they currently hold and could drop.
+  </p>
+
+  <div className="pers-evidence">
+    <span className="pers-material" aria-hidden="true">science</span>
+    <div className="pers-evidence-body">
+      <strong>Losses loom larger than gains.</strong> Kahneman and Tversky's prospect theory formalized this in 1979: the value function is steeper for losses than for equal-sized gains. It is one of the most cited results in behavioral economics.
+      <span className="pers-cite">Kahneman &amp; Tversky, "Prospect Theory," Econometrica 47 (1979)</span>
+    </div>
+  </div>
+
+  <p className="pers-lede">
+    <span className="pers-caveat">Contested</span>
+    Treat loss aversion as a real but bounded effect, not a universal law. Gal and Rucker's 2018 review argues the asymmetry is weaker and more context-dependent than often claimed; Simonson's reply the same year defends a <em>contingent</em> version, real but conditional. The debate is unresolved. Practically: use loss framing only where a genuine loss exists, do not manufacture one, and never assume fear will reliably out-pull a clearly communicated gain.
+  </p>
+
+  <div className="pers-apply">
+    <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">savings</span> In a RamosLabs product</div>
+    <p className="pers-apply-text">
+      Name the real thing at risk, plainly. "Your draft has unsaved changes" or "Your 200 saved items stay if you keep this plan" states a true consequence the user can act on. Pair the warning with an easy way to prevent the loss. No invented deadlines, no fake stock counters.
+    </p>
+    <div className="pers-demo">
+      <div className="pers-price-cap" style={{ color: '#4f46e5' }}>Honest loss-framed reminder</div>
+      <p className="pers-apply-text" style={{ marginTop: '0.35rem' }}>
+        You have <strong>3 unsaved sections</strong>. Create a free account to keep them, or they clear when this tab closes.
+      </p>
+    </div>
+  </div>
+
+  <div className="pers-line">
+    <div className="pers-line-col ok">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <p className="pers-line-text">Remind the user of value that truly exists and truly could be lost, with a clear way to keep it. <strong>The loss is real and preventable.</strong></p>
+    </div>
+    <div className="pers-line-col avoid">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <p className="pers-line-text">False urgency, fake "only 2 left" counters, invented countdown timers, or confirmshaming ("No thanks, I like overpaying"). <strong>Manufactured fear is the sharpest dark pattern of all, and it is banned.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 6. CONTRAST EFFECT                           */}
+{/* ============================================ */}
+
+<div className="pers-principle">
+  <div className="pers-principle-head">
+    <span className="pers-num">6</span>
+    <h2 className="pers-principle-title">Contrast Effect</h2>
+  </div>
+
+  <p className="pers-lede">
+    A number means little in isolation. Placed next to a reference, it reads as large or small by comparison. A cost shown alone invites sticker shock; the same cost shown beside the value it unlocks, or a higher reference the user recognizes, reads as proportionate. The honest version anchors on a <strong>true</strong> reference: a real list price, a real alternative cost, the concrete value delivered.
+  </p>
+
+  <div className="pers-evidence">
+    <span className="pers-material" aria-hidden="true">science</span>
+    <div className="pers-evidence-body">
+      <strong>Judgments latch onto whatever reference is offered.</strong> Tversky and Kahneman's 1974 work established anchoring as a general heuristic: an arbitrary starting number pulls people's numeric estimates toward it, even when they know it is arbitrary. Ariely, Loewenstein, and Prelec carried it directly into pricing in 2003, showing an arbitrary anchor shifts what people will actually pay for a real product. Contrast is the sibling effect: an item is judged relative to what sits beside it. Together they explain why context, not the raw figure, drives how a price feels.
+      <span className="pers-cite">Tversky &amp; Kahneman, Science 185 (1974), general anchoring heuristic · Ariely, Loewenstein &amp; Prelec, "Coherent Arbitrariness," Q. J. Economics 118 (2003), anchoring in pricing</span>
+    </div>
+  </div>
+
+  <p className="pers-lede">
+    <span className="pers-caveat">Caveat</span>
+    Anchoring is potent, which is why the reference must be true. A comparison price that was never charged, or a struck-through "original" the product never sold at, crosses from context into deception and, in many markets, into unlawful pricing. Contrast is legitimate only when the higher number is real.
+  </p>
+
+  <div className="pers-apply">
+    <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">payments</span> In a RamosLabs product</div>
+    <p className="pers-apply-text">
+      Never show a price bare. Set it beside a genuine reference: the cost it replaces, the annual value it returns, or a real higher tier. Keep the layout calm and factual, the reference on a muted <code>--color-surface-secondary</code> card, the offer on a <code>--color-primary</code> bordered card. Let the comparison inform, not corner.
+    </p>
+    <div className="pers-demo">
+      <div className="pers-price-row">
+        <div className="pers-price-anchor">
+          <div className="pers-price-cap">What it replaces</div>
+          <div className="pers-price-value">$180 / mo</div>
+          <p className="pers-price-note">Three separate tools you already pay for, billed individually.</p>
+        </div>
+        <div className="pers-price-offer">
+          <div className="pers-price-cap">This plan</div>
+          <div className="pers-price-value">$49 / mo</div>
+          <p className="pers-price-note">All three, in one. Reference figure is a real, verifiable total.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="pers-line">
+    <div className="pers-line-col ok">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <p className="pers-line-text">Contextualize a price against a true reference: a real alternative cost, a genuine higher tier, or the value returned. <strong>Every number on screen is one the user could verify.</strong></p>
+    </div>
+    <div className="pers-line-col avoid">
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <p className="pers-line-text">Inflated or fictional anchor prices, a decoy struck-through "original" that never existed, or a fake premium tier that exists only to make the real one look cheap. <strong>A reference the user cannot verify is a lie.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* ETHICS DOCTRINE                              */}
+{/* ============================================ */}
+
+<div className="pers-ethics">
+  <h2 className="pers-ethics-title">The Line: Persuasion or Manipulation</h2>
+  <p className="pers-ethics-lede">
+    The mechanics are identical on both sides of the line. What separates honest persuasion from a dark pattern is not the technique, it is <strong>whose goal it serves and what it hides</strong>. Harry Brignull coined "dark patterns" in 2010 for interfaces engineered to trick users into things they did not mean to do, now catalogued at deceptive.design and studied formally by Gray and colleagues. Nielsen Norman Group tracks the same taxonomy as "deceptive patterns". This system treats that catalogue as a list of prohibitions.
+  </p>
+
+  <div className="pers-ethics-grid">
+    <div className="pers-ethics-card">
+      <div className="pers-ethics-card-title"><span className="pers-material" aria-hidden="true">target</span> Whose goal</div>
+      <p className="pers-ethics-card-text">Honest persuasion advances a goal the user already holds. Manipulation advances the business at the user's expense.</p>
+    </div>
+    <div className="pers-ethics-card">
+      <div className="pers-ethics-card-title"><span className="pers-material" aria-hidden="true">lightbulb</span> Awareness</div>
+      <p className="pers-ethics-card-text">If it works only because the user does not notice it, it is manipulation. Honest nudges survive being pointed out.</p>
+    </div>
+    <div className="pers-ethics-card">
+      <div className="pers-ethics-card-title"><span className="pers-material" aria-hidden="true">undo</span> Reversibility</div>
+      <p className="pers-ethics-card-text">A default the user can change, a step they can skip, a choice they can undo. Traps that are hard to escape are out.</p>
+    </div>
+    <div className="pers-ethics-card">
+      <div className="pers-ethics-card-title"><span className="pers-material" aria-hidden="true">fact_check</span> Truth</div>
+      <p className="pers-ethics-card-text">Every scarcity claim, countdown, progress figure, and reference price must be literally true. No inventions.</p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* RULES OF IMPLEMENTATION                       */}
+{/* ============================================ */}
+
+<div className="pers-section">
+  <h2 className="pers-section-title">Rules of Implementation</h2>
+
+  <div className="pers-rules">
+    <div className="pers-rules-col do">
+      <div className="pers-rules-col-title"><span className="pers-rules-badge">+</span> Do</div>
+      <ul className="pers-rules-list">
+        <li>Default to the choice a typical user would make with full attention, clearly editable.</li>
+        <li>Start progress from real, completed steps, never a fabricated head start.</li>
+        <li>Deliver genuine value before asking for anything in return.</li>
+        <li>Preserve the user's own work across every gate and sign-up.</li>
+        <li>Frame loss only around value that truly exists and can truly be kept.</li>
+        <li>Anchor prices on references the user could independently verify.</li>
+        <li>Assume a technique will be pointed out. If it only works hidden, remove it.</li>
+      </ul>
+    </div>
+    <div className="pers-rules-col dont">
+      <div className="pers-rules-col-title"><span className="pers-rules-badge">x</span> Don't</div>
+      <ul className="pers-rules-list">
+        <li>Pre-check paid add-ons, marketing opt-ins, or anything that costs money or privacy.</li>
+        <li>Show progress bars that only fill after payment or invented steps.</li>
+        <li>Dangle "free" value that vanishes the moment the user hesitates.</li>
+        <li>Force busywork to manufacture sunk cost, or hold the user's work hostage.</li>
+        <li>Use fake counters, false countdowns, invented scarcity, or confirmshaming.</li>
+        <li>Display struck-through or comparison prices that were never real.</li>
+        <li>Rely on any effect the user would reject if they saw it clearly.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* DECISION LADDER                              */}
+{/* ============================================ */}
+
+<div className="pers-section">
+  <h2 className="pers-section-title">Before You Ship a Persuasive Element</h2>
+
+  <div className="pers-decision">
+    <div className="pers-decision-step">
+      <div className="pers-decision-text"><strong>Whose goal does this serve?</strong> If it advances the business against what the user wants, stop. It does not ship.</div>
+    </div>
+    <div className="pers-decision-step">
+      <div className="pers-decision-text"><strong>Is every claim literally true?</strong> The scarcity, the countdown, the progress number, the reference price. If any of them is invented, stop.</div>
+    </div>
+    <div className="pers-decision-step">
+      <div className="pers-decision-text"><strong>Would it survive being pointed out?</strong> Imagine the user seeing exactly how it works. If that kills the effect, it was manipulation. Remove it.</div>
+    </div>
+    <div className="pers-decision-step">
+      <div className="pers-decision-text"><strong>Can the user reverse it?</strong> A default they can change, a step they can skip, a choice they can undo. If not, make it so or drop it.</div>
+    </div>
+    <div className="pers-decision-step">
+      <div className="pers-decision-text"><strong>Only now, ship it,</strong> using the DS primitives. See <strong>Patterns / Form Elements</strong> for defaults and <strong>Patterns / Interactive</strong> for progress and state.</div>
+    </div>
+  </div>
+
+  <span className="pers-xlink"><span className="pers-material" aria-hidden="true">link</span> Related: Patterns / Form Elements · Patterns / Interactive · Patterns / Accessibility</span>
+</div>
+
+{/* ============================================ */}
+{/* SOURCES                                      */}
+{/* ============================================ */}
+
+<div className="pers-section">
+  <h2 className="pers-section-title">Sources</h2>
+  <ul className="pers-sources-list">
+    <li>
+      <strong>Johnson &amp; Goldstein, "Do Defaults Save Lives?"</strong> Science 302 (2003), the opt-in versus opt-out organ donation result. science.org/doi/10.1126/science.1091721
+    </li>
+    <li>
+      <strong>Thaler &amp; Sunstein, Nudge (2008).</strong> Choice architecture and the power of the default option. Book (synthesis, not itself an experiment). On the mechanism: the ego-depletion / "decision fatigue" account failed a large multi-lab replication, Hagger et al. (2016), pmc.ncbi.nlm.nih.gov/articles/PMC4971805
+    </li>
+    <li>
+      <strong>Hull (1932); Kivetz, Urminsky &amp; Zheng (2006); Nunes &amp; Drèze (2006).</strong> The goal gradient and its consumer revival (JMR 43(1), 39-58, doi.org/10.1509/jmkr.43.1.39), plus the "endowed progress effect" car-wash study that is the direct source for starting above zero (J. Consumer Research 32(4), 504-512, doi.org/10.1086/500480).
+    </li>
+    <li>
+      <strong>Cialdini, Influence (1984); Regan (1971).</strong> Reciprocity as a principle of influence, and the classic favor experiment. J. Experimental Social Psychology 7(6).
+    </li>
+    <li>
+      <strong>Norton, Mochon &amp; Ariely (2012).</strong> "The IKEA Effect: When Labor Leads to Love." J. Consumer Psychology 22(3), 453-460. doi.org/10.1016/j.jcps.2011.08.002
+    </li>
+    <li>
+      <strong>Kahneman, Knetsch &amp; Thaler (1990).</strong> The endowment effect and the mug experiments. J. Political Economy 98(6). Also J. Economic Perspectives 5(1), 1991.
+    </li>
+    <li>
+      <strong>Kahneman &amp; Tversky, "Prospect Theory" (1979).</strong> Losses loom larger than gains. Econometrica 47(2), 263-291.
+    </li>
+    <li>
+      <strong>Gal &amp; Rucker (2018); Simonson (2018).</strong> The active controversy: Gal &amp; Rucker's "The Loss of Loss Aversion" argues the asymmetry is weaker and context-dependent (J. Consumer Psychology 28(3), doi.org/10.1002/jcpy.1047); Simonson's reply defends a contingent version (doi.org/10.1002/jcpy.1046). Read alongside Kahneman &amp; Tversky, not instead of.
+    </li>
+    <li>
+      <strong>Tversky &amp; Kahneman (1974); Ariely, Loewenstein &amp; Prelec (2003).</strong> Anchoring as a general heuristic (Science 185, 1124-1131) and its direct extension to pricing / willingness-to-pay, "Coherent Arbitrariness" (Q. J. Economics 118(1), 73-106), the better-fitting source for reference-price effects.
+    </li>
+    <li>
+      <strong>Brignull, deceptive.design; Gray et al. (2018); NN/g.</strong> Origin and taxonomy of dark patterns, renamed deceptive patterns. deceptive.design · "The Dark (Patterns) Side of UX Design," CHI 2018 · nngroup.com/articles/deceptive-patterns
+    </li>
+    <li>
+      Approximate URLs are given for the primary studies; the exact DOI or landing page may differ slightly. <span className="pers-spa">SPA</span> The framing of each technique as strictly gated behind a truth-and-reversibility test is this system's house doctrine, not a claim from the cited authors.
+    </li>
+  </ul>
+</div>

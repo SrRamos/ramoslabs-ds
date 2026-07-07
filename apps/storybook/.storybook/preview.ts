@@ -24,7 +24,7 @@ const preview: Preview = {
             'Color Picker',
           ],
           'Patterns',
-          ['Interactive', 'Accessibility', 'Form Elements', 'AI Insights', 'Voice & Tone'],
+          ['Interactive', 'Accessibility', 'Persuasion', 'Form Elements', 'AI Insights', 'Voice & Tone'],
         ],
       },
     },
