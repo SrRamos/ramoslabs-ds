@@ -22,37 +22,46 @@ import { Meta } from '@storybook/addon-docs/blocks';
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ===== HEADER ===== */
-  .fe-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 2rem;
+  /* ===== HERO ===== */
+  .fe-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.25rem 2.5rem;
+    margin-bottom: 3rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
 
-  .fe-header-icon {
-    padding: 0.75rem;
-    background: #e0e7ff;
-    color: #4338ca;
-    border-radius: 12px;
-    flex-shrink: 0;
+  .fe-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
   }
 
-  .fe-title {
+  .fe-hero h1 {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw + 1rem, 3.1rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 22ch;
   }
 
-  .fe-description {
-    font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
-    font-size: 1rem;
+  .fe-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
     line-height: 1.6;
     max-width: 44rem;
+    margin: 0;
   }
+
+  .fe-hero p strong { color: #ffffff; font-weight: 700; }
 
   /* ===== SECTIONS ===== */
   .fe-section {
@@ -112,14 +121,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'SF Mono', 'Monaco', monospace;
   }
 
-  .fe-cite {
-    color: #4f46e5;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  .fe-cite:hover { text-decoration: underline; }
-
   /* ===== CALLOUT ===== */
   .fe-callout {
     display: flex;
@@ -147,6 +148,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .fe-callout-text strong { color: #312e81; font-weight: 700; }
 
+  .fe-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: rgba(79,70,229,0.1);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #3730a3;
+  }
+
   /* ===== LAB / DEMO ===== */
   .fe-lab {
     display: grid;
@@ -166,16 +176,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 700;
     font-size: 0.6875rem;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #475569;
     letter-spacing: 0.08em;
     margin-bottom: 1rem;
-  }
-
-  .fe-demo-note {
-    font-size: 0.8125rem;
-    color: #64748b;
-    line-height: 1.5;
-    margin-top: 0.875rem;
   }
 
   /* ===== FIELD PRIMITIVES ===== */
@@ -193,7 +196,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .fe-label .fe-req { color: #dc2626; margin-left: 0.15rem; }
   .fe-label .fe-opt {
-    color: #94a3b8;
+    color: #64748b;
     font-weight: 400;
     font-size: 0.8125rem;
     margin-left: 0.35rem;
@@ -220,7 +223,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .fe-input::placeholder { color: #94a3b8; }
+  .fe-input::placeholder { color: #64748b; }
 
   .fe-input:focus-visible {
     outline: none;
@@ -236,7 +239,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
   }
 
-  .fe-input.success { border-color: #10b981; }
+  .fe-input.success { border-color: #059669; }
 
   .fe-error {
     display: flex;
@@ -570,61 +573,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border: 1px solid #c7d2fe;
     border-radius: 999px;
     padding: 0.4rem 0.9rem;
-    margin-top: 1rem;
+    margin: 1rem 0.5rem 0 0;
     text-decoration: none;
   }
 
   .fe-xlink:hover { background: #e0e7ff; }
   .fe-xlink .fe-material { font-size: 1rem; }
-
-  /* ===== CODE BLOCKS ===== */
-  .fe-code {
-    background: #1e293b;
-    border-radius: 12px;
-    overflow: hidden;
-    margin: 1rem 0 0;
-  }
-
-  .fe-code-header {
-    background: #334155;
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-bottom: 1px solid #475569;
-  }
-
-  .fe-code-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .fe-code-dot.red { background: #ef4444; }
-  .fe-code-dot.yellow { background: #f59e0b; }
-  .fe-code-dot.green { background: #22c55e; }
-
-  .fe-code-lang {
-    margin-left: auto;
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.75rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .fe-code pre {
-    margin: 0;
-    padding: 1.5rem;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    color: #e2e8f0;
-    overflow-x: auto;
-  }
-
-  .fe-code .comment { color: #64748b; font-style: italic; }
-  .fe-code .selector { color: #fbbf24; }
-  .fe-code .tag { color: #f472b6; }
-  .fe-code .attr { color: #7dd3fc; }
-  .fe-code .property { color: #7dd3fc; }
-  .fe-code .value { color: #a5f3fc; }
-  .fe-code .punctuation { color: #94a3b8; }
 
   /* ===== SOURCES ===== */
   .fe-sources-list {
@@ -661,33 +615,29 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </style>
 
 {/* ============================================ */}
-{/* HEADER                                       */}
+{/* HERO                                          */}
 {/* ============================================ */}
 
-<div className="fe-header">
-  <div className="fe-header-icon">
-    <span className="fe-material" style={{ fontSize: '1.5rem' }} aria-hidden="true">edit_note</span>
-  </div>
-  <div>
-    <h1 className="fe-title">Forms Are Where the Conversion Is Decided</h1>
-    <p className="fe-description">
-      Every other screen persuades. The form is where the user finally acts, and it is the single place a design most reliably loses the people it worked so hard to earn. A field that hides its label, a keyboard that fights the thumb, an error that only says <strong style={{ color: '#0f172a' }}>"invalid"</strong>. Each of these is a small tax, and forms are where small taxes compound into abandonment. This page treats a field as a conversation: a visible question, an honest input, help before the mistake, and a fix after it.
-    </p>
-  </div>
+<div className="fe-hero">
+  <p className="fe-hero-eyebrow">Patterns / Form Elements</p>
+  <h1>Every screen persuades. The form is where they act.</h1>
+  <p>
+    It is also the single easiest place to lose the people the rest of the product worked to earn. A hidden label, the wrong keyboard, an error that only says <strong>"invalid"</strong>: each is a small tax, and forms are where small taxes compound into abandonment. So treat every field as one exchange in a conversation: a <strong>visible question</strong>, an honest input, <strong>help before the mistake</strong>, and a fix after it.
+  </p>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 1: ANATOMY OF A FIELD                 */}
+{/* 1: ANATOMY OF A FIELD                         */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
     <span className="fe-section-number">1</span>
-    <h2 className="fe-section-title">The Anatomy of a Field</h2>
+    <h2 className="fe-section-title">The anatomy of a field</h2>
   </div>
 
   <p className="fe-text">
-    A field is never just an input box. It is four parts working together, and dropping any of them shifts load onto the user. The <strong>label</strong> asks the question and stays visible for the life of the field. The <strong>control</strong> takes the answer. <strong>Help text</strong> pre-empts the mistake before it happens. The <strong>error</strong> appears only when something is wrong, and it says exactly how to make it right.
+    A field is four parts, and dropping any one shifts the work onto the user. The <strong>label</strong> asks and stays visible. The <strong>control</strong> takes the answer. <strong>Help</strong> pre-empts the mistake. The <strong>error</strong> appears only when something is wrong, and says exactly how to fix it.
   </p>
 
   <div className="fe-anatomy">
@@ -710,13 +660,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="fe-text">
-    <strong>The label is always visible, above the field, never inside it.</strong> The tempting shortcut is to delete the label and let a placeholder stand in for it. It looks clean and it breaks the moment the user starts typing: the question vanishes exactly when they need to check what was asked, people with memory or attention differences lose the prompt entirely, and screen readers treat placeholder text as unreliable. <a className="fe-cite" href="https://www.nngroup.com/articles/form-design-placeholders/" target="_blank" rel="noreferrer">NN/g</a> is unambiguous that placeholders are not a substitute for labels. A persistent top-aligned label is also the fastest layout to scan, because the eye travels straight down a single column from question to answer, which is why <a className="fe-cite" href="https://baymard.com/blog/avoid-multi-column-forms" target="_blank" rel="noreferrer">Baymard</a> finds single-column forms are completed faster and with fewer skipped fields than multicolumn ones.
+    <strong>The label stays visible, above the field, never inside it.</strong> A placeholder is not a label: it vanishes the instant someone types, exactly when they want to re-read the question, and screen readers treat it as unreliable. A single top-aligned column is also the fastest form to scan, because the eye runs straight down from question to answer.
   </p>
 
   <div className="fe-callout">
     <span className="fe-material" aria-hidden="true">lightbulb</span>
     <p className="fe-callout-text">
-      <strong>Mark what is required, but mark the rarer one.</strong> If most fields are required, label the few <em>optional</em> ones in words; if most are optional, mark the required ones. An asterisk alone is not an accessible signal, so pair it with text or an <code>aria-label</code>, and state the convention once at the top of the form.
+      <strong>Mark the rarer one.</strong> If most fields are required, mark the few <em>optional</em> ones in words; if most are optional, mark the required ones. An asterisk alone is not accessible, so pair it with text or an <code>aria-label</code> and state the convention once.
     </p>
   </div>
 
@@ -733,28 +683,24 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="fe-demo-label">Don't: placeholder as the label</div>
       <div className="fe-field">
         <input className="fe-input" type="text" placeholder="Event name" aria-label="Event name (placeholder-as-label anti-pattern)" />
-        <span className="fe-help">The question disappears the instant the user types, and there is nowhere to put help.</span>
+        <span className="fe-help">The question disappears the instant the user types, with nowhere left to put help.</span>
       </div>
     </div>
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 2: INPUT TYPES & MOBILE KEYBOARDS     */}
+{/* 2: INPUT TYPES & MOBILE KEYBOARDS             */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
     <span className="fe-section-number">2</span>
-    <h2 className="fe-section-title">Pick the Type, Get the Right Keyboard</h2>
+    <h2 className="fe-section-title">Pick the type, get the right keyboard</h2>
   </div>
 
   <p className="fe-text">
-    On a phone the biggest usability lever in the whole form is the <code>type</code> attribute. It is not decoration and it is not only validation. The type tells the operating system which on-screen keyboard to raise, so <code>type="email"</code> surfaces the @ key, <code>type="tel"</code> raises the big numeric dial pad, and <code>type="url"</code> puts <em>.com</em> a tap away. Choosing the wrong type does not just look wrong, it forces the user to hunt across keyboard layouts on every single field.
-  </p>
-
-  <p className="fe-text">
-    Two attributes refine it further. <a className="fe-cite" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inputmode" target="_blank" rel="noreferrer"><code>inputmode</code></a> tunes the keyboard without changing the field's semantics, so <code>inputmode="numeric"</code> gives a digit pad to a one-time code that is still logically text. And <a className="fe-cite" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete" target="_blank" rel="noreferrer"><code>autocomplete</code></a> lets the browser fill the field from the user's saved profile, which is the difference between typing a full address and tapping it in once. Google's <a className="fe-cite" href="https://web.dev/articles/payment-and-address-form-best-practices" target="_blank" rel="noreferrer">form best-practice guidance</a> treats correct autocomplete tokens as table stakes for checkout.
+    On a phone, the <code>type</code> attribute is the biggest usability lever in the form. It tells the operating system which keyboard to raise: <code>type="email"</code> surfaces the @ key, <code>type="tel"</code> raises the big dial pad. <code>inputmode</code> tunes the keyboard without changing meaning, and <code>autocomplete</code> lets the browser fill the field from a saved profile in one tap.
   </p>
 
   <div className="fe-table-scroll">
@@ -771,7 +717,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <tr>
           <td className="fe-kbd">Email</td>
           <td><code>type="email"</code></td>
-          <td>Text with a visible @ and no shift needed</td>
+          <td>Text with a visible @, no shift needed</td>
           <td><code>autocomplete="email"</code></td>
         </tr>
         <tr>
@@ -801,7 +747,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <tr>
           <td className="fe-kbd">Full name</td>
           <td><code>type="text"</code></td>
-          <td>Standard, with autocapitalized words</td>
+          <td>Standard, autocapitalized words</td>
           <td><code>autocomplete="name"</code></td>
         </tr>
         <tr>
@@ -823,67 +769,45 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="fe-callout">
     <span className="fe-material" aria-hidden="true">smartphone</span>
     <p className="fe-callout-text">
-      <strong>Reach for the native control before you build one.</strong> <code>type="date"</code>, <code>type="time"</code> and a real <code>&lt;select&gt;</code> already carry a picker, keyboard behaviour and accessibility that a hand-built widget has to re-earn from scratch. Build a custom control only when the native one genuinely cannot express what you need.
+      <strong>Reach for the native control first.</strong> <code>type="date"</code>, <code>type="time"</code> and a real <code>&lt;select&gt;</code> already ship a picker, keyboard behaviour and accessibility that a hand-built widget has to re-earn from scratch. Build custom only when the native one truly cannot express what you need.
     </p>
-  </div>
-
-  <div className="fe-code">
-    <div className="fe-code-header">
-      <span className="fe-code-dot red" aria-hidden="true"></span>
-      <span className="fe-code-dot yellow" aria-hidden="true"></span>
-      <span className="fe-code-dot green" aria-hidden="true"></span>
-      <span className="fe-code-lang">HTML</span>
-    </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">&lt;!-- The right type raises the right keyboard and enables autofill. --&gt;</span>
-<span class="punctuation">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punctuation">=</span><span class="value">"phone"</span><span class="punctuation">&gt;</span>Phone<span class="punctuation">&lt;/</span><span class="tag">label</span><span class="punctuation">&gt;</span>
-<span class="punctuation">&lt;</span><span class="tag">input</span>
-    <span class="attr">id</span><span class="punctuation">=</span><span class="value">"phone"</span>
-    <span class="attr">type</span><span class="punctuation">=</span><span class="value">"tel"</span>
-    <span class="attr">autocomplete</span><span class="punctuation">=</span><span class="value">"tel"</span>
-    <span class="attr">inputmode</span><span class="punctuation">=</span><span class="value">"tel"</span> <span class="punctuation">/&gt;</span>
-
-<span class="comment">&lt;!-- One-time code: numeric pad, text semantics, SMS autofill. --&gt;</span>
-<span class="punctuation">&lt;</span><span class="tag">input</span>
-    <span class="attr">type</span><span class="punctuation">=</span><span class="value">"text"</span>
-    <span class="attr">inputmode</span><span class="punctuation">=</span><span class="value">"numeric"</span>
-    <span class="attr">autocomplete</span><span class="punctuation">=</span><span class="value">"one-time-code"</span> <span class="punctuation">/&gt;</span>`}} />
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 3: VALIDATION                          */}
+{/* 3: VALIDATION                                 */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
     <span className="fe-section-number">3</span>
-    <h2 className="fe-section-title">Validate at the Right Moment, in the Right Words</h2>
+    <h2 className="fe-section-title">Validate at the right moment, in the right words</h2>
   </div>
 
   <p className="fe-text">
-    Validation has two questions: <strong>when</strong> to check, and <strong>what</strong> to say. Get the timing wrong and you either nag someone mid-keystroke or ambush them at submit. The reliable rule, from the classic <a className="fe-cite" href="https://www.smashingmagazine.com/2022/09/inline-validation-web-forms-ux/" target="_blank" rel="noreferrer">inline-validation study by Mihael Konjević</a>, is <strong>reward early, punish late</strong>: confirm a field as valid while the user types if you can, but do not show an error until they have left the field. Validating on every keystroke means the first character of an email is flagged as a broken email, which is technically true and deeply unhelpful.
+    Validation asks two things: <strong>when</strong> to check, and <strong>what</strong> to say. The rule is <strong>reward early, punish late</strong>. Confirm a field as valid while the user types, but hold the error until they leave it. Flagging the first letter of an email as a broken email is technically true and deeply unhelpful.
   </p>
 
   <div className="fe-timeline">
     <div className="fe-tl-step">
       <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">keyboard</span> While typing</span>
       <div className="fe-tl-title">Reward, never punish</div>
-      <div className="fe-tl-body">Show a success tick the moment input becomes valid. Hold every error back, because an incomplete field is not yet a wrong one.</div>
+      <div className="fe-tl-body">Show a success tick the moment input becomes valid. Hold every error back. An incomplete field is not yet a wrong one.</div>
     </div>
     <div className="fe-tl-step">
       <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">logout</span> On blur</span>
       <div className="fe-tl-title">Now you may correct</div>
-      <div className="fe-tl-body">When focus leaves the field, the answer is final enough to judge. This is the moment to surface an inline error, right under the field.</div>
+      <div className="fe-tl-body">When focus leaves the field, the answer is final enough to judge. Surface the inline error, right under the field.</div>
     </div>
     <div className="fe-tl-step">
       <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">send</span> On submit</span>
       <div className="fe-tl-title">Catch the rest</div>
-      <div className="fe-tl-body">Re-check everything, move focus to the first error, and summarise. Never let a form fail silently or scroll the user nowhere.</div>
+      <div className="fe-tl-body">Re-check everything, move focus to the first error, summarise. Never let a form fail silently.</div>
     </div>
   </div>
 
   <p className="fe-text">
-    A good error message does three things at once, per <a className="fe-cite" href="https://www.nngroup.com/articles/error-message-guidelines/" target="_blank" rel="noreferrer">NN/g's error-message guidelines</a>: it is <strong>visible and specific</strong> (next to the field, not a generic banner), it says <strong>what went wrong in plain language</strong>, and it tells the user <strong>how to fix it</strong>. "Invalid input" fails all three. "Enter a date after today, the event cannot start in the past" passes all three. And because <a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noreferrer">WCAG 3.3.1</a> requires errors to be identified in text, never lean on a red border alone. The colour is an enhancement, the words are the message.
+    A good error message is <strong>visible and specific</strong>, says <strong>what went wrong in plain language</strong>, and tells the user <strong>how to fix it</strong>. "Invalid input" fails all three. "Enter a date after today, the event cannot start in the past" passes all three. WCAG 3.3.1 requires the error to be identified in text, so never lean on a red border alone. The colour reinforces; the words are the message.
   </p>
 
   <div className="fe-lab">
@@ -908,45 +832,23 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="fe-callout">
     <span className="fe-material" aria-hidden="true">palette</span>
     <p className="fe-callout-text">
-      <strong>Error colour is <code>--color-error</code>, and it is the only warm colour on the page.</strong> Everything interactive stays indigo; the single job of red here is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so that when it appears the user knows it means something is wrong.
+      <strong>Errors use <code>--color-error</code>, the only warm colour on the page.</strong> Everything interactive stays indigo; red's single job is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so its appearance always means something is wrong.
     </p>
-  </div>
-
-  <div className="fe-code">
-    <div className="fe-code-header">
-      <span className="fe-code-dot red" aria-hidden="true"></span>
-      <span className="fe-code-dot yellow" aria-hidden="true"></span>
-      <span className="fe-code-dot green" aria-hidden="true"></span>
-      <span className="fe-code-lang">CSS</span>
-    </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* The error state: red border plus a text message, never colour alone. */</span>
-<span class="selector">.input.error</span> <span class="punctuation">{</span>
-    <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">var(--color-error)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="selector">.error-text</span> <span class="punctuation">{</span>
-    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-error-text)</span><span class="punctuation">;</span> <span class="comment">/* AA-safe on white */</span>
-    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">var(--text-sm)</span><span class="punctuation">;</span>
-    <span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">var(--space-1)</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>
-
-<span class="comment">/* Reward path: the same field, confirmed valid. */</span>
-<span class="selector">.input.success</span> <span class="punctuation">{</span> <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">var(--color-success)</span><span class="punctuation">;</span> <span class="punctuation">}</span>`}} />
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 4: FIELD STATES                        */}
+{/* 4: FIELD STATES                               */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
     <span className="fe-section-number">4</span>
-    <h2 className="fe-section-title">Every Field Has States</h2>
+    <h2 className="fe-section-title">Every field has states</h2>
   </div>
 
   <p className="fe-text">
-    A field is default, then focused, then filled, sometimes disabled, sometimes in error. These are not styling whims, they are the same modality-driven state model every control in the system follows. Focus is shown with the indigo ring token, not a colour that vanishes on a coloured surface; the press and hover of the checkbox and toggle are tonal indigo layers, gated to the devices that can produce them. Rather than restate that model here, the field inherits it.
+    Default, focused, filled, sometimes disabled or in error. The field inherits the system state model rather than inventing its own: focus is the indigo ring token that stays visible on any surface, and the press and hover of a checkbox or toggle are tonal indigo layers gated to devices that can produce them.
   </p>
 
   <div className="fe-lab">
@@ -981,51 +883,33 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="fe-text">
-    Note the defaults above: the pre-checked box is the reminder the user almost certainly wants, and the newsletter, which costs them attention, is left off. That is not an accident of layout, it is a deliberate, honest default, which is its own discipline.
+    Look at the defaults: the reminder is pre-checked because people want it, the newsletter is left off because it costs their attention. A default must be the choice the user would make with full attention, and it must stay editable. Pre-fill to save effort, never to extract a choice.
   </p>
 
-  <a className="fe-xlink" href="./?path=/docs/patterns-interactive--docs">
-    <span className="fe-material" aria-hidden="true">arrow_forward</span>
-    See Patterns / Interactive for the full state model: focus-visible, press, hover gating
-  </a>
+  <div>
+    <a className="fe-xlink" href="./?path=/docs/patterns-interactive--docs">
+      <span className="fe-material" aria-hidden="true">arrow_forward</span>
+      Patterns / Interactive: the full state model
+    </a>
+    <a className="fe-xlink" href="./?path=/docs/patterns-persuasion--docs">
+      <span className="fe-material" aria-hidden="true">arrow_forward</span>
+      Patterns / Persuasion: the ethics of defaults
+    </a>
+  </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 5: SMART DEFAULTS                       */}
+{/* 5: ACCESSIBILITY                              */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
     <span className="fe-section-number">5</span>
-    <h2 className="fe-section-title">The Fastest Field Is the One Already Filled</h2>
+    <h2 className="fe-section-title">A form is only done when it is accessible</h2>
   </div>
 
   <p className="fe-text">
-    The best way to reduce the cost of a field is to remove it, and the next best is to answer it in advance. A smart default (the country pre-selected from locale, the event date defaulting to the next weekend, the quantity starting at one) turns an act of typing into an act of confirming. Defaults are powerful precisely because most people accept them, which is exactly why they carry an ethical weight: the default must be the choice the user would most likely make with full attention, and it must always stay editable.
-  </p>
-
-  <p className="fe-text">
-    That line, between a helpful default and a manipulative one, is not a form-styling question, it is a persuasion question. A default that quietly opts the user into a paid add-on is the same mechanism pointed the wrong way. The design-system rule is simple: pre-fill to save effort, never to extract a choice the user did not mean to make.
-  </p>
-
-  <a className="fe-xlink" href="./?path=/docs/patterns-persuasion--docs">
-    <span className="fe-material" aria-hidden="true">arrow_forward</span>
-    See Patterns / Persuasion for the ethics of defaults and the truth-and-reversibility test
-  </a>
-</div>
-
-{/* ============================================ */}
-{/* CHAPTER 6: ACCESSIBILITY                        */}
-{/* ============================================ */}
-
-<div className="fe-section">
-  <div className="fe-section-header">
-    <span className="fe-section-number">6</span>
-    <h2 className="fe-section-title">A Form Is Only Done When It Is Accessible</h2>
-  </div>
-
-  <p className="fe-text">
-    Accessible forms are not a separate build, they are the same build done correctly. Three WCAG success criteria govern most of it, and each one maps directly to a habit from the chapters above.
+    An accessible form is the same form built correctly. Three WCAG criteria carry most of it, and each maps straight to a habit from the chapters above.
   </p>
 
   <div className="fe-table-scroll">
@@ -1040,28 +924,28 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </thead>
       <tbody>
         <tr>
-          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html" target="_blank" rel="noreferrer">3.3.2 Labels or Instructions</a></td>
+          <td className="fe-kbd">3.3.2 Labels or Instructions</td>
           <td>A</td>
           <td>Every control has a visible label or instruction.</td>
-          <td>A persistent <code>&lt;label for&gt;</code> above each field; help text linked with <code>aria-describedby</code>.</td>
+          <td>A persistent <code>&lt;label for&gt;</code> above each field; help linked with <code>aria-describedby</code>.</td>
         </tr>
         <tr>
-          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noreferrer">3.3.1 Error Identification</a></td>
+          <td className="fe-kbd">3.3.1 Error Identification</td>
           <td>A</td>
           <td>Errors are identified and described in text.</td>
-          <td>An inline text message, <code>aria-invalid="true"</code>, red as reinforcement not as the sole signal.</td>
+          <td>Inline text message plus <code>aria-invalid="true"</code>; red reinforces, never carries it alone.</td>
         </tr>
         <tr>
-          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html" target="_blank" rel="noreferrer">3.3.3 Error Suggestion</a></td>
+          <td className="fe-kbd">3.3.3 Error Suggestion</td>
           <td>AA</td>
           <td>When a fix is known, suggest it.</td>
           <td>The message says how to correct the value, not only that it is wrong.</td>
         </tr>
         <tr>
-          <td className="fe-kbd"><a className="fe-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noreferrer">2.5.8 Target Size</a></td>
+          <td className="fe-kbd">2.5.8 Target Size</td>
           <td>AA</td>
           <td>Interactive targets are at least 24 by 24 CSS pixels.</td>
-          <td>Checkboxes and toggles clear 24px; the comfortable target is 44px, per AAA 2.5.5.</td>
+          <td>Checkboxes and toggles clear 24px; the comfortable target is 44px (AAA 2.5.5).</td>
         </tr>
       </tbody>
     </table>
@@ -1070,24 +954,26 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="fe-callout">
     <span className="fe-material" aria-hidden="true">accessibility_new</span>
     <p className="fe-callout-text">
-      <strong>The label is the click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input's <code>id</code> both names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. Wrapping or associating is not optional polish, it is the accessible default.
+      <strong>The label is a click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input's <code>id</code> names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. This is the accessible default, not optional polish.
     </p>
   </div>
 
-  <a className="fe-xlink" href="./?path=/docs/patterns-accessibility--docs">
-    <span className="fe-material" aria-hidden="true">arrow_forward</span>
-    See Patterns / Accessibility for focus order, live-region announcements and contrast
-  </a>
+  <div>
+    <a className="fe-xlink" href="./?path=/docs/patterns-accessibility--docs">
+      <span className="fe-material" aria-hidden="true">arrow_forward</span>
+      Patterns / Accessibility: focus order, live regions, contrast
+    </a>
+  </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 7: TAXONOMY RULES                       */}
+{/* 6: RULES                                      */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
-    <span className="fe-section-number">7</span>
-    <h2 className="fe-section-title">Rules of the Form</h2>
+    <span className="fe-section-number">6</span>
+    <h2 className="fe-section-title">Rules of the form</h2>
   </div>
 
   <div className="fe-dodont">
@@ -1098,8 +984,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </div>
       <ul>
         <li>Keep the label visible above every field, always.</li>
-        <li>One field per line. A single column reads top to bottom.</li>
-        <li>Match <code>type</code> and <code>inputmode</code> to the answer, so the right keyboard appears.</li>
+        <li>One field per line, a single column top to bottom.</li>
+        <li>Match <code>type</code> and <code>inputmode</code> to the answer.</li>
         <li>Add the <code>autocomplete</code> token so the browser can fill it.</li>
         <li>Reward valid input while typing, surface errors on blur.</li>
         <li>Write errors that say how to fix the problem, in text.</li>
@@ -1114,12 +1000,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </div>
       <ul>
         <li>Use a placeholder as the label. It vanishes on the first keystroke.</li>
-        <li>Put two fields side by side to look compact.</li>
-        <li>Leave everything <code>type="text"</code> and force a keyboard hunt on mobile.</li>
+        <li>Put two fields side by side just to look compact.</li>
+        <li>Leave everything <code>type="text"</code> and force a keyboard hunt.</li>
         <li>Validate on every keystroke and flag half-typed input as wrong.</li>
         <li>Ship "Invalid" or "Error" with no way to recover.</li>
         <li>Signal an error with a red border and no words.</li>
-        <li>Tint unrelated UI red, or introduce any second accent colour.</li>
+        <li>Tint unrelated UI red, or add any second accent colour.</li>
         <li>Rebuild a date picker or select the platform already ships.</li>
       </ul>
     </div>
@@ -1131,19 +1017,19 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="fe-ladder">
     <div className="fe-ladder-step">
-      <p className="fe-ladder-text"><strong>Does this field need to exist?</strong> Every field is a cost. If you can infer it, default it, or drop it, do that before you style anything.</p>
+      <p className="fe-ladder-text"><strong>Does this field need to exist?</strong> Every field is a cost. If you can infer it, default it, or drop it, do that before styling anything.</p>
     </div>
     <div className="fe-ladder-step">
-      <p className="fe-ladder-text"><strong>Can a native control answer it?</strong> A <code>&lt;select&gt;</code>, <code>type="date"</code>, a checkbox. Use it, and the keyboard and accessibility come built in.</p>
+      <p className="fe-ladder-text"><strong>Can a native control answer it?</strong> A <code>&lt;select&gt;</code>, <code>type="date"</code>, a checkbox. Use it, and keyboard and accessibility come built in.</p>
     </div>
     <div className="fe-ladder-step">
       <p className="fe-ladder-text"><strong>What is the answer's shape?</strong> Pick the <code>type</code> and <code>inputmode</code> that raise the matching keyboard, and add the <code>autocomplete</code> token.</p>
     </div>
     <div className="fe-ladder-step">
-      <p className="fe-ladder-text"><strong>What can go wrong, and how is it fixed?</strong> Write the help text and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.</p>
+      <p className="fe-ladder-text"><strong>What can go wrong, and how is it fixed?</strong> Write the help and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.</p>
     </div>
     <div className="fe-ladder-step">
-      <p className="fe-ladder-text"><strong>Only now, assemble it</strong> from the primitives above: visible label, control, help, error, in one column, states inherited from Patterns / Interactive.</p>
+      <p className="fe-ladder-text"><strong>Only now, assemble it</strong> from the primitives: visible label, control, help, error, in one column, states inherited from Patterns / Interactive.</p>
     </div>
   </div>
 </div>
@@ -1156,28 +1042,28 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <h2 className="fe-section-title">Sources</h2>
   <ul className="fe-sources-list">
     <li>
-      <strong>Nielsen Norman Group, "Placeholders in Form Fields Are Harmful."</strong> Why placeholder text cannot replace a label: it disappears on input, strains memory, and hurts error recovery. nngroup.com/articles/form-design-placeholders
+      <strong>Nielsen Norman Group, "Placeholders in Form Fields Are Harmful."</strong> Placeholder text cannot replace a label: it disappears on input, strains memory, and hurts error recovery. nngroup.com/articles/form-design-placeholders
     </li>
     <li>
       <strong>Nielsen Norman Group, "Error-Message Guidelines."</strong> Errors must be visible, human-readable, specific, and constructive about how to recover. nngroup.com/articles/error-message-guidelines
     </li>
     <li>
-      <strong>Mihael Konjević, "Inline Validation in Web Forms: A UX Designer's Guide" (Smashing Magazine, 2022).</strong> Source of the "reward early, punish late" principle: validate to a positive while typing, but hold errors until the user leaves the field. smashingmagazine.com/2022/09/inline-validation-web-forms-ux
+      <strong>Mihael Konjevic, "Inline Validation in Web Forms" (Smashing Magazine, 2022).</strong> Source of "reward early, punish late": validate to a positive while typing, hold errors until the user leaves the field. smashingmagazine.com/2022/09/inline-validation-web-forms-ux
     </li>
     <li>
-      <strong>Baymard Institute, form-field usability research.</strong> "Avoid Extensive Multicolumn Layouts" on single-column forms (baymard.com/blog/avoid-multi-column-forms), "Never Use Inline Labels" on keeping the label visible (baymard.com/blog/mobile-forms-avoid-inline-labels), and "Usability Testing of Inline Form Validation" on validating on blur and clearing the error the instant it is fixed (baymard.com/blog/inline-form-validation).
+      <strong>Baymard Institute, form-field usability research.</strong> Single-column forms complete faster (baymard.com/blog/avoid-multi-column-forms), keep the label visible (baymard.com/blog/mobile-forms-avoid-inline-labels), and validate on blur (baymard.com/blog/inline-form-validation).
     </li>
     <li>
-      <strong>web.dev, "Payment and address form best practices" and the Learn Forms course.</strong> Correct <code>type</code>, <code>inputmode</code>, and <code>autocomplete</code> tokens for mobile keyboards and browser autofill. web.dev/articles/payment-and-address-form-best-practices · web.dev/learn/forms
+      <strong>web.dev, "Payment and address form best practices" and the Learn Forms course.</strong> Correct <code>type</code>, <code>inputmode</code>, and <code>autocomplete</code> tokens for mobile keyboards and autofill. web.dev/articles/payment-and-address-form-best-practices
     </li>
     <li>
-      <strong>MDN Web Docs.</strong> The <code>inputmode</code> global attribute and the <code>autocomplete</code> attribute token list (given-name, email, tel, one-time-code, and the rest). developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inputmode · .../Attributes/autocomplete
+      <strong>MDN Web Docs.</strong> The <code>inputmode</code> global attribute and the <code>autocomplete</code> token list. developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inputmode
     </li>
     <li>
-      <strong>W3C, Understanding WCAG 2.2.</strong> SC 3.3.2 Labels or Instructions (A), 3.3.1 Error Identification (A), 3.3.3 Error Suggestion (AA), 2.5.8 Target Size Minimum (AA), 2.5.5 Target Size Enhanced (AAA). w3.org/WAI/WCAG22/Understanding
+      <strong>W3C, Understanding WCAG 2.2.</strong> SC 3.3.2 (A), 3.3.1 (A), 3.3.3 (AA), 2.5.8 (AA), 2.5.5 (AAA). w3.org/WAI/WCAG22/Understanding
     </li>
     <li>
-      Approximate landing URLs are given for each source; a specific article path may shift over time. <span className="fe-spa">SPA</span> The exact timing thresholds (reward-while-typing, punish-on-blur) and the strict single-accent, error-only use of <code>--color-error</code> are this system's house doctrine layered on top of the cited guidance, not verbatim claims from the authors.
+      Approximate landing URLs are given per source; a specific path may shift over time. <span className="fe-spa">Doctrine</span> The reward-while-typing / punish-on-blur timing and the single-accent, error-only use of <code>--color-error</code> are this system's house rules layered on the cited guidance, not verbatim claims from the authors.
     </li>
   </ul>
 </div>

@@ -42,8 +42,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'Red Hat Display', system-ui, sans-serif;
     color: #0f172a;
     font-size: 1.875rem;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     margin-bottom: 0.75rem;
+    max-width: 20ch;
   }
 
   .pers-description {
@@ -51,7 +53,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #475569;
     font-size: 1rem;
     line-height: 1.65;
-    max-width: 68ch;
+    max-width: 62ch;
   }
 
   .pers-description strong { color: #0f172a; font-weight: 600; }
@@ -138,7 +140,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #475569;
     font-size: 0.9375rem;
     line-height: 1.7;
-    max-width: 68ch;
+    max-width: 64ch;
   }
 
   .pers-lede strong { color: #0f172a; font-weight: 600; }
@@ -152,21 +154,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #4f46e5;
   }
 
-  .pers-sub {
-    font-size: 0.6875rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #94a3b8;
-    margin: 1.4rem 0 0.6rem;
-  }
-
-  /* Evidence callout */
+  /* Evidence callout: one finding, one cite */
   .pers-evidence {
     background: #eef2ff;
     border: 1px solid #c7d2fe;
     border-radius: 12px;
-    padding: 1.1rem 1.35rem;
+    padding: 1rem 1.3rem;
     margin: 1.1rem 0;
     display: flex;
     gap: 0.85rem;
@@ -191,27 +184,27 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .pers-cite {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.7rem;
-    color: #64748b;
+    color: #475569;
     display: block;
-    margin-top: 0.4rem;
-    word-break: break-word;
+    margin-top: 0.35rem;
   }
 
-  .pers-caveat {
+  .pers-contested {
     display: inline-block;
     font-size: 0.625rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #64748b;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
+    color: #4f46e5;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
     border-radius: 4px;
     padding: 0.05rem 0.4rem;
-    margin-right: 0.4rem;
+    margin-left: 0.4rem;
+    vertical-align: middle;
   }
 
-  /* Apply-in-product block */
+  /* Apply-in-product block holds the demo */
   .pers-apply {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
@@ -293,6 +286,24 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin: -0.6rem 0 0.9rem;
   }
 
+  /* Choice chips (endowment demo) */
+  .pers-opts { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.1rem; }
+  .pers-opt {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #334155;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    padding: 0.3rem 0.75rem;
+  }
+  .pers-opt.sel {
+    background: #eef2ff;
+    border-color: #4f46e5;
+    color: #3730a3;
+    font-weight: 600;
+  }
+
   /* Progress demo */
   .pers-progress-track {
     height: 10px;
@@ -361,7 +372,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #94a3b8;
+    color: #475569;
     margin-bottom: 0.35rem;
   }
 
@@ -377,7 +388,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .pers-price-note {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #64748b;
+    color: #475569;
     margin-top: 0.25rem;
     line-height: 1.5;
   }
@@ -412,7 +423,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .pers-line-col.ok .pers-line-tag { color: #4f46e5; }
-  .pers-line-col.avoid .pers-line-tag { color: #64748b; }
+  .pers-line-col.avoid .pers-line-tag { color: #475569; }
 
   .pers-line-tag .pers-material { font-size: 1.05rem; }
 
@@ -446,7 +457,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.9375rem;
     color: #c7d2fe;
     line-height: 1.7;
-    max-width: 68ch;
+    max-width: 64ch;
   }
 
   .pers-ethics-lede strong { color: #ffffff; }
@@ -485,85 +496,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.55;
   }
 
-  /* Section shell (rules, ladder, sources) */
+  /* Section shell (ladder, sources) */
   .pers-section { margin-top: 2.75rem; }
 
   .pers-section-title {
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
   }
-
-  /* Do / Don't */
-  .pers-rules {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .pers-rules-col {
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    padding: 1.5rem;
-  }
-
-  .pers-rules-col-title {
-    font-weight: 700;
-    font-size: 0.8125rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .pers-rules-col.do .pers-rules-col-title { color: #4f46e5; }
-  .pers-rules-col.dont .pers-rules-col-title { color: #64748b; }
-
-  .pers-rules-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  .pers-rules-col.do .pers-rules-badge { background: #4f46e5; color: white; }
-  .pers-rules-col.dont .pers-rules-badge { background: #e2e8f0; color: #64748b; }
-
-  .pers-rules-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    color: #475569;
-    line-height: 1.55;
-  }
-
-  .pers-rules-list li {
-    padding-left: 1.25rem;
-    position: relative;
-    margin-bottom: 0.6rem;
-  }
-
-  .pers-rules-list li::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-weight: 700;
-  }
-
-  .pers-rules-col.do .pers-rules-list li::before { content: '+'; color: #4f46e5; }
-  .pers-rules-col.dont .pers-rules-list li::before { content: 'x'; color: #94a3b8; }
 
   /* Decision ladder */
   .pers-decision {
@@ -621,7 +564,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .pers-sources-list li {
-    padding: 0.6rem 0;
+    padding: 0.65rem 0;
     border-bottom: 1px solid #f1f5f9;
   }
 
@@ -666,9 +609,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <span className="pers-material" style={{ fontSize: '1.5rem' }} aria-hidden="true">handshake</span>
   </div>
   <div>
-    <h1 className="pers-title">Persuasion, In the User's Favor</h1>
+    <h1 className="pers-title">Persuade in the user's favor, or not at all.</h1>
     <p className="pers-description">
-      Behavioral design is real and it works, which is exactly why it carries an obligation. A well-placed default, an honest progress bar, or a price shown next to its true reference can lower the friction between a person and something they genuinely want. The same mechanisms, pointed the other way, become <strong>dark patterns</strong>. This system uses six behavioral principles and draws a hard line under each one: honest persuasion that serves the user's own goal, never manipulation that extracts against it.
+      Behavioral design works, which is exactly why it needs a limit. Six principles, each one drawn to move a person toward something they already want, and each one gated by a hard line: honest persuasion that serves the user, never a <strong>dark pattern</strong> that extracts against them. The test is simple. If a technique only works while the user does not notice it, it does not ship.
     </p>
   </div>
 </div>
@@ -677,17 +620,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="pers-doctrine-card accent">
     <span className="pers-material pers-doctrine-icon" aria-hidden="true">volunteer_activism</span>
     <div className="pers-doctrine-title">Serve the user's goal</div>
-    <p className="pers-doctrine-text">Every technique here is legitimate only when it moves a person toward an outcome they already want. If it works only because the user does not notice, it is out.</p>
+    <p className="pers-doctrine-text">A technique earns its place only when it moves a person toward an outcome they already want. If it works only unnoticed, it is out.</p>
   </div>
   <div className="pers-doctrine-card">
     <span className="pers-material pers-doctrine-icon" aria-hidden="true">visibility</span>
     <div className="pers-doctrine-title">Nothing hidden</div>
-    <p className="pers-doctrine-text">Reversible, transparent, and true. A default is a starting point the user can change, not a trap. A number on screen matches reality.</p>
+    <p className="pers-doctrine-text">Reversible, transparent, true. A default is a starting point the user can change. A number on screen matches reality.</p>
   </div>
   <div className="pers-doctrine-card">
     <span className="pers-material pers-doctrine-icon" aria-hidden="true">block</span>
     <div className="pers-doctrine-title">Dark patterns are banned</div>
-    <p className="pers-doctrine-text">Fake scarcity, false countdowns, confirmshaming, and inflated anchor prices are prohibited in this system, not merely discouraged.</p>
+    <p className="pers-doctrine-text">Fake scarcity, false countdowns, confirmshaming, inflated anchors. Prohibited in this system, not merely discouraged.</p>
   </div>
 </div>
 
@@ -702,26 +645,21 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="pers-lede">
-    A blank form is a pile of decisions handed to someone who came to do one thing. Every empty field is a small tax, and the total is friction and abandonment. A <strong>smart default</strong> pre-selects the most common, most sensible choice so the path of least resistance is also the good path. The user is never locked in: the default is a visible, editable starting point, not a decision made for them.
+    A blank form hands every decision to someone who came to do one thing. A <strong>smart default</strong> pre-selects the sensible choice so the path of least resistance is also the good path, always visible and one tap to change.
   </p>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
     <div className="pers-evidence-body">
-      <strong>Defaults are among the most powerful levers in choice architecture.</strong> Johnson and Goldstein showed that whether organ donation is opt-in or opt-out swings participation from single digits to over 90 percent, holding everything else constant. Thaler and Sunstein generalized this into the "nudge": the default option is chosen far more often simply because it is the default. Nielsen Norman Group extends the same finding to forms, where smart defaults measurably cut completion time and error rates.
-      <span className="pers-cite">Johnson &amp; Goldstein, "Do Defaults Save Lives?" Science 302 (2003) · Thaler &amp; Sunstein, Nudge (2008) · nngroup.com, form design</span>
+      <strong>Defaults are the strongest lever in choice architecture.</strong> Switching organ donation from opt-in to opt-out swings participation from single digits to over 90 percent, everything else held constant.
+      <span className="pers-cite">Johnson &amp; Goldstein, Science (2003). Notes below.</span>
     </div>
   </div>
-
-  <p className="pers-lede">
-    <span className="pers-caveat">Caveat</span>
-    Two honest notes. First, the mechanism is effort-avoidance and status-quo bias, not "decision fatigue": the ego-depletion account behind that popular phrase failed a large multi-lab replication, so we do not lean on it. <span className="pers-spa">SPA</span> Second, a default is influential precisely because many people never change it, so an unsuitable default does real harm. The test is whether the pre-filled choice is the one the user would most likely pick with full attention. When there is no such majority choice, or the decision is high-stakes and personal, leave it unset and ask.
-  </p>
 
   <div className="pers-apply">
     <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">edit_note</span> In a RamosLabs product</div>
     <p className="pers-apply-text">
-      Pre-fill the field the way the data already points. Detect country and currency, select the most common plan, default the quantity to <code>1</code>, and pre-check the option most people keep. Style the pre-filled state so it is obviously changeable, never a locked value. See <strong>Patterns / Form Elements</strong> for the input and select primitives that carry these defaults.
+      Pre-fill the field the way the data already points, and style the pre-filled state so it reads as changeable, never locked. See <strong>Patterns / Form Elements</strong> for the input primitives.
     </p>
     <div className="pers-demo">
       <label className="pers-field-label" htmlFor="pers-country">Country</label>
@@ -735,46 +673,41 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="pers-line">
     <div className="pers-line-col ok">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
-      <p className="pers-line-text">Default to the option a typical user would choose anyway, clearly labelled and one tap to change. <strong>The default saves effort on a choice the user still owns.</strong></p>
+      <p className="pers-line-text">Default to the option a typical user would pick anyway, labelled and one tap to change. <strong>The default saves effort on a choice the user still owns.</strong></p>
     </div>
     <div className="pers-line-col avoid">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
-      <p className="pers-line-text">Pre-checking a paid add-on, a marketing opt-in, or an insurance upsell the user did not ask for, so inattention becomes revenue. <strong>Preselection is banned wherever it costs the user money or privacy.</strong></p>
+      <p className="pers-line-text">Pre-checking a paid add-on or a marketing opt-in the user never asked for, so inattention becomes revenue. <strong>Preselection is banned wherever it costs money or privacy.</strong></p>
     </div>
   </div>
 </div>
 
 {/* ============================================ */}
-{/* 2. GOAL GRADIENT                             */}
+{/* 2. ENDOWED PROGRESS / GOAL GRADIENT          */}
 {/* ============================================ */}
 
 <div className="pers-principle">
   <div className="pers-principle-head">
     <span className="pers-num">2</span>
-    <h2 className="pers-principle-title">Goal Gradient Effect</h2>
+    <h2 className="pers-principle-title">Endowed Progress</h2>
   </div>
 
   <p className="pers-lede">
-    Effort accelerates as a goal comes into view. People push harder on the last stretch than the first, so a progress indicator that starts at a true, non-zero point ("2 of 6 done" rather than a cold zero) makes the finish feel reachable and pulls the user forward. The rule is not to inflate the number, it is to <strong>count the real work already behind them</strong> so the bar never opens empty.
+    Effort accelerates as the finish comes into view. Open a progress bar at a true, non-zero point, counting real work already behind the user, and the end feels reachable. The rule is not to inflate the number, it is to <strong>count only what actually happened</strong>.
   </p>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
     <div className="pers-evidence-body">
-      <strong>Motivation rises the closer a goal appears.</strong> Hull first measured the goal gradient in 1932. Kivetz, Urminsky, and Zheng revived it for consumer behavior in 2006, showing purchases accelerate as a loyalty reward nears. The specific "start above zero" recommendation comes from a separate study, the <strong>endowed progress effect</strong>: Nunes and Drèze gave a car-wash card two stamps toward a ten-stamp reward, versus a blank card needing eight, the same eight washes either way. The pre-credited card reached completion far more often (34 percent versus 19 percent). A true head start pulls people forward.
-      <span className="pers-cite">Hull, Psychological Review (1932) · Kivetz, Urminsky &amp; Zheng, J. Marketing Research 43 (2006) · Nunes &amp; Drèze, "The Endowed Progress Effect," J. Consumer Research 32 (2006)</span>
+      <strong>A real head start pulls people forward.</strong> A car-wash card pre-credited two of ten stamps was completed far more often than a blank card needing the same eight washes (34 versus 19 percent).
+      <span className="pers-cite">Nunes &amp; Dreze, J. Consumer Research (2006). Notes below.</span>
     </div>
   </div>
-
-  <p className="pers-lede">
-    <span className="pers-caveat">Caveat</span>
-    The endowed-progress result depends on giving the head start an honest reason. In the study, the extra stamps were framed as a bonus, not invented from nothing. A progress bar that claims steps the user never took reads as a trick the moment it is noticed. Only count real progress: a confirmed email, a saved draft, a completed step.
-  </p>
 
   <div className="pers-apply">
     <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">trending_up</span> In a RamosLabs product</div>
     <p className="pers-apply-text">
-      A multi-step flow should open with the first step already credited when the user has, in fact, done something (arrived with an account, verified an email, imported a file). Show a step meter and a labelled bar. The fill uses <code>--color-primary</code> on a <code>--color-border</code> track. See <strong>Patterns / Interactive</strong> for progress and stepper states.
+      Open a multi-step flow with the first step already credited when the user genuinely did something (arrived with an account, verified an email). The fill uses <code>--color-primary</code> on a <code>--color-border</code> track. See <strong>Patterns / Interactive</strong>.
     </p>
     <div className="pers-demo">
       <div className="pers-progress-meta"><span>Set up your workspace</span><span>Step 2 of 6</span></div>
@@ -793,11 +726,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="pers-line">
     <div className="pers-line-col ok">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
-      <p className="pers-line-text">Credit steps the user genuinely completed and show how near the finish is. <strong>The head start is real, and the destination is something the user chose to reach.</strong></p>
+      <p className="pers-line-text">Credit steps the user truly completed and show how near the finish is. <strong>The head start is real, and the destination is one the user chose.</strong></p>
     </div>
     <div className="pers-line-col avoid">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
-      <p className="pers-line-text">A "90 percent complete" bar that only fills once payment or personal data is handed over, or endless artificial steps that manufacture sunk cost. <strong>Progress that does not reflect real progress is a lie with a nice animation.</strong></p>
+      <p className="pers-line-text">A "90 percent complete" bar that only fills once payment is handed over, or invented steps that manufacture sunk cost. <strong>Progress that does not reflect real progress is a lie with a nice animation.</strong></p>
     </div>
   </div>
 </div>
@@ -813,37 +746,39 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="pers-lede">
-    People feel an obligation to return a favor. Deliver something genuinely useful first, a result, an insight, a working preview, and the ask that follows lands on willing ground rather than a cold wall. The honest version gives real value with no strings, then makes a fair request. The user owes nothing they did not already want to give.
+    People return a favor. Deliver something genuinely useful first, then make a fair ask, and it lands on willing ground rather than a cold wall. <strong>The value stays whether or not they say yes.</strong>
   </p>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
     <div className="pers-evidence-body">
-      <strong>An unsolicited gift creates a felt obligation to reciprocate.</strong> Cialdini documents reciprocity as one of the core principles of influence, backed by field and lab work. Regan's 1971 experiment is the classic demonstration: participants given a small unrequested favor later agreed to a larger request far more often than a control group.
-      <span className="pers-cite">Cialdini, Influence: The Psychology of Persuasion (1984) · Regan, J. Experimental Social Psychology 7 (1971)</span>
+      <strong>An unsolicited favor creates a felt obligation to return it.</strong> In Regan's classic experiment, people given a small unrequested gift later agreed to a larger request far more often than a control group.
+      <span className="pers-cite">Regan (1971); Cialdini (1984). Notes below.</span>
     </div>
   </div>
-
-  <p className="pers-lede">
-    <span className="pers-caveat">Caveat</span>
-    Regan's effect is well established for offline, interpersonal compliance. The direct translation to "value-first content raises product sign-ups" is a sound-but-untested extrapolation, not something Regan or Cialdini measured. <span className="pers-spa">SPA</span> Use it as a design instinct, not a guaranteed lift.
-  </p>
 
   <div className="pers-apply">
     <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">redeem</span> In a RamosLabs product</div>
     <p className="pers-apply-text">
-      Let the product prove itself before it asks. Return a real analysis, a rendered result, or a usable draft, then invite the user to save it by creating an account. The value is delivered whether or not they sign up. The request comes after the gift, never as a toll gate in front of it.
+      Let the product prove itself before it asks. Return a real result, then invite the user to save it. The request comes after the gift, never as a toll gate in front of it.
     </p>
+    <div className="pers-demo">
+      <div className="pers-price-offer">
+        <div className="pers-price-cap">Your result, ready</div>
+        <div className="pers-price-value">Report generated</div>
+        <p className="pers-price-note">Yours to read now. Create a free account only if you want to save it.</p>
+      </div>
+    </div>
   </div>
 
   <div className="pers-line">
     <div className="pers-line-col ok">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
-      <p className="pers-line-text">Give a genuinely useful result up front, then ask to save or continue. <strong>The gift is real and keeps its value even if the user declines the ask.</strong></p>
+      <p className="pers-line-text">Give a genuinely useful result up front, then ask to save or continue. <strong>The gift keeps its value even if the user declines.</strong></p>
     </div>
     <div className="pers-line-col avoid">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
-      <p className="pers-line-text">A hollow "free" gift that is really a hook, a preview that vanishes unless you pay, or manufactured guilt for accepting help. <strong>If the value evaporates the moment the user hesitates, it was bait, not a gift.</strong></p>
+      <p className="pers-line-text">A hollow "free" gift that is really a hook, or a preview that vanishes unless you pay. <strong>If the value evaporates the moment the user hesitates, it was bait.</strong></p>
     </div>
   </div>
 </div>
@@ -859,72 +794,72 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="pers-lede">
-    We value what we build and what we own more than the identical thing untouched by us. Invite a person to shape something, name a project, arrange a layout, tune a setting, and it becomes theirs in their mind before it is theirs in fact. That felt ownership makes the last step, saving or signing up, feel like keeping something they already have rather than starting from scratch.
+    We value what we build and own more than the identical thing untouched. Let a person name a project or arrange a layout and it becomes theirs in their mind before it is theirs in fact, so signing up feels like <strong>keeping something they already have</strong>.
   </p>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
     <div className="pers-evidence-body">
-      <strong>Labor and ownership both inflate perceived value.</strong> Norton, Mochon, and Ariely named the "IKEA effect": people price self-assembled items above identical pre-made ones, purely because they built them. The related endowment effect, measured by Kahneman, Knetsch, and Thaler with their mug experiments, shows owners demand more to give up an object than others will pay for it.
-      <span className="pers-cite">Norton, Mochon &amp; Ariely, J. Consumer Psychology 22 (2012) · Kahneman, Knetsch &amp; Thaler, J. Political Economy 98 (1990)</span>
+      <strong>Labor and ownership both inflate perceived value.</strong> People price self-assembled goods above identical ready-made ones (the IKEA effect), and owners demand more to give up an object than others will pay for it (the endowment effect).
+      <span className="pers-cite">Norton, Mochon &amp; Ariely (2012); Kahneman, Knetsch &amp; Thaler (1990). Notes below.</span>
     </div>
   </div>
-
-  <p className="pers-lede">
-    <span className="pers-caveat">Caveat</span>
-    Norton and colleagues found the effect needs <strong>successful completion</strong>: unfinished or failed building does not raise valuation, and a task that is trivially easy or punishingly hard weakens it. And whether self-customization specifically lowers sign-up abandonment (rather than just raising how much people value what they made) is an inferential step beyond these studies. <span className="pers-spa">SPA</span> Keep the customization real and completable.
-  </p>
 
   <div className="pers-apply">
     <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">build</span> In a RamosLabs product</div>
     <p className="pers-apply-text">
-      Let the user personalize before the gate. Configure the dashboard, draft the first document, pick a theme, all before an account exists. Preserve that work through sign-up so nothing they made is lost. Investment the user chose to make is legitimate; investment tricked out of them is not.
+      Let the user personalize before the gate, then carry that work intact through sign-up so nothing they made is lost. Investment they chose to make is legitimate; investment tricked out of them is not.
     </p>
+    <div className="pers-demo">
+      <label className="pers-field-label" htmlFor="pers-project">Name your workspace</label>
+      <input id="pers-project" className="pers-field filled" defaultValue="Q3 launch plan" />
+      <label className="pers-field-label" htmlFor="pers-layout">Starting layout</label>
+      <div className="pers-opts" id="pers-layout">
+        <span className="pers-opt sel">Board</span>
+        <span className="pers-opt">List</span>
+        <span className="pers-opt">Timeline</span>
+      </div>
+    </div>
   </div>
 
   <div className="pers-line">
     <div className="pers-line-col ok">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
-      <p className="pers-line-text">Offer real customization the user wants, and carry their work intact across the sign-up boundary. <strong>They keep exactly what they built.</strong></p>
+      <p className="pers-line-text">Offer real customization the user wants, and carry their work across the sign-up boundary intact. <strong>They keep exactly what they built.</strong></p>
     </div>
     <div className="pers-line-col avoid">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
-      <p className="pers-line-text">Forcing busywork purely to manufacture sunk cost, then holding the user's own work hostage behind a paywall or deleting it if they leave. <strong>Effort must never become a hostage.</strong></p>
+      <p className="pers-line-text">Forcing busywork to manufacture sunk cost, then holding the user's own work hostage behind a paywall. <strong>Effort must never become a hostage.</strong></p>
     </div>
   </div>
 </div>
 
 {/* ============================================ */}
-{/* 5. LOSS AVERSION                             */}
+{/* 5. LOSS AVERSION (CONTESTED)                 */}
 {/* ============================================ */}
 
 <div className="pers-principle">
   <div className="pers-principle-head">
     <span className="pers-num">5</span>
-    <h2 className="pers-principle-title">Loss Aversion</h2>
+    <h2 className="pers-principle-title">Loss Aversion <span className="pers-contested">Contested</span></h2>
   </div>
 
   <p className="pers-lede">
-    A loss tends to weigh heavier than an equivalent gain. Framing a choice around what a person stands to lose can therefore focus attention more sharply than the same fact framed as a gain. The honest use is a truthful reminder of real value at stake: an unsaved draft, an expiring credit the user actually earned, a benefit they currently hold and could drop.
+    A loss tends to weigh heavier than an equivalent gain, so framing a choice around what a person stands to lose can sharpen attention. Use it only where a <strong>real loss exists</strong>: an unsaved draft, an earned credit about to expire. Never invent one.
   </p>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
     <div className="pers-evidence-body">
-      <strong>Losses loom larger than gains.</strong> Kahneman and Tversky's prospect theory formalized this in 1979: the value function is steeper for losses than for equal-sized gains. It is one of the most cited results in behavioral economics.
-      <span className="pers-cite">Kahneman &amp; Tversky, "Prospect Theory," Econometrica 47 (1979)</span>
+      <strong>Losses loom larger than gains.</strong> Prospect theory formalized it: the value function is steeper for losses than for equal-sized gains. The size of that asymmetry, though, is actively debated.
+      <span className="pers-cite">Kahneman &amp; Tversky (1979); Gal &amp; Rucker (2018). Notes below.</span>
     </div>
   </div>
-
-  <p className="pers-lede">
-    <span className="pers-caveat">Contested</span>
-    Treat loss aversion as a real but bounded effect, not a universal law. Gal and Rucker's 2018 review argues the asymmetry is weaker and more context-dependent than often claimed; Simonson's reply the same year defends a <em>contingent</em> version, real but conditional. The debate is unresolved. Practically: use loss framing only where a genuine loss exists, do not manufacture one, and never assume fear will reliably out-pull a clearly communicated gain.
-  </p>
 
   <div className="pers-apply">
     <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">savings</span> In a RamosLabs product</div>
     <p className="pers-apply-text">
-      Name the real thing at risk, plainly. "Your draft has unsaved changes" or "Your 200 saved items stay if you keep this plan" states a true consequence the user can act on. Pair the warning with an easy way to prevent the loss. No invented deadlines, no fake stock counters.
+      Name the real thing at risk, plainly, and pair the warning with an easy way to prevent the loss. No invented deadlines, no fake stock counters.
     </p>
     <div className="pers-demo">
       <div className="pers-price-cap" style={{ color: '#4f46e5' }}>Honest loss-framed reminder</div>
@@ -941,7 +876,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
     <div className="pers-line-col avoid">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
-      <p className="pers-line-text">False urgency, fake "only 2 left" counters, invented countdown timers, or confirmshaming ("No thanks, I like overpaying"). <strong>Manufactured fear is the sharpest dark pattern of all, and it is banned.</strong></p>
+      <p className="pers-line-text">Fake "only 2 left" counters, invented countdowns, or confirmshaming ("No thanks, I like overpaying"). <strong>Manufactured fear is the sharpest dark pattern of all, and it is banned.</strong></p>
     </div>
   </div>
 </div>
@@ -957,26 +892,21 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="pers-lede">
-    A number means little in isolation. Placed next to a reference, it reads as large or small by comparison. A cost shown alone invites sticker shock; the same cost shown beside the value it unlocks, or a higher reference the user recognizes, reads as proportionate. The honest version anchors on a <strong>true</strong> reference: a real list price, a real alternative cost, the concrete value delivered.
+    A number means little in isolation. Beside a true reference, a real list price, a genuine alternative, or the value it returns, the same cost reads as proportionate. Anchor only on a <strong>reference the user could verify</strong>.
   </p>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
     <div className="pers-evidence-body">
-      <strong>Judgments latch onto whatever reference is offered.</strong> Tversky and Kahneman's 1974 work established anchoring as a general heuristic: an arbitrary starting number pulls people's numeric estimates toward it, even when they know it is arbitrary. Ariely, Loewenstein, and Prelec carried it directly into pricing in 2003, showing an arbitrary anchor shifts what people will actually pay for a real product. Contrast is the sibling effect: an item is judged relative to what sits beside it. Together they explain why context, not the raw figure, drives how a price feels.
-      <span className="pers-cite">Tversky &amp; Kahneman, Science 185 (1974), general anchoring heuristic · Ariely, Loewenstein &amp; Prelec, "Coherent Arbitrariness," Q. J. Economics 118 (2003), anchoring in pricing</span>
+      <strong>Judgments latch onto whatever reference is offered.</strong> An anchor pulls numeric estimates toward it even when people know it is arbitrary, and it shifts what they will actually pay for a real product.
+      <span className="pers-cite">Tversky &amp; Kahneman (1974); Ariely, Loewenstein &amp; Prelec (2003). Notes below.</span>
     </div>
   </div>
-
-  <p className="pers-lede">
-    <span className="pers-caveat">Caveat</span>
-    Anchoring is potent, which is why the reference must be true. A comparison price that was never charged, or a struck-through "original" the product never sold at, crosses from context into deception and, in many markets, into unlawful pricing. Contrast is legitimate only when the higher number is real.
-  </p>
 
   <div className="pers-apply">
     <div className="pers-apply-title"><span className="pers-material" aria-hidden="true">payments</span> In a RamosLabs product</div>
     <p className="pers-apply-text">
-      Never show a price bare. Set it beside a genuine reference: the cost it replaces, the annual value it returns, or a real higher tier. Keep the layout calm and factual, the reference on a muted <code>--color-surface-secondary</code> card, the offer on a <code>--color-primary</code> bordered card. Let the comparison inform, not corner.
+      Never show a price bare. Set it beside a genuine reference on a <code>--color-surface-secondary</code> card, with the offer on a <code>--color-primary</code> bordered card. Let the comparison inform, not corner.
     </p>
     <div className="pers-demo">
       <div className="pers-price-row">
@@ -988,7 +918,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="pers-price-offer">
           <div className="pers-price-cap">This plan</div>
           <div className="pers-price-value">$49 / mo</div>
-          <p className="pers-price-note">All three, in one. Reference figure is a real, verifiable total.</p>
+          <p className="pers-price-note">All three, in one. A real, verifiable total.</p>
         </div>
       </div>
     </div>
@@ -1001,7 +931,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
     <div className="pers-line-col avoid">
       <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
-      <p className="pers-line-text">Inflated or fictional anchor prices, a decoy struck-through "original" that never existed, or a fake premium tier that exists only to make the real one look cheap. <strong>A reference the user cannot verify is a lie.</strong></p>
+      <p className="pers-line-text">A struck-through "original" that never sold, or a fake premium tier built only to make the real one look cheap. <strong>A reference the user cannot verify is a lie.</strong></p>
     </div>
   </div>
 </div>
@@ -1013,7 +943,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="pers-ethics">
   <h2 className="pers-ethics-title">The Line: Persuasion or Manipulation</h2>
   <p className="pers-ethics-lede">
-    The mechanics are identical on both sides of the line. What separates honest persuasion from a dark pattern is not the technique, it is <strong>whose goal it serves and what it hides</strong>. Harry Brignull coined "dark patterns" in 2010 for interfaces engineered to trick users into things they did not mean to do, now catalogued at deceptive.design and studied formally by Gray and colleagues. Nielsen Norman Group tracks the same taxonomy as "deceptive patterns". This system treats that catalogue as a list of prohibitions.
+    The mechanics are identical on both sides of the line. What separates honest persuasion from a dark pattern is <strong>whose goal it serves and what it hides</strong>. Brignull coined "dark patterns" in 2010 for interfaces built to trick people into what they did not mean to do. This system treats that catalogue as a list of prohibitions.
   </p>
 
   <div className="pers-ethics-grid">
@@ -1023,50 +953,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
     <div className="pers-ethics-card">
       <div className="pers-ethics-card-title"><span className="pers-material" aria-hidden="true">lightbulb</span> Awareness</div>
-      <p className="pers-ethics-card-text">If it works only because the user does not notice it, it is manipulation. Honest nudges survive being pointed out.</p>
+      <p className="pers-ethics-card-text">If it only works because the user does not notice, it is manipulation. Honest nudges survive being pointed out.</p>
     </div>
     <div className="pers-ethics-card">
       <div className="pers-ethics-card-title"><span className="pers-material" aria-hidden="true">undo</span> Reversibility</div>
-      <p className="pers-ethics-card-text">A default the user can change, a step they can skip, a choice they can undo. Traps that are hard to escape are out.</p>
+      <p className="pers-ethics-card-text">A default they can change, a step they can skip, a choice they can undo. Traps that are hard to escape are out.</p>
     </div>
     <div className="pers-ethics-card">
       <div className="pers-ethics-card-title"><span className="pers-material" aria-hidden="true">fact_check</span> Truth</div>
-      <p className="pers-ethics-card-text">Every scarcity claim, countdown, progress figure, and reference price must be literally true. No inventions.</p>
-    </div>
-  </div>
-</div>
-
-{/* ============================================ */}
-{/* RULES OF IMPLEMENTATION                       */}
-{/* ============================================ */}
-
-<div className="pers-section">
-  <h2 className="pers-section-title">Rules of Implementation</h2>
-
-  <div className="pers-rules">
-    <div className="pers-rules-col do">
-      <div className="pers-rules-col-title"><span className="pers-rules-badge">+</span> Do</div>
-      <ul className="pers-rules-list">
-        <li>Default to the choice a typical user would make with full attention, clearly editable.</li>
-        <li>Start progress from real, completed steps, never a fabricated head start.</li>
-        <li>Deliver genuine value before asking for anything in return.</li>
-        <li>Preserve the user's own work across every gate and sign-up.</li>
-        <li>Frame loss only around value that truly exists and can truly be kept.</li>
-        <li>Anchor prices on references the user could independently verify.</li>
-        <li>Assume a technique will be pointed out. If it only works hidden, remove it.</li>
-      </ul>
-    </div>
-    <div className="pers-rules-col dont">
-      <div className="pers-rules-col-title"><span className="pers-rules-badge">x</span> Don't</div>
-      <ul className="pers-rules-list">
-        <li>Pre-check paid add-ons, marketing opt-ins, or anything that costs money or privacy.</li>
-        <li>Show progress bars that only fill after payment or invented steps.</li>
-        <li>Dangle "free" value that vanishes the moment the user hesitates.</li>
-        <li>Force busywork to manufacture sunk cost, or hold the user's work hostage.</li>
-        <li>Use fake counters, false countdowns, invented scarcity, or confirmshaming.</li>
-        <li>Display struck-through or comparison prices that were never real.</li>
-        <li>Rely on any effect the user would reject if they saw it clearly.</li>
-      </ul>
+      <p className="pers-ethics-card-text">Every scarcity claim, countdown, progress figure, and reference price is literally true. No inventions.</p>
     </div>
   </div>
 </div>
@@ -1080,10 +975,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="pers-decision">
     <div className="pers-decision-step">
-      <div className="pers-decision-text"><strong>Whose goal does this serve?</strong> If it advances the business against what the user wants, stop. It does not ship.</div>
+      <div className="pers-decision-text"><strong>Whose goal does this serve?</strong> If it advances the business against what the user wants, it does not ship.</div>
     </div>
     <div className="pers-decision-step">
-      <div className="pers-decision-text"><strong>Is every claim literally true?</strong> The scarcity, the countdown, the progress number, the reference price. If any of them is invented, stop.</div>
+      <div className="pers-decision-text"><strong>Is every claim literally true?</strong> The scarcity, the countdown, the progress number, the reference price. If any is invented, stop.</div>
     </div>
     <div className="pers-decision-step">
       <div className="pers-decision-text"><strong>Would it survive being pointed out?</strong> Imagine the user seeing exactly how it works. If that kills the effect, it was manipulation. Remove it.</div>
@@ -1091,53 +986,38 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="pers-decision-step">
       <div className="pers-decision-text"><strong>Can the user reverse it?</strong> A default they can change, a step they can skip, a choice they can undo. If not, make it so or drop it.</div>
     </div>
-    <div className="pers-decision-step">
-      <div className="pers-decision-text"><strong>Only now, ship it,</strong> using the DS primitives. See <strong>Patterns / Form Elements</strong> for defaults and <strong>Patterns / Interactive</strong> for progress and state.</div>
-    </div>
   </div>
 
   <span className="pers-xlink"><span className="pers-material" aria-hidden="true">link</span> Related: Patterns / Form Elements · Patterns / Interactive · Patterns / Accessibility</span>
 </div>
 
 {/* ============================================ */}
-{/* SOURCES                                      */}
+{/* NOTES AND SOURCES                            */}
 {/* ============================================ */}
 
 <div className="pers-section">
-  <h2 className="pers-section-title">Sources</h2>
+  <h2 className="pers-section-title">Notes and Sources</h2>
   <ul className="pers-sources-list">
     <li>
-      <strong>Johnson &amp; Goldstein, "Do Defaults Save Lives?"</strong> Science 302 (2003), the opt-in versus opt-out organ donation result. science.org/doi/10.1126/science.1091721
+      <strong>1 · Smart defaults.</strong> The mechanism is effort-avoidance and status-quo bias, not "decision fatigue": the ego-depletion account behind that phrase failed a large multi-lab replication (Hagger et al., 2016). A default harms when it is not the choice an attentive user would make, so where there is no majority choice or the stakes are personal, leave it unset. Johnson &amp; Goldstein, "Do Defaults Save Lives?" Science 302 (2003); Thaler &amp; Sunstein, Nudge (2008); NN/g form design.
     </li>
     <li>
-      <strong>Thaler &amp; Sunstein, Nudge (2008).</strong> Choice architecture and the power of the default option. Book (synthesis, not itself an experiment). On the mechanism: the ego-depletion / "decision fatigue" account failed a large multi-lab replication, Hagger et al. (2016), pmc.ncbi.nlm.nih.gov/articles/PMC4971805
+      <strong>2 · Endowed progress.</strong> The lift depends on an honest reason for the head start; steps the user never took read as a trick once noticed. Count only real progress: a confirmed email, a saved draft, a completed step. Hull (1932); Kivetz, Urminsky &amp; Zheng, JMR 43 (2006); Nunes &amp; Dreze, "The Endowed Progress Effect," J. Consumer Research 32 (2006).
     </li>
     <li>
-      <strong>Hull (1932); Kivetz, Urminsky &amp; Zheng (2006); Nunes &amp; Drèze (2006).</strong> The goal gradient and its consumer revival (JMR 43(1), 39-58, doi.org/10.1509/jmkr.43.1.39), plus the "endowed progress effect" car-wash study that is the direct source for starting above zero (J. Consumer Research 32(4), 504-512, doi.org/10.1086/500480).
+      <strong>3 · Reciprocity.</strong> Regan's effect is well established for offline, interpersonal compliance; "value-first content raises product sign-ups" is a reasonable but untested extrapolation, not something Regan or Cialdini measured. <span className="pers-spa">SPA</span> Cialdini, Influence (1984); Regan, J. Experimental Social Psychology 7 (1971).
     </li>
     <li>
-      <strong>Cialdini, Influence (1984); Regan (1971).</strong> Reciprocity as a principle of influence, and the classic favor experiment. J. Experimental Social Psychology 7(6).
+      <strong>4 · IKEA and endowment.</strong> The effect needs successful completion: unfinished or trivially easy building does not raise valuation. Whether self-customization specifically lowers sign-up abandonment is an inferential step beyond these studies. <span className="pers-spa">SPA</span> Norton, Mochon &amp; Ariely, J. Consumer Psychology 22 (2012); Kahneman, Knetsch &amp; Thaler, J. Political Economy 98 (1990).
     </li>
     <li>
-      <strong>Norton, Mochon &amp; Ariely (2012).</strong> "The IKEA Effect: When Labor Leads to Love." J. Consumer Psychology 22(3), 453-460. doi.org/10.1016/j.jcps.2011.08.002
+      <strong>5 · Loss aversion (contested).</strong> Treat it as real but bounded, not a universal law. Gal &amp; Rucker (2018) argue the asymmetry is weaker and context-dependent; Simonson (2018) defends a contingent version. Use loss framing only where a genuine loss exists, and never assume fear out-pulls a clearly stated gain. Kahneman &amp; Tversky, "Prospect Theory," Econometrica 47 (1979); Gal &amp; Rucker, J. Consumer Psychology 28 (2018); Simonson (2018).
     </li>
     <li>
-      <strong>Kahneman, Knetsch &amp; Thaler (1990).</strong> The endowment effect and the mug experiments. J. Political Economy 98(6). Also J. Economic Perspectives 5(1), 1991.
+      <strong>6 · Contrast and anchoring.</strong> Anchoring is potent, which is why the reference must be true: a comparison price never charged crosses from context into deception and, in many markets, unlawful pricing. Tversky &amp; Kahneman, Science 185 (1974); Ariely, Loewenstein &amp; Prelec, "Coherent Arbitrariness," Q. J. Economics 118 (2003).
     </li>
     <li>
-      <strong>Kahneman &amp; Tversky, "Prospect Theory" (1979).</strong> Losses loom larger than gains. Econometrica 47(2), 263-291.
-    </li>
-    <li>
-      <strong>Gal &amp; Rucker (2018); Simonson (2018).</strong> The active controversy: Gal &amp; Rucker's "The Loss of Loss Aversion" argues the asymmetry is weaker and context-dependent (J. Consumer Psychology 28(3), doi.org/10.1002/jcpy.1047); Simonson's reply defends a contingent version (doi.org/10.1002/jcpy.1046). Read alongside Kahneman &amp; Tversky, not instead of.
-    </li>
-    <li>
-      <strong>Tversky &amp; Kahneman (1974); Ariely, Loewenstein &amp; Prelec (2003).</strong> Anchoring as a general heuristic (Science 185, 1124-1131) and its direct extension to pricing / willingness-to-pay, "Coherent Arbitrariness" (Q. J. Economics 118(1), 73-106), the better-fitting source for reference-price effects.
-    </li>
-    <li>
-      <strong>Brignull, deceptive.design; Gray et al. (2018); NN/g.</strong> Origin and taxonomy of dark patterns, renamed deceptive patterns. deceptive.design · "The Dark (Patterns) Side of UX Design," CHI 2018 · nngroup.com/articles/deceptive-patterns
-    </li>
-    <li>
-      Approximate URLs are given for the primary studies; the exact DOI or landing page may differ slightly. <span className="pers-spa">SPA</span> The framing of each technique as strictly gated behind a truth-and-reversibility test is this system's house doctrine, not a claim from the cited authors.
+      <strong>Dark patterns.</strong> Brignull originated the term (deceptive.design); Gray et al. formalized the taxonomy ("The Dark (Patterns) Side of UX Design," CHI 2018); NN/g tracks it as deceptive patterns. The strict truth-and-reversibility gate around each technique is this system's house doctrine, not a claim from the cited authors. <span className="pers-spa">SPA</span>
     </li>
   </ul>
 </div>

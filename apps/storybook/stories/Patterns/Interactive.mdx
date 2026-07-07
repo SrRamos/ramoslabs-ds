@@ -21,53 +21,62 @@ import { Meta } from '@storybook/addon-docs/blocks';
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ===== HEADER ===== */
-  .ix-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 2rem;
+  /* ===== HERO ===== */
+  .ix-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
-
-  .ix-header-icon {
-    padding: 0.75rem;
-    background: #e0e7ff;
-    color: #4338ca;
-    border-radius: 12px;
-    flex-shrink: 0;
+  .ix-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
   }
-
-  .ix-title {
+  .ix-hero h1 {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
   }
-
-  .ix-description {
-    font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
-    font-size: 1rem;
+  .ix-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
     line-height: 1.6;
-    max-width: 44rem;
+    max-width: 42rem;
+    margin: 0;
+  }
+  .ix-hero p strong { color: #ffffff; font-weight: 700; }
+  .ix-hero-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
   }
 
   /* ===== SECTIONS ===== */
   .ix-section {
-    margin-top: 2.5rem;
+    margin-top: 3rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid #e6e8eb;
   }
 
-  .ix-section:last-of-type {
-    border-bottom: none;
-  }
+  .ix-section:last-of-type { border-bottom: none; }
 
   .ix-section-header {
     display: flex;
     align-items: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
   }
 
   .ix-section-number {
@@ -87,27 +96,22 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .ix-section-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 1.375rem;
+    font-weight: 800;
     color: #0f172a;
+    letter-spacing: -0.02em;
   }
 
   .ix-text {
     font-family: 'Rubik', system-ui, sans-serif;
     color: #475569;
     font-size: 0.9375rem;
-    line-height: 1.7;
-    max-width: 48rem;
+    line-height: 1.65;
+    max-width: 44rem;
+    margin: 0 0 1.25rem;
   }
 
-  .ix-text + .ix-text {
-    margin-top: 1rem;
-  }
-
-  .ix-text strong {
-    color: #0f172a;
-    font-weight: 600;
-  }
+  .ix-text strong { color: #0f172a; font-weight: 600; }
 
   .ix-text code {
     background: #f1f5f9;
@@ -118,16 +122,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'SF Mono', 'Monaco', monospace;
   }
 
-  .ix-cite {
-    color: #4f46e5;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  .ix-cite:hover {
-    text-decoration: underline;
-  }
-
   .ix-callout {
     display: flex;
     gap: 0.75rem;
@@ -136,23 +130,27 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-radius: 10px;
     padding: 1rem 1.25rem;
     margin: 1.25rem 0;
-    max-width: 48rem;
+    max-width: 44rem;
   }
 
-  .ix-callout .ix-material {
-    color: #4338ca;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-  }
+  .ix-callout .ix-material { color: #4338ca; font-size: 1.25rem; flex-shrink: 0; }
 
   .ix-callout-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    line-height: 1.6;
+    line-height: 1.55;
     color: #3730a3;
   }
 
   .ix-callout-text strong { color: #312e81; font-weight: 700; }
+  .ix-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125em;
+    background: rgba(79,70,229,0.10);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #3730a3;
+  }
 
   /* ===== DEMO LAB ===== */
   .ix-lab {
@@ -173,7 +171,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 700;
     font-size: 0.6875rem;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #475569;
     letter-spacing: 0.08em;
     margin-bottom: 1rem;
   }
@@ -187,14 +185,18 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .ix-demo-note {
     font-size: 0.8125rem;
-    color: #64748b;
+    color: #475569;
     line-height: 1.5;
     margin-top: 0.875rem;
   }
 
-  /* ===== BUTTONS (modern state model) ===== */
-  /* Signature control radius is 6px. Never a pill on a wide button. */
+  .ix-demo-note code, .ix-demo-label code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+  }
 
+  /* ===== BUTTONS (state by modality) ===== */
   .ix-btn {
     position: relative;
     overflow: hidden;
@@ -210,7 +212,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
                 transform 150ms cubic-bezier(0, 0, 0.2, 1);
   }
 
-  /* Filled primary: hover deepens the indigo (600 to 700), press deepens further (800). */
   .ix-btn-primary {
     background: #4f46e5;
     color: white;
@@ -223,8 +224,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .ix-btn-primary:active { background: #3730a3; }
 
-  /* Tonal / ghost: the literal Material 3 state layer. An indigo overlay whose
-     opacity steps through the --state-* scale. No fill swap, no shadow. */
   .ix-btn-tonal {
     background: transparent;
     color: #4338ca;
@@ -242,18 +241,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .ix-btn-tonal:hover::after { opacity: 0.08; } /* --state-hover */
+    .ix-btn-tonal:hover::after { opacity: 0.08; }
   }
 
-  .ix-btn-tonal:active::after { opacity: 0.10; } /* --state-pressed */
+  .ix-btn-tonal:active::after { opacity: 0.10; }
 
-  /* Focus ring is the same on every button: indigo, never white. */
   .ix-btn:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.45); /* --shadow-focus */
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.45);
   }
 
-  /* Press micro-motion is opt-in and only when the user allows motion. */
   @media (prefers-reduced-motion: no-preference) {
     .ix-btn:active { transform: scale(0.98); }
   }
@@ -261,7 +258,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .ix-btn:disabled,
   .ix-btn[aria-disabled='true'] {
     background: #e2e8f0;
-    color: #94a3b8;
+    color: #64748b;
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -288,7 +285,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     .ix-btn { transition-duration: 1ms; }
   }
 
-  /* ===== SELECTABLE CARD (no lift, no dramatic shadow) ===== */
+  /* ===== SELECTABLE CARD ===== */
   .ix-card {
     position: relative;
     overflow: hidden;
@@ -333,10 +330,28 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-bottom: 0.75rem;
   }
 
-  .ix-card-line {
-    background: #f1f5f9;
-    border-radius: 4px;
+  .ix-card-line { background: #f1f5f9; border-radius: 4px; }
+
+  /* ===== STATE SCALE ===== */
+  .ix-scale-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.375rem 0;
   }
+  .ix-scale-chip {
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid #e6e8eb;
+    flex-shrink: 0;
+  }
+  .ix-scale-txt {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #475569;
+  }
+  .ix-scale-txt b { color: #0f172a; }
 
   /* ===== FOCUS RING COMPARISON ===== */
   .ix-ring-grid {
@@ -346,11 +361,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-top: 0.5rem;
   }
 
-  @media (max-width: 560px) {
-    .ix-ring-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 560px) { .ix-ring-grid { grid-template-columns: 1fr; } }
 
   .ix-ring-cell {
+    background: #4338ca;
     border-radius: 10px;
     padding: 1.75rem 1rem;
     display: flex;
@@ -358,9 +372,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
     align-items: center;
     gap: 0.75rem;
   }
-
-  .ix-ring-cell.on-indigo { background: #4338ca; }
-  .ix-ring-cell.on-white { background: white; border: 1px solid #e6e8eb; }
 
   .ix-ring-btn {
     font-family: 'Rubik', sans-serif;
@@ -373,15 +384,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #0f172a;
   }
 
-  /* Broken: a white ring vanishes on the indigo surface. */
   .ix-ring-btn.broken { box-shadow: 0 0 0 2px #4f46e5, 0 0 0 4px white; }
-  /* Fixed: the indigo ring reads on any background. */
   .ix-ring-btn.fixed { box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.55); }
 
-  .ix-ring-caption {
-    font-size: 0.75rem;
-    font-weight: 500;
-  }
+  .ix-ring-caption { font-size: 0.75rem; font-weight: 500; }
 
   .ix-badge {
     display: inline-flex;
@@ -398,64 +404,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .ix-badge.bad { background: #fee2e2; color: #991b1b; }
   .ix-badge.good { background: #dcfce7; color: #166534; }
 
-  /* ===== MATRIX TABLE ===== */
-  .ix-table-scroll {
-    overflow-x: auto;
-    margin: 1.25rem 0;
-    border: 1px solid #e6e8eb;
-    border-radius: 12px;
-  }
-
-  .ix-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    min-width: 640px;
-  }
-
-  .ix-table th {
-    text-align: left;
-    padding: 0.75rem 1rem;
-    background: #f8fafc;
-    color: #0f172a;
-    font-weight: 700;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    border-bottom: 1px solid #e6e8eb;
-    white-space: nowrap;
-  }
-
-  .ix-table td {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #f1f5f9;
-    color: #475569;
-    vertical-align: top;
-  }
-
-  .ix-table tr:last-child td { border-bottom: none; }
-
-  .ix-table .ix-state-name {
-    font-weight: 600;
-    color: #0f172a;
-    white-space: nowrap;
-  }
-
-  .ix-mod {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 6px;
-    font-size: 1rem;
-  }
-
-  .ix-mod.yes { background: #dcfce7; color: #166534; }
-  .ix-mod.no { background: #f1f5f9; color: #94a3b8; }
-  .ix-mod.key { background: #e0e7ff; color: #4338ca; }
-
   /* ===== DO / DON'T ===== */
   .ix-dodont {
     display: grid;
@@ -464,13 +412,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin: 1.25rem 0;
   }
 
-  @media (max-width: 700px) {
-    .ix-dodont { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 700px) { .ix-dodont { grid-template-columns: 1fr; } }
 
   .ix-list {
     border-radius: 12px;
-    padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+    padding: 1.25rem;
     border: 1px solid #e6e8eb;
   }
 
@@ -520,88 +466,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #334155;
   }
 
-  /* ===== LADDER ===== */
-  .ix-ladder {
-    counter-reset: ix-step;
-    margin: 1.25rem 0;
-    max-width: 48rem;
-  }
-
-  .ix-ladder-step {
-    display: flex;
-    gap: 0.875rem;
-    padding: 0.875rem 0;
-    border-bottom: 1px dashed #e2e8f0;
-  }
-
-  .ix-ladder-step:last-child { border-bottom: none; }
-
-  .ix-ladder-step::before {
-    counter-increment: ix-step;
-    content: counter(ix-step);
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    background: #eef2ff;
-    color: #4338ca;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'SF Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  .ix-ladder-text {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: #334155;
-  }
-
-  .ix-ladder-text strong { color: #0f172a; }
-
-  /* ===== VERSUS ===== */
-  .ix-versus {
-    background: #f8fafc;
-    border: 1px solid #e6e8eb;
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    margin: 1.25rem 0;
-    max-width: 48rem;
-  }
-
-  .ix-versus-row {
-    display: grid;
-    grid-template-columns: 10rem 1fr;
-    gap: 1rem;
-    padding: 0.625rem 0;
-    border-bottom: 1px solid #e6e8eb;
-  }
-
-  .ix-versus-row:last-child { border-bottom: none; }
-
-  @media (max-width: 560px) {
-    .ix-versus-row { grid-template-columns: 1fr; gap: 0.25rem; }
-  }
-
-  .ix-versus-who {
-    font-family: 'SF Mono', monospace;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: #64748b;
-  }
-
-  .ix-versus-who.us { color: #4338ca; }
-
-  .ix-versus-what {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: #475569;
-  }
-
   /* ===== CODE BLOCKS ===== */
   .ix-code {
     background: #1e293b;
@@ -628,7 +492,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #cbd5e1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -643,201 +507,131 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
 
-  .ix-code .comment { color: #64748b; font-style: italic; }
+  .ix-code .comment { color: #94a3b8; font-style: italic; }
   .ix-code .selector { color: #fbbf24; }
   .ix-code .property { color: #7dd3fc; }
   .ix-code .value { color: #a5f3fc; }
   .ix-code .function { color: #c4b5fd; }
-  .ix-code .punctuation { color: #94a3b8; }
+  .ix-code .punctuation { color: #cbd5e1; }
+
+  /* ===== SOURCES ===== */
+  .ix-refs { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid #e6e8eb; }
+  .ix-refs-h {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    margin-bottom: 0.75rem;
+  }
+  .ix-refs p { font-size: 0.75rem; line-height: 1.7; color: #475569; margin: 0; }
+  .ix-refs a { color: #4f46e5; text-decoration: none; }
+  .ix-refs a:hover { text-decoration: underline; }
 `}
 </style>
 
 {/* ============================================ */}
-{/* HEADER                                       */}
+{/* HERO                                          */}
 {/* ============================================ */}
 
-<div className="ix-header">
-  <div className="ix-header-icon">
-    <span className="ix-material" style={{ fontSize: '1.5rem' }} aria-hidden="true">touch_app</span>
-  </div>
-  <div>
-    <h1 className="ix-title">Interaction, by Modality</h1>
-    <p className="ix-description">
-      In 2026 interaction is not "hover". Hover is one input mode among several, and it is the one most people never use. A modern control answers to <strong style={{ color: '#0f172a' }}>the pointer, the finger, and the keyboard</strong> with a different signal for each. This page teaches that model: state by modality, expressed with tonal indigo state layers, gated so nothing lands where it does not belong.
-    </p>
-  </div>
+<div className="ix-hero">
+  <p className="ix-hero-eyebrow">Patterns / Interactive</p>
+  <h1>Most of your users can't hover.</h1>
+  <p>
+    Touch is the majority of every session, and a finger has nothing to hover with. So the press comes first, the keyboard gets a ring, and hover is a <strong>pointer only</strong> garnish laid on top. One tonal indigo layer expresses all three, stepped through the <span className="ix-hero-code">--state-*</span> scale and gated so no state lands where it does not belong.
+  </p>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 1: THE SHIFT                          */}
+{/* 1 - THE MODALITY MODEL                        */}
 {/* ============================================ */}
 
 <div className="ix-section">
   <div className="ix-section-header">
     <span className="ix-section-number">1</span>
-    <h2 className="ix-section-title">Hover Is Not the Model</h2>
+    <h2 className="ix-section-title">Three inputs, one state each</h2>
   </div>
 
   <p className="ix-text">
-    A generation of interfaces were designed on a desktop, for a mouse, and the whole language of "interactive" collapsed into a single event: <code>:hover</code>. That assumption breaks the moment a real person picks up a phone. Most sessions are touch. On touch there is no pointer that travels across the screen, so there is nothing to hover. Build your feedback on hover and the majority of your users get <strong>nothing</strong> when they tap.
-  </p>
-
-  <p className="ix-text">
-    The modern model starts from input modality, not from one event. There are three that matter on the web, and each one gets its own state:
+    Interactive stopped meaning hover years ago. Each input arrives its own way and reads its own signal. Build for all three, or you build for a mouse alone.
   </p>
 
   <div className="ix-lab">
     <div className="ix-demo">
-      <div className="ix-demo-label"><span className="ix-material" style={{ fontSize: '1rem', verticalAlign: '-3px', marginRight: '0.35rem' }} aria-hidden="true">mouse</span>Pointer (fine)</div>
-      <p className="ix-demo-note" style={{ marginTop: 0 }}>A mouse or trackpad can rest over an element without committing. That idle state is <strong>hover</strong>, and it is the only state that belongs to the pointer alone.</p>
+      <div className="ix-demo-label"><span className="ix-material" style={{ fontSize: '1rem', verticalAlign: '-3px', marginRight: '0.35rem' }} aria-hidden="true">mouse</span>Pointer</div>
+      <p className="ix-demo-note" style={{ marginTop: 0 }}>Rests over a control without committing. That idle moment is <strong style={{ color: '#0f172a' }}>hover</strong>, and it belongs to the pointer alone.</p>
     </div>
     <div className="ix-demo">
-      <div className="ix-demo-label"><span className="ix-material" style={{ fontSize: '1rem', verticalAlign: '-3px', marginRight: '0.35rem' }} aria-hidden="true">touch_app</span>Touch (coarse)</div>
-      <p className="ix-demo-note" style={{ marginTop: 0 }}>A finger has no idle-over state. It commits on contact. The universal touch signal is <strong>active / pressed</strong>, fired the instant the finger lands.</p>
+      <div className="ix-demo-label"><span className="ix-material" style={{ fontSize: '1rem', verticalAlign: '-3px', marginRight: '0.35rem' }} aria-hidden="true">touch_app</span>Touch</div>
+      <p className="ix-demo-note" style={{ marginTop: 0 }}>No idle state. A finger commits on contact, so its signal is the <strong style={{ color: '#0f172a' }}>press</strong>, fired the instant it lands.</p>
     </div>
     <div className="ix-demo">
       <div className="ix-demo-label"><span className="ix-material" style={{ fontSize: '1rem', verticalAlign: '-3px', marginRight: '0.35rem' }} aria-hidden="true">keyboard</span>Keyboard</div>
-      <p className="ix-demo-note" style={{ marginTop: 0 }}>A keyboard user moves by Tab and commits with Enter or Space. Their orientation state is <strong>focus-visible</strong>, and without it the interface is unusable.</p>
+      <p className="ix-demo-note" style={{ marginTop: 0 }}>Moves by Tab, commits with Enter or Space. Its signal is <strong style={{ color: '#0f172a' }}>focus-visible</strong>, and without it the interface is unusable.</p>
     </div>
   </div>
 
   <div className="ix-callout">
     <span className="ix-material" aria-hidden="true">bolt</span>
     <p className="ix-callout-text">
-      <strong>Mobile-first rule.</strong> The one state every device can produce is the press. Design <code>:active</code> first, add <code>:focus-visible</code> for keyboards, and treat <code>:hover</code> as a pointer-only enhancement layered on top. Never the reverse.
+      <strong>Mobile first.</strong> The press is the one state every device can make. Design <code>:active</code> first, add <code>:focus-visible</code> for keyboards, layer <code>:hover</code> for pointers. Never the reverse.
     </p>
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 2: THE MATRIX                         */}
+{/* 2 - THE LIVE DEMO                             */}
 {/* ============================================ */}
 
 <div className="ix-section">
   <div className="ix-section-header">
     <span className="ix-section-number">2</span>
-    <h2 className="ix-section-title">State by Modality</h2>
+    <h2 className="ix-section-title">Feel it</h2>
   </div>
 
   <p className="ix-text">
-    Seven states cover almost every control. Read this table as a contract: each row is a state, the three device columns say which input can trigger it, and the last column says how we express it. Every expression is a tonal indigo signal, a color change, never a shadow and never a jump in position.
-  </p>
-
-  <div className="ix-table-scroll">
-    <table className="ix-table">
-      <thead>
-        <tr>
-          <th>State</th>
-          <th>Pointer</th>
-          <th>Touch</th>
-          <th>Keyboard</th>
-          <th>How it is expressed</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td className="ix-state-name">Default</td>
-          <td><span className="ix-mod no" aria-label="resting">&middot;</span></td>
-          <td><span className="ix-mod no" aria-label="resting">&middot;</span></td>
-          <td><span className="ix-mod no" aria-label="resting">&middot;</span></td>
-          <td>Resting surface. Signature 6px radius, a whisper of <code>--shadow-sm</code>. No state layer.</td>
-        </tr>
-        <tr>
-          <td className="ix-state-name">Hover</td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td><span className="ix-mod no" role="img" aria-label="does not apply">&times;</span></td>
-          <td><span className="ix-mod no" role="img" aria-label="does not apply">&times;</span></td>
-          <td>Indigo state layer at <code>--state-hover</code> (8%), or a fill that deepens toward indigo 700. Gated in <code>@media (hover: hover)</code>.</td>
-        </tr>
-        <tr>
-          <td className="ix-state-name">Focus-visible</td>
-          <td><span className="ix-mod no" role="img" aria-label="rarely">&times;</span></td>
-          <td><span className="ix-mod no" role="img" aria-label="rarely">&times;</span></td>
-          <td><span className="ix-mod key" role="img" aria-label="primary keyboard state">&#9632;</span></td>
-          <td>Indigo ring via <code>--shadow-focus</code>. Shown for keyboard, suppressed for a plain mouse click.</td>
-        </tr>
-        <tr>
-          <td className="ix-state-name">Active / Pressed</td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td><span className="ix-mod key" role="img" aria-label="primary touch state">&#9632;</span></td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td>Indigo state layer at <code>--state-pressed</code> (10%) plus an optional <code>scale(0.98)</code>, motion permitting. The key touch feedback.</td>
-        </tr>
-        <tr>
-          <td className="ix-state-name">Disabled</td>
-          <td><span className="ix-mod no" role="img" aria-label="inert">&times;</span></td>
-          <td><span className="ix-mod no" role="img" aria-label="inert">&times;</span></td>
-          <td><span className="ix-mod no" role="img" aria-label="inert">&times;</span></td>
-          <td>Muted fill, no state layers, <code>cursor: not-allowed</code>, <code>aria-disabled</code>. Communicated by more than color alone.</td>
-        </tr>
-        <tr>
-          <td className="ix-state-name">Loading</td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td>Spinner with <code>aria-busy</code>, pointer events off, same footprint so the layout never shifts.</td>
-        </tr>
-        <tr>
-          <td className="ix-state-name">Selected</td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td><span className="ix-mod yes" role="img" aria-label="applies">&#10003;</span></td>
-          <td>Persistent indigo tonal fill plus <code>aria-pressed</code> or <code>aria-selected</code>. A held state, not a transient one.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p className="ix-text" style={{ fontSize: '0.8125rem', color: '#64748b' }}>
-    The square marks the primary state for that modality: <strong>press</strong> for touch, <strong>focus-visible</strong> for the keyboard. The check marks a state the modality can also produce.
-  </p>
-</div>
-
-{/* ============================================ */}
-{/* CHAPTER 3: STATE LAYERS                        */}
-{/* ============================================ */}
-
-<div className="ix-section">
-  <div className="ix-section-header">
-    <span className="ix-section-number">3</span>
-    <h2 className="ix-section-title">The State Layer</h2>
-  </div>
-
-  <p className="ix-text">
-    A state layer is a single translucent overlay of the interactive color, laid over the control, whose opacity changes with the state. It is the mechanism <a className="ix-cite" href="https://m3.material.io/foundations/interaction/states/state-layers" target="_blank" rel="noreferrer">Material 3</a> standardized, and it is why hover, press and drag can all be built from one rule instead of three bespoke skins. Our tokens carry the exact opacities:
+    Every state is a color, never a jump in position. Hover with a mouse, tap, or tab in and press Space. The signal changes, the layout holds still.
   </p>
 
   <div className="ix-lab">
     <div className="ix-demo">
-      <div className="ix-demo-label">Live buttons</div>
+      <div className="ix-demo-label">Live controls</div>
       <div className="ix-demo-row">
-        <button className="ix-btn ix-btn-primary" type="button">Confirm action</button>
+        <button className="ix-btn ix-btn-primary" type="button">Confirm</button>
         <button className="ix-btn ix-btn-tonal" type="button">Learn more</button>
+        <button className="ix-btn ix-btn-primary" type="button" disabled>Disabled</button>
+        <button className="ix-btn ix-btn-primary" type="button" aria-busy="true"><span className="ix-spinner" aria-hidden="true"></span>Saving</button>
+      </div>
+      <div className="ix-card" tabIndex={0} role="button" aria-label="Example selectable card" style={{ marginTop: '1rem' }}>
+        <div className="ix-card-image"></div>
+        <div className="ix-card-line" style={{ height: '0.875rem', width: '75%', marginBottom: '0.5rem' }}></div>
+        <div className="ix-card-line" style={{ height: '0.75rem', width: '50%' }}></div>
       </div>
       <p className="ix-demo-note">
-        Hover them with a mouse: the filled button deepens to indigo 700, the tonal button gains an 8% indigo layer. Press either (or tab to it and hit Space): the layer steps to 10% and the button dips to <code>scale(0.98)</code>. Tab to see the indigo ring. Every hover here is gated to pointer devices.
+        Filled deepens to indigo 700 on hover, 800 on press. The tonal button and card gain an indigo state layer instead. Tab in for the ring. Hover is gated to pointers; the press works everywhere.
       </p>
     </div>
     <div className="ix-demo">
-      <div className="ix-demo-label">The scale</div>
-      <div className="ix-demo-row" style={{ gap: '0.5rem', flexDirection: 'column', alignItems: 'stretch' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <span style={{ width: '2.75rem', height: '1.5rem', borderRadius: '6px', background: 'rgba(79,70,229,0.08)', border: '1px solid #e6e8eb' }}></span>
-          <span className="ix-demo-note" style={{ margin: 0 }}><code>--state-hover</code> &middot; 0.08 &middot; pointer only</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <span style={{ width: '2.75rem', height: '1.5rem', borderRadius: '6px', background: 'rgba(79,70,229,0.10)', border: '1px solid #e6e8eb' }}></span>
-          <span className="ix-demo-note" style={{ margin: 0 }}><code>--state-focus</code> &middot; 0.10 &middot; keyboard</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <span style={{ width: '2.75rem', height: '1.5rem', borderRadius: '6px', background: 'rgba(79,70,229,0.10)', border: '1px solid #e6e8eb' }}></span>
-          <span className="ix-demo-note" style={{ margin: 0 }}><code>--state-pressed</code> &middot; 0.10 &middot; all inputs</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <span style={{ width: '2.75rem', height: '1.5rem', borderRadius: '6px', background: 'rgba(79,70,229,0.16)', border: '1px solid #e6e8eb' }}></span>
-          <span className="ix-demo-note" style={{ margin: 0 }}><code>--state-dragged</code> &middot; 0.16 &middot; while dragging</span>
-        </div>
+      <div className="ix-demo-label">One overlay, four opacities</div>
+      <div className="ix-scale-row">
+        <span className="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.08)' }}></span>
+        <span className="ix-scale-txt"><b>--state-hover</b> · 0.08 · pointer only</span>
       </div>
+      <div className="ix-scale-row">
+        <span className="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.10)' }}></span>
+        <span className="ix-scale-txt"><b>--state-focus</b> · 0.10 · keyboard</span>
+      </div>
+      <div className="ix-scale-row">
+        <span className="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.10)' }}></span>
+        <span className="ix-scale-txt"><b>--state-pressed</b> · 0.10 · all inputs</span>
+      </div>
+      <div className="ix-scale-row">
+        <span className="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.16)' }}></span>
+        <span className="ix-scale-txt"><b>--state-dragged</b> · 0.16 · while dragging</span>
+      </div>
+      <p className="ix-demo-note">
+        A single translucent indigo overlay, the mechanism Material 3 standardized. One rule builds hover, press and drag alike.
+      </p>
     </div>
   </div>
 
@@ -848,47 +642,41 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <span className="ix-code-dot green" aria-hidden="true"></span>
       <span className="ix-code-lang">CSS</span>
     </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* One overlay, driven by the --state-* opacity scale.
-   Works on any surface: tonal, ghost, list row, card. */</span>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* One indigo overlay, opacity driven by the --state-* scale.
+   Works on any surface: button, card, list row. */</span>
 <span class="selector">.control</span> <span class="punctuation">{</span>
     <span class="property">position</span><span class="punctuation">:</span> <span class="value">relative</span><span class="punctuation">;</span>
     <span class="property">overflow</span><span class="punctuation">:</span> <span class="value">hidden</span><span class="punctuation">;</span>
-    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-sm)</span><span class="punctuation">;</span> <span class="comment">/* 6px, the signature control radius */</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-sm)</span><span class="punctuation">;</span> <span class="comment">/* 6px */</span>
 <span class="punctuation">}</span>
-
 <span class="selector">.control::after</span> <span class="punctuation">{</span>
-    <span class="property">content</span><span class="punctuation">:</span> <span class="value">''</span><span class="punctuation">;</span>
-    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
-    <span class="property">inset</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
-    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span> <span class="comment">/* the on-color, indigo */</span>
-    <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">content</span><span class="punctuation">:</span> <span class="value">''</span><span class="punctuation">;</span> <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span> <span class="property">inset</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
     <span class="property">transition</span><span class="punctuation">:</span> <span class="value">opacity var(--duration-fast) var(--easing-out)</span><span class="punctuation">;</span>
     <span class="property">pointer-events</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
 <span class="punctuation">}</span>
-
-<span class="comment">/* pressed: every input, the base touch feedback */</span>
-<span class="selector">.control:active::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-pressed)</span><span class="punctuation">;</span> <span class="punctuation">}</span>`}} />
+<span class="selector">.control:active::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-pressed)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* every input */</span>`}} />
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 4: THE HOVER RULE                      */}
+{/* 3 - THE HOVER GATE                            */}
 {/* ============================================ */}
 
 <div className="ix-section">
   <div className="ix-section-header">
-    <span className="ix-section-number">4</span>
-    <h2 className="ix-section-title">The Golden Rule of Hover</h2>
+    <span className="ix-section-number">3</span>
+    <h2 className="ix-section-title">Hover belongs to pointers</h2>
   </div>
 
   <p className="ix-text">
-    Hover styling belongs to devices that can actually hover. Wrap every hover rule in <code>@media (hover: hover) and (pointer: fine)</code>. The <a className="ix-cite" href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover" target="_blank" rel="noreferrer">MDN hover feature</a> reports whether the primary input can hover at all, and <a className="ix-cite" href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer" target="_blank" rel="noreferrer">pointer</a> reports whether it is precise (a mouse) or coarse (a finger).
+    Wrap every hover rule in <code>@media (hover: hover) and (pointer: fine)</code>. It fires only where a pointer can actually rest over a control.
   </p>
 
   <div className="ix-callout">
     <span className="ix-material" aria-hidden="true">warning</span>
     <p className="ix-callout-text">
-      <strong>The sticky-hover bug.</strong> A touchscreen has no pointer to move away, so it never fires the leave that clears a hover. Tap an ungated hover control and the hover style <strong>sticks</strong> until you tap elsewhere. Buttons look permanently lit, cards freeze mid-transition. The media gate is the fix, not a nicety.
+      <strong>The sticky hover bug.</strong> A touchscreen has no pointer to move away, so it never clears an ungated hover. Tap one and the style <strong>sticks</strong>: buttons stay lit, cards freeze mid transition. The gate is the fix, not a nicety.
     </p>
   </div>
 
@@ -902,7 +690,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Press works everywhere, so it lives at the top level. */</span>
 <span class="selector">.control:active::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-pressed)</span><span class="punctuation">;</span> <span class="punctuation">}</span>
 
-<span class="comment">/* Hover is an enhancement for real pointers only. */</span>
+<span class="comment">/* Hover is a pointer-only enhancement. */</span>
 <span class="selector">@media (hover: hover) and (pointer: fine)</span> <span class="punctuation">{</span>
     <span class="selector">.control:hover::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-hover)</span><span class="punctuation">;</span> <span class="punctuation">}</span>
 <span class="punctuation">}</span>`}} />
@@ -910,30 +698,26 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 5: FOCUS-VISIBLE                        */}
+{/* 4 - THE FOCUS RING                            */}
 {/* ============================================ */}
 
 <div className="ix-section">
   <div className="ix-section-header">
-    <span className="ix-section-number">5</span>
-    <h2 className="ix-section-title">Focus You Can See, Not Focus You Can Feel</h2>
+    <span className="ix-section-number">4</span>
+    <h2 className="ix-section-title">A ring you can always see</h2>
   </div>
 
   <p className="ix-text">
-    Style <a className="ix-cite" href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible" target="_blank" rel="noreferrer"><code>:focus-visible</code></a>, not <code>:focus</code>. The browser uses a heuristic: it shows the ring when focus arrives by keyboard, and suppresses it after a plain mouse click, so pointer users are not nagged by a ring on every button they press while keyboard users keep the orientation cue they depend on.
-  </p>
-
-  <p className="ix-text">
-    The ring color matters more than it looks. Hardcoding the outer ring in <code>white</code> is a trap: on a white page that is invisible padding, and on any colored surface the ring simply <strong>disappears</strong>. Use the token: <code>--shadow-focus</code> is an indigo ring that reads on light and dark alike.
+    Style <code>:focus-visible</code>, not <code>:focus</code>: the ring shows for the keyboard and hides after a plain click. Color it with <code>--shadow-focus</code>, an indigo ring that reads on any surface. A white ring vanishes the moment the background is not white.
   </p>
 
   <div className="ix-ring-grid">
-    <div className="ix-ring-cell on-indigo">
+    <div className="ix-ring-cell">
       <span className="ix-badge bad"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">close</span>Don't</span>
       <button className="ix-ring-btn broken" type="button" tabIndex={-1}>White ring</button>
       <span className="ix-ring-caption" style={{ color: '#c7d2fe' }}>Vanishes on indigo</span>
     </div>
-    <div className="ix-ring-cell on-indigo">
+    <div className="ix-ring-cell">
       <span className="ix-badge good"><span className="ix-material" style={{ fontSize: '0.75rem' }} aria-hidden="true">check</span>Do</span>
       <button className="ix-ring-btn fixed" type="button" tabIndex={-1}>Indigo ring</button>
       <span className="ix-ring-caption" style={{ color: '#e0e7ff' }}>Reads on any background</span>
@@ -943,7 +727,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="ix-callout">
     <span className="ix-material" aria-hidden="true">verified</span>
     <p className="ix-callout-text">
-      <strong>WCAG 2.2.</strong> <a className="ix-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html" target="_blank" rel="noreferrer">SC 2.4.11 Focus Not Obscured (Minimum), AA</a> requires the focused control to not be entirely hidden by other content. <a className="ix-cite" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html" target="_blank" rel="noreferrer">SC 2.4.13 Focus Appearance, AAA</a> sets a minimum size and contrast for the indicator itself. A 3px indigo ring at high contrast clears both.
+      <strong>WCAG 2.2.</strong> SC 2.4.11 Focus Not Obscured (AA) keeps the focused control visible; SC 2.4.13 Focus Appearance (AAA) sets its size and contrast. A 3px indigo ring clears both.
     </p>
   </div>
 
@@ -954,135 +738,24 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <span className="ix-code-dot green" aria-hidden="true"></span>
       <span className="ix-code-lang">CSS</span>
     </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Do: keyboard-only ring, indigo token, reads on every surface. */</span>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Do: keyboard-only ring, indigo token, reads everywhere. */</span>
 <span class="selector">.control:focus-visible</span> <span class="punctuation">{</span>
     <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
     <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-focus)</span><span class="punctuation">;</span> <span class="comment">/* 0 0 0 3px rgba(79,70,229,.45) */</span>
 <span class="punctuation">}</span>
-
-<span class="comment">/* Don't: fires on mouse clicks too, and a white ring
-   disappears the moment the surface is not white. */</span>
-<span class="selector">.control:focus</span> <span class="punctuation">{</span>
-    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 2px var(--color-primary), 0 0 0 4px white</span><span class="punctuation">;</span>
-<span class="punctuation">}</span>`}} />
+<span class="comment">/* Don't: fires on clicks, and white disappears off white. */</span>
+<span class="selector">.control:focus</span> <span class="punctuation">{</span> <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 2px var(--color-primary), 0 0 0 4px white</span><span class="punctuation">;</span> <span class="punctuation">}</span>`}} />
   </div>
 </div>
 
 {/* ============================================ */}
-{/* CHAPTER 6: PRESS FOR TOUCH                      */}
+{/* 5 - THE RULES                                 */}
 {/* ============================================ */}
 
 <div className="ix-section">
   <div className="ix-section-header">
-    <span className="ix-section-number">6</span>
-    <h2 className="ix-section-title">Press: The State Touch Depends On</h2>
-  </div>
-
-  <p className="ix-text">
-    On touch, the press is the whole conversation. <a className="ix-cite" href="https://developer.apple.com/design/human-interface-guidelines/feedback" target="_blank" rel="noreferrer">Apple's Human Interface Guidelines</a> put immediacy first: a tap must produce a visible response at once, or the person taps again, unsure it registered. So <code>:active</code> paints the pressed state layer the instant the finger lands, and an optional <code>scale(0.98)</code> gives the control a physical dip.
-  </p>
-
-  <p className="ix-text">
-    The one caveat is motion. That scale is comfort, not information, so it is gated behind <code>prefers-reduced-motion: no-preference</code> and the color layer alone still carries the feedback. Native platforms add a haptic tap here, a hardware affordance the web cannot reach, which is one more reason the visual press has to be flawless.
-  </p>
-
-  <div className="ix-code">
-    <div className="ix-code-header">
-      <span className="ix-code-dot red" aria-hidden="true"></span>
-      <span className="ix-code-dot yellow" aria-hidden="true"></span>
-      <span className="ix-code-dot green" aria-hidden="true"></span>
-      <span className="ix-code-lang">CSS</span>
-    </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Color feedback is unconditional: it is information. */</span>
-<span class="selector">.control:active::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-pressed)</span><span class="punctuation">;</span> <span class="punctuation">}</span>
-
-<span class="comment">/* The physical dip is comfort: only when motion is welcome. */</span>
-<span class="selector">@media (prefers-reduced-motion: no-preference)</span> <span class="punctuation">{</span>
-    <span class="selector">.control:active</span> <span class="punctuation">{</span> <span class="property">transform</span><span class="punctuation">:</span> <span class="function">scale</span><span class="punctuation">(</span><span class="value">0.98</span><span class="punctuation">)</span><span class="punctuation">;</span> <span class="punctuation">}</span>
-<span class="punctuation">}</span>`}} />
-  </div>
-</div>
-
-{/* ============================================ */}
-{/* CHAPTER 7: REDUCED MOTION                       */}
-{/* ============================================ */}
-
-<div className="ix-section">
-  <div className="ix-section-header">
-    <span className="ix-section-number">7</span>
-    <h2 className="ix-section-title">Every Transition Degrades Gracefully</h2>
-  </div>
-
-  <p className="ix-text">
-    Some people get physically ill from movement on screen. The <a className="ix-cite" href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noreferrer"><code>prefers-reduced-motion</code></a> feature is how their operating system tells us so, and a value of <code>reduce</code> is a firm request to hold still. Because our states are carried by <strong>color and opacity</strong>, honoring it costs nothing: the pressed layer, the hover tint and the focus ring all still appear, we simply collapse the animated part.
-  </p>
-
-  <div className="ix-code">
-    <div className="ix-code-header">
-      <span className="ix-code-dot red" aria-hidden="true"></span>
-      <span className="ix-code-dot yellow" aria-hidden="true"></span>
-      <span className="ix-code-dot green" aria-hidden="true"></span>
-      <span className="ix-code-lang">CSS</span>
-    </div>
-    <pre dangerouslySetInnerHTML={{__html: `<span class="selector">@media (prefers-reduced-motion: reduce)</span> <span class="punctuation">{</span>
-    <span class="selector">.control</span> <span class="punctuation">{</span> <span class="property">transition-duration</span><span class="punctuation">:</span> <span class="value">1ms</span><span class="punctuation">;</span> <span class="punctuation">}</span>
-    <span class="selector">.control:active</span> <span class="punctuation">{</span> <span class="property">transform</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* no scale */</span>
-    <span class="selector">.spinner</span> <span class="punctuation">{</span> <span class="property">animation-duration</span><span class="punctuation">:</span> <span class="value">1.4s</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* slow, not gone */</span>
-<span class="punctuation">}</span>`}} />
-  </div>
-</div>
-
-{/* ============================================ */}
-{/* CHAPTER 8: SHADOW IS NOT A STATE               */}
-{/* ============================================ */}
-
-<div className="ix-section">
-  <div className="ix-section-header">
-    <span className="ix-section-number">8</span>
-    <h2 className="ix-section-title">Shadow Is Elevation, Not a Signal</h2>
-  </div>
-
-  <p className="ix-text">
-    A tempting pattern is to raise a card on hover, floating it up a few pixels under a dramatic drop shadow. It feels slick on a desktop and does three wrong things at once: it uses shadow (which means <strong>elevation</strong>, how high a surface sits) to mean hover (a transient input state), it moves layout under the pointer, and on touch it does nothing at all because there is no hover to trigger it.
-  </p>
-
-  <p className="ix-text">
-    Shadow answers "which layer is this on?" and its scale belongs to <a className="ix-cite" href="./?path=/docs/foundations-shadows--docs" target="_blank" rel="noreferrer">Shadows</a>: <code>--shadow-sm</code> for resting controls, <code>--shadow-md</code> for menus, <code>--shadow-lg</code> for modals. A resting card and a hovered card are on the same layer, so they carry the same shadow. Hover is a color signal, the same tonal indigo layer as everything else.
-  </p>
-
-  <div className="ix-lab">
-    <div className="ix-demo">
-      <div className="ix-demo-label">Selectable card (correct)</div>
-      <div className="ix-card" tabIndex={0} role="button" aria-label="Example event card">
-        <div className="ix-card-image"></div>
-        <div className="ix-card-line" style={{ height: '0.875rem', width: '75%', marginBottom: '0.5rem' }}></div>
-        <div className="ix-card-line" style={{ height: '0.75rem', width: '50%' }}></div>
-      </div>
-      <p className="ix-demo-note">
-        Hover: the border deepens and a 4% indigo layer washes in, elevation unchanged. Press: the layer steps to 10%. Tab to it: the indigo ring. It never leaves its layer and never moves the layout.
-      </p>
-    </div>
-    <div className="ix-demo">
-      <div className="ix-demo-label">What to avoid</div>
-      <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
-        <li className="ix-demo-note" style={{ marginTop: '0.25rem' }}>An upward lift on hover, which moves layout under the pointer.</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>A heavy drop shadow standing in for a hover state.</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>A pill radius on buttons. Controls are 6px, <code>--radius-sm</code>.</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>Ungated hover, which sticks on touch. Keep it pointer-only.</li>
-        <li className="ix-demo-note" style={{ marginTop: '0.5rem' }}>A white focus ring, which vanishes off-white. Use indigo.</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-{/* ============================================ */}
-{/* CHAPTER 9: RULES + LADDER + VERSUS             */}
-{/* ============================================ */}
-
-<div className="ix-section">
-  <div className="ix-section-header">
-    <span className="ix-section-number">9</span>
-    <h2 className="ix-section-title">Rules of Implementation</h2>
+    <span className="ix-section-number">5</span>
+    <h2 className="ix-section-title">The rules</h2>
   </div>
 
   <div className="ix-dodont">
@@ -1096,9 +769,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <li>Wrap every hover in <code>@media (hover: hover) and (pointer: fine)</code>.</li>
         <li>Express state with tonal indigo via <code>--state-*</code> opacity.</li>
         <li>Ring with <code>--shadow-focus</code> on <code>:focus-visible</code> only.</li>
-        <li>Gate any transform behind <code>prefers-reduced-motion</code>.</li>
-        <li>Give controls a 6px radius, <code>--radius-sm</code>.</li>
-        <li>Pair every visual state with its ARIA (<code>aria-pressed</code>, <code>aria-busy</code>, <code>aria-disabled</code>).</li>
+        <li>Gate transforms behind <code>prefers-reduced-motion</code>, and let color carry the meaning without them.</li>
+        <li>Give controls a 6px radius, <code>--radius-sm</code>, and pair each state with its ARIA.</li>
       </ul>
     </div>
     <div className="ix-list dont">
@@ -1108,54 +780,23 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </div>
       <ul>
         <li>Build feedback on hover alone. Touch gets nothing.</li>
-        <li>Leave hover ungated. It sticks after a tap on touch.</li>
-        <li>Lift an element or swap its shadow to signal hover.</li>
+        <li>Leave hover ungated. It sticks after a tap.</li>
+        <li>Lift a card or swap its shadow to signal hover. Shadow is elevation, not state.</li>
         <li>Style <code>:focus</code> when you mean <code>:focus-visible</code>.</li>
-        <li>Ring in <code>white</code>. It disappears off a white surface.</li>
-        <li>Move layout on interaction or animate through reduced-motion.</li>
+        <li>Ring in <code>white</code>. It vanishes off a white surface.</li>
         <li>Put a pill radius on a wide button.</li>
       </ul>
     </div>
   </div>
+</div>
 
-  <p className="ix-text" style={{ marginTop: '1.5rem' }}>
-    <strong>Decision ladder.</strong> Adding a state to a control? Stop at the first rung that answers it.
+{/* ============================================ */}
+{/* SOURCES                                       */}
+{/* ============================================ */}
+
+<div className="ix-refs">
+  <p className="ix-refs-h">Sources</p>
+  <p>
+    State layers after Material 3 (<a href="https://m3.material.io/foundations/interaction/states/state-layers">m3.material.io</a>). The hover and pointer media features and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible">:focus-visible</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">prefers-reduced-motion</a> per MDN (<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover">hover</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer">pointer</a>). Immediate press feedback from Apple Human Interface Guidelines (<a href="https://developer.apple.com/design/human-interface-guidelines/feedback">developer.apple.com</a>). Focus floors SC 2.4.11 and SC 2.4.13, WCAG 2.2 (<a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html">2.4.11</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">2.4.13</a>).
   </p>
-
-  <div className="ix-ladder">
-    <div className="ix-ladder-step">
-      <p className="ix-ladder-text"><strong>Can every input trigger it?</strong> If yes it is press or one of its cousins. Build it at the top level, ungated, so touch gets it.</p>
-    </div>
-    <div className="ix-ladder-step">
-      <p className="ix-ladder-text"><strong>Is it keyboard orientation?</strong> Then it is <code>:focus-visible</code> with <code>--shadow-focus</code>. Never plain <code>:focus</code>.</p>
-    </div>
-    <div className="ix-ladder-step">
-      <p className="ix-ladder-text"><strong>Is it a pointer-only nicety?</strong> Then it is hover, and it lives inside the <code>@media (hover: hover)</code> gate. Nowhere else.</p>
-    </div>
-    <div className="ix-ladder-step">
-      <p className="ix-ladder-text"><strong>Does it move?</strong> Gate the motion behind <code>prefers-reduced-motion</code> and make sure color still carries the meaning without it.</p>
-    </div>
-    <div className="ix-ladder-step">
-      <p className="ix-ladder-text"><strong>Is it a held state?</strong> Selected, expanded, checked. Persist it and mirror it in ARIA. It is not a transient hover.</p>
-    </div>
-  </div>
-
-  <p className="ix-text" style={{ marginTop: '1.5rem' }}>
-    <strong>How this differs from a utility framework.</strong> Tailwind and Bulma hand you the hooks (<code>hover:</code>, <code>active:</code>, <code>focus:</code>) but no doctrine about when each one is right. The gate, the modality model, the state-layer scale and the accessibility floor are left to you, and left out they usually stay out.
-  </p>
-
-  <div className="ix-versus">
-    <div className="ix-versus-row">
-      <span className="ix-versus-who">Tailwind</span>
-      <span className="ix-versus-what"><code>hover:</code> ships ungated by default, so the sticky-hover bug is one class away. No state-layer scale, no reduced-motion baked in.</span>
-    </div>
-    <div className="ix-versus-row">
-      <span className="ix-versus-who">Bulma</span>
-      <span className="ix-versus-what"><code>:hover</code> and <code>:active</code> skins with no modality doctrine and no <code>:focus-visible</code> discipline. Feedback assumes a mouse.</span>
-    </div>
-    <div className="ix-versus-row">
-      <span className="ix-versus-who us">This system</span>
-      <span className="ix-versus-what">The modality model, the pointer gate, the <code>--state-*</code> scale, the indigo <code>--shadow-focus</code> ring and WCAG 2.2 plus reduced-motion are the default, not an exercise for the reader.</span>
-    </div>
-  </div>
 </div>

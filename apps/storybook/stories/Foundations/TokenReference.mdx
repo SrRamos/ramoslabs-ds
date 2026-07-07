@@ -73,20 +73,51 @@ export const Ramp = ({ name }) => (
 {`
   .token-ref-header { margin-bottom: 2rem; }
 
-  .token-ref-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
+  .tr-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
 
-  .token-ref-description {
-    font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
-    font-size: 1rem;
-    line-height: 1.65;
-    max-width: 70ch;
+  .tr-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+
+  .tr-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+
+  .tr-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .tr-hero p strong { color: #ffffff; font-weight: 700; }
+
+  .tr-hero-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
   }
 
   .token-ref-section { margin-top: 3rem; scroll-margin-top: 2rem; }
@@ -95,7 +126,7 @@ export const Ramp = ({ name }) => (
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
     display: flex;
@@ -274,7 +305,7 @@ export const Ramp = ({ name }) => (
 
   .quick-ref-label {
     font-size: 0.75rem;
-    color: #64748b;
+    color: #475569;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -300,7 +331,7 @@ export const Ramp = ({ name }) => (
     font-weight: 600;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #475569;
     letter-spacing: 0.05em;
     background: #f8fafc;
   }
@@ -409,7 +440,7 @@ export const Ramp = ({ name }) => (
   .palette-pattern {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
-    color: #94a3b8;
+    color: #64748b;
   }
 
   .palette-strip {
@@ -503,7 +534,7 @@ export const Ramp = ({ name }) => (
   }
 
   .rules-col.do .rules-col-title { color: #4f46e5; }
-  .rules-col.dont .rules-col-title { color: #64748b; }
+  .rules-col.dont .rules-col-title { color: #475569; }
 
   .rules-badge {
     display: inline-flex;
@@ -517,7 +548,7 @@ export const Ramp = ({ name }) => (
   }
 
   .rules-col.do .rules-badge { background: #4f46e5; color: white; }
-  .rules-col.dont .rules-badge { background: #e2e8f0; color: #64748b; }
+  .rules-col.dont .rules-badge { background: #e2e8f0; color: #475569; }
 
   .rules-list {
     margin: 0;
@@ -532,7 +563,7 @@ export const Ramp = ({ name }) => (
   .rules-list li { padding-left: 1.25rem; position: relative; margin-bottom: 0.6rem; }
   .rules-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
   .rules-col.do .rules-list li::before { content: '+'; color: #4f46e5; }
-  .rules-col.dont .rules-list li::before { content: 'x'; color: #94a3b8; }
+  .rules-col.dont .rules-list li::before { content: 'x'; color: #475569; }
 
   .rules-list code {
     font-family: 'SF Mono', 'Monaco', monospace;
@@ -608,7 +639,7 @@ export const Ramp = ({ name }) => (
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #cbd5e1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -691,10 +722,13 @@ export const Ramp = ({ name }) => (
 </style>
 
 <div className="token-ref-header">
-  <h1 className="token-ref-title">Token Reference</h1>
-  <p className="token-ref-description">
-    This is the canonical list of every design token in the RamosLabs system, and the architecture that produces it. A token is a named design decision, the smallest reusable unit of the language: one color, one step of space, one shadow. Read the source of truth as the JSON files, use it as the generated CSS custom properties. Click any token to copy its <code style={{ fontFamily: "'SF Mono', monospace", fontSize: '0.85em', background: '#eef2ff', padding: '0.05rem 0.35rem', borderRadius: '4px', color: '#4f46e5' }}>var(...)</code> reference.
-  </p>
+  <div className="tr-hero">
+    <p className="tr-hero-eyebrow">Foundations / Tokens</p>
+    <h1>Every design decision, named once.</h1>
+    <p>
+      A token is the smallest unit of the language: <strong>one color, one step of space, one shadow</strong>, authored as data and published to CSS and TypeScript from a single source. This is the canonical list of all 212, and the two-tier system that generates them. Click any token to copy its <span className="tr-hero-code">var(...)</span> reference.
+    </p>
+  </div>
 
   <div className="toc">
     <a href="#architecture">Architecture</a>
@@ -726,18 +760,15 @@ export const Ramp = ({ name }) => (
     <div className="quick-ref-label">Radius Steps</div>
   </div>
   <div className="quick-ref-item">
-    <div className="quick-ref-value">4</div>
-    <div className="quick-ref-label">Shadow Levels</div>
+    <div className="quick-ref-value">3</div>
+    <div className="quick-ref-label">Elevation Shadows</div>
   </div>
 </div>
 
 <div className="token-ref-section" id="architecture">
   <h2 className="token-ref-section-title"><span className="material-symbols-outlined">account_tree</span> Tokens as a Contract</h2>
   <p className="token-ref-lede">
-    Every token is authored in the Design Tokens Community Group format, the open specification maintained under the W3C at design-tokens.org. In that format a token is a JSON object whose design value lives under a reserved <code>$value</code> key and whose kind lives under <code>$type</code>, for example <code>color</code>, <code>dimension</code>, or <code>shadow</code>. Writing tokens as data, not as CSS, is the whole point: one authored decision can be published to CSS, to TypeScript, to native platforms, all from the same source. The JSON is the contract, and everything downstream honors it.
-  </p>
-  <p className="token-ref-lede">
-    The system is organized in two tiers. Primitive tokens are the raw material, a full palette of hex values with no opinion about where they are used. Semantic tokens are the meaningful layer, and each one references a primitive by alias rather than repeating a hex, so <code>--color-primary</code> resolves to indigo 600 and <code>--color-text-heading</code> resolves to slate 900. Product code consumes the semantic tier almost exclusively. When the brand shifts, you re-point a handful of semantic aliases and the whole surface follows, because nothing downstream hardcoded the underlying hue.
+    Every token is authored as data, not CSS, in the W3C Design Tokens Community Group format: a JSON object with a reserved <code>$value</code> and a <code>$type</code> like <code>color</code> or <code>dimension</code>. One authored decision publishes to CSS, TypeScript, and native from the same source. The JSON is the contract, and everything downstream honors it. It runs in two tiers.
   </p>
 
   <div className="tier-grid">
@@ -758,7 +789,7 @@ export const Ramp = ({ name }) => (
   </div>
 
   <p className="token-ref-lede" style={{ marginTop: '1.5rem' }}>
-    The JSON is authored by hand, then Style Dictionary transforms and formats it into the artifacts the apps import. Style Dictionary is a build tool that reads a token source and emits platform-specific files, resolving the aliases and applying transforms along the way. In this system the CSS output is a flat block of custom properties on <code>:root</code>, and a parallel TypeScript output exposes the same values as typed constants. Those generated files carry a do-not-edit banner for a reason: they are build output, not source.
+    Style Dictionary reads that JSON, resolves the aliases, and formats each target. The CSS output is a flat block of custom properties on <code>:root</code>, a parallel TypeScript output exposes the same values as typed constants. Both carry a do-not-edit banner: they are build output, not source.
   </p>
 
   <div className="pipeline">

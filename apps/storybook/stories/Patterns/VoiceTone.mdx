@@ -21,47 +21,53 @@ import { Meta } from '@storybook/addon-docs/blocks';
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ===== Header ===== */
-  .vt-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 2rem;
+  /* ===== Hero ===== */
+  .vt-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.25rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
 
-  .vt-icon {
-    padding: 0.75rem;
-    background: #eef2ff;
-    color: #4f46e5;
-    border-radius: 9999px;
-    flex-shrink: 0;
-    display: flex;
+  .vt-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
   }
 
-  .vt-title {
+  .vt-hero h1 {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw + 1rem, 3.1rem);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.15rem;
+    max-width: 20ch;
   }
 
-  .vt-description {
+  .vt-hero p {
+    color: #e0e7ff;
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
-    font-size: 1rem;
-    line-height: 1.65;
-    max-width: 68ch;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0;
   }
 
-  .vt-description strong { color: #0f172a; font-weight: 600; }
+  .vt-hero p strong { color: #ffffff; font-weight: 700; }
 
   /* ===== Doctrine band ===== */
   .vt-doctrine {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1rem;
-    margin: 1.75rem 0 0.5rem;
+    margin: 1.5rem 0 0.5rem;
   }
 
   .vt-doctrine-card {
@@ -71,16 +77,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding: 1.25rem 1.35rem;
   }
 
-  .vt-doctrine-card.accent {
-    border-color: #c7d2fe;
-    background: #eef2ff;
-  }
+  .vt-doctrine-card.accent { border-color: #c7d2fe; background: #eef2ff; }
 
-  .vt-doctrine-icon {
-    color: #4f46e5;
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
+  .vt-doctrine-icon { color: #4f46e5; font-size: 1.4rem; margin-bottom: 0.5rem; }
 
   .vt-doctrine-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
@@ -97,16 +96,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.55;
   }
 
-  .vt-doctrine-text code, .vt-lede code, .vt-apply-text code {
+  .vt-doctrine-text code, .vt-lede code, .vt-section-sub code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8125em;
     background: #eef2ff;
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: #4338ca;
   }
 
-  /* ===== Generic section shell ===== */
+  /* ===== Section shell ===== */
   .vt-section { margin-top: 2.75rem; }
 
   .vt-section-label {
@@ -130,20 +129,20 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'Rubik', system-ui, sans-serif;
     color: #475569;
     font-size: 0.9375rem;
-    line-height: 1.65;
-    max-width: 68ch;
+    line-height: 1.6;
+    max-width: 70ch;
     margin-bottom: 1.25rem;
   }
 
   .vt-section-sub strong { color: #0f172a; font-weight: 600; }
 
   .vt-rule-label {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 0.1em;
-    margin: 2.75rem 0 1rem;
+    margin: 2.5rem 0 1rem;
   }
 
   /* ===== Voice vs Tone ===== */
@@ -174,8 +173,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-bottom: 0.7rem;
   }
 
-  .vt-vs-card.constant .vt-vs-tag { color: #4f46e5; }
-  .vt-vs-card.variable .vt-vs-tag { color: #64748b; }
+  .vt-vs-card.constant .vt-vs-tag { color: #4338ca; }
+  .vt-vs-card.variable .vt-vs-tag { color: #475569; }
 
   .vt-vs-tag .vt-material { font-size: 1.05rem; }
 
@@ -206,11 +205,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.5;
   }
 
-  .vt-vs-list li {
-    padding-left: 1.15rem;
-    position: relative;
-    margin-bottom: 0.4rem;
-  }
+  .vt-vs-list li { padding-left: 1.15rem; position: relative; margin-bottom: 0.4rem; }
 
   .vt-vs-list li::before {
     content: '';
@@ -225,13 +220,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .vt-vs-card.constant .vt-vs-list li::before { background: #4f46e5; }
 
-  /* ===== Tone dimensions (scales) ===== */
-  .vt-dims {
-    display: flex;
-    flex-direction: column;
-    gap: 1.15rem;
-    margin-top: 0.5rem;
-  }
+  /* ===== Tone dials ===== */
+  .vt-dims { display: flex; flex-direction: column; gap: 1.15rem; margin-top: 0.5rem; }
 
   .vt-dim {
     background: #f8fafc;
@@ -245,18 +235,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
     justify-content: space-between;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #475569;
     margin-bottom: 0.5rem;
   }
 
-  .vt-dim-ends .here { color: #4f46e5; font-weight: 700; }
+  .vt-dim-ends .here { color: #4338ca; font-weight: 700; }
 
-  .vt-dim-track {
-    position: relative;
-    height: 6px;
-    border-radius: 9999px;
-    background: #e2e8f0;
-  }
+  .vt-dim-track { position: relative; height: 6px; border-radius: 9999px; background: #e2e8f0; }
 
   .vt-dim-marker {
     position: absolute;
@@ -279,18 +264,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   /* ===== Principles ===== */
-  .vt-principle {
-    margin-top: 2.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #e6e8eb;
-  }
+  .vt-principle { margin-top: 2.25rem; padding-bottom: 1.75rem; border-bottom: 1px solid #e6e8eb; }
 
-  .vt-principle-head {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.85rem;
-  }
+  .vt-principle-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
 
   .vt-num {
     display: inline-flex;
@@ -318,60 +294,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'Rubik', system-ui, sans-serif;
     color: #475569;
     font-size: 0.9375rem;
-    line-height: 1.7;
-    max-width: 68ch;
+    line-height: 1.65;
+    max-width: 70ch;
   }
 
+  .vt-lede + .vt-lede { margin-top: 0.75rem; }
   .vt-lede strong { color: #0f172a; font-weight: 600; }
-
-  /* Evidence callout */
-  .vt-evidence {
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
-    border-radius: 12px;
-    padding: 1.1rem 1.35rem;
-    margin: 1.1rem 0;
-    display: flex;
-    gap: 0.85rem;
-    align-items: flex-start;
-  }
-
-  .vt-evidence .vt-material {
-    color: #4f46e5;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-
-  .vt-evidence-body {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    color: #475569;
-    line-height: 1.6;
-  }
-
-  .vt-evidence-body strong { color: #3730a3; }
-
-  .vt-cite {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.7rem;
-    color: #64748b;
-    display: block;
-    margin-top: 0.4rem;
-    word-break: break-word;
-  }
-
-  .vt-spa {
-    display: inline-block;
-    font-size: 0.625rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #4f46e5;
-    background: #eef2ff;
-    border-radius: 4px;
-    padding: 0.05rem 0.35rem;
-    margin-left: 0.35rem;
-  }
 
   /* ===== Do / Don't microcopy pairs ===== */
   .vt-pair {
@@ -384,9 +312,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-top: 0.75rem;
   }
 
-  @media (max-width: 640px) {
-    .vt-pair { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 640px) { .vt-pair { grid-template-columns: 1fr; } }
 
   .vt-pair-head {
     padding: 0.7rem 1.1rem;
@@ -402,8 +328,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .vt-pair-head .vt-material { font-size: 1.05rem; }
 
-  .vt-pair-col.do .vt-pair-head { color: #4f46e5; background: #eef2ff; border-bottom: 1px solid #c7d2fe; }
-  .vt-pair-col.dont .vt-pair-head { color: #64748b; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+  .vt-pair-col.do .vt-pair-head { color: #4338ca; background: #eef2ff; border-bottom: 1px solid #c7d2fe; }
+  .vt-pair-col.dont .vt-pair-head { color: #475569; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
 
   .vt-pair-col.do { border-right: 1px solid #e2e8f0; }
 
@@ -420,12 +346,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.5;
   }
 
-  .vt-pair-list li {
-    padding: 0.4rem 0;
-    border-bottom: 1px dashed #eef2f7;
-    color: #475569;
-  }
-
+  .vt-pair-list li { padding: 0.4rem 0; border-bottom: 1px dashed #eef2f7; color: #475569; }
   .vt-pair-list li:last-child { border-bottom: none; }
 
   .vt-pair-list .say {
@@ -437,7 +358,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .vt-pair-col.do .vt-pair-list .say { color: #4338ca; }
 
-  .vt-pair-list .why { display: block; font-size: 0.72rem; color: #94a3b8; margin-top: 0.15rem; }
+  .vt-pair-list .why { display: block; font-size: 0.72rem; color: #475569; margin-top: 0.15rem; }
 
   /* ===== Tone by context ===== */
   .vt-tone-grid {
@@ -447,19 +368,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-top: 0.5rem;
   }
 
-  .vt-tone-card {
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    background: white;
-    padding: 1.25rem 1.35rem;
-  }
+  .vt-tone-card { border: 1px solid #e2e8f0; border-radius: 12px; background: white; padding: 1.25rem 1.35rem; }
 
-  .vt-tone-head {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    margin-bottom: 0.7rem;
-  }
+  .vt-tone-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.7rem; }
 
   .vt-tone-badge {
     width: 34px;
@@ -487,7 +398,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #94a3b8;
+    color: #64748b;
   }
 
   .vt-tone-example {
@@ -519,18 +430,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin: 0.5rem 0 1.25rem;
   }
 
-  .vt-anatomy-step {
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    background: #f8fafc;
-    padding: 1rem 1.15rem;
-  }
+  .vt-anatomy-step { border: 1px solid #e2e8f0; border-radius: 10px; background: #f8fafc; padding: 1rem 1.15rem; }
 
   .vt-anatomy-n {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #4f46e5;
+    color: #4338ca;
     letter-spacing: 0.05em;
     margin-bottom: 0.35rem;
   }
@@ -543,20 +449,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-bottom: 0.3rem;
   }
 
-  .vt-anatomy-text {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.78rem;
-    color: #475569;
-    line-height: 1.5;
-  }
+  .vt-anatomy-text { font-family: 'Rubik', system-ui, sans-serif; font-size: 0.78rem; color: #475569; line-height: 1.5; }
 
-  .vt-demo {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 1.25rem;
-    margin-top: 0.5rem;
-  }
+  .vt-demo { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-top: 0.5rem; }
 
   .vt-demo-label {
     display: block;
@@ -594,12 +489,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .vt-demo-msg .vt-material { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
 
   /* ===== Ethics band ===== */
-  .vt-ethics {
-    margin-top: 2.75rem;
-    background: #0f172a;
-    border-radius: 16px;
-    padding: 2rem 2.25rem;
-  }
+  .vt-ethics { margin-top: 2.75rem; background: #0f172a; border-radius: 16px; padding: 2rem 2.25rem; }
 
   .vt-ethics-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
@@ -613,8 +503,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.9375rem;
     color: #c7d2fe;
-    line-height: 1.7;
-    max-width: 68ch;
+    line-height: 1.65;
+    max-width: 70ch;
   }
 
   .vt-ethics-lede strong { color: #ffffff; }
@@ -626,12 +516,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-top: 1.5rem;
   }
 
-  .vt-ethics-card {
-    background: #1a1f3d;
-    border: 1px solid rgba(199, 210, 254, 0.14);
-    border-radius: 10px;
-    padding: 1.1rem 1.2rem;
-  }
+  .vt-ethics-card { background: #1a1f3d; border: 1px solid rgba(199, 210, 254, 0.14); border-radius: 10px; padding: 1.1rem 1.2rem; }
 
   .vt-ethics-card-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
@@ -646,32 +531,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .vt-ethics-card-title .vt-material { font-size: 1.05rem; color: #a5b4fc; }
 
-  .vt-ethics-card-text {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.78rem;
-    color: #a5b4fc;
-    line-height: 1.55;
-  }
-
-  .vt-ethics-card-text code {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.85em;
-    color: #c7d2fe;
-  }
+  .vt-ethics-card-text { font-family: 'Rubik', system-ui, sans-serif; font-size: 0.78rem; color: #a5b4fc; line-height: 1.55; }
 
   /* ===== Rules do/don't ===== */
-  .vt-rules {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
+  .vt-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
 
-  .vt-rules-col {
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    padding: 1.5rem;
-  }
+  .vt-rules-col { border-radius: 12px; border: 1px solid #e2e8f0; background: #f8fafc; padding: 1.5rem; }
 
   .vt-rules-col-title {
     font-weight: 700;
@@ -684,8 +549,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     gap: 0.5rem;
   }
 
-  .vt-rules-col.do .vt-rules-col-title { color: #4f46e5; }
-  .vt-rules-col.dont .vt-rules-col-title { color: #64748b; }
+  .vt-rules-col.do .vt-rules-col-title { color: #4338ca; }
+  .vt-rules-col.dont .vt-rules-col-title { color: #475569; }
 
   .vt-rules-badge {
     display: inline-flex;
@@ -699,7 +564,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .vt-rules-col.do .vt-rules-badge { background: #4f46e5; color: white; }
-  .vt-rules-col.dont .vt-rules-badge { background: #e2e8f0; color: #64748b; }
+  .vt-rules-col.dont .vt-rules-badge { background: #e2e8f0; color: #475569; }
 
   .vt-rules-list {
     margin: 0;
@@ -711,29 +576,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.55;
   }
 
-  .vt-rules-list li {
-    padding-left: 1.25rem;
-    position: relative;
-    margin-bottom: 0.6rem;
-  }
+  .vt-rules-list li { padding-left: 1.25rem; position: relative; margin-bottom: 0.6rem; }
 
-  .vt-rules-list li::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-weight: 700;
-  }
+  .vt-rules-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
 
   .vt-rules-col.do .vt-rules-list li::before { content: '+'; color: #4f46e5; }
-  .vt-rules-col.dont .vt-rules-list li::before { content: 'x'; color: #94a3b8; }
+  .vt-rules-col.dont .vt-rules-list li::before { content: 'x'; color: #475569; }
 
-  /* ===== Decision ladder ===== */
-  .vt-decision {
-    counter-reset: step;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+  /* ===== Ship checklist ===== */
+  .vt-decision { counter-reset: step; display: flex; flex-direction: column; gap: 0.75rem; }
 
   .vt-decision-step {
     display: flex;
@@ -762,13 +613,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     justify-content: center;
   }
 
-  .vt-decision-text {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.875rem;
-    color: #334155;
-    line-height: 1.55;
-  }
-
+  .vt-decision-text { font-family: 'Rubik', system-ui, sans-serif; font-size: 0.875rem; color: #334155; line-height: 1.55; }
   .vt-decision-text strong { color: #0f172a; }
 
   .vt-xlink {
@@ -778,7 +623,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
-    color: #4f46e5;
+    color: #4338ca;
     margin-top: 0.9rem;
   }
 
@@ -795,55 +640,59 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.6;
   }
 
-  .vt-sources-list li {
-    padding: 0.6rem 0;
-    border-bottom: 1px solid #f1f5f9;
-  }
-
+  .vt-sources-list li { padding: 0.55rem 0; border-bottom: 1px solid #f1f5f9; }
   .vt-sources-list li:last-child { border-bottom: none; }
-
   .vt-sources-list strong { color: #0f172a; }
 
   .vt-sources-list code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.78em;
-    color: #64748b;
+    color: #475569;
     word-break: break-word;
+  }
+
+  .vt-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-right: 0.35rem;
   }
 `}
 </style>
 
 {/* ============================================ */}
-{/* HEADER                                       */}
+{/* HERO                                         */}
 {/* ============================================ */}
 
-<div className="vt-header">
-  <div className="vt-icon">
-    <span className="vt-material" style={{ fontSize: '1.5rem' }} aria-hidden="true">record_voice_over</span>
-  </div>
-  <div>
-    <h1 className="vt-title">Voice &amp; Tone</h1>
-    <p className="vt-description">
-      The interface talks. A button label, an empty state, the line under a failed field: each one is a sentence the product says out loud, and together they decide whether a person feels guided or abandoned. <strong>Words are not a layer applied after the design; they are the design.</strong> This page sets one steady voice for the system and the rules for bending its tone to the moment, so every surface sounds like the same product, calm on a good day and steadier still on a bad one.
-    </p>
-  </div>
+<div className="vt-hero">
+  <p className="vt-hero-eyebrow">Patterns / Voice &amp; Tone</p>
+  <h1>One voice, every screen. The tone reads the room.</h1>
+  <p>
+    Every label, empty state, and error is the product talking, and the words are not a coat applied after the design; <strong>they are the design</strong>. The voice never changes. The tone bends to the moment: warm at a win, calm at a break, plain when it counts.
+  </p>
 </div>
 
 <div className="vt-doctrine">
   <div className="vt-doctrine-card accent">
     <span className="vt-material vt-doctrine-icon" aria-hidden="true">chat</span>
     <div className="vt-doctrine-title">The UI is a conversation</div>
-    <p className="vt-doctrine-text">Every label, hint, and message is the product speaking. Content is a design material, weighed with the same care as spacing and color, not poured in at the end.</p>
+    <p className="vt-doctrine-text">Every label, hint, and message is the product speaking. Content is a design material, weighed like spacing and color, not poured in last.</p>
   </div>
   <div className="vt-doctrine-card">
     <span className="vt-material vt-doctrine-icon" aria-hidden="true">visibility</span>
     <div className="vt-doctrine-title">Read before it is read</div>
-    <p className="vt-doctrine-text">People scan, they do not study. Front-load the point, cut the words that carry none, and let someone act correctly on a glance.</p>
+    <p className="vt-doctrine-text">People scan, they do not study. Front-load the point, cut the dead words, let someone act on a glance.</p>
   </div>
   <div className="vt-doctrine-card">
     <span className="vt-material vt-doctrine-icon" aria-hidden="true">favorite</span>
     <div className="vt-doctrine-title">Respect on the worst day</div>
-    <p className="vt-doctrine-text">The tone that matters most is the one used when something breaks. No blame, no jargon, no dead ends; name what happened and hand back a next step.</p>
+    <p className="vt-doctrine-text">The tone that matters most is the one for when something breaks. No blame, no jargon, no dead ends: name it, hand back a step.</p>
   </div>
 </div>
 
@@ -855,39 +704,31 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="vt-section-label">The core distinction</div>
   <h2 className="vt-section-title">Voice Is Constant, Tone Adapts</h2>
   <p className="vt-section-sub">
-    <strong>Voice</strong> is who the product is: one personality that never changes, the same way a person keeps their character whatever the day brings. <strong>Tone</strong> is how that voice modulates for the situation, warmer at a win, quieter at a failure, plainer under pressure. Get this pair right and the product can feel human without ever feeling inconsistent.
+    <strong>Voice</strong> is who the product is: one personality that never shifts. <strong>Tone</strong> is how that voice modulates for the situation, warmer at a win, quieter at a failure, plainer under pressure. Get the pair right and the product feels human without ever feeling inconsistent.
   </p>
 
   <div className="vt-vs">
     <div className="vt-vs-card constant">
       <div className="vt-vs-tag"><span className="vt-material" aria-hidden="true">anchor</span> Voice, constant</div>
       <div className="vt-vs-title">One personality, every screen</div>
-      <p className="vt-vs-text">Set once and held everywhere. If you could redact the logo and still know it is us, the voice is doing its job.</p>
+      <p className="vt-vs-text">Set once, held everywhere. Redact the logo and you should still know it is us.</p>
       <ul className="vt-vs-list">
         <li>Clear before clever, always.</li>
         <li>Human, not corporate or robotic.</li>
         <li>Honest, never hype.</li>
-        <li>Plain words a nine-year-old could follow.</li>
+        <li>Plain enough for a nine-year-old.</li>
       </ul>
     </div>
     <div className="vt-vs-card variable">
       <div className="vt-vs-tag"><span className="vt-material" aria-hidden="true">tune</span> Tone, variable</div>
       <div className="vt-vs-title">Same voice, read the room</div>
-      <p className="vt-vs-text">The dial the voice turns for context. A person is not spoken to the same way mid-celebration and mid-error, yet it is one person speaking.</p>
+      <p className="vt-vs-text">The dial the voice turns for context. One person, spoken differently mid-win and mid-error.</p>
       <ul className="vt-vs-list">
-        <li>Success: brief and glad, then out of the way.</li>
+        <li>Success: brief and glad, then gone.</li>
         <li>Error: calm, specific, pointed at the fix.</li>
         <li>Destructive: slow, plain, no cheer.</li>
-        <li>Onboarding: encouraging, never overwhelming.</li>
+        <li>Onboarding: encouraging, never flooding.</li>
       </ul>
-    </div>
-  </div>
-
-  <div className="vt-evidence">
-    <span className="vt-material" aria-hidden="true">insights</span>
-    <div className="vt-evidence-body">
-      <strong>Tone is measurable along four dimensions.</strong> Nielsen Norman Group frames product tone on four independent scales: funny to serious, formal to casual, respectful to irreverent, and enthusiastic to matter-of-fact. A voice picks a home position on each; tone is the small, deliberate slide away from that home when the moment calls for it. Mailchimp's content style guide draws the same line in a sentence worth keeping: the voice stays the same, the tone changes.
-      <span className="vt-cite">nngroup.com/articles/tone-of-voice-dimensions · styleguide.mailchimp.com/voice-and-tone</span>
     </div>
   </div>
 
@@ -896,7 +737,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="vt-dim">
       <div className="vt-dim-ends"><span>Funny</span><span className="here">Serious, with warmth</span><span>Serious</span></div>
       <div className="vt-dim-track"><span className="vt-dim-marker" style={{ left: '72%' }}></span></div>
-      <p className="vt-dim-note">We take the user's goal seriously. Wit is welcome only when it never costs a second of comprehension.</p>
+      <p className="vt-dim-note">We take the goal seriously. Wit is welcome only when it never costs a second of comprehension.</p>
     </div>
     <div className="vt-dim">
       <div className="vt-dim-ends"><span>Formal</span><span className="here">Casual, but clear</span><span>Casual</span></div>
@@ -906,12 +747,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="vt-dim">
       <div className="vt-dim-ends"><span>Respectful</span><span className="here">Respectful</span><span>Irreverent</span></div>
       <div className="vt-dim-track"><span className="vt-dim-marker" style={{ left: '12%' }}></span></div>
-      <p className="vt-dim-note">Never at the user's expense. No sarcasm in errors, no jokes about their data, no cleverness where they are stuck.</p>
+      <p className="vt-dim-note">Never at the user's expense. No sarcasm in errors, no jokes where they are stuck.</p>
     </div>
     <div className="vt-dim">
       <div className="vt-dim-ends"><span>Enthusiastic</span><span className="here">Measured, warm at wins</span><span>Matter-of-fact</span></div>
       <div className="vt-dim-track"><span className="vt-dim-marker" style={{ left: '58%' }}></span></div>
-      <p className="vt-dim-note">Mostly matter-of-fact so the interface stays quiet. Enthusiasm is saved for genuine moments and spent sparingly.</p>
+      <p className="vt-dim-note">Mostly matter-of-fact so the interface stays quiet. Enthusiasm is saved for real moments and spent sparingly.</p>
     </div>
   </div>
 </div>
@@ -924,7 +765,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="vt-section-label">Our voice</div>
   <h2 className="vt-section-title">Three Principles That Never Bend</h2>
   <p className="vt-section-sub">
-    These hold on every surface and in every state. When a line is hard to write, it is usually because one of these three is being tested. Return to them and the sentence resolves.
+    They hold on every surface and in every state. When a line is hard to write, one of these three is usually being tested. Return to it and the sentence resolves.
   </p>
 </div>
 
@@ -934,17 +775,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <h2 className="vt-principle-title">Clarity Over Creativity</h2>
   </div>
   <p className="vt-lede">
-    A clever line that makes someone pause to decode it has already failed. The job of interface copy is to let a person act correctly without thinking about the words at all. Write for scanning, not reading: put the outcome first, cut every word that does not change what the user does, and prefer the plain term to the impressive one. If a label and a joke fight, the label wins.
+    A clever line that makes someone stop to decode it has already failed. Copy exists to let a person act without thinking about the words. Write for scanning: outcome first, cut every word that does not change what they do, plain term over the impressive one. Label versus joke, the label wins.
   </p>
-  <div className="vt-evidence">
-    <span className="vt-material" aria-hidden="true">science</span>
-    <div className="vt-evidence-body">
-      <strong>People do not read online, they scan.</strong> Nielsen Norman Group's early study found 79 percent of users always scanned a new page and only 16 percent read word by word; concise, scannable, front-loaded copy measured up to 124 percent more usable than the conventional version. Users fixate on headings, links, and the first words of a line in an F-shaped pattern. The UK government's design manuals reach the same rule from public-service scale: write so content is understandable at a reading age of around nine, because clear beats clever for everyone, expert and novice alike.
-      <span className="vt-cite">nngroup.com/articles/how-users-read-on-the-web · nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web · design.homeoffice.gov.uk/accessibility/written-content/readability</span>
-    </div>
-  </div>
   <p className="vt-lede">
-    In practice: headline the result ("Saved" before "Your changes were successfully saved"), name buttons for what they do ("Delete event", not "Confirm"), and drop filler like "please", "simply", and "in order to". The U.S. plain language guidance puts the discipline in one line worth taping to the wall: write for your reader, use common words, keep sentences short, and lead with what matters.
+    In practice: headline the result (<strong>"Saved"</strong>, not "Your changes were successfully saved"), name buttons for what they do (<strong>"Delete event"</strong>, not "Confirm"), and drop filler like "please", "simply", and "in order to".
   </p>
 </div>
 
@@ -954,17 +788,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <h2 className="vt-principle-title">Human, Not Robotic</h2>
   </div>
   <p className="vt-lede">
-    Machine copy hides behind the passive voice and the system's point of view: "an error occurred", "your request could not be processed". Human copy speaks in the first and second person, takes responsibility, and sounds like one careful person helping another. Address the reader as "you", let the product say "we", use contractions, and prefer the active voice so it is always clear who does what.
+    Machine copy hides in the passive voice and the system's point of view: "an error occurred". Human copy says "you" and "we", takes responsibility, and prefers the active voice so it is always clear who does what. It sounds like one careful person helping another.
   </p>
-  <div className="vt-evidence">
-    <span className="vt-material" aria-hidden="true">science</span>
-    <div className="vt-evidence-body">
-      <strong>Plain, active, personal language is the documented standard, not a stylistic whim.</strong> GOV.UK instructs writers to use "you" for the user, write in the active voice, write conversationally, and avoid jargon and formal filler. The U.S. plain language guidance, backing the Plain Writing Act, prescribes the same: active voice, personal pronouns, and everyday words. Both exist because passive, impersonal copy measurably slows comprehension and erodes trust.
-      <span className="vt-cite">guidance.publishing.service.gov.uk/writing-to-gov-uk-standards · digital.gov/guides/plain-language</span>
-    </div>
-  </div>
   <p className="vt-lede">
-    Human does not mean chatty. Warmth is carried by point of view and plainness, not by exclamation marks or personality for its own sake. The test: read the line aloud. If no real person would say it to another across a desk, rewrite it.
+    Human does not mean chatty; warmth comes from plainness, not exclamation marks. The test: read the line aloud. If no real person would say it to another across a desk, rewrite it.
   </p>
 </div>
 
@@ -974,17 +801,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <h2 className="vt-principle-title">Honest, Never Hype</h2>
   </div>
   <p className="vt-lede">
-    Every number, claim, and countdown on screen must be literally true. Copy does not inflate ("the best", "instantly", "in seconds") what the product cannot guarantee, does not manufacture urgency the situation does not hold, and does not bury a cost in a cheerful phrase. Honesty is also about completeness: tell the user what will happen before they commit, especially when the action spends money, shares data, or cannot be undone.
+    Every number, claim, and countdown on screen must be literally true. No inflation ("the best", "in seconds"), no manufactured urgency, no cost buried in a cheerful phrase. Honesty is completeness too: say what will happen before someone commits, above all when it spends money, shares data, or cannot be undone.
   </p>
-  <div className="vt-evidence">
-    <span className="vt-material" aria-hidden="true">verified</span>
-    <div className="vt-evidence-body">
-      <strong>Content honesty is a content-design responsibility, not just a legal one.</strong> Shopify's Polaris content guidelines set the bar for product language: be clear and accurate, help people act with confidence, and never overstate. Language that exaggerates or pressures crosses into the deceptive-pattern territory that Nielsen Norman Group and deceptive.design catalogue as harm. Truthful copy is the cheapest trust the product will ever buy.
-      <span className="vt-cite">polaris.shopify.com/content/voice-and-tone · nngroup.com/articles/deceptive-patterns</span>
-    </div>
-  </div>
   <p className="vt-lede">
-    This principle connects directly to the ethics section below and to <strong>Patterns / Persuasion</strong>, where the line between honest persuasion and manipulation is drawn technique by technique. The voice never sells with a claim the user could catch out.
+    This runs straight into the ethics band below and into <strong>Patterns / Persuasion</strong>, where the line between honest persuasion and manipulation is drawn technique by technique.
   </p>
 </div>
 
@@ -996,12 +816,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="vt-section-label">Reference</div>
   <h2 className="vt-section-title">Microcopy, Pattern by Pattern</h2>
   <p className="vt-section-sub">
-    Microcopy is the small text that does the heavy lifting: button labels, field hints, empty states, error lines, confirmations. It is the highest-leverage writing in the product because it sits exactly where a person is deciding what to do. Each pattern below pairs what to say with what to avoid, and why.
+    The small text does the heavy lifting: labels, hints, empty states, errors, confirmations. It sits exactly where a person decides what to do, so it is the highest-leverage writing in the product. Each pattern pairs what to say with what to avoid.
   </p>
 
   <div className="vt-rule-label">Buttons &amp; calls to action</div>
   <p className="vt-section-sub" style={{ marginBottom: '0.25rem' }}>
-    A button names its own action so the label reads as a promise of what happens next. Verb plus object beats a vague "Submit"; the exact action beats a generic "Confirm".
+    A button names its own action, so the label reads as a promise of what happens next. Verb plus object beats a vague "Submit".
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
@@ -1026,7 +846,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="vt-rule-label">Labels &amp; hints</div>
   <p className="vt-section-sub" style={{ marginBottom: '0.25rem' }}>
-    A label says what the field is; a hint removes doubt before the user types. Keep both short and specific, and put help where the eye already is, next to the field, not in a distant tooltip.
+    A label says what the field is; a hint removes doubt before the user types. Keep both short, and put help next to the field, not in a distant tooltip.
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
@@ -1049,7 +869,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="vt-rule-label">Empty states</div>
   <p className="vt-section-sub" style={{ marginBottom: '0.25rem' }}>
-    An empty state is not a dead end; it is the first step. Say what will be here, then hand over the one action that fills it. Skip the pep talk and the cleverness.
+    An empty state is not a dead end; it is the first step. Say what will be here, then hand over the one action that fills it.
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
@@ -1070,13 +890,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="vt-rule-label">Errors</div>
   <p className="vt-section-sub" style={{ marginBottom: '0.25rem' }}>
-    An error line has one job: get the user unstuck. Say what happened in their words, drop the blame and the codes, and point at the fix. The full anatomy is below.
+    An error line has one job: get the user unstuck. Say what happened in their words, drop the blame and the codes, point at the fix.
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
       <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Say this</div>
       <ul className="vt-pair-list">
-        <li><span className="say">That email address is missing an @. Check and try again.</span><span className="why">Names the problem and the exact fix.</span></li>
+        <li><span className="say">That email is missing an @. Check and try again.</span><span className="why">Names the problem and the exact fix.</span></li>
         <li><span className="say">This card was declined. Try another card or contact your bank.</span><span className="why">Says what happened and two ways forward.</span></li>
       </ul>
     </div>
@@ -1105,16 +925,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Not this</div>
       <ul className="vt-pair-list">
         <li><span className="say">Success!</span><span className="why">Success at what? The exclamation carries no information.</span></li>
-        <li><span className="say">Your request has been processed.</span><span className="why">Robotic, and vague about what actually happened.</span></li>
+        <li><span className="say">Your request has been processed.</span><span className="why">Robotic, and vague about what happened.</span></li>
       </ul>
-    </div>
-  </div>
-
-  <div className="vt-evidence">
-    <span className="vt-material" aria-hidden="true">draft</span>
-    <div className="vt-evidence-body">
-      <strong>Microcopy earns its name by weight, not length.</strong> Nielsen Norman Group defines microcopy as text shorter than three sentences that supports scanning and is read more often than any other copy, judged by clarity, concision, and character. Its separate error-message guidelines add that these lines must be polite, precise, and constructive. Shopify Polaris publishes ready patterns for exactly these surfaces, buttons, banners, empty states, so teams write consistently rather than reinventing each line.
-      <span className="vt-cite">nngroup.com/articles/3-cs-microcopy · nngroup.com/articles/error-message-guidelines · polaris.shopify.com/content</span>
     </div>
   </div>
 </div>
@@ -1127,7 +939,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="vt-section-label">Reading the room</div>
   <h2 className="vt-section-title">Tone by Context</h2>
   <p className="vt-section-sub">
-    One voice, four emotional registers. The words stay plain and human throughout; what changes is the temperature. The register a moment deserves is set by how the user is feeling when they arrive at it, not by how the team feels shipping it.
+    One voice, four registers. The words stay plain throughout; only the temperature changes. The register is set by how the user feels arriving, not how the team feels shipping.
   </p>
 
   <div className="vt-tone-grid">
@@ -1140,7 +952,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
       </div>
       <div className="vt-tone-example">"Event created. It is live for your audience now."</div>
-      <p className="vt-tone-guide">Acknowledge the win, name the result, and step aside. A little warmth is earned here; a paragraph is not. <strong>Confirm, do not celebrate at length.</strong></p>
+      <p className="vt-tone-guide">Acknowledge the win, name the result, step aside. A little warmth is earned; a paragraph is not. <strong>Confirm, do not celebrate at length.</strong></p>
     </div>
 
     <div className="vt-tone-card">
@@ -1152,7 +964,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
       </div>
       <div className="vt-tone-example">"This card was declined. Try another card or contact your bank."</div>
-      <p className="vt-tone-guide">Stay level. No exclamation, no blame, no code. Name what happened and give the next step. <strong>The tone that reassures is a clear path out.</strong></p>
+      <p className="vt-tone-guide">Stay level. No exclamation, no blame, no code. Name what happened, give the next step. <strong>The tone that reassures is a clear path out.</strong></p>
     </div>
 
     <div className="vt-tone-card">
@@ -1164,7 +976,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
       </div>
       <div className="vt-tone-example">"Delete this event? Its 240 tickets will be cancelled. This cannot be undone."</div>
-      <p className="vt-tone-guide">Slow the user down with facts, not fear. State the real consequence and label the button for the action, "Delete event", not "Confirm". <strong>Never cheerful, never coy.</strong></p>
+      <p className="vt-tone-guide">Slow the user with facts, not fear. State the real consequence and label the button "Delete event", not "Confirm". <strong>Never cheerful, never coy.</strong></p>
     </div>
 
     <div className="vt-tone-card">
@@ -1176,7 +988,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
       </div>
       <div className="vt-tone-example">"Let us set up your first event. It takes about two minutes."</div>
-      <p className="vt-tone-guide">Encourage without overwhelming. One step at a time, honest about effort, generous with progress. <strong>Invite; do not flood.</strong></p>
+      <p className="vt-tone-guide">One step at a time, honest about effort, generous with progress. <strong>Invite; do not flood.</strong></p>
     </div>
   </div>
 </div>
@@ -1189,32 +1001,24 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="vt-section-label">The hardest lines to get right</div>
   <h2 className="vt-section-title">Writing Errors People Can Act On</h2>
   <p className="vt-section-sub">
-    Error copy is where voice is tested hardest, because the reader is already frustrated. A good error message answers three questions in order, in the user's language: <strong>what happened, why (if it helps), and how to fix it.</strong> Everything else, blame, apology theatre, error codes, jargon, is noise the user has to wade through to get unstuck.
+    Error copy is tested hardest, because the reader is already stuck. A good message answers three questions in the user's words: <strong>what happened, why (if it helps), and how to fix it.</strong> Everything else, blame, apology theatre, codes, jargon, is noise to wade through.
   </p>
 
   <div className="vt-anatomy">
     <div className="vt-anatomy-step">
       <div className="vt-anatomy-n">01</div>
       <div className="vt-anatomy-title">What happened</div>
-      <p className="vt-anatomy-text">Name the problem in plain words, from the user's side. "This card was declined", not "Payment gateway returned 402".</p>
+      <p className="vt-anatomy-text">Name the problem in plain words, from the user's side. "This card was declined", not "Gateway returned 402".</p>
     </div>
     <div className="vt-anatomy-step">
       <div className="vt-anatomy-n">02</div>
       <div className="vt-anatomy-title">Why, if it helps</div>
-      <p className="vt-anatomy-text">Add a reason only when it guides the fix. "The file is over the 10 MB limit" earns its place; an internal stack trace does not.</p>
+      <p className="vt-anatomy-text">Add a reason only when it guides the fix. "The file is over the 10 MB limit" earns its place; a stack trace does not.</p>
     </div>
     <div className="vt-anatomy-step">
       <div className="vt-anatomy-n">03</div>
       <div className="vt-anatomy-title">How to fix it</div>
       <p className="vt-anatomy-text">Hand back a next step, ideally more than one. "Try another card or contact your bank." Never leave the user at a wall.</p>
-    </div>
-  </div>
-
-  <div className="vt-evidence">
-    <span className="vt-material" aria-hidden="true">rule</span>
-    <div className="vt-evidence-body">
-      <strong>Actionable, blame-free errors are a named usability heuristic.</strong> Nielsen's ninth heuristic asks interfaces to help users recognize, diagnose, and recover from errors: express the problem in plain language, be precise, and offer a constructive way out. NN/g's error-message guidelines add the human rules, do not blame the user, avoid uppercase and alarming tone, and place the message next to where the error happened.
-      <span className="vt-cite">nngroup.com/articles/ten-usability-heuristics (H9) · nngroup.com/articles/error-message-guidelines</span>
     </div>
   </div>
 
@@ -1227,7 +1031,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </p>
   </div>
   <p className="vt-section-sub" style={{ marginTop: '1rem' }}>
-    The visual half of this pattern, the error border, the message placement, the <code>var(--color-error)</code> token, lives in <strong>Patterns / Form Elements</strong>. Voice and Tone owns the words; Form Elements owns the field they sit in. Written well, the two are indistinguishable to the user: one product, helping them recover.
+    The field, the error border, and the <code>var(--color-error)</code> token live in <strong>Patterns / Form Elements</strong>. Voice owns the words, Form Elements owns the field; written well, the user cannot tell where one ends.
   </p>
 </div>
 
@@ -1238,7 +1042,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="vt-ethics">
   <h2 className="vt-ethics-title">Copy Has Ethics</h2>
   <p className="vt-ethics-lede">
-    Words persuade, which means words can manipulate. The same sentence that helps a person decide can be twisted to trap them. This system draws the line in the copy itself: <strong>no dark patterns, no false urgency, no shame.</strong> A phrase that only works because the user is rushed, confused, or embarrassed is banned, not merely discouraged. The full technique-by-technique treatment lives in <strong>Patterns / Persuasion</strong>; the language rules are here.
+    Words persuade, so words can manipulate. The same sentence that helps a person decide can be twisted to trap them. This system draws the line in the copy itself: <strong>no dark patterns, no false urgency, no shame.</strong> A phrase that only works because the user is rushed, confused, or embarrassed is banned, not discouraged. The technique-by-technique treatment is in <strong>Patterns / Persuasion</strong>; the language rules are here.
   </p>
 
   <div className="vt-ethics-grid">
@@ -1262,7 +1066,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 {/* ============================================ */}
-{/* TAXONOMY RULES                               */}
+{/* RULES + SHIP CHECKLIST                       */}
 {/* ============================================ */}
 
 <div className="vt-section">
@@ -1307,10 +1111,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="vt-decision-text"><strong>Would a real person say this out loud?</strong> Read it aloud. If it sounds like a machine or a form, make it human, active, and personal.</div>
     </div>
     <div className="vt-decision-step">
-      <div className="vt-decision-text"><strong>Does the register fit the moment?</strong> Match the user's state, warm at a win, calm at an error, plain and cheerless at a destructive step.</div>
+      <div className="vt-decision-text"><strong>Does the register fit the moment?</strong> Warm at a win, calm at an error, plain and cheerless at a destructive step.</div>
     </div>
     <div className="vt-decision-step">
-      <div className="vt-decision-text"><strong>Is every word true and free of pressure?</strong> No invented urgency, no shame, no hidden cost, no claim the user could catch out. If in doubt, see <strong>Patterns / Persuasion</strong>.</div>
+      <div className="vt-decision-text"><strong>Is every word true and free of pressure?</strong> No invented urgency, no shame, no hidden cost, no claim the user could catch out. In doubt, see <strong>Patterns / Persuasion</strong>.</div>
     </div>
     <div className="vt-decision-step">
       <div className="vt-decision-text"><strong>Only now, ship it,</strong> in the DS primitives. See <strong>Patterns / Form Elements</strong> for the fields and error states that carry these words.</div>
@@ -1328,37 +1132,34 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <h2 className="vt-rule-label" style={{ marginTop: 0 }}>Sources</h2>
   <ul className="vt-sources-list">
     <li>
-      <strong>Nielsen Norman Group, "The Four Dimensions of Tone of Voice".</strong> Product tone measured on four independent scales (funny to serious, formal to casual, respectful to irreverent, enthusiastic to matter-of-fact). <code>nngroup.com/articles/tone-of-voice-dimensions</code>
-    </li>
-    <li>
       <strong>Mailchimp Content Style Guide, "Voice and Tone".</strong> The canonical distinction: one voice, many tones; the voice stays the same, the tone changes with context. <code>styleguide.mailchimp.com/voice-and-tone</code>
     </li>
     <li>
-      <strong>Nielsen Norman Group, reading behavior.</strong> "How Users Read on the Web" (79 percent of users always scan, 16 percent read word by word) and "Concise, SCANNABLE, and Objective" (concise, scannable, front-loaded copy up to 124 percent more usable). <code>nngroup.com/articles/how-users-read-on-the-web</code> · <code>nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web</code>
+      <strong>Nielsen Norman Group, "The Four Dimensions of Tone of Voice".</strong> Product tone measured on four independent scales: funny to serious, formal to casual, respectful to irreverent, enthusiastic to matter-of-fact. <code>nngroup.com/articles/tone-of-voice-dimensions</code>
     </li>
     <li>
-      <strong>Nielsen Norman Group, microcopy and errors.</strong> "The 3 Cs of Microcopy" and "The 3 Is of Microcopy" (definition and quality bars); "Error-Message Guidelines" (polite, precise, constructive, blame-free, placed in context). <code>nngroup.com/articles/3-cs-microcopy</code> · <code>nngroup.com/articles/3-is-of-microcopy</code> · <code>nngroup.com/articles/error-message-guidelines</code>
+      <strong>Nielsen Norman Group, reading behavior.</strong> "How Users Read on the Web" (79 percent of users always scan, 16 percent read word by word) and "Concise, SCANNABLE, and Objective" (concise, front-loaded copy up to 124 percent more usable). <code>nngroup.com/articles/how-users-read-on-the-web</code> · <code>nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web</code>
+    </li>
+    <li>
+      <strong>Nielsen Norman Group, microcopy and errors.</strong> "The 3 Cs of Microcopy" (clarity, concision, character) and "Error-Message Guidelines" (polite, precise, constructive, blame-free, placed in context). <code>nngroup.com/articles/3-cs-microcopy</code> · <code>nngroup.com/articles/error-message-guidelines</code>
     </li>
     <li>
       <strong>Nielsen, "10 Usability Heuristics" (H9).</strong> Help users recognize, diagnose, and recover from errors: plain language, precise, constructive. <code>nngroup.com/articles/ten-usability-heuristics</code>
     </li>
     <li>
-      <strong>GOV.UK writing standards (content design and style guide).</strong> Write for everyone in plain English, front-load content, active voice, conversational tone; the gold standard for public clarity. The reading-age-of-9 target is documented across the UK government design ecosystem. <code>guidance.publishing.service.gov.uk/writing-to-gov-uk-standards</code> · <code>design.homeoffice.gov.uk/accessibility/written-content/readability</code>
+      <strong>GOV.UK writing standards.</strong> Write in plain English for everyone, front-load content, active voice, conversational tone; the reading-age-of-9 target runs across the UK government design ecosystem. <code>guidance.publishing.service.gov.uk/writing-to-gov-uk-standards</code> · <code>design.homeoffice.gov.uk/accessibility/written-content/readability</code>
     </li>
     <li>
-      <strong>U.S. plain language guidance (formerly plainlanguage.gov).</strong> Write for your audience, organize, use simple words, active voice, and personal pronouns; the basis of the Plain Writing Act. Now published at <code>digital.gov/guides/plain-language</code>
-    </li>
-    <li>
-      <strong>Sarah Richards / GDS, "What we mean when we talk about content design" (2014).</strong> The framing that content is a design discipline: take a user need and present it in the best possible form, which may not be prose at all. <code>gds.blog.gov.uk/2014/03/14/what-we-mean-when-we-talk-about-content-design</code>
+      <strong>U.S. plain language guidance</strong> (formerly plainlanguage.gov). Write for your audience, use simple words, active voice, personal pronouns; the basis of the Plain Writing Act. <code>digital.gov/guides/plain-language</code>
     </li>
     <li>
       <strong>Shopify Polaris, content guidelines.</strong> Product voice and tone, actionable and accurate language, and ready patterns for buttons, banners, and empty states. <code>polaris.shopify.com/content</code>
     </li>
     <li>
-      <strong>Deceptive patterns.</strong> Brignull's deceptive.design catalogue and NN/g's "Deceptive Patterns" set the harms this system's copy ethics prohibit (false urgency, confirmshaming, hidden cost). <code>deceptive.design</code> · <code>nngroup.com/articles/deceptive-patterns</code>
+      <strong>Deceptive patterns.</strong> Brignull's deceptive.design catalogue and NN/g's "Deceptive Patterns" name the harms this system's copy ethics prohibit: false urgency, confirmshaming, hidden cost. <code>deceptive.design</code> · <code>nngroup.com/articles/deceptive-patterns</code>
     </li>
     <li>
-      Exact article URLs and titles may shift as these sites are reorganized; each landing page above resolves to the current version. <span className="vt-spa">SPA</span> The four-dial positions chosen for our voice, and the framing of copy ethics as hard prohibitions rather than guidance, are this system's house doctrine, not claims made by the cited authors.
+      <span className="vt-spa">Note</span> Exact article URLs may shift as these sites are reorganized; each landing page above resolves to the current version. The four-dial positions chosen for our voice, and the framing of copy ethics as hard prohibitions rather than guidance, are house doctrine, not claims made by the cited authors.
     </li>
   </ul>
 </div>
