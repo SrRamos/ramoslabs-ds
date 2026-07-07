@@ -1,0 +1,24 @@
+{
+  "name": "@ramoslabs/tokens",
+  "version": "0.0.0",
+  "description": "RamosLabs design tokens. DTCG JSON is the source; CSS/TS/JSON are generated.",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/tokens.ts",
+      "import": "./dist/tokens.ts"
+    },
+    "./css": "./dist/tokens.css",
+    "./json": "./dist/tokens.json"
+  },
+  "scripts": {
+    "build": "style-dictionary build --config style-dictionary.config.mjs",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.5.0"
+  }
+}

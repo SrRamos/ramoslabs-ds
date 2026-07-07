@@ -1,0 +1,42 @@
+{
+  "shadow": {
+    "$type": "shadow",
+    "sm": {
+      "$value": {
+        "offsetX": "0", "offsetY": "1px", "blur": "2px", "spread": "0",
+        "color": "rgba(0, 0, 0, 0.05)"
+      }
+    },
+    "md": {
+      "$value": {
+        "offsetX": "0", "offsetY": "4px", "blur": "6px", "spread": "-1px",
+        "color": "rgba(0, 0, 0, 0.1)"
+      }
+    },
+    "lg": {
+      "$value": {
+        "offsetX": "0", "offsetY": "10px", "blur": "15px", "spread": "-3px",
+        "color": "rgba(0, 0, 0, 0.1)"
+      }
+    },
+    "xl": {
+      "$value": {
+        "offsetX": "0", "offsetY": "20px", "blur": "25px", "spread": "-5px",
+        "color": "rgba(0, 0, 0, 0.1)"
+      }
+    },
+    "2xl": {
+      "$value": {
+        "offsetX": "0", "offsetY": "25px", "blur": "50px", "spread": "-12px",
+        "color": "rgba(0, 0, 0, 0.25)"
+      }
+    },
+    "focus": {
+      "$value": {
+        "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "3px",
+        "color": "rgba(79, 70, 229, 0.15)"
+      },
+      "$description": "Brand-tinted focus ring."
+    }
+  }
+}

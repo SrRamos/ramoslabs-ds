@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "types": ["vite/client"],
+    "noEmit": true
+  },
+  "include": [".storybook/**/*.ts", "stories/**/*.ts", "stories/**/*.tsx"]
+}

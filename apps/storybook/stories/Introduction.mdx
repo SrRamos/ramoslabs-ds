@@ -1,0 +1,27 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# RamosLabs Design System
+
+A standalone design system where tokens are the single source of truth. The
+design decisions live as DTCG JSON in `@ramoslabs/tokens`, and Style Dictionary
+compiles them into CSS variables and TypeScript. Nothing here hardcodes a color,
+spacing, radius, or shadow; every value traces back to a token.
+
+## Brand
+
+The brand is mono-indigo. The primary is Indigo 600 (`#4f46e5`). There is no
+coral accent; the accent is the primary. Semantic colors (success, warning,
+error, info) reference their primitive scales through DTCG aliases.
+
+## Packages
+
+- `@ramoslabs/tokens`: the token source and its generated CSS, TS, and JSON.
+- `@ramoslabs/vue`: the Vue 3 component library. Components use the `SJ` prefix
+  and arrive in a later phase; F0 ships the scaffold only.
+
+## Foundations
+
+Browse the Foundations section for the live color and typography tokens, read
+straight from the generated CSS custom properties.
