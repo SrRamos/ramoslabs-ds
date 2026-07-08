@@ -208,6 +208,78 @@ function buildLlmsFull({ siteUrl, resolved, introSummary, tokens }) {
   return sections.join('\n')
 }
 
+// --- crawler layer -------------------------------------------------------------
+// AI crawler / agent user-agent tokens we explicitly welcome. This is a public,
+// free-to-use design system, so we WANT AI ingestion. Tokens are the real, current
+// UA strings each vendor publishes for its crawler and agent traffic.
+const AI_CRAWLERS = [
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-Web',
+  'anthropic-ai',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Google-Extended',
+  'Applebot-Extended',
+  'CCBot',
+  'Bytespider',
+  'Amazonbot',
+  'Meta-ExternalAgent',
+  'cohere-ai',
+  'Diffbot',
+  'Timpibot',
+]
+
+function buildRobotsTxt(siteUrl) {
+  const lines = []
+  lines.push('# RamosLabs Design System robots policy.')
+  lines.push('# Public, free-to-use design system (MIT). We welcome AI ingestion.')
+  lines.push(`# AI agents: structured docs at ${siteUrl}/llms.txt and ${siteUrl}/llms-full.txt`)
+  lines.push('')
+  lines.push('User-agent: *')
+  lines.push('Allow: /')
+  lines.push('')
+  for (const ua of AI_CRAWLERS) {
+    lines.push(`User-agent: ${ua}`)
+    lines.push('Allow: /')
+    lines.push('')
+  }
+  lines.push(`Sitemap: ${siteUrl}/sitemap.xml`)
+  lines.push('')
+  return lines.join('\n')
+}
+
+function xmlEscape(s) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
+// The URLs a sitemap should list: site root, one per docs page (the same ?path=
+// URL the generator computes everywhere else), plus the machine-readable artifacts.
+function sitemapLocs(siteUrl, resolved) {
+  return [
+    `${siteUrl}/`,
+    ...resolved.map((p) => docsUrl(siteUrl, p.storybookTitle)),
+    `${siteUrl}/llms.txt`,
+    `${siteUrl}/llms-full.txt`,
+    `${siteUrl}/AGENTS.md`,
+    `${siteUrl}/registry.json`,
+  ]
+}
+
+function buildSitemap(locs) {
+  const urls = locs
+    .map((loc) => `  <url>\n    <loc>${xmlEscape(loc)}</loc>\n  </url>`)
+    .join('\n')
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
+}
+
 function buildRegistry({ siteUrl, resolved, tokens, version }) {
   const patterns = resolved
     .filter((p) => p.group === 'patterns')
@@ -262,12 +334,15 @@ async function main() {
     null,
     2
   )
+  const locs = sitemapLocs(siteUrl, resolved)
 
   // Repo root: committed artifacts.
   const rootOutputs = {
     'llms.txt': llmsTxt,
     'llms-full.txt': llmsFull,
     'registry.json': registry + '\n',
+    'robots.txt': buildRobotsTxt(siteUrl),
+    'sitemap.xml': buildSitemap(locs),
   }
   for (const [name, content] of Object.entries(rootOutputs)) {
     fs.writeFileSync(path.join(repoRoot, name), content)
@@ -285,6 +360,24 @@ async function main() {
     } else {
       warn('AGENTS.md not found at repo root; skipped copy into storybook-static')
     }
+
+    // Rewrite the static document <title> so crawlers that do not run JS see the DS
+    // name instead of Storybook's placeholder. Storybook's manager template owns this
+    // <title>; manager-head.html can only append a second (duplicate) title tag, so we
+    // set it here where we already own the post-build storybook-static step. Storybook's
+    // runtime still updates the title per view once its JS boots.
+    const indexHtmlPath = path.join(storybookStaticDir, 'index.html')
+    if (fs.existsSync(indexHtmlPath)) {
+      const html = fs.readFileSync(indexHtmlPath, 'utf8')
+      const next = html.replace(/<title>[^<]*<\/title>/, `<title>${TITLE}</title>`)
+      if (next === html) {
+        warn('could not rewrite <title> in storybook-static/index.html')
+      } else {
+        fs.writeFileSync(indexHtmlPath, next)
+      }
+    } else {
+      warn('storybook-static/index.html not found; skipped <title> rewrite')
+    }
   } else {
     warn(`storybook-static not found at ${storybookStaticDir}; skipped deploy copies`)
   }
@@ -292,7 +385,8 @@ async function main() {
   const missing = resolved.filter((p) => !p.present).length
   process.stdout.write(
     `Built agentic layer: ${resolved.length} pages (${missing} missing), ` +
-      `${tokens.total} tokens, ${warnings.length} warning(s).\n`
+      `${tokens.total} tokens, robots.txt + sitemap.xml (${locs.length} urls), ` +
+      `${warnings.length} warning(s).\n`
   )
 }
 
