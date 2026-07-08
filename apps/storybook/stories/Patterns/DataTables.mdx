@@ -602,7 +602,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding: 2.5rem 1.5rem;
     background: white;
   }
-  .dt-state .dt-material { font-size: 2rem; color: #94a3b8; }
+  .dt-state > .dt-material { font-size: 2rem; color: #94a3b8; }
   .dt-state-title {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.9375rem;
@@ -1089,16 +1089,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <tr>
             <th scope="col">Session</th>
             <th scope="col" className="num" aria-sort="descending">
-              <button type="button" className="dt-sort" style={{ marginLeft: 'auto' }}>
-                Attendees
-                <span className="dt-arrow" aria-hidden="true">▼</span>
-              </button>
+              <button type="button" className="dt-sort" style={{ marginLeft: 'auto' }}>Attendees<span className="dt-arrow" aria-hidden="true">▼</span></button>
             </th>
             <th scope="col" className="num">
-              <button type="button" className="dt-sort" style={{ marginLeft: 'auto' }}>
-                No-shows
-                <span className="dt-arrow" aria-hidden="true">↕</span>
-              </button>
+              <button type="button" className="dt-sort" style={{ marginLeft: 'auto' }}>No-shows<span className="dt-arrow" aria-hidden="true">↕</span></button>
             </th>
           </tr>
         </thead>
@@ -1426,18 +1420,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <button type="button" className="dt-btn"><span className="dt-material" aria-hidden="true">tune</span>Filters</button>
     </div>
     <div className="dt-chips">
-      <span className="dt-chip">
-        Status: Paid
-        <button type="button" className="dt-chip-x" aria-label="Remove filter Status Paid"><span className="dt-material" aria-hidden="true">close</span></button>
-      </span>
-      <span className="dt-chip">
-        City: Denver
-        <button type="button" className="dt-chip-x" aria-label="Remove filter City Denver"><span className="dt-material" aria-hidden="true">close</span></button>
-      </span>
-      <span className="dt-chip">
-        Ticket: VIP
-        <button type="button" className="dt-chip-x" aria-label="Remove filter Ticket VIP"><span className="dt-material" aria-hidden="true">close</span></button>
-      </span>
+      <span className="dt-chip">Status: Paid<button type="button" className="dt-chip-x" aria-label="Remove filter Status Paid"><span className="dt-material" aria-hidden="true">close</span></button></span>
+      <span className="dt-chip">City: Denver<button type="button" className="dt-chip-x" aria-label="Remove filter City Denver"><span className="dt-material" aria-hidden="true">close</span></button></span>
+      <span className="dt-chip">Ticket: VIP<button type="button" className="dt-chip-x" aria-label="Remove filter Ticket VIP"><span className="dt-material" aria-hidden="true">close</span></button></span>
       <button type="button" className="dt-clear">Clear all</button>
     </div>
     <p className="dt-filter-status" role="status" aria-live="polite">Showing <strong>12</strong> of <strong>320</strong>, filters active.</p>

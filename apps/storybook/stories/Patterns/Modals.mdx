@@ -370,7 +370,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   /* ===== POPOVER (non-modal) ===== */
   .md-popover {
-    margin: 0;
+    margin: auto;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 0.375rem;
@@ -379,6 +379,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
     box-shadow: 0 12px 24px -8px rgba(15,23,42,0.18), 0 4px 8px -4px rgba(15,23,42,0.10);
   }
   .md-popover::backdrop { background: transparent; }
+  .md-menu-trigger { anchor-name: --md-menu-anchor; }
+  @supports (position-anchor: --a) {
+    .md-popover {
+      position: fixed;
+      position-anchor: --md-menu-anchor;
+      top: anchor(bottom);
+      left: anchor(left);
+      margin: 0.375rem 0 0 0;
+    }
+  }
   .md-menu-item {
     display: flex;
     align-items: center;
@@ -901,9 +911,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           type="button"
           className="md-btn md-btn-danger-outline"
           onClick={() => document.getElementById('md-alert-demo').showModal()}
-        >
-          Delete event
-        </button>
+        >Delete event</button>
       </div>
       <p className="md-demo-note">
         Opens as <code>role="alertdialog"</code> with <code>autofocus</code> on Cancel. The red is the <code>--color-error</code> family, the only place this system leaves indigo.
@@ -1008,14 +1016,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="md-demo-row">
         <button
           type="button"
-          className="md-btn md-btn-tonal"
+          className="md-btn md-btn-tonal md-menu-trigger"
           popovertarget="md-popover-demo"
-        >
-          Event actions
-        </button>
+        >Event actions</button>
       </div>
       <p className="md-demo-note">
-        Wired with <code>popovertarget</code> alone. Click outside or press Escape to light-dismiss. The page behind stays fully interactive, no trap, no inert.
+        Wired with <code>popovertarget</code> alone. Click outside or press Escape to light-dismiss. The page behind stays fully interactive, no trap, no inert. It sits below the trigger via CSS anchor positioning, with a centered fallback where that is unsupported.
       </p>
       <div id="md-popover-demo" popover="auto" className="md-popover">
         <button type="button" className="md-menu-item" popovertarget="md-popover-demo" popovertargetaction="hide"><span className="md-material" aria-hidden="true">edit</span>Edit details</button>
