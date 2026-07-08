@@ -9,7 +9,7 @@ the system is, how to install it, and the rules your output must satisfy.
 RamosLabs DS is a mono-indigo, taxonomy-first design system. Tokens are the single source
 of truth. Color, spacing, typography, radius, shadow, and motion are defined once as
 design tokens and compiled to CSS variables and TypeScript. The brand primary is Indigo
-600 (`#4f46e5`); the accent is the primary. There is no second accent color.
+600 (`#4f46e5`); the action accent is the primary. Violet is a decorative accent only, never used for interactive or action affordances.
 
 The system ships two things today:
 

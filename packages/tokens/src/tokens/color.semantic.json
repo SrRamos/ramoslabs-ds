@@ -3,12 +3,15 @@
     "$type": "color",
     "primary": {
       "$value": "{color.indigo.600}",
-      "$description": "Brand primary. Indigo 600. Also serves as the single brand accent (no coral)."
+      "$description": "Brand primary. Indigo 600. The single action accent; every interactive affordance uses it."
     },
     "primary-light": { "$value": "{color.indigo.500}" },
     "primary-dark": { "$value": "{color.indigo.700}" },
     "primary-surface": { "$value": "{color.indigo.50}" },
-    "secondary": { "$value": "{color.violet.500}" },
+    "secondary": {
+      "$value": "{color.violet.500}",
+      "$description": "Violet. Decorative accent only, never for interactive or action affordances."
+    },
     "secondary-light": { "$value": "{color.violet.400}" },
     "secondary-dark": { "$value": "{color.violet.600}" },
     "secondary-surface": { "$value": "{color.violet.50}" },

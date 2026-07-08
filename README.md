@@ -24,8 +24,8 @@ apps/
 
 ## Brand
 
-Mono-indigo. The primary is Indigo 600 (`#4f46e5`); there is no coral accent.
-The accent is the primary.
+Mono-indigo. The primary is Indigo 600 (`#4f46e5`); it is the single action accent.
+Violet is a decorative accent only, never for interactive or action affordances.
 
 ## Commands
 
