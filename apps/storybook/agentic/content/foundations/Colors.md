@@ -6,7 +6,7 @@ storybookTitle: Foundations/Colors
 summary: Mono-indigo accent, slate neutral ramp, reserved status colors, role tokens over raw hex, and measured contrast floors
 ---
 
-RamosLabs runs on a single accent. Indigo carries every deliberate action and nothing else competes for it. One voice for action, a deep neutral ramp for everything else, reserved signals for state. The accent is `#4f46e5`. No second brand hue, no rainbow.
+RamosLabs runs on a single action accent. Indigo carries every deliberate action and nothing else competes for it. One voice for action, a deep neutral ramp for everything else, reserved signals for state. The action accent is `#4f46e5`. Violet appears as a decorative accent only, never for action.
 
 ## The accent, up close
 
