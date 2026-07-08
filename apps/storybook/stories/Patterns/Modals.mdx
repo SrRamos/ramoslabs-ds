@@ -1,0 +1,1192 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Modals" />
+
+<style>
+{`
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+  .md-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .md-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+  .md-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .md-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 20ch;
+  }
+  .md-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 44rem;
+    margin: 0;
+  }
+  .md-hero p strong { color: #ffffff; font-weight: 700; }
+  .md-hero-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
+  }
+
+  /* ===== SECTIONS ===== */
+  .md-section {
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+  .md-section:last-of-type { border-bottom: none; }
+
+  .md-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .md-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+  .md-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  .md-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    max-width: 44rem;
+    margin: 0 0 1.25rem;
+  }
+  .md-text strong { color: #0f172a; font-weight: 600; }
+  .md-text code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+  .md-text a { color: #4f46e5; text-decoration: none; font-weight: 600; }
+  .md-text a:hover { text-decoration: underline; }
+
+  /* ===== CALLOUT ===== */
+  .md-callout {
+    display: flex;
+    gap: 0.75rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    max-width: 44rem;
+  }
+  .md-callout .md-material { color: #4338ca; font-size: 1.25rem; flex-shrink: 0; }
+  .md-callout-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #3730a3;
+  }
+  .md-callout-text strong { color: #312e81; font-weight: 700; }
+  .md-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125em;
+    background: rgba(79,70,229,0.10);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #3730a3;
+  }
+
+  /* Warning-toned callout still stays inside the indigo family for chrome,
+     using the error token only where the meaning is truly destructive. */
+  .md-callout.warn { background: #fef2f2; border-color: #fecaca; }
+  .md-callout.warn .md-material { color: #b91c1c; }
+  .md-callout.warn .md-callout-text { color: #991b1b; }
+  .md-callout.warn .md-callout-text strong { color: #7f1d1d; }
+  .md-callout.warn .md-callout-text code {
+    background: rgba(153,27,27,0.08);
+    color: #991b1b;
+  }
+
+  /* ===== DEMO LAB ===== */
+  .md-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .md-demo {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .md-demo-label {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .md-demo-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .md-demo-note {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
+    margin-top: 0.875rem;
+  }
+  .md-demo-note code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+  }
+
+  /* ===== BUTTONS ===== */
+  .md-btn {
+    position: relative;
+    overflow: hidden;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 150ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  .md-btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+  .md-btn-primary {
+    background: #4f46e5;
+    color: white;
+    box-shadow: 0 1px 2px rgba(79, 70, 229, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .md-btn-primary:hover { background: #4338ca; }
+  }
+  .md-btn-primary:active { background: #3730a3; }
+
+  .md-btn-tonal {
+    background: transparent;
+    color: #4338ca;
+    border: 1px solid #c7d2fe;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .md-btn-tonal:hover { background: #eef2ff; }
+  }
+  .md-btn-tonal:active { background: #e0e7ff; }
+
+  .md-btn-ghost {
+    background: #ffffff;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .md-btn-ghost:hover { background: #f8fafc; }
+  }
+  .md-btn-ghost:active { background: #f1f5f9; }
+
+  /* Destructive uses the error token with an AA-safe red under white text.
+     Red 500 is only 3.76:1 on white, so the fill is red 600 (#dc2626). */
+  .md-btn-danger {
+    background: var(--color-error-strong, #dc2626);
+    color: #ffffff;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .md-btn-danger:hover { background: #b91c1c; }
+  }
+  .md-btn-danger:active { background: #991b1b; }
+
+  .md-btn-danger-outline {
+    background: #ffffff;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .md-btn-danger-outline:hover { background: #fef2f2; }
+  }
+  .md-btn-danger-outline:active { background: #fee2e2; }
+
+  /* ===== NATIVE DIALOG ===== */
+  .md-dialog {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    width: min(92vw, 30rem);
+    box-shadow: 0 24px 48px -12px rgba(15,23,42,0.30), 0 8px 16px -8px rgba(15,23,42,0.18);
+    color: #334155;
+  }
+  .md-dialog::backdrop {
+    background: rgba(15, 23, 42, 0.55);
+  }
+  .md-dialog-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1.5rem;
+    margin: 0;
+  }
+  .md-dialog-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .md-dialog-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .md-dialog-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #475569;
+    margin: 0;
+  }
+  .md-dialog-text strong { color: #0f172a; font-weight: 600; }
+  .md-dialog-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .md-dialog-field label {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #334155;
+  }
+  .md-dialog-field input {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    color: #0f172a;
+    background: #ffffff;
+  }
+  .md-dialog-field input:focus-visible {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: var(--shadow-focus);
+  }
+  .md-dialog-actions {
+    display: flex;
+    gap: 0.625rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+  .md-dialog-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    color: #64748b;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .md-dialog-close:hover { background: #f1f5f9; color: #334155; }
+  }
+  .md-dialog-close:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+  .md-dialog-close .md-material { font-size: 1.25rem; }
+
+  .md-alert-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #b91c1c;
+    flex-shrink: 0;
+  }
+  .md-alert-mark .md-material { font-size: 1.35rem; }
+
+  /* ===== POPOVER (non-modal) ===== */
+  .md-popover {
+    margin: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.375rem;
+    width: 13rem;
+    background: #ffffff;
+    box-shadow: 0 12px 24px -8px rgba(15,23,42,0.18), 0 4px 8px -4px rgba(15,23,42,0.10);
+  }
+  .md-popover::backdrop { background: transparent; }
+  .md-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    text-align: left;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #334155;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.625rem;
+    cursor: pointer;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .md-menu-item:hover { background: #f1f5f9; }
+  }
+  .md-menu-item:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+  .md-menu-item .md-material { font-size: 1.1rem; color: #64748b; }
+
+  /* ===== REQUIREMENT GRID ===== */
+  .md-reqs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.875rem;
+    margin: 1.25rem 0;
+  }
+  .md-req {
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    background: #ffffff;
+  }
+  .md-req-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .md-req-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 6px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .md-req-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+  }
+  .md-req-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #475569;
+    margin: 0 0 0.5rem;
+  }
+  .md-req-body code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #4338ca;
+  }
+  .md-req-cite {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: #64748b;
+    border-left: 2px solid #c7d2fe;
+    padding-left: 0.625rem;
+    margin: 0;
+  }
+  .md-req-cite b { color: #475569; font-weight: 600; }
+
+  /* ===== COMPACT TYPE CHIPS ===== */
+  .md-chips { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin: 0.5rem 0 0; }
+  .md-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #3730a3;
+  }
+  .md-chip .md-material { font-size: 0.85rem; color: #4338ca; }
+
+  /* ===== DECISION LADDER ===== */
+  .md-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    margin: 1.25rem 0;
+    max-width: 44rem;
+  }
+  .md-rung {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    background: #ffffff;
+  }
+  .md-rung-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 8px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .md-rung-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #475569;
+    margin: 0;
+  }
+  .md-rung-body b { color: #0f172a; font-weight: 700; }
+  .md-rung-body code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #4338ca;
+  }
+  .md-rung-body a { color: #4f46e5; text-decoration: none; font-weight: 600; }
+  .md-rung-body a:hover { text-decoration: underline; }
+
+  /* ===== RULES ===== */
+  .md-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.25rem 0;
+    max-width: 44rem;
+  }
+  .md-rule {
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    background: #ffffff;
+  }
+  .md-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #334155;
+    margin: 0;
+  }
+  .md-rule-line + .md-rule-line { margin-top: 0.4rem; }
+  .md-rule-tag {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-right: 0.4rem;
+  }
+  .md-rule-tag.rule { color: #4338ca; }
+  .md-rule-tag.why { color: #64748b; }
+  .md-rule-line strong { color: #0f172a; font-weight: 600; }
+  .md-rule-line code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #4338ca;
+  }
+
+  .md-ra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.875rem;
+  }
+  @media (max-width: 700px) { .md-ra { grid-template-columns: 1fr; } }
+  .md-ra-card { border-radius: 10px; padding: 0.85rem 1rem; }
+  .md-ra-card.reco { border: 1px solid #c7d2fe; background: #eef2ff; }
+  .md-ra-card.avoid { border: 1px dashed #94a3b8; background: #f8fafc; }
+  .md-ra-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    margin-bottom: 0.45rem;
+  }
+  .md-ra-card.reco .md-ra-head { color: #3730a3; }
+  .md-ra-card.avoid .md-ra-head { color: #475569; }
+  .md-ra-card.reco .md-ra-head .md-material { color: #4338ca; font-size: 1.1rem; }
+  .md-ra-card.avoid .md-ra-head .md-material { color: #475569; font-size: 1.1rem; }
+  .md-ra-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #475569;
+    margin: 0;
+  }
+  .md-ra-body code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #334155;
+  }
+
+  /* ===== CODE BLOCKS ===== */
+  .md-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 1rem 0 0;
+  }
+  .md-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+  .md-code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .md-code-dot.red { background: #ef4444; }
+  .md-code-dot.yellow { background: #f59e0b; }
+  .md-code-dot.green { background: #22c55e; }
+  .md-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .md-code pre {
+    margin: 0;
+    padding: 1.5rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+  .md-code .comment { color: #94a3b8; font-style: italic; }
+  .md-code .tag { color: #fbbf24; }
+  .md-code .attr { color: #7dd3fc; }
+  .md-code .value { color: #a5f3fc; }
+  .md-code .function { color: #c4b5fd; }
+  .md-code .punctuation { color: #cbd5e1; }
+
+  /* ===== SOURCES ===== */
+  .md-refs { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid #e6e8eb; }
+  .md-refs-h {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    margin-bottom: 0.75rem;
+  }
+  .md-refs p { font-size: 0.75rem; line-height: 1.7; color: #475569; margin: 0; }
+  .md-refs a { color: #4f46e5; text-decoration: none; }
+  .md-refs a:hover { text-decoration: underline; }
+`}
+</style>
+
+{/* ============================================ */}
+{/* HERO                                          */}
+{/* ============================================ */}
+
+<div className="md-hero">
+  <p className="md-hero-eyebrow">Patterns / Modals</p>
+  <h1>A modal steals the whole room.</h1>
+  <p>
+    It stops the task, blanks the background, and traps the keyboard until the user answers. That power is worth spending only on the rare moment that deserves it, and when you spend it the accessibility has to be flawless. So the rule is short. Reach for the native <span className="md-hero-code">&lt;dialog&gt;</span> with <span className="md-hero-code">showModal()</span> first, use it rarely, and never open one where a page, an inline message, or a popover would have done the job without taking the room.
+  </p>
+</div>
+
+{/* ============================================ */}
+{/* 1 - THE SIX REQUIREMENTS                      */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">1</span>
+    <h2 className="md-section-title">The six things a modal must do</h2>
+  </div>
+
+  <p className="md-text">
+    An accessible modal dialog is not a styled overlay. It is a contract with the keyboard and the screen reader, and the WAI-ARIA Authoring Practices name six terms of it. Miss any one and the modal is broken for someone. The good news is in Section 2: the native element hands you all six.
+  </p>
+
+  <div className="md-reqs">
+
+    <div className="md-req">
+      <div className="md-req-head">
+        <span className="md-req-num">1</span>
+        <span className="md-req-title">It has an accessible name</span>
+      </div>
+      <p className="md-req-body">Point <code>aria-labelledby</code> at the visible title, or set <code>aria-label</code> when there is no visible title. Without a name it fails WCAG 4.1.2.</p>
+      <p className="md-req-cite"><b>APG, Dialog Pattern.</b> The dialog has "a value set for the aria-labelledby property that refers to a visible dialog title."</p>
+    </div>
+
+    <div className="md-req">
+      <div className="md-req-head">
+        <span className="md-req-num">2</span>
+        <span className="md-req-title">Focus moves in on open</span>
+      </div>
+      <p className="md-req-body">When the dialog opens, focus lands on an element inside it, not out on the page behind. Use <code>autofocus</code> to place it deliberately.</p>
+      <p className="md-req-cite"><b>APG, Dialog Pattern.</b> "When a dialog opens, focus moves to an element inside the dialog."</p>
+    </div>
+
+    <div className="md-req">
+      <div className="md-req-head">
+        <span className="md-req-num">3</span>
+        <span className="md-req-title">Tab cycles inside</span>
+      </div>
+      <p className="md-req-body">Tab off the last control wraps to the first, and Shift+Tab off the first wraps to the last. Focus never escapes to the inert page.</p>
+      <p className="md-req-cite"><b>APG, Dialog Pattern.</b> On the last tabbable element, Tab "moves focus to the first tabbable element inside the dialog."</p>
+    </div>
+
+    <div className="md-req">
+      <div className="md-req-head">
+        <span className="md-req-num">4</span>
+        <span className="md-req-title">Escape closes it</span>
+      </div>
+      <p className="md-req-body">The Escape key dismisses the dialog. This is the release valve that keeps the focus trap legal under WCAG 2.1.2 (see Section 6).</p>
+      <p className="md-req-cite"><b>APG, Dialog Pattern.</b> "Escape: Closes the dialog."</p>
+    </div>
+
+    <div className="md-req">
+      <div className="md-req-head">
+        <span className="md-req-num">5</span>
+        <span className="md-req-title">Focus returns to the trigger</span>
+      </div>
+      <p className="md-req-body">On close, focus goes back to the control that opened the dialog, so the user resumes where they left off rather than at the top of the page.</p>
+      <p className="md-req-cite"><b>APG, Dialog Pattern.</b> "Focus returns to the element that invoked the dialog."</p>
+    </div>
+
+    <div className="md-req">
+      <div className="md-req-head">
+        <span className="md-req-num">6</span>
+        <span className="md-req-title">The background is inert</span>
+      </div>
+      <p className="md-req-body">Everything behind the dialog leaves the tab order and the accessibility tree. A pointer, a Tab, and a screen reader all stop at the dialog edge.</p>
+      <p className="md-req-cite"><b>APG, Dialog Pattern.</b> "Windows under a modal dialog are inert... users cannot interact with content outside an active dialog window."</p>
+    </div>
+
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 2 - NATIVE DIALOG FIRST                       */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">2</span>
+    <h2 className="md-section-title">The native element hands you all six</h2>
+  </div>
+
+  <p className="md-text">
+    <code>&lt;dialog&gt;</code> opened with <code>.showModal()</code> gives you the whole contract for free and correctly: focus moves in, Tab is trapped, Escape closes, the background goes <code>inert</code>, and focus returns to the trigger on close. It renders in the top layer, so it sits above the page with no <code>z-index</code> fight, and it exposes a <code>::backdrop</code> to dim what is behind. Building this by hand means re-deriving every one of those behaviors, and that is exactly where accessibility bugs are born.
+  </p>
+
+  <div className="md-callout">
+    <span className="md-material" aria-hidden="true">bolt</span>
+    <p className="md-callout-text">
+      <strong>MDN, in its own words.</strong> "While dialogs can be created using other elements, the native <code>&lt;dialog&gt;</code> element provides usability and accessibility features that must be replicated if you use other elements for a similar purpose."
+    </p>
+  </div>
+
+  <p className="md-text">
+    Open the demo below. Tab through it and the focus stays inside. Press Escape and it closes. Notice the dimmed <code>::backdrop</code>. The Cancel and Save buttons live in a <code>&lt;form method="dialog"&gt;</code>, so activating either closes the dialog and reports its <code>returnValue</code> without a submit or a page reload. There is a real close button too, because Escape alone is not a discoverable exit.
+  </p>
+
+  <div className="md-lab">
+    <div className="md-demo">
+      <div className="md-demo-label">Live: role dialog, content and form</div>
+      <div className="md-demo-row">
+        <button
+          type="button"
+          className="md-btn md-btn-primary"
+          onClick={() => document.getElementById('md-dialog-demo').showModal()}
+        >
+          Rename event
+        </button>
+      </div>
+      <p className="md-demo-note">
+        Opens with <code>showModal()</code>. Initial focus lands on the text field via <code>autofocus</code>. Tab is trapped, Escape closes, focus returns to this button.
+      </p>
+
+      <dialog id="md-dialog-demo" className="md-dialog" aria-labelledby="md-dialog-title">
+        <form method="dialog" className="md-dialog-body">
+          <div className="md-dialog-head">
+            <h3 id="md-dialog-title" className="md-dialog-title">Rename event</h3>
+            <button type="submit" value="cancel" className="md-dialog-close" aria-label="Close dialog">
+              <span className="md-material" aria-hidden="true">close</span>
+            </button>
+          </div>
+          <p className="md-dialog-text">Give this event a clearer public name. The change is visible to attendees right away.</p>
+          <div className="md-dialog-field">
+            <label htmlFor="md-dialog-input">Event name</label>
+            <input id="md-dialog-input" type="text" defaultValue="Summer Rooftop Session" autoFocus />
+          </div>
+          <div className="md-dialog-actions">
+            <button type="submit" value="cancel" className="md-btn md-btn-ghost">Cancel</button>
+            <button type="submit" value="save" className="md-btn md-btn-primary">Save name</button>
+          </div>
+        </form>
+      </dialog>
+    </div>
+
+    <div className="md-demo">
+      <div className="md-demo-label">What showModal() gives you for free</div>
+      <div className="md-chips">
+        <span className="md-chip"><span className="md-material" aria-hidden="true">lock</span>Background inert</span>
+        <span className="md-chip"><span className="md-material" aria-hidden="true">center_focus_strong</span>Focus enters</span>
+        <span className="md-chip"><span className="md-material" aria-hidden="true">sync</span>Tab trapped</span>
+        <span className="md-chip"><span className="md-material" aria-hidden="true">keyboard</span>Escape closes</span>
+        <span className="md-chip"><span className="md-material" aria-hidden="true">layers</span>Top layer</span>
+        <span className="md-chip"><span className="md-material" aria-hidden="true">gradient</span>::backdrop</span>
+      </div>
+      <p className="md-demo-note" style={{ marginTop: '1rem' }}>
+        Three rules from MDN keep it honest: never open a modal with the <code>open</code> attribute (that makes a non-modal, no trap, no Escape, no inert), never put <code>tabindex</code> on the <code>&lt;dialog&gt;</code>, and always ship an explicit close button.
+      </p>
+    </div>
+  </div>
+
+  <div className="md-code">
+    <div className="md-code-header">
+      <span className="md-code-dot red" aria-hidden="true"></span>
+      <span className="md-code-dot yellow" aria-hidden="true"></span>
+      <span className="md-code-dot green" aria-hidden="true"></span>
+      <span className="md-code-lang">HTML</span>
+    </div>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">&lt;!-- Open with .showModal(), never the open attribute. --&gt;</span>
+<span class="punctuation">&lt;</span><span class="tag">button</span> <span class="attr">onclick</span><span class="punctuation">=</span><span class="value">"dlg.showModal()"</span><span class="punctuation">&gt;</span>Rename event<span class="punctuation">&lt;/</span><span class="tag">button</span><span class="punctuation">&gt;</span>
+
+<span class="punctuation">&lt;</span><span class="tag">dialog</span> <span class="attr">id</span><span class="punctuation">=</span><span class="value">"dlg"</span> <span class="attr">aria-labelledby</span><span class="punctuation">=</span><span class="value">"dlg-title"</span><span class="punctuation">&gt;</span>
+  <span class="comment">&lt;!-- method="dialog" closes on submit, no reload, sets returnValue --&gt;</span>
+  <span class="punctuation">&lt;</span><span class="tag">form</span> <span class="attr">method</span><span class="punctuation">=</span><span class="value">"dialog"</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="tag">h3</span> <span class="attr">id</span><span class="punctuation">=</span><span class="value">"dlg-title"</span><span class="punctuation">&gt;</span>Rename event<span class="punctuation">&lt;/</span><span class="tag">h3</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="tag">input</span> <span class="attr">autofocus</span> <span class="attr">value</span><span class="punctuation">=</span><span class="value">"Summer Rooftop Session"</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="tag">button</span> <span class="attr">value</span><span class="punctuation">=</span><span class="value">"cancel"</span><span class="punctuation">&gt;</span>Cancel<span class="punctuation">&lt;/</span><span class="tag">button</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="tag">button</span> <span class="attr">value</span><span class="punctuation">=</span><span class="value">"save"</span><span class="punctuation">&gt;</span>Save name<span class="punctuation">&lt;/</span><span class="tag">button</span><span class="punctuation">&gt;</span>
+  <span class="punctuation">&lt;/</span><span class="tag">form</span><span class="punctuation">&gt;</span>
+<span class="punctuation">&lt;/</span><span class="tag">dialog</span><span class="punctuation">&gt;</span>`}} />
+  </div>
+
+  <div className="md-callout warn">
+    <span className="md-material" aria-hidden="true">animation</span>
+    <p className="md-callout-text">
+      <strong>Animating opts you out of one guarantee.</strong> web.dev warns that when you animate a dialog open or closed, the built-in focus return is lost and has to be restored by hand with event listeners. This demo does not animate, which is why its focus snaps back to the trigger on its own. If you add motion, put the focus return back yourself, and honor <code>prefers-reduced-motion</code>.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 3 - DIALOG VS ALERTDIALOG                     */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">3</span>
+    <h2 className="md-section-title">dialog for content, alertdialog for consequences</h2>
+  </div>
+
+  <p className="md-text">
+    The role is not decoration. <code>role="alertdialog"</code> tells assistive tech this dialog interrupts to demand a response, so it can treat it specially, a system alert sound for instance. Use it for confirmations and destructive or irreversible actions. Use plain <code>dialog</code> for forms, selection, and content. The decision rule is one line.
+  </p>
+
+  <div className="md-ra" style={{ maxWidth: '44rem' }}>
+    <div className="md-ra-card reco">
+      <div className="md-ra-head"><span className="md-material" aria-hidden="true">description</span>role dialog</div>
+      <p className="md-ra-body">Forms, pickers, multi-step content. Nothing is destroyed by opening it. Focus the first field or the primary control.</p>
+    </div>
+    <div className="md-ra-card avoid" style={{ border: '1px solid #fecaca', background: '#fef2f2' }}>
+      <div className="md-ra-head" style={{ color: '#991b1b' }}><span className="md-material" aria-hidden="true" style={{ color: '#b91c1c' }}>warning</span>role alertdialog</div>
+      <p className="md-ra-body" style={{ color: '#7f1d1d' }}>Delete, cancel, wipe, anything irreversible. Requires <code>aria-describedby</code> on the message, and focus starts on Cancel.</p>
+    </div>
+  </div>
+
+  <p className="md-text" style={{ marginTop: '1.25rem' }}>
+    An alertdialog carries every requirement from Section 1 plus two of its own: <code>aria-describedby</code> must point at the element holding the alert message, and the safest initial focus is the Cancel button, not the destructive one. Putting focus on Cancel makes the dangerous choice deliberate rather than one stray Enter away. Open the demo and press Enter the instant it appears: nothing is destroyed, because Cancel is what was focused.
+  </p>
+
+  <div className="md-lab">
+    <div className="md-demo">
+      <div className="md-demo-label">Live: destructive confirmation</div>
+      <div className="md-demo-row">
+        <button
+          type="button"
+          className="md-btn md-btn-danger-outline"
+          onClick={() => document.getElementById('md-alert-demo').showModal()}
+        >
+          Delete event
+        </button>
+      </div>
+      <p className="md-demo-note">
+        Opens as <code>role="alertdialog"</code> with <code>autofocus</code> on Cancel. The red is the <code>--color-error</code> family, the only place this system leaves indigo.
+      </p>
+
+      <dialog
+        id="md-alert-demo"
+        className="md-dialog"
+        role="alertdialog"
+        aria-labelledby="md-alert-title"
+        aria-describedby="md-alert-desc"
+      >
+        <form method="dialog" className="md-dialog-body">
+          <div className="md-dialog-head">
+            <span className="md-alert-mark"><span className="md-material" aria-hidden="true">warning</span></span>
+            <button type="submit" value="cancel" className="md-dialog-close" aria-label="Close dialog">
+              <span className="md-material" aria-hidden="true">close</span>
+            </button>
+          </div>
+          <h3 id="md-alert-title" className="md-dialog-title">Delete this event?</h3>
+          <p id="md-alert-desc" className="md-dialog-text">
+            This permanently removes <strong>Summer Rooftop Session</strong> and its 240 sold tickets. This cannot be undone.
+          </p>
+          <div className="md-dialog-actions">
+            <button type="submit" value="cancel" className="md-btn md-btn-ghost" autoFocus>Cancel</button>
+            <button type="submit" value="confirm" className="md-btn md-btn-danger">Delete event</button>
+          </div>
+        </form>
+      </dialog>
+    </div>
+
+    <div className="md-demo">
+      <div className="md-demo-label">Why the extra role earns its keep</div>
+      <p className="md-demo-note" style={{ marginTop: 0 }}>
+        The APG is blunt about the reason: "The alertdialog role enables assistive technologies and browsers to distinguish alert dialogs from other dialogs so they have the option of giving alert dialogs special treatment, such as playing a system alert sound."
+      </p>
+      <p className="md-demo-note">
+        NN/g draws the same line from the UX side: interrupt the user precisely when "there is a chance that users' work be lost or that an action may have destructive, irreversible consequences." That is the alertdialog's whole job. A purely informational message that needs no decision should probably not be a modal at all (Section 4).
+      </p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 4 - WHEN NOT TO USE A MODAL                   */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">4</span>
+    <h2 className="md-section-title">When not to use a modal at all</h2>
+  </div>
+
+  <p className="md-text">
+    A modal charges a tax. NN/g lists the bill: it demands immediate action, breaks the flow, makes the user lose their place, adds cognitive load to recover the task, and hides relevant background. "Modal dialogs that are not directly related to users' goals are perceived as annoying and can diminish trust." Before you open one, walk down this ladder and stop at the first rung that fits. Most of the time you stop before the modal.
+  </p>
+
+  <div className="md-ladder">
+    <div className="md-rung">
+      <span className="md-rung-step">1</span>
+      <p className="md-rung-body"><b>A separate page.</b> For anything complex or multi-step. This is GOV.UK's default: their "one thing per page" philosophy sends the user to another page instead of a modal, and their public design system ships no modal component at all. Simplicity over speed.</p>
+    </div>
+    <div className="md-rung">
+      <span className="md-rung-step">2</span>
+      <p className="md-rung-body"><b>Inline content.</b> A field failed validation? Show the error inline, next to the field. Help text, hints, and single-field errors belong in the page, never behind an interruption.</p>
+    </div>
+    <div className="md-rung">
+      <span className="md-rung-step">3</span>
+      <p className="md-rung-body"><b>A non-modal dialog.</b> When the user should keep working with the background, like a compose window, open a dialog with <code>show()</code> instead of <code>showModal()</code>. No trap, no inert, the page stays live around it.</p>
+    </div>
+    <div className="md-rung">
+      <span className="md-rung-step">4</span>
+      <p className="md-rung-body"><b>A popover.</b> Action menus, toasts, form suggestions, teaching hints. Lightweight, non-modal, light-dismiss. This is Section 5.</p>
+    </div>
+  </div>
+
+  <div className="md-callout warn">
+    <span className="md-material" aria-hidden="true">block</span>
+    <p className="md-callout-text">
+      <strong>Never modal.</strong> Newsletter and promo interrupts unrelated to the goal, high-risk checkout (NN/g advises against it explicitly), decisions that need information the user cannot see inside the modal, and single-field validation errors. If the content does not deserve to steal the room, it does not get a modal.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 5 - POPOVER API                               */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">5</span>
+    <h2 className="md-section-title">Popover for everything non-modal</h2>
+  </div>
+
+  <p className="md-text">
+    The Popover API is the tool for overlays that must not steal the room. "Popovers created using the Popover API are always non-modal." They do not make the background inert, they do not trap focus, and the rest of the page stays interactive. MDN draws the boundary cleanly: "If you want to create a modal popover, a <code>&lt;dialog&gt;</code> element is the right way to go." A <code>popover="auto"</code> light-dismisses on Escape or an outside click and wires up with nothing but <code>popovertarget</code> on a button.
+  </p>
+
+  <div className="md-lab">
+    <div className="md-demo">
+      <div className="md-demo-label">Live: non-modal action menu</div>
+      <div className="md-demo-row">
+        <button
+          type="button"
+          className="md-btn md-btn-tonal"
+          popovertarget="md-popover-demo"
+        >
+          Event actions
+        </button>
+      </div>
+      <p className="md-demo-note">
+        Wired with <code>popovertarget</code> alone. Click outside or press Escape to light-dismiss. The page behind stays fully interactive, no trap, no inert.
+      </p>
+      <div id="md-popover-demo" popover="auto" className="md-popover">
+        <button type="button" className="md-menu-item" popovertarget="md-popover-demo" popovertargetaction="hide"><span className="md-material" aria-hidden="true">edit</span>Edit details</button>
+        <button type="button" className="md-menu-item" popovertarget="md-popover-demo" popovertargetaction="hide"><span className="md-material" aria-hidden="true">content_copy</span>Duplicate</button>
+        <button type="button" className="md-menu-item" popovertarget="md-popover-demo" popovertargetaction="hide"><span className="md-material" aria-hidden="true">share</span>Share link</button>
+      </div>
+    </div>
+
+    <div className="md-demo">
+      <div className="md-demo-label">Tooltip vs popover vs dialog</div>
+      <p className="md-demo-note" style={{ marginTop: 0 }}>
+        <strong style={{ color: '#0f172a' }}>Tooltip</strong> is a brief description on hover or focus over a control. It takes no focus of its own and holds no interactive content. Not a dialog.
+      </p>
+      <p className="md-demo-note">
+        <strong style={{ color: '#0f172a' }}>Popover</strong> is a light interactive layer. The background stays active, dismiss is light, focus is not trapped. Menus, toasts, pickers.
+      </p>
+      <p className="md-demo-note">
+        <strong style={{ color: '#0f172a' }}>Dialog, modal</strong> interrupts. Background inert, focus trapped, needs an answer. Spend it rarely.
+      </p>
+    </div>
+  </div>
+
+  <div className="md-callout">
+    <span className="md-material" aria-hidden="true">schedule</span>
+    <p className="md-callout-text">
+      <strong>Platform honesty.</strong> <code>&lt;dialog&gt;</code> and <code>showModal()</code> are Baseline Widely available since March 2022, and <code>inert</code> since April 2023, both safe for production today. The Popover API is newer, Baseline Newly available since January 2025, so on an older browser base consider a fallback for popovers.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 6 - PITFALLS                                  */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">6</span>
+    <h2 className="md-section-title">The pitfalls, and the WCAG nuance</h2>
+  </div>
+
+  <p className="md-text">
+    Every one of these is a real dialog shipped broken. The native element prevents most of them; a hand-built modal has to guard against all of them.
+  </p>
+
+  <div className="md-rules">
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Trap</span>Focus escapes to the background. Tab lands on links behind the dialog. The native element inertizes the rest of the document for you; by hand you must set the <code>inert</code> attribute, not just <code>pointer-events</code>.</p>
+    </div>
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Trap</span>Focus never returns to the trigger, most often because the open or close was animated, which drops the automatic return. Restore it in an event listener.</p>
+    </div>
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Trap</span>No accessible name. Missing <code>aria-labelledby</code> or <code>aria-label</code> fails WCAG 4.1.2 outright.</p>
+    </div>
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Trap</span>Close only on outside click, with no keyboard exit. Always ship an explicit close button plus Escape.</p>
+    </div>
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Trap</span>Opened with the <code>open</code> attribute, which produces a non-modal, no trap and no Escape and no inert. Use <code>.showModal()</code>.</p>
+    </div>
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Trap</span>Nesting modals. Stacked dialogs confuse which Escape closes what. Prefer one dialog, or steps inside a single dialog.</p>
+    </div>
+  </div>
+
+  <div className="md-callout">
+    <span className="md-material" aria-hidden="true">verified</span>
+    <p className="md-callout-text">
+      <strong>The trap is legal, on one condition.</strong> A modal's focus trap looks like it violates WCAG 2.1.2 No Keyboard Trap, and it does not, as long as there is a way out. W3C: restricting focus to a subsection "does not fail the requirements of this criterion, as long as the user knows how to 'untrap' the focus and leave that component." Trap the focus on purpose, but Escape or a Cancel button must always release it. A modal with no keyboard exit does fail 2.1.2.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 7 - RESPONSIVE BRIDGE                         */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">7</span>
+    <h2 className="md-section-title">On a phone, the modal becomes a sheet</h2>
+  </div>
+
+  <p className="md-text">
+    A centered modal is a desktop shape. On a phone it usually becomes a bottom sheet, a panel that rises from the bottom edge into the thumb's reach. What changes is only the presentation, position, anchor, and entry animation. The semantics do not move. A bottom sheet is still a modal <code>dialog</code> or <code>alertdialog</code>, and it owes every one of the six requirements from Section 1: an accessible name, focus in, a trapped Tab cycle, Escape to close, focus back to the trigger, and an inert background. The same native <code>&lt;dialog&gt;</code> can present as a sheet through CSS while keeping <code>showModal()</code> and its guarantees.
+  </p>
+
+  <div className="md-callout">
+    <span className="md-material" aria-hidden="true">swipe_up</span>
+    <p className="md-callout-text">
+      <strong>Do not trade a11y for the gesture.</strong> Drag-to-dismiss is a pointer nicety, not a substitute for the keyboard. Every sheet still needs Escape and a visible close button, and the drag must have a keyboard equivalent. The presentation is documented in <strong>Patterns / Mobile First</strong>; the doctrine on this page travels with it unchanged.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 8 - THE RULES                                 */}
+{/* ============================================ */}
+
+<div className="md-section">
+  <div className="md-section-header">
+    <span className="md-section-number">8</span>
+    <h2 className="md-section-title">The rules</h2>
+  </div>
+
+  <p className="md-text">
+    Each rule is stated in the positive, with the reason it exists. Where the wrong turn is easy to make, a recommended and an avoid card sit side by side.
+  </p>
+
+  <div className="md-rules">
+
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Rule</span>Reach for the native <code>&lt;dialog&gt;</code> with <code>.showModal()</code> before building anything by hand.</p>
+      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>It delivers all six accessibility requirements correctly for free: focus in, Tab trapped, Escape, inert background, focus return, top layer. A hand-built modal has to re-derive each one, which is where the bugs live.</p>
+      <div className="md-ra">
+        <div className="md-ra-card reco">
+          <div className="md-ra-head"><span className="md-material" aria-hidden="true">check_circle</span>Recommended</div>
+          <p className="md-ra-body">Open with <code>.showModal()</code>, close a form with <code>method="dialog"</code>, style the dim with <code>::backdrop</code>.</p>
+        </div>
+        <div className="md-ra-card avoid">
+          <div className="md-ra-head"><span className="md-material" aria-hidden="true">block</span>Avoid</div>
+          <p className="md-ra-body">Opening with the <code>open</code> attribute, which yields a non-modal with no trap, no Escape, and no inert.</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Rule</span>Give every modal an accessible name and a real close button, and never put <code>tabindex</code> on the <code>&lt;dialog&gt;</code>.</p>
+      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>An unnamed dialog fails WCAG 4.1.2, and Escape alone is not discoverable. MDN calls a visible close button the most robust exit for all users, and warns the dialog itself is not interactive.</p>
+    </div>
+
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Rule</span>Use <code>role="alertdialog"</code> for destructive or irreversible actions, with <code>aria-describedby</code> and initial focus on Cancel.</p>
+      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>The role lets assistive tech treat the interruption specially, and focusing Cancel makes the dangerous choice deliberate rather than one stray Enter away.</p>
+      <div className="md-ra">
+        <div className="md-ra-card reco">
+          <div className="md-ra-head"><span className="md-material" aria-hidden="true">check_circle</span>Recommended</div>
+          <p className="md-ra-body"><code>alertdialog</code> with the message wired to <code>aria-describedby</code> and <code>autofocus</code> on Cancel.</p>
+        </div>
+        <div className="md-ra-card avoid">
+          <div className="md-ra-head"><span className="md-material" aria-hidden="true">block</span>Avoid</div>
+          <p className="md-ra-body">A plain <code>dialog</code> for a delete, or <code>autofocus</code> on the destructive button so one Enter wipes the data.</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Rule</span>Before opening a modal, try a page, an inline message, a non-modal dialog, or a popover first.</p>
+      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>A modal steals context and demands an immediate answer. Most content does not earn that cost, and an interruption unrelated to the goal reads as annoying and erodes trust.</p>
+    </div>
+
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Rule</span>Keep the focus trap, but always leave a keyboard exit, and if you animate, restore the focus return by hand.</p>
+      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>The trap is legal under WCAG 2.1.2 only while the user can untrap with Escape or Cancel, and animating a dialog drops the automatic focus return that the six requirements depend on.</p>
+    </div>
+
+    <div className="md-rule">
+      <p className="md-rule-line"><span className="md-rule-tag rule">Rule</span>Reserve the <code>--color-error</code> family for the destructive path and keep everything else mono-indigo; radius 6px on buttons, 12px on the dialog.</p>
+      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>Red carries a single meaning, danger, so it stays out of chrome and buttons that do not destroy. The destructive fill uses red 600 because red 500 clears only 3.76:1 under white text.</p>
+    </div>
+
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* SOURCES                                       */}
+{/* ============================================ */}
+
+<div className="md-refs">
+  <p className="md-refs-h">Sources</p>
+  <p>
+    The six requirements, the roles, and the keyboard model from the WAI-ARIA Authoring Practices Guide: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/">Dialog (Modal) Pattern</a> and <a href="https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/">Alert Dialog Pattern</a>. The native element, <code>showModal()</code> vs <code>show()</code>, <code>::backdrop</code>, top layer, <code>method="dialog"</code>, the <code>open</code> and <code>tabindex</code> warnings, and Baseline support from MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog">&lt;dialog&gt;</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert">inert</a>, and the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">Popover API</a>. The legal focus trap from WCAG 2.1 Understanding <a href="https://www.w3.org/WAI/WCAG21/Understanding/no-keyboard-trap.html">SC 2.1.2 No Keyboard Trap</a> and the name and role floor from <a href="https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html">SC 4.1.2 Name, Role, Value</a>. The cost of interrupting and when a modal is justified from Nielsen Norman Group, <a href="https://www.nngroup.com/articles/modal-nonmodal-dialog/">Modal &amp; Nonmodal Dialogs</a>. The animation-breaks-focus-return caveat and the focus-on-Cancel practice from web.dev, <a href="https://web.dev/articles/building/a-dialog-component">Building a dialog component</a>. The one-thing-per-page stance from the <a href="https://design-system.service.gov.uk/accessibility/">GOV.UK Design System</a>.
+  </p>
+</div>

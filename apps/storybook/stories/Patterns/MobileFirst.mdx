@@ -1,0 +1,1481 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Mobile First" />
+
+<style>
+{`
+  /* ===== FONT IMPORTS ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+  .mf-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .mf-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.25rem 2.5rem;
+    margin-bottom: 3rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+  .mf-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .mf-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw + 1rem, 3.1rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 26ch;
+  }
+  .mf-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0;
+  }
+  .mf-hero p strong { color: #ffffff; font-weight: 700; }
+
+  /* ===== PART BANNER ===== */
+  .mf-part {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin: 3.5rem 0 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #4f46e5;
+    flex-wrap: wrap;
+  }
+  .mf-part-kicker {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #4338ca;
+    background: #e0e7ff;
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+  }
+  .mf-part-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  /* ===== SECTIONS ===== */
+  .mf-section {
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+  .mf-section:last-of-type { border-bottom: none; }
+  .mf-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .mf-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+  .mf-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .mf-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 48rem;
+  }
+  .mf-text + .mf-text { margin-top: 1rem; }
+  .mf-text strong { color: #0f172a; font-weight: 600; }
+  .mf-text code, .mf-inline-code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  /* ===== CALLOUT ===== */
+  .mf-callout {
+    display: flex;
+    gap: 0.75rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+  .mf-callout .mf-material {
+    color: #4338ca;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+  .mf-callout-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #3730a3;
+  }
+  .mf-callout-text strong { color: #312e81; font-weight: 700; }
+  .mf-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: rgba(79,70,229,0.1);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #3730a3;
+  }
+
+  /* ===== RULES (Rule / Why) ===== */
+  .mf-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+  .mf-rule {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-left: 3px solid #4f46e5;
+    border-radius: 10px;
+    padding: 0.9rem 1.125rem;
+  }
+  .mf-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #0f172a;
+    margin: 0;
+  }
+  .mf-rule-why {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #64748b;
+    margin: 0.35rem 0 0;
+  }
+  .mf-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+    vertical-align: 0.08em;
+  }
+  .mf-tag.rule { color: #4338ca; background: #e0e7ff; }
+  .mf-tag.why { color: #475569; background: #f1f5f9; }
+  .mf-rule code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #334155;
+  }
+
+  /* ===== DEMO SHELL ===== */
+  .mf-demo {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.25rem 0;
+  }
+  .mf-demo-label {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  /* ===== REC / AVOID PAIR ===== */
+  .mf-pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+  .mf-card {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.15rem 1.25rem;
+  }
+  .mf-card.avoid {
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background: #fbfcfd;
+  }
+  .mf-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+  .mf-card.rec .mf-card-head { color: #166534; }
+  .mf-card.avoid .mf-card-head { color: #475569; }
+  .mf-card-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: #475569;
+  }
+  .mf-card-body code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+    background: #eef2ff;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  /* ===== THE MAP TABLE ===== */
+  .mf-scroll {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    max-width: 52rem;
+  }
+  table.mf-map {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    min-width: 620px;
+    background: white;
+  }
+  table.mf-map th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #e6e8eb;
+    white-space: nowrap;
+  }
+  table.mf-map th.desk { background: #f8fafc; }
+  table.mf-map th.mob { background: #eef2ff; }
+  table.mf-map th.src { background: #f8fafc; }
+  table.mf-map td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+    vertical-align: top;
+  }
+  table.mf-map td.desk { color: #64748b; }
+  table.mf-map td.mob { background: #fafbff; color: #0f172a; font-weight: 600; }
+  table.mf-map td.src { font-size: 0.75rem; color: #64748b; }
+  table.mf-map tr:last-child td { border-bottom: none; }
+  table.mf-map .mf-arrow-cell {
+    color: #4338ca;
+    font-weight: 700;
+  }
+  table.mf-map code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+    background: #eef2ff;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  /* ===== PHONE MOCK ===== */
+  .mf-phone {
+    position: relative;
+    width: 300px;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #0f172a;
+    border-radius: 34px;
+    padding: 10px;
+    box-shadow: 0 20px 40px -12px rgba(15,23,42,0.35);
+  }
+  .mf-phone-screen {
+    position: relative;
+    height: 460px;
+    background: #f8fafc;
+    border-radius: 26px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .mf-phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 20px;
+    background: #0f172a;
+    border-radius: 0 0 12px 12px;
+    z-index: 5;
+  }
+  .mf-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 1rem 0.2rem;
+    padding-top: 1.5rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #475569;
+    flex-shrink: 0;
+  }
+  .mf-appbar {
+    padding: 0.35rem 1rem 0.75rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f172a;
+    border-bottom: 1px solid #e6e8eb;
+    flex-shrink: 0;
+  }
+  .mf-canvas {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .mf-line {
+    height: 0.7rem;
+    border-radius: 6px;
+    background: #e6e8eb;
+  }
+  .mf-line.short { width: 55%; }
+  .mf-line.mid { width: 78%; }
+  .mf-tile {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 0.75rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .mf-tile-title {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  /* thumb overlay */
+  .mf-thumb-arc {
+    position: absolute;
+    right: -40px;
+    bottom: -40px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 100% 100%, rgba(79,70,229,0.14) 0%, rgba(79,70,229,0.06) 55%, rgba(79,70,229,0) 72%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .mf-reach-tag {
+    position: absolute;
+    left: 12px;
+    top: 46px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+    background: rgba(248,250,252,0.85);
+    border: 1px dashed #cbd5e1;
+    border-radius: 6px;
+    padding: 0.1rem 0.35rem;
+    z-index: 4;
+  }
+
+  /* sticky CTA */
+  .mf-sticky-cta {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    padding: 0.7rem 1rem calc(0.7rem + 8px);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid #e6e8eb;
+  }
+  .mf-cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    min-height: 48px;
+    background: #4f46e5;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .mf-cta-btn:hover { background: #4338ca; }
+  .mf-cta-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+  .mf-cta-btn .mf-material { font-size: 1.2rem; }
+
+  /* bottom nav */
+  .mf-bottomnav {
+    display: flex;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-top: 1px solid #e6e8eb;
+    padding-bottom: 8px;
+  }
+  .mf-navitem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    min-height: 48px;
+    padding: 0.45rem 0.2rem;
+    background: none;
+    border: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #64748b;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .mf-navitem .mf-material { font-size: 1.25rem; }
+  .mf-navitem:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px #4f46e5;
+    border-radius: 8px;
+  }
+  .mf-navitem[aria-current="page"] { color: #4338ca; }
+  .mf-navitem[aria-current="page"] .mf-material { font-variation-settings: 'FILL' 1; }
+
+  /* FAB */
+  .mf-fab {
+    position: absolute;
+    right: 14px;
+    bottom: 70px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: #4f46e5;
+    border: none;
+    border-radius: 16px;
+    color: #ffffff;
+    box-shadow: 0 8px 16px -4px rgba(79,70,229,0.5);
+    cursor: pointer;
+  }
+  .mf-fab:hover { background: #4338ca; }
+  .mf-fab:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+  .mf-fab .mf-material { font-size: 1.5rem; }
+
+  /* snackbar */
+  .mf-snackbar {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 16px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 0.7rem 0.75rem 0.7rem 1rem;
+    box-shadow: 0 10px 24px -8px rgba(15,23,42,0.5);
+  }
+  .mf-snackbar-text {
+    flex: 1;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: #f1f5f9;
+  }
+  .mf-snackbar-action {
+    flex-shrink: 0;
+    min-height: 36px;
+    padding: 0 0.6rem;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #a5b4fc;
+    cursor: pointer;
+  }
+  .mf-snackbar-action:hover { background: rgba(165,180,252,0.16); }
+  .mf-snackbar-action:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #1e293b, 0 0 0 4px #a5b4fc;
+  }
+
+  /* trigger button (generic, in-frame) */
+  .mf-ghost-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 44px;
+    padding: 0 0.9rem;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+  }
+  .mf-ghost-btn:hover { border-color: #4f46e5; color: #4338ca; }
+  .mf-ghost-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+  .mf-ghost-btn .mf-material { font-size: 1.1rem; color: #4338ca; }
+
+  /* ===== BOTTOM SHEET DIALOG ===== */
+  dialog.mf-sheet {
+    position: fixed;
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    border-radius: 18px 18px 0 0;
+    background: #ffffff;
+    box-shadow: 0 -12px 32px -8px rgba(15,23,42,0.25);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  dialog.mf-sheet::backdrop { background: rgba(15,23,42,0.45); }
+  .mf-sheet-inner { padding: 0.5rem 1.25rem 1.25rem; }
+  .mf-grabber-row {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0 0.75rem;
+  }
+  .mf-grabber {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 24px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .mf-grabber::before {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 5px;
+    border-radius: 999px;
+    background: #cbd5e1;
+  }
+  .mf-grabber:hover::before { background: #94a3b8; }
+  .mf-grabber:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+  .mf-sheet-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.4rem;
+  }
+  .mf-sheet-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #475569;
+    margin: 0 0 1rem;
+  }
+  .mf-sheet-actions {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .mf-sheet-actions button {
+    flex: 1;
+    min-height: 48px;
+    border-radius: 10px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .mf-btn-primary {
+    background: #4f46e5;
+    border: 1px solid #4f46e5;
+    color: #ffffff;
+  }
+  .mf-btn-primary:hover { background: #4338ca; }
+  .mf-btn-secondary {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+  }
+  .mf-btn-secondary:hover { border-color: #4f46e5; color: #4338ca; }
+  .mf-sheet-actions button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+
+  /* ===== SWIPE ROW ===== */
+  .mf-swipe-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 32rem;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .mf-swipe-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .mf-swipe-row:last-child { border-bottom: none; }
+  .mf-swipe-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .mf-swipe-name {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .mf-swipe-meta {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+  .mf-swipe-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 44px;
+    padding: 0 0.75rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 8px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #3730a3;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .mf-swipe-action:hover { background: #e0e7ff; }
+  .mf-swipe-action:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+  .mf-swipe-action .mf-material { font-size: 1.05rem; }
+  .mf-swipe-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+  }
+  .mf-swipe-hint .mf-material { font-size: 0.95rem; color: #94a3b8; }
+
+  /* ===== COMPACT CHIP ===== */
+  .mf-chips { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin: 0.75rem 0; }
+  .mf-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 0.1rem 0.15rem 0.1rem 0.5rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #3730a3;
+  }
+  .mf-chip-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    color: #4338ca;
+    cursor: pointer;
+  }
+  .mf-chip-x:hover { background: #c7d2fe; }
+  .mf-chip-x:focus-visible { outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #4f46e5; }
+  .mf-chip-x .mf-material { font-size: 0.8rem; }
+
+  /* ===== CODE BLOCK ===== */
+  .mf-code {
+    background: #0f172a;
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+  }
+  .mf-code .mf-c-com { color: #94a3b8; }
+  .mf-code .mf-c-prop { color: #a5b4fc; }
+  .mf-code .mf-c-val { color: #7dd3fc; }
+
+  /* ===== LADDER ===== */
+  .mf-ladder {
+    counter-reset: mf-step;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+  .mf-ladder-step {
+    display: flex;
+    gap: 0.875rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+  .mf-ladder-step:last-child { border-bottom: none; }
+  .mf-ladder-step::before {
+    counter-increment: mf-step;
+    content: counter(mf-step);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #eef2ff;
+    color: #4338ca;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .mf-ladder-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #334155;
+  }
+  .mf-ladder-text strong { color: #0f172a; }
+  .mf-ladder-text code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  /* ===== CROSS-LINK CHIP ===== */
+  .mf-xlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #4338ca;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    margin: 1rem 0.5rem 0 0;
+    text-decoration: none;
+  }
+  .mf-xlink:hover { background: #e0e7ff; }
+  .mf-xlink .mf-material { font-size: 1rem; }
+
+  /* ===== SOURCES ===== */
+  .mf-sources-list {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    max-width: 52rem;
+  }
+  .mf-sources-list li {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #475569;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .mf-sources-list li:last-child { border-bottom: none; }
+  .mf-sources-list strong { color: #0f172a; }
+  .mf-sources-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+  }
+  .mf-note {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #92400e;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .mf-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    dialog.mf-sheet { transition: none; }
+  }
+`}
+</style>
+
+{/* ============================================ */}
+{/* HERO                                          */}
+{/* ============================================ */}
+
+<div className="mf-hero">
+  <p className="mf-hero-eyebrow">Patterns / Mobile First</p>
+  <h1>The same content does not deserve the same container.</h1>
+  <p>
+    A modal is centered on a desktop because a cursor can reach the middle of a wide screen without effort. A thumb on a 375px phone cannot. So the mobile equivalent of a centered modal is a <strong>bottom sheet anchored to the bottom edge</strong>, where the thumb already rests. This page is the last word on how we relocate desktop patterns downward, into the reachable zone, anchored to the safe area, and how we keep every one of them operable by keyboard and announced correctly. It is not a coat of paint on the desktop layout. It is a different container for the same content.
+  </p>
+</div>
+
+{/* ============================================ */}
+{/* PART 1 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="mf-part">
+  <span className="mf-part-kicker">Part 1</span>
+  <span className="mf-part-title">The map, every desktop pattern has a mobile home</span>
+</div>
+
+{/* 1: THE MAP */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">1</span>
+    <h2 className="mf-section-title">The desktop to mobile map</h2>
+  </div>
+
+  <p className="mf-text">
+    Patterns that lean on a cursor, on hover, and on a wide screen (a centered modal, a hover menu, a tooltip, a right click, a persistent sidebar) are ergonomically hostile to a thumb. Steven Hoober's field study of 1,333 observations found that <strong>49% of people use a phone one-handed</strong>, with the thumb as the dominant actuator, and that grip changes "very often, sometimes every few seconds." The comfortable arc of the thumb covers the lower half of the screen; the top edge forces a regrip. That single fact drives the whole map: primary actions and navigation move <strong>down</strong>, anchored to the bottom edge, inside the safe area.
+  </p>
+
+  <div className="mf-scroll">
+    <table className="mf-map">
+      <caption className="mf-sr-only">Each desktop pattern and its mobile replacement, with the anchoring source.</caption>
+      <thead>
+        <tr>
+          <th className="desk" scope="col">Desktop pattern</th>
+          <th className="mob" scope="col">Mobile replacement</th>
+          <th className="src" scope="col">Anchor source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="desk">Centered modal / dialog <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">Bottom sheet (dialog anchored to the bottom edge)</td>
+          <td className="src">web.dev: at a small viewport the bottom margin goes to <code>0</code> and the mega dialog "transforms into an action sheet."</td>
+        </tr>
+        <tr>
+          <td className="desk">Hover menu / dropdown <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">Action sheet of options (a list-only bottom sheet)</td>
+          <td className="src">Material modal bottom sheet: "present a set of choices while blocking interaction with the rest of the screen."</td>
+        </tr>
+        <tr>
+          <td className="desk">Hover tooltip <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">Tap to reveal, inline disclosure, or tap to a sheet</td>
+          <td className="src">There is no reliable <code>:hover</code> on <code>pointer: coarse</code> (Section 8).</td>
+        </tr>
+        <tr>
+          <td className="desk">Right click (context menu) <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">Long press, plus a visible overflow control</td>
+          <td className="src">WCAG 2.5.1 lists "long press" as a valid single-pointer alternative.</td>
+        </tr>
+        <tr>
+          <td className="desk">Persistent left sidebar <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">Bottom navigation bar (3 to 5) or a drawer</td>
+          <td className="src">Material: the navigation bar "lets people switch between UI views on smaller devices."</td>
+        </tr>
+        <tr>
+          <td className="desk">Hover to reveal actions <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">No such state. Make actions visible or reveal on tap</td>
+          <td className="src"><code>pointer: coarse</code> does not fire hover (Section 8).</td>
+        </tr>
+        <tr>
+          <td className="desk">Top toolbar of actions <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">Bottom app bar or a sticky bottom CTA</td>
+          <td className="src">Thumb zone, Section 3.</td>
+        </tr>
+        <tr>
+          <td className="desk">Toast, top of the screen <span className="mf-arrow-cell">to</span></td>
+          <td className="mob">Snackbar anchored to the bottom</td>
+          <td className="src">Material: "brief messages ... at the bottom of the screen."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="mf-callout">
+    <span className="mf-material" aria-hidden="true">bolt</span>
+    <p className="mf-callout-text">
+      <strong>How the map is switched on: by input capability, never by user agent.</strong> Detect <code>@media (pointer: coarse)</code> and viewport width. A touchscreen laptop, an iPad with a trackpad, a phone in a desktop dock: none of these fit a substring match on <code>navigator.userAgent</code>, and all of them break it. The switch is a capability query, combined with a width breakpoint. Section 8 has the mechanics.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* PART 2 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="mf-part">
+  <span className="mf-part-kicker">Part 2</span>
+  <span className="mf-part-title">The components, anchored to the bottom</span>
+</div>
+
+{/* 2: BOTTOM SHEET */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">2</span>
+    <h2 className="mf-section-title">Bottom sheet, the modal's mobile form</h2>
+  </div>
+
+  <p className="mf-text">
+    Material draws two variants. A <strong>standard bottom sheet</strong> "co-exists with the screen's main UI region and allows for simultaneously viewing and interacting with both regions," so it carries no scrim, good for secondary content that stays on screen while the main area scrolls. A <strong>modal bottom sheet</strong> "present[s] a set of choices while blocking interaction with the rest of the screen," sits above a scrim, and is the direct replacement for a centered modal and for inline menus. iOS expresses the same idea as a sheet with resizable detents (medium and large snap points) and an optional grabber, treated here as an iOS convention rather than a verbatim rule (see Sources).
+  </p>
+
+  <p className="mf-text">
+    <strong>A bottom sheet is still a dialog.</strong> It is not a decorated <code>&lt;div&gt;</code>. Build the modal variant on the native <code>&lt;dialog&gt;</code> element and let the platform hand you most of the accessibility for free.
+  </p>
+
+  <div className="mf-ladder">
+    <div className="mf-ladder-step"><span className="mf-ladder-text"><strong>Open with <code>showModal()</code>.</strong> MDN: it "block[s] interaction with other UI elements, making the rest of the page inert." The browser applies <code>inert</code> to the rest of the document for you, and implies <code>aria-modal="true"</code>.</span></div>
+    <div className="mf-ladder-step"><span className="mf-ladder-text"><strong>Send focus to Cancel, not Confirm.</strong> On open, focus lands on the first focusable element; put <code>autofocus</code> on the cancel or close control so that "confirmation is deliberate and not accidental."</span></div>
+    <div className="mf-ladder-step"><span className="mf-ladder-text"><strong>Escape is free.</strong> A dialog opened with <code>showModal()</code> "can be dismissed by pressing the Esc key." You do not wire it.</span></div>
+    <div className="mf-ladder-step"><span className="mf-ladder-text"><strong>Give it an explicit close.</strong> MDN: "The most robust way to ensure that all users can close the dialog is to include an explicit button." The swipe and the grabber can never be the only way out.</span></div>
+    <div className="mf-ladder-step"><span className="mf-ladder-text"><strong>Return focus on close.</strong> Native <code>&lt;dialog&gt;</code> restores focus to the trigger in most cases; with custom animation you restore it yourself.</span></div>
+    <div className="mf-ladder-step"><span className="mf-ladder-text"><strong>Anchor to the bottom with CSS, not a new component.</strong> Set <code>inset: auto 0 0 0</code> so the sheet sits on the bottom edge, style the <code>::backdrop</code> for the scrim, and pad the bottom with <code>env(safe-area-inset-bottom)</code> so content clears the home indicator.</span></div>
+    <div className="mf-ladder-step"><span className="mf-ladder-text"><strong>The drag handle is a real control.</strong> In Material the handle "will automatically receive and handle accessibility commands to expand and collapse." On web that means a genuine <code>&lt;button&gt;</code> the keyboard can operate to cycle snap points, sized to the 48px touch-target floor, not a decorative bar you can only drag.</span></div>
+  </div>
+
+  <div className="mf-demo">
+    <div className="mf-demo-label">Live: a real modal bottom sheet, native &lt;dialog&gt; anchored to the bottom</div>
+    <div className="mf-phone">
+      <div className="mf-phone-notch" aria-hidden="true"></div>
+      <div className="mf-phone-screen">
+        <div className="mf-status"><span>9:41</span><span aria-hidden="true">100%</span></div>
+        <div className="mf-appbar">Ticket options</div>
+        <div className="mf-canvas">
+          <div className="mf-tile">
+            <span className="mf-tile-title">General admission</span>
+            <div className="mf-line mid" aria-hidden="true"></div>
+            <div className="mf-line short" aria-hidden="true"></div>
+          </div>
+          <button
+            type="button"
+            className="mf-ghost-btn"
+            onClick={() => { const d = document.getElementById('mf-sheet-demo'); if (d) d.showModal(); }}
+          >
+            <span className="mf-material" aria-hidden="true">expand_less</span>
+            Open bottom sheet
+          </button>
+          <div className="mf-line mid" aria-hidden="true"></div>
+          <div className="mf-line short" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+
+    <dialog id="mf-sheet-demo" className="mf-sheet" aria-labelledby="mf-sheet-heading">
+      <div className="mf-sheet-inner">
+        <div className="mf-grabber-row">
+          <button type="button" className="mf-grabber" aria-label="Resize sheet"></button>
+        </div>
+        <h3 id="mf-sheet-heading" className="mf-sheet-title">Transfer this ticket</h3>
+        <p className="mf-sheet-body">
+          Send the ticket to another attendee by email. They confirm it on their own device. You keep a record of the transfer.
+        </p>
+        <div className="mf-sheet-actions">
+          <button
+            type="button"
+            className="mf-btn-secondary"
+            autoFocus
+            onClick={() => { const d = document.getElementById('mf-sheet-demo'); if (d) d.close(); }}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="mf-btn-primary"
+            onClick={() => { const d = document.getElementById('mf-sheet-demo'); if (d) d.close(); }}
+          >
+            Transfer
+          </button>
+        </div>
+      </div>
+    </dialog>
+    <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Try</span> Open it, then press Escape, or Tab to Cancel (which holds focus on open) and press Enter. Both close it. The backdrop dims the page and the rest goes inert.</p>
+  </div>
+
+  <p className="mf-text"><strong>Bottom sheet or centered modal? Same component, one media query.</strong></p>
+
+  <div className="mf-pair">
+    <div className="mf-card rec">
+      <div className="mf-card-head"><span aria-hidden="true">&#10003;</span> Bottom sheet when</div>
+      <p className="mf-card-body">The viewport is small (<code>pointer: coarse</code> or width at or below the breakpoint), the task is scoped and tied to context, or it is a list of actions or a short form where thumb reach matters. The standard variant when the user needs to keep seeing the content behind.</p>
+    </div>
+    <div className="mf-card rec">
+      <div className="mf-card-head"><span aria-hidden="true">&#10003;</span> Centered modal when</div>
+      <p className="mf-card-body">There is a cursor (desktop), or the dialog is genuinely blocking and critical (a destructive confirmation with forced focus), or content does not sit comfortably against the bottom edge.</p>
+    </div>
+  </div>
+
+  <div className="mf-callout">
+    <span className="mf-material" aria-hidden="true">lightbulb</span>
+    <p className="mf-callout-text">
+      <strong>Do not duplicate the component.</strong> It is the same <code>&lt;dialog&gt;</code> in both cases. Only the positioning changes by media query: centered on wide screens, anchored to the bottom on narrow ones. One accessibility contract, two layouts.
+    </p>
+  </div>
+
+  <a className="mf-xlink" href="../?path=/docs/patterns-modals--docs"><span className="mf-material" aria-hidden="true">arrow_forward</span>Modals, the full dialog contract</a>
+</div>
+
+{/* 3: THUMB ZONE + STICKY CTA */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">3</span>
+    <h2 className="mf-section-title">Thumb zone and the sticky bottom CTA</h2>
+  </div>
+
+  <p className="mf-text">
+    Hoober's field data is the anchor here. One-handed use: <strong>49%</strong> (67% right thumb, 33% left). Cradling: 36%. Two-handed: 15%, and 90% of that in portrait. When cradling, the thumb is on the screen 72% of the time. And, verbatim: users "change the way they're holding their phone very often, sometimes every few seconds." The thumb owns the lower band; the top edge is the stretch zone. So the primary action lives at the bottom, pinned (sticky), full width or aligned to the dominant thumb.
+  </p>
+
+  <p className="mf-text"><strong>Target size: the legal floor is not the goal.</strong> WCAG 2.5.8 (AA) sets the minimum at "24 by 24 CSS pixels," but that is a floor with exceptions, not a target. NN/g recommends far more: interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide," and targets must be big enough and then also spaced well enough. Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material's 48dp and NN/g's 1cm. Never the bare 24px for a primary action.</p>
+
+  <div className="mf-rules">
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> The primary action is a full-width control pinned to the bottom, at least 48px tall, in the thumb band.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> Hoober: the thumb comfortably covers the lower half, and grip shifts constantly. A bottom-pinned action is reachable regardless of the current grip.</p>
+    </div>
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Pad the sticky bar's bottom with <code>calc(base + env(safe-area-inset-bottom))</code>.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> MDN gives this exact pattern so "fixed app toolbar buttons are not obscured" by the home indicator. Section 7 covers the insets.</p>
+    </div>
+  </div>
+
+  <div className="mf-demo">
+    <div className="mf-demo-label">Live: content scrolls, the primary CTA stays pinned in the thumb band</div>
+    <div className="mf-phone">
+      <div className="mf-phone-notch" aria-hidden="true"></div>
+      <div className="mf-phone-screen">
+        <div className="mf-thumb-arc" aria-hidden="true"></div>
+        <span className="mf-reach-tag" aria-hidden="true">Stretch zone</span>
+        <div className="mf-status"><span>9:41</span><span aria-hidden="true">100%</span></div>
+        <div className="mf-appbar">Checkout</div>
+        <div className="mf-canvas">
+          <div className="mf-tile">
+            <span className="mf-tile-title">2 x General admission</span>
+            <div className="mf-line mid" aria-hidden="true"></div>
+          </div>
+          <div className="mf-line" aria-hidden="true"></div>
+          <div className="mf-line mid" aria-hidden="true"></div>
+          <div className="mf-line short" aria-hidden="true"></div>
+          <div className="mf-line" aria-hidden="true"></div>
+          <div className="mf-line mid" aria-hidden="true"></div>
+        </div>
+        <div className="mf-sticky-cta">
+          <button type="button" className="mf-cta-btn">
+            <span className="mf-material" aria-hidden="true">lock</span>
+            Pay 360,000 COP
+          </button>
+        </div>
+      </div>
+    </div>
+    <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> The tinted arc marks the comfortable thumb reach from a bottom-right grip. The CTA sits inside it; the app title sits in the stretch zone, where only navigation labels belong.</p>
+  </div>
+</div>
+
+{/* 4: BOTTOM NAV + FAB */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">4</span>
+    <h2 className="mf-section-title">Bottom navigation and the FAB</h2>
+  </div>
+
+  <p className="mf-text">
+    Material: a navigation bar "lets people switch between UI views on smaller devices" and holds <strong>three to five destinations</strong> (the component "does not support more than 5"). Each destination is a link or button with an accessible name, and the active one carries <code>aria-current="page"</code>. Use a bottom bar for three to five top-level destinations of equal weight that stay visible; use a drawer when there are more than five or the navigation is secondary or hierarchical. On desktop that same set becomes the persistent sidebar.
+  </p>
+
+  <p className="mf-text">
+    A <strong>FAB</strong> "represents the primary action of a screen," a single, unambiguous action like create or compose. Use it only when there is exactly one such action. Do not pair a FAB with a sticky bottom CTA: they compete for the same thumb band, so on any one screen they are usually mutually exclusive.
+  </p>
+
+  <div className="mf-demo">
+    <div className="mf-demo-label">Live: bottom nav with aria-current on the active tab, plus a single FAB</div>
+    <div className="mf-phone">
+      <div className="mf-phone-notch" aria-hidden="true"></div>
+      <div className="mf-phone-screen">
+        <div className="mf-status"><span>9:41</span><span aria-hidden="true">100%</span></div>
+        <div className="mf-appbar">Events</div>
+        <div className="mf-canvas">
+          <div className="mf-tile">
+            <span className="mf-tile-title">Design Systems Summit</span>
+            <div className="mf-line mid" aria-hidden="true"></div>
+          </div>
+          <div className="mf-tile">
+            <span className="mf-tile-title">Payments Deep Dive</span>
+            <div className="mf-line short" aria-hidden="true"></div>
+          </div>
+        </div>
+        <button type="button" className="mf-fab" aria-label="Create event">
+          <span className="mf-material" aria-hidden="true">add</span>
+        </button>
+        <nav className="mf-bottomnav" aria-label="Primary">
+          <a className="mf-navitem" href="#mf-nav-home" aria-current="page">
+            <span className="mf-material" aria-hidden="true">home</span>
+            Home
+          </a>
+          <a className="mf-navitem" href="#mf-nav-events">
+            <span className="mf-material" aria-hidden="true">calendar_month</span>
+            Events
+          </a>
+          <a className="mf-navitem" href="#mf-nav-tickets">
+            <span className="mf-material" aria-hidden="true">confirmation_number</span>
+            Tickets
+          </a>
+          <a className="mf-navitem" href="#mf-nav-profile">
+            <span className="mf-material" aria-hidden="true">person</span>
+            Profile
+          </a>
+        </nav>
+      </div>
+    </div>
+    <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> The active tab is marked with <code>aria-current="page"</code>, so a screen reader announces it as current, not by color alone. The FAB carries an <code>aria-label</code> because its glyph has no visible text.</p>
+  </div>
+</div>
+
+{/* 5: SNACKBAR */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">5</span>
+    <h2 className="mf-section-title">Snackbar, feedback in the thumb band</h2>
+  </div>
+
+  <p className="mf-text">
+    Material: snackbars "provide brief messages about app processes at the bottom of the screen" and "shouldn't interrupt the user experience." Only one shows at a time (a new one dismisses any previous), it may carry a single optional action such as undo or retry, and it is "the preferred mechanism for displaying feedback messages," with toast reserved for when a snackbar cannot be used. It replaces the desktop toast that lived in the top-right corner. On web: a region with <code>role="status"</code> (or <code>aria-live="polite"</code>) anchored to the bottom with <code>env(safe-area-inset-bottom)</code>; if it has an action, that action is a real <code>&lt;button&gt;</code> reachable by keyboard, and never dependent on a swipe (Section 6).
+  </p>
+
+  <div className="mf-demo">
+    <div className="mf-demo-label">Live: a bottom snackbar with a single Undo action, role="status"</div>
+    <div className="mf-phone">
+      <div className="mf-phone-notch" aria-hidden="true"></div>
+      <div className="mf-phone-screen">
+        <div className="mf-status"><span>9:41</span><span aria-hidden="true">100%</span></div>
+        <div className="mf-appbar">Saved events</div>
+        <div className="mf-canvas">
+          <div className="mf-tile">
+            <span className="mf-tile-title">Payments Deep Dive</span>
+            <div className="mf-line short" aria-hidden="true"></div>
+          </div>
+          <div className="mf-line mid" aria-hidden="true"></div>
+          <div className="mf-line" aria-hidden="true"></div>
+        </div>
+        <div className="mf-snackbar" role="status" aria-live="polite">
+          <span className="mf-snackbar-text">Event removed from saved.</span>
+          <button type="button" className="mf-snackbar-action">Undo</button>
+        </div>
+      </div>
+    </div>
+    <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> The message sits in a polite live region so it is announced without stealing focus. The Undo action is a keyboard-reachable button, the same action a swipe would have triggered.</p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* PART 3 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="mf-part">
+  <span className="mf-part-kicker">Part 3</span>
+  <span className="mf-part-title">Touch rules, gestures, safe areas, activation</span>
+</div>
+
+{/* 6: GESTURES */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">6</span>
+    <h2 className="mf-section-title">Gestures, and the rule that never bends</h2>
+  </div>
+
+  <p className="mf-text">
+    Swipe to delete, long press for a context menu, pull to refresh, drag on a sheet's snap points: all useful, all mobile-native. The non-negotiable rule: <strong>a gesture can never be the only path.</strong> There must always be an alternative that works with a single pointer and with a keyboard.
+  </p>
+
+  <div className="mf-rules">
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Any path-based or multipoint gesture has a single-pointer alternative.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> WCAG 2.5.1 Pointer Gestures (Level A): functionality using such gestures "can be operated with a single pointer without a path-based gesture" unless essential. A tap, click, or long press qualifies. Swipe to delete needs a visible Delete button.</p>
+    </div>
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Any dragging movement has a no-drag alternative.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> WCAG 2.5.7 Dragging Movements (2.2, Level AA): achievable "by a single pointer without dragging," for example tapping buttons to move items or picking from a pop-up menu. The sheet's drag handle needs buttons or taps that expand, collapse, and close it.</p>
+    </div>
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Long press replaces right click only alongside a visible overflow control.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> Long press is neither discoverable nor keyboard-operable. The same action must live in a visible "more options" menu so every user can reach it.</p>
+    </div>
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Custom pull to refresh ships with a visible Refresh button.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> Native browser scroll and the OS pull-to-refresh fall under the user-agent exception, but a gesture your own content interprets does not. If you build it, give the same action an explicit control.</p>
+    </div>
+  </div>
+
+  <div className="mf-demo">
+    <div className="mf-demo-label">Live: a swipe-to-delete row that also exposes its action as a visible button</div>
+    <ul className="mf-swipe-list">
+      <li className="mf-swipe-row">
+        <div className="mf-swipe-main">
+          <span className="mf-swipe-name">Mariana Restrepo</span>
+          <span className="mf-swipe-meta">General admission, order 4521</span>
+        </div>
+        <span className="mf-swipe-hint" aria-hidden="true">
+          <span className="mf-material">swipe_left</span>
+          swipe
+        </span>
+        <button type="button" className="mf-swipe-action">
+          <span className="mf-material" aria-hidden="true">delete</span>
+          Remove
+        </button>
+      </li>
+      <li className="mf-swipe-row">
+        <div className="mf-swipe-main">
+          <span className="mf-swipe-name">Jordan Ellis</span>
+          <span className="mf-swipe-meta">VIP, order 4520</span>
+        </div>
+        <span className="mf-swipe-hint" aria-hidden="true">
+          <span className="mf-material">swipe_left</span>
+          swipe
+        </span>
+        <button type="button" className="mf-swipe-action">
+          <span className="mf-material" aria-hidden="true">delete</span>
+          Remove
+        </button>
+      </li>
+    </ul>
+    <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> Swiping is the shortcut, not the requirement. The Remove button carries the same action, is at least 44px tall, and a keyboard can reach it. It is styled in the brand indigo, not an alarm color, because destructive intent is carried by the label and the confirmation step, not by hue.</p>
+  </div>
+</div>
+
+{/* 7: SAFE AREA */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">7</span>
+    <h2 className="mf-section-title">Safe-area insets, notch and home indicator</h2>
+  </div>
+
+  <p className="mf-text">
+    MDN defines <code>env(safe-area-inset-*)</code> as "the safe distance from the top, right, bottom, or left inset edge of the viewport, defining where it is safe to place content without risking it being cut off by the shape of a non-rectangular display." The four variables are <code>safe-area-inset-top</code>, <code>-right</code>, <code>-bottom</code>, and <code>-left</code>. They are <code>0</code> on a plain rectangular viewport and larger than zero around a notch or the home indicator, but only when the page opts in with <code>&lt;meta name="viewport" content="viewport-fit=cover"&gt;</code>.
+  </p>
+
+  <div className="mf-code">
+    <div><span className="mf-c-com">{'/* MDN canonical sticky bottom bar */'}</span></div>
+    <div>footer &#123;</div>
+    <div>&nbsp;&nbsp;<span className="mf-c-prop">position</span>: <span className="mf-c-val">sticky</span>;</div>
+    <div>&nbsp;&nbsp;<span className="mf-c-prop">bottom</span>: <span className="mf-c-val">0</span>;</div>
+    <div>&nbsp;&nbsp;<span className="mf-c-prop">padding</span>: <span className="mf-c-val">1em 1em calc(1em + env(safe-area-inset-bottom, 0px))</span>;</div>
+    <div>&#125;</div>
+  </div>
+
+  <div className="mf-rules">
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Never pad a fixed edge with a bare constant. Use <code>calc(base + env(safe-area-inset-*, 0px))</code>.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> The <code>calc()</code> keeps your normal spacing on rectangular screens and adds only the device inset where one exists. The <code>0px</code> fallback keeps it correct on browsers that do not supply the variable. <code>env()</code> has been widely available since January 2020.</p>
+    </div>
+  </div>
+
+  <div className="mf-callout">
+    <span className="mf-material" aria-hidden="true">science</span>
+    <p className="mf-callout-text">
+      <strong>Out of scope, not yet normative: the virtual keyboard.</strong> Handling the on-screen keyboard resizing the viewport (the VirtualKeyboard API, <code>interactive-widget</code>, dynamic viewport units) is a live and shifting area we have not verified against a primary source for this page. iOS documents automatic keyboard avoidance for sheets as a platform behavior, but the web story is experimental. Treat it as a follow-up, not a rule, and confirm current support before relying on it.
+    </p>
+  </div>
+</div>
+
+{/* 8: ACTIVATION */}
+<div className="mf-section">
+  <div className="mf-section-header">
+    <span className="mf-section-number">8</span>
+    <h2 className="mf-section-title">Enable the patterns on touch, without sniffing</h2>
+  </div>
+
+  <p className="mf-text">
+    Do not read <code>navigator.userAgent</code>. Detect the capability of the input and the size of the viewport, because that is what actually decides whether these patterns fit. MDN's <code>pointer</code> media feature tests the primary pointer's accuracy: <code>coarse</code> is "a pointing device of limited accuracy, such as a finger on a touchscreen," <code>fine</code> is "an accurate pointing device, such as a mouse," and <code>none</code> is no pointer at all. Use <code>pointer</code> for the primary device and <code>any-pointer</code> for any device present.
+  </p>
+
+  <div className="mf-code">
+    <div><span className="mf-c-com">{'/* Capability, not user agent */'}</span></div>
+    <div>@media <span className="mf-c-val">(pointer: coarse)</span> &#123;</div>
+    <div>&nbsp;&nbsp;<span className="mf-c-com">{'/* larger targets, touch patterns, no hover reveal */'}</span></div>
+    <div>&#125;</div>
+    <div>@media <span className="mf-c-val">(pointer: fine)</span> &#123;</div>
+    <div>&nbsp;&nbsp;<span className="mf-c-com">{'/* mouse density, hover affordances */'}</span></div>
+    <div>&#125;</div>
+    <div><span className="mf-c-com">{'/* Switch container by capability OR width */'}</span></div>
+    <div>@media <span className="mf-c-val">(pointer: coarse), (max-width: 640px)</span> &#123; <span className="mf-c-com">{'/* sheet, bottom nav */'}</span> &#125;</div>
+  </div>
+
+  <div className="mf-rules">
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> On <code>pointer: coarse</code>, assume no reliable hover. Reveal-on-hover patterns do not exist; make actions visible or reveal on tap.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> A touchscreen has no persistent hover state. Anything hidden behind <code>:hover</code> is simply unreachable by a finger, which is why the map has no mobile home for "hover to reveal."</p>
+    </div>
+    <div className="mf-rule">
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Switch the container on <code>pointer: coarse</code> OR width at or below the breakpoint, so both phones and touch tablets are covered.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> Width alone misses a small touch tablet; capability alone misses a narrow mouse window. The union of the two is what reliably picks the sheet-and-bottom-nav layout. <code>pointer</code> has been widely available since December 2018.</p>
+    </div>
+  </div>
+
+  <div className="mf-chips">
+    <span className="mf-chip">pointer: coarse<button type="button" className="mf-chip-x" aria-label="Remove filter, pointer coarse"><span className="mf-material" aria-hidden="true">close</span></button></span>
+    <span className="mf-chip">width breakpoint<button type="button" className="mf-chip-x" aria-label="Remove filter, width breakpoint"><span className="mf-material" aria-hidden="true">close</span></button></span>
+    <span className="mf-chip">any-hover: none<button type="button" className="mf-chip-x" aria-label="Remove filter, any-hover none"><span className="mf-material" aria-hidden="true">close</span></button></span>
+  </div>
+  <p className="mf-rule-why"><span className="mf-tag why">Why</span> These compact chips are the whole detection surface: primary pointer accuracy, viewport width, and hover availability. No user-agent string appears anywhere in it.</p>
+</div>
+
+{/* ============================================ */}
+{/* SOURCES                                       */}
+{/* ============================================ */}
+
+<div className="mf-section">
+  <h2 className="mf-section-title">Sources</h2>
+  <ul className="mf-sources-list">
+    <li>
+      <strong>Steven Hoober, How Do Users Really Hold Mobile Devices? (UXmatters, 2013).</strong> Field study of 1,333 observations: 49% one-handed (67% right thumb), 36% cradling, 15% two-handed; thumb on screen 72% while cradling; grip changes very often, sometimes every few seconds. The basis for anchoring actions at the bottom. uxmatters.com/mt/archives/2013/02
+    </li>
+    <li>
+      <strong>Aurora Harley, Touch Targets on Touchscreens (Nielsen Norman Group, 2019).</strong> Interactive elements at least 1cm by 1cm; the typical thumb impact area averages 2.5cm; targets must be big enough and then spaced well enough. nngroup.com/articles/touch-target-size
+    </li>
+    <li>
+      <strong>W3C, Understanding WCAG.</strong> SC 2.5.1 Pointer Gestures (A), single-pointer alternative for path-based and multipoint gestures. SC 2.5.7 Dragging Movements (2.2, AA), no-drag alternative with the user-agent exception. SC 2.5.8 Target Size Minimum (2.2, AA), 24 by 24 CSS px floor with exceptions. w3.org/WAI/WCAG22/Understanding
+    </li>
+    <li>
+      <strong>MDN Web Docs.</strong> The <code>&lt;dialog&gt;</code> element (<code>showModal()</code> makes the rest inert, Escape closes, focus behavior, <code>aria-modal</code>, <code>::backdrop</code>, explicit close button). CSS <code>env()</code> and safe-area insets with the sticky footer pattern (Baseline 2020). The <code>pointer</code> media feature, coarse and fine and none (Baseline 2018). developer.mozilla.org
+    </li>
+    <li>
+      <strong>Adam Argyle, Building a dialog component (web.dev).</strong> An accessible native dialog, focus placed on the cancel action so confirmation is deliberate, and the mega dialog transforming into a bottom-anchored action sheet at small viewports. web.dev/building-a-dialog-component
+    </li>
+    <li>
+      <strong>Material Components (official docs, GitHub material-components-android).</strong> Bottom Sheet (standard vs modal, scrim, the 48dp accessible drag handle that handles expand and collapse commands). Snackbar (bottom, one at a time, one optional action, preferred over toast, readable by screen readers). Floating Action Button (single primary action, sizes, content description). Bottom Navigation (three to five destinations, a title per item). github.com/material-components/material-components-android
+    </li>
+    <li>
+      <strong>Apple Human Interface Guidelines, Sheets and Action Sheets.</strong> Sheets for a scoped task tied to context; resizable detents (medium and large); the grabber as a resize hint; nonmodal sheets; action sheets anchored at the bottom on iPhone. Referenced as iOS conventions. <span className="mf-note">iOS convention, cited via snippet, not verified verbatim</span> developer.apple.com/design/human-interface-guidelines
+    </li>
+    <li>
+      House rules layered on the cited guidance, not verbatim claims: the desktop-to-mobile mapping table and the "same component, one media query" position (design judgment anchored in the sources above), the 44 to 48px thumb-zone floor (reconciling Material 48dp, NN/g 1cm, and the WCAG 24px minimum), the FAB and sticky-CTA mutual-exclusion guidance, and the capability-OR-width activation rule. The virtual keyboard subsection is explicitly marked out of scope and not yet verified against a primary source.
+    </li>
+  </ul>
+</div>
