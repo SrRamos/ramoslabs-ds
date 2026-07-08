@@ -25,18 +25,24 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .sb-main-wrapper {
+  /* Our docs pages opt out of Storybook's default typography with .sb-unstyled,
+     so establish the DS base font here (elements that set their own font win).
+     Without this, opted-out text falls back to the browser serif default. */
+  .sb-main-wrapper,
+  .sb-unstyled {
     font-family: 'Rubik', system-ui, sans-serif;
+    color: #334155;
+    line-height: 1.5;
   }
 
   .sb-main-wrapper h1,
   .sb-main-wrapper h2,
   .sb-main-wrapper h3,
-  .sb-main-wrapper h4 {
+  .sb-main-wrapper h4,
+  .sb-unstyled h1,
+  .sb-unstyled h2,
+  .sb-unstyled h3,
+  .sb-unstyled h4 {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-  }
-
-  .sbdocs-content.sbdocs-content :is(p, h1, h2, h3, h4, ul, ol, blockquote, pre) {
-    margin-block: 0;
   }
 </style>
