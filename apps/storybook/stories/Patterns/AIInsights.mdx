@@ -1,510 +1,1098 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Patterns/AI Insights" />
+<Meta title="Patterns/AI Content" />
 
 <style>
 {`
-  .ai-header {
-    margin-bottom: 2rem;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
-  .ai-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .ai-description {
-    font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
-    font-size: 1rem;
-    line-height: 1.6;
-    max-width: 640px;
-  }
-
-  .ai-section {
-    margin-top: 2.5rem;
-  }
-
-  .ai-section-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #4f46e5;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.5rem;
-  }
-
-  .ai-section-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-size: 1.375rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.5rem;
-  }
-
-  .ai-section-subtitle {
-    font-family: 'Rubik', system-ui, sans-serif;
-    color: #64748b;
-    font-size: 0.9375rem;
-    margin-bottom: 1.25rem;
-    max-width: 600px;
-  }
-
-  /* ===== CONFIDENCE BADGES ===== */
-  .badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .badge-card {
-    background: white;
-    border: 1px solid #e6e8eb;
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    min-width: 200px;
-    flex: 1;
-  }
-
-  .badge-label {
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.75rem;
-    color: #94a3b8;
-  }
-
-  .badge-example {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.25rem 0.625rem;
-    border-radius: 8px;
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-bottom: 0.875rem;
-  }
-
-  .badge-example.high {
-    background: #dcfce7;
-    color: #15803d;
-  }
-
-  .badge-example.medium {
-    background: #fefce8;
-    color: #a16207;
-  }
-
-  .badge-example.low {
-    background: #f1f5f9;
-    color: #64748b;
-  }
-
-  .badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-  }
-
-  .badge-dot.high { background: #10b981; }
-  .badge-dot.medium { background: #f59e0b; }
-  .badge-dot.low { background: #64748b; }
-
-  .badge-token {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.6875rem;
-    color: #94a3b8;
-    display: block;
-    margin-bottom: 0.25rem;
-  }
-
-  .badge-hex {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.6875rem;
-    color: #94a3b8;
-  }
-
-  /* ===== COPY TABLE ===== */
-  .copy-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #e6e8eb;
-  }
-
-  .copy-table th,
-  .copy-table td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e6e8eb;
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.875rem;
-  }
-
-  .copy-table th {
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #94a3b8;
-    background: #f8fafc;
-  }
-
-  .copy-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .copy-table .use {
-    color: #15803d;
-    font-weight: 500;
-  }
-
-  .copy-table .avoid {
-    color: #b91c1c;
-    font-weight: 500;
-  }
-
-  .copy-table .note {
-    color: #64748b;
-    font-size: 0.8125rem;
-  }
-
-  .check-icon {
+  .aic-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
     display: inline-block;
-    margin-right: 0.25rem;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ===== RULE CALLOUT ===== */
-  .rule-callout {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-left: 4px solid #ef4444;
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.5rem;
+  /* ===== Hero ===== */
+  .aic-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
+  .aic-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .aic-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 22ch;
+  }
+  .aic-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0;
+  }
+  .aic-hero p strong { color: #ffffff; font-weight: 700; }
 
-  .rule-callout-title {
+  /* ===== Intro doctrine band ===== */
+  .aic-doctrine {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1.75rem 0 0.5rem;
+  }
+  .aic-doctrine-card {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.25rem 1.35rem;
+  }
+  .aic-doctrine-card.accent {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+  .aic-doctrine-icon {
+    color: #4f46e5;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .aic-doctrine-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #b91c1c;
-    margin-bottom: 0.375rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
   }
-
-  .rule-callout-text {
+  .aic-doctrine-text {
     font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.875rem;
-    color: #7f1d1d;
+    font-size: 0.8125rem;
+    color: #475569;
     line-height: 1.55;
   }
 
-  .rule-examples {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    margin-top: 1rem;
+  /* ===== Principle sections ===== */
+  .aic-principle {
+    margin-top: 2.75rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
   }
-
-  .rule-example-row {
+  .aic-principle-head {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.875rem;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
   }
-
-  .rule-example-row .arrow {
-    color: #94a3b8;
+  .aic-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
     flex-shrink: 0;
   }
-
-  .rule-example-row .bad {
+  .aic-principle-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .aic-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 64ch;
+  }
+  .aic-lede strong { color: #0f172a; font-weight: 600; }
+  .aic-lede code, .aic-doctrine-text code {
     font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.8125rem;
-    background: #fee2e2;
-    color: #b91c1c;
-    padding: 0.2rem 0.5rem;
+    font-size: 0.8125em;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    text-decoration: line-through;
+    color: #4f46e5;
   }
 
-  .rule-example-row .good {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.8125rem;
-    background: #dcfce7;
-    color: #15803d;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
+  /* Prescriptive rule: positive imperative + reason */
+  .aic-rule {
+    border-left: 3px solid #4f46e5;
+    background: #f8fafc;
+    border-radius: 0 10px 10px 0;
+    padding: 0.85rem 1.15rem;
+    margin: 1.1rem 0;
   }
-
-  /* ===== COMPONENT INVENTORY ===== */
-  .component-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #e6e8eb;
-  }
-
-  .component-table th,
-  .component-table td {
-    padding: 0.875rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e6e8eb;
+  .aic-rule-line {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
+    color: #334155;
+    line-height: 1.6;
+  }
+  .aic-rule-line + .aic-rule-line { margin-top: 0.4rem; }
+  .aic-rule-key {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-right: 0.45rem;
   }
 
-  .component-table th {
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #94a3b8;
+  /* Evidence callout: one finding, one cite */
+  .aic-evidence {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    margin: 1.1rem 0;
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+  .aic-evidence .aic-material {
+    color: #4f46e5;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .aic-evidence-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .aic-evidence-body strong { color: #3730a3; }
+  .aic-cite {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.7rem;
+    color: #475569;
+    display: block;
+    margin-top: 0.35rem;
+  }
+
+  /* Apply-in-product block holds the demo */
+  .aic-apply {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    margin: 1.1rem 0;
+  }
+  .aic-apply-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #0f172a;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .aic-apply-title .aic-material { color: #4f46e5; font-size: 1.15rem; }
+  .aic-apply-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .aic-apply-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125em;
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* ===== Generated-content demo card ===== */
+  .aic-gen {
+    margin-top: 1rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .aic-gen-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #eef2ff;
     background: #f8fafc;
   }
-
-  .component-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .component-name {
-    font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.8125rem;
-    background: #f1f5f9;
-    color: #4f46e5;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    white-space: nowrap;
-  }
-
-  .component-desc {
-    color: #475569;
-    line-height: 1.5;
-  }
-
-  .component-prefix {
-    display: inline-block;
+  .aic-gen-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.6875rem;
     font-weight: 700;
-    padding: 0.125rem 0.375rem;
-    border-radius: 4px;
-    background: #ede9fe;
-    color: #6d28d9;
-    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 9999px;
+    padding: 0.2rem 0.6rem;
   }
+  .aic-gen-badge .aic-material { font-size: 0.9rem; }
+  .aic-gen-model {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #64748b;
+    margin-left: auto;
+  }
+  .aic-gen-body {
+    padding: 1rem 1.15rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #334155;
+    line-height: 1.65;
+  }
+  .aic-caret {
+    display: inline-block;
+    width: 0.5rem;
+    height: 1.05em;
+    background: #4f46e5;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+    border-radius: 1px;
+  }
+  .aic-gen-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    padding: 0.65rem 1rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .aic-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #334155;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.35rem 0.65rem;
+  }
+  .aic-btn .aic-material { font-size: 0.95rem; }
+  .aic-btn.primary {
+    color: #4f46e5;
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+  .aic-btn.icon { padding: 0.35rem 0.45rem; }
+  .aic-btn-spacer { margin-left: auto; }
 
-  .two-col {
+  /* Confidence meter, differentiated by fill + label, not hue */
+  .aic-conf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #475569;
+  }
+  .aic-conf .aic-material { font-size: 0.9rem; color: #4f46e5; }
+  .aic-conf-bars {
+    display: inline-flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 12px;
+  }
+  .aic-conf-bars i {
+    width: 4px;
+    background: #cbd5e1;
+    border-radius: 1px;
+    display: inline-block;
+  }
+  .aic-conf-bars i:nth-child(1) { height: 5px; }
+  .aic-conf-bars i:nth-child(2) { height: 8px; }
+  .aic-conf-bars i:nth-child(3) { height: 12px; }
+  .aic-conf-bars.high i { background: #4f46e5; }
+  .aic-conf-bars.medium i:nth-child(1),
+  .aic-conf-bars.medium i:nth-child(2) { background: #4f46e5; }
+  .aic-conf-bars.low i:nth-child(1) { background: #4f46e5; }
+
+  .aic-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #4f46e5;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 8px;
+    padding: 0.25rem 0.55rem;
+    margin: 0.15rem 0.3rem 0.15rem 0;
+  }
+  .aic-source .aic-material { font-size: 0.9rem; }
+
+  .aic-disclaimer {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.55;
+    padding: 0.7rem 0.9rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+  }
+  .aic-disclaimer .aic-material { font-size: 1rem; color: #64748b; flex-shrink: 0; }
+
+  /* Recommended vs avoid */
+  .aic-line {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.1rem;
+  }
+  .aic-line-col {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 1.15rem 1.35rem;
+    background: #f8fafc;
+  }
+  .aic-line-col.ok { border-color: #c7d2fe; background: #eef2ff; }
+  .aic-line-col.avoid {
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background: #ffffff;
+  }
+  .aic-line-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.6rem;
+  }
+  .aic-line-col.ok .aic-line-tag { color: #4f46e5; }
+  .aic-line-col.avoid .aic-line-tag { color: #475569; }
+  .aic-line-tag .aic-material { font-size: 1.05rem; }
+  .aic-line-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .aic-line-text strong { color: #0f172a; }
+
+  /* Ethics band */
+  .aic-ethics {
+    margin-top: 2.75rem;
+    background: #0f172a;
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+  }
+  .aic-ethics-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #e0e7ff;
+    margin-bottom: 0.6rem;
+  }
+  .aic-ethics-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #c7d2fe;
+    line-height: 1.7;
+    max-width: 64ch;
+  }
+  .aic-ethics-lede strong { color: #ffffff; }
+  .aic-ethics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .aic-ethics-card {
+    background: #1a1f3d;
+    border: 1px solid rgba(199, 210, 254, 0.14);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+  .aic-ethics-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #e0e7ff;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .aic-ethics-card-title .aic-material { font-size: 1.05rem; color: #a5b4fc; }
+  .aic-ethics-card-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: #a5b4fc;
+    line-height: 1.55;
   }
 
-  @media (max-width: 860px) {
-    .two-col {
-      grid-template-columns: 1fr;
-    }
-    .badge-row {
-      flex-direction: column;
-    }
+  /* Section shell (ladder, sources) */
+  .aic-section { margin-top: 2.75rem; }
+  .aic-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
   }
+
+  /* Decision ladder */
+  .aic-decision {
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .aic-decision-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .aic-decision-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .aic-decision-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #334155;
+    line-height: 1.55;
+  }
+  .aic-decision-text strong { color: #0f172a; }
+
+  /* Sources */
+  .aic-sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .aic-sources-list li {
+    padding: 0.65rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .aic-sources-list li:last-child { border-bottom: none; }
+  .aic-sources-list strong { color: #0f172a; }
+  .aic-sources-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #4f46e5;
+    word-break: break-all;
+  }
+  .aic-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
+  .aic-xlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #4f46e5;
+    margin-top: 0.9rem;
+  }
+  .aic-xlink .aic-material { font-size: 1rem; }
 `}
 </style>
 
-<div className="ai-header">
-  <h1 className="ai-title">AI Insights - Design Patterns</h1>
-  <p className="ai-description">
-    The RamosLabs organizer copilot surfaces data-driven suggestions and projections. This page documents the visual tokens, copy rules, and component inventory for those surfaces. Read it before building or modifying any insights UI.
+{/* ============================================ */}
+{/* HERO                                         */}
+{/* ============================================ */}
+
+<div className="aic-hero">
+  <p className="aic-hero-eyebrow">Patterns / AI Content</p>
+  <h1>Label it, bound it, and let the human have the last word.</h1>
+  <p>
+    A model can write, summarize, and suggest in seconds, and it can be confidently wrong just as fast. The interface is where that gap is managed. Show plainly what a machine produced, how sure it is, and where it came from, then keep a person in the loop before anything acts. The goal is not to hide the AI. It is to make its output <strong>legible, checkable, and reversible</strong>.
   </p>
 </div>
 
-{/* ===== CONFIDENCE BADGE TOKENS ===== */}
-<div className="ai-section">
-  <div className="ai-section-label">Visual Tokens</div>
-  <h2 className="ai-section-title">Confidence Badge Colors</h2>
-  <p className="ai-section-subtitle">
-    Three confidence levels, each mapped to a semantic token. Never use raw hex in component code - reference the token so the value can change globally.
+<div className="aic-doctrine">
+  <div className="aic-doctrine-card accent">
+    <span className="aic-material aic-doctrine-icon" aria-hidden="true">auto_awesome</span>
+    <div className="aic-doctrine-title">Disclosed, never disguised</div>
+    <p className="aic-doctrine-text">Anything a model generated carries a visible marker. A person always knows when they are reading a machine, not a human or a hard fact.</p>
+  </div>
+  <div className="aic-doctrine-card">
+    <span className="aic-material aic-doctrine-icon" aria-hidden="true">balance</span>
+    <div className="aic-doctrine-title">Honest about certainty</div>
+    <p className="aic-doctrine-text">Output is framed as a draft or an estimate, not a verdict. Confidence, sources, and the option to verify travel with the text.</p>
+  </div>
+  <div className="aic-doctrine-card">
+    <span className="aic-material aic-doctrine-icon" aria-hidden="true">how_to_reg</span>
+    <div className="aic-doctrine-title">Human holds the last word</div>
+    <p className="aic-doctrine-text">The person reviews, edits, and approves before the result acts. Every action the AI proposes is one the user can undo.</p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 1. LABEL                                      */}
+{/* ============================================ */}
+
+<div className="aic-principle">
+  <div className="aic-principle-head">
+    <span className="aic-num">1</span>
+    <h2 className="aic-principle-title">Label What the Machine Made</h2>
+  </div>
+
+  <p className="aic-lede">
+    People calibrate trust by source. Text that looks like a fact, a human note, or a system rule earns a trust the model has not earned. Mark generated content at the point of reading with a <strong>consistent, visible badge</strong>, so no one mistakes a probable answer for a settled one.
   </p>
 
-  <div className="badge-row">
-    <div className="badge-card">
-      <div className="badge-label">High confidence</div>
-      <div className="badge-example high">
-        <span className="badge-dot high"></span>
-        Alta confianza
-      </div>
-      <span className="badge-token">var(--color-success)</span>
-      <span className="badge-hex">#10b981 - Emerald 500</span>
-    </div>
+  <div className="aic-rule">
+    <p className="aic-rule-line"><span className="aic-rule-key">Rule</span> Attach a visible, consistent marker to every piece of AI-generated content, at the point where it is read.</p>
+    <p className="aic-rule-line"><span className="aic-rule-key">Why</span> Users judge trust by source, so an unlabeled draft borrows credibility it has not earned.</p>
+  </div>
 
-    <div className="badge-card">
-      <div className="badge-label">Medium confidence</div>
-      <div className="badge-example medium">
-        <span className="badge-dot medium"></span>
-        Confianza media
-      </div>
-      <span className="badge-token">var(--color-warning)</span>
-      <span className="badge-hex">#f59e0b - Amber 500</span>
+  <div className="aic-evidence">
+    <span className="aic-material" aria-hidden="true">verified</span>
+    <div className="aic-evidence-body">
+      <strong>Set expectations up front about what the system does and how well.</strong> Microsoft's first two Human-AI guidelines put "make clear what the system can do" and "make clear how well" at the very start of an interaction, before trust is misplaced.
+      <span className="aic-cite">Microsoft HAX, Guidelines G1 and G2. Sources below.</span>
     </div>
+  </div>
 
-    <div className="badge-card">
-      <div className="badge-label">Low confidence</div>
-      <div className="badge-example low">
-        <span className="badge-dot low"></span>
-        Datos limitados
+  <div className="aic-apply">
+    <div className="aic-apply-title"><span className="aic-material" aria-hidden="true">auto_awesome</span> In a RamosLabs product</div>
+    <p className="aic-apply-text">
+      Use one badge everywhere: a sparkle glyph plus a word like "Generated," on <code>--color-primary-surface</code> with a <code>--color-primary</code> label. Icon and text together, never color alone, so the marker survives grayscale and screen readers.
+    </p>
+    <div className="aic-gen">
+      <div className="aic-gen-bar">
+        <span className="aic-gen-badge"><span className="aic-material" aria-hidden="true">auto_awesome</span> Generated</span>
+        <span className="aic-gen-model">draft, not verified</span>
       </div>
-      <span className="badge-token">var(--color-text-muted)</span>
-      <span className="badge-hex">#64748b - Slate 500</span>
+      <div className="aic-gen-body">
+        Here is a summary of the three attached documents. Review the highlighted figures before you send it.
+      </div>
+    </div>
+  </div>
+
+  <div className="aic-line">
+    <div className="aic-line-col ok">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <p className="aic-line-text">Badge every generated block with the same icon-plus-text marker, inline where it is read. <strong>A person always knows the source before they act on it.</strong></p>
+    </div>
+    <div className="aic-line-col avoid">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">cancel</span> Avoid</div>
+      <p className="aic-line-text">Slipping generated text into the same style as human or factual content, or burying the disclosure in a tooltip. <strong>Unlabeled AI reads as ground truth, which is a trust the model has not earned.</strong></p>
     </div>
   </div>
 </div>
 
-{/* ===== COPY GUIDELINES ===== */}
-<div className="ai-section">
-  <div className="ai-section-label">Copy Guidelines</div>
-  <h2 className="ai-section-title">"Basado en datos" - Label Language</h2>
-  <p className="ai-section-subtitle">
-    All suggestion labels must frame the output as statistical inference over historical event data - not as system opinion or automation. Use the approved phrases below.
+{/* ============================================ */}
+{/* 2. CONFIDENCE                                 */}
+{/* ============================================ */}
+
+<div className="aic-principle">
+  <div className="aic-principle-head">
+    <span className="aic-num">2</span>
+    <h2 className="aic-principle-title">Communicate Uncertainty</h2>
+  </div>
+
+  <p className="aic-lede">
+    A model returns a most-likely answer, not a certain one, yet fluent prose reads as authority. Carry a <strong>signal of confidence</strong> with the output, and word it as an estimate. "Projected," "suggested," and "likely" tell the truth. "The answer is" does not.
   </p>
 
-  <table className="copy-table">
-    <thead>
-      <tr>
-        <th>Contexto</th>
-        <th><span className="check-icon">✅</span> Usar</th>
-        <th><span className="check-icon">❌</span> Evitar</th>
-        <th>Razón</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td className="note">Etiqueta de sugerencia</td>
-        <td className="use">Sugerencia</td>
-        <td className="avoid">Recomendado por el sistema</td>
-        <td className="note">Neutral, sin atribuir agencia al sistema</td>
-      </tr>
-      <tr>
-        <td className="note">Origen del dato</td>
-        <td className="use">Basado en datos de eventos similares</td>
-        <td className="avoid">Calculado automáticamente</td>
-        <td className="note">Transparencia sobre la fuente del valor</td>
-      </tr>
-      <tr>
-        <td className="note">Proyección de ventas</td>
-        <td className="use">Proyección estadística</td>
-        <td className="avoid">Predicción</td>
-        <td className="note">"Predicción" implica certeza; "proyección" es honesto</td>
-      </tr>
-      <tr>
-        <td className="note">Precio sugerido</td>
-        <td className="use">Sugerido · Basado en eventos similares</td>
-        <td className="avoid">Precio óptimo calculado por IA</td>
-        <td className="note">Ver regla global sobre "IA" abajo</td>
-      </tr>
-      <tr>
-        <td className="note">Resumen de panel</td>
-        <td className="use">Datos de los últimos 90 días</td>
-        <td className="avoid">Análisis en tiempo real</td>
-        <td className="note">Ser específico sobre el período; no exagerar</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div className="aic-rule">
+    <p className="aic-rule-line"><span className="aic-rule-key">Rule</span> Pair generated output with a confidence signal and estimate-framed wording that flags it as provisional.</p>
+    <p className="aic-rule-line"><span className="aic-rule-key">Why</span> Fluent text reads as certain, so without a visible cue users over-trust a guess.</p>
+  </div>
 
-{/* ===== NEVER USE IA ===== */}
-<div className="ai-section">
-  <div className="ai-section-label">Regla Global</div>
-  <h2 className="ai-section-title">Nunca usar "IA" en copy de usuario</h2>
-
-  <div className="rule-callout">
-    <div className="rule-callout-title">Prohibición absoluta - aplica a toda la plataforma</div>
-    <div className="rule-callout-text">
-      RamosLabs no usa "IA", "inteligencia artificial", "AI", ni "machine learning" en ninguna superficie de usuario, ni en labels, tooltips, emails, onboarding, ni marketing. El sistema es algorítmico y basado en datos históricos. Describir el output como tal es más preciso y más honesto.
+  <div className="aic-evidence">
+    <span className="aic-material" aria-hidden="true">insights</span>
+    <div className="aic-evidence-body">
+      <strong>Communicate the model's confidence, and account for how people read it.</strong> Google's People + AI Guidebook devotes its Explainability and Trust chapter to showing confidence honestly, warning that a poorly framed number can mislead as much as no number at all.
+      <span className="aic-cite">Google PAIR, Explainability + Trust. Sources below.</span>
     </div>
   </div>
 
-  <div className="rule-examples">
-    <div className="rule-example-row">
-      <span className="bad">Sugerido por IA</span>
-      <span className="arrow">→</span>
-      <span className="good">Sugerido</span>
+  <div className="aic-apply">
+    <div className="aic-apply-title"><span className="aic-material" aria-hidden="true">insights</span> In a RamosLabs product</div>
+    <p className="aic-apply-text">
+      Show confidence as a stepped meter plus a word, differentiated by fill count and label, not by hue. Three levels: high, medium, limited. When confidence is low, say so and point to what would raise it.
+    </p>
+    <div className="aic-gen">
+      <div className="aic-gen-bar">
+        <span className="aic-gen-badge"><span className="aic-material" aria-hidden="true">auto_awesome</span> Generated</span>
+        <span className="aic-conf" style={{ marginLeft: 'auto' }}>
+          <span className="aic-conf-bars high" aria-hidden="true"><i></i><i></i><i></i></span>
+          High confidence
+        </span>
+      </div>
+      <div className="aic-gen-body">
+        Projected turnout is around <strong>820 people</strong>, based on twelve comparable events. Treat it as an estimate, not a booking guarantee.
+      </div>
     </div>
-    <div className="rule-example-row">
-      <span className="bad">Precio calculado con IA</span>
-      <span className="arrow">→</span>
-      <span className="good">Precio sugerido · Basado en eventos similares</span>
+    <div className="aic-gen" style={{ marginTop: '0.6rem' }}>
+      <div className="aic-gen-bar">
+        <span className="aic-gen-badge"><span className="aic-material" aria-hidden="true">auto_awesome</span> Generated</span>
+        <span className="aic-conf" style={{ marginLeft: 'auto' }}>
+          <span className="aic-conf-bars low" aria-hidden="true"><i></i><i></i><i></i></span>
+          Limited data
+        </span>
+      </div>
+      <div className="aic-gen-body">
+        Only two similar events on record, so this projection is rough. Add last year's numbers to sharpen it.
+      </div>
     </div>
-    <div className="rule-example-row">
-      <span className="bad">Etiquetas generadas por inteligencia artificial</span>
-      <span className="arrow">→</span>
-      <span className="good">Sugerido</span>
+  </div>
+
+  <div className="aic-line">
+    <div className="aic-line-col ok">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <p className="aic-line-text">Frame output as an estimate and show how firm it is, in words and a meter. <strong>The reader sees both the answer and how far to trust it.</strong></p>
     </div>
-    <div className="rule-example-row">
-      <span className="bad">Análisis de ML</span>
-      <span className="arrow">→</span>
-      <span className="good">Análisis estadístico</span>
-    </div>
-    <div className="rule-example-row">
-      <span className="bad">Copiloto de IA</span>
-      <span className="arrow">→</span>
-      <span className="good">Copiloto de datos</span>
+    <div className="aic-line-col avoid">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">cancel</span> Avoid</div>
+      <p className="aic-line-text">Stating a guess as flat fact, or a precise 87.34 percent score that implies a rigor the model does not have. <strong>False precision is just a prettier form of overconfidence.</strong></p>
     </div>
   </div>
 </div>
 
-{/* ===== COMPONENT INVENTORY ===== */}
-<div className="ai-section">
-  <div className="ai-section-label">Referencia</div>
-  <h2 className="ai-section-title">Componentes de AI Insights</h2>
-  <p className="ai-section-subtitle">
-    Todos los componentes de este feature viven en el directorio de componentes bajo su prefijo correspondiente. Antes de crear algo nuevo, verifica si ya existe aquí.
+{/* ============================================ */}
+{/* 3. GENERATION STATES                          */}
+{/* ============================================ */}
+
+<div className="aic-principle">
+  <div className="aic-principle-head">
+    <span className="aic-num">3</span>
+    <h2 className="aic-principle-title">Show the Work in Progress</h2>
+  </div>
+
+  <p className="aic-lede">
+    Generation takes time and does not always land. Stream the answer as it forms so the wait feels alive, and keep the user in command of it: a <strong>stop</strong> while it runs, a <strong>regenerate</strong> when it misses. A spinner that cannot be cancelled is a trap.
   </p>
 
-  <table className="component-table">
-    <thead>
-      <tr>
-        <th>Componente</th>
-        <th>Prefijo</th>
-        <th>Descripción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span className="component-name">SJInsightsPanel</span></td>
-        <td><span className="component-prefix">SJ</span></td>
-        <td className="component-desc">Panel de sugerencias del copiloto de organizadores. Muestra tarjetas de recomendación con badges de confianza y copy "Basado en datos".</td>
-      </tr>
-      <tr>
-        <td><span className="component-name">SJCVICard</span></td>
-        <td><span className="component-prefix">SJ</span></td>
-        <td className="component-desc">Tarjeta del Conversational Value Index. Muestra el score CVI del evento con su contexto estadístico y franja de confianza.</td>
-      </tr>
-      <tr>
-        <td><span className="component-name">SJReferralLinkWidget</span></td>
-        <td><span className="component-prefix">SJ</span></td>
-        <td className="component-desc">Widget de enlace de referido para asistentes. Genera y copia el link personalizado; muestra estadísticas de conversión del enlace.</td>
-      </tr>
-      <tr>
-        <td><span className="component-name">SJSimulatorPanel</span></td>
-        <td><span className="component-prefix">SJ</span></td>
-        <td className="component-desc">Panel de resultados del simulador de eventos. Proyecta ingresos estimados a partir de parámetros del evento usando datos históricos comparables.</td>
-      </tr>
-      <tr>
-        <td><span className="component-name">SJAITagEditor</span></td>
-        <td><span className="component-prefix">SJ</span></td>
-        <td className="component-desc">Editor de tags con badges "Sugerido". Permite al organizador aceptar, rechazar o editar etiquetas propuestas a partir de datos del evento.</td>
-      </tr>
-    </tbody>
-  </table>
+  <div className="aic-rule">
+    <p className="aic-rule-line"><span className="aic-rule-key">Rule</span> Stream output as it generates and give a stop control while it runs and a regenerate after it finishes.</p>
+    <p className="aic-rule-line"><span className="aic-rule-key">Why</span> Visible progress keeps a slow response tolerable, and control over it keeps the user in charge.</p>
+  </div>
+
+  <div className="aic-evidence">
+    <span className="aic-material" aria-hidden="true">tune</span>
+    <div className="aic-evidence-body">
+      <strong>Support efficient dismissal and correction, and let people invoke and control the service.</strong> Microsoft's guidelines call for easy dismissal (G8) and correction (G9); Apple frames on-device generation as something people should be able to interrupt and rerun.
+      <span className="aic-cite">Microsoft HAX G8, G9; Apple HIG, Generative AI. Sources below.</span>
+    </div>
+  </div>
+
+  <div className="aic-apply">
+    <div className="aic-apply-title"><span className="aic-material" aria-hidden="true">graphic_eq</span> In a RamosLabs product</div>
+    <p className="aic-apply-text">
+      While tokens stream, show them arriving with a caret and swap the primary action to <strong>Stop</strong>. When done, offer <strong>Regenerate</strong> and <strong>Copy</strong>. Never leave a bare, uncancellable spinner.
+    </p>
+    <div className="aic-gen">
+      <div className="aic-gen-bar">
+        <span className="aic-gen-badge"><span className="aic-material" aria-hidden="true">auto_awesome</span> Generated</span>
+        <span className="aic-gen-model">generating</span>
+      </div>
+      <div className="aic-gen-body">
+        Your event description is coming together. The headline leads with the venue, the body highlights the lineup<span className="aic-caret" aria-hidden="true"></span>
+      </div>
+      <div className="aic-gen-foot">
+        <button className="aic-btn primary" type="button"><span className="aic-material" aria-hidden="true">stop</span> Stop</button>
+        <button className="aic-btn" type="button" disabled><span className="aic-material" aria-hidden="true">refresh</span> Regenerate</button>
+      </div>
+    </div>
+  </div>
+
+  <div className="aic-line">
+    <div className="aic-line-col ok">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <p className="aic-line-text">Stream the response, expose Stop while running, and Regenerate plus Copy when done. <strong>The user drives the generation, not the other way around.</strong></p>
+    </div>
+    <div className="aic-line-col avoid">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">cancel</span> Avoid</div>
+      <p className="aic-line-text">A modal spinner that blocks the screen with no way out, or a single answer the user cannot rerun. <strong>Removing control over a slow, fallible process turns waiting into helplessness.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 4. HUMAN IN THE LOOP                          */}
+{/* ============================================ */}
+
+<div className="aic-principle">
+  <div className="aic-principle-head">
+    <span className="aic-num">4</span>
+    <h2 className="aic-principle-title">Keep a Human in the Loop</h2>
+  </div>
+
+  <p className="aic-lede">
+    The model proposes; the person disposes. Between a generated result and any real-world effect, insert a step to <strong>review, edit, and approve</strong>. Match the friction to the stakes: a draft email can auto-fill, but sending it, spending money, or deleting data waits for a human yes, and stays reversible.
+  </p>
+
+  <div className="aic-rule">
+    <p className="aic-rule-line"><span className="aic-rule-key">Rule</span> Route consequential AI output through a human review-edit-approve step, and keep the resulting action reversible.</p>
+    <p className="aic-rule-line"><span className="aic-rule-key">Why</span> The person carries the consequences, so they, not the model, make the final call.</p>
+  </div>
+
+  <div className="aic-evidence">
+    <span className="aic-material" aria-hidden="true">rate_review</span>
+    <div className="aic-evidence-body">
+      <strong>Let people review and edit generated content before it is used, and scope autonomy to the stakes.</strong> Apple advises giving people a chance to review and revise machine output before acting on it, and Google's guidebook ties the level of automation to the cost of a mistake.
+      <span className="aic-cite">Apple HIG, Machine learning and Generative AI; Google PAIR, Feedback + Control. Sources below.</span>
+    </div>
+  </div>
+
+  <div className="aic-apply">
+    <div className="aic-apply-title"><span className="aic-material" aria-hidden="true">rate_review</span> In a RamosLabs product</div>
+    <p className="aic-apply-text">
+      Present generated output as an editable draft, not a done deed. The primary action is <strong>Approve</strong>, editing is always open, and once applied the change can be undone. See <strong>Patterns / Persuasion</strong> on reversibility as a hard line.
+    </p>
+    <div className="aic-gen">
+      <div className="aic-gen-bar">
+        <span className="aic-gen-badge"><span className="aic-material" aria-hidden="true">auto_awesome</span> Generated draft</span>
+        <span className="aic-gen-model">not sent yet</span>
+      </div>
+      <div className="aic-gen-body">
+        Hi Marta, thanks for registering for the workshop. Here is what to bring and how to find the room.
+      </div>
+      <div className="aic-gen-foot">
+        <button className="aic-btn primary" type="button"><span className="aic-material" aria-hidden="true">check</span> Approve and send</button>
+        <button className="aic-btn" type="button"><span className="aic-material" aria-hidden="true">edit</span> Edit</button>
+        <button className="aic-btn" type="button"><span className="aic-material" aria-hidden="true">close</span> Discard</button>
+      </div>
+    </div>
+  </div>
+
+  <div className="aic-line">
+    <div className="aic-line-col ok">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <p className="aic-line-text">Hold consequential output at an editable review step, then let the applied result be undone. <strong>The human approves, and can always walk it back.</strong></p>
+    </div>
+    <div className="aic-line-col avoid">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">cancel</span> Avoid</div>
+      <p className="aic-line-text">Auto-sending, auto-charging, or auto-deleting on the model's word, with no review and no undo. <strong>Irreversible action on an unverified guess hands the user the blame for the model's mistake.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 5. ERRORS AND HALLUCINATIONS                  */}
+{/* ============================================ */}
+
+<div className="aic-principle">
+  <div className="aic-principle-head">
+    <span className="aic-num">5</span>
+    <h2 className="aic-principle-title">Plan for Wrong Answers</h2>
+  </div>
+
+  <p className="aic-lede">
+    A model will state a falsehood with the same confidence as a fact. Design for it. <strong>Cite the source</strong> so a claim can be checked, make correction a first-class action, and when the system cannot answer well, say so plainly instead of inventing. Graceful failure beats a confident fabrication.
+  </p>
+
+  <div className="aic-rule">
+    <p className="aic-rule-line"><span className="aic-rule-key">Rule</span> Attach checkable sources to factual claims, offer a correction path, and degrade to an honest "I do not know" over a guess.</p>
+    <p className="aic-rule-line"><span className="aic-rule-key">Why</span> Models hallucinate fluently, so users need a way to verify, fix, and recognize the system's limits.</p>
+  </div>
+
+  <div className="aic-evidence">
+    <span className="aic-material" aria-hidden="true">fact_check</span>
+    <div className="aic-evidence-body">
+      <strong>Design for graceful failure and easy correction.</strong> Google's People + AI Guidebook has a full Errors and Graceful Failure chapter; Microsoft's G9 calls for supporting efficient correction; NN/g documents that citing sources and enabling verification is what makes AI answers trustworthy.
+      <span className="aic-cite">Google PAIR, Errors + Graceful Failure; Microsoft HAX G9; NN/g. Sources below.</span>
+    </div>
+  </div>
+
+  <div className="aic-apply">
+    <div className="aic-apply-title"><span className="aic-material" aria-hidden="true">fact_check</span> In a RamosLabs product</div>
+    <p className="aic-apply-text">
+      Show the sources a claim rests on as chips the user can open. Offer <strong>Report</strong> and <strong>Suggest a fix</strong> on every answer. When the system is unsure, it says so rather than filling the gap with a plausible invention.
+    </p>
+    <div className="aic-gen">
+      <div className="aic-gen-bar">
+        <span className="aic-gen-badge"><span className="aic-material" aria-hidden="true">auto_awesome</span> Generated</span>
+      </div>
+      <div className="aic-gen-body">
+        Doors open at 7 pm and the opening act starts at 8 pm, per the two documents below.
+        <div style={{ marginTop: '0.7rem' }}>
+          <span className="aic-source"><span className="aic-material" aria-hidden="true">description</span> run-of-show.pdf</span>
+          <span className="aic-source"><span className="aic-material" aria-hidden="true">description</span> venue-contract.pdf</span>
+        </div>
+      </div>
+      <div className="aic-gen-foot">
+        <button className="aic-btn" type="button"><span className="aic-material" aria-hidden="true">edit_note</span> Suggest a fix</button>
+        <button className="aic-btn" type="button"><span className="aic-material" aria-hidden="true">flag</span> Report</button>
+      </div>
+    </div>
+  </div>
+
+  <div className="aic-line">
+    <div className="aic-line-col ok">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <p className="aic-line-text">Cite sources, let users correct or report, and admit uncertainty when the answer is thin. <strong>Every claim is checkable, and every miss is fixable.</strong></p>
+    </div>
+    <div className="aic-line-col avoid">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">cancel</span> Avoid</div>
+      <p className="aic-line-text">Sourceless assertions, no way to flag a wrong answer, or a confident fabrication where "I could not find that" was the honest reply. <strong>An unverifiable, uncorrectable answer is a liability wearing the mask of help.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 6. FEEDBACK                                   */}
+{/* ============================================ */}
+
+<div className="aic-principle">
+  <div className="aic-principle-head">
+    <span className="aic-num">6</span>
+    <h2 className="aic-principle-title">Make Feedback One Tap Away</h2>
+  </div>
+
+  <p className="aic-lede">
+    The model improves only when it hears where it failed, and users trust a system more when their signal is welcome. Put a <strong>lightweight rating</strong> on every answer, thumbs up or down, with a quiet path to report something harmful. Ask, acknowledge, and never nag.
+  </p>
+
+  <div className="aic-rule">
+    <p className="aic-rule-line"><span className="aic-rule-key">Rule</span> Offer a one-tap rating and a report path on every generated answer, and acknowledge the input without nagging.</p>
+    <p className="aic-rule-line"><span className="aic-rule-key">Why</span> Cheap-to-give feedback improves the system and signals that the user's judgment counts.</p>
+  </div>
+
+  <div className="aic-evidence">
+    <span className="aic-material" aria-hidden="true">thumb_up</span>
+    <div className="aic-evidence-body">
+      <strong>Learn from user behavior and encourage granular feedback.</strong> Microsoft's guidelines G12 and G15 to G17 cover remembering, learning from, and updating on user feedback; Google's guidebook makes feedback and control a core chapter of the design process.
+      <span className="aic-cite">Microsoft HAX G12, G15 to G17; Google PAIR, Feedback + Control. Sources below.</span>
+    </div>
+  </div>
+
+  <div className="aic-apply">
+    <div className="aic-apply-title"><span className="aic-material" aria-hidden="true">thumb_up</span> In a RamosLabs product</div>
+    <p className="aic-apply-text">
+      Sit thumbs and a report flag in the answer footer, low-key until hovered. A tap confirms with a quiet "Thanks, noted," never a modal. Optional detail on a down-vote, never required.
+    </p>
+    <div className="aic-gen">
+      <div className="aic-gen-bar">
+        <span className="aic-gen-badge"><span className="aic-material" aria-hidden="true">auto_awesome</span> Generated</span>
+      </div>
+      <div className="aic-gen-body">
+        Suggested tags for this event: live music, outdoor, family friendly.
+      </div>
+      <div className="aic-gen-foot">
+        <span className="aic-apply-text" style={{ fontSize: '0.75rem' }}>Was this helpful?</span>
+        <button className="aic-btn icon" type="button" aria-label="Helpful"><span className="aic-material" aria-hidden="true">thumb_up</span></button>
+        <button className="aic-btn icon" type="button" aria-label="Not helpful"><span className="aic-material" aria-hidden="true">thumb_down</span></button>
+        <button className="aic-btn icon aic-btn-spacer" type="button" aria-label="Report this response"><span className="aic-material" aria-hidden="true">flag</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div className="aic-line">
+    <div className="aic-line-col ok">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <p className="aic-line-text">A quiet thumbs pair and report flag, a one-line acknowledgement, optional extra detail. <strong>Giving feedback costs the user a single tap.</strong></p>
+    </div>
+    <div className="aic-line-col avoid">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">cancel</span> Avoid</div>
+      <p className="aic-line-text">A mandatory survey after every answer, or thumbs that vanish into a void with no sign they landed. <strong>Feedback the user cannot see received is feedback they stop giving.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 7. PRIVACY AND DISCLAIMERS                     */}
+{/* ============================================ */}
+
+<div className="aic-principle">
+  <div className="aic-principle-head">
+    <span className="aic-num">7</span>
+    <h2 className="aic-principle-title">Say What Happens to the Data</h2>
+  </div>
+
+  <p className="aic-lede">
+    People share more with a system they understand. Before an input reaches a model, state <strong>what is sent, where it goes, and whether it trains anything</strong>, in plain words at the moment of entry. A disclaimer is not fine print. It is a promise placed where the user can act on it.
+  </p>
+
+  <div className="aic-rule">
+    <p className="aic-rule-line"><span className="aic-rule-key">Rule</span> Disclose what data the feature sends, where it goes, and whether it trains a model, in plain language at the point of input.</p>
+    <p className="aic-rule-line"><span className="aic-rule-key">Why</span> Informed consent needs the facts before the send, not buried in a policy read by no one.</p>
+  </div>
+
+  <div className="aic-evidence">
+    <span className="aic-material" aria-hidden="true">shield</span>
+    <div className="aic-evidence-body">
+      <strong>Be transparent about data collection and honor its limits.</strong> Google's People + AI Guidebook dedicates a Data Collection chapter to responsible, consented data use, and Apple's guidance stresses being clear and up front about how personal data feeds machine-learning features.
+      <span className="aic-cite">Google PAIR, Data Collection; Apple HIG, Machine learning. Sources below.</span>
+    </div>
+  </div>
+
+  <div className="aic-apply">
+    <div className="aic-apply-title"><span className="aic-material" aria-hidden="true">shield</span> In a RamosLabs product</div>
+    <p className="aic-apply-text">
+      A one-line disclaimer sits beside the AI input, in muted <code>--color-text-body</code> that still clears AA contrast. It names the boundary in words a person can act on, with a link to the detail for anyone who wants it.
+    </p>
+    <div className="aic-disclaimer">
+      <span className="aic-material" aria-hidden="true">info</span>
+      <span>Your text is sent to our AI provider to generate this draft. It is not used to train their models, and it is deleted after processing. Read how we handle AI data.</span>
+    </div>
+  </div>
+
+  <div className="aic-line">
+    <div className="aic-line-col ok">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <p className="aic-line-text">Name what leaves the device and what happens to it, in plain words at the input. <strong>The user consents knowing the facts, before anything is sent.</strong></p>
+    </div>
+    <div className="aic-line-col avoid">
+      <div className="aic-line-tag"><span className="aic-material" aria-hidden="true">cancel</span> Avoid</div>
+      <p className="aic-line-text">Hiding data use in a linked policy, or quietly training on user content without a clear, visible say. <strong>Consent extracted through omission is not consent.</strong></p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* DOCTRINE BAND                                 */}
+{/* ============================================ */}
+
+<div className="aic-ethics">
+  <h2 className="aic-ethics-title">The Contract With the User</h2>
+  <p className="aic-ethics-lede">
+    Every generated pixel makes an implicit promise about what it is and how far to trust it. Honest AI content keeps that promise: it is <strong>disclosed, bounded, checkable, and reversible</strong>. The moment output pretends to be more certain, more human, or more final than it is, the interface has started to deceive on the model's behalf.
+  </p>
+
+  <div className="aic-ethics-grid">
+    <div className="aic-ethics-card">
+      <div className="aic-ethics-card-title"><span className="aic-material" aria-hidden="true">label</span> Disclosed</div>
+      <p className="aic-ethics-card-text">Generated content is marked as generated. No one mistakes a machine's draft for a human's word or a settled fact.</p>
+    </div>
+    <div className="aic-ethics-card">
+      <div className="aic-ethics-card-title"><span className="aic-material" aria-hidden="true">balance</span> Bounded</div>
+      <p className="aic-ethics-card-text">Output states its confidence and its limits. An estimate is called an estimate; an unknown is admitted, not invented.</p>
+    </div>
+    <div className="aic-ethics-card">
+      <div className="aic-ethics-card-title"><span className="aic-material" aria-hidden="true">fact_check</span> Checkable</div>
+      <p className="aic-ethics-card-text">Claims carry sources and a way to verify or correct them. Nothing important rests on the user's blind faith.</p>
+    </div>
+    <div className="aic-ethics-card">
+      <div className="aic-ethics-card-title"><span className="aic-material" aria-hidden="true">undo</span> Reversible</div>
+      <p className="aic-ethics-card-text">A human approves before anything acts, and can undo it after. The model never gets an irreversible last word.</p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* DECISION LADDER                               */}
+{/* ============================================ */}
+
+<div className="aic-section">
+  <h2 className="aic-section-title">Before You Ship AI-Generated Content</h2>
+
+  <div className="aic-decision">
+    <div className="aic-decision-step">
+      <div className="aic-decision-text"><strong>Is it labeled as generated?</strong> A visible, consistent marker sits where the content is read. If a person could mistake it for human or factual, add the badge.</div>
+    </div>
+    <div className="aic-decision-step">
+      <div className="aic-decision-text"><strong>Does it show its confidence and limits?</strong> Output is framed as an estimate, with a signal of how firm it is. If it reads as flat certainty, fix the framing.</div>
+    </div>
+    <div className="aic-decision-step">
+      <div className="aic-decision-text"><strong>Can the user verify and correct it?</strong> Sources are checkable, a wrong answer can be reported or fixed, and the system admits when it does not know.</div>
+    </div>
+    <div className="aic-decision-step">
+      <div className="aic-decision-text"><strong>Does a human approve before it acts, and can they undo it?</strong> Consequential actions wait for a human yes and stay reversible. If not, add the review step or drop the automation.</div>
+    </div>
+    <div className="aic-decision-step">
+      <div className="aic-decision-text"><strong>Is the user told what happens to their data?</strong> What is sent, where it goes, and whether it trains anything is stated in plain words at the input. If it is only in a linked policy, surface it.</div>
+    </div>
+  </div>
+
+  <span className="aic-xlink"><span className="aic-material" aria-hidden="true">link</span> Related: Patterns / Persuasion · Patterns / Voice &amp; Tone · Patterns / Accessibility</span>
+</div>
+
+{/* ============================================ */}
+{/* NOTES AND SOURCES                             */}
+{/* ============================================ */}
+
+<div className="aic-section">
+  <h2 className="aic-section-title">Notes and Sources</h2>
+  <ul className="aic-sources-list">
+    <li>
+      <strong>Google People + AI Guidebook (PAIR).</strong> Label and set expectations, from Mental Models: <code>https://pair.withgoogle.com/chapter/mental-models/</code>. Confidence, from Explainability + Trust: <code>https://pair.withgoogle.com/chapter/explainability-trust/</code>. Graceful failure, from Errors + Graceful Failure: <code>https://pair.withgoogle.com/chapter/errors-failing/</code>. Feedback and manual fallback, from Feedback + Controls: <code>https://pair.withgoogle.com/chapter/feedback-controls/</code>. Data use, from Data Collection + Evaluation: <code>https://pair.withgoogle.com/chapter/data-collection/</code>. <span className="aic-spa">SPA</span>, deep-linked at chapter level only.
+    </li>
+    <li>
+      <strong>Microsoft HAX, Guidelines for Human-AI Interaction (Amershi et al., CHI 2019).</strong> G1 make clear what the system can do: <code>https://www.microsoft.com/en-us/haxtoolkit/guideline/make-clear-what-the-system-can-do/</code>. G2 make clear how well: <code>.../make-clear-how-well-the-system-can-do-what-it-can-do/</code>. G9 support efficient correction: <code>.../support-efficient-correction/</code>. G11 make clear why the system did what it did: <code>.../make-clear-why-the-system-did-what-it-did/</code>. G17 provide global controls: <code>.../provide-global-controls/</code>. Server-rendered, stable.
+    </li>
+    <li>
+      <strong>Apple Human Interface Guidelines.</strong> Generative AI (communicate where AI is used, give feedback during generation, refine or revert results, minimize and disclose hallucinations, share feedback on outputs): <code>https://developer.apple.com/design/human-interface-guidelines/generative-ai</code>. Machine learning (corrections, be transparent and let people control their data): <code>https://developer.apple.com/design/human-interface-guidelines/machine-learning</code>. <span className="aic-spa">SPA</span>, no stable per-section anchor.
+    </li>
+    <li>
+      <strong>Nielsen Norman Group.</strong> AI Hallucinations, on citing sources and first-person uncertainty (2025): <code>https://www.nngroup.com/articles/ai-hallucinations/</code>. Explainable AI in Chat Interfaces, on disclaimer placement near the input (2025): <code>https://www.nngroup.com/articles/explainable-ai/</code>. AI Chatbot design guidelines, on streaming and autoscroll (2026): <code>https://www.nngroup.com/articles/ai-chatbots-design-guidelines/</code>.
+    </li>
+    <li>
+      <strong>House doctrine.</strong> The strict disclose, bound, verify, and reverse gate around each pattern, and the mono-indigo, icon-plus-text treatment of every state, is RamosLabs house doctrine, not a claim from the cited authors. Confidence is shown by fill and label, never hue alone, to satisfy WCAG 2.1 SC 1.4.1 Use of Color.
+    </li>
+  </ul>
 </div>
