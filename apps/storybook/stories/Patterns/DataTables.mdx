@@ -1,0 +1,1769 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Data Tables" />
+
+<style>
+{`
+  /* ===== FONT IMPORTS ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+  .dt-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .dt-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.25rem 2.5rem;
+    margin-bottom: 3rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+
+  .dt-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+
+  .dt-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw + 1rem, 3.1rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 24ch;
+  }
+
+  .dt-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .dt-hero p strong { color: #ffffff; font-weight: 700; }
+
+  /* ===== PART BANNER ===== */
+  .dt-part {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin: 3.5rem 0 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #4f46e5;
+    flex-wrap: wrap;
+  }
+
+  .dt-part-kicker {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #4338ca;
+    background: #e0e7ff;
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .dt-part-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  /* ===== SECTIONS ===== */
+  .dt-section {
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .dt-section:last-of-type { border-bottom: none; }
+
+  .dt-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .dt-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .dt-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .dt-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 48rem;
+  }
+
+  .dt-text + .dt-text { margin-top: 1rem; }
+
+  .dt-text strong { color: #0f172a; font-weight: 600; }
+
+  .dt-text code, .dt-inline-code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  /* ===== CALLOUT ===== */
+  .dt-callout {
+    display: flex;
+    gap: 0.75rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+
+  .dt-callout .dt-material {
+    color: #4338ca;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .dt-callout-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #3730a3;
+  }
+
+  .dt-callout-text strong { color: #312e81; font-weight: 700; }
+
+  .dt-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: rgba(79,70,229,0.1);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #3730a3;
+  }
+
+  /* ===== RULES (Rule / Why) ===== */
+  .dt-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+
+  .dt-rule {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-left: 3px solid #4f46e5;
+    border-radius: 10px;
+    padding: 0.9rem 1.125rem;
+  }
+
+  .dt-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .dt-rule-why {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #64748b;
+    margin: 0.35rem 0 0;
+  }
+
+  .dt-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+    vertical-align: 0.08em;
+  }
+
+  .dt-tag.rule { color: #4338ca; background: #e0e7ff; }
+  .dt-tag.why { color: #475569; background: #f1f5f9; }
+
+  .dt-rule code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #334155;
+  }
+
+  /* ===== LAB / DEMO ===== */
+  .dt-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .dt-demo {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .dt-demo-label {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  .dt-demo.avoid {
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background: #fbfcfd;
+  }
+
+  .dt-demo-label.rec { color: #166534; }
+  .dt-demo-label.avoid { color: #991b1b; }
+
+  /* ===== THE DATA TABLE ITSELF ===== */
+  .dt-scroll {
+    overflow-x: auto;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    margin: 0;
+  }
+
+  .dt-scroll:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+    border-color: #4f46e5;
+  }
+
+  table.dt-data {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    background: white;
+  }
+
+  table.dt-data caption {
+    text-align: left;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  table.dt-data caption .dt-cap-hint { color: #4338ca; font-weight: 600; }
+
+  table.dt-data th,
+  table.dt-data td {
+    padding: 0 1rem;
+    height: 48px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  table.dt-data thead th {
+    background: #f8fafc;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #e6e8eb;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+  }
+
+  table.dt-data tbody th[scope="row"] {
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  table.dt-data td { color: #475569; }
+
+  table.dt-data td.num,
+  table.dt-data th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  table.dt-data tbody tr:hover { background: #f8fafc; }
+  table.dt-data tbody tr:last-child th,
+  table.dt-data tbody tr:last-child td { border-bottom: none; }
+
+  .dt-null { color: #94a3b8; }
+
+  .dt-badge {
+    display: inline-block;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    white-space: nowrap;
+  }
+  .dt-badge.paid { color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .dt-badge.pending { color: #92400e; background: #fffbeb; border: 1px solid #fde68a; }
+  .dt-badge.failed { color: var(--color-error-text); background: var(--color-error-surface); border: 1px solid var(--color-error-border); }
+
+  /* ===== SORT BUTTON ===== */
+  .dt-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 24px;
+    padding: 0.25rem 0.35rem;
+    margin: -0.25rem -0.35rem;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f172a;
+    cursor: pointer;
+  }
+  .dt-sort:hover { background: #eef2ff; }
+  .dt-sort:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+  .dt-sort .dt-arrow { font-size: 0.95rem; line-height: 1; color: #4338ca; }
+  th[aria-sort="none"] .dt-sort .dt-arrow,
+  th:not([aria-sort]) .dt-sort .dt-arrow { color: #cbd5e1; }
+
+  /* ===== CHECKBOXES (native, accent) ===== */
+  .dt-check {
+    accent-color: var(--color-primary);
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+    cursor: pointer;
+  }
+  td.dt-check-cell, th.dt-check-cell { width: 1px; padding-right: 0.5rem; padding-left: 1rem; }
+  table.dt-data tbody tr.selected { background: #eef2ff; }
+  table.dt-data tbody tr.selected:hover { background: #e0e7ff; }
+
+  /* ===== BULK TOOLBAR ===== */
+  .dt-bulkbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .dt-bulk-count {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #3730a3;
+  }
+  .dt-bulk-sep { width: 1px; height: 1.1rem; background: #c7d2fe; }
+  .dt-bulk-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-left: auto; }
+
+  /* ===== BUTTONS ===== */
+  .dt-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 32px;
+    padding: 0.35rem 0.75rem;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+  }
+  .dt-btn:hover { border-color: #4f46e5; color: #4338ca; }
+  .dt-btn:focus-visible { outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5; }
+  .dt-btn.primary { background: #4f46e5; border-color: #4f46e5; color: #ffffff; }
+  .dt-btn.primary:hover { background: #4338ca; color: #ffffff; }
+  .dt-btn .dt-material { font-size: 1.05rem; }
+
+  /* Icon-only action button: 24x24 minimum target */
+  .dt-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #475569;
+    cursor: pointer;
+  }
+  .dt-icon-btn:hover { border-color: #4f46e5; color: #4338ca; }
+  .dt-icon-btn:focus-visible { outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5; }
+  .dt-icon-btn .dt-material { font-size: 1.15rem; }
+  .dt-row-actions { display: inline-flex; gap: 0.35rem; }
+
+  /* ===== PAGINATION ===== */
+  .dt-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #f1f5f9;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+  }
+  .dt-pager-range { font-variant-numeric: tabular-nums; }
+  .dt-pager-range strong { color: #0f172a; }
+  .dt-pager-nav { display: flex; align-items: center; gap: 0.25rem; }
+  .dt-page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 0.4rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+  }
+  .dt-page:hover { border-color: #4f46e5; color: #4338ca; }
+  .dt-page:focus-visible { outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5; }
+  .dt-page[aria-current="page"] {
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: #ffffff;
+  }
+  .dt-page[aria-disabled="true"] { opacity: 0.4; cursor: default; }
+  .dt-page .dt-material { font-size: 1.1rem; }
+
+  /* ===== FILTER CHIPS + SEARCH ===== */
+  .dt-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.85rem;
+  }
+  .dt-search {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1 1 12rem;
+    min-width: 10rem;
+    background: white;
+    border: 1px solid #64748b;
+    border-radius: 6px;
+    padding: 0 0.75rem;
+  }
+  .dt-search .dt-material { color: #64748b; font-size: 1.1rem; }
+  .dt-search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0.6rem 0;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 1rem;
+    color: #0f172a;
+  }
+  .dt-search:focus-within { border-color: #4f46e5; box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #4f46e5; }
+
+  .dt-chips { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+  .dt-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 0.25rem 0.35rem 0.25rem 0.6rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #3730a3;
+  }
+  .dt-chip-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    color: #4338ca;
+    cursor: pointer;
+  }
+  .dt-chip-x:hover { background: #c7d2fe; }
+  .dt-chip-x:focus-visible { outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #4f46e5; }
+  .dt-chip-x .dt-material { font-size: 0.95rem; }
+  .dt-clear {
+    background: none;
+    border: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4338ca;
+    cursor: pointer;
+    padding: 0.25rem 0.4rem;
+    border-radius: 6px;
+    min-height: 24px;
+  }
+  .dt-clear:hover { background: #eef2ff; }
+  .dt-clear:focus-visible { outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #4f46e5; }
+  .dt-filter-status {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+  }
+  .dt-filter-status strong { color: #0f172a; }
+
+  /* ===== STATES ===== */
+  .dt-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 2.5rem 1.5rem;
+    background: white;
+  }
+  .dt-state .dt-material { font-size: 2rem; color: #94a3b8; }
+  .dt-state-title {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .dt-state-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    max-width: 26rem;
+    line-height: 1.5;
+  }
+
+  .dt-skel-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 0.8rem;
+    gap: 1rem;
+    align-items: center;
+    padding: 0 1rem;
+    height: 48px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .dt-skel {
+    height: 0.7rem;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #eef2f6 25%, #e2e8f0 37%, #eef2f6 63%);
+    background-size: 400% 100%;
+    animation: dt-shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes dt-shimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dt-skel { animation: none; }
+  }
+
+  /* ===== DECISION TABLE ===== */
+  .dt-fork {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    min-width: 560px;
+  }
+  .dt-fork th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: #0f172a;
+    font-weight: 700;
+    border-bottom: 1px solid #e6e8eb;
+    vertical-align: top;
+  }
+  .dt-fork th.a { background: #f0fdf4; }
+  .dt-fork th.b { background: #eef2ff; }
+  .dt-fork td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+    vertical-align: top;
+  }
+  .dt-fork td.a { background: #fafffb; }
+  .dt-fork td.b { background: #fafbff; }
+  .dt-fork tr:last-child td { border-bottom: none; }
+  .dt-fork code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+    background: #eef2ff;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  /* ===== REFERENCE TABLE ===== */
+  .dt-ref-scroll {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+  }
+  table.dt-ref {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    min-width: 560px;
+  }
+  table.dt-ref th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #e6e8eb;
+    white-space: nowrap;
+  }
+  table.dt-ref th.num, table.dt-ref td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  table.dt-ref td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+    vertical-align: top;
+  }
+  table.dt-ref tr:last-child td { border-bottom: none; }
+  table.dt-ref code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: #4338ca;
+    background: #eef2ff;
+    padding: 1px 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* ===== CODE BLOCK ===== */
+  .dt-code {
+    background: #0f172a;
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+  }
+  .dt-code .dt-c-com { color: #94a3b8; }
+  .dt-code .dt-c-prop { color: #a5b4fc; }
+  .dt-code .dt-c-tag { color: #c4b5fd; }
+  .dt-code .dt-c-attr { color: #7dd3fc; }
+
+  /* ===== LADDER ===== */
+  .dt-ladder {
+    counter-reset: dt-step;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+  .dt-ladder-step {
+    display: flex;
+    gap: 0.875rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+  .dt-ladder-step:last-child { border-bottom: none; }
+  .dt-ladder-step::before {
+    counter-increment: dt-step;
+    content: counter(dt-step);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #eef2ff;
+    color: #4338ca;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .dt-ladder-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #334155;
+  }
+  .dt-ladder-text strong { color: #0f172a; }
+  .dt-ladder-text code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  /* ===== CROSS-LINK CHIP ===== */
+  .dt-xlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #4338ca;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    margin: 1rem 0.5rem 0 0;
+    text-decoration: none;
+  }
+  .dt-xlink:hover { background: #e0e7ff; }
+  .dt-xlink .dt-material { font-size: 1rem; }
+
+  /* ===== MOBILE PATTERN CARDS ===== */
+  .dt-patterns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .dt-pattern {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .dt-pattern.default { border-color: #4f46e5; box-shadow: 0 0 0 1px #4f46e5; }
+  .dt-pattern-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .dt-pattern-name {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .dt-verdict {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 6px;
+    padding: 0.15rem 0.55rem;
+    white-space: nowrap;
+  }
+  .dt-verdict.def { color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .dt-verdict.alt { color: #4338ca; background: #eef2ff; border: 1px solid #c7d2fe; }
+  .dt-verdict.care { color: #92400e; background: #fffbeb; border: 1px solid #fde68a; }
+  .dt-pattern-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #64748b;
+  }
+  .dt-pattern-tradeoff {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: #475569;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 0.5rem;
+  }
+  .dt-pattern-tradeoff b { color: #166534; }
+  .dt-pattern-tradeoff i { color: #991b1b; font-style: normal; font-weight: 600; }
+
+  /* Sticky first column inside the responsive demo */
+  table.dt-data.sticky-first th.stick,
+  table.dt-data.sticky-first td.stick {
+    position: sticky;
+    left: 0;
+    background: white;
+    box-shadow: 1px 0 0 #e6e8eb;
+    z-index: 1;
+  }
+  table.dt-data.sticky-first thead th.stick { background: #f8fafc; z-index: 2; }
+  table.dt-data.sticky-first tbody tr:hover th.stick { background: #f8fafc; }
+
+  /* ===== SOURCES ===== */
+  .dt-sources-list {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    max-width: 52rem;
+  }
+  .dt-sources-list li {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #475569;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .dt-sources-list li:last-child { border-bottom: none; }
+  .dt-sources-list strong { color: #0f172a; }
+  .dt-sources-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+  }
+  .dt-note {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #92400e;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .dt-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+`}
+</style>
+
+{/* ============================================ */}
+{/* HERO                                          */}
+{/* ============================================ */}
+
+<div className="dt-hero">
+  <p className="dt-hero-eyebrow">Patterns / Data Tables</p>
+  <h1>The semantics are the component. Everything else is paint.</h1>
+  <p>
+    A data table is a native <strong>&lt;table&gt;</strong> first, always. Density, sorting, pagination and the mobile transform are behavior layered on top of correct structure, they are not a substitute for it. Reach for an ARIA role only when native HTML genuinely cannot express the interaction. This page is the last word on how we build tables that stay readable, operable by keyboard, and announced correctly by a screen reader, from a 320px phone to a wide analytics grid.
+  </p>
+</div>
+
+{/* ============================================ */}
+{/* PART 1 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="dt-part">
+  <span className="dt-part-kicker">Part 1</span>
+  <span className="dt-part-title">Doctrine, the accessibility is not optional</span>
+</div>
+
+{/* 1: NATIVE TABLE FIRST */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">1</span>
+    <h2 className="dt-section-title">Native &lt;table&gt; first, never div-soup</h2>
+  </div>
+
+  <p className="dt-text">
+    Build the table from real elements: a <code>&lt;table&gt;</code> with a <code>&lt;caption&gt;</code>, a <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code>, and <code>&lt;th&gt;</code> cells that carry <code>scope</code>. This is not stylistic. Without <code>&lt;th&gt;</code>, <code>scope</code> and the table role, a screen reader cannot announce "column Amount, row Order 4521" when the user lands on a cell. The row and column relationship is simply lost, and there is no ARIA shortcut simpler than using the real element. MDN puts it plainly: a logical structure with semantic markup is not only easier to style, it is what makes a table understandable and navigable by assistive technology and search engines alike.
+  </p>
+
+  <div className="dt-rules">
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Use a real <code>&lt;table&gt;</code> with <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code>, and <code>&lt;th scope="col"&gt;</code> for column headers plus <code>&lt;th scope="row"&gt;</code> for each row's identifying cell.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> WCAG 2.1 SC 1.3.1 Info and Relationships (Level A) requires that structure conveyed visually be programmatically determinable. Scope is inferred in simple tables, but MDN and GOV.UK both advise setting it explicitly, because some assistive technology draws the wrong inference.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> The <code>&lt;caption&gt;</code> is the table's accessible name. Give every table one.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> GOV.UK: a caption helps users find, navigate and understand tables. It lets a screen reader user decide whether to read on or skip the table entirely.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> For multi-level or spanned headers, prefer splitting into smaller related tables over reaching for <code>headers</code> / <code>id</code> wiring.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> MDN recommends breaking a complex table apart rather than relying on <code>colspan</code> / <code>rowspan</code>. It helps assistive technology and lowers cognitive load. If you are reaching for <code>headers</code> / <code>id</code>, first ask whether this should be two tables.</p>
+    </div>
+  </div>
+
+  <div className="dt-demo" style={{ marginTop: '1.25rem' }}>
+    <div className="dt-demo-label">Live: a correctly structured accessible table</div>
+    <div className="dt-scroll">
+      <table className="dt-data">
+        <caption>Recent orders, October 2025. Amounts in Colombian pesos.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Status</th>
+            <th scope="col" className="num">Amount (COP)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">4521</th>
+            <td>Mariana Restrepo</td>
+            <td><span className="dt-badge paid">Paid</span></td>
+            <td className="num">180,000</td>
+          </tr>
+          <tr>
+            <th scope="row">4520</th>
+            <td>Jordan Ellis</td>
+            <td><span className="dt-badge pending">Pending</span></td>
+            <td className="num">92,500</td>
+          </tr>
+          <tr>
+            <th scope="row">4519</th>
+            <td>Riley Chen</td>
+            <td><span className="dt-badge failed">Failed</span></td>
+            <td className="num">240,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{/* 2: THE FORK */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">2</span>
+    <h2 className="dt-section-title">The fork: &lt;table&gt; vs role="grid"</h2>
+  </div>
+
+  <p className="dt-text">
+    This is the single most misunderstood decision in table design, and the most common mistake is over-reaching for <code>role="grid"</code>. The default is a static <code>&lt;table&gt;</code>. Most product tables, even with sorting, filtering, pagination, row links and row actions, are <strong>not</strong> grids. The WAI-ARIA APG is explicit: like an HTML table, a WAI-ARIA table is a static tabular structure, not an interactive widget. You only graduate to a grid when the table is a spreadsheet the user operates cell by cell with arrow keys.
+  </p>
+
+  <div className="dt-ref-scroll">
+    <table className="dt-fork">
+      <thead>
+        <tr>
+          <th className="a">Use a static <code>&lt;table&gt;</code> (default) when</th>
+          <th className="b">Use <code>role="grid"</code> only when</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="a">The table presents data to read, scan and compare.</td>
+          <td className="b">The table is an interactive widget operated like a spreadsheet.</td>
+        </tr>
+        <tr>
+          <td className="a">Cells may hold links or buttons and the user tabs through them normally.</td>
+          <td className="b">You need cell-by-cell arrow-key navigation with a single tab stop for the whole grid.</td>
+        </tr>
+        <tr>
+          <td className="a">You have sorting, filtering, pagination. None of these require a grid.</td>
+          <td className="b">You have editable cells or complex keyboard row and column selection.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="dt-callout">
+    <span className="dt-material" aria-hidden="true">warning</span>
+    <p className="dt-callout-text">
+      <strong>A grid is a heavyweight commitment.</strong> Once you adopt <code>role="grid"</code> you own focus management by roving tabindex (exactly one focusable element in the tab sequence at a time) and the full keyboard model: arrow keys move one cell and stop at edges, <code>Home</code> / <code>End</code> jump to row ends, <code>Ctrl+Home</code> / <code>Ctrl+End</code> to grid corners, and in an edit grid <code>Enter</code> or <code>F2</code> enters edit mode while <code>Escape</code> returns to navigation. Do not sign up for this to get sortable columns.
+    </p>
+  </div>
+</div>
+
+{/* 3: ACCESSIBLE SORTING */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">3</span>
+    <h2 className="dt-section-title">Sorting that a screen reader can follow</h2>
+  </div>
+
+  <div className="dt-rules">
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> The sort control is a native <code>&lt;button&gt;</code> inside the <code>&lt;th&gt;</code>. Sort state lives in <code>aria-sort</code> on that <code>&lt;th&gt;</code>, on one column at a time.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> The APG sortable-table example wraps header text in a button, so keyboard support is free from the browser. Roselli is firm: never set <code>aria-sort</code> on more than one header at once.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Signal direction by shape, a filled versus outline arrow marked <code>aria-hidden="true"</code>, not by color.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Encoding sort purely through color risks failing WCAG 1.4.1 Use of Color. The glyph is hidden from the accessible name so it does not pollute the button label.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Pair sorting with an optional polite live region that announces the change.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Roselli tested support: NVDA, JAWS, Narrator and VoiceOver on iOS announce <code>aria-sort</code>, but <strong>VoiceOver on macOS and TalkBack on Android do not</strong>. A live region is the only way those users hear that the order changed.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Communicate sortability itself through a <code>&lt;caption&gt;</code> hint, not a verbose per-button <code>aria-label</code>.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> The caption is announced once on table entry. Roselli found per-button labels translate poorly and are read on every cell. The visible button text must carry the meaning, because not every screen reader user is blind.</p>
+    </div>
+  </div>
+
+  <div className="dt-demo">
+    <div className="dt-demo-label">Live: a sortable header (button in the th, aria-sort set, arrow by shape)</div>
+    <div className="dt-scroll">
+      <table className="dt-data">
+        <caption>Sessions by attendance. <span className="dt-cap-hint">Column headers with an arrow are sortable.</span></caption>
+        <thead>
+          <tr>
+            <th scope="col">Session</th>
+            <th scope="col" className="num" aria-sort="descending">
+              <button type="button" className="dt-sort" style={{ marginLeft: 'auto' }}>
+                Attendees
+                <span className="dt-arrow" aria-hidden="true">▼</span>
+              </button>
+            </th>
+            <th scope="col" className="num">
+              <button type="button" className="dt-sort" style={{ marginLeft: 'auto' }}>
+                No-shows
+                <span className="dt-arrow" aria-hidden="true">↕</span>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Opening keynote</th><td className="num">1,240</td><td className="num">86</td></tr>
+          <tr><th scope="row">Design systems</th><td className="num">830</td><td className="num">54</td></tr>
+          <tr><th scope="row">Payments deep dive</th><td className="num">610</td><td className="num">41</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p className="dt-filter-status" role="status" aria-live="polite">Sorted by Attendees, descending.</p>
+  </div>
+</div>
+
+{/* 4: ROW SELECTION */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">4</span>
+    <h2 className="dt-section-title">Row selection with a real indeterminate select-all</h2>
+  </div>
+
+  <p className="dt-text">
+    Each selectable row gets a native <code>&lt;input type="checkbox"&gt;</code> whose accessible name identifies the row, not a generic "Select row". The header select-all checkbox uses the <code>indeterminate</code> DOM property (set in JavaScript, it is not the same as <code>checked</code>) when some but not all rows are selected: checked when all are, unchecked when none. All native checkboxes are tinted with <code>accent-color: var(--color-primary)</code> so they read as brand without losing a single built-in behavior. Announce the derived selection count through a polite live region, because assistive technology does not report it on its own.
+  </p>
+
+  <div className="dt-demo">
+    <div className="dt-demo-label">Live: checkbox column, select-all indeterminate, contextual bulk toolbar</div>
+
+    <div className="dt-bulkbar" role="status" aria-live="polite">
+      <span className="dt-bulk-count">2 selected</span>
+      <span className="dt-bulk-sep" aria-hidden="true"></span>
+      <div className="dt-bulk-actions">
+        <button type="button" className="dt-btn"><span className="dt-material" aria-hidden="true">download</span>Export</button>
+        <button type="button" className="dt-btn"><span className="dt-material" aria-hidden="true">delete</span>Delete</button>
+        <button type="button" className="dt-btn">Clear selection</button>
+      </div>
+    </div>
+
+    <div className="dt-scroll">
+      <table className="dt-data">
+        <caption>Attendees. Select rows to act on them in bulk.</caption>
+        <thead>
+          <tr>
+            <th scope="col" className="dt-check-cell">
+              <input
+                type="checkbox"
+                className="dt-check"
+                aria-label="Select all rows on this page"
+                ref={(el) => { if (el) el.indeterminate = true; }}
+              />
+            </th>
+            <th scope="col">Attendee</th>
+            <th scope="col">Ticket</th>
+            <th scope="col" className="num">Paid (COP)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="selected">
+            <td className="dt-check-cell"><input type="checkbox" className="dt-check" defaultChecked aria-label="Select Mariana Restrepo" /></td>
+            <th scope="row">Mariana Restrepo</th>
+            <td>General</td>
+            <td className="num">180,000</td>
+          </tr>
+          <tr className="selected">
+            <td className="dt-check-cell"><input type="checkbox" className="dt-check" defaultChecked aria-label="Select Jordan Ellis" /></td>
+            <th scope="row">Jordan Ellis</th>
+            <td>VIP</td>
+            <td className="num">420,000</td>
+          </tr>
+          <tr>
+            <td className="dt-check-cell"><input type="checkbox" className="dt-check" aria-label="Select Riley Chen" /></td>
+            <th scope="row">Riley Chen</th>
+            <td>General</td>
+            <td className="num">180,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div className="dt-callout">
+    <span className="dt-material" aria-hidden="true">info</span>
+    <p className="dt-callout-text">
+      <strong>Be explicit about scope across pages.</strong> When the table is paginated, state whether a selection covers only the current page or the whole filtered set. Ambiguous selection is how users delete more than they meant to.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* PART 2 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="dt-part">
+  <span className="dt-part-kicker">Part 2</span>
+  <span className="dt-part-title">Anatomy, density, alignment and format</span>
+</div>
+
+{/* 5: DENSITY & ALIGNMENT */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">5</span>
+    <h2 className="dt-section-title">Density and alignment</h2>
+  </div>
+
+  <p className="dt-text">
+    Anchor row height to IBM Carbon's five-tier scale, the most complete published density system. Ship at least two densities: a comfortable default around 48px, which is touch and low-vision friendlier, and a compact opt-in around 32px for power users comparing many rows at once. Never ship compact only.
+  </p>
+
+  <div className="dt-ref-scroll">
+    <table className="dt-ref">
+      <thead>
+        <tr>
+          <th scope="col">Carbon tier</th>
+          <th scope="col" className="num">Height</th>
+          <th scope="col">Use when</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Extra small / Compact</td><td className="num">24px</td><td>Dense exploration, expert users, maximum rows on screen.</td></tr>
+        <tr><td>Small / Short</td><td className="num">32px</td><td>Dense with a little more breathing room.</td></tr>
+        <tr><td>Medium</td><td className="num">40px</td><td>Balanced default for many products (added in Carbon 11).</td></tr>
+        <tr><td>Large / Default</td><td className="num">48px</td><td>Comfortable default, touch friendlier.</td></tr>
+        <tr><td>Extra large / Tall</td><td className="num">64px</td><td>Rows with two lines, a value plus secondary text.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="dt-rules">
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Left-align text, right-align numbers, and align each header with its own column.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Right-aligned digits line up by place value so columns of numbers become scannable. GOV.UK ships exactly this with numeric cell and header modifiers.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Put <code>font-variant-numeric: tabular-nums</code> on numeric columns.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Tabular figures occupy equal width, so a column of numbers aligns vertically digit by digit. This is what tabular figures are for.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Interactive targets inside cells (sort buttons, row-action buttons, checkboxes, pagination links) meet at least 24 by 24 CSS px, or the 24px-spacing exception.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> WCAG 2.2 SC 2.5.8 Target Size (Minimum). A 24px compact row can hold a 24px target but leaves no spacing margin, so compact density plus icon buttons is a target-size risk. Prefer comfortable density anywhere row actions are tappable.</p>
+    </div>
+  </div>
+
+  <div className="dt-lab">
+    <div className="dt-demo">
+      <div className="dt-demo-label">Comfortable, about 48px</div>
+      <div className="dt-scroll">
+        <table className="dt-data">
+          <caption className="dt-sr-only">Comfortable density example</caption>
+          <thead><tr><th scope="col">City</th><th scope="col" className="num">Tickets</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Denver</th><td className="num">12,480</td></tr>
+            <tr><th scope="row">Portland</th><td className="num">8,210</td></tr>
+            <tr><th scope="row">Cali</th><td className="num">4,905</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div className="dt-demo">
+      <div className="dt-demo-label">Compact, about 32px (opt-in)</div>
+      <div className="dt-scroll">
+        <table className="dt-data" style={{ fontSize: '0.78rem' }}>
+          <caption className="dt-sr-only">Compact density example</caption>
+          <thead><tr><th scope="col" style={{ height: '32px' }}>City</th><th scope="col" className="num" style={{ height: '32px' }}>Tickets</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" style={{ height: '32px' }}>Denver</th><td className="num" style={{ height: '32px' }}>12,480</td></tr>
+            <tr><th scope="row" style={{ height: '32px' }}>Portland</th><td className="num" style={{ height: '32px' }}>8,210</td></tr>
+            <tr><th scope="row" style={{ height: '32px' }}>Cali</th><td className="num" style={{ height: '32px' }}>4,905</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* 6: ZEBRA VS DIVIDERS */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">6</span>
+    <h2 className="dt-section-title">Zebra striping vs dividers</h2>
+  </div>
+
+  <p className="dt-text">
+    The evidence here is softer than most people assume, so do not over-claim. NN/g endorses borders, zebra striping and hover highlighting as valid aids for keeping your place across a wide row, but it does not publish a controlled study crowning a winner. Anyone who tells you striping always beats dividers is inventing a result.
+  </p>
+
+  <div className="dt-rules">
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Pick one row-tracking aid, driven by table width, and do not stack them.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> For wide tables with many columns, zebra striping or a row hover highlight materially helps the eye stay on one record while scanning across. For narrow tables, subtle horizontal dividers or nothing at all is cleaner, and striping only adds noise. Stacking striping plus heavy borders plus hover is visual clutter.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Always add a row hover highlight and a matching focus highlight for keyboard users.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Hover helps mouse users track a row, but keyboard users need the same anchor on focus, never one without the other.</p>
+    </div>
+  </div>
+</div>
+
+{/* 7: DATA FORMATTING */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">7</span>
+    <h2 className="dt-section-title">Data formatting</h2>
+  </div>
+
+  <div className="dt-ref-scroll">
+    <table className="dt-ref">
+      <thead>
+        <tr><th scope="col">Type</th><th scope="col">Format rule</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Numbers</td><td>Right-align, <code>tabular-nums</code>, group thousands. Keep a shared unit in the header, <code>Price (COP)</code>, not repeated in every cell.</td></tr>
+        <tr><td>Currency</td><td>Right-align, one consistent symbol and decimal count per column. For this product's COP context, whole pesos.</td></tr>
+        <tr><td>Dates</td><td>One format per column. Wrap the machine value in <code>&lt;time datetime="..."&gt;</code>. Show relative dates only when a precise value is available on hover or focus.</td></tr>
+        <tr><td>Text</td><td>Left-align. Decide truncate or wrap per column, not per table.</td></tr>
+        <tr><td>Empty cells</td><td>Use an explicit placeholder, <span className="dt-null">an em value</span> shown as a dash, with an accessible meaning, never a blank cell that reads as nothing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="dt-rules">
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Wrap content the user must read in full (names, addresses, descriptions), pairing it with the tall 64px density.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Truncating a value the user needs to read makes the table useless for that task.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Truncate with an ellipsis only for low-value tails (IDs, URLs, long machine strings), and always give an accessible way to recover the full value with <code>title</code> or a tooltip.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Truncation buys column alignment, but hiding a value with no way to read it fails the user who needs it.</p>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* PART 3 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="dt-part">
+  <span className="dt-part-kicker">Part 3</span>
+  <span className="dt-part-title">Behavior, pagination, filters, actions, states</span>
+</div>
+
+{/* 8: PAGINATION */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">8</span>
+    <h2 className="dt-section-title">Pagination vs infinite scroll vs load-more</h2>
+  </div>
+
+  <p className="dt-text">
+    Data tables are goal-oriented lookup and compare surfaces, so the default is pagination. NN/g finds infinite scroll suits homogeneous feeds with no particular task (entertainment, news, social), and explicitly recommends avoiding it when users need to find something specific, compare items in a long list, or return to an item they saw. In an infinite list it is hard to remember where an item was, footers become unreachable, and the page gives a false sense of completeness.
+  </p>
+
+  <div className="dt-ref-scroll">
+    <table className="dt-ref">
+      <thead>
+        <tr><th scope="col">Pattern</th><th scope="col">Use for a table when</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Pagination</strong> (default)</td><td>Users look up, compare, and return to items, and need a sense of position, a total, and access to a footer or summary.</td></tr>
+        <tr><td>Load-more button</td><td>Mostly-browse lists where you still want footer access and user-controlled loading. A middle ground.</td></tr>
+        <tr><td>Infinite scroll</td><td>Rare for tables. Only a pure exploratory feed with no find, compare or return task.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="dt-rules">
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Always show the current range and the total, "1-25 of 320", and let users choose the page size.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> It gives position and scope, directly answering the "where am I" problem infinite scroll creates.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Wrap controls in <code>&lt;nav aria-label="Table pagination"&gt;</code>, mark the current page with <code>aria-current="page"</code>, meet SC 2.5.8 target size, and announce the new range politely.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> WCAG cites pagination links as a case for the 24px target-size rule. Swapping the table body is not auto-announced, so a live region carries the change.</p>
+    </div>
+  </div>
+
+  <div className="dt-demo">
+    <div className="dt-demo-label">Live: a pagination bar with range and current page</div>
+    <div className="dt-scroll">
+      <div className="dt-pager">
+        <span className="dt-pager-range" role="status" aria-live="polite">Showing <strong>1-25</strong> of <strong>320</strong></span>
+        <nav className="dt-pager-nav" aria-label="Table pagination">
+          <button type="button" className="dt-page" aria-label="Previous page" aria-disabled="true"><span className="dt-material" aria-hidden="true">chevron_left</span></button>
+          <button type="button" className="dt-page" aria-current="page">1</button>
+          <button type="button" className="dt-page">2</button>
+          <button type="button" className="dt-page">3</button>
+          <span aria-hidden="true" style={{ padding: '0 0.25rem', color: '#94a3b8' }}>...</span>
+          <button type="button" className="dt-page">13</button>
+          <button type="button" className="dt-page" aria-label="Next page"><span className="dt-material" aria-hidden="true">chevron_right</span></button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* 9: FILTERS & SEARCH */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">9</span>
+    <h2 className="dt-section-title">Filters and search</h2>
+  </div>
+
+  <p className="dt-text">
+    Give the table a global search that filters across columns, and per-column filters where users repeatedly narrow by known dimensions like status or date. Keep the sort button and any column filter as separate, separately-labeled controls, never overloaded onto one target. Above all, make the current filter state visible.
+  </p>
+
+  <div className="dt-rules">
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> Every applied filter renders as a visible, removable chip with an accessible name, plus a "Clear all".</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Chips are the honest answer to "what am I currently looking at". A filtered table that hides its own active filters is a dark pattern of confusion.</p>
+    </div>
+    <div className="dt-rule">
+      <p className="dt-rule-line"><span className="dt-tag rule">Rule</span> State the filtered count against the total on the table itself, "Showing 12 of 320, filters active", and announce result counts through a polite live region.</p>
+      <p className="dt-rule-why"><span className="dt-tag why">Why</span> Users must never mistake a filtered view for the whole dataset. When filtering reaches zero rows, show the no-results state, not the empty state.</p>
+    </div>
+  </div>
+
+  <div className="dt-demo">
+    <div className="dt-demo-label">Live: global search plus removable filter chips</div>
+    <div className="dt-toolbar">
+      <label className="dt-sr-only" htmlFor="dt-search-demo">Search attendees</label>
+      <span className="dt-search">
+        <span className="dt-material" aria-hidden="true">search</span>
+        <input id="dt-search-demo" type="search" placeholder="Search attendees" />
+      </span>
+      <button type="button" className="dt-btn"><span className="dt-material" aria-hidden="true">tune</span>Filters</button>
+    </div>
+    <div className="dt-chips">
+      <span className="dt-chip">
+        Status: Paid
+        <button type="button" className="dt-chip-x" aria-label="Remove filter Status Paid"><span className="dt-material" aria-hidden="true">close</span></button>
+      </span>
+      <span className="dt-chip">
+        City: Denver
+        <button type="button" className="dt-chip-x" aria-label="Remove filter City Denver"><span className="dt-material" aria-hidden="true">close</span></button>
+      </span>
+      <span className="dt-chip">
+        Ticket: VIP
+        <button type="button" className="dt-chip-x" aria-label="Remove filter Ticket VIP"><span className="dt-material" aria-hidden="true">close</span></button>
+      </span>
+      <button type="button" className="dt-clear">Clear all</button>
+    </div>
+    <p className="dt-filter-status" role="status" aria-live="polite">Showing <strong>12</strong> of <strong>320</strong>, filters active.</p>
+  </div>
+</div>
+
+{/* 10: ROW & BULK ACTIONS */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">10</span>
+    <h2 className="dt-section-title">Row actions and bulk actions</h2>
+  </div>
+
+  <p className="dt-text">
+    Show one or two primary, high-frequency actions as inline buttons in an actions column. Collapse three or more, or any secondary actions, into an overflow kebab menu to control width and noise. Icon-only buttons must carry an <code>aria-label</code>. For bulk work, select rows through the checkboxes from section 4, then reveal a contextual toolbar when at least one row is selected.
+  </p>
+
+  <div className="dt-callout">
+    <span className="dt-material" aria-hidden="true">do_not_disturb_on</span>
+    <p className="dt-callout-text">
+      <strong>The hover-only trap.</strong> Row actions must never appear on mouse hover alone. Hover does not exist on touch and is unreachable by keyboard. Actions must be always rendered (optionally lower contrast until hover or focus), never hidden with <code>display:none</code> behind a hover, and every target meets the 24 by 24px minimum.
+    </p>
+  </div>
+
+  <div className="dt-lab">
+    <div className="dt-demo">
+      <div className="dt-demo-label rec">✓ Recommended: actions always visible and focusable</div>
+      <div className="dt-scroll">
+        <table className="dt-data">
+          <caption className="dt-sr-only">Row actions always visible</caption>
+          <thead><tr><th scope="col">Attendee</th><th scope="col"><span className="dt-sr-only">Actions</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <th scope="row">Mariana Restrepo</th>
+              <td style={{ textAlign: 'right' }}>
+                <span className="dt-row-actions">
+                  <button type="button" className="dt-icon-btn" aria-label="View Mariana Restrepo"><span className="dt-material" aria-hidden="true">visibility</span></button>
+                  <button type="button" className="dt-icon-btn" aria-label="More actions for Mariana Restrepo"><span className="dt-material" aria-hidden="true">more_vert</span></button>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Jordan Ellis</th>
+              <td style={{ textAlign: 'right' }}>
+                <span className="dt-row-actions">
+                  <button type="button" className="dt-icon-btn" aria-label="View Jordan Ellis"><span className="dt-material" aria-hidden="true">visibility</span></button>
+                  <button type="button" className="dt-icon-btn" aria-label="More actions for Jordan Ellis"><span className="dt-material" aria-hidden="true">more_vert</span></button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div className="dt-demo avoid">
+      <div className="dt-demo-label avoid">✕ Avoid: actions that only appear on hover</div>
+      <div className="dt-scroll">
+        <table className="dt-data">
+          <caption className="dt-sr-only">Row actions hidden until hover, do not do this</caption>
+          <thead><tr><th scope="col">Attendee</th><th scope="col"><span className="dt-sr-only">Actions</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <th scope="row">Mariana Restrepo</th>
+              <td style={{ textAlign: 'right', color: '#cbd5e1', fontStyle: 'italic', fontSize: '0.75rem' }}>hidden until hover</td>
+            </tr>
+            <tr>
+              <th scope="row">Jordan Ellis</th>
+              <td style={{ textAlign: 'right', color: '#cbd5e1', fontStyle: 'italic', fontSize: '0.75rem' }}>unreachable on touch</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* 11: STATES */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">11</span>
+    <h2 className="dt-section-title">States: empty, loading, error, no results</h2>
+  </div>
+
+  <p className="dt-text">
+    A table has four states beyond happy-path data, and two of them are constantly confused. The empty state (no data yet) explains why the table is empty and offers a primary action to add the first record. The no-results state (after filtering to zero rows) is different: it must say the filters matched nothing and offer a one-click Clear filters. Loading prefers skeleton rows that mirror the real column layout over a bare spinner, with the region marked <code>aria-busy="true"</code> while it loads. On error, keep any stale data visible under an error banner with a retry rather than blanking the screen.
+  </p>
+
+  <div className="dt-lab">
+    <div className="dt-demo">
+      <div className="dt-demo-label">Live: loading, skeleton rows</div>
+      <div className="dt-scroll" aria-busy="true" aria-label="Loading attendees">
+        <div className="dt-skel-row"><div className="dt-skel" style={{ width: '80%' }}></div><div className="dt-skel" style={{ width: '60%' }}></div><div className="dt-skel" style={{ width: '70%' }}></div><div className="dt-skel"></div></div>
+        <div className="dt-skel-row"><div className="dt-skel" style={{ width: '65%' }}></div><div className="dt-skel" style={{ width: '55%' }}></div><div className="dt-skel" style={{ width: '75%' }}></div><div className="dt-skel"></div></div>
+        <div className="dt-skel-row"><div className="dt-skel" style={{ width: '72%' }}></div><div className="dt-skel" style={{ width: '48%' }}></div><div className="dt-skel" style={{ width: '66%' }}></div><div className="dt-skel"></div></div>
+      </div>
+    </div>
+    <div className="dt-demo">
+      <div className="dt-demo-label">Live: no results after filtering</div>
+      <div className="dt-scroll">
+        <div className="dt-state">
+          <span className="dt-material" aria-hidden="true">filter_alt_off</span>
+          <span className="dt-state-title">No results for these filters</span>
+          <span className="dt-state-body">No attendees match Status Paid and City Denver. Try widening the filters.</span>
+          <button type="button" className="dt-btn primary">Clear filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="dt-lab">
+    <div className="dt-demo">
+      <div className="dt-demo-label">Live: empty, no data yet</div>
+      <div className="dt-scroll">
+        <div className="dt-state">
+          <span className="dt-material" aria-hidden="true">table_rows</span>
+          <span className="dt-state-title">No attendees yet</span>
+          <span className="dt-state-body">Attendees appear here once people register. Share your event to get the first sign-up.</span>
+          <button type="button" className="dt-btn primary"><span className="dt-material" aria-hidden="true">share</span>Share event</button>
+        </div>
+      </div>
+    </div>
+    <div className="dt-demo">
+      <div className="dt-demo-label">Live: error, keep stale data under a banner</div>
+      <div className="dt-scroll">
+        <div
+          role="alert"
+          style={{
+            display: 'flex', alignItems: 'center', gap: '0.6rem',
+            padding: '0.75rem 1rem',
+            background: 'var(--color-error-surface)',
+            borderBottom: '1px solid var(--color-error-border)',
+            color: 'var(--color-error-text)',
+            fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '0.8125rem', fontWeight: 600,
+          }}
+        >
+          <span className="dt-material" aria-hidden="true">error</span>
+          Could not refresh. Showing the last loaded data.
+          <button type="button" className="dt-btn" style={{ marginLeft: 'auto' }}>Retry</button>
+        </div>
+        <table className="dt-data">
+          <caption className="dt-sr-only">Stale attendees still visible</caption>
+          <thead><tr><th scope="col">Attendee</th><th scope="col" className="num">Paid (COP)</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Mariana Restrepo</th><td className="num">180,000</td></tr>
+            <tr><th scope="row">Jordan Ellis</th><td className="num">420,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* PART 4 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="dt-part">
+  <span className="dt-part-kicker">Part 4</span>
+  <span className="dt-part-title">Mobile and advanced</span>
+</div>
+
+{/* 12: MOBILE */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">12</span>
+    <h2 className="dt-section-title">Mobile, the hard problem</h2>
+  </div>
+
+  <p className="dt-text">
+    Tables do not fit narrow viewports, and WCAG SC 1.4.10 Reflow gives them a specific carve-out. Content must reflow to 320 CSS px without two-dimensional scrolling, <strong>except for parts that require a two-dimensional layout for meaning</strong>, and the standard names "data tables (not individual cells)" as exactly such a part. In plain terms: a data table is permitted to scroll horizontally on a phone and you do not fail Reflow for it, as long as the surrounding page (headings, search, filters) still reflows. Horizontal scroll is a legitimate, standards-blessed strategy for tables, not a hack.
+  </p>
+
+  <div className="dt-patterns">
+    <div className="dt-pattern default">
+      <div className="dt-pattern-head">
+        <span className="dt-pattern-name">A. Scroll region + sticky first column</span>
+        <span className="dt-verdict def">Default</span>
+      </div>
+      <p className="dt-pattern-body">Keep the real <code>&lt;table&gt;</code>. Wrap it in a focusable, labeled scroll region and freeze the identifying first column as the anchor.</p>
+      <p className="dt-pattern-tradeoff"><b>Gain:</b> bulletproof semantics, about six lines of CSS, no JS, no data duplication. <i>Lose:</i> the user scrolls to reach far columns, so mitigate with the sticky first column.</p>
+    </div>
+    <div className="dt-pattern">
+      <div className="dt-pattern-head">
+        <span className="dt-pattern-name">B. Stacked cards</span>
+        <span className="dt-verdict care">Repair needed</span>
+      </div>
+      <p className="dt-pattern-body">Collapse each row into a key and value card with <code>td::before</code> labels. Readable one record at a time.</p>
+      <p className="dt-pattern-tradeoff"><b>Gain:</b> no horizontal scroll, great for inspecting single records. <i>Lose:</i> <code>display:block</code> destroys table semantics, so you MUST restore roles with ARIA, and cross-record comparison becomes nearly impossible.</p>
+    </div>
+    <div className="dt-pattern">
+      <div className="dt-pattern-head">
+        <span className="dt-pattern-name">C. Priority columns + expand</span>
+        <span className="dt-verdict alt">Alternative</span>
+      </div>
+      <p className="dt-pattern-body">Show only the top-priority columns on narrow screens, reveal the rest behind a columns toggle or an expandable row.</p>
+      <p className="dt-pattern-tradeoff"><b>Gain:</b> keeps a real table and fits the width. <i>Lose:</i> hidden data is out of sight, so the toggle state must be announced and persistent.</p>
+    </div>
+    <div className="dt-pattern">
+      <div className="dt-pattern-head">
+        <span className="dt-pattern-name">D. Not a table at all</span>
+        <span className="dt-verdict alt">Alternative</span>
+      </div>
+      <p className="dt-pattern-body">Show a scannable list of summary items linking to a full detail view. Put the real table on wider viewports.</p>
+      <p className="dt-pattern-tradeoff"><b>Gain:</b> simplest reading on a phone. <i>Lose:</i> cross-column comparison is not available on mobile, so use it only when identity dominates.</p>
+    </div>
+  </div>
+
+  <div className="dt-callout">
+    <span className="dt-material" aria-hidden="true">rule</span>
+    <p className="dt-callout-text">
+      <strong>The conflict, resolved in favor of Roselli.</strong> CSS-Tricks (Coyier, 2011) claims the <code>display:block</code> card transform stays accessible. Roselli's assistive-technology testing (2017, updated 2024) shows the opposite: as soon as the table becomes <code>display:block</code>, screen readers stop treating it as a table. We trust Roselli, the AT-tested specialist. If you use the card pattern you must repair semantics with ARIA roles. Otherwise, prefer Pattern A.
+    </p>
+  </div>
+
+  <p className="dt-text" style={{ marginTop: '1.25rem' }}><strong>Mobile decision ladder</strong></p>
+  <div className="dt-ladder">
+    <div className="dt-ladder-step"><span className="dt-ladder-text">Is cross-column comparison the core task? Use <strong>Pattern A</strong>, scroll region with a sticky first column.</span></div>
+    <div className="dt-ladder-step"><span className="dt-ladder-text">Do users inspect one record at a time? Use <strong>Pattern C</strong> (priority + expand) or <strong>Pattern B</strong> (cards, with ARIA repair).</span></div>
+    <div className="dt-ladder-step"><span className="dt-ladder-text">Is it really a list of records, not a comparison grid? Use <strong>Pattern D</strong>, list plus detail.</span></div>
+    <div className="dt-ladder-step"><span className="dt-ladder-text">Never: hover-only actions. Never: assume <code>display:block</code> keeps semantics.</span></div>
+  </div>
+
+  <div className="dt-demo">
+    <div className="dt-demo-label">Live: Pattern A, focusable scroll region with a sticky first column</div>
+    <p className="dt-filter-status" style={{ marginTop: 0, marginBottom: '0.6rem' }}>Tab to the table below, then scroll it sideways. The Attendee column stays pinned.</p>
+    <div
+      className="dt-scroll"
+      role="region"
+      aria-label="Attendees, scrollable"
+      tabIndex={0}
+    >
+      <table className="dt-data sticky-first" style={{ minWidth: '640px' }}>
+        <caption>Attendees with full detail. Scroll horizontally to see every column.</caption>
+        <thead>
+          <tr>
+            <th scope="col" className="stick">Attendee</th>
+            <th scope="col">Ticket</th>
+            <th scope="col">City</th>
+            <th scope="col">Status</th>
+            <th scope="col" className="num">Paid (COP)</th>
+            <th scope="col">Registered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" className="stick">Mariana Restrepo</th>
+            <td>General</td><td>Denver</td><td><span className="dt-badge paid">Paid</span></td><td className="num">180,000</td><td>Oct 3, 2025</td>
+          </tr>
+          <tr>
+            <th scope="row" className="stick">Jordan Ellis</th>
+            <td>VIP</td><td>Portland</td><td><span className="dt-badge paid">Paid</span></td><td className="num">420,000</td><td>Oct 3, 2025</td>
+          </tr>
+          <tr>
+            <th scope="row" className="stick">Riley Chen</th>
+            <td>General</td><td>Cali</td><td><span className="dt-badge pending">Pending</span></td><td className="num">180,000</td><td>Oct 4, 2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div className="dt-callout">
+    <span className="dt-material" aria-hidden="true">info</span>
+    <p className="dt-callout-text">
+      <strong>Why the region needs <code>tabindex="0"</code>.</strong> Roselli's under-engineered pattern wraps the table in <code>&lt;div role="region" aria-labelledby="..." tabindex="0"&gt;</code>. The tabindex satisfies WCAG SC 2.1.1 Keyboard so a keyboard user can tab to the region and scroll it. Avoid CSS scroll-snap here: it clips cells, and users need to compare adjacent cells freely.
+    </p>
+  </div>
+</div>
+
+{/* 13: ADVANCED */}
+<div className="dt-section">
+  <div className="dt-section-header">
+    <span className="dt-section-number">13</span>
+    <h2 className="dt-section-title">Advanced: editing, expansion, pinning, virtualization</h2>
+  </div>
+
+  <div className="dt-ref-scroll">
+    <table className="dt-ref">
+      <thead>
+        <tr><th scope="col">Feature</th><th scope="col">Rule and cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Editable cells / data grid</td><td>This is where you graduate to <code>role="grid"</code> with the edit-grid keyboard model (<code>Enter</code> or <code>F2</code> to edit, <code>Escape</code> to exit). Do not bolt inline edit onto a static table without the grid contract.</td></tr>
+        <tr><td>Column resize / reorder</td><td>Provide keyboard-operable handles, announce the new size or position, and persist per user. High effort, ship only if users demonstrably need it.</td></tr>
+        <tr><td>Expandable rows</td><td>A disclosure <code>&lt;button&gt;</code> per row with <code>aria-expanded</code> toggling an adjacent detail region. A natural home for secondary columns on mobile Pattern C. Test density against expanded content together, Carbon logged a bug where row density skipped the expansion.</td></tr>
+        <tr><td>Column pinning</td><td>Use CSS <code>position: sticky</code>, and pin only the identifier column. Freezing many columns eats mobile width.</td></tr>
+        <tr><td>Virtualization</td><td>Render only visible rows for very large datasets. It breaks find-in-page and can confuse assistive technology because off-screen rows are not in the DOM. If you virtualize, set <code>aria-rowcount</code> and <code>aria-rowindex</code> so AT knows the true totals. Treat it as a last resort after pagination.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a className="dt-xlink" href="../?path=/docs/patterns-form-elements--docs"><span className="dt-material" aria-hidden="true">arrow_forward</span>Form Elements, native-first controls</a>
+  <a className="dt-xlink" href="../?path=/docs/patterns-accessibility--docs"><span className="dt-material" aria-hidden="true">arrow_forward</span>Accessibility patterns</a>
+</div>
+
+{/* ============================================ */}
+{/* SOURCES                                       */}
+{/* ============================================ */}
+
+<div className="dt-section">
+  <h2 className="dt-section-title">Sources</h2>
+  <ul className="dt-sources-list">
+    <li>
+      <strong>MDN Web Docs, the <code>&lt;table&gt;</code> element and its accessibility.</strong> Semantic markup makes tables understandable to assistive technology and search engines, the correct child order (<code>caption</code>, <code>colgroup</code>, <code>thead</code>, <code>tbody</code>, <code>tfoot</code>), explicit <code>scope</code>, the split-over-<code>headers</code>/<code>id</code> guidance, and wrapping dates in <code>&lt;time&gt;</code>. developer.mozilla.org/en-US/docs/Web/HTML/Element/table
+    </li>
+    <li>
+      <strong>WAI-ARIA Authoring Practices Guide, Table and Grid patterns.</strong> Native table is strongly encouraged over <code>role="table"</code>, a WAI-ARIA table is static not interactive, and a grid is a composite widget with a single tab stop and roving tabindex. The Sortable Table example wraps header text in a button and drives state with <code>aria-sort</code>. w3.org/WAI/ARIA/apg/patterns/table <span className="dt-note">SPA index</span>
+    </li>
+    <li>
+      <strong>Adrian Roselli.</strong> Sortable Table Columns (2021, updated 2024): one <code>aria-sort</code> at a time, VoiceOver macOS and TalkBack do not announce it so add an optional live region, signal direction by shape not color, prefer a <code>&lt;caption&gt;</code> hint. Under-Engineered Responsive Tables (2020): the <code>role="region"</code> plus <code>tabindex="0"</code> scroll pattern, no scroll-snap. A Responsive Accessible Table (2017, updated 2024): <code>display:block</code> stops screen readers treating it as a table. adrianroselli.com
+    </li>
+    <li>
+      <strong>GOV.UK Design System, Table component.</strong> Captions help users find and understand tables, <code>scope</code> distinguishes row from column headers, numeric cell and header modifiers right-align, and aim for less tabular data on small screens. design-system.service.gov.uk/components/table
+    </li>
+    <li>
+      <strong>Nielsen Norman Group.</strong> Data Tables, Four Major User Tasks (Laubheimer, 2022): borders, zebra striping and hover highlighting all help place-keeping, and freeze header rows and columns. Infinite Scrolling, When to Use It (Neusesser, 2022): avoid infinite scroll for find, compare and return tasks, so tables default to pagination. nngroup.com/articles/data-tables
+    </li>
+    <li>
+      <strong>W3C, Understanding WCAG.</strong> SC 1.3.1 Info and Relationships (A) as the basis for table semantics, SC 1.4.1 Use of Color (A), SC 2.1.1 Keyboard (A), SC 1.4.10 Reflow (AA) with its data-table carve-out, and SC 2.5.8 Target Size Minimum 24px (AA) citing pagination links. w3.org/WAI/WCAG22/Understanding
+    </li>
+    <li>
+      <strong>IBM Carbon Design System.</strong> Row-height tiers Compact 24, Short 32, Medium 40, Default 48, Tall 64 from GitHub issue #8874, and the row-size versus expanded-content bug from issue #4796. github.com/carbon-design-system/carbon <span className="dt-note">values from repo issues, rendered docs are a SPA</span>
+    </li>
+    <li>
+      <strong>CSS-Tricks, Responsive Data Tables (Coyier, 2011).</strong> The <code>display:block</code> card transform with <code>td::before</code> labels. Cited for the pattern, and for the accessibility claim that Roselli's testing contradicts. Resolved in favor of Roselli. css-tricks.com/responsive-data-tables
+    </li>
+    <li>
+      House rules layered on the cited guidance, not verbatim claims: the width-driven zebra-versus-dividers heuristic (NN/g endorses the aids but publishes no winner), <code>tabular-nums</code> on numeric columns (standard CSS, GOV.UK documents only right-alignment), the checkbox plus indeterminate select-all with bulk announce, the sticky-header guidance, and the filter, states and virtualization accessibility hooks (standard ARIA and WCAG).
+    </li>
+  </ul>
+</div>
