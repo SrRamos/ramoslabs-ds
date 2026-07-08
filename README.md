@@ -2,6 +2,7 @@
 
 A mono-indigo, taxonomy-first design system that ships the decisions, not a bundle you import.
 
+[![Version](https://img.shields.io/github/package-json/v/SrRamos/ramoslabs-ds?filename=packages%2Ftokens%2Fpackage.json&label=%40ramoslabs%2Ftokens&color=4f46e5)](./CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-4f46e5.svg)](./LICENSE)
 [![Built with Storybook](https://img.shields.io/badge/docs-Storybook_10-ff4785.svg)](https://storybook.js.org/)
 [![Tokens: Style Dictionary](https://img.shields.io/badge/tokens-Style_Dictionary_v5-0b0d0e.svg)](https://styledictionary.com/)
@@ -127,6 +128,13 @@ These are planned, not commitments with dates:
 
 - Publish `@ramoslabs/tokens` to npm so consumers can install it directly.
 - Ship SJ components in `@ramoslabs/vue`.
+
+## Versioning
+
+The project follows Semantic Versioning, and every notable change is recorded in
+[CHANGELOG.md](./CHANGELOG.md). The release ritual (SemVer, Conventional Commits, the
+changelog, git tags, and the npm publish flow) is codified in the `.claude/skills/release`
+skill so it is never lost.
 
 ## Contributing
 
