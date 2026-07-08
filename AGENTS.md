@@ -9,7 +9,7 @@ the system is, how to install it, and the rules your output must satisfy.
 RamosLabs DS is a mono-indigo, taxonomy-first design system. Tokens are the single source
 of truth. Color, spacing, typography, radius, shadow, and motion are defined once as
 design tokens and compiled to CSS variables and TypeScript. The brand primary is Indigo
-600 (`#4f46e5`); the accent is the primary. There is no second accent color.
+600 (`#4f46e5`); the action accent is the primary. Violet is a decorative accent only, never used for interactive or action affordances.
 
 The system ships two things today:
 
@@ -21,13 +21,18 @@ The system ships two things today:
 Components are not shipped yet. They land in the `@ramoslabs/vue` package under the `SJ`
 prefix in a future release. Until then, build with the tokens and the documented patterns.
 
-## Install and consume tokens
+## Consume tokens
 
-```bash
-bun add @ramoslabs/tokens   # or npm/pnpm/yarn
-```
+`@ramoslabs/tokens` is not yet published to npm, so `bun add @ramoslabs/tokens` does not work
+today. Get the token names and values one of two ways:
 
-Import the CSS variables once at your app entry, then reference them everywhere:
+- Read the served flat map from the deployed site: `WebFetch ${SITE_URL}/tokens.json` (names to
+  resolved values), or `${SITE_URL}/tokens.css` for the CSS variable declarations.
+- Or build the package from source in the monorepo: `bun run --filter @ramoslabs/tokens build`,
+  which emits `dist/tokens.css`, `dist/tokens.ts`, and `dist/tokens.json`.
+
+Once the package is available in your project, import the CSS variables once at your app entry,
+then reference them everywhere:
 
 ```css
 @import '@ramoslabs/tokens/css';
@@ -96,3 +101,13 @@ WebFetch https://ramoslabs-ds.pages.dev/registry.json
 
 Start with `llms.txt` to find the right page, or `llms-full.txt` when you want everything.
 Use `registry.json` when you need structured token or pattern data rather than prose.
+
+## License and attribution
+
+RamosLabs Design System is free to use under the MIT License. Use, copy, modify, and
+distribute it, including commercially. Keep the copyright and license notice, and credit
+RamosLabs.
+
+© 2026 RAMOS SOLUTIONS S.A.S. RamosLabs is a product of RAMOS SOLUTIONS S.A.S.
+Website: https://ramoslabs.com. The `registry.json` `license`, `copyright`, and
+`attribution` fields carry these terms in machine-readable form.

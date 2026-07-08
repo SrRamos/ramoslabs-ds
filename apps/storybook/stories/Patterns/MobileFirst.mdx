@@ -238,6 +238,19 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.08em;
     margin-bottom: 1rem;
   }
+  .mf-standard-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+    margin: 0.9rem 0 0;
+  }
+  .mf-standard-cap .mf-material { font-size: 0.95rem; color: #4338ca; }
 
   /* ===== REC / AVOID PAIR ===== */
   .mf-pair {
@@ -342,32 +355,49 @@ import { Meta } from '@storybook/addon-docs/blocks';
   /* ===== PHONE MOCK ===== */
   .mf-phone {
     position: relative;
-    width: 300px;
+    width: 320px;
     max-width: 100%;
     margin: 0 auto;
     background: #0f172a;
-    border-radius: 34px;
-    padding: 10px;
-    box-shadow: 0 20px 40px -12px rgba(15,23,42,0.35);
+    border-radius: 48px;
+    padding: 12px;
+    box-shadow: 0 28px 56px -16px rgba(15,23,42,0.45), inset 0 0 0 1px rgba(148,163,184,0.25);
+  }
+  .mf-phone::before,
+  .mf-phone::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    width: 3px;
+    border-radius: 2px 0 0 2px;
+    background: #1e293b;
+  }
+  .mf-phone::before {
+    top: 108px;
+    height: 34px;
+  }
+  .mf-phone::after {
+    top: 152px;
+    height: 58px;
   }
   .mf-phone-screen {
     position: relative;
-    height: 460px;
+    height: 640px;
     background: #f8fafc;
-    border-radius: 26px;
+    border-radius: 38px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
   }
   .mf-phone-notch {
     position: absolute;
-    top: 0;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 96px;
-    height: 20px;
+    width: 110px;
+    height: 26px;
     background: #0f172a;
-    border-radius: 0 0 12px 12px;
+    border-radius: 14px;
     z-index: 5;
   }
   .mf-status {
@@ -375,7 +405,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     align-items: center;
     justify-content: space-between;
     padding: 0.4rem 1rem 0.2rem;
-    padding-top: 1.5rem;
+    padding-top: 2.75rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.7rem;
     font-weight: 600;
@@ -1081,10 +1111,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
             type="button"
             className="mf-ghost-btn"
             onClick={() => { const d = document.getElementById('mf-sheet-demo'); if (d) d.showModal(); }}
-          >
-            <span className="mf-material" aria-hidden="true">expand_less</span>
-            Open bottom sheet
-          </button>
+          ><span className="mf-material" aria-hidden="true">expand_less</span>Open bottom sheet</button>
           <div className="mf-line mid" aria-hidden="true"></div>
           <div className="mf-line short" aria-hidden="true"></div>
         </div>
@@ -1106,19 +1133,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
             className="mf-btn-secondary"
             autoFocus
             onClick={() => { const d = document.getElementById('mf-sheet-demo'); if (d) d.close(); }}
-          >
-            Cancel
-          </button>
+          >Cancel</button>
           <button
             type="button"
             className="mf-btn-primary"
             onClick={() => { const d = document.getElementById('mf-sheet-demo'); if (d) d.close(); }}
-          >
-            Transfer
-          </button>
+          >Transfer</button>
         </div>
       </div>
     </dialog>
+    <p className="mf-standard-cap"><span className="mf-material" aria-hidden="true">bookmark</span>Standard: modal bottom sheet</p>
     <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Try</span> Open it, then press Escape, or Tab to Cancel (which holds focus on open) and press Enter. Both close it. The backdrop dims the page and the rest goes inert.</p>
   </div>
 
@@ -1190,10 +1214,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <div className="mf-line mid" aria-hidden="true"></div>
         </div>
         <div className="mf-sticky-cta">
-          <button type="button" className="mf-cta-btn">
-            <span className="mf-material" aria-hidden="true">lock</span>
-            Pay 360,000 COP
-          </button>
+          <button type="button" className="mf-cta-btn"><span className="mf-material" aria-hidden="true">lock</span>Pay 360,000 COP</button>
         </div>
       </div>
     </div>
@@ -1237,25 +1258,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <span className="mf-material" aria-hidden="true">add</span>
         </button>
         <nav className="mf-bottomnav" aria-label="Primary">
-          <a className="mf-navitem" href="#mf-nav-home" aria-current="page">
-            <span className="mf-material" aria-hidden="true">home</span>
-            Home
-          </a>
-          <a className="mf-navitem" href="#mf-nav-events">
-            <span className="mf-material" aria-hidden="true">calendar_month</span>
-            Events
-          </a>
-          <a className="mf-navitem" href="#mf-nav-tickets">
-            <span className="mf-material" aria-hidden="true">confirmation_number</span>
-            Tickets
-          </a>
-          <a className="mf-navitem" href="#mf-nav-profile">
-            <span className="mf-material" aria-hidden="true">person</span>
-            Profile
-          </a>
+          <a className="mf-navitem" href="#mf-nav-home" aria-current="page" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">home</span>Home</a>
+          <a className="mf-navitem" href="#mf-nav-events" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">calendar_month</span>Events</a>
+          <a className="mf-navitem" href="#mf-nav-tickets" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">confirmation_number</span>Tickets</a>
+          <a className="mf-navitem" href="#mf-nav-profile" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">person</span>Profile</a>
         </nav>
       </div>
     </div>
+    <p className="mf-standard-cap"><span className="mf-material" aria-hidden="true">bookmark</span>Standard: bottom navigation and FAB</p>
     <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> The active tab is marked with <code>aria-current="page"</code>, so a screen reader announces it as current, not by color alone. The FAB carries an <code>aria-label</code> because its glyph has no visible text.</p>
   </div>
 </div>
@@ -1292,6 +1302,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
       </div>
     </div>
+    <p className="mf-standard-cap"><span className="mf-material" aria-hidden="true">bookmark</span>Standard: bottom snackbar</p>
     <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> The message sits in a polite live region so it is announced without stealing focus. The Undo action is a keyboard-reachable button, the same action a swipe would have triggered.</p>
   </div>
 </div>
@@ -1343,28 +1354,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <span className="mf-swipe-name">Mariana Restrepo</span>
           <span className="mf-swipe-meta">General admission, order 4521</span>
         </div>
-        <span className="mf-swipe-hint" aria-hidden="true">
-          <span className="mf-material">swipe_left</span>
-          swipe
-        </span>
-        <button type="button" className="mf-swipe-action">
-          <span className="mf-material" aria-hidden="true">delete</span>
-          Remove
-        </button>
+        <span className="mf-swipe-hint" aria-hidden="true"><span className="mf-material">swipe_left</span>swipe</span>
+        <button type="button" className="mf-swipe-action"><span className="mf-material" aria-hidden="true">delete</span>Remove</button>
       </li>
       <li className="mf-swipe-row">
         <div className="mf-swipe-main">
           <span className="mf-swipe-name">Jordan Ellis</span>
           <span className="mf-swipe-meta">VIP, order 4520</span>
         </div>
-        <span className="mf-swipe-hint" aria-hidden="true">
-          <span className="mf-material">swipe_left</span>
-          swipe
-        </span>
-        <button type="button" className="mf-swipe-action">
-          <span className="mf-material" aria-hidden="true">delete</span>
-          Remove
-        </button>
+        <span className="mf-swipe-hint" aria-hidden="true"><span className="mf-material">swipe_left</span>swipe</span>
+        <button type="button" className="mf-swipe-action"><span className="mf-material" aria-hidden="true">delete</span>Remove</button>
       </li>
     </ul>
     <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> Swiping is the shortcut, not the requirement. The Remove button carries the same action, is at least 44px tall, and a keyboard can reach it. It is styled in the brand indigo, not an alarm color, because destructive intent is carried by the label and the confirmation step, not by hue.</p>

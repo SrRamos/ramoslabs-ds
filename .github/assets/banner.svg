@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="1280" height="400" role="img" aria-labelledby="title desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title id="title">RamosLabs Design System</title>
+  <desc id="desc">A mono-indigo, taxonomy-first design system. Ships the decisions, not a bundle you import.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e1b4b"/>
+      <stop offset="0.55" stop-color="#3730a3"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#ffffff" fill-opacity="0.06"/>
+    </pattern>
+    <clipPath id="frame">
+      <rect x="0" y="0" width="1280" height="400" rx="0"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <!-- base -->
+    <rect x="0" y="0" width="1280" height="400" fill="url(#bg)"/>
+    <rect x="0" y="0" width="1280" height="400" fill="url(#dots)"/>
+    <rect x="0" y="0" width="1280" height="400" fill="url(#fade)"/>
+
+    <!-- concentric radii motif, top-right corner: a nod to the radius scale -->
+    <g fill="none" stroke="#c7d2fe" stroke-opacity="0.28">
+      <circle cx="1200" cy="30" r="120"/>
+      <circle cx="1200" cy="30" r="190"/>
+      <circle cx="1200" cy="30" r="270"/>
+    </g>
+    <circle cx="1200" cy="30" r="60" fill="#6366f1" fill-opacity="0.35"/>
+
+    <!-- thin accent rule under the wordmark region -->
+    <rect x="80" y="0" width="4" height="400" fill="#8b5cf6" fill-opacity="0.55"/>
+
+    <!-- LEFT: wordmark + tagline -->
+    <g transform="translate(120,0)">
+      <text x="0" y="118" fill="#a5b4fc" font-size="20" font-weight="600" letter-spacing="5">RAMOSLABS · DS</text>
+
+      <text x="-3" y="205" fill="#ffffff" font-size="86" font-weight="800" letter-spacing="-2">RamosLabs</text>
+
+      <text x="0" y="256" fill="#c7d2fe" font-size="36" font-weight="500" letter-spacing="1">Design System</text>
+
+      <text x="0" y="320" fill="#e0e7ff" font-size="23" font-weight="400">Ships the decisions, not a bundle you import.</text>
+    </g>
+
+    <!-- RIGHT: indigo ramp swatch motif (the token product, shown not told) -->
+    <g transform="translate(876,150)">
+      <rect x="0"   y="0" width="46" height="100" rx="10" fill="#a5b4fc"/>
+      <rect x="56"  y="0" width="46" height="100" rx="10" fill="#818cf8"/>
+      <rect x="112" y="0" width="46" height="100" rx="10" fill="#6366f1"/>
+      <!-- 600, the single action accent, lifted and outlined -->
+      <rect x="168" y="-8" width="46" height="116" rx="10" fill="#4f46e5" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
+      <rect x="224" y="0" width="46" height="100" rx="10" fill="#4338ca"/>
+      <!-- lone violet accent chip: decorative only -->
+      <rect x="280" y="0" width="46" height="100" rx="10" fill="#8b5cf6" fill-opacity="0.85"/>
+
+      <text x="168" y="132" fill="#e0e7ff" font-size="15" font-weight="600" text-anchor="start" letter-spacing="1">600 · action accent</text>
+    </g>
+  </g>
+</svg>

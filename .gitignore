@@ -19,3 +19,9 @@ yarn-error.log*
 .idea/
 .vscode/
 *.tsbuildinfo
+
+# Local Claude config is ignored (often globally). Track ONLY shareable project skills.
+!.claude/
+.claude/*
+!.claude/skills/
+!.claude/skills/**

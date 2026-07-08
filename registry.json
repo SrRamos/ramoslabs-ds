@@ -1,6 +1,10 @@
 {
   "name": "RamosLabs Design System",
   "version": "0.0.0",
+  "license": "MIT",
+  "copyright": "© 2026 RAMOS SOLUTIONS S.A.S.",
+  "homepage": "https://ramoslabs.com",
+  "attribution": "RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.",
   "generatedFrom": "@ramoslabs/tokens dist JSON + Storybook MDX content",
   "tokens": {
     "total": 213,

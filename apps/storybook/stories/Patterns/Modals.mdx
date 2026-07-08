@@ -370,7 +370,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   /* ===== POPOVER (non-modal) ===== */
   .md-popover {
-    margin: 0;
+    margin: auto;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 0.375rem;
@@ -379,6 +379,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
     box-shadow: 0 12px 24px -8px rgba(15,23,42,0.18), 0 4px 8px -4px rgba(15,23,42,0.10);
   }
   .md-popover::backdrop { background: transparent; }
+  .md-menu-trigger { anchor-name: --md-menu-anchor; }
+  @supports (position-anchor: --a) {
+    .md-popover {
+      position: fixed;
+      position-anchor: --md-menu-anchor;
+      top: anchor(bottom);
+      left: anchor(left);
+      margin: 0.375rem 0 0 0;
+    }
+  }
   .md-menu-item {
     display: flex;
     align-items: center;
@@ -399,6 +409,163 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
   .md-menu-item:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
   .md-menu-item .md-material { font-size: 1.1rem; color: #64748b; }
+
+  /* ===== DESKTOP WINDOW STANDARD RENDER ===== */
+  .md-standard { margin: 1.25rem 0 0; }
+  .md-standard-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+    margin: 0 0 0.6rem;
+  }
+  .md-standard-cap .md-material { font-size: 0.95rem; color: #4338ca; }
+
+  .md-window {
+    max-width: 520px;
+    margin: 0 auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 24px 48px -12px rgba(15,23,42,0.30), 0 8px 16px -8px rgba(15,23,42,0.18);
+  }
+  .md-window-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .md-window-dots { display: inline-flex; gap: 0.35rem; justify-self: start; }
+  .md-window-dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; }
+  .md-window-url {
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: 240px;
+    padding: 0.22rem 0.75rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+  }
+  .md-window-url .md-material { font-size: 0.85rem; color: #94a3b8; }
+  .md-window-body {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    background: #f1f5f9;
+  }
+  /* The scene is authored at a reference desktop resolution and scaled down to
+     fit the window body, so every element inside reads to scale like a real
+     screenshot. 1040 x 600 at scale 0.5 renders 520 x 300, matching the body,
+     and the 440px modal occupies ~42% of the 1040px screen. The window chrome
+     is never scaled: only the scene content shrinks. */
+  .md-window-scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1040px;
+    height: 600px;
+    transform: scale(0.5);
+    transform-origin: top left;
+    background: #f1f5f9;
+  }
+  .md-window-faux {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    padding: 2.25rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .md-window-faux-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .md-window-faux-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+  }
+  .md-window-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #e0e7ff;
+    color: #4338ca;
+    flex-shrink: 0;
+  }
+  .md-window-avatar .md-material { font-size: 1.6rem; }
+  .md-window-card {
+    background: #ffffff;
+    border: 1px solid #e6e8eb;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .md-window-cardtitle {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #0f172a;
+  }
+  .md-window-cardline { height: 0.85rem; border-radius: 6px; background: #e6e8eb; }
+  .md-window-cardline.short { width: 38%; }
+  .md-window-cardline.mid { width: 60%; }
+  .md-window-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(15,23,42,0.5);
+  }
+  .md-window-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 440px;
+    /* The static render reuses .md-dialog on a div, which has no UA white
+       backdrop of a real <dialog>, so the card is made opaque here to sit
+       crisp in front of the scrim. */
+    background: #ffffff;
+  }
+  .md-window-menu {
+    position: absolute;
+    z-index: 2;
+    top: 5.25rem;
+    right: 2.5rem;
+    width: 14rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.5rem;
+    box-shadow: 0 12px 24px -8px rgba(15,23,42,0.18), 0 4px 8px -4px rgba(15,23,42,0.10);
+  }
 
   /* ===== REQUIREMENT GRID ===== */
   .md-reqs {
@@ -835,6 +1002,54 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
   </div>
 
+  <div className="md-standard" aria-hidden="true">
+    <p className="md-standard-cap"><span className="md-material" aria-hidden="true">web_asset</span>Standard: dialog on desktop</p>
+    <div className="md-window">
+      <div className="md-window-bar">
+        <span className="md-window-dots"><span className="md-window-dot"></span><span className="md-window-dot"></span><span className="md-window-dot"></span></span>
+        <span className="md-window-url"><span className="md-material" aria-hidden="true">lock</span>app.ramoslabs.com</span>
+      </div>
+      <div className="md-window-body">
+        <div className="md-window-scene">
+          <div className="md-window-faux">
+            <div className="md-window-faux-head">
+              <span className="md-window-faux-title">Events</span>
+              <span className="md-window-avatar"><span className="md-material" aria-hidden="true">person</span></span>
+            </div>
+            <div className="md-window-card">
+              <span className="md-window-cardtitle">Summer Rooftop Session</span>
+              <div className="md-window-cardline mid"></div>
+              <div className="md-window-cardline short"></div>
+            </div>
+            <div className="md-window-card">
+              <span className="md-window-cardtitle">Payments Deep Dive</span>
+              <div className="md-window-cardline mid"></div>
+              <div className="md-window-cardline short"></div>
+            </div>
+          </div>
+          <div className="md-window-scrim"></div>
+          <div className="md-dialog md-window-modal">
+            <div className="md-dialog-body">
+              <div className="md-dialog-head">
+                <h3 className="md-dialog-title">Rename event</h3>
+                <button type="button" tabIndex={-1} className="md-dialog-close" aria-label="Close dialog"><span className="md-material" aria-hidden="true">close</span></button>
+              </div>
+              <p className="md-dialog-text">Give this event a clearer public name. The change is visible to attendees right away.</p>
+              <div className="md-dialog-field">
+                <label>Event name</label>
+                <input type="text" tabIndex={-1} readOnly defaultValue="Summer Rooftop Session" />
+              </div>
+              <div className="md-dialog-actions">
+                <button type="button" tabIndex={-1} className="md-btn md-btn-ghost">Cancel</button>
+                <button type="button" tabIndex={-1} className="md-btn md-btn-primary">Save name</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div className="md-code">
     <div className="md-code-header">
       <span className="md-code-dot red" aria-hidden="true"></span>
@@ -901,9 +1116,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           type="button"
           className="md-btn md-btn-danger-outline"
           onClick={() => document.getElementById('md-alert-demo').showModal()}
-        >
-          Delete event
-        </button>
+        >Delete event</button>
       </div>
       <p className="md-demo-note">
         Opens as <code>role="alertdialog"</code> with <code>autofocus</code> on Cancel. The red is the <code>--color-error</code> family, the only place this system leaves indigo.
@@ -943,6 +1156,51 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="md-demo-note">
         NN/g draws the same line from the UX side: interrupt the user precisely when "there is a chance that users' work be lost or that an action may have destructive, irreversible consequences." That is the alertdialog's whole job. A purely informational message that needs no decision should probably not be a modal at all (Section 4).
       </p>
+    </div>
+  </div>
+
+  <div className="md-standard" aria-hidden="true">
+    <p className="md-standard-cap"><span className="md-material" aria-hidden="true">web_asset</span>Standard: alertdialog on desktop</p>
+    <div className="md-window">
+      <div className="md-window-bar">
+        <span className="md-window-dots"><span className="md-window-dot"></span><span className="md-window-dot"></span><span className="md-window-dot"></span></span>
+        <span className="md-window-url"><span className="md-material" aria-hidden="true">lock</span>app.ramoslabs.com</span>
+      </div>
+      <div className="md-window-body">
+        <div className="md-window-scene">
+          <div className="md-window-faux">
+            <div className="md-window-faux-head">
+              <span className="md-window-faux-title">Summer Rooftop Session</span>
+              <span className="md-window-avatar"><span className="md-material" aria-hidden="true">person</span></span>
+            </div>
+            <div className="md-window-card">
+              <span className="md-window-cardtitle">General admission</span>
+              <div className="md-window-cardline mid"></div>
+              <div className="md-window-cardline short"></div>
+            </div>
+            <div className="md-window-card">
+              <span className="md-window-cardtitle">VIP balcony</span>
+              <div className="md-window-cardline mid"></div>
+              <div className="md-window-cardline short"></div>
+            </div>
+          </div>
+          <div className="md-window-scrim"></div>
+          <div className="md-dialog md-window-modal">
+            <div className="md-dialog-body">
+              <div className="md-dialog-head">
+                <span className="md-alert-mark"><span className="md-material" aria-hidden="true">warning</span></span>
+                <button type="button" tabIndex={-1} className="md-dialog-close" aria-label="Close dialog"><span className="md-material" aria-hidden="true">close</span></button>
+              </div>
+              <h3 className="md-dialog-title">Delete this event?</h3>
+              <p className="md-dialog-text">This permanently removes <strong>Summer Rooftop Session</strong> and its 240 sold tickets. This cannot be undone.</p>
+              <div className="md-dialog-actions">
+                <button type="button" tabIndex={-1} className="md-btn md-btn-ghost">Cancel</button>
+                <button type="button" tabIndex={-1} className="md-btn md-btn-danger">Delete event</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1008,14 +1266,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="md-demo-row">
         <button
           type="button"
-          className="md-btn md-btn-tonal"
+          className="md-btn md-btn-tonal md-menu-trigger"
           popovertarget="md-popover-demo"
-        >
-          Event actions
-        </button>
+        >Event actions</button>
       </div>
       <p className="md-demo-note">
-        Wired with <code>popovertarget</code> alone. Click outside or press Escape to light-dismiss. The page behind stays fully interactive, no trap, no inert.
+        Wired with <code>popovertarget</code> alone. Click outside or press Escape to light-dismiss. The page behind stays fully interactive, no trap, no inert. It sits below the trigger via CSS anchor positioning, with a centered fallback where that is unsupported.
       </p>
       <div id="md-popover-demo" popover="auto" className="md-popover">
         <button type="button" className="md-menu-item" popovertarget="md-popover-demo" popovertargetaction="hide"><span className="md-material" aria-hidden="true">edit</span>Edit details</button>
@@ -1036,6 +1292,74 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <strong style={{ color: '#0f172a' }}>Dialog, modal</strong> interrupts. Background inert, focus trapped, needs an answer. Spend it rarely.
       </p>
     </div>
+  </div>
+
+  <div className="md-standard" aria-hidden="true">
+    <p className="md-standard-cap"><span className="md-material" aria-hidden="true">web_asset</span>Standard: popover menu on desktop</p>
+    <div className="md-window">
+      <div className="md-window-bar">
+        <span className="md-window-dots"><span className="md-window-dot"></span><span className="md-window-dot"></span><span className="md-window-dot"></span></span>
+        <span className="md-window-url"><span className="md-material" aria-hidden="true">lock</span>app.ramoslabs.com</span>
+      </div>
+      <div className="md-window-body">
+        <div className="md-window-scene">
+          <div className="md-window-faux">
+            <div className="md-window-faux-head">
+              <span className="md-window-faux-title">Events</span>
+              <button type="button" tabIndex={-1} className="md-btn md-btn-tonal">Event actions</button>
+            </div>
+            <div className="md-window-card">
+              <span className="md-window-cardtitle">Summer Rooftop Session</span>
+              <div className="md-window-cardline mid"></div>
+              <div className="md-window-cardline short"></div>
+            </div>
+            <div className="md-window-card">
+              <span className="md-window-cardtitle">Payments Deep Dive</span>
+              <div className="md-window-cardline mid"></div>
+              <div className="md-window-cardline short"></div>
+            </div>
+          </div>
+          <div className="md-window-menu">
+            <button type="button" tabIndex={-1} className="md-menu-item"><span className="md-material" aria-hidden="true">edit</span>Edit details</button>
+            <button type="button" tabIndex={-1} className="md-menu-item"><span className="md-material" aria-hidden="true">content_copy</span>Duplicate</button>
+            <button type="button" tabIndex={-1} className="md-menu-item"><span className="md-material" aria-hidden="true">share</span>Share link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p className="md-text">
+    The menu above sits at its trigger with pure CSS anchor positioning, no measuring script. Name the trigger, then position the menu against that name. Inset properties (<code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code>) take the <code>anchor()</code> function; sizing (<code>width</code>, <code>height</code>) takes <code>anchor-size()</code>.
+  </p>
+
+  <div className="md-code">
+    <div className="md-code-header">
+      <span className="md-code-dot red" aria-hidden="true"></span>
+      <span className="md-code-dot yellow" aria-hidden="true"></span>
+      <span className="md-code-dot green" aria-hidden="true"></span>
+      <span className="md-code-lang">CSS</span>
+    </div>
+    <pre dangerouslySetInnerHTML={{__html: `<span class="comment">/* Anchor the menu to its trigger. */</span>
+<span class="function">@supports</span> (<span class="attr">position-anchor</span>: <span class="value">--a</span>) {
+  <span class="tag">.trigger</span> { <span class="attr">anchor-name</span>: <span class="value">--menu</span>; }
+
+  <span class="tag">.menu</span> {
+    <span class="attr">position</span>: <span class="value">fixed</span>;
+    <span class="attr">position-anchor</span>: <span class="value">--menu</span>;
+    <span class="attr">top</span>: <span class="function">anchor</span>(<span class="value">bottom</span>);           <span class="comment">/* place below the trigger */</span>
+    <span class="attr">left</span>: <span class="function">anchor</span>(<span class="value">left</span>);            <span class="comment">/* align left edges */</span>
+    <span class="attr">min-width</span>: <span class="function">anchor-size</span>(<span class="value">width</span>); <span class="comment">/* match the trigger width */</span>
+    <span class="attr">margin-top</span>: <span class="value">0.375rem</span>;
+  }
+}`}} />
+  </div>
+
+  <div className="md-callout">
+    <span className="md-material" aria-hidden="true">anchor</span>
+    <p className="md-callout-text">
+      <strong>Progressive enhancement only.</strong> Firefox and Safari do not ship anchor positioning yet (2026), so the rules live inside <code>@supports (position-anchor: --a)</code>. Capable browsers get the anchored placement, and everyone else keeps a sensible fallback, here the menu stays centered and fully usable.
+    </p>
   </div>
 
   <div className="md-callout">

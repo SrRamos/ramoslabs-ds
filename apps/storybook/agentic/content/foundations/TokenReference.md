@@ -21,7 +21,7 @@ Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file 
 
 ## Categories
 
-- Primitive palette: eight ramps, `--color-indigo-*`, `--color-slate-*`, `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*`, `--color-blue-*`, `--color-violet-*`, each 50 through 950, plus `--color-white` and `--color-black`. Indigo is the brand ramp and single accent; slate carries text, surfaces, and borders; the four status ramps feed the feedback tokens; violet backs the secondary role.
+- Primitive palette: eight ramps, `--color-indigo-*`, `--color-slate-*`, `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*`, `--color-blue-*`, `--color-violet-*`, each 50 through 950, plus `--color-white` and `--color-black`. These ramps are Tailwind CSS's open-source (MIT) default palette, adopted hex-for-hex as the primitive layer; what this system owns sits on top, the mono-indigo constraint and the semantic mapping. Indigo is the brand ramp and single action accent; slate carries text, surfaces, and borders; the four status ramps feed the feedback tokens; violet backs the decorative secondary role, never for action.
 - Semantic color: brand (`--color-primary*`, `--color-secondary*`), text (`--color-text-heading`, `-strong`, `-secondary`, `-body`, `-muted`, `-disabled`), surface and border (`--color-surface*`, `--color-background`, `--color-border*`, `--color-focus`), and feedback (`--color-success*`, `--color-warning*`, `--color-error*`, `--color-info*`, each with the strong/surface/border/text variants).
 - Spacing: `--space-*`, one scale for margin, padding, and gap.
 - Border radius: `--radius-*`, eight steps. `sm` at 6px is the signature control radius; `pill` is the fully rounded accent.

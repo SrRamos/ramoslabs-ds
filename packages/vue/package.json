@@ -2,6 +2,9 @@
   "name": "@ramoslabs/vue",
   "version": "0.0.0",
   "description": "RamosLabs Vue 3 component library (SJ prefix). Scaffold only in F0.",
+  "license": "MIT",
+  "author": "RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com)",
+  "homepage": "https://ramoslabs.com",
   "type": "module",
   "files": [
     "dist"

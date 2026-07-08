@@ -5,6 +5,8 @@
 This is the complete, self-contained reference for AI agents building UI on the
 RamosLabs Design System. It inlines every documentation page and the full token table.
 
+Free to use under the MIT License. Keep the copyright and license notice, and credit RamosLabs. © 2026 RAMOS SOLUTIONS S.A.S.. https://ramoslabs.com
+
 ## Token reference (213 tokens)
 
 ### breakpoint (5)
@@ -332,7 +334,7 @@ Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.1.
 
 Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-colors--docs
 
-RamosLabs runs on a single accent. Indigo carries every deliberate action and nothing else competes for it. One voice for action, a deep neutral ramp for everything else, reserved signals for state. The accent is `#4f46e5`. No second brand hue, no rainbow.
+RamosLabs runs on a single action accent. Indigo carries every deliberate action and nothing else competes for it. One voice for action, a deep neutral ramp for everything else, reserved signals for state. The action accent is `#4f46e5`. Violet appears as a decorative accent only, never for action.
 
 ## The accent, up close
 
@@ -959,7 +961,7 @@ Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file 
 
 ## Categories
 
-- Primitive palette: eight ramps, `--color-indigo-*`, `--color-slate-*`, `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*`, `--color-blue-*`, `--color-violet-*`, each 50 through 950, plus `--color-white` and `--color-black`. Indigo is the brand ramp and single accent; slate carries text, surfaces, and borders; the four status ramps feed the feedback tokens; violet backs the secondary role.
+- Primitive palette: eight ramps, `--color-indigo-*`, `--color-slate-*`, `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*`, `--color-blue-*`, `--color-violet-*`, each 50 through 950, plus `--color-white` and `--color-black`. These ramps are Tailwind CSS's open-source (MIT) default palette, adopted hex-for-hex as the primitive layer; what this system owns sits on top, the mono-indigo constraint and the semantic mapping. Indigo is the brand ramp and single action accent; slate carries text, surfaces, and borders; the four status ramps feed the feedback tokens; violet backs the decorative secondary role, never for action.
 - Semantic color: brand (`--color-primary*`, `--color-secondary*`), text (`--color-text-heading`, `-strong`, `-secondary`, `-body`, `-muted`, `-disabled`), surface and border (`--color-surface*`, `--color-background`, `--color-border*`, `--color-focus`), and feedback (`--color-success*`, `--color-warning*`, `--color-error*`, `--color-info*`, each with the strong/surface/border/text variants).
 - Spacing: `--space-*`, one scale for margin, padding, and gap.
 - Border radius: `--radius-*`, eight steps. `sm` at 6px is the signature control radius; `pill` is the fully rounded accent.
@@ -1821,6 +1823,24 @@ A modal charges a tax. NN/g: it demands immediate action, breaks the flow, makes
 ## 5. Popover for everything non-modal
 
 The Popover API is the tool for overlays that must not steal the room. "Popovers created using the Popover API are always non-modal." They do not make the background inert, they do not trap focus, and the rest of the page stays interactive. MDN: "If you want to create a modal popover, a `<dialog>` element is the right way to go." A `popover="auto"` light-dismisses on Escape or an outside click and wires up with nothing but `popovertarget` on a button.
+
+A popover opens in the top layer, so normal CSS cannot place it next to its trigger. Anchor it with CSS Anchor Positioning: put `anchor-name` on the trigger, then `position-anchor` plus the `anchor()` function on the popover. Inset properties (top, left, right, bottom) take `anchor()`; sizing (width, height) takes `anchor-size()`.
+
+```css
+.trigger { anchor-name: --menu; }
+@supports (position-anchor: --a) {
+  .menu {
+    position: fixed;
+    position-anchor: --menu;
+    top: anchor(bottom);
+    left: anchor(left);
+    min-width: anchor-size(width);
+    margin-top: 0.375rem;
+  }
+}
+```
+
+Anchor positioning is not in Firefox or Safari yet (2026), so keep the rules inside `@supports` and give a sensible fallback (a centered, usable popover) for browsers without it.
 
 - Tooltip: a brief description on hover or focus over a control. Takes no focus of its own, holds no interactive content. Not a dialog.
 - Popover: a light interactive layer. Background stays active, dismiss is light, focus is not trapped. Menus, toasts, pickers.

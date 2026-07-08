@@ -72,6 +72,24 @@ A modal charges a tax. NN/g: it demands immediate action, breaks the flow, makes
 
 The Popover API is the tool for overlays that must not steal the room. "Popovers created using the Popover API are always non-modal." They do not make the background inert, they do not trap focus, and the rest of the page stays interactive. MDN: "If you want to create a modal popover, a `<dialog>` element is the right way to go." A `popover="auto"` light-dismisses on Escape or an outside click and wires up with nothing but `popovertarget` on a button.
 
+A popover opens in the top layer, so normal CSS cannot place it next to its trigger. Anchor it with CSS Anchor Positioning: put `anchor-name` on the trigger, then `position-anchor` plus the `anchor()` function on the popover. Inset properties (top, left, right, bottom) take `anchor()`; sizing (width, height) takes `anchor-size()`.
+
+```css
+.trigger { anchor-name: --menu; }
+@supports (position-anchor: --a) {
+  .menu {
+    position: fixed;
+    position-anchor: --menu;
+    top: anchor(bottom);
+    left: anchor(left);
+    min-width: anchor-size(width);
+    margin-top: 0.375rem;
+  }
+}
+```
+
+Anchor positioning is not in Firefox or Safari yet (2026), so keep the rules inside `@supports` and give a sensible fallback (a centered, usable popover) for browsers without it.
+
 - Tooltip: a brief description on hover or focus over a control. Takes no focus of its own, holds no interactive content. Not a dialog.
 - Popover: a light interactive layer. Background stays active, dismiss is light, focus is not trapped. Menus, toasts, pickers.
 - Dialog, modal: interrupts. Background inert, focus trapped, needs an answer. Spend it rarely.

@@ -1,22 +1,46 @@
 {
   "name": "@ramoslabs/tokens",
-  "version": "0.0.0",
-  "description": "RamosLabs design tokens. DTCG JSON is the source; CSS/TS/JSON are generated.",
+  "version": "0.1.0",
+  "description": "RamosLabs design tokens. DTCG JSON is the source; CSS variables, typed values, and a flat JSON map are generated.",
+  "license": "MIT",
+  "author": "RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com)",
+  "homepage": "https://ramoslabs.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SrRamos/ramoslabs-ds.git",
+    "directory": "packages/tokens"
+  },
+  "keywords": [
+    "design-tokens",
+    "design-system",
+    "css-variables",
+    "dtcg",
+    "ramoslabs"
+  ],
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/tokens.js",
+  "types": "./dist/tokens.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "types": "./dist/tokens.ts",
-      "import": "./dist/tokens.ts"
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js"
     },
     "./css": "./dist/tokens.css",
     "./json": "./dist/tokens.json"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "style-dictionary build --config style-dictionary.config.mjs",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepack": "style-dictionary build --config style-dictionary.config.mjs"
   },
   "devDependencies": {
     "style-dictionary": "^5.5.0"
