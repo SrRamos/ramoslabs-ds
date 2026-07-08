@@ -154,6 +154,31 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #4f46e5;
   }
 
+  /* Prescriptive rule: positive imperative + reason */
+  .pers-rule {
+    border-left: 3px solid #4f46e5;
+    background: #f8fafc;
+    border-radius: 0 10px 10px 0;
+    padding: 0.85rem 1.15rem;
+    margin: 1.1rem 0;
+  }
+
+  .pers-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .pers-rule-line + .pers-rule-line { margin-top: 0.4rem; }
+
+  .pers-rule-key {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-right: 0.45rem;
+  }
+
   /* Evidence callout: one finding, one cite */
   .pers-evidence {
     background: #eef2ff;
@@ -410,6 +435,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .pers-line-col.ok { border-color: #c7d2fe; background: #eef2ff; }
 
+  .pers-line-col.avoid {
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background: #ffffff;
+  }
+
   .pers-line-tag {
     display: flex;
     align-items: center;
@@ -648,6 +679,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     A blank form hands every decision to someone who came to do one thing. A <strong>smart default</strong> pre-selects the sensible choice so the path of least resistance is also the good path, always visible and one tap to change.
   </p>
 
+  <div className="pers-rule">
+    <p className="pers-rule-line"><span className="pers-rule-key">Rule</span> Pre-select the choice the data already points to, and style it so it plainly reads as changeable.</p>
+    <p className="pers-rule-line"><span className="pers-rule-key">Why</span> The path of least resistance becomes the good path while the user keeps a one-tap way out.</p>
+  </div>
+
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
     <div className="pers-evidence-body">
@@ -672,11 +708,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="pers-line">
     <div className="pers-line-col ok">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Recommended</div>
       <p className="pers-line-text">Default to the option a typical user would pick anyway, labelled and one tap to change. <strong>The default saves effort on a choice the user still owns.</strong></p>
     </div>
     <div className="pers-line-col avoid">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">cancel</span> Avoid</div>
       <p className="pers-line-text">Pre-checking a paid add-on or a marketing opt-in the user never asked for, so inattention becomes revenue. <strong>Preselection is banned wherever it costs money or privacy.</strong></p>
     </div>
   </div>
@@ -695,6 +731,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p className="pers-lede">
     Effort accelerates as the finish comes into view. Open a progress bar at a true, non-zero point, counting real work already behind the user, and the end feels reachable. The rule is not to inflate the number, it is to <strong>count only what actually happened</strong>.
   </p>
+
+  <div className="pers-rule">
+    <p className="pers-rule-line"><span className="pers-rule-key">Rule</span> Open a progress indicator at a true, non-zero point that credits only work the user actually did.</p>
+    <p className="pers-rule-line"><span className="pers-rule-key">Why</span> A real head start makes the finish feel reachable and pulls the user forward.</p>
+  </div>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
@@ -725,11 +766,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="pers-line">
     <div className="pers-line-col ok">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Recommended</div>
       <p className="pers-line-text">Credit steps the user truly completed and show how near the finish is. <strong>The head start is real, and the destination is one the user chose.</strong></p>
     </div>
     <div className="pers-line-col avoid">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">cancel</span> Avoid</div>
       <p className="pers-line-text">A "90 percent complete" bar that only fills once payment is handed over, or invented steps that manufacture sunk cost. <strong>Progress that does not reflect real progress is a lie with a nice animation.</strong></p>
     </div>
   </div>
@@ -748,6 +789,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p className="pers-lede">
     People return a favor. Deliver something genuinely useful first, then make a fair ask, and it lands on willing ground rather than a cold wall. <strong>The value stays whether or not they say yes.</strong>
   </p>
+
+  <div className="pers-rule">
+    <p className="pers-rule-line"><span className="pers-rule-key">Rule</span> Deliver a genuinely useful result first, then make a fair ask the user is free to decline.</p>
+    <p className="pers-rule-line"><span className="pers-rule-key">Why</span> Value given up front lands the request on willing ground and keeps its worth either way.</p>
+  </div>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
@@ -773,11 +819,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="pers-line">
     <div className="pers-line-col ok">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Recommended</div>
       <p className="pers-line-text">Give a genuinely useful result up front, then ask to save or continue. <strong>The gift keeps its value even if the user declines.</strong></p>
     </div>
     <div className="pers-line-col avoid">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">cancel</span> Avoid</div>
       <p className="pers-line-text">A hollow "free" gift that is really a hook, or a preview that vanishes unless you pay. <strong>If the value evaporates the moment the user hesitates, it was bait.</strong></p>
     </div>
   </div>
@@ -796,6 +842,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p className="pers-lede">
     We value what we build and own more than the identical thing untouched. Let a person name a project or arrange a layout and it becomes theirs in their mind before it is theirs in fact, so signing up feels like <strong>keeping something they already have</strong>.
   </p>
+
+  <div className="pers-rule">
+    <p className="pers-rule-line"><span className="pers-rule-key">Rule</span> Let the user personalize real work before any gate, then carry that work intact through sign-up.</p>
+    <p className="pers-rule-line"><span className="pers-rule-key">Why</span> People value what they build, so keeping their own work feels like keeping something they own.</p>
+  </div>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
@@ -824,11 +875,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="pers-line">
     <div className="pers-line-col ok">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Recommended</div>
       <p className="pers-line-text">Offer real customization the user wants, and carry their work across the sign-up boundary intact. <strong>They keep exactly what they built.</strong></p>
     </div>
     <div className="pers-line-col avoid">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">cancel</span> Avoid</div>
       <p className="pers-line-text">Forcing busywork to manufacture sunk cost, then holding the user's own work hostage behind a paywall. <strong>Effort must never become a hostage.</strong></p>
     </div>
   </div>
@@ -847,6 +898,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p className="pers-lede">
     A loss tends to weigh heavier than an equivalent gain, so framing a choice around what a person stands to lose can sharpen attention. Use it only where a <strong>real loss exists</strong>: an unsaved draft, an earned credit about to expire. Never invent one.
   </p>
+
+  <div className="pers-rule">
+    <p className="pers-rule-line"><span className="pers-rule-key">Rule</span> Frame a choice around loss only where a real, preventable loss exists, and pair the warning with the fix.</p>
+    <p className="pers-rule-line"><span className="pers-rule-key">Why</span> A true loss sharpens attention honestly, while an invented one is manufactured fear.</p>
+  </div>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
@@ -871,11 +927,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="pers-line">
     <div className="pers-line-col ok">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Recommended</div>
       <p className="pers-line-text">Remind the user of value that truly exists and truly could be lost, with a clear way to keep it. <strong>The loss is real and preventable.</strong></p>
     </div>
     <div className="pers-line-col avoid">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">cancel</span> Avoid</div>
       <p className="pers-line-text">Fake "only 2 left" counters, invented countdowns, or confirmshaming ("No thanks, I like overpaying"). <strong>Manufactured fear is the sharpest dark pattern of all, and it is banned.</strong></p>
     </div>
   </div>
@@ -894,6 +950,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p className="pers-lede">
     A number means little in isolation. Beside a true reference, a real list price, a genuine alternative, or the value it returns, the same cost reads as proportionate. Anchor only on a <strong>reference the user could verify</strong>.
   </p>
+
+  <div className="pers-rule">
+    <p className="pers-rule-line"><span className="pers-rule-key">Rule</span> Show every price beside a reference the user could independently verify.</p>
+    <p className="pers-rule-line"><span className="pers-rule-key">Why</span> A number reads as proportionate next to a true comparison, and every figure on screen stays checkable.</p>
+  </div>
 
   <div className="pers-evidence">
     <span className="pers-material" aria-hidden="true">science</span>
@@ -926,11 +987,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="pers-line">
     <div className="pers-line-col ok">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Legitimate use</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">check_circle</span> Recommended</div>
       <p className="pers-line-text">Contextualize a price against a true reference: a real alternative cost, a genuine higher tier, or the value returned. <strong>Every number on screen is one the user could verify.</strong></p>
     </div>
     <div className="pers-line-col avoid">
-      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">block</span> Dark pattern to avoid</div>
+      <div className="pers-line-tag"><span className="pers-material" aria-hidden="true">cancel</span> Avoid</div>
       <p className="pers-line-text">A struck-through "original" that never sold, or a fake premium tier built only to make the real one look cheap. <strong>A reference the user cannot verify is a lie.</strong></p>
     </div>
   </div>

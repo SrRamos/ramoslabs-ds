@@ -210,6 +210,18 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.5;
   }
 
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .fe-input {
     width: 100%;
     box-sizing: border-box;
@@ -236,7 +248,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .fe-input.error:focus-visible {
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #dc2626;
   }
 
   .fe-input.success { border-color: #059669; }
@@ -454,62 +466,66 @@ import { Meta } from '@storybook/addon-docs/blocks';
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
   }
 
-  /* ===== DO / DON'T ===== */
-  .fe-dodont {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin: 1.25rem 0;
+  /* ===== RECOMMENDED / AVOID DEMO ===== */
+  .fe-demo.avoid {
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background: #fbfcfd;
   }
 
-  @media (max-width: 700px) {
-    .fe-dodont { grid-template-columns: 1fr; }
-  }
+  .fe-demo-label.rec { color: #166534; }
+  .fe-demo-label.avoid { color: #991b1b; }
 
-  .fe-list {
-    border-radius: 12px;
-    padding: 1.25rem;
-    border: 1px solid #e6e8eb;
-  }
-
-  .fe-list.do { background: #f0fdf4; border-color: #bbf7d0; }
-  .fe-list.dont { background: #fef2f2; border-color: #fecaca; }
-
-  .fe-list-head {
+  /* ===== RULES (Rule / Why) ===== */
+  .fe-rules {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'Red Hat Display', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    margin-bottom: 0.75rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
   }
 
-  .fe-list.do .fe-list-head { color: #166534; }
-  .fe-list.dont .fe-list-head { color: #991b1b; }
+  .fe-rule {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-left: 3px solid #4f46e5;
+    border-radius: 10px;
+    padding: 0.9rem 1.125rem;
+  }
 
-  .fe-list ul { margin: 0; padding: 0; list-style: none; }
+  .fe-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #0f172a;
+    margin: 0;
+  }
 
-  .fe-list li {
+  .fe-rule-why {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
     line-height: 1.5;
-    color: #334155;
-    padding: 0.375rem 0 0.375rem 1.25rem;
-    position: relative;
+    color: #64748b;
+    margin: 0.35rem 0 0;
   }
 
-  .fe-list li::before {
-    position: absolute;
-    left: 0;
-    top: 0.375rem;
+  .fe-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+    vertical-align: 0.08em;
   }
 
-  .fe-list.do li::before { content: '+'; color: #16a34a; }
-  .fe-list.dont li::before { content: '\\00d7'; color: #dc2626; }
+  .fe-tag.rule { color: #4338ca; background: #e0e7ff; }
+  .fe-tag.why { color: #475569; background: #f1f5f9; }
 
-  .fe-list code {
+  .fe-rule code {
     background: rgba(15, 23, 42, 0.06);
     padding: 1px 5px;
     border-radius: 4px;
@@ -643,11 +659,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="fe-anatomy">
     <div className="fe-anatomy-part">
       <span className="fe-anatomy-tag">Label</span>
-      <label className="fe-label" htmlFor="fe-anatomy-input">Email address <span className="fe-req" aria-hidden="true">*</span></label>
+      <label className="fe-label" htmlFor="fe-anatomy-input">Email address <span className="fe-req" aria-hidden="true">*</span><span className="sr-only"> (required)</span></label>
     </div>
     <div className="fe-anatomy-part">
       <span className="fe-anatomy-tag">Control</span>
-      <input id="fe-anatomy-input" className="fe-input" type="email" autoComplete="email" placeholder="you@example.com" aria-describedby="fe-anatomy-help" />
+      <input id="fe-anatomy-input" className="fe-input" type="email" autoComplete="email" placeholder="you@example.com" required aria-required="true" aria-describedby="fe-anatomy-help" />
     </div>
     <div className="fe-anatomy-part">
       <span className="fe-anatomy-tag">Help</span>
@@ -672,15 +688,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="fe-lab">
     <div className="fe-demo">
-      <div className="fe-demo-label">Do: label above, help visible</div>
+      <div className="fe-demo-label rec">✓ Recommended: label above, help visible</div>
       <div className="fe-field">
         <label className="fe-label" htmlFor="fe-good">Event name</label>
         <input id="fe-good" className="fe-input" type="text" placeholder="Summer Jazz Festival" aria-describedby="fe-good-help" />
         <span id="fe-good-help" className="fe-help">Shown on the public page and on every ticket.</span>
       </div>
     </div>
-    <div className="fe-demo">
-      <div className="fe-demo-label">Don't: placeholder as the label</div>
+    <div className="fe-demo avoid">
+      <div className="fe-demo-label avoid">✕ Avoid: placeholder as the label</div>
       <div className="fe-field">
         <input className="fe-input" type="text" placeholder="Event name" aria-label="Event name (placeholder-as-label anti-pattern)" />
         <span className="fe-help">The question disappears the instant the user types, with nowhere left to put help.</span>
@@ -788,11 +804,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     Validation asks two things: <strong>when</strong> to check, and <strong>what</strong> to say. The rule is <strong>reward early, punish late</strong>. Confirm a field as valid while the user types, but hold the error until they leave it. Flagging the first letter of an email as a broken email is technically true and deeply unhelpful.
   </p>
 
+  <p className="fe-text">
+    The rule has a second half that starts the moment a field has <em>already</em> shown an error. From then on, switch that field to re-validate on every keystroke and <strong>clear the error the instant the value becomes valid</strong>. Once someone is fixing a known problem, the reassurance that they succeeded should arrive immediately, never held back until they leave and re-enter the field.
+  </p>
+
   <div className="fe-timeline">
     <div className="fe-tl-step">
       <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">keyboard</span> While typing</span>
       <div className="fe-tl-title">Reward, never punish</div>
-      <div className="fe-tl-body">Show a success tick the moment input becomes valid. Hold every error back. An incomplete field is not yet a wrong one.</div>
+      <div className="fe-tl-body">Show a success tick the moment input becomes valid. Hold the first error back; an incomplete field is not yet a wrong one. After a field has erred, though, re-check on input and clear it the instant it is valid.</div>
     </div>
     <div className="fe-tl-step">
       <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">logout</span> On blur</span>
@@ -976,38 +996,38 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <h2 className="fe-section-title">Rules of the form</h2>
   </div>
 
-  <div className="fe-dodont">
-    <div className="fe-list do">
-      <div className="fe-list-head">
-        <span className="fe-material" style={{ fontSize: '1.25rem' }} aria-hidden="true">check_circle</span>
-        Do
-      </div>
-      <ul>
-        <li>Keep the label visible above every field, always.</li>
-        <li>One field per line, a single column top to bottom.</li>
-        <li>Match <code>type</code> and <code>inputmode</code> to the answer.</li>
-        <li>Add the <code>autocomplete</code> token so the browser can fill it.</li>
-        <li>Reward valid input while typing, surface errors on blur.</li>
-        <li>Write errors that say how to fix the problem, in text.</li>
-        <li>Use <code>--color-error</code> for errors and nothing else.</li>
-        <li>Reach for the native control before building a custom one.</li>
-      </ul>
+  <div className="fe-rules">
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Keep the label visible above every field.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A placeholder vanishes on the first keystroke and takes the question with it, leaving nowhere to put help.</p>
     </div>
-    <div className="fe-list dont">
-      <div className="fe-list-head">
-        <span className="fe-material" style={{ fontSize: '1.25rem' }} aria-hidden="true">cancel</span>
-        Don't
-      </div>
-      <ul>
-        <li>Use a placeholder as the label. It vanishes on the first keystroke.</li>
-        <li>Put two fields side by side just to look compact.</li>
-        <li>Leave everything <code>type="text"</code> and force a keyboard hunt.</li>
-        <li>Validate on every keystroke and flag half-typed input as wrong.</li>
-        <li>Ship "Invalid" or "Error" with no way to recover.</li>
-        <li>Signal an error with a red border and no words.</li>
-        <li>Tint unrelated UI red, or add any second accent colour.</li>
-        <li>Rebuild a date picker or select the platform already ships.</li>
-      </ul>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Give each field its own line in a single top-aligned column.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> The eye runs straight down from question to answer; fields set side by side to look compact slow the scan and break on a narrow screen.</p>
+    </div>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Match <code>type</code> and <code>inputmode</code> to the answer.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> The matching keyboard rises on the first tap, so no one hunts for the @ key or a digit on a plain text keyboard.</p>
+    </div>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Add the <code>autocomplete</code> token to every field the browser can fill.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A saved profile completes the field in one tap instead of a manual retype.</p>
+    </div>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Reward valid input while typing, and surface errors on blur.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> Flagging a half-typed value as wrong punishes progress; once a field has already erred, re-check on input and clear the error the instant it is valid.</p>
+    </div>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Write errors that name the fix, in text.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> "Invalid" leaves no way to recover, and a red border alone reaches no screen reader; the words carry the message.</p>
+    </div>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Reserve <code>--color-error</code> for genuine errors and nothing else.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> One warm colour on an otherwise indigo page means its appearance always signals a real problem.</p>
+    </div>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Reach for the native control before building a custom one.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A native <code>&lt;select&gt;</code> or date picker ships the keyboard, picker and accessibility a hand-built widget has to re-earn from scratch.</p>
     </div>
   </div>
 

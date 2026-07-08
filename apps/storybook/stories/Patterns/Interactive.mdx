@@ -427,60 +427,99 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .ix-ring-surface.light .ix-ring-caption b { color: #0f172a; }
   .ix-ring-surface.brand .ix-ring-caption b { color: #ffffff; }
 
-  /* ===== DO / DON'T ===== */
-  .ix-dodont {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  /* ===== RULES (positive, with recommended / avoid pairs) ===== */
+  .ix-rules {
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
     margin: 1.25rem 0;
+    max-width: 44rem;
   }
 
-  @media (max-width: 700px) { .ix-dodont { grid-template-columns: 1fr; } }
-
-  .ix-list {
-    border-radius: 12px;
-    padding: 1.25rem;
+  .ix-rule {
     border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    background: #ffffff;
   }
 
-  .ix-list.do { background: #f0fdf4; border-color: #bbf7d0; }
-  .ix-list.dont { background: #fef2f2; border-color: #fecaca; }
+  .ix-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #334155;
+    margin: 0;
+  }
 
-  .ix-list-head {
+  .ix-rule-line + .ix-rule-line { margin-top: 0.4rem; }
+
+  .ix-rule-tag {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-right: 0.4rem;
+  }
+
+  .ix-rule-tag.rule { color: #4338ca; }
+  .ix-rule-tag.why { color: #64748b; }
+  .ix-rule-tag.house { color: #64748b; }
+
+  .ix-rule-line strong { color: #0f172a; font-weight: 600; }
+
+  .ix-rule-line code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #4338ca;
+  }
+
+  .ix-ra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.875rem;
+  }
+
+  @media (max-width: 700px) { .ix-ra { grid-template-columns: 1fr; } }
+
+  .ix-ra-card {
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+
+  /* Recommended: solid indigo tint. Avoid: dashed slate outline, so the
+     two never rely on color alone to tell apart (WCAG 1.4.1). */
+  .ix-ra-card.reco { border: 1px solid #c7d2fe; background: #eef2ff; }
+  .ix-ra-card.avoid { border: 1px dashed #94a3b8; background: #f8fafc; }
+
+  .ix-ra-head {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
-    font-size: 0.9375rem;
-    margin-bottom: 0.75rem;
+    font-size: 0.8125rem;
+    margin-bottom: 0.45rem;
   }
 
-  .ix-list.do .ix-list-head { color: #166534; }
-  .ix-list.dont .ix-list-head { color: #991b1b; }
+  .ix-ra-card.reco .ix-ra-head { color: #3730a3; }
+  .ix-ra-card.avoid .ix-ra-head { color: #475569; }
+  .ix-ra-card.reco .ix-ra-head .ix-material { color: #4338ca; font-size: 1.1rem; }
+  .ix-ra-card.avoid .ix-ra-head .ix-material { color: #475569; font-size: 1.1rem; }
 
-  .ix-list ul { margin: 0; padding: 0; list-style: none; }
-
-  .ix-list li {
+  .ix-ra-body {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
     line-height: 1.5;
-    color: #334155;
-    padding: 0.375rem 0 0.375rem 1.25rem;
-    position: relative;
+    color: #475569;
+    margin: 0;
   }
 
-  .ix-list li::before {
-    position: absolute;
-    left: 0;
-    top: 0.375rem;
-    font-weight: 700;
-  }
-
-  .ix-list.do li::before { content: '+'; color: #16a34a; }
-  .ix-list.dont li::before { content: '\\00d7'; color: #dc2626; }
-
-  .ix-list code {
+  .ix-ra-body code {
     background: rgba(15, 23, 42, 0.06);
     padding: 1px 5px;
     border-radius: 4px;
@@ -680,6 +719,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <span class="punctuation">}</span>
 <span class="selector">.control:active::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-pressed)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* every input */</span>`}} />
   </div>
+
+  <div className="ix-callout">
+    <span className="ix-material" aria-hidden="true">ios</span>
+    <p className="ix-callout-text">
+      <strong>iOS caveat for custom controls.</strong> On iOS Safari <code>:active</code> does not fire on a non-native control, a <code>div</code> or <code>span</code> with <code>role="button"</code>, unless that element carries <code>cursor: pointer</code> or an empty <code>ontouchstart</code> handler to arm it. Real <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> are unaffected, so prefer them. The card above keeps <code>cursor: pointer</code>, which is what wakes its press on iOS. Where a native element will do, reach for it before <code>role="button"</code>.
+    </p>
+  </div>
 </div>
 
 {/* ============================================ */}
@@ -804,35 +850,73 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <h2 className="ix-section-title">The rules</h2>
   </div>
 
-  <div className="ix-dodont">
-    <div className="ix-list do">
-      <div className="ix-list-head">
-        <span className="ix-material" style={{ fontSize: '1.25rem' }} aria-hidden="true">check_circle</span>
-        Do
-      </div>
-      <ul>
-        <li>Design <code>:active</code> first, then <code>:focus-visible</code>, then hover.</li>
-        <li>Wrap every hover in <code>@media (hover: hover) and (pointer: fine)</code>.</li>
-        <li>Express state with tonal indigo via <code>--state-*</code> opacity.</li>
-        <li>Ring with <code>--shadow-focus</code> on <code>:focus-visible</code> only.</li>
-        <li>Gate transforms behind <code>prefers-reduced-motion</code>, and let color carry the meaning without them.</li>
-        <li>Give controls a 6px radius, <code>--radius-sm</code>, and pair each state with its ARIA.</li>
-      </ul>
+  <p className="ix-text">
+    Each rule is stated in the positive, with the reason it exists. Where the wrong turn is easy to make, a recommended and an avoid card sit side by side.
+  </p>
+
+  <div className="ix-rules">
+
+    <div className="ix-rule">
+      <p className="ix-rule-line"><span className="ix-rule-tag rule">Rule</span>Design the press first, then the keyboard ring, then hover.</p>
+      <p className="ix-rule-line"><span className="ix-rule-tag why">Why</span>The press is the one signal every device can make, so <code>:active</code> is the floor, <code>:focus-visible</code> the next layer, and hover the pointer garnish on top. Feedback built on hover alone leaves touch with nothing.</p>
     </div>
-    <div className="ix-list dont">
-      <div className="ix-list-head">
-        <span className="ix-material" style={{ fontSize: '1.25rem' }} aria-hidden="true">cancel</span>
-        Don't
+
+    <div className="ix-rule">
+      <p className="ix-rule-line"><span className="ix-rule-tag rule">Rule</span>Wrap every hover rule in <code>@media (hover: hover) and (pointer: fine)</code>.</p>
+      <p className="ix-rule-line"><span className="ix-rule-tag why">Why</span>A touchscreen has no pointer to move away, so an ungated hover sticks lit after a tap. The gate fires hover only where a pointer can rest.</p>
+      <div className="ix-ra">
+        <div className="ix-ra-card reco">
+          <div className="ix-ra-head"><span className="ix-material" aria-hidden="true">check_circle</span>Recommended</div>
+          <p className="ix-ra-body">Hover lives inside the pointer gate, so it clears the moment the finger lifts.</p>
+        </div>
+        <div className="ix-ra-card avoid">
+          <div className="ix-ra-head"><span className="ix-material" aria-hidden="true">block</span>Avoid</div>
+          <p className="ix-ra-body">An ungated <code>:hover</code> has no way to reset on touch, so the control freezes lit after a tap.</p>
+        </div>
       </div>
-      <ul>
-        <li>Build feedback on hover alone. Touch gets nothing.</li>
-        <li>Leave hover ungated. It sticks after a tap.</li>
-        <li>Lift a card or swap its shadow to signal hover. Shadow is elevation, not state.</li>
-        <li>Style <code>:focus</code> when you mean <code>:focus-visible</code>.</li>
-        <li>Ring in one flat color. White fades on light, indigo fades on brand. Make it two-tone.</li>
-        <li>Put a pill radius on a wide button.</li>
-      </ul>
     </div>
+
+    <div className="ix-rule">
+      <p className="ix-rule-line"><span className="ix-rule-tag rule">Rule</span>Signal every state with the tonal indigo overlay on the <code>--state-*</code> scale.</p>
+      <p className="ix-rule-line"><span className="ix-rule-tag why">Why</span>One translucent layer expresses hover, press and drag with a single rule, and color carries the meaning on every input.</p>
+      <p className="ix-rule-line"><span className="ix-rule-tag house">House rule</span>In this design system shadow is reserved for <strong>elevation, never for state</strong>. Material 3 does raise cards and buttons on hover; RamosLabs keeps the shadow still on purpose, so one mechanism carries every state. This is a RamosLabs decision, not an M3 mandate.</p>
+      <div className="ix-ra">
+        <div className="ix-ra-card reco">
+          <div className="ix-ra-head"><span className="ix-material" aria-hidden="true">check_circle</span>Recommended</div>
+          <p className="ix-ra-body">Deepen the tonal overlay for hover and press. The card holds its elevation.</p>
+        </div>
+        <div className="ix-ra-card avoid">
+          <div className="ix-ra-head"><span className="ix-material" aria-hidden="true">block</span>Avoid</div>
+          <p className="ix-ra-body">Lifting a card or swapping its shadow to signal hover. Here that spends elevation on a job the overlay already does.</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="ix-rule">
+      <p className="ix-rule-line"><span className="ix-rule-tag rule">Rule</span>Ring with <code>--shadow-focus</code> on <code>:focus-visible</code>, and keep the token two-tone.</p>
+      <p className="ix-rule-line"><span className="ix-rule-tag why">Why</span><code>:focus-visible</code> shows the ring for the keyboard and hides it after a plain click. A flat ring fades into a matching surface, so two tones keep one layer above 3:1 on any background.</p>
+      <div className="ix-ra">
+        <div className="ix-ra-card reco">
+          <div className="ix-ra-head"><span className="ix-material" aria-hidden="true">check_circle</span>Recommended</div>
+          <p className="ix-ra-body"><code>:focus-visible</code> with the two-tone <code>--shadow-focus</code>, so the ring reads on light and on brand.</p>
+        </div>
+        <div className="ix-ra-card avoid">
+          <div className="ix-ra-head"><span className="ix-material" aria-hidden="true">block</span>Avoid</div>
+          <p className="ix-ra-body">Styling <code>:focus</code> instead of <code>:focus-visible</code>, or a one-color ring that vanishes into a surface of the same color.</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="ix-rule">
+      <p className="ix-rule-line"><span className="ix-rule-tag rule">Rule</span>Gate transforms behind <code>prefers-reduced-motion</code> and let color carry the state without them.</p>
+      <p className="ix-rule-line"><span className="ix-rule-tag why">Why</span>The overlay already tells the whole story, so a reduced-motion visitor loses no information when the scale or lift is dropped.</p>
+    </div>
+
+    <div className="ix-rule">
+      <p className="ix-rule-line"><span className="ix-rule-tag rule">Rule</span>Give controls a 6px radius, <code>--radius-sm</code>, and pair each visual state with its ARIA.</p>
+      <p className="ix-rule-line"><span className="ix-rule-tag why">Why</span>A shared radius keeps controls in one family, and a pill radius stays on chips rather than wide buttons. Screen readers need <code>aria-busy</code>, <code>aria-disabled</code> and friends to hear what the color shows.</p>
+    </div>
+
   </div>
 </div>
 

@@ -301,7 +301,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .vt-lede + .vt-lede { margin-top: 0.75rem; }
   .vt-lede strong { color: #0f172a; font-weight: 600; }
 
-  /* ===== Do / Don't microcopy pairs ===== */
+  /* ===== Recommended / Avoid microcopy pairs ===== */
   .vt-pair {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -357,6 +357,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .vt-pair-col.do .vt-pair-list .say { color: #4338ca; }
+
+  .vt-pair-col.dont .vt-pair-list .say {
+    text-decoration: line-through;
+    text-decoration-color: #94a3b8;
+    text-decoration-thickness: 1px;
+  }
 
   .vt-pair-list .why { display: block; font-size: 0.72rem; color: #475569; margin-top: 0.15rem; }
 
@@ -465,14 +471,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .vt-demo-input {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid #4f46e5;
+    border: 1px solid #ef4444;
     border-radius: 8px;
     padding: 0.6rem 0.75rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
     color: #0f172a;
     background: white;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
   }
 
   .vt-demo-msg {
@@ -481,12 +487,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     gap: 0.4rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8rem;
-    color: #4338ca;
+    color: #991b1b;
     margin-top: 0.5rem;
     line-height: 1.5;
   }
 
-  .vt-demo-msg .vt-material { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
+  .vt-demo-msg .vt-material { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; color: #dc2626; }
 
   /* ===== Ethics band ===== */
   .vt-ethics { margin-top: 2.75rem; background: #0f172a; border-radius: 16px; padding: 2rem 2.25rem; }
@@ -533,55 +539,53 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .vt-ethics-card-text { font-family: 'Rubik', system-ui, sans-serif; font-size: 0.78rem; color: #a5b4fc; line-height: 1.55; }
 
-  /* ===== Rules do/don't ===== */
-  .vt-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
-
-  .vt-rules-col { border-radius: 12px; border: 1px solid #e2e8f0; background: #f8fafc; padding: 1.5rem; }
-
-  .vt-rules-col-title {
-    font-weight: 700;
-    font-size: 0.8125rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  /* ===== Rules (Rule / Why) ===== */
+  .vt-ruleset {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
   }
 
-  .vt-rules-col.do .vt-rules-col-title { color: #4338ca; }
-  .vt-rules-col.dont .vt-rules-col-title { color: #475569; }
-
-  .vt-rules-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-weight: 700;
+  .vt-rule-item {
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #4f46e5;
+    border-radius: 10px;
+    background: #f8fafc;
+    padding: 1.1rem 1.35rem;
   }
 
-  .vt-rules-col.do .vt-rules-badge { background: #4f46e5; color: white; }
-  .vt-rules-col.dont .vt-rules-badge { background: #e2e8f0; color: #475569; }
+  .vt-rule-stmt {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.5;
+    margin: 0 0 0.5rem;
+  }
 
-  .vt-rules-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .vt-rule-why {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
     color: #475569;
     line-height: 1.55;
+    margin: 0;
   }
 
-  .vt-rules-list li { padding-left: 1.25rem; position: relative; margin-bottom: 0.6rem; }
+  .vt-rule-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.4rem;
+    margin-right: 0.45rem;
+  }
 
-  .vt-rules-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
-
-  .vt-rules-col.do .vt-rules-list li::before { content: '+'; color: #4f46e5; }
-  .vt-rules-col.dont .vt-rules-list li::before { content: 'x'; color: #475569; }
+  .vt-rule-tag.why { color: #475569; background: #f1f5f9; }
 
   /* ===== Ship checklist ===== */
   .vt-decision { counter-reset: step; display: flex; flex-direction: column; gap: 0.75rem; }
@@ -825,7 +829,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Say this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Recommended</div>
       <ul className="vt-pair-list">
         <li><span className="say">Create event</span><span className="why">Names the exact outcome of the tap.</span></li>
         <li><span className="say">Delete event</span><span className="why">A destructive action says so, plainly.</span></li>
@@ -834,7 +838,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </ul>
     </div>
     <div className="vt-pair-col dont">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Not this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Avoid</div>
       <ul className="vt-pair-list">
         <li><span className="say">Submit</span><span className="why">Submit what, to where? A form word, not an action.</span></li>
         <li><span className="say">Confirm</span><span className="why">On a delete dialog, hides the consequence.</span></li>
@@ -850,7 +854,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Say this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Recommended</div>
       <ul className="vt-pair-list">
         <li><span className="say">Work email</span><span className="why">Specific enough to prevent the wrong entry.</span></li>
         <li><span className="say">Doors open at</span><span className="why">Plain label paired with an example time.</span></li>
@@ -858,7 +862,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </ul>
     </div>
     <div className="vt-pair-col dont">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Not this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Avoid</div>
       <ul className="vt-pair-list">
         <li><span className="say">Email *</span><span className="why">Which email, and why? The asterisk is not an answer.</span></li>
         <li><span className="say">Time</span><span className="why">Of what? Ambiguous on a busy form.</span></li>
@@ -873,14 +877,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Say this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Recommended</div>
       <ul className="vt-pair-list">
         <li><span className="say">No events yet. Create your first one to get started.</span><span className="why">Names the state, offers the next step.</span></li>
         <li><span className="say">Nothing matches "jazz". Try a broader search.</span><span className="why">Explains the blank and suggests a fix.</span></li>
       </ul>
     </div>
     <div className="vt-pair-col dont">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Not this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Avoid</div>
       <ul className="vt-pair-list">
         <li><span className="say">Your story starts now.</span><span className="why">Evocative, but tells the user nothing to do.</span></li>
         <li><span className="say">No results found.</span><span className="why">A dead end with no way forward.</span></li>
@@ -894,14 +898,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Say this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Recommended</div>
       <ul className="vt-pair-list">
         <li><span className="say">That email is missing an @. Check and try again.</span><span className="why">Names the problem and the exact fix.</span></li>
         <li><span className="say">This card was declined. Try another card or contact your bank.</span><span className="why">Says what happened and two ways forward.</span></li>
       </ul>
     </div>
     <div className="vt-pair-col dont">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Not this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Avoid</div>
       <ul className="vt-pair-list">
         <li><span className="say">Invalid input.</span><span className="why">Which input, invalid how, fixed how? Nothing to act on.</span></li>
         <li><span className="say">Error 402: transaction failed.</span><span className="why">A code and blame, no path out.</span></li>
@@ -915,14 +919,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </p>
   <div className="vt-pair">
     <div className="vt-pair-col do">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Say this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Recommended</div>
       <ul className="vt-pair-list">
         <li><span className="say">Event created. It is now visible to your audience.</span><span className="why">Confirms and states the consequence.</span></li>
         <li><span className="say">Invites sent to 12 people.</span><span className="why">Specific, verifiable, done.</span></li>
       </ul>
     </div>
     <div className="vt-pair-col dont">
-      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Not this</div>
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Avoid</div>
       <ul className="vt-pair-list">
         <li><span className="say">Success!</span><span className="why">Success at what? The exclamation carries no information.</span></li>
         <li><span className="say">Your request has been processed.</span><span className="why">Robotic, and vague about what happened.</span></li>
@@ -1024,9 +1028,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="vt-demo">
     <span className="vt-demo-label">Email address</span>
-    <input className="vt-demo-input" type="text" defaultValue="ada.example.com" aria-describedby="vt-err-hint" readOnly />
+    <input className="vt-demo-input" type="text" defaultValue="ada.example.com" aria-invalid="true" aria-describedby="vt-err-hint" readOnly />
     <p id="vt-err-hint" className="vt-demo-msg">
-      <span className="vt-material" aria-hidden="true">info</span>
+      <span className="vt-material" aria-hidden="true">error</span>
       <span>This email is missing an @. It should look like name@example.com.</span>
     </p>
   </div>
@@ -1071,31 +1075,38 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <div className="vt-section">
   <h2 className="vt-rule-label" style={{ marginTop: 0 }}>Rules of the Voice</h2>
+  <p className="vt-section-sub" style={{ marginBottom: '1rem' }}>
+    Each rule stands on its own as an instruction; the reason follows, so you can weigh it whenever a line resists.
+  </p>
 
-  <div className="vt-rules">
-    <div className="vt-rules-col do">
-      <div className="vt-rules-col-title"><span className="vt-rules-badge">+</span> Do</div>
-      <ul className="vt-rules-list">
-        <li>Lead with the outcome; put the point in the first three words.</li>
-        <li>Name buttons for their action, verb plus object.</li>
-        <li>Write in the active voice, addressing the user as "you".</li>
-        <li>Keep it plain enough to read at a glance, jargon-free.</li>
-        <li>In errors, say what happened and how to fix it.</li>
-        <li>Match the register to the user's moment, not the team's.</li>
-        <li>Make every number and claim literally true.</li>
-      </ul>
+  <div className="vt-ruleset">
+    <div className="vt-rule-item">
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Lead with the outcome; put the point in the first three words.</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>People scan before they study, so a clever line that must be decoded has already failed.</p>
     </div>
-    <div className="vt-rules-col dont">
-      <div className="vt-rules-col-title"><span className="vt-rules-badge">x</span> Don't</div>
-      <ul className="vt-rules-list">
-        <li>Trade clarity for a clever line that needs decoding.</li>
-        <li>Label actions "Submit", "Confirm", or "OK" when a real verb exists.</li>
-        <li>Hide behind the passive voice or the system's point of view.</li>
-        <li>Ship "An error occurred" or a raw code to the user.</li>
-        <li>Celebrate a destructive action or bury its consequence.</li>
-        <li>Manufacture urgency, shame the decline, or hide a cost.</li>
-        <li>Add filler: "please", "simply", "in order to", stray exclamation marks.</li>
-      </ul>
+    <div className="vt-rule-item">
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Name every action button with a verb and its object.</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>"Submit", "Confirm", and "OK" hide what happens next; "Delete event" reads as a promise.</p>
+    </div>
+    <div className="vt-rule-item">
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Write in the active voice and speak to the reader as "you".</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>The passive voice and the system's point of view sound like a machine, not a person.</p>
+    </div>
+    <div className="vt-rule-item">
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Keep every line plain enough to read at a glance.</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>Jargon and filler like "please", "simply", and "in order to" cost comprehension and add nothing.</p>
+    </div>
+    <div className="vt-rule-item">
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>In an error, say what happened and how to fix it.</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>"An error occurred" or a raw code leaves the reader stuck at a wall.</p>
+    </div>
+    <div className="vt-rule-item">
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Match the register to the reader's moment, not the team's.</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>Cheer on a destructive step, or a buried consequence, breaks trust exactly where it counts.</p>
+    </div>
+    <div className="vt-rule-item">
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Keep every number and claim literally true.</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>Invented urgency, a shamed decline, or a hidden cost is manipulation, and it stays out.</p>
     </div>
   </div>
 </div>

@@ -243,6 +243,117 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'SF Mono', monospace;
   }
 
+  /* ===== RULE + WHY CALLOUT ===== */
+  .a11y-rule {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-left: 4px solid #4f46e5;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+  }
+  .a11y-rule-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #4338ca;
+    margin-bottom: 0.4rem;
+  }
+  .a11y-rule-label .material-symbols-outlined { font-size: 0.9rem; }
+  .a11y-rule-text {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.45;
+  }
+  .a11y-rule-text code {
+    background: #ffffff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #4f46e5;
+    font-family: 'SF Mono', monospace;
+  }
+  .a11y-rule-why {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+    margin-top: 0.4rem;
+  }
+  .a11y-rule-why strong { color: #4338ca; font-weight: 700; }
+  .a11y-rule-why code {
+    background: #ffffff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #4f46e5;
+    font-family: 'SF Mono', monospace;
+  }
+
+  /* ===== RECOMMENDED / AVOID PAIR ===== */
+  .a11y-ra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  @media (max-width: 700px) {
+    .a11y-ra { grid-template-columns: 1fr; }
+  }
+  .a11y-ra-card {
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    background: #f8fafc;
+  }
+  .a11y-ra-card.rec { border: 1px solid #c7d2fe; background: #eef2ff; }
+  .a11y-ra-card.avoid { border: 1px dashed #94a3b8; background: #f8fafc; }
+  .a11y-ra-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: 0.65rem;
+  }
+  .a11y-ra-card.rec .a11y-ra-head { color: #3730a3; }
+  .a11y-ra-card.avoid .a11y-ra-head { color: #334155; }
+  .a11y-ra-head .material-symbols-outlined { font-size: 1.1rem; }
+  .a11y-ra-code {
+    display: block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.78rem;
+    color: #0f172a;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.55rem;
+    overflow-x: auto;
+  }
+  .a11y-ra-note {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #475569;
+    margin: 0;
+  }
+  .a11y-ra-note code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.82em;
+    color: #334155;
+    font-family: 'SF Mono', monospace;
+  }
+
   /* ===== CONTRAST PAIRS ===== */
   .a11y-contrast-grid {
     display: grid;
@@ -584,15 +695,34 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="a11y-section-text">
-    Reach for the native element first: <code>&lt;button&gt;</code> over <code>&lt;div onclick&gt;</code>, <code>&lt;nav&gt;</code> over <code>&lt;div class="nav"&gt;</code>, <code>&lt;a href&gt;</code> for anything that navigates. Native elements ship with a role, a name, keyboard behavior, and focus already wired in. ARIA changes only what a screen reader announces, so you still build the keyboard and state by hand. That is why the first rule of ARIA is: do not use ARIA.
+    The first rule of ARIA is: do not use ARIA. Reach for the native element first, because it hands you the accessibility that a styled <code>&lt;div&gt;</code> makes you rebuild from scratch.
   </p>
 
+  <div className="a11y-rule">
+    <div className="a11y-rule-label"><span className="material-symbols-outlined" aria-hidden="true">gavel</span>Rule</div>
+    <div className="a11y-rule-text">Reach for the native element first, and add ARIA only to fill a gap it leaves.</div>
+    <div className="a11y-rule-why"><strong>Why:</strong> a native <code>&lt;button&gt;</code>, <code>&lt;nav&gt;</code>, or <code>&lt;a href&gt;</code> ships with a role, an accessible name, keyboard behavior, and focus already wired in. ARIA changes only what a screen reader announces, so anything you build on a bare <code>&lt;div&gt;</code> you also have to make operable and focusable by hand.</div>
+  </div>
+
+  <div className="a11y-ra">
+    <div className="a11y-ra-card rec">
+      <div className="a11y-ra-head"><span className="material-symbols-outlined" aria-hidden="true">check_circle</span>Recommended</div>
+      <code className="a11y-ra-code">&lt;button type="button"&gt;Buy tickets&lt;/button&gt;</code>
+      <p className="a11y-ra-note">Role, accessible name, focus stop, and keyboard activation come for free, and it behaves the same in every browser and assistive tech.</p>
+    </div>
+    <div className="a11y-ra-card avoid">
+      <div className="a11y-ra-head"><span className="material-symbols-outlined" aria-hidden="true">cancel</span>Avoid</div>
+      <code className="a11y-ra-code">&lt;div onclick="buy()"&gt;Buy tickets&lt;/div&gt;</code>
+      <p className="a11y-ra-note">No role, no keyboard, no focus stop. You would have to rebuild <code>tabindex</code>, key handling, and the focus ring by hand, and it is easy to miss one.</p>
+    </div>
+  </div>
+
   <ol className="a11y-numbered">
-    <li>If a native element gives you the semantics and behavior, use it. A real <code>&lt;button&gt;</code> beats <code>&lt;div role="button" tabindex="0"&gt;</code>.</li>
-    <li>Do not override native semantics. Nest a real element inside instead of repainting one with a role.</li>
-    <li>Every interactive ARIA control stays keyboard operable. Add <code>role="button"</code> and you own <code>Enter</code>, <code>Space</code>, focus, and the ring.</li>
-    <li>Never put <code>aria-hidden="true"</code> or <code>role="presentation"</code> on a focusable element. It strands screen reader users on nothing.</li>
-    <li>Every interactive element needs an accessible name: a visible <code>&lt;label&gt;</code>, its text, <code>aria-label</code>, or <code>aria-labelledby</code>.</li>
+    <li>Prefer the native element whenever it carries the semantics and behavior you need. A real <code>&lt;button&gt;</code> beats <code>&lt;div role="button" tabindex="0"&gt;</code>.</li>
+    <li>Keep native semantics intact: nest a real element inside rather than repainting one with a role.</li>
+    <li>Keep every interactive ARIA control keyboard operable. Add <code>role="button"</code> and you own <code>Enter</code>, <code>Space</code>, focus, and the ring.</li>
+    <li>Keep focusable elements visible to assistive tech: <code>aria-hidden="true"</code> and <code>role="presentation"</code> belong only on content that cannot receive focus.</li>
+    <li>Give every interactive element an accessible name: a visible <code>&lt;label&gt;</code>, its text, <code>aria-label</code>, or <code>aria-labelledby</code>.</li>
   </ol>
 
   <p className="a11y-section-text">
@@ -679,8 +809,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="a11y-section-text">
-    Many people navigate entirely by keyboard: a motor impairment, repetitive strain, a screen reader, or plain preference. <strong>SC 2.1.1</strong> means every control is reachable with <strong>Tab</strong>, fired with <strong>Enter</strong> or <strong>Space</strong>, and dismissed with <strong>Escape</strong>. Focus is never a trap, is always visible (<strong>SC 2.4.7</strong>), and is never hidden behind sticky UI (<strong>SC 2.4.11</strong>). Never remove the outline without a stronger replacement.
+    Many people navigate entirely by keyboard: a motor impairment, repetitive strain, a screen reader, or plain preference. <strong>SC 2.1.1 Keyboard</strong> asks that every control be reachable and operable from the keyboard, and the activation key follows the role: <strong>Tab</strong> moves focus, <strong>Space</strong> activates buttons and checkboxes, and <strong>Enter</strong> activates links and buttons. <strong>SC 2.1.2 No Keyboard Trap</strong> is a separate promise: focus that lands somewhere can always move away again through a standard mechanism, not necessarily <code>Escape</code>. Escape-to-close is a dialog and menu convention from the ARIA Authoring Practices Guide, not part of 2.1.1. Focus stays visible (<strong>SC 2.4.7</strong>) and is never hidden behind sticky UI (<strong>SC 2.4.11</strong>).
   </p>
+
+  <div className="a11y-rule">
+    <div className="a11y-rule-label"><span className="material-symbols-outlined" aria-hidden="true">gavel</span>Rule</div>
+    <div className="a11y-rule-text">Keep a visible focus indicator on every focusable control.</div>
+    <div className="a11y-rule-why"><strong>Why:</strong> the focus ring is how a keyboard user knows where they are. If a design has to drop the default outline, replace it with something at least as clear, never with nothing.</div>
+  </div>
 
   <div className="a11y-demo">
     <div className="a11y-demo-panel">
@@ -692,12 +828,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <span className="a11y-demo-btn is-focused">Buy tickets</span>
     </div>
     <div className="a11y-demo-panel">
-      <span className="a11y-demo-label">One reachable path</span>
+      <span className="a11y-demo-label">Operable by keyboard (SC 2.1.1)</span>
       <div className="a11y-keys" aria-hidden="true">
         <span className="a11y-key">Tab</span>
         <span className="a11y-key">Enter</span>
         <span className="a11y-key">Space</span>
-        <span className="a11y-key">Esc</span>
       </div>
     </div>
   </div>
@@ -843,7 +978,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
-      <span className="a11y-checklist-text"><span className="sr-only">Done: </span>Keyboard test: Tab, Enter, Space, Escape all work, no trap<span className="a11y-check-sc">SC 2.1.1 / 2.1.2</span></span>
+      <span className="a11y-checklist-text"><span className="sr-only">Done: </span>Keyboard: Tab reaches every control, Space and Enter activate by role, focus can always move away<span className="a11y-check-sc">SC 2.1.1 / 2.1.2</span></span>
     </li>
     <li className="a11y-checklist-item">
       <div className="a11y-check" aria-hidden="true"><span className="material-symbols-outlined a11y-check-icon" aria-hidden="true">check</span></div>
