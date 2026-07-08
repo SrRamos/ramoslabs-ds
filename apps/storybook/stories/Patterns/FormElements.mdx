@@ -63,6 +63,36 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   .fe-hero p strong { color: #ffffff; font-weight: 700; }
 
+  /* ===== PART BANNER ===== */
+  .fe-part {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin: 3.5rem 0 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #4f46e5;
+  }
+
+  .fe-part-kicker {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #4338ca;
+    background: #e0e7ff;
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .fe-part-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
   /* ===== SECTIONS ===== */
   .fe-section {
     margin-top: 2.5rem;
@@ -232,6 +262,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 1rem;
     color: #0f172a;
     font-family: 'Rubik', sans-serif;
+    caret-color: var(--color-primary);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
@@ -252,6 +283,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .fe-input.success { border-color: #059669; }
+
+  select.fe-input { appearance: auto; cursor: pointer; }
 
   .fe-error {
     display: flex;
@@ -366,6 +399,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     white-space: nowrap;
   }
 
+  .fe-yes { color: #166534; font-weight: 700; }
+  .fe-no { color: #991b1b; font-weight: 700; }
+  .fe-yes .fe-material, .fe-no .fe-material { font-size: 0.95rem; vertical-align: -0.15rem; }
+
   /* ===== TIMELINE (validation) ===== */
   .fe-timeline {
     display: grid;
@@ -465,6 +502,78 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-radius: 9999px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
   }
+
+  /* ===== NATIVE ACCENT LAB ===== */
+  .fe-accent-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    background: #f8fafc;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-accent-lab input[type="checkbox"],
+  .fe-accent-lab input[type="radio"],
+  .fe-accent-lab input[type="range"],
+  .fe-accent-lab progress {
+    accent-color: var(--color-primary);
+  }
+
+  .fe-accent-lab input[type="checkbox"],
+  .fe-accent-lab input[type="radio"] {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+  }
+
+  .fe-accent-lab input[type="range"] { width: 100%; }
+  .fe-accent-lab progress { width: 100%; height: 0.75rem; }
+
+  .fe-accent-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .fe-accent-cap {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #475569;
+    margin-bottom: 0.15rem;
+  }
+
+  .fe-accent-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #0f172a;
+  }
+
+  /* ===== CODE BLOCK ===== */
+  .fe-code {
+    background: #0f172a;
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+  }
+
+  .fe-code .fe-c-com { color: #94a3b8; }
+  .fe-code .fe-c-prop { color: #a5b4fc; }
+  .fe-code .fe-c-sel { color: #c4b5fd; }
 
   /* ===== RECOMMENDED / AVOID DEMO ===== */
   .fe-demo.avoid {
@@ -596,6 +705,122 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .fe-xlink:hover { background: #e0e7ff; }
   .fe-xlink .fe-material { font-size: 1rem; }
 
+  /* ===== CATALOG CARDS ===== */
+  .fe-family {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 2rem 0 0.5rem;
+  }
+
+  .fe-family .fe-material {
+    color: #4f46e5;
+    font-size: 1.35rem;
+  }
+
+  .fe-family-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .fe-catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .fe-cat {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .fe-cat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .fe-cat-name {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .fe-verdict {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    white-space: nowrap;
+  }
+
+  .fe-verdict.native { color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .fe-verdict.custom { color: #4338ca; background: #eef2ff; border: 1px solid #c7d2fe; }
+  .fe-verdict.hybrid { color: #475569; background: #f1f5f9; border: 1px solid #e2e8f0; }
+
+  .fe-cat-el {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    color: #4338ca;
+    margin: 0;
+  }
+
+  .fe-cat-attrs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .fe-cat-attrs code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+  }
+
+  .fe-cat-notes {
+    list-style: none;
+    margin: 0.15rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .fe-cat-notes li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: #475569;
+  }
+
+  .fe-cat-notes li .fe-material {
+    font-size: 0.95rem;
+    color: #64748b;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .fe-cat-notes li strong { color: #0f172a; font-weight: 600; }
+
   /* ===== SOURCES ===== */
   .fe-sources-list {
     margin: 1rem 0 0;
@@ -638,17 +863,184 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p className="fe-hero-eyebrow">Patterns / Form Elements</p>
   <h1>Every screen persuades. The form is where they act.</h1>
   <p>
-    It is also the single easiest place to lose the people the rest of the product worked to earn. A hidden label, the wrong keyboard, an error that only says <strong>"invalid"</strong>: each is a small tax, and forms are where small taxes compound into abandonment. So treat every field as one exchange in a conversation: a <strong>visible question</strong>, an honest input, <strong>help before the mistake</strong>, and a fix after it.
+    It is also the single easiest place to lose the people the rest of the product worked to earn. A hidden label, the wrong keyboard, an error that only says <strong>"invalid"</strong>: each is a small tax, and forms are where small taxes compound into abandonment. This page is the last word on how we build them. The spine is one rule: <strong>reach for the native control first</strong>, tune it with the right attributes, and build custom only where the platform genuinely falls short.
   </p>
 </div>
 
 {/* ============================================ */}
-{/* 1: ANATOMY OF A FIELD                         */}
+{/* PART 1 BANNER                                 */}
+{/* ============================================ */}
+
+<div className="fe-part">
+  <span className="fe-part-kicker">Part 1</span>
+  <span className="fe-part-title">Doctrine, the rules under every field</span>
+</div>
+
+{/* ============================================ */}
+{/* 1: NATIVE-FIRST                               */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
     <span className="fe-section-number">1</span>
+    <h2 className="fe-section-title">Native-first, and doubly so on mobile</h2>
+  </div>
+
+  <p className="fe-text">
+    The default is always the plain HTML control with the right <code>type</code>, <code>inputmode</code> and <code>autocomplete</code>. On a phone this is not a preference, it is leverage: a semantic <code>&lt;input type&gt;</code> raises the correct on-screen keyboard, opens the platform picker, and arrives with keyboard support, focus handling and screen-reader semantics already built in. MDN is blunt about it: prefer the semantic input type over hacks, for better accessibility and built-in validation.
+  </p>
+
+  <p className="fe-text">
+    Go custom only when one of two things is true: the pattern <strong>does not exist in HTML</strong> (a real multi-select, a filtering combobox, tags, rating), or the brand <strong>must style something the platform will not let you style</strong> (the popup of a <code>&lt;select&gt;</code>, the calendar of a date picker). When you do, prefer desktop, keep a native control underneath as the progressive-enhancement base, and follow the matching WAI-ARIA APG pattern to the letter. On mobile, bias even harder toward native: the OS picker is already accessible and familiar.
+  </p>
+
+  <div className="fe-callout">
+    <span className="fe-material" aria-hidden="true">info</span>
+    <p className="fe-callout-text">
+      <strong>Native controls are hard to style, and that is the whole tension.</strong> web.dev says it plainly: today's HTML form elements are difficult to customize. You can style the field box (border, radius, padding, type) of almost anything. What you cannot reliably restyle cross-browser is the <code>&lt;select&gt;</code> arrow and popup, and the date and time picker widgets. That single limit, not taste, is what pushes a control from native to custom.
+    </p>
+  </div>
+
+  <p className="fe-text">
+    The clearest case is a date. GOV.UK research is the reference here: for a date the user <strong>already knows or can look up</strong> without a calendar, such as a birthday or an issue date, do not open a calendar at all. Use three plain text inputs, grouped in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>, each with <code>inputmode="numeric"</code>. Reserve the native calendar picker for dates the user picks by looking, like choosing a future session to attend.
+  </p>
+
+  <div className="fe-lab">
+    <div className="fe-demo">
+      <div className="fe-demo-label rec">✓ Recommended: a memorable date, as three fields</div>
+      <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
+        <legend className="fe-label" style={{ marginBottom: '0.5rem' }}>Date of birth</legend>
+        <span className="fe-help" style={{ marginTop: 0, marginBottom: '0.6rem', display: 'block' }}>For example, 27 3 1998.</span>
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <label className="fe-help" htmlFor="fe-dob-d" style={{ marginTop: 0 }}>Day</label>
+            <input id="fe-dob-d" className="fe-input" style={{ width: '3.5rem' }} type="text" inputMode="numeric" maxLength={2} defaultValue="27" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <label className="fe-help" htmlFor="fe-dob-m" style={{ marginTop: 0 }}>Month</label>
+            <input id="fe-dob-m" className="fe-input" style={{ width: '3.5rem' }} type="text" inputMode="numeric" maxLength={2} defaultValue="3" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <label className="fe-help" htmlFor="fe-dob-y" style={{ marginTop: 0 }}>Year</label>
+            <input id="fe-dob-y" className="fe-input" style={{ width: '5rem' }} type="text" inputMode="numeric" maxLength={4} defaultValue="1998" />
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div className="fe-demo avoid">
+      <div className="fe-demo-label avoid">✕ Avoid: a calendar for a birthday</div>
+      <div className="fe-field">
+        <label className="fe-label" htmlFor="fe-dob-bad">Date of birth</label>
+        <input id="fe-dob-bad" className="fe-input" type="date" defaultValue="1998-03-27" />
+        <span className="fe-help">A picker that opens on the current month forces the user to page back through decades to reach a year they could have simply typed.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 2: THEMING THE ACCENT                         */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">2</span>
+    <h2 className="fe-section-title">Theming the accent without giving up native</h2>
+  </div>
+
+  <p className="fe-text">
+    You can brand native controls without rebuilding them. Three CSS properties carry it, and each one has a precise reach. Set them once at the root and every native checkbox, radio, range and text caret in the product turns indigo, and every control follows the OS light or dark theme, with zero per-control work.
+  </p>
+
+  <div className="fe-code" dangerouslySetInnerHTML={{ __html:
+`<span class="fe-c-sel">:root</span> {
+  <span class="fe-c-prop">color-scheme</span>: light dark;               <span class="fe-c-com">/* native controls follow the OS theme */</span>
+  <span class="fe-c-prop">accent-color</span>: var(--color-primary);    <span class="fe-c-com">/* tints checkbox, radio, range, progress */</span>
+  <span class="fe-c-prop">caret-color</span>: var(--color-primary);     <span class="fe-c-com">/* the text insertion cursor */</span>
+}
+<span class="fe-c-com">&lt;!-- in &lt;head&gt;, prevents a theme flash on load --&gt;</span>
+&lt;meta name=<span class="fe-c-prop">"color-scheme"</span> content=<span class="fe-c-prop">"light dark"</span>&gt;` }} />
+
+  <p className="fe-text">
+    <strong>Read the coverage exactly.</strong> <code>accent-color</code> tints four controls and nothing else. It does not touch <code>&lt;select&gt;</code>, the date and time inputs, <code>type="color"</code>, <code>type="file"</code>, or any text field. Getting this wrong is the usual reason a "themed" form still shows a stock blue selected option.
+  </p>
+
+  <div className="fe-table-scroll">
+    <table className="fe-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>What it does</th>
+          <th>Reaches</th>
+          <th>Does not reach</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="fe-kbd"><code>accent-color</code></td>
+          <td>Tints the control's accent to the brand, keeping native behaviour</td>
+          <td><span className="fe-yes">checkbox, radio, <code>range</code>, <code>progress</code></span></td>
+          <td><span className="fe-no">select, date, time, color, file, text</span></td>
+        </tr>
+        <tr>
+          <td className="fe-kbd"><code>caret-color</code></td>
+          <td>Colours the text insertion cursor</td>
+          <td><span className="fe-yes">text, search, tel, email, password, textarea</span></td>
+          <td><span className="fe-no">date, color, checkbox, radio</span></td>
+        </tr>
+        <tr>
+          <td className="fe-kbd"><code>color-scheme</code></td>
+          <td>Native controls adopt the OS dark or light look, no extra CSS</td>
+          <td><span className="fe-yes">all native controls, scrollbars</span></td>
+          <td><span className="fe-no">your own custom colours</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p className="fe-text">
+    Here it is live. Every control below is a stock browser control tinted with <code>accent-color: var(--color-primary)</code>. No custom markup, no JavaScript. Toggle your OS theme and they follow it, while the indigo accent stays put in both.
+  </p>
+
+  <div className="fe-accent-lab">
+    <div className="fe-accent-group">
+      <span className="fe-accent-cap">accent-color, checkbox</span>
+      <label className="fe-accent-row"><input type="checkbox" defaultChecked /> Send event reminders</label>
+      <label className="fe-accent-row"><input type="checkbox" /> Add me to the newsletter</label>
+    </div>
+    <div className="fe-accent-group">
+      <span className="fe-accent-cap">accent-color, radio</span>
+      <label className="fe-accent-row"><input type="radio" name="fe-accent-radio" defaultChecked /> General admission</label>
+      <label className="fe-accent-row"><input type="radio" name="fe-accent-radio" /> VIP</label>
+    </div>
+    <div className="fe-accent-group">
+      <span className="fe-accent-cap">accent-color, range</span>
+      <input type="range" min="0" max="100" defaultValue="65" aria-label="Accent-tinted range demo" />
+      <span className="fe-accent-cap" style={{ marginTop: '0.4rem' }}>progress</span>
+      <progress max="100" value="65" aria-label="Accent-tinted progress demo">65%</progress>
+    </div>
+    <div className="fe-accent-group">
+      <span className="fe-accent-cap">caret-color, text</span>
+      <label className="fe-help" htmlFor="fe-caret" style={{ marginTop: 0 }}>Click in, the cursor is indigo</label>
+      <input id="fe-caret" className="fe-input" type="text" defaultValue="Ramos" />
+    </div>
+  </div>
+
+  <div className="fe-callout">
+    <span className="fe-material" aria-hidden="true">lightbulb</span>
+    <p className="fe-callout-text">
+      <strong>Trust the browser on accent contrast.</strong> Provide the brand colour and the browser picks a legible checkmark or thumb colour against it for you. For the controls <code>accent-color</code> cannot reach, take the decision ladder: accept the native chrome (best on mobile), style only the field box and keep the native popup, or, only if the brand demands it, rebuild with the matching APG pattern on desktop with a native control underneath.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 3: ANATOMY OF A FIELD                         */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">3</span>
     <h2 className="fe-section-title">The anatomy of a field</h2>
   </div>
 
@@ -679,6 +1071,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <strong>The label stays visible, above the field, never inside it.</strong> A placeholder is not a label: it vanishes the instant someone types, exactly when they want to re-read the question, and screen readers treat it as unreliable. A single top-aligned column is also the fastest form to scan, because the eye runs straight down from question to answer.
   </p>
 
+  <p className="fe-text">
+    Marking the required field is not optional decoration. The <code>*</code> is drawn with <code>aria-hidden</code>, and the word "required" rides along in an <code>sr-only</code> span so a screen reader announces it in full. Pair the real <code>required</code> attribute with that text, and state the convention once at the top of the form.
+  </p>
+
   <div className="fe-callout">
     <span className="fe-material" aria-hidden="true">lightbulb</span>
     <p className="fe-callout-text">
@@ -706,17 +1102,93 @@ import { Meta } from '@storybook/addon-docs/blocks';
 </div>
 
 {/* ============================================ */}
-{/* 2: INPUT TYPES & MOBILE KEYBOARDS             */}
+{/* 4: VALIDATION                                 */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
-    <span className="fe-section-number">2</span>
-    <h2 className="fe-section-title">Pick the type, get the right keyboard</h2>
+    <span className="fe-section-number">4</span>
+    <h2 className="fe-section-title">Validate at the right moment, in the right words</h2>
   </div>
 
   <p className="fe-text">
-    On a phone, the <code>type</code> attribute is the biggest usability lever in the form. It tells the operating system which keyboard to raise: <code>type="email"</code> surfaces the @ key, <code>type="tel"</code> raises the big dial pad. <code>inputmode</code> tunes the keyboard without changing meaning, and <code>autocomplete</code> lets the browser fill the field from a saved profile in one tap.
+    Start from HTML constraint validation, <code>required</code>, <code>type</code>, <code>pattern</code>, <code>min</code>, <code>max</code>, <code>step</code>. It is free, works without JavaScript, and is the source of truth. Present its state with the newer <code>:user-invalid</code> and <code>:user-valid</code> pseudo-classes, not <code>:invalid</code> and <code>:valid</code>. The user variants only match after the person has interacted or tried to submit, which is exactly what stops a pristine form from lighting up red on load.
+  </p>
+
+  <div className="fe-code" dangerouslySetInnerHTML={{ __html:
+`<span class="fe-c-com">/* matches only after interaction, never on first paint */</span>
+<span class="fe-c-sel">input:user-invalid</span> { <span class="fe-c-prop">border-color</span>: var(--color-error); }
+<span class="fe-c-sel">input:user-valid</span>   { <span class="fe-c-prop">border-color</span>: var(--color-success-strong); }` }} />
+
+  <p className="fe-text">
+    On timing, the rule is <strong>reward early, punish late</strong>. Confirm a field as valid while the user types, but hold a new error until they leave it. Flagging the first letter of an email as a broken email is technically true and deeply unhelpful.
+  </p>
+
+  <p className="fe-text">
+    The rule has a second half that starts the moment a field has <em>already</em> shown an error. From then on, switch that field to re-validate on every keystroke and <strong>clear the error the instant the value becomes valid</strong>. Once someone is fixing a known problem, the reassurance that they succeeded should arrive immediately, never held back until they leave and re-enter the field.
+  </p>
+
+  <div className="fe-timeline">
+    <div className="fe-tl-step">
+      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">keyboard</span> While typing</span>
+      <div className="fe-tl-title">Reward, never punish</div>
+      <div className="fe-tl-body">Show a success tick the moment input becomes valid. Hold the first error back; an incomplete field is not yet a wrong one. After a field has erred, though, re-check on input and clear it the instant it is valid.</div>
+    </div>
+    <div className="fe-tl-step">
+      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">logout</span> On blur</span>
+      <div className="fe-tl-title">Now you may correct</div>
+      <div className="fe-tl-body">When focus leaves the field, the answer is final enough to judge. Surface the inline error, right under the field.</div>
+    </div>
+    <div className="fe-tl-step">
+      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">send</span> On submit</span>
+      <div className="fe-tl-title">Catch the rest</div>
+      <div className="fe-tl-body">Re-check everything, move focus to the first error, summarise in a live region. Never let a form fail silently.</div>
+    </div>
+  </div>
+
+  <p className="fe-text">
+    A good error message is <strong>visible and specific</strong>, says <strong>what went wrong in plain language</strong>, and tells the user <strong>how to fix it</strong>. "Invalid input" fails all three. "Enter a date after today, the event cannot start in the past" passes all three. WCAG 3.3.1 requires the error to be identified in text, so the field carries <code>aria-invalid="true"</code> and points at the message with <code>aria-describedby</code>. The colour reinforces; the words are the message.
+  </p>
+
+  <div className="fe-lab">
+    <div className="fe-demo">
+      <div className="fe-demo-label">Reward: valid while typing</div>
+      <div className="fe-field">
+        <label className="fe-label" htmlFor="fe-ok">Email address</label>
+        <input id="fe-ok" className="fe-input success" type="email" defaultValue="ana@ramoslabs.co" aria-describedby="fe-ok-msg" />
+        <span id="fe-ok-msg" className="fe-success-text"><span className="fe-material" aria-hidden="true">check_circle</span> Looks good.</span>
+      </div>
+    </div>
+    <div className="fe-demo">
+      <div className="fe-demo-label">Punish late: actionable error on blur</div>
+      <div className="fe-field">
+        <label className="fe-label" htmlFor="fe-bad">Email address</label>
+        <input id="fe-bad" className="fe-input error" type="email" defaultValue="ana@ramoslabs" aria-invalid="true" aria-describedby="fe-bad-msg" />
+        <span id="fe-bad-msg" className="fe-error"><span className="fe-material" aria-hidden="true">error</span> Add the domain ending, like .co or .com, so the address can receive mail.</span>
+      </div>
+    </div>
+  </div>
+
+  <div className="fe-callout">
+    <span className="fe-material" aria-hidden="true">palette</span>
+    <p className="fe-callout-text">
+      <strong>Errors use <code>--color-error</code>, the only warm colour on the page.</strong> Everything interactive stays indigo; red's single job is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so its appearance always means something is wrong.
+    </p>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* 5: MOBILE                                     */}
+{/* ============================================ */}
+
+<div className="fe-section">
+  <div className="fe-section-header">
+    <span className="fe-section-number">5</span>
+    <h2 className="fe-section-title">Built for the thumb: the mobile contract</h2>
+  </div>
+
+  <p className="fe-text">
+    On a phone the <code>type</code> attribute is the biggest usability lever in the form. It tells the OS which keyboard to raise. <code>inputmode</code> tunes that keyboard without changing meaning, <code>enterkeyhint</code> relabels the return key, and <code>autocomplete</code> lets the browser fill the field from a saved profile in one tap, which also satisfies WCAG 1.3.5 Identify Input Purpose. Avoid <code>autocomplete="off"</code> except for genuine one-offs like a CAPTCHA answer.
   </p>
 
   <div className="fe-table-scroll">
@@ -755,6 +1227,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <td><code>autocomplete="one-time-code"</code></td>
         </tr>
         <tr>
+          <td className="fe-kbd">Amount of money</td>
+          <td><code>inputmode="decimal"</code></td>
+          <td>Digits with a decimal separator</td>
+          <td>None</td>
+        </tr>
+        <tr>
           <td className="fe-kbd">Quantity of tickets</td>
           <td><code>type="number"</code></td>
           <td>Number pad with stepper</td>
@@ -767,169 +1245,39 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <td><code>autocomplete="name"</code></td>
         </tr>
         <tr>
-          <td className="fe-kbd">Event date</td>
-          <td><code>type="date"</code></td>
-          <td>Native date picker, no free typing</td>
-          <td>None</td>
-        </tr>
-        <tr>
           <td className="fe-kbd">Search</td>
           <td><code>type="search"</code></td>
-          <td>Text with a Search / Go return key</td>
-          <td>None</td>
+          <td>Text with a Search return key</td>
+          <td><code>enterkeyhint="search"</code></td>
         </tr>
       </tbody>
     </table>
   </div>
 
+  <p className="fe-text">
+    Two numbers are non-negotiable. Inputs render at <strong><code>font-size: 16px</code> or larger</strong>, because iOS Safari auto-zooms any field below that on focus, and the fix is the size, never disabling <code>user-scalable</code>, which breaks zoom for everyone. Interactive targets are at least <strong>24 by 24 CSS pixels</strong> to clear WCAG 2.5.8, and the comfortable goal is <strong>44 by 44</strong>, the AAA target size and Apple's minimum. Native UA controls are exempt from the strict measure, which is one more reason to lean native on small screens.
+  </p>
+
   <div className="fe-callout">
     <span className="fe-material" aria-hidden="true">smartphone</span>
     <p className="fe-callout-text">
-      <strong>Reach for the native control first.</strong> <code>type="date"</code>, <code>type="time"</code> and a real <code>&lt;select&gt;</code> already ship a picker, keyboard behaviour and accessibility that a hand-built widget has to re-earn from scratch. Build custom only when the native one truly cannot express what you need.
+      <strong>Every input on this page renders at 16px.</strong> The <code>type</code> validates and picks the keyboard; <code>inputmode</code> only hints at it, so use the semantic type first and reach for <code>inputmode</code> to fine-tune. For SMS logins, <code>autocomplete="one-time-code"</code> lets iOS and Android drop the texted code straight into the field.
     </p>
   </div>
 </div>
 
 {/* ============================================ */}
-{/* 3: VALIDATION                                 */}
+{/* 6: ACCESSIBILITY FLOOR                        */}
 {/* ============================================ */}
 
 <div className="fe-section">
   <div className="fe-section-header">
-    <span className="fe-section-number">3</span>
-    <h2 className="fe-section-title">Validate at the right moment, in the right words</h2>
+    <span className="fe-section-number">6</span>
+    <h2 className="fe-section-title">The accessibility floor</h2>
   </div>
 
   <p className="fe-text">
-    Validation asks two things: <strong>when</strong> to check, and <strong>what</strong> to say. The rule is <strong>reward early, punish late</strong>. Confirm a field as valid while the user types, but hold the error until they leave it. Flagging the first letter of an email as a broken email is technically true and deeply unhelpful.
-  </p>
-
-  <p className="fe-text">
-    The rule has a second half that starts the moment a field has <em>already</em> shown an error. From then on, switch that field to re-validate on every keystroke and <strong>clear the error the instant the value becomes valid</strong>. Once someone is fixing a known problem, the reassurance that they succeeded should arrive immediately, never held back until they leave and re-enter the field.
-  </p>
-
-  <div className="fe-timeline">
-    <div className="fe-tl-step">
-      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">keyboard</span> While typing</span>
-      <div className="fe-tl-title">Reward, never punish</div>
-      <div className="fe-tl-body">Show a success tick the moment input becomes valid. Hold the first error back; an incomplete field is not yet a wrong one. After a field has erred, though, re-check on input and clear it the instant it is valid.</div>
-    </div>
-    <div className="fe-tl-step">
-      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">logout</span> On blur</span>
-      <div className="fe-tl-title">Now you may correct</div>
-      <div className="fe-tl-body">When focus leaves the field, the answer is final enough to judge. Surface the inline error, right under the field.</div>
-    </div>
-    <div className="fe-tl-step">
-      <span className="fe-tl-when"><span className="fe-material" style={{ fontSize: '0.85rem' }} aria-hidden="true">send</span> On submit</span>
-      <div className="fe-tl-title">Catch the rest</div>
-      <div className="fe-tl-body">Re-check everything, move focus to the first error, summarise. Never let a form fail silently.</div>
-    </div>
-  </div>
-
-  <p className="fe-text">
-    A good error message is <strong>visible and specific</strong>, says <strong>what went wrong in plain language</strong>, and tells the user <strong>how to fix it</strong>. "Invalid input" fails all three. "Enter a date after today, the event cannot start in the past" passes all three. WCAG 3.3.1 requires the error to be identified in text, so never lean on a red border alone. The colour reinforces; the words are the message.
-  </p>
-
-  <div className="fe-lab">
-    <div className="fe-demo">
-      <div className="fe-demo-label">Reward: valid while typing</div>
-      <div className="fe-field">
-        <label className="fe-label" htmlFor="fe-ok">Email address</label>
-        <input id="fe-ok" className="fe-input success" type="email" defaultValue="ana@ramoslabs.co" aria-describedby="fe-ok-msg" />
-        <span id="fe-ok-msg" className="fe-success-text"><span className="fe-material" aria-hidden="true">check_circle</span> Looks good.</span>
-      </div>
-    </div>
-    <div className="fe-demo">
-      <div className="fe-demo-label">Punish late: actionable error on blur</div>
-      <div className="fe-field">
-        <label className="fe-label" htmlFor="fe-bad">Email address</label>
-        <input id="fe-bad" className="fe-input error" type="email" defaultValue="ana@ramoslabs" aria-invalid="true" aria-describedby="fe-bad-msg" />
-        <span id="fe-bad-msg" className="fe-error"><span className="fe-material" aria-hidden="true">error</span> Add the domain ending, like .co or .com, so the address can receive mail.</span>
-      </div>
-    </div>
-  </div>
-
-  <div className="fe-callout">
-    <span className="fe-material" aria-hidden="true">palette</span>
-    <p className="fe-callout-text">
-      <strong>Errors use <code>--color-error</code>, the only warm colour on the page.</strong> Everything interactive stays indigo; red's single job is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so its appearance always means something is wrong.
-    </p>
-  </div>
-</div>
-
-{/* ============================================ */}
-{/* 4: FIELD STATES                               */}
-{/* ============================================ */}
-
-<div className="fe-section">
-  <div className="fe-section-header">
-    <span className="fe-section-number">4</span>
-    <h2 className="fe-section-title">Every field has states</h2>
-  </div>
-
-  <p className="fe-text">
-    Default, focused, filled, sometimes disabled or in error. The field inherits the system state model rather than inventing its own: focus is the indigo ring token that stays visible on any surface, and the press and hover of a checkbox or toggle are tonal indigo layers gated to devices that can produce them.
-  </p>
-
-  <div className="fe-lab">
-    <div className="fe-demo">
-      <div className="fe-demo-label">Input states</div>
-      <div className="fe-field">
-        <label className="fe-label" htmlFor="fe-s1">Default</label>
-        <input id="fe-s1" className="fe-input" type="text" placeholder="Tap or click to focus" />
-      </div>
-      <div className="fe-field">
-        <label className="fe-label">Disabled</label>
-        <input className="fe-input" type="text" defaultValue="Locked while saving" disabled />
-      </div>
-    </div>
-    <div className="fe-demo">
-      <div className="fe-demo-label">Selection controls</div>
-      <div className="fe-controls">
-        <div className="fe-control-row">
-          <div className="fe-checkbox"><span className="fe-material" aria-hidden="true">check</span></div>
-          <span className="fe-control-label">Send me event reminders</span>
-        </div>
-        <div className="fe-control-row">
-          <div className="fe-checkbox-off"></div>
-          <span className="fe-control-label">Add me to the newsletter</span>
-        </div>
-        <div className="fe-control-row">
-          <div className="fe-toggle"><div className="fe-toggle-knob"></div></div>
-          <span className="fe-control-label">Publish immediately</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <p className="fe-text">
-    Look at the defaults: the reminder is pre-checked because people want it, the newsletter is left off because it costs their attention. A default must be the choice the user would make with full attention, and it must stay editable. Pre-fill to save effort, never to extract a choice.
-  </p>
-
-  <div>
-    <a className="fe-xlink" href="./?path=/docs/patterns-interactive--docs">
-      <span className="fe-material" aria-hidden="true">arrow_forward</span>
-      Patterns / Interactive: the full state model
-    </a>
-    <a className="fe-xlink" href="./?path=/docs/patterns-persuasion--docs">
-      <span className="fe-material" aria-hidden="true">arrow_forward</span>
-      Patterns / Persuasion: the ethics of defaults
-    </a>
-  </div>
-</div>
-
-{/* ============================================ */}
-{/* 5: ACCESSIBILITY                              */}
-{/* ============================================ */}
-
-<div className="fe-section">
-  <div className="fe-section-header">
-    <span className="fe-section-number">5</span>
-    <h2 className="fe-section-title">A form is only done when it is accessible</h2>
-  </div>
-
-  <p className="fe-text">
-    An accessible form is the same form built correctly. Three WCAG criteria carry most of it, and each maps straight to a habit from the chapters above.
+    An accessible form is the same form built correctly. Four WCAG criteria carry most of it, and each maps straight to a habit from the sections above. This is the floor, AA is the minimum we ship, and we reach for AAA target sizing wherever the layout allows.
   </p>
 
   <div className="fe-table-scroll">
@@ -962,6 +1310,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <td>The message says how to correct the value, not only that it is wrong.</td>
         </tr>
         <tr>
+          <td className="fe-kbd">1.3.5 Identify Input Purpose</td>
+          <td>AA</td>
+          <td>Common fields expose their purpose programmatically.</td>
+          <td>Correct <code>autocomplete</code> tokens, which also drive autofill.</td>
+        </tr>
+        <tr>
           <td className="fe-kbd">2.5.8 Target Size</td>
           <td>AA</td>
           <td>Interactive targets are at least 24 by 24 CSS pixels.</td>
@@ -974,7 +1328,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="fe-callout">
     <span className="fe-material" aria-hidden="true">accessibility_new</span>
     <p className="fe-callout-text">
-      <strong>The label is a click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input's <code>id</code> names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. This is the accessible default, not optional polish.
+      <strong>The label is a click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input's <code>id</code> names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. Group related controls in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> so the group's question is announced too. This is the accessible default, not optional polish.
     </p>
   </div>
 
@@ -983,42 +1337,515 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <span className="fe-material" aria-hidden="true">arrow_forward</span>
       Patterns / Accessibility: focus order, live regions, contrast
     </a>
+    <a className="fe-xlink" href="./?path=/docs/patterns-interactive--docs">
+      <span className="fe-material" aria-hidden="true">arrow_forward</span>
+      Patterns / Interactive: the full state model
+    </a>
   </div>
 </div>
 
 {/* ============================================ */}
-{/* 6: RULES                                      */}
+{/* PART 2 BANNER                                 */}
 {/* ============================================ */}
 
-<div className="fe-section">
-  <div className="fe-section-header">
-    <span className="fe-section-number">6</span>
-    <h2 className="fe-section-title">Rules of the form</h2>
+<div className="fe-part">
+  <span className="fe-part-kicker">Part 2</span>
+  <span className="fe-part-title">The catalog, every control we reach for</span>
+</div>
+
+<p className="fe-text" style={{ marginTop: '1.25rem' }}>
+  One card per control, grouped by family. Each names the native element, a verdict of <strong className="fe-yes">Native</strong>, <strong className="fe-verdict custom" style={{ padding: '0.05rem 0.4rem' }}>Custom</strong> or <strong className="fe-verdict hybrid" style={{ padding: '0.05rem 0.4rem' }}>Hybrid</strong>, the attributes that matter, and the two notes that decide quality: what happens on mobile, and the accessibility pattern to follow. When a control has no good native form, the note names the WAI-ARIA APG pattern to build against.
+</p>
+
+{/* ---- FAMILY: TEXT & NUMERIC ---- */}
+
+<div className="fe-family">
+  <span className="fe-material" aria-hidden="true">edit</span>
+  <span className="fe-family-title">Text and numeric fields</span>
+</div>
+
+<div className="fe-catalog">
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Text</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="text"&gt;</p>
+    <div className="fe-cat-attrs"><code>autocomplete</code><code>enterkeyhint</code><code>maxlength</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Standard keyboard; keep <strong>font-size at 16px</strong>.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Visible <code>&lt;label for&gt;</code>; error via <code>aria-describedby</code> and <code>aria-invalid</code>.</li>
+    </ul>
   </div>
 
-  <div className="fe-rules">
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Email</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="email"&gt;</p>
+    <div className="fe-cat-attrs"><code>inputmode="email"</code><code>autocomplete="email"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Raises a keyboard with @ and a dot, no shift needed.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Built-in format validation; still write a fix-it error message.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Password</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="password"&gt;</p>
+    <div className="fe-cat-attrs"><code>autocomplete="current-password"</code><code>new-password</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">visibility</span> Offer a show-password toggle; <strong>never block paste</strong>.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Use <code>new-password</code> on sign-up so managers offer a strong one.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Number</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="number"&gt;</p>
+    <div className="fe-cat-attrs"><code>inputmode="numeric"</code><code>min</code><code>max</code><code>step</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> For true quantities. For codes and IDs use <code>text</code> plus <code>inputmode</code>.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Native role is spinbutton; arrows step the value.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Tel</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="tel"&gt;</p>
+    <div className="fe-cat-attrs"><code>inputmode="tel"</code><code>autocomplete="tel"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Raises the phone dial pad. No format validation, so pair with a hint.</li>
+      <li><span className="fe-material" aria-hidden="true">public</span> Add a country selector only when you serve many regions (see Composite).</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">URL</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="url"&gt;</p>
+    <div className="fe-cat-attrs"><code>inputmode="url"</code><code>autocomplete="url"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Keyboard adds / and .com shortcuts.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Validates for a scheme; accept input without <code>https://</code> and normalise it.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Search</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="search"&gt;</p>
+    <div className="fe-cat-attrs"><code>enterkeyhint="search"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Return key reads "Search"; a clear button appears on many browsers.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Carries an implicit searchbox role.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Textarea</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;textarea&gt;</p>
+    <div className="fe-cat-attrs"><code>rows</code><code>maxlength</code><code>enterkeyhint="enter"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Keep 16px; let it auto-grow rather than trapping text in a scroll.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> If you show a counter, mirror it in an <code>aria-live</code> region.</li>
+    </ul>
+  </div>
+</div>
+
+<div className="fe-lab">
+  <div className="fe-demo">
+    <div className="fe-demo-label">Native text inputs, right type each</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-email">Email</label>
+      <input id="fe-cat-email" className="fe-input" type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" />
+    </div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-tel">Phone</label>
+      <input id="fe-cat-tel" className="fe-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="300 123 4567" />
+    </div>
+  </div>
+  <div className="fe-demo">
+    <div className="fe-demo-label">Textarea with a live counter</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-ta">Event description</label>
+      <textarea id="fe-cat-ta" className="fe-input" rows={3} maxLength={140} defaultValue="An intimate night of live jazz under the stars." aria-describedby="fe-cat-ta-c" style={{ resize: 'vertical' }}></textarea>
+      <span id="fe-cat-ta-c" className="fe-help" aria-live="polite">92 characters left</span>
+    </div>
+  </div>
+</div>
+
+{/* ---- FAMILY: SELECTION ---- */}
+
+<div className="fe-family">
+  <span className="fe-material" aria-hidden="true">checklist</span>
+  <span className="fe-family-title">Selection controls</span>
+</div>
+
+<div className="fe-catalog">
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Select, single</span><span className="fe-verdict hybrid">Hybrid</span></div>
+    <p className="fe-cat-el">&lt;select&gt;</p>
+    <div className="fe-cat-attrs"><code>&lt;option&gt;</code><code>required</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> <strong>Prefer native</strong>: it opens the OS wheel, already accessible.</li>
+      <li><span className="fe-material" aria-hidden="true">architecture</span> Custom only to style the popup, then follow <strong>APG Select-only Combobox</strong>. Long lists: switch to an autocomplete.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Multi-select</span><span className="fe-verdict custom">Custom</span></div>
+    <p className="fe-cat-el">no good native form</p>
+    <div className="fe-cat-attrs"><code>aria-multiselectable</code><code>aria-selected</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> <code>&lt;select multiple&gt;</code> is hostile on touch; use checkboxes or a sheet.</li>
+      <li><span className="fe-material" aria-hidden="true">architecture</span> Build against <strong>APG Listbox, multi-select</strong>, or just decompose into a checkbox group.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Checkbox</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="checkbox"&gt;</p>
+    <div className="fe-cat-attrs"><code>accent-color</code><code>checked</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Target 44px; <code>accent-color</code> tints it indigo, no rebuild.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> For a group, wrap in <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Radio group</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="radio"&gt; x N</p>
+    <div className="fe-cat-attrs"><code>name</code><code>accent-color</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> One shared <code>name</code>; each option a 44px target.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> <strong>APG Radio Group</strong>: one tab-stop, arrows move and select.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Switch, toggle</span><span className="fe-verdict custom">Custom</span></div>
+    <p className="fe-cat-el">checkbox as the base</p>
+    <div className="fe-cat-attrs"><code>role="switch"</code><code>aria-checked</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> For an instant on/off setting; the change applies at once.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> <strong>APG Switch</strong>: Space toggles, and the <strong>label does not change</strong> with state.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Range, slider</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="range"&gt;</p>
+    <div className="fe-cat-attrs"><code>min</code><code>max</code><code>step</code><code>accent-color</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Tinted by <code>accent-color</code>; pair with a visible value, dragging is imprecise.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Native covers <strong>APG Slider</strong>. Two-thumb range: <strong>APG Slider Multi-Thumb</strong>.</li>
+    </ul>
+  </div>
+</div>
+
+<div className="fe-lab">
+  <div className="fe-demo">
+    <div className="fe-demo-label">Native select, styled box, native popup</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-sel">Ticket type</label>
+      <select id="fe-cat-sel" className="fe-input" defaultValue="ga">
+        <option value="ga">General admission</option>
+        <option value="vip">VIP</option>
+        <option value="student">Student</option>
+      </select>
+      <span className="fe-help">The box is styled with CSS; the popup stays native and accessible.</span>
+    </div>
+  </div>
+  <div className="fe-demo">
+    <div className="fe-demo-label">Selection controls and a custom switch</div>
+    <div className="fe-controls">
+      <div className="fe-control-row">
+        <div className="fe-checkbox"><span className="fe-material" aria-hidden="true">check</span></div>
+        <span className="fe-control-label">Send me event reminders</span>
+      </div>
+      <div className="fe-control-row">
+        <div className="fe-checkbox-off"></div>
+        <span className="fe-control-label">Add me to the newsletter</span>
+      </div>
+      <div className="fe-control-row">
+        <div className="fe-toggle"><div className="fe-toggle-knob"></div></div>
+        <span className="fe-control-label">Publish immediately</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="fe-text">
+  Look at those defaults: the reminder is pre-checked because people want it, the newsletter is left off because it costs their attention. A default must be the choice the user would make with full attention, and it must stay editable. Pre-fill to save effort, never to extract a choice.
+</p>
+
+<div>
+  <a className="fe-xlink" href="./?path=/docs/patterns-persuasion--docs">
+    <span className="fe-material" aria-hidden="true">arrow_forward</span>
+    Patterns / Persuasion: the ethics of defaults
+  </a>
+</div>
+
+{/* ---- FAMILY: DATE & TIME ---- */}
+
+<div className="fe-family">
+  <span className="fe-material" aria-hidden="true">calendar_month</span>
+  <span className="fe-family-title">Date, time and colour</span>
+</div>
+
+<div className="fe-catalog">
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Calendar date</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="date"&gt;</p>
+    <div className="fe-cat-attrs"><code>min</code><code>max</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Opens the OS calendar. Right for a date the user picks by looking.</li>
+      <li><span className="fe-material" aria-hidden="true">architecture</span> Custom only to style the calendar: a button opening an <strong>APG Dialog</strong> grid.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Memorable date</span><span className="fe-verdict hybrid">Hybrid</span></div>
+    <p className="fe-cat-el">3 x &lt;input type="text"&gt;</p>
+    <div className="fe-cat-attrs"><code>inputmode="numeric"</code><code>fieldset</code><code>legend</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Birthdays and issue dates: three numeric fields beat a calendar.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> The GOV.UK pattern: day, month, year, grouped in a fieldset.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Time</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="time"&gt;</p>
+    <div className="fe-cat-attrs"><code>datetime-local</code><code>step</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Native time wheel respects the 12 or 24 hour locale.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Use <code>datetime-local</code> to capture date and time in one control.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Colour</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="color"&gt;</p>
+    <div className="fe-cat-attrs"><code>value</code> hex</div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Opens the OS colour picker. <code>accent-color</code> does not apply here.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Pair with a text hex field so the value is typeable too.</li>
+    </ul>
+  </div>
+</div>
+
+<div className="fe-lab">
+  <div className="fe-demo">
+    <div className="fe-demo-label rec">✓ Recommended: native picker for a future date</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-date">Event date</label>
+      <input id="fe-cat-date" className="fe-input" type="date" defaultValue="2026-09-12" />
+      <span className="fe-help">The user is choosing a date to attend, so the calendar earns its place.</span>
+    </div>
+  </div>
+  <div className="fe-demo">
+    <div className="fe-demo-label">Native time and colour</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-time">Doors open</label>
+      <input id="fe-cat-time" className="fe-input" type="time" defaultValue="19:30" />
+    </div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-color">Brand colour</label>
+      <input id="fe-cat-color" type="color" defaultValue="#4f46e5" style={{ width: '3rem', height: '2.75rem', border: '1px solid #64748b', borderRadius: '8px', background: 'white', padding: '0.2rem' }} />
+    </div>
+  </div>
+</div>
+
+{/* ---- FAMILY: SPECIALIZED ---- */}
+
+<div className="fe-family">
+  <span className="fe-material" aria-hidden="true">tune</span>
+  <span className="fe-family-title">Specialized inputs</span>
+</div>
+
+<div className="fe-catalog">
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">File</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="file"&gt;</p>
+    <div className="fe-cat-attrs"><code>accept</code><code>capture</code><code>multiple</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> <code>capture</code> can open the camera directly for a photo upload.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Style the triggering <code>&lt;label&gt;</code>, never hide the input without a label.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Combobox, autocomplete</span><span className="fe-verdict custom">Custom</span></div>
+    <p className="fe-cat-el">&lt;input&gt; + &lt;datalist&gt; as base</p>
+    <div className="fe-cat-attrs"><code>role="combobox"</code><code>aria-autocomplete</code><code>aria-expanded</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Text keyboard; render suggestions as a sheet on small screens.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> <strong>APG Combobox</strong> with <code>aria-activedescendant</code>. Enhance a real <code>&lt;select&gt;</code>.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">One-time code</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input&gt; single or split</p>
+    <div className="fe-cat-attrs"><code>autocomplete="one-time-code"</code><code>inputmode="numeric"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> iOS and Android autofill the SMS code straight into the field.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> If you split into boxes, group them and announce progress.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Phone with country</span><span className="fe-verdict hybrid">Hybrid</span></div>
+    <p className="fe-cat-el">&lt;input type="tel"&gt; + selector</p>
+    <div className="fe-cat-attrs"><code>autocomplete="tel"</code><code>tel-country-code</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> The number stays a native tel input; only the country picker is custom.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Country selector follows <strong>APG Combobox or Listbox</strong>.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Currency, masked</span><span className="fe-verdict custom">Custom</span></div>
+    <p className="fe-cat-el">&lt;input type="text"&gt; + mask</p>
+    <div className="fe-cat-attrs"><code>inputmode="decimal"</code><code>pattern</code><code>aria-describedby</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Avoid <code>type="number"</code>: it fights thousands separators. Use text plus a mask.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> State the expected format in help; do not break editing for AT.</li>
+    </ul>
+  </div>
+</div>
+
+<div className="fe-lab">
+  <div className="fe-demo">
+    <div className="fe-demo-label">One-time code, SMS autofill</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-otp">Verification code</label>
+      <input id="fe-cat-otp" className="fe-input" type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="123456" style={{ letterSpacing: '0.4em' }} />
+      <span className="fe-help">Sent by SMS. Your phone can fill it in one tap.</span>
+    </div>
+  </div>
+  <div className="fe-demo">
+    <div className="fe-demo-label">Masked currency, decimal keypad</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-cur">Ticket price</label>
+      <input id="fe-cat-cur" className="fe-input" type="text" inputMode="decimal" defaultValue="$ 85,000" aria-describedby="fe-cat-cur-h" />
+      <span id="fe-cat-cur-h" className="fe-help">Amount in COP. The decimal keypad keeps entry fast.</span>
+    </div>
+  </div>
+</div>
+
+{/* ---- FAMILY: COMPOSITE & ADVANCED ---- */}
+
+<div className="fe-family">
+  <span className="fe-material" aria-hidden="true">widgets</span>
+  <span className="fe-family-title">Composite and advanced</span>
+</div>
+
+<div className="fe-catalog">
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Tags, chips</span><span className="fe-verdict custom">Custom</span></div>
+    <p className="fe-cat-el">no native form</p>
+    <div className="fe-cat-attrs"><code>role="combobox"</code><code>aria-label</code> per chip</div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Chips are 44px targets; each removable by keyboard, not hover alone.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Input follows <strong>APG Combobox</strong>; each chip's remove button has a label.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Rating, stars</span><span className="fe-verdict custom">Custom</span></div>
+    <p className="fe-cat-el">radio group as base</p>
+    <div className="fe-cat-attrs"><code>role="radiogroup"</code><code>name</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Each star a 44px target; never depend on hover to set a value.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> One star is one radio option, so <strong>APG Radio Group</strong> carries it.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Stepper, plus and minus</span><span className="fe-verdict native">Native</span></div>
+    <p className="fe-cat-el">&lt;input type="number"&gt;</p>
+    <div className="fe-cat-attrs"><code>min</code><code>max</code><code>step</code><code>role="spinbutton"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Custom plus and minus buttons at 44px beat the tiny native spinners.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Native and custom both are <strong>APG Spinbutton</strong>: arrows, Home, End.</li>
+    </ul>
+  </div>
+
+  <div className="fe-cat">
+    <div className="fe-cat-head"><span className="fe-cat-name">Rich text</span><span className="fe-verdict custom">Custom</span></div>
+    <p className="fe-cat-el">contenteditable, or a library</p>
+    <div className="fe-cat-attrs"><code>contenteditable</code><code>role="toolbar"</code></div>
+    <ul className="fe-cat-notes">
+      <li><span className="fe-material" aria-hidden="true">smartphone</span> Expensive to make accessible; use only when formatting truly matters.</li>
+      <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Toolbar follows <strong>APG Toolbar</strong>; announce applied formatting.</li>
+    </ul>
+  </div>
+</div>
+
+<div className="fe-lab">
+  <div className="fe-demo">
+    <div className="fe-demo-label">Stepper, 44px targets</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-step">Tickets</label>
+      <div style={{ display: 'flex', alignItems: 'stretch', gap: '0.5rem' }}>
+        <button type="button" aria-label="Remove one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #64748b', borderRadius: '8px', background: 'white', color: '#0f172a', fontSize: '1.25rem', cursor: 'pointer' }}>-</button>
+        <input id="fe-cat-step" className="fe-input" type="number" inputMode="numeric" min={1} max={10} defaultValue={2} style={{ width: '4rem', textAlign: 'center' }} />
+        <button type="button" aria-label="Add one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #4f46e5', borderRadius: '8px', background: '#4f46e5', color: 'white', fontSize: '1.25rem', cursor: 'pointer' }}>+</button>
+      </div>
+    </div>
+  </div>
+  <div className="fe-demo">
+    <div className="fe-demo-label">Tags, keyboard removable</div>
+    <div className="fe-field">
+      <label className="fe-label" htmlFor="fe-cat-tags">Event topics</label>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'center', border: '1px solid #64748b', borderRadius: '8px', padding: '0.5rem' }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', background: '#eef2ff', color: '#3730a3', borderRadius: '999px', padding: '0.25rem 0.4rem 0.25rem 0.7rem', fontSize: '0.8125rem', fontFamily: 'Rubik, sans-serif' }}>
+          Jazz
+          <button type="button" aria-label="Remove Jazz" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', borderRadius: '999px' }}><span className="fe-material" aria-hidden="true" style={{ fontSize: '1rem' }}>close</span></button>
+        </span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', background: '#eef2ff', color: '#3730a3', borderRadius: '999px', padding: '0.25rem 0.4rem 0.25rem 0.7rem', fontSize: '0.8125rem', fontFamily: 'Rubik, sans-serif' }}>
+          Live
+          <button type="button" aria-label="Remove Live" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', borderRadius: '999px' }}><span className="fe-material" aria-hidden="true" style={{ fontSize: '1rem' }}>close</span></button>
+        </span>
+        <input id="fe-cat-tags" type="text" role="combobox" aria-expanded="false" aria-label="Add a topic" placeholder="Add topic" style={{ flex: 1, minWidth: '6rem', border: 'none', outline: 'none', fontSize: '1rem', fontFamily: 'Rubik, sans-serif', color: '#0f172a', background: 'transparent' }} />
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ============================================ */}
+{/* RULES                                         */}
+{/* ============================================ */}
+
+<div className="fe-part">
+  <span className="fe-part-kicker">Close</span>
+  <span className="fe-part-title">Rules of the form</span>
+</div>
+
+<div className="fe-section" style={{ borderBottom: 'none' }}>
+  <div className="fe-rules" style={{ marginTop: '1.5rem' }}>
     <div className="fe-rule">
-      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Keep the label visible above every field.</p>
-      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A placeholder vanishes on the first keystroke and takes the question with it, leaving nowhere to put help.</p>
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Reach for the native control before building a custom one.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A native <code>&lt;select&gt;</code>, date input or checkbox ships the keyboard, picker and accessibility a hand-built widget has to re-earn from scratch.</p>
     </div>
     <div className="fe-rule">
-      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Give each field its own line in a single top-aligned column.</p>
-      <p className="fe-rule-why"><span className="fe-tag why">Why</span> The eye runs straight down from question to answer; fields set side by side to look compact slow the scan and break on a narrow screen.</p>
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Brand native controls with <code>accent-color</code>, <code>caret-color</code> and <code>color-scheme</code>, and know their reach.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> They tint checkbox, radio, range, progress and the caret without a rebuild; select, date and text they do not touch, so plan for those.</p>
     </div>
     <div className="fe-rule">
-      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Match <code>type</code> and <code>inputmode</code> to the answer.</p>
-      <p className="fe-rule-why"><span className="fe-tag why">Why</span> The matching keyboard rises on the first tap, so no one hunts for the @ key or a digit on a plain text keyboard.</p>
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Keep the label visible above every field, and mark the rarer of required or optional in words.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A placeholder vanishes on the first keystroke and takes the question with it; an asterisk alone reaches no screen reader.</p>
     </div>
     <div className="fe-rule">
-      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Add the <code>autocomplete</code> token to every field the browser can fill.</p>
-      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A saved profile completes the field in one tap instead of a manual retype.</p>
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Match <code>type</code>, <code>inputmode</code>, <code>enterkeyhint</code> and <code>autocomplete</code> to the answer.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> The right keyboard rises on the first tap and a saved profile fills the field in one, instead of a manual retype.</p>
     </div>
     <div className="fe-rule">
-      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Reward valid input while typing, and surface errors on blur.</p>
-      <p className="fe-rule-why"><span className="fe-tag why">Why</span> Flagging a half-typed value as wrong punishes progress; once a field has already erred, re-check on input and clear the error the instant it is valid.</p>
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Render inputs at 16px or larger and give interactive targets at least 24px, ideally 44px.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> Below 16px iOS Safari auto-zooms on focus; below 24px the target fails WCAG 2.5.8, and the thumb misses.</p>
     </div>
     <div className="fe-rule">
-      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Write errors that name the fix, in text.</p>
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Reward valid input while typing with <code>:user-valid</code>, and surface errors on blur.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> Flagging a half-typed value as wrong punishes progress; once a field has already erred, re-check on input and clear it the instant it is valid.</p>
+    </div>
+    <div className="fe-rule">
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Write errors that name the fix, in text, with <code>aria-invalid</code> and <code>aria-describedby</code>.</p>
       <p className="fe-rule-why"><span className="fe-tag why">Why</span> "Invalid" leaves no way to recover, and a red border alone reaches no screen reader; the words carry the message.</p>
     </div>
     <div className="fe-rule">
@@ -1026,8 +1853,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="fe-rule-why"><span className="fe-tag why">Why</span> One warm colour on an otherwise indigo page means its appearance always signals a real problem.</p>
     </div>
     <div className="fe-rule">
-      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> Reach for the native control before building a custom one.</p>
-      <p className="fe-rule-why"><span className="fe-tag why">Why</span> A native <code>&lt;select&gt;</code> or date picker ships the keyboard, picker and accessibility a hand-built widget has to re-earn from scratch.</p>
+      <p className="fe-rule-line"><span className="fe-tag rule">Rule</span> When you must go custom, build against the matching WAI-ARIA APG pattern and keep a native base underneath.</p>
+      <p className="fe-rule-why"><span className="fe-tag why">Why</span> The APG pattern encodes the keyboard and roles users expect, and the native base keeps the field working if the script fails.</p>
     </div>
   </div>
 
@@ -1043,13 +1870,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="fe-ladder-text"><strong>Can a native control answer it?</strong> A <code>&lt;select&gt;</code>, <code>type="date"</code>, a checkbox. Use it, and keyboard and accessibility come built in.</p>
     </div>
     <div className="fe-ladder-step">
-      <p className="fe-ladder-text"><strong>What is the answer's shape?</strong> Pick the <code>type</code> and <code>inputmode</code> that raise the matching keyboard, and add the <code>autocomplete</code> token.</p>
+      <p className="fe-ladder-text"><strong>What is the answer's shape?</strong> Pick the <code>type</code> and <code>inputmode</code> that raise the matching keyboard, add <code>enterkeyhint</code> and the <code>autocomplete</code> token, and brand it with <code>accent-color</code>.</p>
     </div>
     <div className="fe-ladder-step">
       <p className="fe-ladder-text"><strong>What can go wrong, and how is it fixed?</strong> Write the help and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.</p>
     </div>
     <div className="fe-ladder-step">
-      <p className="fe-ladder-text"><strong>Only now, assemble it</strong> from the primitives: visible label, control, help, error, in one column, states inherited from Patterns / Interactive.</p>
+      <p className="fe-ladder-text"><strong>Only now, assemble it</strong> from the primitives: visible label, control, help, error, in one column, states inherited from Patterns / Interactive. If the pattern is not in HTML, build the matching APG pattern over a native base.</p>
     </div>
   </div>
 </div>
@@ -1062,28 +1889,37 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <h2 className="fe-section-title">Sources</h2>
   <ul className="fe-sources-list">
     <li>
-      <strong>Nielsen Norman Group, "Placeholders in Form Fields Are Harmful."</strong> Placeholder text cannot replace a label: it disappears on input, strains memory, and hurts error recovery. nngroup.com/articles/form-design-placeholders
+      <strong>MDN Web Docs, CSS and HTML references.</strong> <code>accent-color</code> (tints checkbox, radio, range, progress, and its limits), <code>caret-color</code>, <code>color-scheme</code>, <code>&lt;input&gt;</code> types, the <code>inputmode</code> and <code>enterkeyhint</code> global attributes, the <code>autocomplete</code> token list, and the <code>:user-invalid</code> pseudo-class. developer.mozilla.org/en-US/docs/Web/CSS/accent-color
     </li>
     <li>
-      <strong>Nielsen Norman Group, "Error-Message Guidelines."</strong> Errors must be visible, human-readable, specific, and constructive about how to recover. nngroup.com/articles/error-message-guidelines
+      <strong>web.dev, "accent-color" and the Learn Forms course.</strong> Four themable controls, automatic accent contrast, interaction with <code>color-scheme</code>, and the note that HTML form elements are difficult to customize. web.dev/articles/accent-color
     </li>
     <li>
-      <strong>Mihael Konjevic, "Inline Validation in Web Forms" (Smashing Magazine, 2022).</strong> Source of "reward early, punish late": validate to a positive while typing, hold errors until the user leaves the field. smashingmagazine.com/2022/09/inline-validation-web-forms-ux
+      <strong>caniuse, accent-color support.</strong> Roughly 94 percent, available since Chrome and Edge 93, Firefox 92, Safari 15.4 (March 2022), so widely available with a Safari caveat to check in QA. caniuse.com/mdn-css_properties_accent-color
     </li>
     <li>
-      <strong>Baymard Institute, form-field usability research.</strong> Single-column forms complete faster (baymard.com/blog/avoid-multi-column-forms), keep the label visible (baymard.com/blog/mobile-forms-avoid-inline-labels), and validate on blur (baymard.com/blog/inline-form-validation).
+      <strong>WAI-ARIA Authoring Practices Guide (APG).</strong> Patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog and Toolbar. The canonical path is w3.org/WAI/ARIA/apg/patterns/{'{'}pattern{'}'}. <span className="fe-spa">SPA</span> The index is a single-page app; individual pattern pages open directly.
     </li>
     <li>
-      <strong>web.dev, "Payment and address form best practices" and the Learn Forms course.</strong> Correct <code>type</code>, <code>inputmode</code>, and <code>autocomplete</code> tokens for mobile keyboards and autofill. web.dev/articles/payment-and-address-form-best-practices
+      <strong>GOV.UK Design System and Service Manual.</strong> Progressive enhancement (build on working HTML, enhance after), the Select component (long drop-downs are not user friendly), and the Date input (three text fields with <code>inputmode="numeric"</code> in a fieldset for memorable dates). design-system.service.gov.uk/components/date-input
     </li>
     <li>
-      <strong>MDN Web Docs.</strong> The <code>inputmode</code> global attribute and the <code>autocomplete</code> token list. developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inputmode
+      <strong>W3C, Understanding WCAG 2.2.</strong> SC 3.3.2 (A), 3.3.1 (A) with technique ARIA21 <code>aria-invalid</code>, 3.3.3 (AA), 1.3.5 Identify Input Purpose (AA), 2.5.8 Target Size Minimum 24px (AA) and 2.5.5 44px (AAA). w3.org/WAI/WCAG22/Understanding
     </li>
     <li>
-      <strong>W3C, Understanding WCAG 2.2.</strong> SC 3.3.2 (A), 3.3.1 (A), 3.3.3 (AA), 2.5.8 (AA), 2.5.5 (AAA). w3.org/WAI/WCAG22/Understanding
+      <strong>Mihael Konjevic, "Inline Validation in Web Forms" (Smashing Magazine, 2022).</strong> Source of "reward early, punish late": validate to a positive while typing, hold errors until the user leaves the field, then clear on input once corrected. smashingmagazine.com/2022/09/inline-validation-web-forms-ux
     </li>
     <li>
-      Approximate landing URLs are given per source; a specific path may shift over time. <span className="fe-spa">Doctrine</span> The reward-while-typing / punish-on-blur timing and the single-accent, error-only use of <code>--color-error</code> are this system's house rules layered on the cited guidance, not verbatim claims from the authors.
+      <strong>CSS-Tricks and defensivecss.dev, iOS input zoom.</strong> Inputs at 16px or larger prevent Safari iOS from auto-zooming on focus; do not disable user scaling. css-tricks.com/16px-or-larger-text-prevents-ios-form-zoom
+    </li>
+    <li>
+      <strong>Apple Human Interface Guidelines, Text fields.</strong> Content-appropriate keyboards, a 44pt minimum target, content types for autofill, and secure entry. developer.apple.com/design/human-interface-guidelines/text-fields <span className="fe-spa">SPA</span>
+    </li>
+    <li>
+      <strong>Nielsen Norman Group and Baymard Institute.</strong> Placeholders cannot replace labels; error messages must be visible, specific and constructive; single-column forms complete faster and validate on blur. nngroup.com/articles/form-design-placeholders, baymard.com/blog/avoid-multi-column-forms
+    </li>
+    <li>
+      The reward-while-typing timing and the single-accent, error-only use of <code>--color-error</code> are this system's house rules layered on the cited guidance, not verbatim claims from the authors.
     </li>
   </ul>
 </div>
