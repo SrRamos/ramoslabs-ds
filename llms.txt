@@ -35,3 +35,8 @@ color, spacing, typography, radius, shadow, and motion values ship as CSS variab
 - [llms-full.txt](https://ramoslabs-ds.pages.dev/llms-full.txt): every page inlined, plus the full token table.
 - [registry.json](https://ramoslabs-ds.pages.dev/registry.json): tokens, patterns, and components as JSON.
 - [tokens.json](https://ramoslabs-ds.pages.dev/tokens.json): the flat DTCG token map (name to resolved value).
+
+## License
+
+Free to use under the MIT License. Keep the copyright and license notice, and credit
+RamosLabs. © 2026 RAMOS SOLUTIONS S.A.S.. https://ramoslabs.com

@@ -96,3 +96,13 @@ WebFetch https://ramoslabs-ds.pages.dev/registry.json
 
 Start with `llms.txt` to find the right page, or `llms-full.txt` when you want everything.
 Use `registry.json` when you need structured token or pattern data rather than prose.
+
+## License and attribution
+
+RamosLabs Design System is free to use under the MIT License. Use, copy, modify, and
+distribute it, including commercially. Keep the copyright and license notice, and credit
+RamosLabs.
+
+© 2026 RAMOS SOLUTIONS S.A.S. RamosLabs is a product of RAMOS SOLUTIONS S.A.S.
+Website: https://ramoslabs.com. The `registry.json` `license`, `copyright`, and
+`attribution` fields carry these terms in machine-readable form.

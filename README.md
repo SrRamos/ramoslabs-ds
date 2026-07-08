@@ -49,3 +49,12 @@ bun run --filter @ramoslabs/tokens build
    `@ramoslabs/tokens`.
 
 The JSON is the source. The CSS and TS are always generated, never edited by hand.
+
+## License
+
+RamosLabs Design System is free to use under the [MIT License](./LICENSE): use, copy,
+modify, and distribute it, including commercially. The one condition is attribution, keep
+the copyright and license notice in copies, and credit RamosLabs.
+
+© 2026 RAMOS SOLUTIONS S.A.S. RamosLabs is a product of RAMOS SOLUTIONS S.A.S.
+Website: [ramoslabs.com](https://ramoslabs.com).

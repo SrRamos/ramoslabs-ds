@@ -127,6 +127,10 @@ function loadPages(pages) {
 
 // --- emit ----------------------------------------------------------------------
 const TITLE = 'RamosLabs Design System'
+const COPYRIGHT = '© 2026 RAMOS SOLUTIONS S.A.S.'
+const WEBSITE = 'https://ramoslabs.com'
+const ATTRIBUTION =
+  'RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.'
 
 function buildLlmsTxt({ siteUrl, resolved, introSummary }) {
   const bullets = (group) =>
@@ -159,6 +163,11 @@ ${bullets('patterns')}
 - [llms-full.txt](${siteUrl}/llms-full.txt): every page inlined, plus the full token table.
 - [registry.json](${siteUrl}/registry.json): tokens, patterns, and components as JSON.
 - [tokens.json](${siteUrl}/tokens.json): the flat DTCG token map (name to resolved value).
+
+## License
+
+Free to use under the MIT License. Keep the copyright and license notice, and credit
+RamosLabs. ${COPYRIGHT}. ${WEBSITE}
 `
 }
 
@@ -173,6 +182,10 @@ function buildLlmsFull({ siteUrl, resolved, introSummary, tokens }) {
   )
   sections.push(
     'RamosLabs Design System. It inlines every documentation page and the full token table.'
+  )
+  sections.push('')
+  sections.push(
+    `Free to use under the MIT License. Keep the copyright and license notice, and credit RamosLabs. ${COPYRIGHT}. ${WEBSITE}`
   )
   sections.push('')
   sections.push(`## Token reference (${tokens.total} tokens)`)
@@ -208,6 +221,10 @@ function buildRegistry({ siteUrl, resolved, tokens, version }) {
   return {
     name: TITLE,
     version,
+    license: 'MIT',
+    copyright: COPYRIGHT,
+    homepage: WEBSITE,
+    attribution: ATTRIBUTION,
     generatedFrom: '@ramoslabs/tokens dist JSON + Storybook MDX content',
     tokens: {
       total: tokens.total,

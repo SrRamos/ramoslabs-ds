@@ -2,6 +2,9 @@
   "name": "@ramoslabs/tokens",
   "version": "0.0.0",
   "description": "RamosLabs design tokens. DTCG JSON is the source; CSS/TS/JSON are generated.",
+  "license": "MIT",
+  "author": "RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com)",
+  "homepage": "https://ramoslabs.com",
   "type": "module",
   "files": [
     "dist"

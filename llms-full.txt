@@ -5,6 +5,8 @@
 This is the complete, self-contained reference for AI agents building UI on the
 RamosLabs Design System. It inlines every documentation page and the full token table.
 
+Free to use under the MIT License. Keep the copyright and license notice, and credit RamosLabs. © 2026 RAMOS SOLUTIONS S.A.S.. https://ramoslabs.com
+
 ## Token reference (213 tokens)
 
 ### breakpoint (5)

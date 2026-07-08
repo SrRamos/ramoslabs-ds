@@ -2,6 +2,7 @@
   "name": "storybook",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "storybook": "storybook dev -p 6006 --no-open",
