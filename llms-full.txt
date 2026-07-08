@@ -1,0 +1,2391 @@
+# RamosLabs Design System
+
+> What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth
+
+This is the complete, self-contained reference for AI agents building UI on the
+RamosLabs Design System. It inlines every documentation page and the full token table.
+
+## Token reference (213 tokens)
+
+### breakpoint (5)
+
+| Token | Value |
+| --- | --- |
+| `--breakpoint-sm` | `576px` |
+| `--breakpoint-md` | `769px` |
+| `--breakpoint-lg` | `992px` |
+| `--breakpoint-xl` | `1200px` |
+| `--breakpoint-2xl` | `1366px` |
+
+### color (130)
+
+| Token | Value |
+| --- | --- |
+| `--color-white` | `#ffffff` |
+| `--color-black` | `#000000` |
+| `--color-indigo-50` | `#eef2ff` |
+| `--color-indigo-100` | `#e0e7ff` |
+| `--color-indigo-200` | `#c7d2fe` |
+| `--color-indigo-300` | `#a5b4fc` |
+| `--color-indigo-400` | `#818cf8` |
+| `--color-indigo-500` | `#6366f1` |
+| `--color-indigo-600` | `#4f46e5` |
+| `--color-indigo-700` | `#4338ca` |
+| `--color-indigo-800` | `#3730a3` |
+| `--color-indigo-900` | `#312e81` |
+| `--color-indigo-950` | `#1e1b4b` |
+| `--color-slate-50` | `#f8fafc` |
+| `--color-slate-100` | `#f1f5f9` |
+| `--color-slate-200` | `#e2e8f0` |
+| `--color-slate-300` | `#cbd5e1` |
+| `--color-slate-400` | `#94a3b8` |
+| `--color-slate-500` | `#64748b` |
+| `--color-slate-600` | `#475569` |
+| `--color-slate-700` | `#334155` |
+| `--color-slate-800` | `#1e293b` |
+| `--color-slate-900` | `#0f172a` |
+| `--color-slate-950` | `#020617` |
+| `--color-emerald-50` | `#ecfdf5` |
+| `--color-emerald-100` | `#d1fae5` |
+| `--color-emerald-200` | `#a7f3d0` |
+| `--color-emerald-300` | `#6ee7b7` |
+| `--color-emerald-400` | `#34d399` |
+| `--color-emerald-500` | `#10b981` |
+| `--color-emerald-600` | `#059669` |
+| `--color-emerald-700` | `#047857` |
+| `--color-emerald-800` | `#065f46` |
+| `--color-emerald-900` | `#064e3b` |
+| `--color-emerald-950` | `#022c22` |
+| `--color-green-50` | `#f0fdf4` |
+| `--color-green-100` | `#dcfce7` |
+| `--color-green-200` | `#bbf7d0` |
+| `--color-green-300` | `#86efac` |
+| `--color-green-400` | `#4ade80` |
+| `--color-green-500` | `#22c55e` |
+| `--color-green-600` | `#16a34a` |
+| `--color-green-700` | `#15803d` |
+| `--color-green-800` | `#166534` |
+| `--color-green-900` | `#14532d` |
+| `--color-green-950` | `#052e16` |
+| `--color-amber-50` | `#fffbeb` |
+| `--color-amber-100` | `#fef3c7` |
+| `--color-amber-200` | `#fde68a` |
+| `--color-amber-300` | `#fcd34d` |
+| `--color-amber-400` | `#fbbf24` |
+| `--color-amber-500` | `#f59e0b` |
+| `--color-amber-600` | `#d97706` |
+| `--color-amber-700` | `#b45309` |
+| `--color-amber-800` | `#92400e` |
+| `--color-amber-900` | `#78350f` |
+| `--color-amber-950` | `#451a03` |
+| `--color-red-50` | `#fef2f2` |
+| `--color-red-100` | `#fee2e2` |
+| `--color-red-200` | `#fecaca` |
+| `--color-red-300` | `#fca5a5` |
+| `--color-red-400` | `#f87171` |
+| `--color-red-500` | `#ef4444` |
+| `--color-red-600` | `#dc2626` |
+| `--color-red-700` | `#b91c1c` |
+| `--color-red-800` | `#991b1b` |
+| `--color-red-900` | `#7f1d1d` |
+| `--color-red-950` | `#450a0a` |
+| `--color-blue-50` | `#eff6ff` |
+| `--color-blue-100` | `#dbeafe` |
+| `--color-blue-200` | `#bfdbfe` |
+| `--color-blue-300` | `#93c5fd` |
+| `--color-blue-400` | `#60a5fa` |
+| `--color-blue-500` | `#3b82f6` |
+| `--color-blue-600` | `#2563eb` |
+| `--color-blue-700` | `#1d4ed8` |
+| `--color-blue-800` | `#1e40af` |
+| `--color-blue-900` | `#1e3a8a` |
+| `--color-blue-950` | `#172554` |
+| `--color-violet-50` | `#f5f3ff` |
+| `--color-violet-100` | `#ede9fe` |
+| `--color-violet-200` | `#ddd6fe` |
+| `--color-violet-300` | `#c4b5fd` |
+| `--color-violet-400` | `#a78bfa` |
+| `--color-violet-500` | `#8b5cf6` |
+| `--color-violet-600` | `#7c3aed` |
+| `--color-violet-700` | `#6d28d9` |
+| `--color-violet-800` | `#5b21b6` |
+| `--color-violet-900` | `#4c1d95` |
+| `--color-violet-950` | `#2e1065` |
+| `--color-primary` | `#4f46e5` |
+| `--color-primary-light` | `#6366f1` |
+| `--color-primary-dark` | `#4338ca` |
+| `--color-primary-surface` | `#eef2ff` |
+| `--color-secondary` | `#8b5cf6` |
+| `--color-secondary-light` | `#a78bfa` |
+| `--color-secondary-dark` | `#7c3aed` |
+| `--color-secondary-surface` | `#f5f3ff` |
+| `--color-success` | `#10b981` |
+| `--color-success-strong` | `#059669` |
+| `--color-success-surface` | `#f0fdf4` |
+| `--color-success-border` | `#bbf7d0` |
+| `--color-success-text` | `#166534` |
+| `--color-warning` | `#f59e0b` |
+| `--color-warning-surface` | `#fffbeb` |
+| `--color-warning-border` | `#fde68a` |
+| `--color-warning-text` | `#78350f` |
+| `--color-error` | `#ef4444` |
+| `--color-error-strong` | `#dc2626` |
+| `--color-error-surface` | `#fef2f2` |
+| `--color-error-border` | `#fecaca` |
+| `--color-error-text` | `#991b1b` |
+| `--color-info` | `#3b82f6` |
+| `--color-info-surface` | `#eff6ff` |
+| `--color-info-border` | `#bfdbfe` |
+| `--color-info-text` | `#1e40af` |
+| `--color-text-heading` | `#0f172a` |
+| `--color-text-strong` | `#1e293b` |
+| `--color-text-secondary` | `#475569` |
+| `--color-text-body` | `#64748b` |
+| `--color-text-muted` | `#64748b` |
+| `--color-text-disabled` | `#cbd5e1` |
+| `--color-surface` | `#ffffff` |
+| `--color-surface-secondary` | `#f8fafc` |
+| `--color-surface-hover` | `#f1f5f9` |
+| `--color-background` | `#f8fafc` |
+| `--color-border` | `#e6e8eb` |
+| `--color-border-light` | `#e2e8f0` |
+| `--color-border-subtle` | `#f1f5f9` |
+| `--color-focus` | `#4f46e5` |
+
+### duration (3)
+
+| Token | Value |
+| --- | --- |
+| `--duration-fast` | `150ms` |
+| `--duration-normal` | `200ms` |
+| `--duration-slow` | `300ms` |
+
+### easing (5)
+
+| Token | Value |
+| --- | --- |
+| `--easing-linear` | `cubic-bezier(0, 0, 1, 1)` |
+| `--easing-in` | `cubic-bezier(0.4, 0, 1, 1)` |
+| `--easing-out` | `cubic-bezier(0, 0, 0.2, 1)` |
+| `--easing-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` |
+| `--easing-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` |
+
+### radius (8)
+
+| Token | Value |
+| --- | --- |
+| `--radius-none` | `0` |
+| `--radius-xs` | `0.25rem` |
+| `--radius-sm` | `0.375rem` |
+| `--radius-md` | `0.5rem` |
+| `--radius-lg` | `0.75rem` |
+| `--radius-xl` | `1rem` |
+| `--radius-2xl` | `1.25rem` |
+| `--radius-pill` | `9999px` |
+
+### shadow (4)
+
+| Token | Value |
+| --- | --- |
+| `--shadow-sm` | `0 1px 2px 0 rgba(79, 70, 229, 0.06), 0 1px 3px 0 rgba(15, 23, 42, 0.04)` |
+| `--shadow-md` | `0 2px 4px -1px rgba(79, 70, 229, 0.06), 0 8px 16px -4px rgba(79, 70, 229, 0.10)` |
+| `--shadow-lg` | `0 4px 8px -2px rgba(79, 70, 229, 0.06), 0 16px 32px -8px rgba(79, 70, 229, 0.12)` |
+| `--shadow-focus` | `0 0 0 2px #ffffff, 0 0 0 4px #4f46e5` |
+
+### space (14)
+
+| Token | Value |
+| --- | --- |
+| `--space-0` | `0` |
+| `--space-1` | `0.25rem` |
+| `--space-2` | `0.5rem` |
+| `--space-3` | `0.75rem` |
+| `--space-4` | `1rem` |
+| `--space-5` | `1.25rem` |
+| `--space-6` | `1.5rem` |
+| `--space-8` | `2rem` |
+| `--space-10` | `2.5rem` |
+| `--space-12` | `3rem` |
+| `--space-16` | `4rem` |
+| `--space-20` | `5rem` |
+| `--space-24` | `6rem` |
+| `--space-32` | `8rem` |
+
+### state (4)
+
+| Token | Value |
+| --- | --- |
+| `--state-hover` | `0.08` |
+| `--state-focus` | `0.1` |
+| `--state-pressed` | `0.1` |
+| `--state-dragged` | `0.16` |
+
+### font (21)
+
+| Token | Value |
+| --- | --- |
+| `--font-family-sans` | `Rubik, system-ui, sans-serif` |
+| `--font-family-display` | `'Red Hat Display', system-ui, sans-serif` |
+| `--font-family-alt` | `Roboto, system-ui, sans-serif` |
+| `--font-weight-thin` | `100` |
+| `--font-weight-extralight` | `200` |
+| `--font-weight-light` | `300` |
+| `--font-weight-normal` | `400` |
+| `--font-weight-medium` | `500` |
+| `--font-weight-semibold` | `600` |
+| `--font-weight-bold` | `700` |
+| `--font-weight-extrabold` | `800` |
+| `--font-size-xs` | `0.75rem` |
+| `--font-size-sm` | `0.875rem` |
+| `--font-size-base` | `1rem` |
+| `--font-size-lg` | `1.125rem` |
+| `--font-size-xl` | `1.25rem` |
+| `--font-size-2xl` | `1.5rem` |
+| `--font-size-3xl` | `1.875rem` |
+| `--font-size-4xl` | `2.25rem` |
+| `--font-size-5xl` | `3rem` |
+| `--font-size-6xl` | `3.75rem` |
+
+### leading (5)
+
+| Token | Value |
+| --- | --- |
+| `--leading-none` | `1` |
+| `--leading-tight` | `1.1` |
+| `--leading-snug` | `1.25` |
+| `--leading-normal` | `1.5` |
+| `--leading-relaxed` | `1.625` |
+
+### tracking (5)
+
+| Token | Value |
+| --- | --- |
+| `--tracking-tighter` | `-0.05em` |
+| `--tracking-tight` | `-0.025em` |
+| `--tracking-normal` | `0em` |
+| `--tracking-wide` | `0.025em` |
+| `--tracking-wider` | `0.05em` |
+
+### z (9)
+
+| Token | Value |
+| --- | --- |
+| `--z-dropdown` | `100` |
+| `--z-sticky` | `200` |
+| `--z-fixed` | `300` |
+| `--z-fab` | `400` |
+| `--z-modal-backdrop` | `500` |
+| `--z-modal` | `600` |
+| `--z-popover` | `700` |
+| `--z-tooltip` | `800` |
+| `--z-toast` | `900` |
+
+# Introduction
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/introduction--docs
+
+The RamosLabs Design System is a taxonomy book, not a component bundle. One indigo accent, one token contract, and the rules that turn them into a UI library you own.
+
+The whole system in four numbers:
+
+- 213 design tokens
+- 3 taxonomy tiers
+- AA contrast floor
+- 1 accent color
+
+## Three tiers, one direction
+
+- Tier 1, Foundations: the token contract. Color, type, space, radius, shadow, motion. Start here. References primitives.
+- Tier 2, Patterns: recipes built from foundations. States, forms, accessibility, voice. References foundations.
+- Tier 3, Components: SJ and W UI, built only from patterns and foundations. References patterns and foundations.
+
+The one rule: a tier may reference the tier below, never above. That single constraint keeps the system coherent as it grows.
+
+## The name tells you where it lives
+
+- `SJ` prefix: shared, domain-free UI. `SJButton`, `SJInput`. Built only from tokens and patterns. No business logic.
+- `W` prefix: app-specific widget. `WEventCard`, `WCheckoutSummary`. Composes SJ components and holds the domain logic.
+- `--token`: the value contract. `var(--color-primary)`, `var(--space-6)`. The only source of color, space, and type. Never a raw hex.
+
+## Authored once, compiled everywhere
+
+The pipeline: `tokens.json` (DTCG) to Style Dictionary to CSS variables plus TypeScript. Change a token once and every surface that references it updates in step. The DTCG JSON is the contract; nothing downstream is edited by hand.
+
+```css
+/* app entry, once */
+import '@ramoslabs/tokens/css';
+
+/* then build against the contract */
+.sj-card {
+    background: var(--color-surface);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+```
+
+## Sources
+
+Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.1.
+
+# Colors
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-colors--docs
+
+RamosLabs runs on a single accent. Indigo carries every deliberate action and nothing else competes for it. One voice for action, a deep neutral ramp for everything else, reserved signals for state. The accent is `#4f46e5`. No second brand hue, no rainbow.
+
+## The accent, up close
+
+Eleven tested steps from light to dark. The interface lives at 600. Everything above tints, everything below deepens for hover and pressed states.
+
+Indigo `--color-indigo-*`: 50 `#eef2ff`, 100 `#e0e7ff`, 200 `#c7d2fe`, 300 `#a5b4fc`, 400 `#818cf8`, 500 `#6366f1`, 600 `#4f46e5` (the accent), 700 `#4338ca` (hover), 800 `#3730a3`, 900 `#312e81`, 950 `#1e1b4b`.
+
+Slate `--color-slate-*` (text, surfaces, borders, the 90% of the interface): 50 `#f8fafc`, 100 `#f1f5f9`, 200 `#e2e8f0`, 300 `#cbd5e1`, 400 `#94a3b8`, 500 `#64748b`, 600 `#475569`, 700 `#334155`, 800 `#1e293b`, 900 `#0f172a`, 950 `#020617`.
+
+Reserved for state, never decoration:
+
+- Emerald `--color-emerald-*`: success solid.
+- Green `--color-green-*`: success surface and text.
+- Amber `--color-amber-*`: warning.
+- Red `--color-red-*`: error.
+- Blue `--color-blue-*`: info.
+- Violet `--color-secondary`: decorative support only.
+
+## Always reach for a role, not a raw color
+
+The ramps are primitives: raw hues, named by number, never by meaning. Product code never touches them. It consumes a role, a token named for the job it does. Example: `--color-indigo-600` is a primitive (a number, no job); `--color-primary` is the role (what you use). Re-theme by re-pointing roles, not by hunting hex across a codebase. Roles are theme-agnostic: a future dark theme re-points targets, it never renames the role.
+
+## Roles in context
+
+- Primary action: rest `--color-primary`, hover `--color-primary-dark`, focus ring at `--color-focus`. The one accent for submit, confirm, active nav.
+- Selected / accent zone: ✓ Recommended: `--color-primary-surface` tint with primary-colored text. ✕ Avoid: white text on the tint, it fails contrast on the pale surface.
+- Text scale, one neutral hue: `--text-heading` 17.85:1, `--text-strong` 14.63:1, `--text-secondary` 7.58:1, `--text-body` 4.76:1, `--text-disabled` state only.
+- Feedback, each a full triad (strong solid + surface + text):
+  - Success: `--color-success-strong` + `-surface` + `-text`. Strong solid for the icon so the white check clears 3:1.
+  - Warning: `--color-warning` + `-surface` + `-text`. Amber is bright, so it carries dark text, never white.
+  - Error: `--color-error` + `-surface` + `-text`. For a red button with white text, use `--color-error-strong`.
+  - Info: `--color-info` + `-surface` + `-text`. Kept distinct from indigo so context never reads as an action.
+
+## Contrast you can see
+
+Contrast is a floor. WCAG 2.2 asks 4.5:1 for normal text, 3:1 for large text and UI edges (AA); 7:1 is AAA. Measured pairings:
+
+- Primary on white: 6.29, AA
+- White on primary-dark: 7.90, AAA
+- Heading on white: 17.85, AAA
+- Body / muted on white: 4.76, AA
+- White on error-strong: 4.83, AA
+- White on error (red 500): 3.76, large only
+- Dark text on warning: 8.31, AAA
+- White on warning: 2.15, fail
+- Disabled on white: 1.48, by design
+
+Rule: pair every status color with an icon and a label, give every invalid field real text, and make focus a visible ring. Why: color is never the only channel (WCAG 2.2 SC 1.4.1), so meaning survives for color-blind and low-vision users. Color reinforces, it never carries meaning by itself.
+
+## Sources
+
+WCAG 2.2 contrast floors SC 1.4.3 / 1.4.6 / 1.4.11 and use of color SC 1.4.1. Role-token model after Material 3 color roles and Refactoring UI numbered scales. The 60-30-10 accent balance is a common color composition rule.
+
+# Typography
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-typography--docs
+
+RamosLabs types on three families and one ten-step scale. Every piece of text takes a role (Display, Headline, Title, Body, or Label), and the role hands it a family, size, weight, line-height, and tracking. Pick the role; the type takes care of itself.
+
+## Three voices
+
+- `--font-family-display`, Red Hat Display: geometric, slightly condensed, built to carry weight above 36px. Reserved for Display and Headline. Below the Title role its personality costs legibility.
+- `--font-family-sans`, Rubik: humanist, large x-height, open apertures, distinct at small sizes. The default for the whole product. If unsure which family to use, it is this one.
+- `--font-family-alt`, Roboto: metric-compatible fallback for dense system UI, embedded documents, or while web fonts load. Use it for a whole block on its own, never mixed with Rubik.
+
+## One scale, ten steps
+
+12px metadata to 60px display, a modular scale. 16px is the floor for body reading. Nothing on a surface sits between these steps.
+
+- `--font-size-6xl`: 3.75rem 60px, Display
+- `--font-size-5xl`: 3rem 48px, Display
+- `--font-size-4xl`: 2.25rem 36px, Display
+- `--font-size-3xl`: 1.875rem 30px, Headline
+- `--font-size-2xl`: 1.5rem 24px, Headline
+- `--font-size-xl`: 1.25rem 20px, Title
+- `--font-size-lg`: 1.125rem 18px, Title
+- `--font-size-base`: 1rem 16px, Body, the reading floor
+- `--font-size-sm`: 0.875rem 14px, Label, helper and labels
+- `--font-size-xs`: 0.75rem 12px, Label, metadata only
+
+## Every role, one recipe
+
+Design and build against the role, never against a raw pixel. Five groups, after the Material 3 model.
+
+| Role | Family | Weight | Leading | Tracking |
+| --- | --- | --- | --- | --- |
+| Display | Red Hat Display | bold / extrabold | none / tight | tighter / tight |
+| Headline | Red Hat Display | bold | tight / snug | tight |
+| Title | Display or Sans | semibold | snug | normal |
+| Body | Rubik | normal | normal / relaxed | normal |
+| Label | Rubik | medium / semibold | none / snug | wide / wider |
+
+## Three axes carry the rest
+
+Weight, line-height, and tracking express hierarchy without inventing a new size.
+
+Weight: the scale runs 100 to 800. Working range of five: 400 body, 500 label, 600 title, 700 head, 800 display. Rule: keep the three light weights for display sizes, and set text at 16px and under in 400 or heavier. Why: below 16px, thin strokes lose effective contrast and fail low-vision readers.
+
+Line height, inverse to size: `--leading-tight` 1.1 for display, `--leading-normal` 1.5 for the body floor. Rule: set body at 1.5 line-height or more, and move long-form to `--leading-relaxed` 1.625. Why: 1.5 within paragraphs is the WCAG 1.4.8 Visual Presentation (AAA) target. WCAG 1.4.12 Text Spacing (AA) is a separate promise: text must stay readable when a reader forces 1.5x spacing, which a rem scale that reflows cleanly already meets.
+
+Tracking, tight for big, wide for caps: headline tighter -0.05em, body normal 0em, label wider 0.05em. Rule: reserve positive tracking for uppercase Labels, and leave lowercase body at 0. Why: extra space restores the legibility all-caps removes, while any tracking on lowercase body distorts word shape.
+
+## The measure
+
+Line length decides whether a paragraph is calm or exhausting. Cap running text between 45 and 75 characters with `max-width` in `ch`. Around 66 is the sweet spot.
+
+- ✓ Recommended, 45 to 75ch: the eye finds the start of the next line without effort. Cap body columns in ch, never leave running text at full container width.
+- ✕ Avoid, over 75ch: past seventy-five characters the reader travels too far back, loses their place, and rereads. The single most common readability failure in dashboards and admin tools.
+
+Hierarchy must survive one color. Distinguish levels with size, weight, and space, and back every color step with a real size or weight difference. The scale is defined in `rem`, so text still scales to 200% (WCAG 1.4.4), and body holds at 1.5 line-height or more (WCAG 1.4.8).
+
+## Sources
+
+Role groups after Material 3 type scale. The 45 to 75ch measure from Butterick, Practical Typography, and Baymard. Fluid type with clamp() from Utopia and web.dev. Accessibility floors from WCAG 2.1 SC 1.4.4 Resize Text, 1.4.12 Text Spacing, and 1.4.8 Visual Presentation.
+
+# Spacing
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-spacing--docs
+
+Space is picked once: a 4px base, an 8px rhythm, and 14 fixed steps. Every gap in the product is one of those steps. No 13px here, no 15px there.
+
+## One base, an 8pt rhythm
+
+The scale rests on a 4px base with an 8px primary beat. Four gives fine control for tight gaps; eight is the workhorse, because it divides cleanly across screen densities and renders crisp from a 1x phone to a 3x display, never landing on a half pixel. Spacing, component sizes, and line boxes all snap to the same beat.
+
+## The scale
+
+Fourteen steps, every value a multiple of 4px. Past `--space-6` the steps widen (skipping 7, 9, 11) because at larger sizes the eye needs a bigger jump. Tokens ship in `rem`, so spacing scales with the user's root font size.
+
+| Token | rem | px | Typical use |
+| --- | --- | --- | --- |
+| `--space-0` | 0 | 0 | Reset, collapse a gap |
+| `--space-1` | 0.25rem | 4px | Hairline gaps, icon-to-label |
+| `--space-2` | 0.5rem | 8px | Tight inline spacing, chip padding |
+| `--space-3` | 0.75rem | 12px | Compact input padding |
+| `--space-4` | 1rem | 16px | Default padding, card interior |
+| `--space-5` | 1.25rem | 20px | Roomy control padding |
+| `--space-6` | 1.5rem | 24px | Gap between related components |
+| `--space-8` | 2rem | 32px | Block separation, generous padding |
+| `--space-10` | 2.5rem | 40px | Group separation |
+| `--space-12` | 3rem | 48px | Section padding on mobile |
+| `--space-16` | 4rem | 64px | Between-section rhythm |
+| `--space-20` | 5rem | 80px | Large section breaks |
+| `--space-24` | 6rem | 96px | Desktop section padding |
+| `--space-32` | 8rem | 128px | Hero spacing |
+
+## Touch targets are non-negotiable
+
+Spacing is an accessibility contract. Three floors anchor the system:
+
+- 24 by 24px: WCAG 2.2 floor (AA), the AA minimum.
+- 44 by 44pt: Apple HIG target.
+- 48 by 48dp: Material target.
+
+On phones, add safe-area insets to edge-anchored bars so a sticky CTA never sits under the home indicator: `padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom))`.
+
+- ✓ Recommended: size primary actions to the 44 to 48px range, and keep 24px as the hard floor for dense, secondary controls.
+- ✕ Avoid: letting a tap target shrink to its visual glyph. A 20px icon with no added padding misses the floor; expand the hit area with padding or a pseudo-element so it reaches 44 to 48px while the glyph stays small.
+
+## Density lowers whitespace, never the floor
+
+Density is how tightly the same components pack. You step interior spacing down the scale, never invent off-scale values.
+
+| Mode | Interior step | When to apply |
+| --- | --- | --- |
+| Comfortable (default) | `--space-4` / `--space-6` | Touch-first screens, marketing, reading, onboarding |
+| Compact | `--space-2` / `--space-3` | Data tables, dashboards, admin tools, power-user views |
+
+Rule: keep the 24px hit-area floor in every density mode, compact included. Why: density trims padding, not accessibility.
+
+## Sources
+
+Touch-target floors: WCAG 2.2 SC 2.5.8 Target Size Minimum, 24px AA; Apple HIG 44pt; Material 48dp. The 8pt grid and density model after Material layout and density, and Refactoring UI numbered scales. Safe-area insets via CSS `env()`.
+
+# Border Radius
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-border-radius--docs
+
+A corner sets personality. Sharp reads technical, fully round reads playful, the considered middle reads premium. This system commits to one 6px signature on every control, a short ladder up to hero surfaces, and keeps the fully round pill as an accent, never a default.
+
+## The radius scale
+
+Eight tokens, each with a role. The four middle steps do almost all the work.
+
+- `--radius-none`: 0. Square. Tables, full-bleed media, dividers.
+- `--radius-xs`: 4px. Nested inner corners, tight inline elements.
+- `--radius-sm`: 6px. Signature. Buttons, inputs, selects.
+- `--radius-md`: 8px. Comfortable controls, small badges.
+- `--radius-lg`: 12px. Cards, menus, popovers, dropdowns.
+- `--radius-xl`: 16px. Modals, sheets, large surfaces.
+- `--radius-2xl`: 20px. Hero panels, feature surfaces.
+- `--radius-pill`: 9999px. Accent only. Chips, tags, avatars, toggles.
+
+## The golden rule
+
+The pill is an accent, not a default. Buttons are not pills. Scale the radius to the size and role of the surface.
+
+Reserve `--radius-pill` for small, single-line elements where the round shape is the point: chips, tags, avatars, toggles, status badges. Every button, input, and select takes the 6px signature. Bigger surfaces earn bigger radii: a card is not shaped like a button, and a modal is not shaped like a card.
+
+- Do: wide button at `--radius-sm`, the 6px signature. Calm, precise, unmistakably a control.
+- Don't: the same button forced to a pill. The larger corners read as a toy, not a product.
+
+## The law of concentric corners
+
+Nest one rounded element inside another and the corners must stay concentric: parallel curves sharing a center, like a screen inside its housing.
+
+```
+inner radius = outer radius - padding
+```
+
+Example: an outer `--radius-xl` (16px) with 8px of padding gives an inner surface of `--radius-md` (16 minus 8), so the corners run parallel. Leaving the inner at the full 16px makes the arcs collide. Apple ships this rule as a first-class API: `ConcentricRectangle` and `containerShape` in SwiftUI.
+
+## Continuous corners, when the browser allows
+
+A plain CSS corner is a quarter circle: the curvature jumps from zero to maximum at a single point. A squircle eases the curvature in and out, reading as softer at the same nominal radius. The CSS `corner-shape` property brings it to the web, with `corner-shape: squircle` defined as `superellipse(2)`. Ship it as progressive enhancement inside an `@supports` query, so the base `border-radius` works everywhere and supporting browsers get the smoother curve for free.
+
+`corner-shape` is new, landing first in recent Chromium. That is why it is an enhancement, not a requirement. Never gate layout, hit targets, or legibility on it.
+
+## The scale at real size
+
+A chip stays a pill because it is small and one line. A button takes the 6px signature. A card steps up to 12px, a modal to 16px.
+
+- Chip: `--radius-pill`
+- Button: `--radius-sm`, 6px
+- Card: `--radius-lg`, 12px
+- Modal: `--radius-xl`, 16px
+
+## Token reference
+
+| Token | Value | Role |
+| --- | --- | --- |
+| `--radius-none` | 0 | Square. Tables, full-bleed media, section dividers |
+| `--radius-xs` | 4px | Nested inner corners, tight inline elements |
+| `--radius-sm` | 6px | Signature control radius. Buttons, inputs, selects |
+| `--radius-md` | 8px | Comfortable controls, small badges, compact containers |
+| `--radius-lg` | 12px | Cards, menus, popovers, dropdowns |
+| `--radius-xl` | 16px | Modals, sheets, large surfaces |
+| `--radius-2xl` | 20px | Hero panels, feature surfaces |
+| `--radius-pill` | 9999px | Accent only. Chips, tags, avatars, toggles, one-line status. Never wide buttons or cards |
+
+## Sources
+
+Material 3, Shape scale: shape as a role-based scale rather than one global radius; step values tuned to this brand. Vercel Geist: a 6px control radius on buttons and inputs. Apple SwiftUI: `RoundedRectangle(style: .continuous)` draws the squircle, and `ConcentricRectangle` with `containerShape` formalizes concentric nesting. CSS corner-shape draft: `squircle` equals `superellipse(2)`, support landing first in recent Chromium. The token mapping, the pill-as-accent reading, and the 6px signature are house rules.
+
+# Shadows
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-shadows--docs
+
+Every floating surface picks one of three heights, each a soft two-layer shadow tinted with brand indigo instead of hard black. A shadow says one thing only: this surface sits above another. Add a focus ring at `--shadow-focus` and that is the entire system.
+
+## The elevation ladder
+
+Flat on the page, raised, overlay, floating. The taller a surface reads, the higher it sits, and `lg` is the ceiling every surface stays within.
+
+- On the page: no shadow.
+- Raised: `--shadow-sm`.
+- Overlay: `--shadow-md`.
+- Floating, the ceiling: `--shadow-lg`.
+
+## Three levels, plus a ring
+
+- `--shadow-sm`, Raised: buttons and resting cards. A whisper of lift that separates an element from the page.
+- `--shadow-md`, Overlay: dropdowns, popovers, menus. Content that opens over the current view and closes again.
+- `--shadow-lg`, Floating, the ceiling: modals, sheets, command palettes. The highest surface. If something must feel higher, add a scrim, not more blur.
+- `--shadow-focus`, Focus ring: a two-tone ring, a white gap inside an indigo edge, paired with `:focus-visible` to show keyboard position. Accessibility, never decoration.
+
+## Two layers, tinted indigo
+
+Real shadows are two things at once: a crisp contact shadow close to the object, and a soft ambient shadow far from it.
+
+- Near layer: short offset, tight blur. The crisp contact shadow that grounds the object.
+- Far layer: long offset, wide blur, negative spread. The soft ambient shadow that gives height.
+- Both, tinted indigo: the two combined and tinted. This is `--shadow-md`.
+
+Tinting both with indigo lets the shadow belong to the surface instead of staining it.
+
+## Shadow is height
+
+A shadow says one thing: this surface sits physically above another.
+
+Rule: pick one of the three elevation levels for a surface and keep it fixed for the surface's whole life. Why: a constant elevation reads as real, physical height, so hover, press, and selection stay legible in their own channel, color.
+
+- ✓ Recommended: fix each surface at one level, then carry hover, press, and selection in color and state layers. Color answers "what is happening to this control", shadow answers "how high does this surface sit".
+- ✕ Avoid: swelling a dramatic shadow on hover, usually paired with a `translateY` lift. It fakes physics the surface does not have and collides with the rule against transform-based hover.
+
+State feedback lives in color. Hover, press, and selection ride on color and state layers rather than elevation. See Patterns / Interactive for the state-layer model.
+
+## In the dark, tint carries height
+
+As a surface rises it can take a stronger indigo tint. In dark themes a drop shadow nearly vanishes against a dark background, so a lighter, more tinted surface is the clearer signal. Prefer tint in the dark, shadow in the light, and the two can combine. Height reads from lightness, not from ink.
+
+## Token reference
+
+Four tokens, the whole system. The scale stays closed: `lg` is the top, and hover reuses the resting shadow.
+
+| Token | Role | Value |
+| --- | --- | --- |
+| `--shadow-sm` | Raised, buttons and resting cards | 0 1px 2px rgba(79, 70, 229, .06), 0 1px 3px rgba(15, 23, 42, .04) |
+| `--shadow-md` | Overlay, dropdowns and popovers | 0 2px 4px -1px rgba(79, 70, 229, .06), 0 8px 16px -4px rgba(79, 70, 229, .10) |
+| `--shadow-lg` | Floating ceiling, modals and sheets | 0 4px 8px -2px rgba(79, 70, 229, .06), 0 16px 32px -8px rgba(79, 70, 229, .12) |
+| `--shadow-focus` | Focus ring, pairs with :focus-visible | 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5 |
+
+## Sources
+
+Material 3 elevation and tonal elevation: level count and the surface-tint approach. Tobias Ahlin, layered smooth shadows: stacking soft box-shadow layers for a natural falloff. Apple Human Interface Guidelines, Materials: soft, minimal shadows for depth. Exact rgba layer values are specific to this system's tokens, and reading `lg` as an absolute ceiling is a house rule.
+
+# Motion
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-motion--docs
+
+Every animation earns its place by answering one question: where did that come from, are these the same thing, did my tap register. No job, no motion. The system is deliberately small, three durations and five easings, so the whole product moves at one tempo: fast, and quiet.
+
+## Purposeful, not decorative
+
+Motion earns its place by clarifying a change, never by dressing one up.
+
+- ✓ Recommended:
+  - Orientation. A menu grows from the button that opened it.
+  - Continuity. A row animates to its new spot instead of jumping.
+  - Feedback. A control settles after a tap, confirming the press.
+- ✕ Avoid:
+  - Entrances that animate with nothing to orient.
+  - Looping, attention-grabbing movement with no status behind it.
+  - Long, cinematic reveals that make the interface wait.
+
+## The three durations
+
+Match the duration to the size of the change. Nothing runs past 300ms, where responsive starts to feel slow.
+
+- `--duration-fast`, 150ms: local state on a control the user is already watching. A hover tint, a focus ring, an icon toggling, a checkbox filling.
+- `--duration-normal`, 200ms: the default. Things entering, leaving, or moving a short way: a dropdown, a tooltip, a tab indicator, an accordion.
+- `--duration-slow`, 300ms: a large surface that takes over the view and needs a beat to read: a modal, a bottom sheet, a full-screen overlay.
+
+Larger surface or longer travel, longer duration. The ceiling is 300ms, and most motion lives at 200ms.
+
+## Five easings, five jobs
+
+Easing is the shape of speed over time. Each curve has one job.
+
+- `--easing-linear`, `cubic-bezier(0, 0, 1, 1)`: constant speed. Only for continuous loops: spinners, indeterminate progress. On anything that begins and ends it feels robotic.
+- `--easing-out`, `cubic-bezier(0, 0, 0.2, 1)`: quick start, gentle landing. The default for anything entering or answering a tap.
+- `--easing-in`, `cubic-bezier(0.4, 0, 1, 1)`: slow start, accelerating exit. For elements leaving the screen. Never for entrances, a slow start there reads as lag.
+- `--easing-in-out`, `cubic-bezier(0.4, 0, 0.2, 1)`: eased on both ends. For an element moving between two on-screen positions, both visible the whole time: a reordering row, a toggle thumb, a tab indicator.
+- `--easing-spring`, `cubic-bezier(0.34, 1.56, 0.64, 1)`: overshoots, then settles. Reserved for a small, discrete success: a checkmark, a like, a badge popping in. Comfort not information, so gate it behind reduced motion and keep it off large surfaces.
+
+## Anatomy of a transition
+
+Every transition names three things: the property, a duration token, an easing token.
+
+```css
+transition: opacity var(--duration-normal) var(--easing-out);
+```
+
+- property: what changes. Prefer `transform` and `opacity`. Name it, never `all`.
+- duration: how long. 150ms local, 200ms to enter or leave, 300ms for a takeover.
+- easing: the feel. Out to enter, in to leave, in-out to move, linear to loop, spring to celebrate.
+
+Name the property, never `transition: all`, which animates things you never meant to touch. Reference the tokens instead of hardcoding milliseconds.
+
+## Performance is part of the contract
+
+A frame at 60fps is about 16ms. The browser can animate `transform` and `opacity` on the compositor, off the main thread, with no layout and no repaint. Animating geometry recomputes layout every frame, and that layout thrash is the usual cause of jank.
+
+- ✓ Recommended: `transform`, `opacity`. Handled on the compositor, off the main thread. A slide is `translateY`, not a change to `top`.
+- ✕ Avoid: `width`, `height`, `top`, `left`, `margin`. Each frame recomputes layout, then repaints. On a long list or weak device this drops frames.
+
+## Reduced motion is the floor
+
+The browser exposes the OS setting as `prefers-reduced-motion: reduce`, a firm request to hold still that every animation honors. It aligns with WCAG 2.1: 2.3.3 asks that interaction-triggered motion can be disabled, and 2.2.2 covers looping motion.
+
+Honoring it does not mean deleting meaning. Because information rides on color, opacity, and the final state, the interface stays legible without movement: collapse the animation, keep the destination. Keep a spinner turning slowly rather than freezing it, a stopped spinner reads as a hung app.
+
+```css
+/* Default: motion is welcome. Enter fast, settle gently. */
+.menu {
+    transition: opacity var(--duration-normal) var(--easing-out),
+                transform var(--duration-normal) var(--easing-out);
+}
+
+/* Firm request to hold still: collapse the movement, keep the meaning. */
+@media (prefers-reduced-motion: reduce) {
+    .menu {
+        transition-duration: 1ms;       /* appears, does not fly in */
+        transform: none;                /* no slide */
+    }
+    .spinner {
+        animation-duration: 1.4s;       /* slower, not gone */
+    }
+}
+```
+
+## Rules of motion
+
+- Rule: give every animation a job: orientation, continuity, or feedback. Why: decorative motion clarifies nothing and costs the same frame time.
+- Rule: animate `transform` and `opacity`. Why: the compositor carries them off the main thread with no layout or paint. Animating `width`, `height`, `top`, `left`, or `margin` recomputes layout every frame.
+- Rule: name the property, a duration token, and an easing token explicitly. Why: `transition: all` animates properties you never meant to touch, and hardcoded milliseconds drift from the shared tempo.
+- Rule: match the duration to the change: `fast` for local state, `normal` to enter or leave, `slow` for a takeover. Why: anything past 300ms reads as sluggish.
+- Rule: pick easing by job: `out` to enter, `in` to leave, `in-out` to move, `linear` to loop. Why: `linear` on anything with a start and an end feels robotic.
+- Rule: reserve `spring` for a small, discrete success, and gate it behind reduced motion. Why: an overshooting modal looks broken, and spring is comfort, not information.
+- Rule: honor `prefers-reduced-motion`: collapse the movement, keep the meaning. Why: motion alone must never carry meaning; information rides on color, opacity, and the final state.
+
+## Token reference
+
+| Token | Value | Role |
+| --- | --- | --- |
+| `--duration-fast` | 150ms | Local state on one control: hover, focus, toggle |
+| `--duration-normal` | 200ms | Default. Enter, leave, or move a short distance |
+| `--duration-slow` | 300ms | A large surface taking over the view. The ceiling |
+| `--easing-linear` | cubic-bezier(0, 0, 1, 1) | Continuous loops only: spinners, indeterminate progress |
+| `--easing-in` | cubic-bezier(0.4, 0, 1, 1) | Elements leaving the screen |
+| `--easing-out` | cubic-bezier(0, 0, 0.2, 1) | Elements entering, and taps. The default |
+| `--easing-in-out` | cubic-bezier(0.4, 0, 0.2, 1) | Moving between two visible positions |
+| `--easing-spring` | cubic-bezier(0.34, 1.56, 0.64, 1) | Small discrete successes. Overshoots, then settles |
+
+## Sources
+
+Material 3 Motion: duration buckets and easing sets. Apple HIG Motion: purposeful, communicates status, respects Reduce Motion. web.dev and MDN: animate transform and opacity to stay on the compositor. MDN prefers-reduced-motion. W3C WCAG 2.1: 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A). The three durations, five easings, 300ms ceiling, and gating spring behind reduced motion are specific to this system's tokens.
+
+# Responsive
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-responsive--docs
+
+Design for the content, not the device. Start from the smallest reasonable screen, let the content decide where it strains, and reach for a fixed breakpoint last. A layout keyed to a few famous device widths breaks the moment someone opens a split view, rotates a foldable, or reads at 200% zoom.
+
+## Mobile first is a discipline, not a phone rule
+
+The small screen first forces the hard question early: what is genuinely essential. What survives is the core; what a wider screen adds is progressive enhancement layered on a base that already works.
+
+1. Base is the floor. Write the small-screen layout with no media query. That is the default every browser gets, and it must stand on its own.
+2. Enhance upward. Each `min-width` query only adds: more columns, a sidebar that was stacked. Never subtract from wide to reach narrow.
+3. Content sets the line. Add a breakpoint where the layout actually strains, when a line runs long or a card cramps, not where a popular phone happens to end.
+
+## Five breakpoints, each a structural move
+
+The system ships exactly five named tokens, all `min-width` thresholds. Below the first is the base, the no-query mobile layout.
+
+| Token | Min width | Structural role |
+| --- | --- | --- |
+| `base` | 0 | The default. Single column, thumb-reachable, no media query. Everything enhances this |
+| `--breakpoint-sm` | 576px | Large phones. Room for a two-up grid and side-by-side fields |
+| `--breakpoint-md` | 769px | Tablets. The first real shift: a stacked shell becomes two panes, nav moves inline |
+| `--breakpoint-lg` | 992px | Laptops. Persistent sidebars, three columns, the full desktop chrome |
+| `--breakpoint-xl` | 1200px | Wide desktops. Cap line length and center the shell |
+| `--breakpoint-2xl` | 1366px | Very wide. Add breathing room and max-widths, not more columns |
+
+Rule: key page-shell breakpoints to the five named `min-width` tokens, and no others. Why: there is no `xs` because the base below `sm` needs no query to name it. A media condition cannot read a custom property, so the query carries the literal value, `@media (min-width: 769px)`, while the token stays the single source of that number.
+
+- ✓ Recommended: one component that strains between two tokens: solve it with fluid sizing or a container query, so the scale stays at five.
+- ✕ Avoid: inventing a sixth breakpoint for that one component. It fragments the scale and every reader now has an extra threshold to reason about.
+
+## Media query or container query
+
+A media query asks how wide the viewport is; right for the page shell, wrong for a component. A container query lets an element respond to its own container. Baseline since 2023.
+
+- Media query, viewport level, `@media (min-width: 992px)`: asks about the whole viewport. Right for the page shell: global grid, top nav, where the sidebar lives. Home of capability and preference features: `prefers-color-scheme`, `prefers-reduced-motion`, `pointer`, `hover`. Keyed to the five breakpoint tokens.
+- Container query, component level, `@container (min-width: 24rem)`: asks how much space this element was actually given. Right for reusable parts: cards, tiles, widgets. The parent opts in with `container-type`; children size to `cqw` units. The component becomes portable.
+
+Rule: match the query to its scope: a media query against a token for the page shell, a container query for any part that must work in more than one slot. Why: a media query asks how wide the viewport is, which is what the shell responds to. A container query asks how much room an element was actually given.
+
+- ✓ Recommended: for a capability or preference, dark mode, reduced motion, a coarse pointer, reach for a media query.
+- ✕ Avoid: reaching for a container query there. A container knows only its own size, never color scheme, motion preference, or pointer type.
+
+## The best breakpoint is the one you never wrote
+
+Between the structural thresholds, layout should flow, not jump. Intrinsic layouts lean on what CSS already does: a grid that fits as many columns as comfortably fit, type and spacing that scale as a range. The result adapts at every width, with far fewer media queries.
+
+- Intrinsic grid, one rule, no media query: `grid-template-columns: repeat(auto-fit, minmax(160px, 1fr))`. Columns reflow on their own.
+- Fluid type: `clamp(1.5rem, 3vw + 1rem, 2.75rem)` grows and shrinks smoothly, held between a floor and a ceiling. Use `clamp()`, `min()`, and `max()` for type, spacing, and measure.
+
+Rule: reach for fluid sizing and an intrinsic grid before you write any breakpoint. Why: an auto-fit grid and clamped type adapt at every width, not just at the five thresholds, and with far fewer queries to keep in sync.
+
+- ✓ Recommended: let the layout flow: `repeat(auto-fit, minmax(160px, 1fr))` for columns, `clamp()` for type and spacing.
+- ✕ Avoid: stacking breakpoints to imitate that flow. It steps between thresholds and leaves more queries to maintain.
+
+## Safe areas and notches
+
+On modern phones the screen is not a clean rectangle. Notches, rounded corners, and the home indicator carve in, and a layout drawn to the physical edge can bury a primary action under a system gesture. Honor the insets for anything anchored to a screen edge, and add the inset to your spacing token rather than replacing it. Insets are unlocked by `viewport-fit=cover`; on a device with none, `env()` resolves to zero and spacing is unchanged.
+
+Rule: honor the safe-area insets for anything anchored to a screen edge. Why: notches, rounded corners, and the home indicator carve into the screen, so a control drawn to the physical edge can land under a system gesture.
+
+- ✓ Recommended: add the inset to your token: `calc(var(--space-4) + env(safe-area-inset-bottom))`. Where a device has no insets, `env()` resolves to zero and the spacing is unchanged.
+- ✕ Avoid: replacing the token with `env()` alone, or drawing to the physical edge. Where there are no insets the spacing collapses to zero and the control can fall under system chrome.
+
+Thumb-reach and target sizing for anchored controls live in Foundations / Spacing.
+
+## Sources
+
+Mobile-first and progressive enhancement: Wroblewski, Mobile First, and Marcotte, Responsive Web Design. Let content set breakpoints: web.dev responsive basics. Container queries, Baseline since 2023: MDN and web.dev. Intrinsic layouts: Jen Simmons. Fluid sizing and reflow: MDN clamp() and grid auto-fit / minmax. Safe areas: MDN env() and Apple HIG Layout. The five values and reading them as coarse structural ceilings are specific to this system's tokens.
+
+# Helpers
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-helpers--docs
+
+Utilities are single-purpose classes that do exactly one thing, and every value traces back to a token. This is a curated set, not a dump. If a helper would type `16px` by hand instead of reading `--space-4`, it does not belong here.
+
+## Token, utility, or component
+
+Three layers carry style. Reach for the layer that answers the question you actually have.
+
+- Layer 1, Token: the value, named once. `--space-4`, `--color-primary`, `--radius-lg`. What is the value?
+- Layer 2, Utility: one class, one declaration, sourced from a token. `.gap-4` sets `gap: var(--space-4)`. Apply one value, here, now.
+- Layer 3, Component: a named pattern with scoped styles, structure, and states. An event card, a button, a checkout row. A whole reusable thing.
+
+Rule: source every utility value from a token, never a hand-typed value. Why: that is what separates a design-system utility from a loose grab bag of CSS.
+
+- ✓ Recommended: `.gap-4 { gap: var(--space-4); }`. Reads the token, so one change to the scale updates every gap at once.
+- ✕ Avoid: `.gap-4 { gap: 16px; }`. A hand-typed pixel drifts from the token and quietly breaks the system.
+
+## The catalog
+
+Every class is one declaration, and every sized value traces to a token.
+
+Display: `.d-none` display: none; `.d-block` display: block; `.d-inline` display: inline; `.d-inline-block` display: inline-block; `.d-flex` display: flex; `.d-inline-flex` display: inline-flex; `.d-grid` display: grid.
+
+Flexbox: `.flex-row` flex-direction: row; `.flex-col` flex-direction: column; `.flex-wrap` flex-wrap: wrap; `.flex-1` flex: 1 1 0%; `.flex-auto` flex: 1 1 auto; `.flex-none` flex: none.
+
+Alignment: `.items-start` align-items: flex-start; `.items-center` align-items: center; `.items-end` align-items: flex-end; `.justify-center` justify-content: center; `.justify-between` justify-content: space-between; `.justify-end` justify-content: flex-end.
+
+Layout and overflow: `.w-full` width: 100%; `.h-full` height: 100%; `.min-w-0` lets a flex child shrink so truncation works; `.overflow-auto` overflow: auto; `.truncate` one line, ellipsis (hidden overflow, nowrap, ellipsis together).
+
+Gap (every step is a token): `.gap-1` var(--space-1) 0.25rem; `.gap-2` var(--space-2) 0.5rem; `.gap-3` var(--space-3) 0.75rem; `.gap-4` var(--space-4) 1rem; `.gap-6` var(--space-6) 1.5rem; `.gap-8` var(--space-8) 2rem.
+
+Typography: `.text-center` text-align: center; `.text-sm` var(--font-size-sm); `.text-base` var(--font-size-base); `.text-lg` var(--font-size-lg); `.text-xl` var(--font-size-xl); `.font-medium` var(--font-weight-medium); `.font-semibold` var(--font-weight-semibold); `.font-bold` var(--font-weight-bold).
+
+Text color (semantic tokens only): `.text-primary` var(--color-text-heading); `.text-secondary` var(--color-text-secondary); `.text-muted` var(--color-text-muted); `.text-error` var(--color-error-text); `.text-success` var(--color-success-text).
+
+Border radius: `.rounded-sm` var(--radius-sm) 0.375rem; `.rounded-md` var(--radius-md) 0.5rem; `.rounded-lg` var(--radius-lg) 0.75rem; `.rounded-xl` var(--radius-xl) 1rem; `.rounded-pill` var(--radius-pill) 9999px.
+
+Rule: name each helper after the token it reads, so one vocabulary runs top to bottom. Why: a class named for a value the token layer never uses is exactly the drift that erodes trust in the system.
+
+- ✓ Recommended: `.rounded-pill` reads `var(--radius-pill)`. The class mirrors the token name, so the two stay in sync.
+- ✕ Avoid: `.rounded-full`. Describes a scale the tokens never define; the mismatch invites drift.
+
+## Utilities at work
+
+A handful of structural helpers, read in one glance, is fair use. The moment the same cluster becomes a card you build twenty times, give it a name and let the helpers go.
+
+```html
+<!-- Ticket status: label left, state right, one token gap -->
+<div class="d-flex items-center justify-between gap-4">
+    <span class="text-muted text-sm">Ticket status</span>
+    <span class="font-semibold text-success">Confirmed</span>
+</div>
+
+<!-- Long venue name that must never break the row -->
+<div class="d-flex items-center gap-2 min-w-0">
+    <span class="truncate">Teatro Metropolitano Jose Gutierrez Gomez</span>
+</div>
+
+<!-- Icon-only button: eyes see the X, screen readers hear the label -->
+<button class="d-inline-flex items-center focus-ring cursor-pointer">
+    <span class="sr-only">Close ticket details</span>
+    <svg aria-hidden="true">...</svg>
+</button>
+```
+
+## The two helpers that matter most
+
+Two exist purely to serve assistive technology. Treat them as required infrastructure, not decoration.
+
+- `.sr-only`: visually hidden, still announced by screen readers. For icon-button labels, form hints, and status that is obvious by sight but silent to the tree.
+- `.focus-ring`: applies the system focus treatment on `:focus-visible`, pairing with `var(--color-focus)` so keyboard users always see where they are.
+
+Visually hidden is a solved problem with a canonical recipe. The common shortcut `display: none` is wrong for it: that also drops the element from the accessibility tree, the opposite of the goal. Inside `.sr-only`, declaration by declaration:
+
+- `position: absolute`: pulls the element out of flow so its collapsed box disturbs nothing.
+- `width: 1px; height: 1px`: collapses the box to one pixel. Not zero, since a zero-sized box can be dropped from the tree.
+- `overflow: hidden`: clips the real content down to that one-pixel box so none of it paints.
+- `clip + clip-path: inset(50%)`: clips the visible region to nothing. The clip-path rule does the work in modern engines; the deprecated clip stays as a fallback.
+- `white-space: nowrap`: stops the collapsed text from wrapping, which could reintroduce a sliver of layout.
+- `margin: -1px; border: 0`: zeroes the box model and nudges it off-screen so nothing leaks.
+
+```css
+/* The canonical visually-hidden utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+```
+
+Rule: use `.sr-only` for meaning that is obvious by sight but silent to the tree, never to stuff invisible keywords. Why: the word behind an icon-only button, the meaning of a required asterisk. A skip link that must reveal itself on keyboard focus uses the focusable variant. See Patterns / Accessibility.
+
+- ✓ Recommended: `<span class="sr-only">Close</span>`. Keeps the pixels hidden while the label still reaches assistive tech.
+- ✕ Avoid: `display: none`. Drops the element from the accessibility tree, so a screen reader never hears it.
+
+## Which layer, in five questions
+
+Walk down until one fits.
+
+1. Just need the value, inside a component's own scoped CSS? Reference the token, for example `var(--space-4)`. No utility needed.
+2. One structural adjustment in markup, a gap, an alignment, a width? Use the matching utility.
+3. The same three or four utilities always travel together on the same kind of element? That pattern has a name. Extract a component.
+4. The element needs structure, states, or behavior, a card, a modal, a checkout row? Build it as a named component with its own scoped styles from the start.
+5. The need is purely for assistive tech, hiding a label or showing focus? Use `.sr-only` or `.focus-ring`. Infrastructure, not styling.
+
+## Sources
+
+Utility-first model and the extract-to-component threshold: Tailwind CSS and Adam Wathan, CSS Utility Classes and Separation of Concerns. The composition-plus-blocks balance follows Andy Bell, CUBE CSS. The visually-hidden recipe: W3C WAI WCAG technique C7 and Scott O'Hara, Inclusively Hidden. Visible focus is WCAG 2.1 SC 2.4.7. The exact class names, token bindings, and the reading of `.sr-only` and `.focus-ring` as required infrastructure are specific to this system.
+
+# Token Reference
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-token-reference--docs
+
+A token is the smallest unit of the language: one color, one step of space, one shadow, authored as data and published to CSS and TypeScript from a single source. There are 213 tokens across 2 tiers, 8 radius steps, and 3 elevation shadows.
+
+The exhaustive table of every token name and value is auto-generated from `tokens.json` into `llms-full.txt`. This page distills the naming, categories, and consumption rules that govern that table.
+
+## Tokens as a contract
+
+Every token is authored as data, not CSS, in the W3C Design Tokens Community Group (DTCG) format: a JSON object with a reserved `$value` and a `$type` like `color` or `dimension`. One authored decision publishes to CSS, TypeScript, and native from the same source. The JSON is the contract. It runs in two tiers.
+
+- Tier 1, Primitive: the raw palette. Eight color ramps of eleven shades each, plus pure white and black. These carry a value and nothing else, no role, no meaning. Product code rarely touches this tier directly. Naming is descriptive: `--color-indigo-600`.
+- Tier 2, Semantic: the layer you build with. Each token names a role, not a hue, and aliases a primitive: `--color-primary`, `--color-text-body`, `--color-border`. This indirection makes the system themeable. Change one alias, and every consumer moves with it. Naming is intentional: role first, variant second.
+
+Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file per category) to Style Dictionary (resolves aliases, applies transforms, formats each target) to generated `dist/tokens.css` (`:root` custom properties) and `dist/tokens.ts` (typed constants). Both carry a do-not-edit banner: they are build output, not source.
+
+## Categories
+
+- Primitive palette: eight ramps, `--color-indigo-*`, `--color-slate-*`, `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*`, `--color-blue-*`, `--color-violet-*`, each 50 through 950, plus `--color-white` and `--color-black`. Indigo is the brand ramp and single accent; slate carries text, surfaces, and borders; the four status ramps feed the feedback tokens; violet backs the secondary role.
+- Semantic color: brand (`--color-primary*`, `--color-secondary*`), text (`--color-text-heading`, `-strong`, `-secondary`, `-body`, `-muted`, `-disabled`), surface and border (`--color-surface*`, `--color-background`, `--color-border*`, `--color-focus`), and feedback (`--color-success*`, `--color-warning*`, `--color-error*`, `--color-info*`, each with the strong/surface/border/text variants).
+- Spacing: `--space-*`, one scale for margin, padding, and gap.
+- Border radius: `--radius-*`, eight steps. `sm` at 6px is the signature control radius; `pill` is the fully rounded accent.
+- Shadow: three elevation levels plus `--shadow-focus`. Each level is two soft, indigo-tinted layers. Shadow means height, never state.
+- State layers: `--state-*`, interaction feedback as opacity, not elevation.
+- Typography: `--font-family-*` (three families), `--font-weight-*` (eight weights), `--font-size-*` (ten steps), `--leading-*` (line height), `--tracking-*` (letter spacing).
+- Motion: `--duration-*` (three) and `--easing-*` (five curves).
+- Z-index: `--z-*`, a stepped stacking order.
+- Breakpoints: `--breakpoint-*`, five minimum widths.
+
+Borders are dividers, not control outlines. Rule: use `--color-border` and `--color-border-light` only to separate regions (dividers, table rows, card edges). Why: both sit near 1.2:1 against the surface, below the 3:1 floor WCAG 1.4.11 requires for the boundary of an interactive control. For the visible edge of an input, select, or checkbox, reach for a token that clears 3:1, for example `--color-text-muted` at `#64748b`, which is 4.55:1 on white. Never let a subtle border be the only thing marking a control's bounds.
+
+State layers are opacity: each `--state-*` token is the opacity of an indigo overlay painted on a control. Numbers only, so the same layer works on any surface color. `--state-hover` 0.08 (gate with `@media (hover: hover)`), `--state-focus` 0.1 (focus-visible), `--state-pressed` 0.1 (active press, primary feedback on touch), `--state-dragged` 0.16.
+
+## How to consume a token
+
+Reference the variable, never the literal. Reach for the semantic tier first, because it carries the meaning and stays stable across themes. Drop to a primitive only when no semantic token fits. If you find yourself wanting a raw hex, that is the signal a semantic token is missing, not that you should hardcode.
+
+```css
+/* Yes: reference the semantic token */
+.card {
+    background: var(--color-surface);
+    color: var(--color-text-body);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+/* No: a hardcoded value drifts from the system on the next theme change */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+}
+```
+
+## How to name a new token
+
+1. Pick the tier. A raw value with no role belongs in primitive, named by description. A value that carries meaning belongs in semantic, named by role.
+2. Name a semantic token role first, variant second: category, role, variant. So `color`, `text`, `secondary` becomes `--color-text-secondary`. Never encode the hue in the name.
+3. Alias, do not copy. A semantic token points at a primitive with `{color.slate.600}`, so the value has one home. If two tokens share a value, both alias the same primitive.
+4. Add a `$description` when the role is not obvious from the name. It becomes the comment in the generated CSS and the note in this reference.
+
+## How a change propagates
+
+A change starts in the JSON and ends on the screen without a single manual edit downstream. Edit the `$value` in `packages/tokens/src/tokens/`, run the Style Dictionary build, and the generated `tokens.css` and `tokens.ts` update together. Because every consumer references the variable, the new value reaches every product surface at once. Never edit the generated files: they carry a do-not-edit banner and the next build overwrites them.
+
+- ✓ Recommended: consume `var(--token)` references and prefer the semantic tier; author new tokens in the JSON source, then rebuild; name semantic tokens by role, category first, hue never; alias a primitive instead of repeating a hex; add a `$description` for any non-obvious role.
+- ✕ Avoid: hardcoding a hex, px, or raw integer that a token already covers; editing `dist/tokens.css` or `dist/tokens.ts` by hand; reaching for a primitive when a semantic token fits; encoding a color name into a semantic token; duplicating a value across tokens instead of aliasing.
+
+## Sources
+
+Design Tokens Community Group format specification: the open W3C standard defining a token as a JSON object with `$value` and `$type` and the alias syntax the semantic tier relies on. Style Dictionary: the build tool that reads the token source, resolves aliases, and formats the CSS and TypeScript outputs. Salesforce primitive and semantic token tiers: the two-tier model. Every token name, value, and description is quoted from this system's source JSON and generated CSS. The elevation ceiling and the pill-as-accent-only rule are house rules.
+
+# Interactive
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-interactive--docs
+
+Touch is the majority of every session, and a finger has nothing to hover with. So the press comes first, the keyboard gets a ring, and hover is a pointer-only garnish laid on top. One tonal indigo layer expresses all three, stepped through the `--state-*` scale.
+
+## 1. Three inputs, one state each
+
+Each input arrives its own way and reads its own signal. Build for all three, or you build for a mouse alone.
+
+- Pointer: rests over a control without committing. That idle moment is hover, and it belongs to the pointer alone.
+- Touch: no idle state. A finger commits on contact, so its signal is the press, fired the instant it lands.
+- Keyboard: moves by Tab, commits with Enter or Space. Its signal is focus-visible, and without it the interface is unusable.
+
+**Mobile first.** The press is the one state every device can make. Design `:active` first, add `:focus-visible` for keyboards, layer `:hover` for pointers. Never the reverse.
+
+## 2. The state overlay
+
+Every state is a color, never a jump in position. Filled deepens to indigo 700 on hover, 800 on press. The tonal button and card gain an indigo state layer instead. A single translucent indigo overlay, the mechanism Material 3 standardized, builds hover, press, and drag alike.
+
+One overlay, four opacities:
+
+- `--state-hover`: 0.08, pointer only
+- `--state-focus`: 0.10, keyboard
+- `--state-pressed`: 0.10, all inputs
+- `--state-dragged`: 0.16, while dragging
+
+```css
+/* One indigo overlay, opacity driven by the --state-* scale.
+   Works on any surface: button, card, list row. */
+.control {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm); /* 6px */
+}
+.control::after {
+    content: ''; position: absolute; inset: 0;
+    background: var(--color-primary); opacity: 0;
+    transition: opacity var(--duration-fast) var(--easing-out);
+    pointer-events: none;
+}
+.control:active::after { opacity: var(--state-pressed); } /* every input */
+```
+
+**iOS caveat for custom controls.** On iOS Safari `:active` does not fire on a non-native control (a `div` or `span` with `role="button"`) unless that element carries `cursor: pointer` or an empty `ontouchstart` handler to arm it. Real `<button>` and `<a>` are unaffected, so prefer them.
+
+## 3. Hover belongs to pointers
+
+Wrap every hover rule in `@media (hover: hover) and (pointer: fine)`. It fires only where a pointer can actually rest over a control.
+
+**The sticky hover bug.** A touchscreen has no pointer to move away, so it never clears an ungated hover. Tap one and the style sticks: buttons stay lit, cards freeze mid transition. The gate is the fix, not a nicety.
+
+```css
+/* Press works everywhere, so it lives at the top level. */
+.control:active::after { opacity: var(--state-pressed); }
+
+/* Hover is a pointer-only enhancement. */
+@media (hover: hover) and (pointer: fine) {
+    .control:hover::after { opacity: var(--state-hover); }
+}
+```
+
+## 4. A ring you can always see
+
+Style `:focus-visible`, not `:focus`: the ring shows for the keyboard and stays hidden after a plain click. A focus indicator has to clear 3:1 against whatever sits behind it, and one flat color cannot promise that. White dissolves on a light page; indigo dissolves on an indigo button. `--shadow-focus` is two-tone for exactly this reason, a white gap inside an indigo edge, so whichever layer meets the surface, the other one still reads.
+
+An `outline` with `outline-offset` earns the same guarantee: the offset opens a transparent gap so the page shows through, and the outline rides just outside it. The real mistake is `outline: none` with nothing put back, or a single-color ring that fades into a matching surface.
+
+**WCAG 2.2.** A focus indicator has to be visible (SC 2.4.7 Focus Visible, AA) and clear 3:1 against its adjacent colors (SC 1.4.11 Non-text Contrast, AA). SC 2.4.13 Focus Appearance (AAA) adds a floor: an area at least a 2px perimeter thick and a 3:1 change between the unfocused and focused states. The two-tone ring is 4px of indicator and one layer always crosses 3:1, so it clears all three on light and on brand.
+
+```css
+/* Do: keyboard-only ring, two-tone token, reads on any surface. */
+.control:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus); /* 0 0 0 2px #fff, 0 0 0 4px #4f46e5 */
+}
+/* Also fine: an outline with an offset gap does the same job. */
+.control:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+/* Don't: remove the outline with nothing put back, or ring in
+   one color that vanishes into a surface of the same color. */
+.control:focus-visible { outline: none; }
+```
+
+## 5. The rules
+
+**Rule:** Design the press first, then the keyboard ring, then hover.
+**Why:** the press is the one signal every device can make, so `:active` is the floor, `:focus-visible` the next layer, and hover the pointer garnish on top. Feedback built on hover alone leaves touch with nothing.
+
+**Rule:** Wrap every hover rule in `@media (hover: hover) and (pointer: fine)`.
+**Why:** a touchscreen has no pointer to move away, so an ungated hover sticks lit after a tap. The gate fires hover only where a pointer can rest.
+- ✓ Recommended: hover lives inside the pointer gate, so it clears the moment the finger lifts.
+- ✕ Avoid: an ungated `:hover` has no way to reset on touch, so the control freezes lit after a tap.
+
+**Rule:** Signal every state with the tonal indigo overlay on the `--state-*` scale.
+**Why:** one translucent layer expresses hover, press, and drag with a single rule, and color carries the meaning on every input.
+**House rule:** in this design system shadow is reserved for elevation, never for state. Material 3 does raise cards and buttons on hover; RamosLabs keeps the shadow still on purpose, so one mechanism carries every state. This is a RamosLabs decision, not an M3 mandate.
+- ✓ Recommended: deepen the tonal overlay for hover and press. The card holds its elevation.
+- ✕ Avoid: lifting a card or swapping its shadow to signal hover. Here that spends elevation on a job the overlay already does.
+
+**Rule:** Ring with `--shadow-focus` on `:focus-visible`, and keep the token two-tone.
+**Why:** `:focus-visible` shows the ring for the keyboard and hides it after a plain click. A flat ring fades into a matching surface, so two tones keep one layer above 3:1 on any background.
+- ✓ Recommended: `:focus-visible` with the two-tone `--shadow-focus`, so the ring reads on light and on brand.
+- ✕ Avoid: styling `:focus` instead of `:focus-visible`, or a one-color ring that vanishes into a surface of the same color.
+
+**Rule:** Gate transforms behind `prefers-reduced-motion` and let color carry the state without them.
+**Why:** the overlay already tells the whole story, so a reduced-motion visitor loses no information when the scale or lift is dropped.
+
+**Rule:** Give controls a 6px radius, `--radius-sm`, and pair each visual state with its ARIA.
+**Why:** a shared radius keeps controls in one family, and a pill radius stays on chips rather than wide buttons. Screen readers need `aria-busy`, `aria-disabled` and friends to hear what the color shows.
+
+## Sources
+
+State layers after Material 3 (m3.material.io). The hover and pointer media features, `:focus-visible`, and `prefers-reduced-motion` per MDN. Immediate press feedback from Apple Human Interface Guidelines. Focus floors from WCAG 2.2: visible focus (SC 2.4.7), 3:1 non-text contrast against adjacent colors (SC 1.4.11), and focus appearance size and change (SC 2.4.13). The two-tone gap pattern follows GOV.UK focus styles and MDN `outline-offset`.
+
+# Accessibility
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-accessibility--docs
+
+Our floor is WCAG 2.2 Level AA on every surface, and Level AAA wherever a pattern reaches it without hurting the experience.
+
+## 1. The Four Pillars: POUR
+
+Every WCAG success criterion hangs off four principles. Miss one and the interface locks out a real person.
+
+- Perceivable (SC 1.1 to 1.4): reaches every sense. Text alternatives for images, captions for audio, contrast that survives low vision, never color alone.
+- Operable (SC 2.1 to 2.5): works from a keyboard. Nothing traps focus, targets are big enough to hit, motion can be turned down.
+- Understandable (SC 3.1 to 3.3): reads clearly and behaves predictably. Labels stay put, errors explain themselves, focus never surprises.
+- Robust (SC 4.1): valid markup, and every control exposes a name, a role, and a value that assistive technology can read.
+
+## 2. Semantic HTML Before ARIA
+
+The first rule of ARIA is: do not use ARIA. Reach for the native element first.
+
+**Rule:** Reach for the native element first, and add ARIA only to fill a gap it leaves.
+**Why:** a native `<button>`, `<nav>`, or `<a href>` ships with a role, an accessible name, keyboard behavior, and focus already wired in. ARIA changes only what a screen reader announces, so anything you build on a bare `<div>` you also have to make operable and focusable by hand.
+
+- ✓ Recommended: `<button type="button">Buy tickets</button>`. Role, accessible name, focus stop, and keyboard activation come for free, and it behaves the same in every browser and assistive tech.
+- ✕ Avoid: `<div onclick="buy()">Buy tickets</div>`. No role, no keyboard, no focus stop. You would have to rebuild `tabindex`, key handling, and the focus ring by hand.
+
+1. Prefer the native element whenever it carries the semantics and behavior you need. A real `<button>` beats `<div role="button" tabindex="0">`.
+2. Keep native semantics intact: nest a real element inside rather than repainting one with a role.
+3. Keep every interactive ARIA control keyboard operable. Add `role="button"` and you own `Enter`, `Space`, focus, and the ring.
+4. Keep focusable elements visible to assistive tech: `aria-hidden="true"` and `role="presentation"` belong only on content that cannot receive focus.
+5. Give every interactive element an accessible name: a visible `<label>`, its text, `aria-label`, or `aria-labelledby`.
+
+No ARIA is better than bad ARIA. Unsure? Drop to semantic HTML.
+
+## 3. Contrast, Color, and Dark Mode
+
+SC 1.4.3 asks 4.5:1 on text and 3:1 on large text (18pt, or 14pt bold). SC 1.4.11 asks 3:1 on interactive edges and meaningful graphics. SC 1.4.1 means color is never the only signal: an error is red and carries an icon and text.
+
+Brand pairings, all clearing their floor:
+
+| Pairing | Ratio | Level |
+|---------|-------|-------|
+| Heading on White (`#0f172a` on `#ffffff`) | 17.85:1 | AAA |
+| Muted on White (`#64748b` on `#ffffff`) | 4.76:1 | AA |
+| White on Primary (`#ffffff` on `#4f46e5`) | 6.29:1 | AA |
+| White on Primary Dark (`#ffffff` on `#4338ca`) | 7.90:1 | AAA |
+
+Dark mode is not a reskin. Both themes are tuned by hand, both clear the floor, and both are wired to `prefers-color-scheme`.
+
+Measure pairings in Foundations / Color Picker; token ratios in Foundations / Colors.
+
+## 4. Keyboard and Focus
+
+SC 2.1.1 Keyboard asks that every control be reachable and operable from the keyboard. The activation key follows the role: Tab moves focus, Space activates buttons and checkboxes, Enter activates links and buttons. SC 2.1.2 No Keyboard Trap is a separate promise: focus that lands somewhere can always move away again through a standard mechanism, not necessarily Escape. Escape-to-close is a dialog and menu convention from the ARIA APG, not part of 2.1.1. Focus stays visible (SC 2.4.7) and is never hidden behind sticky UI (SC 2.4.11).
+
+**Rule:** Keep a visible focus indicator on every focusable control.
+**Why:** the focus ring is how a keyboard user knows where they are. If a design has to drop the default outline, replace it with something at least as clear, never with nothing.
+
+Skip links let a keyboard user jump straight to `<main>` instead of tabbing through the whole nav. `.sr-only` keeps a label in the accessibility tree while hiding it on screen.
+
+Helpers to add to `main.css`:
+
+- `.focus-ring`: visible focus indicator: outline plus offset plus soft ring
+- `.skip-link`: hidden link that appears on focus and jumps to main content
+- `.sr-only`: visually hidden but present in the accessibility tree
+
+## 5. Target Size and Motion
+
+A control has to be big enough to hit. SC 2.5.8 sets a floor of 24 by 24 CSS pixels; we aim for 44 by 44, the size Apple and WCAG AAA both recommend. Honor `prefers-reduced-motion` as a floor, collapse the motion, keep the meaning (SC 2.3.3, SC 2.2.2).
+
+- `.touch-target`: pads the hit area to a minimum 44 by 44px without changing the visual
+- `.no-motion`: disables animation and transition on an element and its children
+
+Target and spacing scale in Foundations / Spacing; reduced-motion tokens in Foundations / Motion.
+
+## 6. Screen Readers: Name, Role, and Value
+
+SC 4.1.2 requires all three off every control. A native `<input type="checkbox">` with a label supplies them for free; a `<div>` styled to look like one supplies none, so a custom widget must set each by hand and keep the value in sync.
+
+- Name: what it is called. "Search", "Buy tickets", "Close dialog".
+- Role: what kind of thing it is. Button, checkbox, tab, dialog.
+- Value / State: where it stands now. Checked, expanded, "3 of 10".
+
+Live regions announce changes away from focus: a cart count, a validation error, results loading. Use `role="alert"` to interrupt, and `role="status"` or `aria-live="polite"` to wait for a pause.
+
+## 7. Before You Ship
+
+Run this before every PR.
+
+- Semantic HTML elements (button, nav, main, header, article) (SC 1.3.1)
+- Color contrast: 4.5:1 normal text, 3:1 large text and UI (SC 1.4.3 / 1.4.11)
+- Visible focus, never obscured behind sticky UI (SC 2.4.7 / 2.4.11)
+- Accessible name on every control, including icon-only buttons (SC 4.1.2)
+- Labels connected to form inputs (for/id) (SC 3.3.2)
+- Touch targets: 24x24px floor (AA), 44x44px target (AAA) (SC 2.5.8)
+- Live regions announce dynamic status messages (SC 4.1.3)
+- prefers-reduced-motion respected (SC 2.3.3)
+- Keyboard: Tab reaches every control, Space and Enter activate by role, focus can always move away (SC 2.1.1 / 2.1.2)
+- Screen reader pass (VoiceOver or NVDA) (SC 4.1.2)
+
+## Code Reference
+
+Focus states and motion preferences:
+
+```css
+/* Global focus ring - applies to all focusable elements */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Custom focus ring utility */
+.focus-ring:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+/* Respect motion preferences globally */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Manual motion disable (for JS toggle) */
+.no-motion, .no-motion * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Dark mode - automatic based on system preference */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-text-heading: #f1f5f9;
+        --color-text-body: #cbd5e1;
+        --color-surface: #1e293b;
+        --color-background: #0f172a;
+    }
+}
+
+/* Manual dark mode toggle (via class or data attr) */
+.dark, [data-theme="dark"] {
+    --color-text-heading: #f1f5f9;
+    --color-text-body: #cbd5e1;
+    /* ... all dark tokens ... */
+}
+```
+
+Skip links and screen reader utilities:
+
+```css
+/* Skip link - hidden until focused */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    z-index: 9999;
+}
+.skip-link:focus { top: 1rem; }
+
+/* Screen reader only - visually hidden but accessible */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Touch target - ensures minimum clickable area */
+.touch-target { position: relative; }
+.touch-target::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 44px;
+    min-height: 44px;
+}
+```
+
+ARIA live regions:
+
+```html
+<!-- Error - interrupts immediately -->
+<div role="alert">Payment failed. Please try again.</div>
+
+<!-- Status - waits for pause in speech -->
+<div role="status">3 items in cart</div>
+
+<!-- Loading state -->
+<div role="status" aria-busy="true">Loading events...</div>
+
+<!-- Search results - announces full content -->
+<div aria-live="polite" aria-atomic="true">Showing 24 events</div>
+```
+
+Accessible forms:
+
+```html
+<div class="form-field">
+    <label for="email">
+        Email <span aria-hidden="true">*</span>
+        <span class="sr-only">(required)</span>
+    </label>
+    <input type="email" id="email" autocomplete="email"
+        aria-required="true" aria-describedby="email-error" />
+    <p id="email-error" role="alert" hidden>Enter a valid email</p>
+</div>
+```
+
+Accessible modals:
+
+```html
+<!-- Modal dialog: traps focus, closes on Escape, returns focus -->
+<div role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title">Confirm Purchase</h2>
+    <p>Buy 2 tickets for $150?</p>
+    <button>Cancel</button>
+    <button autofocus>Confirm</button>
+</div>
+
+<!-- Background becomes inert -->
+<div id="app" inert>...</div>
+```
+
+## Sources
+
+WCAG 2.2 success criteria (w3.org/TR/WCAG22): contrast 1.4.3 / 1.4.11, use of color 1.4.1, keyboard 2.1.1 / 2.1.2, focus 2.4.7 / 2.4.11 / 2.4.13, target size 2.5.8 / 2.5.5, motion 2.3.3 / 2.2.2, name-role-value 4.1.2, status messages 4.1.3. POUR and the five rules of ARIA from W3C WAI and Using ARIA; widget patterns from the ARIA Authoring Practices Guide. The one-in-six disability figure is WHO; the 44px touch target follows the Apple Human Interface Guidelines. Ratios use the WCAG relative-luminance formula.
+
+# Form Elements
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-form-elements--docs
+
+The spine is one rule: reach for the native control first, tune it with the right attributes, and build custom only where the platform genuinely falls short.
+
+# Part 1: Doctrine, the rules under every field
+
+## 1. Native-first, and doubly so on mobile
+
+The default is always the plain HTML control with the right `type`, `inputmode`, and `autocomplete`. On a phone this is leverage: a semantic `<input type>` raises the correct on-screen keyboard, opens the platform picker, and arrives with keyboard support, focus handling, and screen-reader semantics already built in. MDN: prefer the semantic input type over hacks.
+
+Go custom only when one of two things is true: the pattern does not exist in HTML (a real multi-select, a filtering combobox, tags, rating), or the brand must style something the platform will not let you style (the popup of a `<select>`, the calendar of a date picker). When you do, prefer desktop, keep a native control underneath as the progressive-enhancement base, and follow the matching WAI-ARIA APG pattern to the letter. On mobile, bias even harder toward native.
+
+Native controls are hard to style, and that is the whole tension. web.dev: today's HTML form elements are difficult to customize. You can style the field box (border, radius, padding, type) of almost anything. What you cannot reliably restyle cross-browser is the `<select>` arrow and popup, and the date and time picker widgets. That single limit, not taste, is what pushes a control from native to custom.
+
+The clearest case is a date. GOV.UK: for a date the user already knows or can look up without a calendar, such as a birthday or an issue date, do not open a calendar. Use three plain text inputs, grouped in a `<fieldset>` with a `<legend>`, each with `inputmode="numeric"`. Reserve the native calendar picker for dates the user picks by looking, like choosing a future session.
+
+- ✓ Recommended: a memorable date, as three fields (day / month / year, each `inputmode="numeric"`).
+- ✕ Avoid: a calendar for a birthday. A picker that opens on the current month forces the user to page back through decades to reach a year they could have typed.
+
+## 2. Theming the accent without giving up native
+
+You can brand native controls without rebuilding them. Three CSS properties carry it. Set them once at the root and every native checkbox, radio, range, and text caret in the product turns indigo, and every control follows the OS light or dark theme, with zero per-control work.
+
+```css
+:root {
+  color-scheme: light dark;               /* native controls follow the OS theme */
+  accent-color: var(--color-primary);     /* tints checkbox, radio, range, progress */
+  caret-color: var(--color-primary);      /* the text insertion cursor */
+}
+<!-- in <head>, prevents a theme flash on load -->
+<meta name="color-scheme" content="light dark">
+```
+
+Read the coverage exactly. `accent-color` tints four controls and nothing else. It does not touch `<select>`, the date and time inputs, `type="color"`, `type="file"`, or any text field. Getting this wrong is the usual reason a "themed" form still shows a stock blue selected option.
+
+| Property | What it does | Reaches | Does not reach |
+|----------|--------------|---------|----------------|
+| `accent-color` | Tints the control's accent to the brand, keeping native behaviour | checkbox, radio, `range`, `progress` | select, date, time, color, file, text |
+| `caret-color` | Colours the text insertion cursor | text, search, tel, email, password, textarea | date, color, checkbox, radio |
+| `color-scheme` | Native controls adopt the OS dark or light look, no extra CSS | all native controls, scrollbars | your own custom colours |
+
+**Trust the browser on accent contrast.** Provide the brand colour and the browser picks a legible checkmark or thumb colour against it. For the controls `accent-color` cannot reach, take the decision ladder: accept the native chrome (best on mobile), style only the field box and keep the native popup, or, only if the brand demands it, rebuild with the matching APG pattern on desktop with a native control underneath.
+
+## 3. The anatomy of a field
+
+A field is four parts, and dropping any one shifts the work onto the user. The label asks and stays visible. The control takes the answer. Help pre-empts the mistake. The error appears only when something is wrong, and says exactly how to fix it.
+
+The label stays visible, above the field, never inside it. A placeholder is not a label: it vanishes the instant someone types, and screen readers treat it as unreliable. A single top-aligned column is the fastest form to scan.
+
+Marking the required field is not optional decoration. The `*` is drawn with `aria-hidden`, and the word "required" rides along in an `sr-only` span. Pair the real `required` attribute with that text, and state the convention once at the top of the form.
+
+**Mark the rarer one.** If most fields are required, mark the few optional ones in words; if most are optional, mark the required ones. An asterisk alone is not accessible, so pair it with text or an `aria-label` and state the convention once.
+
+- ✓ Recommended: label above, help visible.
+- ✕ Avoid: placeholder as the label. The question disappears the instant the user types, with nowhere left to put help.
+
+## 4. Validate at the right moment, in the right words
+
+Start from HTML constraint validation: `required`, `type`, `pattern`, `min`, `max`, `step`. It is free, works without JavaScript, and is the source of truth. Present its state with `:user-invalid` and `:user-valid`, not `:invalid` and `:valid`. The user variants only match after the person has interacted or tried to submit, which stops a pristine form from lighting up red on load.
+
+```css
+/* matches only after interaction, never on first paint */
+input:user-invalid { border-color: var(--color-error); }
+input:user-valid   { border-color: var(--color-success-strong); }
+```
+
+On timing, the rule is reward early, punish late. Confirm a field as valid while the user types, but hold a new error until they leave it. Once a field has already shown an error, switch that field to re-validate on every keystroke and clear the error the instant the value becomes valid.
+
+- While typing: reward, never punish. Show a success tick the moment input becomes valid. Hold the first error back. After a field has erred, re-check on input and clear it the instant it is valid.
+- On blur: now you may correct. Surface the inline error, right under the field.
+- On submit: catch the rest. Re-check everything, move focus to the first error, summarise in a live region. Never let a form fail silently.
+
+A good error message is visible and specific, says what went wrong in plain language, and tells the user how to fix it. "Invalid input" fails all three. "Enter a date after today, the event cannot start in the past" passes all three. WCAG 3.3.1 requires the error to be identified in text, so the field carries `aria-invalid="true"` and points at the message with `aria-describedby`. The colour reinforces; the words are the message.
+
+**Errors use `--color-error`, the only warm colour on the page.** Everything interactive stays indigo; red's single job is to mark a genuine problem. Do not tint help text, borders, or icons red for emphasis.
+
+## 5. Built for the thumb: the mobile contract
+
+On a phone the `type` attribute is the biggest usability lever. It tells the OS which keyboard to raise. `inputmode` tunes that keyboard without changing meaning, `enterkeyhint` relabels the return key, and `autocomplete` lets the browser fill the field in one tap, which satisfies WCAG 1.3.5 Identify Input Purpose. Avoid `autocomplete="off"` except for genuine one-offs like a CAPTCHA answer.
+
+| You are asking for | Use | Keyboard raised | Autofill token |
+|--------------------|-----|-----------------|----------------|
+| Email | `type="email"` | Text with a visible @, no shift | `autocomplete="email"` |
+| Phone | `type="tel"` | Large numeric dial pad | `autocomplete="tel"` |
+| Website | `type="url"` | Text with .com and / shortcuts | `autocomplete="url"` |
+| One-time code | `inputmode="numeric"` | Digits only, text semantics kept | `autocomplete="one-time-code"` |
+| Amount of money | `inputmode="decimal"` | Digits with a decimal separator | None |
+| Quantity of tickets | `type="number"` | Number pad with stepper | None |
+| Full name | `type="text"` | Standard, autocapitalized words | `autocomplete="name"` |
+| Search | `type="search"` | Text with a Search return key | `enterkeyhint="search"` |
+
+Two numbers are non-negotiable. Inputs render at `font-size: 16px` or larger, because iOS Safari auto-zooms any field below that on focus, and the fix is the size, never disabling `user-scalable`, which breaks zoom for everyone. Interactive targets are at least 24 by 24 CSS pixels to clear WCAG 2.5.8, and the comfortable goal is 44 by 44, the AAA target size and Apple's minimum. Native UA controls are exempt from the strict measure, one more reason to lean native on small screens.
+
+Use the semantic `type` first and reach for `inputmode` to fine-tune. For SMS logins, `autocomplete="one-time-code"` lets iOS and Android drop the texted code straight into the field.
+
+## 6. The accessibility floor
+
+An accessible form is the same form built correctly. AA is the minimum we ship, and we reach for AAA target sizing wherever the layout allows.
+
+| Criterion | Level | What it requires | How the field meets it |
+|-----------|-------|------------------|------------------------|
+| 3.3.2 Labels or Instructions | A | Every control has a visible label or instruction | Persistent `<label for>` above each field; help linked with `aria-describedby` |
+| 3.3.1 Error Identification | A | Errors are identified and described in text | Inline text message plus `aria-invalid="true"`; red reinforces, never carries it alone |
+| 3.3.3 Error Suggestion | AA | When a fix is known, suggest it | The message says how to correct the value, not only that it is wrong |
+| 1.3.5 Identify Input Purpose | AA | Common fields expose their purpose programmatically | Correct `autocomplete` tokens, which also drive autofill |
+| 2.5.8 Target Size | AA | Interactive targets are at least 24 by 24 CSS pixels | Checkboxes and toggles clear 24px; the comfortable target is 44px (AAA 2.5.5) |
+
+**The label is a click target, for free.** A real `<label for>` pointed at the input's `id` names the field for assistive technology and extends the tap area to the words. Group related controls in a `<fieldset>` with a `<legend>` so the group's question is announced too. This is the accessible default, not optional polish.
+
+# Part 2: The catalog, every control we reach for
+
+One card per control, grouped by family. Each names the native element, a verdict of Native, Custom, or Hybrid, the attributes that matter, and the two notes that decide quality: mobile behavior and the accessibility pattern. When a control has no good native form, the note names the WAI-ARIA APG pattern to build against.
+
+## Text and numeric fields
+
+- **Text**: Native, `<input type="text">`. Attrs: `autocomplete`, `enterkeyhint`, `maxlength`. Standard keyboard; keep font-size at 16px. Visible `<label for>`; error via `aria-describedby` and `aria-invalid`.
+- **Email**: Native, `<input type="email">`. Attrs: `inputmode="email"`, `autocomplete="email"`. Raises a keyboard with @ and a dot, no shift. Built-in format validation; still write a fix-it error message.
+- **Password**: Native, `<input type="password">`. Attrs: `autocomplete="current-password"` / `new-password`. Offer a show-password toggle; never block paste. Use `new-password` on sign-up so managers offer a strong one.
+- **Number**: Native, `<input type="number">`. Attrs: `inputmode="numeric"`, `min`, `max`, `step`. For true quantities. For codes and IDs use `text` plus `inputmode`. Native role is spinbutton; arrows step the value.
+- **Tel**: Native, `<input type="tel">`. Attrs: `inputmode="tel"`, `autocomplete="tel"`. Raises the phone dial pad. No format validation, so pair with a hint. Add a country selector only when you serve many regions.
+- **URL**: Native, `<input type="url">`. Attrs: `inputmode="url"`, `autocomplete="url"`. Keyboard adds / and .com shortcuts. Validates for a scheme; accept input without `https://` and normalise it.
+- **Search**: Native, `<input type="search">`. Attrs: `enterkeyhint="search"`. Return key reads "Search"; a clear button appears on many browsers. Carries an implicit searchbox role.
+- **Textarea**: Native, `<textarea>`. Attrs: `rows`, `maxlength`, `enterkeyhint="enter"`. Keep 16px; let it auto-grow. If you show a counter, mirror it in an `aria-live` region.
+
+## Selection controls
+
+- **Select, single**: Hybrid, `<select>`. Attrs: `<option>`, `required`. Prefer native: it opens the OS wheel, already accessible. Custom only to style the popup, then follow APG Select-only Combobox. Long lists: switch to an autocomplete.
+- **Multi-select**: Custom, no good native form. Attrs: `aria-multiselectable`, `aria-selected`. `<select multiple>` is hostile on touch; use checkboxes or a sheet. Build against APG Listbox multi-select, or decompose into a checkbox group.
+- **Checkbox**: Native, `<input type="checkbox">`. Attrs: `accent-color`, `checked`. Target 44px; `accent-color` tints it indigo, no rebuild. For a group, wrap in `<fieldset>` with a `<legend>`. Supports an indeterminate state.
+- **Radio group**: Native, `<input type="radio">` x N. Attrs: `name`, `accent-color`. One shared `name`; each option a 44px target. APG Radio Group: one tab-stop, arrows move and select.
+- **Switch, toggle**: Custom, checkbox as the base. Attrs: `role="switch"`, `aria-checked`. For an instant on/off setting; the change applies at once. APG Switch: Space toggles, and the label does not change with state.
+- **Range, slider**: Native, `<input type="range">`. Attrs: `min`, `max`, `step`, `accent-color`. Tinted by `accent-color`; pair with a visible value, dragging is imprecise. Native covers APG Slider. Two-thumb range: APG Slider Multi-Thumb.
+
+On defaults: pre-check the reminder because people want it, leave the newsletter off because it costs their attention. A default must be the choice the user would make with full attention, and it must stay editable. Pre-fill to save effort, never to extract a choice. (See Patterns / Persuasion on the ethics of defaults.)
+
+## Date, time and colour
+
+- **Calendar date**: Native, `<input type="date">`. Attrs: `min`, `max`. Opens the OS calendar. Right for a date the user picks by looking. Custom only to style the calendar: a button opening an APG Dialog grid.
+- **Memorable date**: Hybrid, 3 x `<input type="text">`. Attrs: `inputmode="numeric"`, `fieldset`, `legend`. Birthdays and issue dates: three numeric fields beat a calendar. The GOV.UK pattern: day, month, year, grouped in a fieldset.
+- **Time**: Native, `<input type="time">`. Attrs: `datetime-local`, `step`. Native time wheel respects the 12 or 24 hour locale. Use `datetime-local` to capture date and time in one control.
+- **Colour**: Native, `<input type="color">`. Attrs: `value` hex. Opens the OS colour picker. `accent-color` does not apply here. Pair with a text hex field so the value is typeable too.
+
+## Specialized inputs
+
+- **File**: Native, `<input type="file">`. Attrs: `accept`, `capture`, `multiple`. `capture` can open the camera directly for a photo upload. Style the triggering `<label>`, never hide the input without a label.
+- **Combobox, autocomplete**: Custom, `<input>` + `<datalist>` as base. Attrs: `role="combobox"`, `aria-autocomplete`, `aria-expanded`. Text keyboard; render suggestions as a sheet on small screens. APG Combobox with `aria-activedescendant`. Enhance a real `<select>`.
+- **One-time code**: Native, `<input>` single or split. Attrs: `autocomplete="one-time-code"`, `inputmode="numeric"`. iOS and Android autofill the SMS code straight into the field. If you split into boxes, group them and announce progress.
+- **Phone with country**: Hybrid, `<input type="tel">` + selector. Attrs: `autocomplete="tel"`, `tel-country-code`. The number stays a native tel input; only the country picker is custom. Country selector follows APG Combobox or Listbox.
+- **Currency, masked**: Custom, `<input type="text">` + mask. Attrs: `inputmode="decimal"`, `pattern`, `aria-describedby`. Avoid `type="number"`: it fights thousands separators. Use text plus a mask. State the expected format in help; do not break editing for AT.
+
+## Composite and advanced
+
+- **Tags, chips**: Custom, no native form. Attrs: `role="combobox"`, `aria-label` per chip. Chips are 44px targets; each removable by keyboard, not hover alone. Input follows APG Combobox; each chip's remove button has a label.
+- **Rating, stars**: Custom, radio group as base. Attrs: `role="radiogroup"`, `name`. Each star a 44px target; never depend on hover to set a value. One star is one radio option, so APG Radio Group carries it.
+- **Stepper, plus and minus**: Native, `<input type="number">`. Attrs: `min`, `max`, `step`, `role="spinbutton"`. Custom plus and minus buttons at 44px beat the tiny native spinners. Native and custom both are APG Spinbutton: arrows, Home, End.
+- **Rich text**: Custom, contenteditable, or a library. Attrs: `contenteditable`, `role="toolbar"`. Expensive to make accessible; use only when formatting truly matters. Toolbar follows APG Toolbar; announce applied formatting.
+
+# Close: Rules of the form
+
+**Rule:** Reach for the native control before building a custom one.
+**Why:** a native `<select>`, date input, or checkbox ships the keyboard, picker, and accessibility a hand-built widget has to re-earn from scratch.
+
+**Rule:** Brand native controls with `accent-color`, `caret-color`, and `color-scheme`, and know their reach.
+**Why:** they tint checkbox, radio, range, progress, and the caret without a rebuild; select, date, and text they do not touch, so plan for those.
+
+**Rule:** Keep the label visible above every field, and mark the rarer of required or optional in words.
+**Why:** a placeholder vanishes on the first keystroke and takes the question with it; an asterisk alone reaches no screen reader.
+
+**Rule:** Match `type`, `inputmode`, `enterkeyhint`, and `autocomplete` to the answer.
+**Why:** the right keyboard rises on the first tap and a saved profile fills the field in one, instead of a manual retype.
+
+**Rule:** Render inputs at 16px or larger and give interactive targets at least 24px, ideally 44px.
+**Why:** below 16px iOS Safari auto-zooms on focus; below 24px the target fails WCAG 2.5.8, and the thumb misses.
+
+**Rule:** Reward valid input while typing with `:user-valid`, and surface errors on blur.
+**Why:** flagging a half-typed value as wrong punishes progress; once a field has already erred, re-check on input and clear it the instant it is valid.
+
+**Rule:** Write errors that name the fix, in text, with `aria-invalid` and `aria-describedby`.
+**Why:** "Invalid" leaves no way to recover, and a red border alone reaches no screen reader; the words carry the message.
+
+**Rule:** Reserve `--color-error` for genuine errors and nothing else.
+**Why:** one warm colour on an otherwise indigo page means its appearance always signals a real problem.
+
+**Rule:** When you must go custom, build against the matching WAI-ARIA APG pattern and keep a native base underneath.
+**Why:** the APG pattern encodes the keyboard and roles users expect, and the native base keeps the field working if the script fails.
+
+**Decision ladder.** Adding a field? Stop at the first rung that resolves it.
+
+1. Does this field need to exist? Every field is a cost. If you can infer it, default it, or drop it, do that before styling anything.
+2. Can a native control answer it? A `<select>`, `type="date"`, a checkbox. Use it, and keyboard and accessibility come built in.
+3. What is the answer's shape? Pick the `type` and `inputmode` that raise the matching keyboard, add `enterkeyhint` and the `autocomplete` token, and brand it with `accent-color`.
+4. What can go wrong, and how is it fixed? Write the help and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.
+5. Only now, assemble it from the primitives: visible label, control, help, error, in one column, states inherited from Patterns / Interactive. If the pattern is not in HTML, build the matching APG pattern over a native base.
+
+## Sources
+
+MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<input>` types, `inputmode` and `enterkeyhint`, the `autocomplete` token list, `:user-invalid`. web.dev "accent-color" and Learn Forms (four themable controls, automatic accent contrast, HTML form elements are difficult to customize). caniuse: `accent-color` roughly 94 percent, since Chrome/Edge 93, Firefox 92, Safari 15.4 (March 2022). WAI-ARIA APG patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog, Toolbar. GOV.UK Design System: progressive enhancement, the Select component, and the Date input three-field memorable-date pattern. W3C Understanding WCAG 2.2: SC 3.3.2 (A), 3.3.1 (A) with ARIA21 `aria-invalid`, 3.3.3 (AA), 1.3.5 (AA), 2.5.8 (24px, AA), 2.5.5 (44px, AAA). Mihael Konjevic, "Inline Validation in Web Forms" (Smashing, 2022), source of "reward early, punish late". CSS-Tricks and defensivecss.dev: 16px prevents iOS input zoom. Apple HIG Text fields: content-appropriate keyboards, 44pt minimum. NN/g and Baymard: placeholders cannot replace labels, error messages must be visible/specific/constructive, single-column forms complete faster. The reward-while-typing timing and single-accent error-only use of `--color-error` are house rules layered on the cited guidance.
+
+# Data Tables
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-data-tables--docs
+
+A data table is a native `<table>` first, always. Density, sorting, pagination, and the mobile transform are behavior layered on top of correct structure. Reach for an ARIA role only when native HTML genuinely cannot express the interaction.
+
+# Part 1: Doctrine, the accessibility is not optional
+
+## 1. Native <table> first, never div-soup
+
+Build the table from real elements: a `<table>` with a `<caption>`, a `<thead>` and `<tbody>`, and `<th>` cells that carry `scope`. Without `<th>`, `scope`, and the table role, a screen reader cannot announce "column Amount, row Order 4521". The row and column relationship is simply lost.
+
+**Rule:** Use a real `<table>` with `<caption>`, `<thead>` / `<tbody>`, and `<th scope="col">` for column headers plus `<th scope="row">` for each row's identifying cell.
+**Why:** WCAG 2.1 SC 1.3.1 Info and Relationships (Level A) requires that structure conveyed visually be programmatically determinable. Scope is inferred in simple tables, but MDN and GOV.UK both advise setting it explicitly, because some assistive technology draws the wrong inference.
+
+**Rule:** The `<caption>` is the table's accessible name. Give every table one.
+**Why:** GOV.UK: a caption helps users find, navigate, and understand tables. It lets a screen reader user decide whether to read on or skip the table.
+
+**Rule:** For multi-level or spanned headers, prefer splitting into smaller related tables over reaching for `headers` / `id` wiring.
+**Why:** MDN recommends breaking a complex table apart rather than relying on `colspan` / `rowspan`. If you are reaching for `headers` / `id`, first ask whether this should be two tables.
+
+## 2. The fork: <table> vs role="grid"
+
+The most common mistake is over-reaching for `role="grid"`. The default is a static `<table>`. Most product tables, even with sorting, filtering, pagination, row links, and row actions, are not grids. The WAI-ARIA APG: like an HTML table, a WAI-ARIA table is a static tabular structure, not an interactive widget. You graduate to a grid only when the table is a spreadsheet the user operates cell by cell with arrow keys.
+
+| Use a static `<table>` (default) when | Use `role="grid"` only when |
+|---------------------------------------|-----------------------------|
+| The table presents data to read, scan, and compare. | The table is an interactive widget operated like a spreadsheet. |
+| Cells may hold links or buttons and the user tabs through them normally. | You need cell-by-cell arrow-key navigation with a single tab stop for the whole grid. |
+| You have sorting, filtering, pagination. None of these require a grid. | You have editable cells or complex keyboard row and column selection. |
+
+**A grid is a heavyweight commitment.** Once you adopt `role="grid"` you own focus management by roving tabindex (exactly one focusable element in the tab sequence at a time) and the full keyboard model: arrow keys move one cell and stop at edges, `Home` / `End` jump to row ends, `Ctrl+Home` / `Ctrl+End` to grid corners, and in an edit grid `Enter` or `F2` enters edit mode while `Escape` returns to navigation. Do not sign up for this to get sortable columns.
+
+## 3. Sorting that a screen reader can follow
+
+**Rule:** The sort control is a native `<button>` inside the `<th>`. Sort state lives in `aria-sort` on that `<th>`, on one column at a time.
+**Why:** the APG sortable-table example wraps header text in a button, so keyboard support is free. Roselli: never set `aria-sort` on more than one header at once.
+
+**Rule:** Signal direction by shape, a filled versus outline arrow marked `aria-hidden="true"`, not by color.
+**Why:** encoding sort purely through color risks failing WCAG 1.4.1 Use of Color. The glyph is hidden from the accessible name so it does not pollute the button label.
+
+**Rule:** Pair sorting with an optional polite live region that announces the change.
+**Why:** Roselli tested support: NVDA, JAWS, Narrator, and VoiceOver on iOS announce `aria-sort`, but VoiceOver on macOS and TalkBack on Android do not. A live region is the only way those users hear that the order changed.
+
+**Rule:** Communicate sortability itself through a `<caption>` hint, not a verbose per-button `aria-label`.
+**Why:** the caption is announced once on table entry. Per-button labels translate poorly and are read on every cell. The visible button text must carry the meaning, because not every screen reader user is blind.
+
+## 4. Row selection with a real indeterminate select-all
+
+Each selectable row gets a native `<input type="checkbox">` whose accessible name identifies the row, not a generic "Select row". The header select-all checkbox uses the `indeterminate` DOM property (set in JavaScript, not the same as `checked`) when some but not all rows are selected: checked when all are, unchecked when none. All native checkboxes are tinted with `accent-color: var(--color-primary)`. Announce the derived selection count through a polite live region.
+
+**Be explicit about scope across pages.** When the table is paginated, state whether a selection covers only the current page or the whole filtered set. Ambiguous selection is how users delete more than they meant to.
+
+# Part 2: Anatomy, density, alignment and format
+
+## 5. Density and alignment
+
+Anchor row height to IBM Carbon's five-tier scale. Ship at least two densities: a comfortable default around 48px, touch and low-vision friendlier, and a compact opt-in around 32px for power users. Never ship compact only.
+
+| Carbon tier | Height | Use when |
+|-------------|--------|----------|
+| Extra small / Compact | 24px | Dense exploration, expert users, maximum rows on screen |
+| Small / Short | 32px | Dense with a little more breathing room |
+| Medium | 40px | Balanced default for many products (added in Carbon 11) |
+| Large / Default | 48px | Comfortable default, touch friendlier |
+| Extra large / Tall | 64px | Rows with two lines, a value plus secondary text |
+
+**Rule:** Left-align text, right-align numbers, and align each header with its own column.
+**Why:** right-aligned digits line up by place value so columns of numbers become scannable. GOV.UK ships exactly this with numeric cell and header modifiers.
+
+**Rule:** Put `font-variant-numeric: tabular-nums` on numeric columns.
+**Why:** tabular figures occupy equal width, so a column of numbers aligns vertically digit by digit.
+
+**Rule:** Interactive targets inside cells (sort buttons, row-action buttons, checkboxes, pagination links) meet at least 24 by 24 CSS px, or the 24px-spacing exception.
+**Why:** WCAG 2.2 SC 2.5.8 Target Size (Minimum). A 24px compact row can hold a 24px target but leaves no spacing margin, so compact density plus icon buttons is a target-size risk. Prefer comfortable density anywhere row actions are tappable.
+
+## 6. Zebra striping vs dividers
+
+The evidence is softer than most assume. NN/g endorses borders, zebra striping, and hover highlighting as valid aids for keeping your place across a wide row, but publishes no controlled study crowning a winner. Anyone who tells you striping always beats dividers is inventing a result.
+
+**Rule:** Pick one row-tracking aid, driven by table width, and do not stack them.
+**Why:** for wide tables with many columns, zebra striping or a row hover highlight materially helps the eye stay on one record. For narrow tables, subtle horizontal dividers or nothing at all is cleaner. Stacking striping plus heavy borders plus hover is visual clutter.
+
+**Rule:** Always add a row hover highlight and a matching focus highlight for keyboard users.
+**Why:** hover helps mouse users track a row, but keyboard users need the same anchor on focus, never one without the other.
+
+## 7. Data formatting
+
+| Type | Format rule |
+|------|-------------|
+| Numbers | Right-align, `tabular-nums`, group thousands. Keep a shared unit in the header, `Price (COP)`, not in every cell. |
+| Currency | Right-align, one consistent symbol and decimal count per column. For this product's COP context, whole pesos. |
+| Dates | One format per column. Wrap the machine value in `<time datetime="...">`. Show relative dates only when a precise value is available on hover or focus. |
+| Text | Left-align. Decide truncate or wrap per column, not per table. |
+| Empty cells | Use an explicit placeholder shown as a dash, with an accessible meaning, never a blank cell that reads as nothing. |
+
+**Rule:** Wrap content the user must read in full (names, addresses, descriptions), pairing it with the tall 64px density.
+**Why:** truncating a value the user needs to read makes the table useless for that task.
+
+**Rule:** Truncate with an ellipsis only for low-value tails (IDs, URLs, long machine strings), and always give an accessible way to recover the full value with `title` or a tooltip.
+**Why:** truncation buys column alignment, but hiding a value with no way to read it fails the user who needs it.
+
+# Part 3: Behavior, pagination, filters, actions, states
+
+## 8. Pagination vs infinite scroll vs load-more
+
+Data tables are goal-oriented lookup and compare surfaces, so the default is pagination. NN/g finds infinite scroll suits homogeneous feeds with no particular task, and recommends avoiding it when users need to find something specific, compare items in a long list, or return to an item they saw.
+
+| Pattern | Use for a table when |
+|---------|----------------------|
+| Pagination (default) | Users look up, compare, and return to items, and need a sense of position, a total, and access to a footer or summary. |
+| Load-more button | Mostly-browse lists where you still want footer access and user-controlled loading. A middle ground. |
+| Infinite scroll | Rare for tables. Only a pure exploratory feed with no find, compare, or return task. |
+
+**Rule:** Always show the current range and the total, "1-25 of 320", and let users choose the page size.
+**Why:** it gives position and scope, directly answering the "where am I" problem infinite scroll creates.
+
+**Rule:** Wrap controls in `<nav aria-label="Table pagination">`, mark the current page with `aria-current="page"`, meet SC 2.5.8 target size, and announce the new range politely.
+**Why:** WCAG cites pagination links as a case for the 24px target-size rule. Swapping the table body is not auto-announced, so a live region carries the change.
+
+## 9. Filters and search
+
+Give the table a global search that filters across columns, and per-column filters where users repeatedly narrow by known dimensions. Keep the sort button and any column filter as separate, separately-labeled controls, never overloaded onto one target. Make the current filter state visible.
+
+**Rule:** Every applied filter renders as a visible, removable chip with an accessible name, plus a "Clear all".
+**Why:** chips are the honest answer to "what am I currently looking at". A filtered table that hides its own active filters is a dark pattern of confusion.
+
+**Rule:** State the filtered count against the total on the table itself, "Showing 12 of 320, filters active", and announce result counts through a polite live region.
+**Why:** users must never mistake a filtered view for the whole dataset. When filtering reaches zero rows, show the no-results state, not the empty state.
+
+## 10. Row actions and bulk actions
+
+Show one or two primary, high-frequency actions as inline buttons in an actions column. Collapse three or more, or any secondary actions, into an overflow kebab menu. Icon-only buttons must carry an `aria-label`. For bulk work, select rows through the checkboxes, then reveal a contextual toolbar when at least one row is selected.
+
+**The hover-only trap.** Row actions must never appear on mouse hover alone. Hover does not exist on touch and is unreachable by keyboard. Actions must be always rendered (optionally lower contrast until hover or focus), never hidden with `display:none` behind a hover, and every target meets the 24 by 24px minimum.
+
+- ✓ Recommended: actions always visible and focusable.
+- ✕ Avoid: actions that only appear on hover (hidden until hover, unreachable on touch).
+
+## 11. States: empty, loading, error, no results
+
+A table has four states beyond happy-path data, and two are constantly confused.
+
+- Empty (no data yet): explains why the table is empty and offers a primary action to add the first record.
+- No results (after filtering to zero rows): says the filters matched nothing and offers a one-click Clear filters. Different from empty.
+- Loading: prefers skeleton rows that mirror the real column layout over a bare spinner, with the region marked `aria-busy="true"` while it loads.
+- Error: keep any stale data visible under an error banner with a retry (in a `role="alert"`) rather than blanking the screen.
+
+# Part 4: Mobile and advanced
+
+## 12. Mobile, the hard problem
+
+Tables do not fit narrow viewports, and WCAG SC 1.4.10 Reflow gives them a specific carve-out. Content must reflow to 320 CSS px without two-dimensional scrolling, except for parts that require a two-dimensional layout for meaning, and the standard names "data tables (not individual cells)" as exactly such a part. A data table is permitted to scroll horizontally on a phone and you do not fail Reflow for it, as long as the surrounding page still reflows. Horizontal scroll is a legitimate, standards-blessed strategy, not a hack.
+
+- **A. Scroll region + sticky first column (Default).** Keep the real `<table>`. Wrap it in a focusable, labeled scroll region and freeze the identifying first column. Gain: bulletproof semantics, about six lines of CSS, no JS, no data duplication. Lose: the user scrolls to reach far columns, so mitigate with the sticky first column.
+- **B. Stacked cards (Repair needed).** Collapse each row into a key and value card with `td::before` labels. Gain: no horizontal scroll, great for single records. Lose: `display:block` destroys table semantics, so you MUST restore roles with ARIA, and cross-record comparison becomes nearly impossible.
+- **C. Priority columns + expand (Alternative).** Show only the top-priority columns on narrow screens, reveal the rest behind a columns toggle or an expandable row. Gain: keeps a real table and fits the width. Lose: hidden data is out of sight, so the toggle state must be announced and persistent.
+- **D. Not a table at all (Alternative).** Show a scannable list of summary items linking to a full detail view. Put the real table on wider viewports. Gain: simplest reading on a phone. Lose: cross-column comparison is not available on mobile, so use it only when identity dominates.
+
+**The conflict, resolved in favor of Roselli.** CSS-Tricks (Coyier, 2011) claims the `display:block` card transform stays accessible. Roselli's assistive-technology testing (2017, updated 2024) shows the opposite: as soon as the table becomes `display:block`, screen readers stop treating it as a table. We trust Roselli, the AT-tested specialist. If you use the card pattern you must repair semantics with ARIA roles. Otherwise, prefer Pattern A.
+
+Mobile decision ladder:
+1. Is cross-column comparison the core task? Use Pattern A, scroll region with a sticky first column.
+2. Do users inspect one record at a time? Use Pattern C (priority + expand) or Pattern B (cards, with ARIA repair).
+3. Is it really a list of records, not a comparison grid? Use Pattern D, list plus detail.
+4. Never: hover-only actions. Never: assume `display:block` keeps semantics.
+
+**Why the region needs `tabindex="0"`.** Roselli's pattern wraps the table in `<div role="region" aria-labelledby="..." tabindex="0">`. The tabindex satisfies WCAG SC 2.1.1 Keyboard so a keyboard user can tab to the region and scroll it. Avoid CSS scroll-snap here: it clips cells, and users need to compare adjacent cells freely.
+
+## 13. Advanced: editing, expansion, pinning, virtualization
+
+| Feature | Rule and cost |
+|---------|---------------|
+| Editable cells / data grid | This is where you graduate to `role="grid"` with the edit-grid keyboard model (`Enter` or `F2` to edit, `Escape` to exit). Do not bolt inline edit onto a static table without the grid contract. |
+| Column resize / reorder | Provide keyboard-operable handles, announce the new size or position, and persist per user. High effort, ship only if users demonstrably need it. |
+| Expandable rows | A disclosure `<button>` per row with `aria-expanded` toggling an adjacent detail region. A natural home for secondary columns on mobile Pattern C. Test density against expanded content together. |
+| Column pinning | Use CSS `position: sticky`, and pin only the identifier column. Freezing many columns eats mobile width. |
+| Virtualization | Render only visible rows for very large datasets. It breaks find-in-page and can confuse assistive technology. If you virtualize, set `aria-rowcount` and `aria-rowindex` so AT knows the true totals. Treat it as a last resort after pagination. |
+
+## Sources
+
+MDN Web Docs, the `<table>` element and its accessibility: semantic markup, correct child order (`caption`, `colgroup`, `thead`, `tbody`, `tfoot`), explicit `scope`, split-over-`headers`/`id` guidance, wrapping dates in `<time>`. WAI-ARIA APG, Table and Grid patterns: native table strongly encouraged, a WAI-ARIA table is static not interactive, a grid is a composite widget with a single tab stop and roving tabindex; the Sortable Table example. Adrian Roselli: Sortable Table Columns (one `aria-sort` at a time, VoiceOver macOS and TalkBack do not announce it, signal by shape, prefer a caption hint), Under-Engineered Responsive Tables (the `role="region"` plus `tabindex="0"` scroll pattern, no scroll-snap), A Responsive Accessible Table (`display:block` stops screen readers treating it as a table). GOV.UK Design System, Table component. Nielsen Norman Group: Data Tables (borders, zebra striping, hover all help place-keeping), Infinite Scrolling (avoid for find/compare/return, so tables default to pagination). W3C Understanding WCAG: SC 1.3.1 (A), 1.4.1 (A), 2.1.1 (A), 1.4.10 Reflow (AA) with its data-table carve-out, 2.5.8 (24px, AA). IBM Carbon Design System row-height tiers (Compact 24, Short 32, Medium 40, Default 48, Tall 64). CSS-Tricks, Responsive Data Tables (Coyier, 2011), resolved in favor of Roselli. House rules layered on the cited guidance: the width-driven zebra-versus-dividers heuristic, `tabular-nums` on numeric columns, the checkbox plus indeterminate select-all, and the filter, states, and virtualization accessibility hooks.
+
+# Modals
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-modals--docs
+
+A modal steals the whole room: it stops the task, blanks the background, and traps the keyboard until the user answers. Reach for the native `<dialog>` with `showModal()` first, use it rarely, and never open one where a page, an inline message, or a popover would have done the job.
+
+## 1. The six things a modal must do
+
+An accessible modal dialog is a contract with the keyboard and the screen reader. The WAI-ARIA APG names six terms. Miss any one and the modal is broken for someone.
+
+1. **It has an accessible name.** Point `aria-labelledby` at the visible title, or set `aria-label` when there is no visible title. Without a name it fails WCAG 4.1.2.
+2. **Focus moves in on open.** When the dialog opens, focus lands on an element inside it, not the page behind. Use `autofocus` to place it deliberately.
+3. **Tab cycles inside.** Tab off the last control wraps to the first, and Shift+Tab off the first wraps to the last. Focus never escapes to the inert page.
+4. **Escape closes it.** The Escape key dismisses the dialog. This is the release valve that keeps the focus trap legal under WCAG 2.1.2.
+5. **Focus returns to the trigger.** On close, focus goes back to the control that opened the dialog.
+6. **The background is inert.** Everything behind the dialog leaves the tab order and the accessibility tree. A pointer, a Tab, and a screen reader all stop at the dialog edge.
+
+## 2. The native element hands you all six
+
+`<dialog>` opened with `.showModal()` gives you the whole contract for free and correctly: focus moves in, Tab is trapped, Escape closes, the background goes `inert`, and focus returns to the trigger on close. It renders in the top layer, so it sits above the page with no `z-index` fight, and it exposes a `::backdrop` to dim what is behind.
+
+MDN: "While dialogs can be created using other elements, the native `<dialog>` element provides usability and accessibility features that must be replicated if you use other elements for a similar purpose."
+
+The Cancel and Save buttons live in a `<form method="dialog">`, so activating either closes the dialog and reports its `returnValue` without a submit or a page reload. Ship a real close button too, because Escape alone is not a discoverable exit.
+
+Three rules from MDN keep it honest: never open a modal with the `open` attribute (that makes a non-modal, no trap, no Escape, no inert), never put `tabindex` on the `<dialog>`, and always ship an explicit close button.
+
+```html
+<!-- Open with .showModal(), never the open attribute. -->
+<button onclick="dlg.showModal()">Rename event</button>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <!-- method="dialog" closes on submit, no reload, sets returnValue -->
+  <form method="dialog">
+    <h3 id="dlg-title">Rename event</h3>
+    <input autofocus value="Summer Rooftop Session">
+    <button value="cancel">Cancel</button>
+    <button value="save">Save name</button>
+  </form>
+</dialog>
+```
+
+**Animating opts you out of one guarantee.** web.dev warns that when you animate a dialog open or closed, the built-in focus return is lost and has to be restored by hand with event listeners. If you add motion, put the focus return back yourself, and honor `prefers-reduced-motion`.
+
+## 3. dialog for content, alertdialog for consequences
+
+`role="alertdialog"` tells assistive tech this dialog interrupts to demand a response, so it can treat it specially (a system alert sound, for instance). Use it for confirmations and destructive or irreversible actions. Use plain `dialog` for forms, selection, and content.
+
+- role dialog: forms, pickers, multi-step content. Nothing is destroyed by opening it. Focus the first field or the primary control.
+- role alertdialog: delete, cancel, wipe, anything irreversible. Requires `aria-describedby` on the message, and focus starts on Cancel.
+
+An alertdialog carries every requirement from Section 1 plus two of its own: `aria-describedby` must point at the element holding the alert message, and the safest initial focus is the Cancel button, not the destructive one. Putting focus on Cancel makes the dangerous choice deliberate rather than one stray Enter away.
+
+APG: "The alertdialog role enables assistive technologies and browsers to distinguish alert dialogs from other dialogs so they have the option of giving alert dialogs special treatment, such as playing a system alert sound." NN/g draws the same line: interrupt precisely when "there is a chance that users' work be lost or that an action may have destructive, irreversible consequences."
+
+## 4. When not to use a modal at all
+
+A modal charges a tax. NN/g: it demands immediate action, breaks the flow, makes the user lose their place, adds cognitive load, and hides relevant background. "Modal dialogs that are not directly related to users' goals are perceived as annoying and can diminish trust." Walk this ladder and stop at the first rung that fits.
+
+1. **A separate page.** For anything complex or multi-step. GOV.UK's "one thing per page" default sends the user to another page instead of a modal, and their design system ships no modal component at all.
+2. **Inline content.** A field failed validation? Show the error inline, next to the field. Help text, hints, and single-field errors belong in the page.
+3. **A non-modal dialog.** When the user should keep working with the background, open a dialog with `show()` instead of `showModal()`. No trap, no inert, the page stays live.
+4. **A popover.** Action menus, toasts, form suggestions, teaching hints. Lightweight, non-modal, light-dismiss.
+
+**Never modal.** Newsletter and promo interrupts unrelated to the goal, high-risk checkout (NN/g advises against it explicitly), decisions that need information the user cannot see inside the modal, and single-field validation errors.
+
+## 5. Popover for everything non-modal
+
+The Popover API is the tool for overlays that must not steal the room. "Popovers created using the Popover API are always non-modal." They do not make the background inert, they do not trap focus, and the rest of the page stays interactive. MDN: "If you want to create a modal popover, a `<dialog>` element is the right way to go." A `popover="auto"` light-dismisses on Escape or an outside click and wires up with nothing but `popovertarget` on a button.
+
+- Tooltip: a brief description on hover or focus over a control. Takes no focus of its own, holds no interactive content. Not a dialog.
+- Popover: a light interactive layer. Background stays active, dismiss is light, focus is not trapped. Menus, toasts, pickers.
+- Dialog, modal: interrupts. Background inert, focus trapped, needs an answer. Spend it rarely.
+
+**Platform honesty.** `<dialog>` and `showModal()` are Baseline Widely available since March 2022, and `inert` since April 2023, both safe for production. The Popover API is Baseline Newly available since January 2025, so on an older browser base consider a fallback for popovers.
+
+## 6. The pitfalls, and the WCAG nuance
+
+The native element prevents most of these; a hand-built modal has to guard against all of them.
+
+- **Trap:** focus escapes to the background. The native element inertizes the rest of the document for you; by hand you must set the `inert` attribute, not just `pointer-events`.
+- **Trap:** focus never returns to the trigger, most often because the open or close was animated. Restore it in an event listener.
+- **Trap:** no accessible name. Missing `aria-labelledby` or `aria-label` fails WCAG 4.1.2.
+- **Trap:** close only on outside click, with no keyboard exit. Always ship an explicit close button plus Escape.
+- **Trap:** opened with the `open` attribute, which produces a non-modal, no trap and no Escape and no inert. Use `.showModal()`.
+- **Trap:** nesting modals. Prefer one dialog, or steps inside a single dialog.
+
+**The trap is legal, on one condition.** A modal's focus trap does not violate WCAG 2.1.2 No Keyboard Trap as long as there is a way out. W3C: restricting focus "does not fail the requirements of this criterion, as long as the user knows how to 'untrap' the focus and leave that component." Escape or a Cancel button must always release it. A modal with no keyboard exit does fail 2.1.2.
+
+## 7. On a phone, the modal becomes a sheet
+
+On a phone a centered modal usually becomes a bottom sheet, a panel that rises from the bottom edge into the thumb's reach. What changes is only the presentation: position, anchor, and entry animation. The semantics do not move. A bottom sheet is still a modal `dialog` or `alertdialog`, and it owes every one of the six requirements. The same native `<dialog>` can present as a sheet through CSS while keeping `showModal()` and its guarantees.
+
+**Do not trade a11y for the gesture.** Drag-to-dismiss is a pointer nicety, not a substitute for the keyboard. Every sheet still needs Escape and a visible close button, and the drag must have a keyboard equivalent. The presentation is in Patterns / Mobile First; the doctrine here travels with it unchanged.
+
+## 8. The rules
+
+**Rule:** Reach for the native `<dialog>` with `.showModal()` before building anything by hand.
+**Why:** it delivers all six accessibility requirements correctly for free. A hand-built modal has to re-derive each one, which is where the bugs live.
+- ✓ Recommended: open with `.showModal()`, close a form with `method="dialog"`, style the dim with `::backdrop`.
+- ✕ Avoid: opening with the `open` attribute, which yields a non-modal with no trap, no Escape, and no inert.
+
+**Rule:** Give every modal an accessible name and a real close button, and never put `tabindex` on the `<dialog>`.
+**Why:** an unnamed dialog fails WCAG 4.1.2, and Escape alone is not discoverable. MDN calls a visible close button the most robust exit, and warns the dialog itself is not interactive.
+
+**Rule:** Use `role="alertdialog"` for destructive or irreversible actions, with `aria-describedby` and initial focus on Cancel.
+**Why:** the role lets assistive tech treat the interruption specially, and focusing Cancel makes the dangerous choice deliberate.
+- ✓ Recommended: `alertdialog` with the message wired to `aria-describedby` and `autofocus` on Cancel.
+- ✕ Avoid: a plain `dialog` for a delete, or `autofocus` on the destructive button so one Enter wipes the data.
+
+**Rule:** Before opening a modal, try a page, an inline message, a non-modal dialog, or a popover first.
+**Why:** a modal steals context and demands an immediate answer. Most content does not earn that cost, and an unrelated interruption erodes trust.
+
+**Rule:** Keep the focus trap, but always leave a keyboard exit, and if you animate, restore the focus return by hand.
+**Why:** the trap is legal under WCAG 2.1.2 only while the user can untrap with Escape or Cancel, and animating a dialog drops the automatic focus return.
+
+**Rule:** Reserve the `--color-error` family for the destructive path and keep everything else mono-indigo; radius 6px on buttons, 12px on the dialog.
+**Why:** red carries a single meaning, danger, so it stays out of chrome. The destructive fill uses red 600 (`#dc2626`) because red 500 clears only 3.76:1 under white text.
+
+## Sources
+
+The six requirements, roles, and keyboard model from the WAI-ARIA APG: Dialog (Modal) Pattern and Alert Dialog Pattern. The native element, `showModal()` vs `show()`, `::backdrop`, top layer, `method="dialog"`, the `open` and `tabindex` warnings, and Baseline support from MDN: `<dialog>`, `inert`, and the Popover API. The legal focus trap from WCAG 2.1 SC 2.1.2 No Keyboard Trap and the name/role floor from SC 4.1.2. The cost of interrupting from Nielsen Norman Group, Modal & Nonmodal Dialogs. The animation-breaks-focus-return caveat and focus-on-Cancel from web.dev, Building a dialog component. The one-thing-per-page stance from the GOV.UK Design System.
+
+# Mobile First
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-mobile-first--docs
+
+The same content does not deserve the same container. A modal is centered on desktop because a cursor reaches the middle of a wide screen without effort; a thumb on a 375px phone cannot. So the mobile equivalent of a centered modal is a bottom sheet anchored to the bottom edge, where the thumb already rests. This is a different container for the same content, kept operable by keyboard and announced correctly.
+
+# Part 1: The map, every desktop pattern has a mobile home
+
+## 1. The desktop to mobile map
+
+Patterns that lean on a cursor, hover, and a wide screen are ergonomically hostile to a thumb. Steven Hoober's field study of 1,333 observations found 49% of people use a phone one-handed, with the thumb as the dominant actuator, and that grip changes "very often, sometimes every few seconds." The comfortable arc of the thumb covers the lower half of the screen; the top edge forces a regrip. Primary actions and navigation move down, anchored to the bottom edge, inside the safe area.
+
+| Desktop pattern | Mobile replacement | Anchor source |
+|-----------------|--------------------|---------------|
+| Centered modal / dialog | Bottom sheet (dialog anchored to the bottom edge) | web.dev: at a small viewport the bottom margin goes to `0` and the dialog "transforms into an action sheet." |
+| Hover menu / dropdown | Action sheet of options (a list-only bottom sheet) | Material modal bottom sheet: "present a set of choices while blocking interaction with the rest of the screen." |
+| Hover tooltip | Tap to reveal, inline disclosure, or tap to a sheet | There is no reliable `:hover` on `pointer: coarse`. |
+| Right click (context menu) | Long press, plus a visible overflow control | WCAG 2.5.1 lists "long press" as a valid single-pointer alternative. |
+| Persistent left sidebar | Bottom navigation bar (3 to 5) or a drawer | Material: the navigation bar "lets people switch between UI views on smaller devices." |
+| Hover to reveal actions | No such state. Make actions visible or reveal on tap | `pointer: coarse` does not fire hover. |
+| Top toolbar of actions | Bottom app bar or a sticky bottom CTA | Thumb zone. |
+| Toast, top of the screen | Snackbar anchored to the bottom | Material: "brief messages ... at the bottom of the screen." |
+
+**How the map is switched on: by input capability, never by user agent.** Detect `@media (pointer: coarse)` and viewport width. A touchscreen laptop, an iPad with a trackpad, a phone in a desktop dock: none of these fit a substring match on `navigator.userAgent`, and all of them break it. The switch is a capability query combined with a width breakpoint.
+
+# Part 2: The components, anchored to the bottom
+
+## 2. Bottom sheet, the modal's mobile form
+
+Material draws two variants. A standard bottom sheet "co-exists with the screen's main UI region and allows for simultaneously viewing and interacting with both regions," so it carries no scrim. A modal bottom sheet "present[s] a set of choices while blocking interaction with the rest of the screen," sits above a scrim, and is the direct replacement for a centered modal. iOS expresses the same idea as a sheet with resizable detents (medium and large snap points) and an optional grabber, treated here as an iOS convention.
+
+**A bottom sheet is still a dialog.** Build the modal variant on the native `<dialog>` element and let the platform hand you most of the accessibility for free.
+
+1. Open with `showModal()`. MDN: it "block[s] interaction with other UI elements, making the rest of the page inert." The browser applies `inert` to the rest of the document and implies `aria-modal="true"`.
+2. Send focus to Cancel, not Confirm. Put `autofocus` on the cancel or close control so that "confirmation is deliberate and not accidental."
+3. Escape is free. A dialog opened with `showModal()` "can be dismissed by pressing the Esc key." You do not wire it.
+4. Give it an explicit close. MDN: "The most robust way to ensure that all users can close the dialog is to include an explicit button." The swipe and the grabber can never be the only way out.
+5. Return focus on close. Native `<dialog>` restores focus to the trigger in most cases; with custom animation you restore it yourself.
+6. Anchor to the bottom with CSS, not a new component. Set `inset: auto 0 0 0` so the sheet sits on the bottom edge, style the `::backdrop` for the scrim, and pad the bottom with `env(safe-area-inset-bottom)` so content clears the home indicator.
+7. The drag handle is a real control. In Material the handle "will automatically receive and handle accessibility commands to expand and collapse." On web that means a genuine `<button>` the keyboard can operate to cycle snap points, sized to the 48px touch-target floor, not a decorative bar you can only drag.
+
+**Bottom sheet or centered modal? Same component, one media query.**
+- Bottom sheet when: the viewport is small (`pointer: coarse` or width at or below the breakpoint), the task is scoped and tied to context, or it is a list of actions or a short form where thumb reach matters. The standard variant when the user needs to keep seeing the content behind.
+- Centered modal when: there is a cursor (desktop), or the dialog is genuinely blocking and critical (a destructive confirmation with forced focus), or content does not sit comfortably against the bottom edge.
+
+**Do not duplicate the component.** It is the same `<dialog>` in both cases. Only the positioning changes by media query: centered on wide screens, anchored to the bottom on narrow ones. One accessibility contract, two layouts. See Patterns / Modals for the full dialog contract.
+
+## 3. Thumb zone and the sticky bottom CTA
+
+Hoober's field data: one-handed use 49% (67% right thumb, 33% left); cradling 36%; two-handed 15%, 90% of that in portrait. When cradling, the thumb is on the screen 72% of the time. Grip changes very often, sometimes every few seconds. The thumb owns the lower band; the top edge is the stretch zone. So the primary action lives at the bottom, pinned (sticky), full width or aligned to the dominant thumb.
+
+**Target size: the legal floor is not the goal.** WCAG 2.5.8 (AA) sets the minimum at 24 by 24 CSS pixels, but that is a floor with exceptions, not a target. NN/g recommends interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide." Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material's 48dp and NN/g's 1cm. Never the bare 24px for a primary action.
+
+**Rule:** The primary action is a full-width control pinned to the bottom, at least 48px tall, in the thumb band.
+**Why:** Hoober: the thumb comfortably covers the lower half, and grip shifts constantly. A bottom-pinned action is reachable regardless of the current grip.
+
+**Rule:** Pad the sticky bar's bottom with `calc(base + env(safe-area-inset-bottom))`.
+**Why:** MDN gives this exact pattern so "fixed app toolbar buttons are not obscured" by the home indicator.
+
+## 4. Bottom navigation and the FAB
+
+Material: a navigation bar "lets people switch between UI views on smaller devices" and holds three to five destinations (the component "does not support more than 5"). Each destination is a link or button with an accessible name, and the active one carries `aria-current="page"`. Use a bottom bar for three to five top-level destinations of equal weight that stay visible; use a drawer when there are more than five or the navigation is secondary or hierarchical. On desktop that same set becomes the persistent sidebar.
+
+A FAB "represents the primary action of a screen," a single, unambiguous action like create or compose. Use it only when there is exactly one such action. Do not pair a FAB with a sticky bottom CTA: they compete for the same thumb band, so on any one screen they are usually mutually exclusive. Mark the active tab with `aria-current="page"` so a screen reader announces it as current, not by color alone. A FAB with an icon glyph carries an `aria-label`.
+
+## 5. Snackbar, feedback in the thumb band
+
+Material: snackbars "provide brief messages about app processes at the bottom of the screen" and "shouldn't interrupt the user experience." Only one shows at a time (a new one dismisses any previous), it may carry a single optional action such as undo or retry, and it is "the preferred mechanism for displaying feedback messages," with toast reserved for when a snackbar cannot be used. It replaces the desktop toast that lived in the top-right corner. On web: a region with `role="status"` (or `aria-live="polite"`) anchored to the bottom with `env(safe-area-inset-bottom)`; if it has an action, that action is a real `<button>` reachable by keyboard, never dependent on a swipe.
+
+# Part 3: Touch rules, gestures, safe areas, activation
+
+## 6. Gestures, and the rule that never bends
+
+Swipe to delete, long press for a context menu, pull to refresh, drag on a sheet's snap points: all useful, all mobile-native. The non-negotiable rule: a gesture can never be the only path. There must always be an alternative that works with a single pointer and with a keyboard.
+
+**Rule:** Any path-based or multipoint gesture has a single-pointer alternative.
+**Why:** WCAG 2.5.1 Pointer Gestures (Level A): functionality using such gestures "can be operated with a single pointer without a path-based gesture" unless essential. A tap, click, or long press qualifies. Swipe to delete needs a visible Delete button.
+
+**Rule:** Any dragging movement has a no-drag alternative.
+**Why:** WCAG 2.5.7 Dragging Movements (2.2, Level AA): achievable "by a single pointer without dragging," for example tapping buttons to move items. The sheet's drag handle needs buttons or taps that expand, collapse, and close it.
+
+**Rule:** Long press replaces right click only alongside a visible overflow control.
+**Why:** long press is neither discoverable nor keyboard-operable. The same action must live in a visible "more options" menu.
+
+**Rule:** Custom pull to refresh ships with a visible Refresh button.
+**Why:** native browser scroll and the OS pull-to-refresh fall under the user-agent exception, but a gesture your own content interprets does not. If you build it, give the same action an explicit control.
+
+Swiping is the shortcut, not the requirement: a swipe-to-delete row also exposes a Remove button that carries the same action, is at least 44px tall, and is keyboard-reachable. Style it in the brand indigo, not an alarm color, because destructive intent is carried by the label and the confirmation step, not by hue.
+
+## 7. Safe-area insets, notch and home indicator
+
+MDN defines `env(safe-area-inset-*)` as "the safe distance from the top, right, bottom, or left inset edge of the viewport, defining where it is safe to place content without risking it being cut off by the shape of a non-rectangular display." The four variables are `safe-area-inset-top`, `-right`, `-bottom`, and `-left`. They are `0` on a plain rectangular viewport and larger than zero around a notch or the home indicator, but only when the page opts in with `<meta name="viewport" content="viewport-fit=cover">`.
+
+```css
+/* MDN canonical sticky bottom bar */
+footer {
+  position: sticky;
+  bottom: 0;
+  padding: 1em 1em calc(1em + env(safe-area-inset-bottom, 0px));
+}
+```
+
+**Rule:** Never pad a fixed edge with a bare constant. Use `calc(base + env(safe-area-inset-*, 0px))`.
+**Why:** the `calc()` keeps your normal spacing on rectangular screens and adds only the device inset where one exists. The `0px` fallback keeps it correct on browsers that do not supply the variable. `env()` has been widely available since January 2020.
+
+**Out of scope, not yet normative: the virtual keyboard.** Handling the on-screen keyboard resizing the viewport (the VirtualKeyboard API, `interactive-widget`, dynamic viewport units) is a live and shifting area not verified against a primary source for this page. Treat it as a follow-up, not a rule, and confirm current support before relying on it.
+
+## 8. Enable the patterns on touch, without sniffing
+
+Do not read `navigator.userAgent`. Detect the capability of the input and the size of the viewport. MDN's `pointer` media feature tests the primary pointer's accuracy: `coarse` is "a pointing device of limited accuracy, such as a finger on a touchscreen," `fine` is "an accurate pointing device, such as a mouse," and `none` is no pointer. Use `pointer` for the primary device and `any-pointer` for any device present.
+
+```css
+/* Capability, not user agent */
+@media (pointer: coarse) {
+  /* larger targets, touch patterns, no hover reveal */
+}
+@media (pointer: fine) {
+  /* mouse density, hover affordances */
+}
+/* Switch container by capability OR width */
+@media (pointer: coarse), (max-width: 640px) { /* sheet, bottom nav */ }
+```
+
+**Rule:** On `pointer: coarse`, assume no reliable hover. Reveal-on-hover patterns do not exist; make actions visible or reveal on tap.
+**Why:** a touchscreen has no persistent hover state. Anything hidden behind `:hover` is unreachable by a finger, which is why the map has no mobile home for "hover to reveal."
+
+**Rule:** Switch the container on `pointer: coarse` OR width at or below the breakpoint, so both phones and touch tablets are covered.
+**Why:** width alone misses a small touch tablet; capability alone misses a narrow mouse window. The union of the two reliably picks the sheet-and-bottom-nav layout. `pointer` has been widely available since December 2018.
+
+The whole detection surface is three signals: primary pointer accuracy (`pointer: coarse`), viewport width breakpoint, and hover availability (`any-hover: none`). No user-agent string appears anywhere in it.
+
+## Sources
+
+Steven Hoober, How Do Users Really Hold Mobile Devices? (UXmatters, 2013): 1,333 observations, 49% one-handed (67% right thumb), 36% cradling, 15% two-handed; thumb on screen 72% while cradling; grip changes very often. Aurora Harley, Touch Targets on Touchscreens (NN/g, 2019): at least 1cm by 1cm; typical thumb impact area averages 2.5cm. W3C Understanding WCAG: SC 2.5.1 Pointer Gestures (A), SC 2.5.7 Dragging Movements (2.2, AA), SC 2.5.8 Target Size Minimum (2.2, AA, 24px floor with exceptions). MDN Web Docs: the `<dialog>` element (`showModal()` makes the rest inert, Escape closes, `aria-modal`, `::backdrop`, explicit close button), CSS `env()` and safe-area insets with the sticky footer pattern (Baseline 2020), the `pointer` media feature coarse/fine/none (Baseline 2018). Adam Argyle, Building a dialog component (web.dev): accessible native dialog, focus on the cancel action, the mega dialog transforming into a bottom-anchored action sheet. Material Components (official docs): Bottom Sheet (standard vs modal, scrim, the 48dp accessible drag handle), Snackbar (bottom, one at a time, one optional action, preferred over toast), Floating Action Button (single primary action), Bottom Navigation (three to five destinations). Apple Human Interface Guidelines, Sheets and Action Sheets (resizable detents, the grabber, action sheets at the bottom on iPhone), referenced as iOS conventions. House rules layered on the cited guidance: the desktop-to-mobile mapping table and the "same component, one media query" position, the 44 to 48px thumb-zone floor, the FAB and sticky-CTA mutual-exclusion guidance, and the capability-OR-width activation rule. The virtual keyboard subsection is out of scope and not yet verified against a primary source.
+
+# Persuasion
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-persuasion--docs
+
+Behavioral design works, which is why it needs a limit. Six principles, each drawn to move a person toward something they already want, each gated by a hard line: honest persuasion that serves the user, never a dark pattern that extracts against them. The test: if a technique only works while the user does not notice it, it does not ship.
+
+The doctrine:
+
+- **Serve the user's goal.** A technique earns its place only when it moves a person toward an outcome they already want.
+- **Nothing hidden.** Reversible, transparent, true. A default is a starting point the user can change. A number on screen matches reality.
+- **Dark patterns are banned.** Fake scarcity, false countdowns, confirmshaming, inflated anchors. Prohibited in this system, not merely discouraged.
+
+## 1. Smart Defaults
+
+A smart default pre-selects the sensible choice so the path of least resistance is also the good path, always visible and one tap to change.
+
+**Rule:** Pre-select the choice the data already points to, and style it so it plainly reads as changeable.
+**Why:** the path of least resistance becomes the good path while the user keeps a one-tap way out.
+
+Evidence: defaults are the strongest lever in choice architecture. Switching organ donation from opt-in to opt-out swings participation from single digits to over 90 percent, everything else held constant (Johnson & Goldstein, Science 2003).
+
+In a RamosLabs product: pre-fill the field the way the data already points, and style the pre-filled state so it reads as changeable, never locked. See Patterns / Form Elements for the input primitives.
+
+- ✓ Recommended: default to the option a typical user would pick anyway, labelled and one tap to change. The default saves effort on a choice the user still owns.
+- ✕ Avoid: pre-checking a paid add-on or a marketing opt-in the user never asked for. Preselection is banned wherever it costs money or privacy.
+
+## 2. Endowed Progress
+
+Open a progress bar at a true, non-zero point, counting real work already behind the user, and the end feels reachable. The rule is not to inflate the number, it is to count only what actually happened.
+
+**Rule:** Open a progress indicator at a true, non-zero point that credits only work the user actually did.
+**Why:** a real head start makes the finish feel reachable and pulls the user forward.
+
+Evidence: a car-wash card pre-credited two of ten stamps was completed far more often than a blank card needing the same eight washes (34 versus 19 percent) (Nunes & Dreze, J. Consumer Research 2006).
+
+In a RamosLabs product: open a multi-step flow with the first step already credited when the user genuinely did something (arrived with an account, verified an email). The fill uses `--color-primary` on a `--color-border` track. See Patterns / Interactive.
+
+- ✓ Recommended: credit steps the user truly completed and show how near the finish is. The head start is real, and the destination is one the user chose.
+- ✕ Avoid: a "90 percent complete" bar that only fills once payment is handed over, or invented steps that manufacture sunk cost. Progress that does not reflect real progress is a lie with a nice animation.
+
+## 3. Reciprocity
+
+Deliver something genuinely useful first, then make a fair ask, and it lands on willing ground. The value stays whether or not they say yes.
+
+**Rule:** Deliver a genuinely useful result first, then make a fair ask the user is free to decline.
+**Why:** value given up front lands the request on willing ground and keeps its worth either way.
+
+Evidence: an unsolicited favor creates a felt obligation to return it. In Regan's experiment, people given a small unrequested gift later agreed to a larger request far more often than a control group (Regan 1971; Cialdini 1984).
+
+In a RamosLabs product: let the product prove itself before it asks. Return a real result, then invite the user to save it. The request comes after the gift, never as a toll gate in front of it.
+
+- ✓ Recommended: give a genuinely useful result up front, then ask to save or continue. The gift keeps its value even if the user declines.
+- ✕ Avoid: a hollow "free" gift that is really a hook, or a preview that vanishes unless you pay. If the value evaporates the moment the user hesitates, it was bait.
+
+## 4. The IKEA and Endowment Effect
+
+We value what we build and own more than the identical thing untouched. Let a person name a project or arrange a layout and it becomes theirs in their mind before it is theirs in fact, so signing up feels like keeping something they already have.
+
+**Rule:** Let the user personalize real work before any gate, then carry that work intact through sign-up.
+**Why:** people value what they build, so keeping their own work feels like keeping something they own.
+
+Evidence: labor and ownership both inflate perceived value. People price self-assembled goods above identical ready-made ones (the IKEA effect), and owners demand more to give up an object than others will pay for it (the endowment effect) (Norton, Mochon & Ariely 2012; Kahneman, Knetsch & Thaler 1990).
+
+In a RamosLabs product: let the user personalize before the gate, then carry that work intact through sign-up so nothing they made is lost. Investment they chose to make is legitimate; investment tricked out of them is not.
+
+- ✓ Recommended: offer real customization the user wants, and carry their work across the sign-up boundary intact. They keep exactly what they built.
+- ✕ Avoid: forcing busywork to manufacture sunk cost, then holding the user's own work hostage behind a paywall. Effort must never become a hostage.
+
+## 5. Loss Aversion (Contested)
+
+A loss tends to weigh heavier than an equivalent gain, so framing a choice around what a person stands to lose can sharpen attention. Use it only where a real loss exists: an unsaved draft, an earned credit about to expire. Never invent one.
+
+**Rule:** Frame a choice around loss only where a real, preventable loss exists, and pair the warning with the fix.
+**Why:** a true loss sharpens attention honestly, while an invented one is manufactured fear.
+
+Evidence: losses loom larger than gains. Prospect theory formalized it: the value function is steeper for losses than for equal-sized gains. The size of that asymmetry is actively debated (Kahneman & Tversky 1979; Gal & Rucker 2018).
+
+In a RamosLabs product: name the real thing at risk, plainly, and pair the warning with an easy way to prevent the loss. No invented deadlines, no fake stock counters. Example: "You have 3 unsaved sections. Create a free account to keep them, or they clear when this tab closes."
+
+- ✓ Recommended: remind the user of value that truly exists and truly could be lost, with a clear way to keep it. The loss is real and preventable.
+- ✕ Avoid: fake "only 2 left" counters, invented countdowns, or confirmshaming ("No thanks, I like overpaying"). Manufactured fear is the sharpest dark pattern of all, and it is banned.
+
+## 6. Contrast Effect
+
+A number means little in isolation. Beside a true reference (a real list price, a genuine alternative, or the value it returns) the same cost reads as proportionate. Anchor only on a reference the user could verify.
+
+**Rule:** Show every price beside a reference the user could independently verify.
+**Why:** a number reads as proportionate next to a true comparison, and every figure on screen stays checkable.
+
+Evidence: judgments latch onto whatever reference is offered. An anchor pulls numeric estimates toward it even when people know it is arbitrary, and it shifts what they will actually pay (Tversky & Kahneman 1974; Ariely, Loewenstein & Prelec 2003).
+
+In a RamosLabs product: never show a price bare. Set it beside a genuine reference on a `--color-surface-secondary` card, with the offer on a `--color-primary` bordered card. Let the comparison inform, not corner.
+
+- ✓ Recommended: contextualize a price against a true reference: a real alternative cost, a genuine higher tier, or the value returned. Every number on screen is one the user could verify.
+- ✕ Avoid: a struck-through "original" that never sold, or a fake premium tier built only to make the real one look cheap. A reference the user cannot verify is a lie.
+
+## The Line: Persuasion or Manipulation
+
+The mechanics are identical on both sides of the line. What separates honest persuasion from a dark pattern is whose goal it serves and what it hides. Brignull coined "dark patterns" in 2010 for interfaces built to trick people. This system treats that catalogue as a list of prohibitions.
+
+- Whose goal: honest persuasion advances a goal the user already holds. Manipulation advances the business at the user's expense.
+- Awareness: if it only works because the user does not notice, it is manipulation. Honest nudges survive being pointed out.
+- Reversibility: a default they can change, a step they can skip, a choice they can undo. Traps that are hard to escape are out.
+- Truth: every scarcity claim, countdown, progress figure, and reference price is literally true. No inventions.
+
+## Before You Ship a Persuasive Element
+
+1. Whose goal does this serve? If it advances the business against what the user wants, it does not ship.
+2. Is every claim literally true? The scarcity, the countdown, the progress number, the reference price. If any is invented, stop.
+3. Would it survive being pointed out? Imagine the user seeing exactly how it works. If that kills the effect, it was manipulation. Remove it.
+4. Can the user reverse it? A default they can change, a step they can skip, a choice they can undo. If not, make it so or drop it.
+
+## Notes and Sources
+
+1. Smart defaults: the mechanism is effort-avoidance and status-quo bias, not "decision fatigue" (the ego-depletion account failed a large multi-lab replication, Hagger et al. 2016). Leave a default unset where there is no majority choice or the stakes are personal. Johnson & Goldstein, Science 302 (2003); Thaler & Sunstein, Nudge (2008); NN/g form design.
+2. Endowed progress: the lift depends on an honest reason for the head start. Count only real progress. Hull (1932); Kivetz, Urminsky & Zheng, JMR 43 (2006); Nunes & Dreze, J. Consumer Research 32 (2006).
+3. Reciprocity: Regan's effect is established for offline, interpersonal compliance; "value-first content raises product sign-ups" is a reasonable but untested extrapolation. Cialdini, Influence (1984); Regan, J. Experimental Social Psychology 7 (1971).
+4. IKEA and endowment: the effect needs successful completion; unfinished or trivially easy building does not raise valuation. Norton, Mochon & Ariely, J. Consumer Psychology 22 (2012); Kahneman, Knetsch & Thaler, J. Political Economy 98 (1990).
+5. Loss aversion (contested): treat it as real but bounded. Gal & Rucker (2018) argue the asymmetry is weaker and context-dependent; Simonson (2018) defends a contingent version. Kahneman & Tversky, Econometrica 47 (1979); Gal & Rucker, J. Consumer Psychology 28 (2018).
+6. Contrast and anchoring: the reference must be true; a comparison price never charged crosses into deception and, in many markets, unlawful pricing. Tversky & Kahneman, Science 185 (1974); Ariely, Loewenstein & Prelec, Q. J. Economics 118 (2003).
+- Dark patterns: Brignull originated the term (deceptive.design); Gray et al. formalized the taxonomy (CHI 2018); NN/g tracks it as deceptive patterns. The strict truth-and-reversibility gate around each technique is this system's house doctrine.
+
+# Voice & Tone
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-voice-tone--docs
+
+Every label, empty state, and error is the product talking, and the words are the design, not a coat applied after. The voice never changes. The tone bends to the moment: warm at a win, calm at a break, plain when it counts.
+
+Doctrine:
+
+- The UI is a conversation. Content is a design material, weighed like spacing and color, not poured in last.
+- Read before it is read. People scan, they do not study. Front-load the point, cut the dead words.
+- Respect on the worst day. The tone that matters most is the one for when something breaks. No blame, no jargon, no dead ends.
+
+## Voice Is Constant, Tone Adapts
+
+Voice is who the product is: one personality that never shifts. Tone is how that voice modulates for the situation.
+
+Voice, constant: set once, held everywhere. Redact the logo and you should still know it is us.
+- Clear before clever, always.
+- Human, not corporate or robotic.
+- Honest, never hype.
+- Plain enough for a nine-year-old.
+
+Tone, variable: the dial the voice turns for context.
+- Success: brief and glad, then gone.
+- Error: calm, specific, pointed at the fix.
+- Destructive: slow, plain, no cheer.
+- Onboarding: encouraging, never flooding.
+
+Where our voice sits on each dial (NN/g's four dimensions):
+- Funny to Serious: serious, with warmth. Wit only when it never costs a second of comprehension.
+- Formal to Casual: casual, but clear. Say "you" and "we", use contractions, skip ceremony. Casual is not sloppy; it is plain.
+- Respectful to Irreverent: respectful. Never at the user's expense. No sarcasm in errors, no jokes where they are stuck.
+- Enthusiastic to Matter-of-fact: measured, warm at wins. Mostly matter-of-fact so the interface stays quiet; enthusiasm saved for real moments.
+
+## Three Principles That Never Bend
+
+**1. Clarity Over Creativity.** A clever line that makes someone stop to decode it has already failed. Write for scanning: outcome first, cut every word that does not change what they do, plain term over the impressive one. Label versus joke, the label wins. In practice: headline the result ("Saved", not "Your changes were successfully saved"), name buttons for what they do ("Delete event", not "Confirm"), and drop filler like "please", "simply", and "in order to".
+
+**2. Human, Not Robotic.** Machine copy hides in the passive voice and the system's point of view: "an error occurred". Human copy says "you" and "we", takes responsibility, and prefers the active voice. Warmth comes from plainness, not exclamation marks. The test: read the line aloud. If no real person would say it to another across a desk, rewrite it.
+
+**3. Honest, Never Hype.** Every number, claim, and countdown on screen must be literally true. No inflation ("the best", "in seconds"), no manufactured urgency, no cost buried in a cheerful phrase. Honesty is completeness too: say what will happen before someone commits, above all when it spends money, shares data, or cannot be undone. This runs into Patterns / Persuasion.
+
+## Microcopy, Pattern by Pattern
+
+Buttons and calls to action. A button names its own action, so the label reads as a promise. Verb plus object beats a vague "Submit".
+- ✓ Recommended: "Create event" (names the exact outcome), "Delete event" (a destructive action says so), "Save changes" (verb plus object), "Send invites" (the user knows what leaves and to whom).
+- ✕ Avoid: "Submit" (submit what, to where?), "Confirm" (on a delete dialog, hides the consequence), "OK" (agrees to nothing in particular), "Click here" (describes the mechanic, not the result).
+
+Labels and hints. A label says what the field is; a hint removes doubt before the user types.
+- ✓ Recommended: "Work email" (specific), "Doors open at" (plain label with an example time), "We will only use this to send your tickets." (answers the unspoken why).
+- ✕ Avoid: "Email *" (which email, and why?), "Time" (of what?), "Enter valid input" (nothing to act on).
+
+Empty states. Not a dead end; the first step. Say what will be here, then hand over the one action that fills it.
+- ✓ Recommended: "No events yet. Create your first one to get started.", "Nothing matches 'jazz'. Try a broader search."
+- ✕ Avoid: "Your story starts now." (tells the user nothing to do), "No results found." (a dead end).
+
+Errors. One job: get the user unstuck. Say what happened in their words, drop the blame and codes, point at the fix.
+- ✓ Recommended: "That email is missing an @. Check and try again.", "This card was declined. Try another card or contact your bank."
+- ✕ Avoid: "Invalid input." (nothing to act on), "Error 402: transaction failed." (a code and blame, no path out).
+
+Confirmations. Confirm in the fewest words that close the loop. State what happened and, if there is one, the next thing the user might want.
+- ✓ Recommended: "Event created. It is now visible to your audience.", "Invites sent to 12 people."
+- ✕ Avoid: "Success!" (at what?), "Your request has been processed." (robotic and vague).
+
+## Tone by Context
+
+One voice, four registers. The words stay plain throughout; only the temperature changes. The register is set by how the user feels arriving, not how the team feels shipping.
+
+- Success (brief, warm, then gone): "Event created. It is live for your audience now." Acknowledge the win, name the result, step aside. Confirm, do not celebrate at length.
+- Error (calm, specific, fixable): "This card was declined. Try another card or contact your bank." No exclamation, no blame, no code. The tone that reassures is a clear path out.
+- Destructive (slow, plain, no cheer): "Delete this event? Its 240 tickets will be cancelled. This cannot be undone." Slow the user with facts, not fear. Label the button "Delete event", not "Confirm". Never cheerful, never coy.
+- Onboarding (encouraging, unhurried): "Let us set up your first event. It takes about two minutes." One step at a time, honest about effort. Invite; do not flood.
+
+## Writing Errors People Can Act On
+
+**The Framing Rule.** A good error message answers three questions in the user's words: what happened, why (if it helps), and how to fix it. Everything else (blame, apology theatre, codes, jargon) is noise.
+
+1. What happened: name the problem in plain words, from the user's side. "This card was declined", not "Gateway returned 402".
+2. Why, if it helps: add a reason only when it guides the fix. "The file is over the 10 MB limit" earns its place; a stack trace does not.
+3. How to fix it: hand back a next step, ideally more than one. "Try another card or contact your bank." Never leave the user at a wall.
+
+The field, the error border, and `var(--color-error)` live in Patterns / Form Elements. Voice owns the words, Form Elements owns the field.
+
+## Copy Has Ethics
+
+Words persuade, so words can manipulate. This system draws the line in the copy itself: no dark patterns, no false urgency, no shame. A phrase that only works because the user is rushed, confused, or embarrassed is banned, not discouraged. Technique-by-technique treatment is in Patterns / Persuasion.
+
+- No false urgency: no invented countdowns, no "only 2 left" the data cannot back, no fake "selling fast". Urgency stated only when literally true.
+- No confirmshaming: the decline option is neutral. "No thanks" is a valid answer, never "No, I like paying full price".
+- No hidden cost: every charge, fee, and commitment is named before the user agrees, in the same breath as the benefit.
+- No dark patterns: copy never works by being missed. If a line only lands because the user did not read it closely, it is manipulation and it is out.
+
+## Rules of the Voice
+
+**Rule:** Lead with the outcome; put the point in the first three words.
+**Why:** people scan before they study, so a clever line that must be decoded has already failed.
+
+**Rule:** Name every action button with a verb and its object.
+**Why:** "Submit", "Confirm", and "OK" hide what happens next; "Delete event" reads as a promise.
+
+**Rule:** Write in the active voice and speak to the reader as "you".
+**Why:** the passive voice and the system's point of view sound like a machine, not a person.
+
+**Rule:** Keep every line plain enough to read at a glance.
+**Why:** jargon and filler like "please", "simply", and "in order to" cost comprehension and add nothing.
+
+**Rule:** In an error, say what happened and how to fix it.
+**Why:** "An error occurred" or a raw code leaves the reader stuck at a wall.
+
+**Rule:** Match the register to the reader's moment, not the team's.
+**Why:** cheer on a destructive step, or a buried consequence, breaks trust exactly where it counts.
+
+**Rule:** Keep every number and claim literally true.
+**Why:** invented urgency, a shamed decline, or a hidden cost is manipulation, and it stays out.
+
+## Before You Ship a Line
+
+1. Can the user act on it at a glance? If the outcome is not clear in the first few words, rewrite it leading with the result.
+2. Would a real person say this out loud? Read it aloud. If it sounds like a machine or a form, make it human, active, and personal.
+3. Does the register fit the moment? Warm at a win, calm at an error, plain and cheerless at a destructive step.
+4. Is every word true and free of pressure? No invented urgency, no shame, no hidden cost. In doubt, see Patterns / Persuasion.
+5. Only now, ship it, in the DS primitives. See Patterns / Form Elements.
+
+## Sources
+
+Mailchimp Content Style Guide, "Voice and Tone": one voice, many tones. Nielsen Norman Group, "The Four Dimensions of Tone of Voice": funny-serious, formal-casual, respectful-irreverent, enthusiastic-matter-of-fact. NN/g reading behavior: "How Users Read on the Web" and "Concise, SCANNABLE, and Objective". NN/g microcopy: "The 3 Cs of Microcopy" and "Error-Message Guidelines". Nielsen's 10 Usability Heuristics (H9). GOV.UK writing standards (plain English, front-load, active voice, reading-age-of-9). U.S. plain language guidance. Shopify Polaris content guidelines. Deceptive patterns: Brignull's deceptive.design and NN/g's "Deceptive Patterns". The four-dial positions and the framing of copy ethics as hard prohibitions are house doctrine.
+
+# AI Content
+
+Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-ai-content--docs
+
+A model can write, summarize, and suggest in seconds, and it can be confidently wrong just as fast. Show plainly what a machine produced, how sure it is, and where it came from, then keep a person in the loop before anything acts. The goal is not to hide the AI. It is to make its output legible, checkable, and reversible.
+
+Doctrine:
+
+- Disclosed, never disguised. Anything a model generated carries a visible marker. A person always knows when they are reading a machine.
+- Honest about certainty. Output is framed as a draft or an estimate, not a verdict. Confidence, sources, and the option to verify travel with the text.
+- Human holds the last word. The person reviews, edits, and approves before the result acts. Every action the AI proposes is one the user can undo.
+
+## 1. Label What the Machine Made
+
+People calibrate trust by source. Text that looks like a fact, a human note, or a system rule earns a trust the model has not earned.
+
+**Rule:** Attach a visible, consistent marker to every piece of AI-generated content, at the point where it is read.
+**Why:** users judge trust by source, so an unlabeled draft borrows credibility it has not earned.
+
+Evidence: set expectations up front. Microsoft's first two Human-AI guidelines put "make clear what the system can do" (G1) and "make clear how well" (G2) at the very start of an interaction.
+
+In a RamosLabs product: use one badge everywhere, a sparkle glyph plus a word like "Generated," on `--color-primary-surface` with a `--color-primary` label. Icon and text together, never color alone, so the marker survives grayscale and screen readers.
+
+- ✓ Recommended: badge every generated block with the same icon-plus-text marker, inline where it is read. A person always knows the source before they act on it.
+- ✕ Avoid: slipping generated text into the same style as human or factual content, or burying the disclosure in a tooltip. Unlabeled AI reads as ground truth, a trust the model has not earned.
+
+## 2. Communicate Uncertainty
+
+A model returns a most-likely answer, not a certain one, yet fluent prose reads as authority. Carry a signal of confidence with the output, and word it as an estimate. "Projected," "suggested," and "likely" tell the truth. "The answer is" does not.
+
+**Rule:** Pair generated output with a confidence signal and estimate-framed wording that flags it as provisional.
+**Why:** fluent text reads as certain, so without a visible cue users over-trust a guess.
+
+Evidence: Google's People + AI Guidebook devotes its Explainability and Trust chapter to showing confidence honestly, warning that a poorly framed number can mislead as much as no number at all.
+
+In a RamosLabs product: show confidence as a stepped meter plus a word, differentiated by fill count and label, not by hue. Three levels: high, medium, limited. When confidence is low, say so and point to what would raise it.
+
+- ✓ Recommended: frame output as an estimate and show how firm it is, in words and a meter. The reader sees both the answer and how far to trust it.
+- ✕ Avoid: stating a guess as flat fact, or a precise 87.34 percent score that implies a rigor the model does not have. False precision is just a prettier form of overconfidence.
+
+## 3. Show the Work in Progress
+
+Generation takes time and does not always land. Stream the answer as it forms so the wait feels alive, and keep the user in command: a stop while it runs, a regenerate when it misses. A spinner that cannot be cancelled is a trap.
+
+**Rule:** Stream output as it generates and give a stop control while it runs and a regenerate after it finishes.
+**Why:** visible progress keeps a slow response tolerable, and control over it keeps the user in charge.
+
+Evidence: Microsoft's guidelines call for easy dismissal (G8) and correction (G9); Apple frames on-device generation as something people should be able to interrupt and rerun.
+
+In a RamosLabs product: while tokens stream, show them arriving with a caret and swap the primary action to Stop. When done, offer Regenerate and Copy. Never leave a bare, uncancellable spinner.
+
+- ✓ Recommended: stream the response, expose Stop while running, and Regenerate plus Copy when done. The user drives the generation.
+- ✕ Avoid: a modal spinner that blocks the screen with no way out, or a single answer the user cannot rerun. Removing control over a slow, fallible process turns waiting into helplessness.
+
+## 4. Keep a Human in the Loop
+
+The model proposes; the person disposes. Between a generated result and any real-world effect, insert a step to review, edit, and approve. Match the friction to the stakes: a draft email can auto-fill, but sending it, spending money, or deleting data waits for a human yes, and stays reversible.
+
+**Rule:** Route consequential AI output through a human review-edit-approve step, and keep the resulting action reversible.
+**Why:** the person carries the consequences, so they, not the model, make the final call.
+
+Evidence: Apple advises giving people a chance to review and revise machine output before acting on it, and Google's guidebook ties the level of automation to the cost of a mistake.
+
+In a RamosLabs product: present generated output as an editable draft, not a done deed. The primary action is Approve, editing is always open, and once applied the change can be undone. See Patterns / Persuasion on reversibility as a hard line.
+
+- ✓ Recommended: hold consequential output at an editable review step, then let the applied result be undone. The human approves, and can always walk it back.
+- ✕ Avoid: auto-sending, auto-charging, or auto-deleting on the model's word, with no review and no undo. Irreversible action on an unverified guess hands the user the blame for the model's mistake.
+
+## 5. Plan for Wrong Answers
+
+A model will state a falsehood with the same confidence as a fact. Cite the source so a claim can be checked, make correction a first-class action, and when the system cannot answer well, say so plainly instead of inventing. Graceful failure beats a confident fabrication.
+
+**Rule:** Attach checkable sources to factual claims, offer a correction path, and degrade to an honest "I do not know" over a guess.
+**Why:** models hallucinate fluently, so users need a way to verify, fix, and recognize the system's limits.
+
+Evidence: Google's People + AI Guidebook has a full Errors and Graceful Failure chapter; Microsoft's G9 calls for supporting efficient correction; NN/g documents that citing sources and enabling verification is what makes AI answers trustworthy.
+
+In a RamosLabs product: show the sources a claim rests on as chips the user can open. Offer Report and Suggest a fix on every answer. When the system is unsure, it says so rather than filling the gap with a plausible invention.
+
+- ✓ Recommended: cite sources, let users correct or report, and admit uncertainty when the answer is thin. Every claim is checkable, and every miss is fixable.
+- ✕ Avoid: sourceless assertions, no way to flag a wrong answer, or a confident fabrication where "I could not find that" was the honest reply. An unverifiable, uncorrectable answer is a liability wearing the mask of help.
+
+## 6. Make Feedback One Tap Away
+
+The model improves only when it hears where it failed, and users trust a system more when their signal is welcome. Put a lightweight rating on every answer, thumbs up or down, with a quiet path to report something harmful. Ask, acknowledge, and never nag.
+
+**Rule:** Offer a one-tap rating and a report path on every generated answer, and acknowledge the input without nagging.
+**Why:** cheap-to-give feedback improves the system and signals that the user's judgment counts.
+
+Evidence: Microsoft's guidelines G12 and G15 to G17 cover remembering, learning from, and updating on user feedback; Google's guidebook makes feedback and control a core chapter.
+
+In a RamosLabs product: sit thumbs and a report flag in the answer footer, low-key until hovered. A tap confirms with a quiet "Thanks, noted," never a modal. Optional detail on a down-vote, never required.
+
+- ✓ Recommended: a quiet thumbs pair and report flag, a one-line acknowledgement, optional extra detail. Giving feedback costs the user a single tap.
+- ✕ Avoid: a mandatory survey after every answer, or thumbs that vanish into a void with no sign they landed. Feedback the user cannot see received is feedback they stop giving.
+
+## 7. Say What Happens to the Data
+
+People share more with a system they understand. Before an input reaches a model, state what is sent, where it goes, and whether it trains anything, in plain words at the moment of entry. A disclaimer is not fine print. It is a promise placed where the user can act on it.
+
+**Rule:** Disclose what data the feature sends, where it goes, and whether it trains a model, in plain language at the point of input.
+**Why:** informed consent needs the facts before the send, not buried in a policy read by no one.
+
+Evidence: Google's People + AI Guidebook dedicates a Data Collection chapter to responsible, consented data use, and Apple's guidance stresses being clear and up front about how personal data feeds machine-learning features.
+
+In a RamosLabs product: a one-line disclaimer sits beside the AI input, in muted `--color-text-body` that still clears AA contrast. It names the boundary in words a person can act on, with a link to the detail. Example: "Your text is sent to our AI provider to generate this draft. It is not used to train their models, and it is deleted after processing. Read how we handle AI data."
+
+- ✓ Recommended: name what leaves the device and what happens to it, in plain words at the input. The user consents knowing the facts, before anything is sent.
+- ✕ Avoid: hiding data use in a linked policy, or quietly training on user content without a clear, visible say. Consent extracted through omission is not consent.
+
+## The Contract With the User
+
+Every generated pixel makes an implicit promise about what it is and how far to trust it. Honest AI content keeps that promise: it is disclosed, bounded, checkable, and reversible. The moment output pretends to be more certain, more human, or more final than it is, the interface has started to deceive on the model's behalf.
+
+- Disclosed: generated content is marked as generated. No one mistakes a machine's draft for a human's word or a settled fact.
+- Bounded: output states its confidence and its limits. An estimate is called an estimate; an unknown is admitted, not invented.
+- Checkable: claims carry sources and a way to verify or correct them. Nothing important rests on the user's blind faith.
+- Reversible: a human approves before anything acts, and can undo it after. The model never gets an irreversible last word.
+
+## Before You Ship AI-Generated Content
+
+1. Is it labeled as generated? A visible, consistent marker sits where the content is read.
+2. Does it show its confidence and limits? Output is framed as an estimate, with a signal of how firm it is.
+3. Can the user verify and correct it? Sources are checkable, a wrong answer can be reported or fixed, and the system admits when it does not know.
+4. Does a human approve before it acts, and can they undo it? Consequential actions wait for a human yes and stay reversible.
+5. Is the user told what happens to their data? What is sent, where it goes, and whether it trains anything is stated in plain words at the input.
+
+## Notes and Sources
+
+Google People + AI Guidebook (PAIR): Mental Models, Explainability + Trust, Errors + Graceful Failure, Feedback + Controls, Data Collection + Evaluation. Microsoft HAX, Guidelines for Human-AI Interaction (Amershi et al., CHI 2019): G1, G2, G9, G11, G17. Apple Human Interface Guidelines: Generative AI and Machine learning. Nielsen Norman Group: AI Hallucinations (citing sources, first-person uncertainty), Explainable AI in Chat Interfaces (disclaimer placement near the input), AI Chatbot design guidelines (streaming). House doctrine: the strict disclose, bound, verify, and reverse gate around each pattern, and the mono-indigo, icon-plus-text treatment of every state. Confidence is shown by fill and label, never hue alone, to satisfy WCAG 2.1 SC 1.4.1 Use of Color.
