@@ -199,21 +199,85 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .hl-table .cls { color: var(--indigo); font-weight: 500; background: var(--indigo-50); }
   .hl-table .tok { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--indigo-700); background: transparent; padding: 0; }
 
-  /* ---------- Note ---------- */
-  .hl-note {
-    display: grid;
-    grid-template-columns: 4px 1fr;
-    gap: 1rem;
+  /* ---------- Rule + Why ---------- */
+  .hl-rule {
     background: var(--indigo-50);
     border: 1px solid #c7d2fe;
+    border-left: 4px solid var(--indigo);
     border-radius: 12px;
     padding: 1.125rem 1.25rem;
     margin-top: 1.25rem;
   }
-  .hl-note-bar { border-radius: 4px; background: var(--indigo); }
-  .hl-note-title { font-family: 'Red Hat Display', system-ui, sans-serif; font-weight: 800; font-size: 0.875rem; color: var(--indigo-900); margin-bottom: 0.35rem; }
-  .hl-note-body { font-size: 0.8125rem; color: var(--ink-3); line-height: 1.6; }
-  .hl-note-body code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; background: rgba(79,70,229,0.1); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--indigo-700); }
+  .hl-rule-k {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--indigo);
+    margin-right: 0.5rem;
+  }
+  .hl-rule-k.why { color: var(--ink-3); }
+  .hl-rule-text {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.9375rem;
+    color: var(--indigo-900);
+    line-height: 1.5;
+  }
+  .hl-rule-why {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+  .hl-rule code, .hl-rule-why code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: rgba(79,70,229,0.1);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: var(--indigo-700);
+  }
+
+  /* ---------- Recommended / Avoid pair ---------- */
+  .hl-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 640px) { .hl-pair { grid-template-columns: 1fr; } }
+  .hl-pair-col {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  .hl-pair-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.8125rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .hl-pair-col.rec .hl-pair-head { color: var(--indigo-700); background: var(--indigo-50); border-bottom-color: #c7d2fe; }
+  .hl-pair-col.avoid .hl-pair-head { color: var(--ink-3); background: var(--wash); }
+  .hl-pair-mark { font-weight: 900; font-size: 0.9375rem; line-height: 1; }
+  .hl-pair-body { padding: 0.9rem 1rem; }
+  .hl-pair-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-2);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .hl-pair-col.rec .hl-pair-code { color: var(--indigo-700); }
+  .hl-pair-why { font-size: 0.75rem; color: var(--muted); line-height: 1.55; }
 
   /* ---------- Anatomy ---------- */
   .hl-anatomy {
@@ -348,12 +412,24 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
   </div>
 
-  <div className="hl-note">
-    <div className="hl-note-bar"></div>
-    <div>
-      <div className="hl-note-title">The one boundary that keeps the layers honest</div>
-      <div className="hl-note-body">
-        A utility never invents a value. It reads a token. <code>.gap-4</code> means <code>var(--space-4)</code>, not a hand-typed pixel. That is what separates a design-system utility from a loose grab bag of CSS: every helper is a thin, named shortcut to a decision the tokens already made.
+  <div className="hl-rule">
+    <div><span className="hl-rule-k">Rule</span><span className="hl-rule-text">Source every utility value from a token, never a hand-typed value.</span></div>
+    <span className="hl-rule-why"><span className="hl-rule-k why">Why</span>That is what separates a design-system utility from a loose grab bag of CSS. Every helper is a thin, named shortcut to a decision the tokens already made.</span>
+  </div>
+
+  <div className="hl-pair">
+    <div className="hl-pair-col rec">
+      <div className="hl-pair-head"><span className="hl-pair-mark" aria-hidden="true">&#10003;</span> Recommended</div>
+      <div className="hl-pair-body">
+        <code className="hl-pair-code">.gap-4 &#123; gap: var(--space-4); &#125;</code>
+        <span className="hl-pair-why">Reads the token, so one change to the scale updates every gap at once.</span>
+      </div>
+    </div>
+    <div className="hl-pair-col avoid">
+      <div className="hl-pair-head"><span className="hl-pair-mark" aria-hidden="true">&#10005;</span> Avoid</div>
+      <div className="hl-pair-body">
+        <code className="hl-pair-code">.gap-4 &#123; gap: 16px; &#125;</code>
+        <span className="hl-pair-why">A hand-typed pixel drifts from the token and quietly breaks the system.</span>
       </div>
     </div>
   </div>
@@ -476,12 +552,24 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
   </div>
 
-  <div className="hl-note">
-    <div className="hl-note-bar"></div>
-    <div>
-      <div className="hl-note-title">The name mirrors the token, not a foreign scale</div>
-      <div className="hl-note-body">
-        The fully rounded step is <code>.rounded-pill</code> because the token is <code>--radius-pill</code>. A helper named <code>.rounded-full</code> would describe a value the token layer never uses, and that mismatch is exactly the drift that erodes trust. One vocabulary, top to bottom.
+  <div className="hl-rule">
+    <div><span className="hl-rule-k">Rule</span><span className="hl-rule-text">Name each helper after the token it reads, so one vocabulary runs top to bottom.</span></div>
+    <span className="hl-rule-why"><span className="hl-rule-k why">Why</span>A class named for a value the token layer never uses is exactly the drift that erodes trust in the system.</span>
+  </div>
+
+  <div className="hl-pair">
+    <div className="hl-pair-col rec">
+      <div className="hl-pair-head"><span className="hl-pair-mark" aria-hidden="true">&#10003;</span> Recommended</div>
+      <div className="hl-pair-body">
+        <code className="hl-pair-code">.rounded-pill &rarr; var(--radius-pill)</code>
+        <span className="hl-pair-why">The class mirrors the token name, so the two always stay in sync.</span>
+      </div>
+    </div>
+    <div className="hl-pair-col avoid">
+      <div className="hl-pair-head"><span className="hl-pair-mark" aria-hidden="true">&#10005;</span> Avoid</div>
+      <div className="hl-pair-body">
+        <code className="hl-pair-code">.rounded-full</code>
+        <span className="hl-pair-why">Describes a scale the tokens never define; the mismatch invites drift.</span>
       </div>
     </div>
   </div>
@@ -552,8 +640,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="hl-anatomy-text">Clips the real content down to that one-pixel box so none of it paints.</p>
     </div>
     <div className="hl-anatomy-card">
-      <span className="hl-anatomy-decl">clip: rect(0, 0, 0, 0)</span>
-      <p className="hl-anatomy-text">Clips the visible region to nothing, the historical companion to overflow.</p>
+      <span className="hl-anatomy-decl">clip + clip-path: inset(50%)</span>
+      <p className="hl-anatomy-text">Clips the visible region to nothing. The clip-path rule does the work in modern engines; the deprecated clip stays as a fallback.</p>
     </div>
     <div className="hl-anatomy-card">
       <span className="hl-anatomy-decl">white-space: nowrap</span>
@@ -579,17 +667,30 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <span class="p">margin</span><span class="x">:</span> <span class="v">-1px</span><span class="x">;</span>
     <span class="p">overflow</span><span class="x">:</span> <span class="v">hidden</span><span class="x">;</span>
     <span class="p">clip</span><span class="x">:</span> <span class="v">rect(0, 0, 0, 0)</span><span class="x">;</span>
+    <span class="p">clip-path</span><span class="x">:</span> <span class="v">inset(50%)</span><span class="x">;</span>
     <span class="p">white-space</span><span class="x">:</span> <span class="v">nowrap</span><span class="x">;</span>
     <span class="p">border</span><span class="x">:</span> <span class="v">0</span><span class="x">;</span>
 <span class="x">}</span>`}} />
   </div>
 
-  <div className="hl-note">
-    <div className="hl-note-bar"></div>
-    <div>
-      <div className="hl-note-title">Hidden from eyes, present for everyone else</div>
-      <div className="hl-note-body">
-        Use <code>.sr-only</code> for text sighted users infer from context but a screen reader cannot: the word behind an icon-only button, the meaning of a required asterisk. Never to stuff invisible keywords or hide content you simply do not want to design. A skip link that must reveal itself on keyboard focus uses the focusable variant. See <strong>Patterns / Accessibility</strong>.
+  <div className="hl-rule">
+    <div><span className="hl-rule-k">Rule</span><span className="hl-rule-text">Use <code>.sr-only</code> for meaning that is obvious by sight but silent to the tree, never to stuff invisible keywords.</span></div>
+    <span className="hl-rule-why"><span className="hl-rule-k why">Why</span>The word behind an icon-only button, the meaning of a required asterisk. A skip link that must reveal itself on keyboard focus uses the focusable variant. See <strong>Patterns / Accessibility</strong>.</span>
+  </div>
+
+  <div className="hl-pair">
+    <div className="hl-pair-col rec">
+      <div className="hl-pair-head"><span className="hl-pair-mark" aria-hidden="true">&#10003;</span> Recommended</div>
+      <div className="hl-pair-body">
+        <code className="hl-pair-code">&lt;span class="sr-only"&gt;Close&lt;/span&gt;</code>
+        <span className="hl-pair-why">Keeps the pixels hidden while the label still reaches assistive tech.</span>
+      </div>
+    </div>
+    <div className="hl-pair-col avoid">
+      <div className="hl-pair-head"><span className="hl-pair-mark" aria-hidden="true">&#10005;</span> Avoid</div>
+      <div className="hl-pair-body">
+        <code className="hl-pair-code">display: none</code>
+        <span className="hl-pair-why">Drops the element from the accessibility tree, so a screen reader never hears it.</span>
       </div>
     </div>
   </div>
@@ -613,7 +714,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="hl-step-text">The same three or four utilities always travel together on the same kind of element? That pattern has a name. Extract a <strong>component</strong>.</div>
     </div>
     <div className="hl-step">
-      <div className="hl-step-text">The element needs structure, states, or behavior, a card, a modal, a checkout row? It was always a <strong>component</strong>. Do not assemble it from utilities.</div>
+      <div className="hl-step-text">The element needs structure, states, or behavior, a card, a modal, a checkout row? Build it as a named <strong>component</strong> with its own scoped styles from the start.</div>
     </div>
     <div className="hl-step">
       <div className="hl-step-text">The need is purely for assistive tech, hiding a label or showing focus? Use <strong><code>.sr-only</code></strong> or <strong><code>.focus-ring</code></strong>. Infrastructure, not styling.</div>

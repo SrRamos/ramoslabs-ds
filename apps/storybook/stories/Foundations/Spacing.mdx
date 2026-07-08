@@ -258,6 +258,45 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: var(--indigo-700);
   }
 
+  /* ---------- Recommended / Avoid ---------- */
+  .sp-rec {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .sp-rec-card {
+    background: var(--surface);
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    padding: 1.125rem 1.25rem;
+  }
+  .sp-rec-card.rec { background: var(--indigo-50); border-color: var(--indigo-200); }
+  .sp-rec-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .sp-rec-tag.rec { color: var(--indigo-700); }
+  .sp-rec-tag.avoid { color: #475569; }
+  .sp-rec-ico { font-size: 0.8125rem; line-height: 1; }
+  .sp-rec-card p { font-size: 0.875rem; line-height: 1.55; color: var(--muted); margin: 0; }
+  .sp-rec-card.rec p { color: #3730a3; }
+  .sp-rec-card code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: var(--wash-2);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: var(--indigo-700);
+  }
+
   /* ---------- Refs ---------- */
   .sp-refs { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line-2); }
   .sp-refs-h { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; }
@@ -267,6 +306,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   @media (max-width: 600px) {
     .sp-ladder-row { grid-template-columns: 4.75rem 2.75rem 1fr; gap: 0.6rem; }
+    .sp-rec { grid-template-columns: 1fr; }
   }
 `}
 </style>
@@ -351,7 +391,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <span className="sp-num">03</span>
   <h2 className="sp-h2">Touch targets are non-negotiable</h2>
   <p className="sp-intro">
-    Spacing is also an accessibility contract. On touch, an element is only usable if the finger can hit it reliably. Three floors anchor the system, shown here at true scale.
+    Spacing is also an accessibility contract. On touch, an element is only usable if the finger can hit it reliably. Three floors anchor the system, each shown here at 2x scale for legibility.
   </p>
 
   <div className="sp-targets">
@@ -370,13 +410,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="sp-intro" style={{ marginTop: '1.5rem', marginBottom: 0 }}>
-    WCAG 2.2 sets <strong>24 by 24px</strong> as the AA minimum. Apple asks <strong>44 by 44pt</strong>, Material <strong>48 by 48dp</strong>. Design primary actions to the 44 to 48 range; keep 24 as the hard floor for dense, secondary controls. On phones, add safe-area insets to edge-anchored bars so a sticky CTA never sits under the home indicator: <code>padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom))</code>.
+    WCAG 2.2 sets <strong>24 by 24px</strong> as the AA minimum. Apple asks <strong>44 by 44pt</strong>, Material <strong>48 by 48dp</strong>. On phones, add safe-area insets to edge-anchored bars so a sticky CTA never sits under the home indicator: <code>padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom))</code>.
   </p>
 
-  <div className="sp-callout">
-    <div className="sp-callout-mark">!</div>
-    <div className="sp-callout-body">
-      <strong>Hit area is not visual size.</strong> A 20px icon still meets the floor: expand its tappable area with padding or a pseudo-element so the finger target reaches 44 to 48px even when the glyph stays small.
+  <div className="sp-rec">
+    <div className="sp-rec-card rec">
+      <span className="sp-rec-tag rec"><span className="sp-rec-ico" aria-hidden="true">&#10003;</span> Recommended</span>
+      <p>Size primary actions to the 44 to 48px range, and keep 24px as the hard floor for dense, secondary controls.</p>
+    </div>
+    <div className="sp-rec-card">
+      <span className="sp-rec-tag avoid"><span className="sp-rec-ico" aria-hidden="true">&#10005;</span> Avoid</span>
+      <p>Letting a tap target shrink to its visual glyph. A 20px icon with no added padding misses the floor; expand the hit area with padding or a pseudo-element so it reaches 44 to 48px while the glyph stays small.</p>
     </div>
   </div>
 </div>
@@ -407,7 +451,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="sp-callout">
     <div className="sp-callout-mark">i</div>
     <div className="sp-callout-body">
-      Even compact keeps the <strong>24px hit-area floor</strong>. Density trims padding, not accessibility.
+      <strong>Rule:</strong> keep the 24px hit-area floor in every density mode, compact included. <strong>Why:</strong> density trims padding, not accessibility.
     </div>
   </div>
 </div>

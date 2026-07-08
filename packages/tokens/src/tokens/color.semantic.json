@@ -13,6 +13,10 @@
     "secondary-dark": { "$value": "{color.violet.600}" },
     "secondary-surface": { "$value": "{color.violet.50}" },
     "success": { "$value": "{color.emerald.500}" },
+    "success-strong": {
+      "$value": "{color.emerald.600}",
+      "$description": "AA-safe green fill for a white glyph on the success color (emerald 500 is only 2.54:1 with white, below the 3:1 non-text floor)."
+    },
     "success-surface": { "$value": "{color.green.50}" },
     "success-border": { "$value": "{color.green.200}" },
     "success-text": { "$value": "{color.green.800}" },

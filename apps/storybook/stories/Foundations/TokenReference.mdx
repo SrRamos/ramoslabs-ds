@@ -562,8 +562,8 @@ export const Ramp = ({ name }) => (
 
   .rules-list li { padding-left: 1.25rem; position: relative; margin-bottom: 0.6rem; }
   .rules-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
-  .rules-col.do .rules-list li::before { content: '+'; color: #4f46e5; }
-  .rules-col.dont .rules-list li::before { content: 'x'; color: #475569; }
+  .rules-col.do .rules-list li::before { content: '\\2713'; color: #4f46e5; }
+  .rules-col.dont .rules-list li::before { content: '\\2715'; color: #475569; }
 
   .rules-list code {
     font-family: 'SF Mono', 'Monaco', monospace;
@@ -726,7 +726,7 @@ export const Ramp = ({ name }) => (
     <p className="tr-hero-eyebrow">Foundations / Tokens</p>
     <h1>Every design decision, named once.</h1>
     <p>
-      A token is the smallest unit of the language: <strong>one color, one step of space, one shadow</strong>, authored as data and published to CSS and TypeScript from a single source. This is the canonical list of all 212, and the two-tier system that generates them. Click any token to copy its <span className="tr-hero-code">var(...)</span> reference.
+      A token is the smallest unit of the language: <strong>one color, one step of space, one shadow</strong>, authored as data and published to CSS and TypeScript from a single source. This is the canonical list of all 213, and the two-tier system that generates them. Click any token to copy its <span className="tr-hero-code">var(...)</span> reference.
     </p>
   </div>
 
@@ -748,7 +748,7 @@ export const Ramp = ({ name }) => (
 
 <div className="quick-ref">
   <div className="quick-ref-item">
-    <div className="quick-ref-value">212</div>
+    <div className="quick-ref-value">213</div>
     <div className="quick-ref-label">Total Tokens</div>
   </div>
   <div className="quick-ref-item">
@@ -921,6 +921,13 @@ export const Ramp = ({ name }) => (
           ))}
         </tbody>
       </table>
+
+      <div className="callout">
+        <div className="callout-title">Borders are dividers, not control outlines</div>
+        <div className="callout-body">
+          <strong>Rule:</strong> use <code>--color-border</code> and <code>--color-border-light</code> only to separate regions, dividers, table rows, card edges. <strong>Why:</strong> both sit near 1.2:1 against the surface, below the 3:1 floor WCAG 1.4.11 requires for the boundary of an interactive control. For the visible edge of an input, select, or checkbox, reach for a token that clears 3:1, for example <code>--color-text-muted</code> at #64748b, which is 4.55:1 on white. Never let a subtle border be the only thing marking a control's bounds.
+        </div>
+      </div>
     </div>
 
     <div>
@@ -930,6 +937,7 @@ export const Ramp = ({ name }) => (
         <tbody>
           {[
             ['--color-success', '#10b981', 'emerald 500'],
+            ['--color-success-strong', '#059669', 'emerald 600, AA fill for a white glyph'],
             ['--color-success-surface', '#f0fdf4', 'green 50, fill'],
             ['--color-success-border', '#bbf7d0', 'green 200'],
             ['--color-success-text', '#166534', 'green 800, on-surface text'],
@@ -1352,7 +1360,7 @@ export const Ramp = ({ name }) => (
 
   <div className="rules-grid">
     <div className="rules-col do">
-      <div className="rules-col-title"><span className="rules-badge">+</span> Do</div>
+      <div className="rules-col-title"><span className="rules-badge">&#10003;</span> Recommended</div>
       <ul className="rules-list">
         <li>Consume <code>var(--token)</code> references, and prefer the semantic tier.</li>
         <li>Author new tokens in the JSON source, then rebuild.</li>
@@ -1362,7 +1370,7 @@ export const Ramp = ({ name }) => (
       </ul>
     </div>
     <div className="rules-col dont">
-      <div className="rules-col-title"><span className="rules-badge">x</span> Don't</div>
+      <div className="rules-col-title"><span className="rules-badge">&#10005;</span> Avoid</div>
       <ul className="rules-list">
         <li>Hardcode a hex, px, or raw integer that a token already covers.</li>
         <li>Edit <code>dist/tokens.css</code> or <code>dist/tokens.ts</code> by hand.</li>

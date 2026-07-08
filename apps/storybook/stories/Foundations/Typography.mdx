@@ -364,8 +364,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
           AaBbCc 0123456789 &amp; A safe, familiar face for constrained surfaces.
         </div>
         <p className="ty-fam-note">
-          A metric-compatible substitute for dense system UI, embedded documents, or while the web fonts load. Do not
-          mix it with Rubik in the same block. It is a stand-in, not a third accent.
+          A metric-compatible substitute for dense system UI, embedded documents, or while the web fonts load. Use it
+          for a whole block on its own, never mixed with Rubik, since it is a stand-in, not a third accent.
         </p>
       </div>
     </div>
@@ -513,8 +513,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontWeight: 800 }}>Aa</div><div className="ty-weight-l">800 display</div></div>
       </div>
       <p className="ty-axis-note">
-        The scale runs 100 to 800. The three light weights are display-only. Never set text at or below 16px in a light
-        weight: thin strokes drop the effective contrast and fail low-vision readers.
+        The scale runs 100 to 800.<br />
+        <strong>Rule:</strong> keep the three light weights for display sizes, and set text at 16px and under in 400 or heavier.<br />
+        <strong>Why:</strong> below 16px, thin strokes lose effective contrast and fail low-vision readers.
       </p>
     </div>
 
@@ -526,11 +527,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </div>
       <div className="ty-lead-demo">
         <span className="ty-lead-l">--leading-normal 1.5 · body floor</span>
-        <p style={{ lineHeight: 1.5 }}>Body sits at 1.5 or more. WCAG 1.4.12 requires at least 1.5x within paragraphs.</p>
+        <p style={{ lineHeight: 1.5 }}>Body sits at 1.5 or more, the authorial floor WCAG 1.4.8 sets for paragraphs.</p>
       </div>
       <p className="ty-axis-note">
-        Long-form moves to <code>--leading-relaxed</code> 1.625. Setting a paragraph tighter than 1.5 is an
-        accessibility regression, not a style choice.
+        <strong>Rule:</strong> set body at 1.5 line-height or more, and move long-form to <code>--leading-relaxed</code> 1.625.<br />
+        <strong>Why:</strong> 1.5 within paragraphs is the WCAG 1.4.8 Visual Presentation (AAA) target, and generous
+        leading keeps the eye on the right line. WCAG 1.4.12 Text Spacing (AA) is a separate promise: text must stay
+        readable when a reader forces 1.5x spacing, which a rem scale that reflows cleanly already meets. A paragraph
+        under 1.5 misses the AAA target, so 1.5 stays the house floor.
       </p>
     </div>
 
@@ -549,8 +553,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <span className="ty-track-l">wider 0.05em</span>
       </div>
       <p className="ty-axis-note">
-        Positive tracking is only for uppercase Labels, where extra space restores the legibility all-caps removes. Never
-        track lowercase body, positive or negative.
+        <strong>Rule:</strong> reserve positive tracking for uppercase Labels, and leave lowercase body at 0.<br />
+        <strong>Why:</strong> extra space restores the legibility all-caps removes, while any tracking on lowercase body
+        only distorts word shape.
       </p>
     </div>
   </div>
@@ -566,12 +571,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </p>
 
   <div className="ty-measure">
-    <span className="ty-measure-tag">measure 45 to 75ch</span>
+    <span className="ty-measure-tag">✓ Recommended · 45 to 75ch</span>
     <p className="ty-measure-good">
       At this width the eye finds the start of the next line without effort and the paragraph feels calm. Cap body
       columns in ch, never leave running text at full container width.
     </p>
-    <span className="ty-measure-tag bad">too wide, over 75ch</span>
+    <span className="ty-measure-tag bad">✕ Avoid · over 75ch</span>
     <p className="ty-measure-bad">
       When a line runs much past seventy-five characters the reader has to travel too far back to the start of the next line, loses their place, and rereads. This is the single most common readability failure in dashboards and admin tools, where a paragraph is dropped into a wide container and allowed to stretch edge to edge. The words are fine. The width is the bug, and this line is set to a 120ch cap so you can feel it.
     </p>
@@ -582,8 +587,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <p className="ty-callout-body">
       <strong>Hierarchy must survive one color.</strong> Distinguish levels with size, weight and space, and back every
       color step with a real size or weight difference so structure holds for readers who cannot perceive the shift. The
-      scale is defined in <code>rem</code>, so text still scales to 200% (WCAG 1.4.4), and body never drops below 1.5
-      line-height (WCAG 1.4.12).
+      scale is defined in <code>rem</code>, so text still scales to 200% (WCAG 1.4.4), and body holds at 1.5
+      line-height or more (WCAG 1.4.8).
     </p>
   </div>
 </div>

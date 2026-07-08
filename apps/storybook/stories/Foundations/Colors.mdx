@@ -519,7 +519,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <div className="col-section">
   <span className="col-num">02</span>
-  <h2 className="col-h2">Never reach for a raw color</h2>
+  <h2 className="col-h2">Always reach for a role, not a raw color</h2>
   <p className="col-intro">
     Those ramps are <strong>primitives</strong>: raw hues, named by number, never by meaning. Product code never touches them. It consumes a <strong>role</strong>, a token named for the job it does. Re-theme the whole product by re-pointing roles, not by hunting hex across a codebase.
   </p>
@@ -567,7 +567,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <span className="col-chip-pill"><span className="col-dot"></span> Active filter</span>
         </div>
         <p className="col-spec-note">
-          <code>--color-primary-surface</code> tint with primary text. Never white text on the tint.
+          <span aria-hidden="true">&#10003;</span> Recommended: <code>--color-primary-surface</code> tint with primary-colored text. <span aria-hidden="true">&#215;</span> Avoid: white text on the tint, it fails contrast on the pale surface.
         </p>
       </div>
 
@@ -586,11 +586,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <div className="col-spec-label">Feedback, each a full triad</div>
         <div className="col-banners">
           <div className="col-banner" style={{ background: '#f0fdf4', borderColor: '#bbf7d0' }}>
-            <span className="col-banner-icon" style={{ background: '#10b981' }}>&#10003;</span>
+            <span className="col-banner-icon" style={{ background: '#059669' }}>&#10003;</span>
             <div>
               <div className="col-banner-title" style={{ color: '#166534' }}>Saved</div>
-              <div className="col-banner-body" style={{ color: '#166534' }}>Solid for the icon, tinted surface behind, dark text on top.</div>
-              <div className="col-banner-tok" style={{ color: '#166534' }}>--color-success + -surface + -text</div>
+              <div className="col-banner-body" style={{ color: '#166534' }}>Strong solid for the icon so the white check clears 3:1, tinted surface behind, dark text on top.</div>
+              <div className="col-banner-tok" style={{ color: '#166534' }}>--color-success-strong + -surface + -text</div>
             </div>
           </div>
           <div className="col-banner" style={{ background: '#fffbeb', borderColor: '#fde68a' }}>
@@ -700,7 +700,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="col-callout">
     <div className="col-callout-bar"></div>
     <p className="col-callout-body">
-      <strong>Never signal by color alone.</strong> WCAG 2.2 SC 1.4.1: color is never the only channel. Every status pairs its color with an icon and a label, every invalid field gets text and not just a red edge, and the focus ring is a ring, not a hue shift. Color reinforces, it never carries meaning by itself.
+      <strong>Rule:</strong> pair every status color with an icon and a label, give every invalid field real text, and make focus a visible ring. <strong>Why:</strong> color is never the only channel (WCAG 2.2 SC 1.4.1), so meaning survives for color-blind and low-vision users. Color reinforces, it never carries meaning by itself.
     </p>
   </div>
 </div>
@@ -708,7 +708,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="col-refs">
   <p className="col-refs-h">Sources</p>
   <p>
-    WCAG 2.2 contrast floors SC 1.4.3 / 1.4.6 / 1.4.11 and use of color SC 1.4.1 (<a href="https://www.w3.org/TR/WCAG22/">w3.org/TR/WCAG22</a>). Role-token model after Material 3 color roles (<a href="https://m3.material.io/styles/color/roles">m3.material.io</a>) and Refactoring UI numbered scales. The 60-30-10 accent balance is an NN/g heuristic (<a href="https://www.nngroup.com/articles/color-enhance-design/">nngroup.com</a>). Ratios computed with the WCAG 2.x relative-luminance formula, matching the Color Picker story.
+    WCAG 2.2 contrast floors SC 1.4.3 / 1.4.6 / 1.4.11 and use of color SC 1.4.1 (<a href="https://www.w3.org/TR/WCAG22/">w3.org/TR/WCAG22</a>). Role-token model after Material 3 color roles (<a href="https://m3.material.io/styles/color/roles">m3.material.io</a>) and Refactoring UI numbered scales. The 60-30-10 accent balance is a common color composition rule. Ratios computed with the WCAG 2.x relative-luminance formula, matching the Color Picker story.
   </p>
 </div>
 

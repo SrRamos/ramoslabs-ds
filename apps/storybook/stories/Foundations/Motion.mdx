@@ -453,75 +453,65 @@ import { Meta } from '@storybook/addon-docs/blocks';
     line-height: 1.55;
   }
 
-  /* ===== Do / Don't ===== */
-  .mo-rules-grid {
+  /* ===== Rulebook (Rule + Why) ===== */
+  .mo-rulebook {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 
-  .mo-rules-col {
-    border-radius: 12px;
+  .mo-rule {
     border: 1px solid #e2e8f0;
+    border-left: 3px solid #4f46e5;
+    border-radius: 12px;
     background: #f8fafc;
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
   }
 
-  .mo-rules-col-title {
-    font-weight: 700;
-    font-size: 0.8125rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
+  .mo-rule-head {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .mo-rules-col.do .mo-rules-col-title { color: #4f46e5; }
-  .mo-rules-col.dont .mo-rules-col-title { color: #475569; }
-
-  .mo-rules-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  .mo-rules-col.do .mo-rules-badge { background: #4f46e5; color: white; }
-  .mo-rules-col.dont .mo-rules-badge { background: #e2e8f0; color: #475569; }
-
-  .mo-rules-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-family: 'Rubik', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    color: #475569;
-    line-height: 1.55;
-  }
-
-  .mo-rules-list li {
-    padding-left: 1.25rem;
-    position: relative;
+    gap: 0.75rem;
     margin-bottom: 0.6rem;
   }
 
-  .mo-rules-list li::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-weight: 700;
+  .mo-why {
+    display: flex;
+    gap: 0.75rem;
   }
 
-  .mo-rules-col.do .mo-rules-list li::before { content: '+'; color: #4f46e5; }
-  .mo-rules-col.dont .mo-rules-list li::before { content: 'x'; color: #64748b; }
+  .mo-rule-tag,
+  .mo-why-tag {
+    flex-shrink: 0;
+    width: 3rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    padding-top: 0.05rem;
+  }
 
-  .mo-rules-list code {
+  .mo-rule-tag { color: #4f46e5; }
+  .mo-why-tag { color: #64748b; }
+
+  .mo-rule-text {
+    margin: 0;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.55;
+  }
+
+  .mo-why-text {
+    margin: 0;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .mo-rule code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
     background: #eef2ff;
@@ -638,7 +628,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="mo-purpose">
     <div className="mo-purpose-card keep">
-      <div className="mo-purpose-tag"><span className="mo-symbol">check_circle</span> Motion with a job</div>
+      <div className="mo-purpose-tag"><span className="mo-symbol" aria-hidden="true">check_circle</span> Recommended</div>
       <ul className="mo-purpose-list">
         <li><strong>Orientation.</strong> A menu grows from the button that opened it.</li>
         <li><strong>Continuity.</strong> A row animates to its new spot instead of jumping.</li>
@@ -646,7 +636,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </ul>
     </div>
     <div className="mo-purpose-card">
-      <div className="mo-purpose-tag"><span className="mo-symbol">cancel</span> Motion to cut</div>
+      <div className="mo-purpose-tag"><span className="mo-symbol" aria-hidden="true">cancel</span> Avoid</div>
       <ul className="mo-purpose-list">
         <li>Entrances that animate with nothing to orient.</li>
         <li>Looping, attention-grabbing movement with no status behind it.</li>
@@ -824,7 +814,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   <div className="mo-perf">
     <div className="mo-perf-card cheap">
-      <div className="mo-perf-head"><span className="mo-symbol" aria-hidden="true">bolt</span> Compositor cheap</div>
+      <div className="mo-perf-head"><span className="mo-symbol" aria-hidden="true">check_circle</span> Recommended</div>
       <div className="mo-perf-props">
         <span className="mo-chip">transform</span>
         <span className="mo-chip">opacity</span>
@@ -832,7 +822,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="mo-perf-text">Handled on the compositor, off the main thread. No layout, no paint. A slide is <span style={{ fontFamily: "'SF Mono', monospace" }}>translateY</span>, not a change to <span style={{ fontFamily: "'SF Mono', monospace" }}>top</span>.</p>
     </div>
     <div className="mo-perf-card">
-      <div className="mo-perf-head"><span className="mo-symbol" aria-hidden="true">warning</span> Forces layout</div>
+      <div className="mo-perf-head"><span className="mo-symbol" aria-hidden="true">cancel</span> Avoid</div>
       <div className="mo-perf-props">
         <span className="mo-chip">width</span>
         <span className="mo-chip">height</span>
@@ -882,31 +872,86 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <div className="mo-section">
   <h2 className="mo-section-title">Rules of Motion</h2>
+  <p className="mo-lede">
+    Each rule stands on its own: what to do, then why it holds. Read the why once and the rule stops feeling arbitrary.
+  </p>
 
-  <div className="mo-rules-grid">
-    <div className="mo-rules-col do">
-      <div className="mo-rules-col-title"><span className="mo-rules-badge">+</span> Do</div>
-      <ul className="mo-rules-list">
-        <li>Give every animation a job: orientation, continuity, or feedback.</li>
-        <li>Animate <code>transform</code> and <code>opacity</code> so the compositor carries the work.</li>
-        <li>Name the property, a duration token, and an easing token explicitly.</li>
-        <li>Match duration to the change: <code>fast</code> local, <code>normal</code> to enter or leave, <code>slow</code> for a takeover.</li>
-        <li>Ease <code>out</code> to enter, <code>in</code> to leave, <code>in-out</code> to move, <code>linear</code> to loop.</li>
-        <li>Reserve <code>spring</code> for a small success, and gate it behind reduced motion.</li>
-        <li>Honor <code>prefers-reduced-motion</code>: collapse the motion, keep the meaning.</li>
-      </ul>
+  <div className="mo-rulebook">
+    <div className="mo-rule">
+      <div className="mo-rule-head">
+        <span className="mo-rule-tag">Rule</span>
+        <p className="mo-rule-text">Give every animation a job: orientation, continuity, or feedback.</p>
+      </div>
+      <div className="mo-why">
+        <span className="mo-why-tag">Why</span>
+        <p className="mo-why-text">Decorative motion clarifies nothing and costs the same frame time, so it is the first thing to cut.</p>
+      </div>
     </div>
-    <div className="mo-rules-col dont">
-      <div className="mo-rules-col-title"><span className="mo-rules-badge">x</span> Don't</div>
-      <ul className="mo-rules-list">
-        <li>Add motion with no job. Decoration is the thing to cut.</li>
-        <li>Animate <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>, or <code>margin</code>. That is layout thrash.</li>
-        <li>Reach for <code>transition: all</code>. Name the property.</li>
-        <li>Run anything longer than <code>300ms</code>. Longer reads as sluggish.</li>
-        <li>Use <code>linear</code> on anything with a start and an end.</li>
-        <li>Spring a large surface. An overshooting modal looks broken.</li>
-        <li>Let motion alone carry meaning. It must survive reduced motion.</li>
-      </ul>
+
+    <div className="mo-rule">
+      <div className="mo-rule-head">
+        <span className="mo-rule-tag">Rule</span>
+        <p className="mo-rule-text">Animate <code>transform</code> and <code>opacity</code>.</p>
+      </div>
+      <div className="mo-why">
+        <span className="mo-why-tag">Why</span>
+        <p className="mo-why-text">The compositor carries them off the main thread with no layout or paint. Animating <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>, or <code>margin</code> recomputes layout every frame and drops frames.</p>
+      </div>
+    </div>
+
+    <div className="mo-rule">
+      <div className="mo-rule-head">
+        <span className="mo-rule-tag">Rule</span>
+        <p className="mo-rule-text">Name the property, a duration token, and an easing token explicitly.</p>
+      </div>
+      <div className="mo-why">
+        <span className="mo-why-tag">Why</span>
+        <p className="mo-why-text"><code>transition: all</code> animates properties you never meant to touch, and hardcoded milliseconds drift from the shared tempo.</p>
+      </div>
+    </div>
+
+    <div className="mo-rule">
+      <div className="mo-rule-head">
+        <span className="mo-rule-tag">Rule</span>
+        <p className="mo-rule-text">Match the duration to the change: <code>fast</code> for local state, <code>normal</code> to enter or leave, <code>slow</code> for a takeover.</p>
+      </div>
+      <div className="mo-why">
+        <span className="mo-why-tag">Why</span>
+        <p className="mo-why-text">Anything past <code>300ms</code> reads as sluggish, so the ceiling holds and most motion sits at 200ms.</p>
+      </div>
+    </div>
+
+    <div className="mo-rule">
+      <div className="mo-rule-head">
+        <span className="mo-rule-tag">Rule</span>
+        <p className="mo-rule-text">Pick easing by job: <code>out</code> to enter, <code>in</code> to leave, <code>in-out</code> to move, <code>linear</code> to loop.</p>
+      </div>
+      <div className="mo-why">
+        <span className="mo-why-tag">Why</span>
+        <p className="mo-why-text"><code>linear</code> on anything with a start and an end feels robotic, and the wrong curve reads as lag or machinery.</p>
+      </div>
+    </div>
+
+    <div className="mo-rule">
+      <div className="mo-rule-head">
+        <span className="mo-rule-tag">Rule</span>
+        <p className="mo-rule-text">Reserve <code>spring</code> for a small, discrete success, and gate it behind reduced motion.</p>
+      </div>
+      <div className="mo-why">
+        <span className="mo-why-tag">Why</span>
+        <p className="mo-why-text">An overshooting modal looks broken, and spring is comfort, not information.</p>
+      </div>
+    </div>
+
+    <div className="mo-rule">
+      <div className="mo-rule-head">
+        <span className="mo-rule-tag">Rule</span>
+        <p className="mo-rule-text">Honor <code>prefers-reduced-motion</code>: collapse the movement, keep the meaning.</p>
+      </div>
+      <div className="mo-why">
+        <span className="mo-why-tag">Why</span>
+        <p className="mo-why-text">Motion alone must never carry meaning. Information rides on color, opacity, and the final state, so the interface stays legible without movement.</p>
+      </div>
     </div>
   </div>
 </div>

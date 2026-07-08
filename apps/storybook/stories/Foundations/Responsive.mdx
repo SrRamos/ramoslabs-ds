@@ -219,6 +219,64 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-radius: 4px;
     color: var(--indigo-700);
   }
+  .rs-callout-key {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--indigo);
+    margin-right: 0.5rem;
+  }
+  .rs-callout-why {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--ink-3);
+  }
+  .rs-callout-why .rs-callout-key { color: var(--muted); }
+
+  /* ---------- Recommended / Avoid ---------- */
+  .rs-ry {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .rs-ry-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem;
+    border-radius: 12px;
+    border: 1px solid var(--line-2);
+    background: var(--wash);
+    padding: 1rem 1.15rem;
+  }
+  .rs-ry-item.rec { border-color: var(--indigo-200); background: var(--indigo-50); }
+  .rs-ry-icon { font-weight: 700; font-size: 0.9rem; line-height: 1.5; }
+  .rs-ry-item.rec .rs-ry-icon { color: var(--indigo); }
+  .rs-ry-item.avoid .rs-ry-icon { color: var(--ink-3); }
+  .rs-ry-label {
+    display: block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+  .rs-ry-item.rec .rs-ry-label { color: var(--indigo); }
+  .rs-ry-item.avoid .rs-ry-label { color: var(--muted); }
+  .rs-ry-text { font-size: 0.8125rem; color: var(--ink-3); line-height: 1.55; }
+  .rs-ry-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: var(--wash-2);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: var(--indigo-700);
+  }
 
   /* ---------- Media vs container compare ---------- */
   .rs-compare {
@@ -453,8 +511,26 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="rs-callout">
     <div className="rs-callout-bar"></div>
     <p className="rs-callout-body">
-      <strong>These are the only breakpoints.</strong> No <code>xs</code>, because the base below <code>sm</code> needs no query to name it. Do not invent a sixth for one stubborn component; solve it with fluid sizing or a container query. A media condition cannot read a custom property, so the query uses the literal value, <code>@media (min-width: 769px)</code>, while the token stays the single source of that number.
+      <span className="rs-callout-key">Rule</span> Key page-shell breakpoints to the five named <span className="rs-mono">min-width</span> tokens, and no others.
+      <span className="rs-callout-why"><span className="rs-callout-key">Why</span> There is no <code>xs</code> because the base below <code>sm</code> needs no query to name it. A media condition cannot read a custom property, so the query carries the literal value, <code>@media (min-width: 769px)</code>, while the token stays the single source of that number.</span>
     </p>
+  </div>
+
+  <div className="rs-ry">
+    <div className="rs-ry-item rec">
+      <span className="rs-ry-icon" aria-hidden="true">&#10003;</span>
+      <div>
+        <span className="rs-ry-label">Recommended</span>
+        <span className="rs-ry-text">One component that strains between two tokens: solve it with fluid sizing or a container query, so the scale stays at five.</span>
+      </div>
+    </div>
+    <div className="rs-ry-item avoid">
+      <span className="rs-ry-icon" aria-hidden="true">&#10005;</span>
+      <div>
+        <span className="rs-ry-label">Avoid</span>
+        <span className="rs-ry-text">Inventing a sixth breakpoint for that one component. It fragments the scale and every reader now has an extra threshold to reason about.</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -493,8 +569,26 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="rs-callout">
     <div className="rs-callout-bar"></div>
     <p className="rs-callout-body">
-      <strong>The dividing line.</strong> Responds to the page as a whole, use a media query against a token. Must work in more than one slot, give its wrapper a container. A capability or preference, dark mode, reduced motion, a coarse pointer, is always a media query, never a container query.
+      <span className="rs-callout-key">Rule</span> Match the query to its scope: a media query against a token for the page shell, a container query for any part that must work in more than one slot.
+      <span className="rs-callout-why"><span className="rs-callout-key">Why</span> A media query asks how wide the viewport is, which is what the shell responds to. A container query asks how much room an element was actually given, which is what a portable component responds to.</span>
     </p>
+  </div>
+
+  <div className="rs-ry">
+    <div className="rs-ry-item rec">
+      <span className="rs-ry-icon" aria-hidden="true">&#10003;</span>
+      <div>
+        <span className="rs-ry-label">Recommended</span>
+        <span className="rs-ry-text">For a capability or preference, dark mode, reduced motion, a coarse pointer, reach for a media query.</span>
+      </div>
+    </div>
+    <div className="rs-ry-item avoid">
+      <span className="rs-ry-icon" aria-hidden="true">&#10005;</span>
+      <div>
+        <span className="rs-ry-label">Avoid</span>
+        <span className="rs-ry-text">Reaching for a container query there. A container knows only its own size, never color scheme, motion preference, or pointer type.</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -523,6 +617,31 @@ import { Meta } from '@storybook/addon-docs/blocks';
       This heading is <code>clamp(1.5rem, 3vw + 1rem, 2.75rem)</code>: it grows and shrinks smoothly, held between a floor and a ceiling. Use <code>clamp()</code>, <code>min()</code>, and <code>max()</code> for type, spacing, and measure to erase the step changes a stack of breakpoints would cause.
     </p>
   </div>
+
+  <div className="rs-callout">
+    <div className="rs-callout-bar"></div>
+    <p className="rs-callout-body">
+      <span className="rs-callout-key">Rule</span> Reach for fluid sizing and an intrinsic grid before you write any breakpoint.
+      <span className="rs-callout-why"><span className="rs-callout-key">Why</span> An auto-fit grid and clamped type adapt at every width, not just at the five thresholds, and with far fewer queries to keep in sync.</span>
+    </p>
+  </div>
+
+  <div className="rs-ry">
+    <div className="rs-ry-item rec">
+      <span className="rs-ry-icon" aria-hidden="true">&#10003;</span>
+      <div>
+        <span className="rs-ry-label">Recommended</span>
+        <span className="rs-ry-text">Let the layout flow: <code>repeat(auto-fit, minmax(160px, 1fr))</code> for columns, <code>clamp()</code> for type and spacing.</span>
+      </div>
+    </div>
+    <div className="rs-ry-item avoid">
+      <span className="rs-ry-icon" aria-hidden="true">&#10005;</span>
+      <div>
+        <span className="rs-ry-label">Avoid</span>
+        <span className="rs-ry-text">Stacking breakpoints to imitate that flow. It steps between thresholds and leaves more queries to maintain.</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div className="rs-section">
@@ -544,8 +663,33 @@ import { Meta } from '@storybook/addon-docs/blocks';
         The dashed inset is the safe area. The button clears the home indicator because its padding is <code>calc(var(--space-4) + env(safe-area-inset-bottom))</code>, not a bare token. Insets are unlocked by <code>viewport-fit=cover</code>; on a device with none, <code>env()</code> resolves to zero and spacing is unchanged.
       </p>
       <p className="rs-safearea-note">
-        Thumb-reach and target sizing for these anchored controls live in Foundations / Spacing. This page claims only the responsibility: never let a screen-anchored control fall under system chrome.
+        Thumb-reach and target sizing for these anchored controls live in Foundations / Spacing. This page claims only the responsibility: keep every screen-anchored control clear of system chrome.
       </p>
+    </div>
+  </div>
+
+  <div className="rs-callout">
+    <div className="rs-callout-bar"></div>
+    <p className="rs-callout-body">
+      <span className="rs-callout-key">Rule</span> Honor the safe-area insets for anything anchored to a screen edge.
+      <span className="rs-callout-why"><span className="rs-callout-key">Why</span> Notches, rounded corners, and the home indicator carve into the screen, so a control drawn to the physical edge can land under a system gesture.</span>
+    </p>
+  </div>
+
+  <div className="rs-ry">
+    <div className="rs-ry-item rec">
+      <span className="rs-ry-icon" aria-hidden="true">&#10003;</span>
+      <div>
+        <span className="rs-ry-label">Recommended</span>
+        <span className="rs-ry-text">Add the inset to your token: <code>calc(var(--space-4) + env(safe-area-inset-bottom))</code>. Where a device has no insets, <code>env()</code> resolves to zero and the spacing is unchanged.</span>
+      </div>
+    </div>
+    <div className="rs-ry-item avoid">
+      <span className="rs-ry-icon" aria-hidden="true">&#10005;</span>
+      <div>
+        <span className="rs-ry-label">Avoid</span>
+        <span className="rs-ry-text">Replacing the token with <code>env()</code> alone, or drawing to the physical edge. Where there are no insets the spacing collapses to zero and the control can fall under system chrome.</span>
+      </div>
     </div>
   </div>
 </div>

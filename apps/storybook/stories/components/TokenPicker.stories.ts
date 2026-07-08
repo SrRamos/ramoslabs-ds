@@ -21,7 +21,7 @@ Pick a token, read whether text can legibly sit on it. Every ratio here is the e
 | Badge | Ratio | Clears |
 | --- | --- | --- |
 | **AAA** | 7:1+ | Normal text at AAA and everything under it |
-| **AA** | 4.5 to 6.99 | Normal text at AA; large text and UI at AAA |
+| **AA** | 4.5 to 6.99 | Normal text at AA; large text at AAA |
 | **AA Large** | 3 to 4.49 | Large text (1.4.3) and non-text / UI (1.4.11) only, never body text |
 | **Fail** | below 3 | Nothing a user must read |
 
@@ -51,7 +51,12 @@ One accent hue means accessible pairings come from walking the indigo ramp, not 
 - For tinted zones pair **indigo 50** (\`--color-primary-surface\`, #eef2ff) with deep indigo text (700+), and confirm the ratio rather than assume it.
 - Indigo 300 and 400 fail as text on white; the tool badges them **Fail**, and that verdict is the point.
 
-**Color is never the whole message (1.4.1)** [9]. A passing ratio does not satisfy this: every status needs an icon and label, every invalid field needs text and not just a red border, and focus stays a visible ring, not a hue shift.
+**Rule: color is never the whole message (1.4.1)** [9]. **Why:** a passing ratio proves a color is legible, not that its meaning survives once the hue is gone. Signal every state twice, once by color and once by shape or words:
+
+- ✓ Recommended: pair each status with an icon and a text label.
+- ✓ Recommended: mark an invalid field with a message, not only a red border.
+- ✓ Recommended: keep focus a visible ring, so the shape changes and not only the hue.
+- ✕ Avoid: carrying a state on color alone, which vanishes for anyone who cannot separate the hues.
 
 ---
 

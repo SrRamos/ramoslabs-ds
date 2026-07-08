@@ -211,6 +211,61 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .sh-callout-body { font-size: 0.875rem; line-height: 1.55; color: var(--ink-3); }
   .sh-callout-body strong { color: #3730a3; }
 
+  /* ---------- Rule + contrast ---------- */
+  .sh-rule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .sh-rule-line { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-3); margin: 0; }
+  .sh-rule-key {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+  }
+  .sh-rule-line code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.8125rem; color: var(--accent); }
+
+  .sh-contrast {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .sh-contrast-card {
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+  }
+  .sh-ok { border-left: 3px solid var(--accent); }
+  .sh-no { border-left: 3px dashed #94a3b8; }
+  .sh-contrast-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .sh-contrast-icon { font-weight: 700; font-size: 0.9375rem; line-height: 1; }
+  .sh-ok .sh-contrast-icon { color: var(--accent); }
+  .sh-no .sh-contrast-icon { color: var(--ink-3); }
+  .sh-contrast-text { font-size: 0.8125rem; line-height: 1.55; color: var(--ink-3); margin: 0; }
+  .sh-contrast-text code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--accent); }
+
   /* ---------- Tonal (dark) stage ---------- */
   .sh-tonal {
     background: #0f172a;
@@ -314,7 +369,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <span className="sh-num">01</span>
   <h2 className="sh-h2">The elevation ladder</h2>
   <p className="sh-intro">
-    Flat on the page, raised, overlay, floating. The taller a surface reads, the higher it sits. Nothing rises above <code>lg</code>.
+    Flat on the page, raised, overlay, floating. The taller a surface reads, the higher it sits, and <code>lg</code> is the ceiling every surface stays within.
   </p>
 
   <div className="sh-ladder">
@@ -423,14 +478,31 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <div className="sh-section">
   <span className="sh-num">04</span>
-  <h2 className="sh-h2">Shadow is height, not state</h2>
+  <h2 className="sh-h2">Shadow is height</h2>
   <p className="sh-intro">
-    A shadow only ever says this surface is physically above another. Never grow one on hover, press, or select. A card that swells a dramatic shadow, usually paired with a <code>translateY</code> lift, fakes physics it does not have and collides with the rule against transform-based hover.
+    A shadow says one thing: this surface sits physically above another. Match that meaning and elevation stays a clean, single-purpose channel.
   </p>
+
+  <div className="sh-rule">
+    <p className="sh-rule-line"><span className="sh-rule-key">Rule</span>Pick one of the three elevation levels for a surface and keep it fixed for the surface's whole life.</p>
+    <p className="sh-rule-line"><span className="sh-rule-key">Why</span>A constant elevation reads as real, physical height, so the surface feels solid and hover, press, and selection stay legible in their own channel: color.</p>
+  </div>
+
+  <div className="sh-contrast">
+    <div className="sh-contrast-card sh-ok">
+      <div className="sh-contrast-head"><span className="sh-contrast-icon" aria-hidden="true">&#10003;</span> Recommended</div>
+      <p className="sh-contrast-text">Fix each surface at one level, then carry hover, press, and selection in color and state layers. Color answers "what is happening to this control", shadow answers "how high does this surface sit", and both channels stay quiet.</p>
+    </div>
+    <div className="sh-contrast-card sh-no">
+      <div className="sh-contrast-head"><span className="sh-contrast-icon" aria-hidden="true">&#10007;</span> Avoid</div>
+      <p className="sh-contrast-text">Swelling a dramatic shadow on hover, usually paired with a <code>translateY</code> lift. It fakes physics the surface does not have and collides with the rule against transform-based hover.</p>
+    </div>
+  </div>
+
   <div className="sh-callout">
     <div className="sh-callout-bar"></div>
     <p className="sh-callout-body">
-      <strong>State feedback lives in color.</strong> Hover, press, and selection are carried by color and state layers, not elevation. Color answers "what is happening to this control", shadow answers "how high does this surface sit". Keep the two channels separate and neither gets noisy. See <strong>Patterns / Interactive</strong> for the state-layer model.
+      <strong>State feedback lives in color.</strong> Hover, press, and selection ride on color and state layers rather than elevation. See <strong>Patterns / Interactive</strong> for the state-layer model.
     </p>
   </div>
 </div>
@@ -455,7 +527,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <span className="sh-num">06</span>
   <h2 className="sh-h2">Token reference</h2>
   <p className="sh-intro">
-    Four tokens, the whole system. There is no separate hover shadow, and the scale never grows an <code>xl</code> or a <code>*-hover</code> variant.
+    Four tokens, the whole system. The scale stays closed at these four: <code>lg</code> is the top, and hover reuses the resting shadow, so every surface maps to one of the four.
   </p>
 
   <table className="sh-table">
