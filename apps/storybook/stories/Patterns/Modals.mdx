@@ -410,6 +410,136 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .md-menu-item:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
   .md-menu-item .md-material { font-size: 1.1rem; color: #64748b; }
 
+  /* ===== DESKTOP WINDOW STANDARD RENDER ===== */
+  .md-standard { margin: 1.25rem 0 0; }
+  .md-standard-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+    margin: 0 0 0.6rem;
+  }
+  .md-standard-cap .md-material { font-size: 0.95rem; color: #4338ca; }
+
+  .md-window {
+    max-width: 520px;
+    margin: 0 auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 24px 48px -12px rgba(15,23,42,0.30), 0 8px 16px -8px rgba(15,23,42,0.18);
+  }
+  .md-window-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .md-window-dots { display: inline-flex; gap: 0.35rem; justify-self: start; }
+  .md-window-dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; }
+  .md-window-url {
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: 240px;
+    padding: 0.22rem 0.75rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+  }
+  .md-window-url .md-material { font-size: 0.85rem; color: #94a3b8; }
+  .md-window-body {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    background: #f1f5f9;
+  }
+  .md-window-faux {
+    position: absolute;
+    inset: 0;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .md-window-faux-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.15rem;
+  }
+  .md-window-faux-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #0f172a;
+  }
+  .md-window-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e0e7ff;
+    color: #4338ca;
+    flex-shrink: 0;
+  }
+  .md-window-avatar .md-material { font-size: 1.05rem; }
+  .md-window-card {
+    background: #ffffff;
+    border: 1px solid #e6e8eb;
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .md-window-cardline { height: 0.55rem; border-radius: 5px; background: #e6e8eb; }
+  .md-window-cardline.short { width: 45%; }
+  .md-window-cardline.mid { width: 68%; }
+  .md-window-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(15,23,42,0.5);
+  }
+  .md-window-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: min(82%, 19rem);
+  }
+  .md-window-menu {
+    position: absolute;
+    z-index: 2;
+    top: 3.25rem;
+    right: 0.9rem;
+    width: 12rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.375rem;
+    box-shadow: 0 12px 24px -8px rgba(15,23,42,0.18), 0 4px 8px -4px rgba(15,23,42,0.10);
+  }
+
   /* ===== REQUIREMENT GRID ===== */
   .md-reqs {
     display: grid;
@@ -845,6 +975,50 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
   </div>
 
+  <div className="md-standard" aria-hidden="true">
+    <p className="md-standard-cap"><span className="md-material" aria-hidden="true">web_asset</span>Standard: dialog on desktop</p>
+    <div className="md-window">
+      <div className="md-window-bar">
+        <span className="md-window-dots"><span className="md-window-dot"></span><span className="md-window-dot"></span><span className="md-window-dot"></span></span>
+        <span className="md-window-url"><span className="md-material" aria-hidden="true">lock</span>app.ramoslabs.com</span>
+      </div>
+      <div className="md-window-body">
+        <div className="md-window-faux">
+          <div className="md-window-faux-head">
+            <span className="md-window-faux-title">Events</span>
+            <span className="md-window-avatar"><span className="md-material" aria-hidden="true">person</span></span>
+          </div>
+          <div className="md-window-card">
+            <div className="md-window-cardline mid"></div>
+            <div className="md-window-cardline short"></div>
+          </div>
+          <div className="md-window-card">
+            <div className="md-window-cardline"></div>
+            <div className="md-window-cardline short"></div>
+          </div>
+        </div>
+        <div className="md-window-scrim"></div>
+        <div className="md-dialog md-window-modal">
+          <div className="md-dialog-body">
+            <div className="md-dialog-head">
+              <h3 className="md-dialog-title">Rename event</h3>
+              <button type="button" tabIndex={-1} className="md-dialog-close" aria-label="Close dialog"><span className="md-material" aria-hidden="true">close</span></button>
+            </div>
+            <p className="md-dialog-text">Give this event a clearer public name. The change is visible to attendees right away.</p>
+            <div className="md-dialog-field">
+              <label>Event name</label>
+              <input type="text" tabIndex={-1} readOnly defaultValue="Summer Rooftop Session" />
+            </div>
+            <div className="md-dialog-actions">
+              <button type="button" tabIndex={-1} className="md-btn md-btn-ghost">Cancel</button>
+              <button type="button" tabIndex={-1} className="md-btn md-btn-primary">Save name</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div className="md-code">
     <div className="md-code-header">
       <span className="md-code-dot red" aria-hidden="true"></span>
@@ -953,6 +1127,47 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </p>
     </div>
   </div>
+
+  <div className="md-standard" aria-hidden="true">
+    <p className="md-standard-cap"><span className="md-material" aria-hidden="true">web_asset</span>Standard: alertdialog on desktop</p>
+    <div className="md-window">
+      <div className="md-window-bar">
+        <span className="md-window-dots"><span className="md-window-dot"></span><span className="md-window-dot"></span><span className="md-window-dot"></span></span>
+        <span className="md-window-url"><span className="md-material" aria-hidden="true">lock</span>app.ramoslabs.com</span>
+      </div>
+      <div className="md-window-body">
+        <div className="md-window-faux">
+          <div className="md-window-faux-head">
+            <span className="md-window-faux-title">Summer Rooftop Session</span>
+            <span className="md-window-avatar"><span className="md-material" aria-hidden="true">person</span></span>
+          </div>
+          <div className="md-window-card">
+            <div className="md-window-cardline mid"></div>
+            <div className="md-window-cardline short"></div>
+          </div>
+          <div className="md-window-card">
+            <div className="md-window-cardline"></div>
+            <div className="md-window-cardline short"></div>
+          </div>
+        </div>
+        <div className="md-window-scrim"></div>
+        <div className="md-dialog md-window-modal">
+          <div className="md-dialog-body">
+            <div className="md-dialog-head">
+              <span className="md-alert-mark"><span className="md-material" aria-hidden="true">warning</span></span>
+              <button type="button" tabIndex={-1} className="md-dialog-close" aria-label="Close dialog"><span className="md-material" aria-hidden="true">close</span></button>
+            </div>
+            <h3 className="md-dialog-title">Delete this event?</h3>
+            <p className="md-dialog-text">This permanently removes <strong>Summer Rooftop Session</strong> and its 240 sold tickets. This cannot be undone.</p>
+            <div className="md-dialog-actions">
+              <button type="button" tabIndex={-1} className="md-btn md-btn-ghost">Cancel</button>
+              <button type="button" tabIndex={-1} className="md-btn md-btn-danger">Delete event</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {/* ============================================ */}
@@ -1041,6 +1256,37 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="md-demo-note">
         <strong style={{ color: '#0f172a' }}>Dialog, modal</strong> interrupts. Background inert, focus trapped, needs an answer. Spend it rarely.
       </p>
+    </div>
+  </div>
+
+  <div className="md-standard" aria-hidden="true">
+    <p className="md-standard-cap"><span className="md-material" aria-hidden="true">web_asset</span>Standard: popover menu on desktop</p>
+    <div className="md-window">
+      <div className="md-window-bar">
+        <span className="md-window-dots"><span className="md-window-dot"></span><span className="md-window-dot"></span><span className="md-window-dot"></span></span>
+        <span className="md-window-url"><span className="md-material" aria-hidden="true">lock</span>app.ramoslabs.com</span>
+      </div>
+      <div className="md-window-body">
+        <div className="md-window-faux">
+          <div className="md-window-faux-head">
+            <span className="md-window-faux-title">Events</span>
+            <button type="button" tabIndex={-1} className="md-btn md-btn-tonal">Event actions</button>
+          </div>
+          <div className="md-window-card">
+            <div className="md-window-cardline mid"></div>
+            <div className="md-window-cardline short"></div>
+          </div>
+          <div className="md-window-card">
+            <div className="md-window-cardline"></div>
+            <div className="md-window-cardline short"></div>
+          </div>
+        </div>
+        <div className="md-window-menu">
+          <button type="button" tabIndex={-1} className="md-menu-item"><span className="md-material" aria-hidden="true">edit</span>Edit details</button>
+          <button type="button" tabIndex={-1} className="md-menu-item"><span className="md-material" aria-hidden="true">content_copy</span>Duplicate</button>
+          <button type="button" tabIndex={-1} className="md-menu-item"><span className="md-material" aria-hidden="true">share</span>Share link</button>
+        </div>
+      </div>
     </div>
   </div>
 

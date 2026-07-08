@@ -238,6 +238,19 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.08em;
     margin-bottom: 1rem;
   }
+  .mf-standard-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+    margin: 0.9rem 0 0;
+  }
+  .mf-standard-cap .mf-material { font-size: 0.95rem; color: #4338ca; }
 
   /* ===== REC / AVOID PAIR ===== */
   .mf-pair {
@@ -1129,6 +1142,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
       </div>
     </dialog>
+    <p className="mf-standard-cap"><span className="mf-material" aria-hidden="true">bookmark</span>Standard: modal bottom sheet</p>
     <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Try</span> Open it, then press Escape, or Tab to Cancel (which holds focus on open) and press Enter. Both close it. The backdrop dims the page and the rest goes inert.</p>
   </div>
 
@@ -1251,6 +1265,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </nav>
       </div>
     </div>
+    <p className="mf-standard-cap"><span className="mf-material" aria-hidden="true">bookmark</span>Standard: bottom navigation and FAB</p>
     <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> The active tab is marked with <code>aria-current="page"</code>, so a screen reader announces it as current, not by color alone. The FAB carries an <code>aria-label</code> because its glyph has no visible text.</p>
   </div>
 </div>
@@ -1287,6 +1302,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
       </div>
     </div>
+    <p className="mf-standard-cap"><span className="mf-material" aria-hidden="true">bookmark</span>Standard: bottom snackbar</p>
     <p className="mf-rule-why" style={{ marginTop: '0.75rem' }}><span className="mf-tag why">Note</span> The message sits in a polite live region so it is announced without stealing focus. The Undo action is a keyboard-reachable button, the same action a swipe would have triggered.</p>
   </div>
 </div>
