@@ -4,6 +4,9 @@ import type { Preview } from '@storybook/vue3-vite';
 // RamosLabs design tokens available as CSS custom properties.
 import '@ramoslabs/tokens/css';
 
+// Wraps every docs page with the global RamosLabs footer.
+import { DocsContainer } from './DocsContainer';
+
 const preview: Preview = {
   parameters: {
     options: {
@@ -39,6 +42,7 @@ const preview: Preview = {
     },
     docs: {
       toc: true,
+      container: DocsContainer,
     },
   },
   decorators: [
