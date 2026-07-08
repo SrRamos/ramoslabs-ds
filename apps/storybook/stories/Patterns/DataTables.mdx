@@ -874,6 +874,138 @@ import { Meta } from '@storybook/addon-docs/blocks';
   table.dt-data.sticky-first thead th.stick { background: #f8fafc; z-index: 2; }
   table.dt-data.sticky-first tbody tr:hover th.stick { background: #f8fafc; }
 
+  /* ===== PHONE-FRAME RENDER OF THE MOBILE TRANSFORM ===== */
+  .dt-phones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin: 1.5rem 0 0.5rem;
+  }
+  .dt-phone-fig {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    max-width: 320px;
+  }
+  .dt-phone {
+    position: relative;
+    width: 310px;
+    max-width: 100%;
+    background: #0f172a;
+    border-radius: 44px;
+    padding: 10px;
+    box-shadow: 0 28px 56px -16px rgba(15,23,42,0.45), inset 0 0 0 1px rgba(148,163,184,0.25);
+  }
+  .dt-phone-screen {
+    position: relative;
+    height: 620px;
+    background: #f8fafc;
+    border-radius: 34px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .dt-phone-island {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 24px;
+    background: #0f172a;
+    border-radius: 14px;
+    z-index: 5;
+  }
+  .dt-phone-head {
+    padding: 2.75rem 1rem 0.75rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e6e8eb;
+    flex-shrink: 0;
+  }
+  .dt-phone-title {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+  .dt-phone-sub {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin: 0.15rem 0 0;
+  }
+  .dt-phone-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem;
+  }
+  .dt-phone-cap {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #475569;
+    text-align: center;
+    margin: 0;
+    max-width: 30ch;
+  }
+  .dt-phone-cap b { color: #0f172a; font-weight: 700; }
+
+  /* Key/value record cards: real list, real labels */
+  .dt-cards { list-style: none; margin: 0; padding: 0; }
+  .dt-card {
+    background: #ffffff;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 0.85rem 0.95rem;
+    margin-bottom: 0.75rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+  }
+  .dt-card:last-child { margin-bottom: 0; }
+  .dt-card-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.6rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .dt-kv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.28rem 0;
+  }
+  .dt-kv-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+  }
+  .dt-kv-value {
+    font-size: 0.8125rem;
+    color: #0f172a;
+    text-align: right;
+  }
+
+  /* Comparison table kept as a table, clipped to imply horizontal scroll */
+  .dt-phone-scroll {
+    overflow-x: auto;
+    height: 100%;
+  }
+  .dt-phone-scroll:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px #4f46e5;
+  }
+  .dt-phone-scroll table.dt-data { font-size: 0.75rem; }
+  .dt-phone-scroll table.dt-data th,
+  .dt-phone-scroll table.dt-data td { height: 40px; padding: 0 0.65rem; }
+
   /* ===== SOURCES ===== */
   .dt-sources-list {
     list-style: none;
@@ -1645,6 +1777,76 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="dt-ladder-step"><span className="dt-ladder-text">Never: hover-only actions. Never: assume <code>display:block</code> keeps semantics.</span></div>
   </div>
 
+  <p className="dt-text" style={{ marginTop: '1.25rem' }}><strong>What that looks like on a 320px screen</strong>. The same attendee dataset, two ways. A <strong>record</strong> table becomes stacked cards, one identity per card, one thing per line. A <strong>comparison</strong> table stays a table and scrolls sideways with the identifier column pinned. Which way you go is the ladder above, not a coin toss.</p>
+
+  <div className="dt-phones">
+    <figure className="dt-phone-fig" aria-hidden="true">
+      <div className="dt-phone">
+        <div className="dt-phone-screen">
+          <div className="dt-phone-island"></div>
+          <div className="dt-phone-head">
+            <p className="dt-phone-title">Attendees</p>
+            <p className="dt-phone-sub">3 people</p>
+          </div>
+          <div className="dt-phone-body">
+            <ul className="dt-cards">
+              <li className="dt-card">
+                <p className="dt-card-name">Mariana Restrepo</p>
+                <div className="dt-kv"><span className="dt-kv-label">Status</span><span className="dt-kv-value"><span className="dt-badge paid">Paid</span></span></div>
+                <div className="dt-kv"><span className="dt-kv-label">City</span><span className="dt-kv-value">Denver</span></div>
+                <div className="dt-kv"><span className="dt-kv-label">Ticket</span><span className="dt-kv-value">General</span></div>
+              </li>
+              <li className="dt-card">
+                <p className="dt-card-name">Jordan Ellis</p>
+                <div className="dt-kv"><span className="dt-kv-label">Status</span><span className="dt-kv-value"><span className="dt-badge paid">Paid</span></span></div>
+                <div className="dt-kv"><span className="dt-kv-label">City</span><span className="dt-kv-value">Portland</span></div>
+                <div className="dt-kv"><span className="dt-kv-label">Ticket</span><span className="dt-kv-value">VIP</span></div>
+              </li>
+              <li className="dt-card">
+                <p className="dt-card-name">Riley Chen</p>
+                <div className="dt-kv"><span className="dt-kv-label">Status</span><span className="dt-kv-value"><span className="dt-badge pending">Pending</span></span></div>
+                <div className="dt-kv"><span className="dt-kv-label">City</span><span className="dt-kv-value">Cali</span></div>
+                <div className="dt-kv"><span className="dt-kv-label">Ticket</span><span className="dt-kv-value">General</span></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <figcaption className="dt-phone-cap"><b>Standard: record table becomes key/value cards.</b> Each card is one attendee, a real list with real label text. The recommended default when users read one record at a time.</figcaption>
+    </figure>
+
+    <figure className="dt-phone-fig" aria-hidden="true">
+      <div className="dt-phone">
+        <div className="dt-phone-screen">
+          <div className="dt-phone-island"></div>
+          <div className="dt-phone-head">
+            <p className="dt-phone-title">Attendees</p>
+            <p className="dt-phone-sub">Compare across columns</p>
+          </div>
+          <div className="dt-phone-scroll" role="region" aria-label="Attendees, scrollable" tabIndex={0}>
+            <table className="dt-data sticky-first" style={{ minWidth: '520px' }}>
+              <thead>
+                <tr>
+                  <th scope="col" className="stick">Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Ticket</th>
+                  <th scope="col" className="num">Paid (COP)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row" className="stick">Mariana Restrepo</th><td><span className="dt-badge paid">Paid</span></td><td>Denver</td><td>General</td><td className="num">180,000</td></tr>
+                <tr><th scope="row" className="stick">Jordan Ellis</th><td><span className="dt-badge paid">Paid</span></td><td>Portland</td><td>VIP</td><td className="num">420,000</td></tr>
+                <tr><th scope="row" className="stick">Riley Chen</th><td><span className="dt-badge pending">Pending</span></td><td>Cali</td><td>General</td><td className="num">180,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <figcaption className="dt-phone-cap"><b>Standard: comparison stays a table, scroll horizontally.</b> The Name column is pinned with <code>position: sticky</code>; the rest runs off the right edge. The default when comparing values across columns is the task.</figcaption>
+    </figure>
+  </div>
+
   <div className="dt-demo">
     <div className="dt-demo-label">Live: Pattern A, focusable scroll region with a sticky first column</div>
     <p className="dt-filter-status" style={{ marginTop: 0, marginBottom: '0.6rem' }}>Tab to the table below, then scroll it sideways. The Attendee column stays pinned.</p>
@@ -1732,13 +1934,19 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <strong>WAI-ARIA Authoring Practices Guide, Table and Grid patterns.</strong> Native table is strongly encouraged over <code>role="table"</code>, a WAI-ARIA table is static not interactive, and a grid is a composite widget with a single tab stop and roving tabindex. The Sortable Table example wraps header text in a button and drives state with <code>aria-sort</code>. w3.org/WAI/ARIA/apg/patterns/table <span className="dt-note">SPA index</span>
     </li>
     <li>
-      <strong>Adrian Roselli.</strong> Sortable Table Columns (2021, updated 2024): one <code>aria-sort</code> at a time, VoiceOver macOS and TalkBack do not announce it so add an optional live region, signal direction by shape not color, prefer a <code>&lt;caption&gt;</code> hint. Under-Engineered Responsive Tables (2020): the <code>role="region"</code> plus <code>tabindex="0"</code> scroll pattern, no scroll-snap. A Responsive Accessible Table (2017, updated 2024): <code>display:block</code> stops screen readers treating it as a table. adrianroselli.com
+      <strong>Adrian Roselli.</strong> Sortable Table Columns (2021, updated 2024): one <code>aria-sort</code> at a time, VoiceOver macOS and TalkBack do not announce it so add an optional live region, signal direction by shape not color, prefer a <code>&lt;caption&gt;</code> hint. Under-Engineered Responsive Tables (2020): the <code>role="region"</code> plus <code>tabindex="0"</code> scroll pattern, no scroll-snap. A Responsive Accessible Table (2017, updated 2024): <code>display:block</code> stops screen readers treating it as a table. Browser note: Safari only restored table semantics under a <code>display</code> override in Safari 17 (2023), and <code>display: contents</code> still drops semantics across browsers, so do not lean on <code>display</code> tricks. adrianroselli.com
     </li>
     <li>
       <strong>GOV.UK Design System, Table component.</strong> Captions help users find and understand tables, <code>scope</code> distinguishes row from column headers, numeric cell and header modifiers right-align, and aim for less tabular data on small screens. design-system.service.gov.uk/components/table
     </li>
     <li>
       <strong>Nielsen Norman Group.</strong> Data Tables, Four Major User Tasks (Laubheimer, 2022): borders, zebra striping and hover highlighting all help place-keeping, and freeze header rows and columns. Infinite Scrolling, When to Use It (Neusesser, 2022): avoid infinite scroll for find, compare and return tasks, so tables default to pagination. nngroup.com/articles/data-tables
+    </li>
+    <li>
+      <strong>Nielsen Norman Group, Amy Schade, Mobile Tables (2017).</strong> The primary source for the mobile guidance this page gives: keep the header and the identifying first column in view (sticky) while the rest scrolls, and use an accordion or expand to reveal secondary columns on narrow screens. nngroup.com/articles/mobile-tables
+    </li>
+    <li>
+      <strong>Baymard Institute (2024).</strong> Use product tables for desktop product listings: their testing shows a full comparison table degrades poorly on a phone, so on mobile it becomes a curated list view of two to three key attributes and the full comparison is deferred to desktop. This is the evidence behind the "not a table" rung of the decision ladder. baymard.com
     </li>
     <li>
       <strong>W3C, Understanding WCAG.</strong> SC 1.3.1 Info and Relationships (A) as the basis for table semantics, SC 1.4.1 Use of Color (A), SC 2.1.1 Keyboard (A), SC 1.4.10 Reflow (AA) with its data-table carve-out, and SC 2.5.8 Target Size Minimum 24px (AA) citing pagination links. w3.org/WAI/WCAG22/Understanding
