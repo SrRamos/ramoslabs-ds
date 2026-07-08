@@ -672,6 +672,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 `}
 </style>
 
+<div className="sb-unstyled">
+
 {/* ============================================ */}
 {/* HERO                                          */}
 {/* ============================================ */}
@@ -790,9 +792,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
           type="button"
           className="md-btn md-btn-primary"
           onClick={() => document.getElementById('md-dialog-demo').showModal()}
-        >
-          Rename event
-        </button>
+        >Rename event</button>
       </div>
       <p className="md-demo-note">
         Opens with <code>showModal()</code>. Initial focus lands on the text field via <code>autofocus</code>. Tab is trapped, Escape closes, focus returns to this button.
@@ -1189,4 +1189,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p>
     The six requirements, the roles, and the keyboard model from the WAI-ARIA Authoring Practices Guide: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/">Dialog (Modal) Pattern</a> and <a href="https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/">Alert Dialog Pattern</a>. The native element, <code>showModal()</code> vs <code>show()</code>, <code>::backdrop</code>, top layer, <code>method="dialog"</code>, the <code>open</code> and <code>tabindex</code> warnings, and Baseline support from MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog">&lt;dialog&gt;</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert">inert</a>, and the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">Popover API</a>. The legal focus trap from WCAG 2.1 Understanding <a href="https://www.w3.org/WAI/WCAG21/Understanding/no-keyboard-trap.html">SC 2.1.2 No Keyboard Trap</a> and the name and role floor from <a href="https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html">SC 4.1.2 Name, Role, Value</a>. The cost of interrupting and when a modal is justified from Nielsen Norman Group, <a href="https://www.nngroup.com/articles/modal-nonmodal-dialog/">Modal &amp; Nonmodal Dialogs</a>. The animation-breaks-focus-return caveat and the focus-on-Cancel practice from web.dev, <a href="https://web.dev/articles/building/a-dialog-component">Building a dialog component</a>. The one-thing-per-page stance from the <a href="https://design-system.service.gov.uk/accessibility/">GOV.UK Design System</a>.
   </p>
+</div>
+
 </div>
