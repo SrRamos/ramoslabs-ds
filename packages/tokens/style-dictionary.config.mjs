@@ -34,12 +34,16 @@ export default {
       ],
     },
     ts: {
-      transforms: ['name/pascal', ...valueTransforms],
+      transforms: ['name/camel', ...valueTransforms],
       buildPath: 'dist/',
       files: [
         {
-          destination: 'tokens.ts',
+          destination: 'tokens.js',
           format: 'javascript/es6',
+        },
+        {
+          destination: 'tokens.d.ts',
+          format: 'typescript/es6-declarations',
         },
       ],
     },
