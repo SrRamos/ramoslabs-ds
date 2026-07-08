@@ -1,0 +1,80 @@
+{
+  "name": "RamosLabs Design System",
+  "version": "0.0.0",
+  "generatedFrom": "@ramoslabs/tokens dist JSON + Storybook MDX content",
+  "tokens": {
+    "total": 213,
+    "byCategory": {
+      "breakpoint": 5,
+      "color": 130,
+      "duration": 3,
+      "easing": 5,
+      "radius": 8,
+      "shadow": 4,
+      "space": 14,
+      "state": 4,
+      "font": 21,
+      "leading": 5,
+      "tracking": 5,
+      "z": 9
+    },
+    "url": "https://ramoslabs-ds.pages.dev/tokens.json"
+  },
+  "patterns": [
+    {
+      "id": "interactive",
+      "title": "Interactive",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-interactive--docs",
+      "summary": "The three-modality state model, the tonal indigo --state-* overlay, the pointer-only hover gate, and the two-tone --shadow-focus ring"
+    },
+    {
+      "id": "accessibility",
+      "title": "Accessibility",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-accessibility--docs",
+      "summary": "The POUR taxonomy, semantic-HTML-before-ARIA, contrast ratios, keyboard and focus, target size, name-role-value, and a pre-ship checklist keyed to WCAG 2.2"
+    },
+    {
+      "id": "form-elements",
+      "title": "Form Elements",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-form-elements--docs",
+      "summary": "The canonical, exhaustive form guide: native-first doctrine, the accent-color theming recipe, field anatomy, validation timing, the mobile keyboard contract, the a11y floor, and a per-control catalog of 25 controls"
+    },
+    {
+      "id": "data-tables",
+      "title": "Data Tables",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-data-tables--docs",
+      "summary": "Native <table> first, the table vs role=grid fork, accessible sorting and row selection, density and alignment, pagination vs infinite scroll, filters, row actions, states, and the four mobile patterns"
+    },
+    {
+      "id": "modals",
+      "title": "Modals",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-modals--docs",
+      "summary": "The six accessibility requirements of a modal, native <dialog>.showModal() as the way to get them, dialog vs alertdialog, when not to use a modal, the Popover API, pitfalls, and the mobile bottom sheet"
+    },
+    {
+      "id": "mobile-first",
+      "title": "Mobile First",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-mobile-first--docs",
+      "summary": "The desktop-to-mobile pattern map, bottom sheets from native <dialog>, thumb-zone and sticky CTAs, bottom nav and FAB, snackbars, the gesture-alternative rules, safe-area insets, and capability-not-user-agent activation"
+    },
+    {
+      "id": "persuasion",
+      "title": "Persuasion",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-persuasion--docs",
+      "summary": "The standing six UX persuasion principles (smart defaults, endowed progress, reciprocity, IKEA/endowment, loss aversion, contrast) each gated by a hard truth-and-reversibility line, with dark patterns banned"
+    },
+    {
+      "id": "voice-tone",
+      "title": "Voice & Tone",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-voice-tone--docs",
+      "summary": "One constant brand voice, tone that adapts to context, three unbending voice principles, a microcopy library, tone by context, the error-writing framing rule, and the copy ethics prohibitions"
+    },
+    {
+      "id": "ai-insights",
+      "title": "AI Content",
+      "url": "https://ramoslabs-ds.pages.dev/?path=/docs/patterns-ai-content--docs",
+      "summary": "The AI-content pattern: label generated output, communicate uncertainty, show generation states, keep a human in the loop, plan for wrong answers, one-tap feedback, and data disclosure, under a disclosed-bounded-checkable-reversible contract"
+    }
+  ],
+  "components": []
+}

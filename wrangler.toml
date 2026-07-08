@@ -1,0 +1,11 @@
+# Cloudflare Pages config for the RamosLabs Design System (Storybook static site).
+# Used for direct-upload deploys: `bunx wrangler pages deploy` reads this file.
+# Production URL after first deploy: https://ramoslabs-ds.pages.dev
+#
+# The build output dir below is produced by:
+#   bun run build-storybook            # Storybook build (also copies agentic-static/_headers, _redirects)
+#   bun run --filter storybook agentic:build   # writes llms.txt, llms-full.txt, AGENTS.md, registry.json into it
+
+name = "ramoslabs-ds"
+compatibility_date = "2026-07-08"
+pages_build_output_dir = "apps/storybook/storybook-static"

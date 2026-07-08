@@ -1,0 +1,20 @@
+# Cloudflare Pages headers for the RamosLabs DS agentic layer.
+# Source of truth: apps/storybook/agentic-static/_headers
+# Copied to the deployed site root by Storybook staticDirs on every
+# `storybook build` (see apps/storybook/.storybook/main.ts).
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/registry.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/AGENTS.md
+  Content-Type: text/markdown; charset=utf-8
+  Access-Control-Allow-Origin: *
