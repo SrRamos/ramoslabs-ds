@@ -257,7 +257,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     box-sizing: border-box;
     background: white;
     border: 1px solid #64748b;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 0.75rem 1rem;
     font-size: 1rem;
     color: #0f172a;
@@ -429,7 +429,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.04em;
     color: #4338ca;
     background: #eef2ff;
-    border-radius: 999px;
+    border-radius: 6px;
     padding: 0.15rem 0.55rem;
     margin-bottom: 0.6rem;
   }
@@ -447,60 +447,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 0.8125rem;
     color: #64748b;
     line-height: 1.5;
-  }
-
-  /* ===== CONTROLS (checkbox / toggle) ===== */
-  .fe-controls { display: flex; flex-direction: column; gap: 1rem; }
-
-  .fe-control-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .fe-checkbox {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: #4f46e5;
-    border: 1px solid #4f46e5;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .fe-checkbox-off {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: white;
-    border: 1px solid #64748b;
-    border-radius: 6px;
-    flex-shrink: 0;
-  }
-
-  .fe-checkbox .fe-material { color: white; font-size: 1.05rem; }
-
-  .fe-control-label { color: #0f172a; font-size: 0.9375rem; font-family: 'Rubik', system-ui, sans-serif; }
-
-  .fe-toggle {
-    width: 2.75rem;
-    height: 1.5rem;
-    background: #4f46e5;
-    border-radius: 9999px;
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  .fe-toggle-knob {
-    position: absolute;
-    right: 0.25rem;
-    top: 0.25rem;
-    width: 1rem;
-    height: 1rem;
-    background: white;
-    border-radius: 9999px;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
   }
 
   /* ===== NATIVE ACCENT LAB ===== */
@@ -762,7 +708,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-radius: 999px;
+    border-radius: 6px;
     padding: 0.15rem 0.55rem;
     white-space: nowrap;
   }
@@ -820,6 +766,172 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .fe-cat-notes li strong { color: #0f172a; font-weight: 600; }
+
+  /* ===== IN-CARD LIVE DEMO ===== */
+  .fe-cat-demo {
+    background: #f8fafc;
+    border: 1px solid #e6e8eb;
+    border-radius: 8px;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .fe-cat-demo .fe-input { border-radius: 6px; padding: 0.6rem 0.75rem; }
+
+  .fe-cat-field { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .fe-cat-lbl {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #0f172a;
+  }
+
+  .fe-cat-demo legend.fe-cat-lbl { margin-bottom: 0.4rem; padding: 0; }
+
+  .fe-cat-demo input[type="checkbox"],
+  .fe-cat-demo input[type="radio"],
+  .fe-cat-demo input[type="range"] {
+    accent-color: var(--color-primary, #4f46e5);
+  }
+
+  .fe-cat-demo input[type="checkbox"]:not(.fe-switch),
+  .fe-cat-demo input[type="radio"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .fe-cat-demo input[type="range"] { width: 100%; }
+
+  .fe-cat-choice {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #0f172a;
+    min-height: 1.75rem;
+    cursor: pointer;
+  }
+
+  .fe-cat-group {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .fe-cat-hex {
+    width: 7rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    text-transform: uppercase;
+  }
+
+  /* ===== LIVE SWITCH (APG role="switch") ===== */
+  .fe-switch {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    background: #94a3b8;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 0;
+    transition: background 0.15s ease;
+  }
+
+  .fe-switch:checked { background: var(--color-primary, #4f46e5); }
+
+  .fe-switch::before {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 9999px;
+    background: white;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+    transition: transform 0.15s ease;
+  }
+
+  .fe-switch:checked::before { transform: translateX(1.25rem); }
+
+  .fe-switch:focus-visible {
+    outline: 2px solid var(--color-primary, #4f46e5);
+    outline-offset: 2px;
+  }
+
+  /* ===== LIVE STAR RATING (radio group, no JS) ===== */
+  .fe-stars {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+
+  .fe-stars > input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .fe-stars > label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: #cbd5e1;
+    cursor: pointer;
+  }
+
+  .fe-stars > label .fe-material { font-size: 1.75rem; }
+
+  .fe-stars > input:checked ~ label { color: var(--color-primary, #4f46e5); }
+
+  .fe-stars > input:focus-visible + label {
+    outline: 2px solid var(--color-primary, #4f46e5);
+    outline-offset: -2px;
+    border-radius: 6px;
+  }
+
+  /* ===== RICH TEXT REPRESENTATIVE ===== */
+  .fe-rte-toolbar {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .fe-rte-btn {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: white;
+    color: #0f172a;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fe-rte-btn .fe-material { font-size: 1.05rem; }
+
+  .fe-rte-area {
+    min-height: 3.5rem;
+    line-height: 1.5;
+  }
 
   /* ===== SOURCES ===== */
   .fe-sources-list {
@@ -1369,6 +1481,21 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Text</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="text"&gt;</p>
     <div className="fe-cat-attrs"><code>autocomplete</code><code>enterkeyhint</code><code>maxlength</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-text">Full name</label>
+        <input id="fe-d-text" className="fe-input" type="text" autoComplete="name" enterKeyHint="next" placeholder="Ada Lovelace" />
+      </div>
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-text-err">Full name, on-blur error</label>
+        <input id="fe-d-text-err" className="fe-input error" type="text" defaultValue="A" aria-invalid="true" aria-describedby="fe-d-text-err-m" />
+        <span id="fe-d-text-err-m" className="fe-error"><span className="fe-material" aria-hidden="true">error</span> Enter your full name so tickets match your ID.</span>
+      </div>
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-text-dis">Full name, disabled while saving</label>
+        <input id="fe-d-text-dis" className="fe-input" type="text" defaultValue="Ada Lovelace" disabled />
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Standard keyboard; keep <strong>font-size at 16px</strong>.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Visible <code>&lt;label for&gt;</code>; error via <code>aria-describedby</code> and <code>aria-invalid</code>.</li>
@@ -1379,6 +1506,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Email</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="email"&gt;</p>
     <div className="fe-cat-attrs"><code>inputmode="email"</code><code>autocomplete="email"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-email">Email</label>
+        <input id="fe-d-email" className="fe-input" type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" />
+      </div>
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-email-ok">Email, valid while typing</label>
+        <input id="fe-d-email-ok" className="fe-input success" type="email" inputMode="email" autoComplete="email" defaultValue="ana@ramoslabs.co" aria-describedby="fe-d-email-ok-m" />
+        <span id="fe-d-email-ok-m" className="fe-success-text"><span className="fe-material" aria-hidden="true">check_circle</span> Looks good.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Raises a keyboard with @ and a dot, no shift needed.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Built-in format validation; still write a fix-it error message.</li>
@@ -1389,6 +1527,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Password</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="password"&gt;</p>
     <div className="fe-cat-attrs"><code>autocomplete="current-password"</code><code>new-password</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-pass">Password, masked</label>
+        <input id="fe-d-pass" className="fe-input" type="password" autoComplete="new-password" defaultValue="ramoslabs" />
+      </div>
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-pass-show">Password, revealed by the show toggle</label>
+        <input id="fe-d-pass-show" className="fe-input" type="text" autoComplete="off" defaultValue="ramoslabs" />
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">visibility</span> Offer a show-password toggle; <strong>never block paste</strong>.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Use <code>new-password</code> on sign-up so managers offer a strong one.</li>
@@ -1399,6 +1547,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Number</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="number"&gt;</p>
     <div className="fe-cat-attrs"><code>inputmode="numeric"</code><code>min</code><code>max</code><code>step</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-num">Tickets (1 to 10)</label>
+        <input id="fe-d-num" className="fe-input" type="number" inputMode="numeric" min={1} max={10} step={1} defaultValue={2} />
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> For true quantities. For codes and IDs use <code>text</code> plus <code>inputmode</code>.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Native role is spinbutton; arrows step the value.</li>
@@ -1409,6 +1563,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Tel</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="tel"&gt;</p>
     <div className="fe-cat-attrs"><code>inputmode="tel"</code><code>autocomplete="tel"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-tel">Phone</label>
+        <input id="fe-d-tel" className="fe-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="300 123 4567" />
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Raises the phone dial pad. No format validation, so pair with a hint.</li>
       <li><span className="fe-material" aria-hidden="true">public</span> Add a country selector only when you serve many regions (see Composite).</li>
@@ -1419,6 +1579,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">URL</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="url"&gt;</p>
     <div className="fe-cat-attrs"><code>inputmode="url"</code><code>autocomplete="url"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-url">Website</label>
+        <input id="fe-d-url" className="fe-input" type="url" inputMode="url" autoComplete="url" placeholder="ramoslabs.co" />
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Keyboard adds / and .com shortcuts.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Validates for a scheme; accept input without <code>https://</code> and normalise it.</li>
@@ -1429,6 +1595,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Search</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="search"&gt;</p>
     <div className="fe-cat-attrs"><code>enterkeyhint="search"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-search">Search events</label>
+        <input id="fe-d-search" className="fe-input" type="search" enterKeyHint="search" defaultValue="jazz" placeholder="Search events" />
+        <span className="fe-help" style={{ marginTop: 0 }}>Type to see the native clear button appear.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Return key reads "Search"; a clear button appears on many browsers.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Carries an implicit searchbox role.</li>
@@ -1439,32 +1612,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Textarea</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;textarea&gt;</p>
     <div className="fe-cat-attrs"><code>rows</code><code>maxlength</code><code>enterkeyhint="enter"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-ta">Event description</label>
+        <textarea id="fe-d-ta" className="fe-input" rows={3} maxLength={140} defaultValue="An intimate night of live jazz under the stars." aria-describedby="fe-d-ta-c" style={{ resize: 'vertical' }}></textarea>
+        <span id="fe-d-ta-c" className="fe-help" style={{ marginTop: 0 }} aria-live="polite">92 characters left</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Keep 16px; let it auto-grow rather than trapping text in a scroll.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> If you show a counter, mirror it in an <code>aria-live</code> region.</li>
     </ul>
-  </div>
-</div>
-
-<div className="fe-lab">
-  <div className="fe-demo">
-    <div className="fe-demo-label">Native text inputs, right type each</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-email">Email</label>
-      <input id="fe-cat-email" className="fe-input" type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" />
-    </div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-tel">Phone</label>
-      <input id="fe-cat-tel" className="fe-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="300 123 4567" />
-    </div>
-  </div>
-  <div className="fe-demo">
-    <div className="fe-demo-label">Textarea with a live counter</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-ta">Event description</label>
-      <textarea id="fe-cat-ta" className="fe-input" rows={3} maxLength={140} defaultValue="An intimate night of live jazz under the stars." aria-describedby="fe-cat-ta-c" style={{ resize: 'vertical' }}></textarea>
-      <span id="fe-cat-ta-c" className="fe-help" aria-live="polite">92 characters left</span>
-    </div>
   </div>
 </div>
 
@@ -1480,6 +1638,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Select, single</span><span className="fe-verdict hybrid">Hybrid</span></div>
     <p className="fe-cat-el">&lt;select&gt;</p>
     <div className="fe-cat-attrs"><code>&lt;option&gt;</code><code>required</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-sel">Ticket type</label>
+        <select id="fe-d-sel" className="fe-input" defaultValue="ga">
+          <option value="ga">General admission</option>
+          <option value="vip">VIP</option>
+          <option value="student">Student</option>
+        </select>
+        <span className="fe-help" style={{ marginTop: 0 }}>Styled box, native popup.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> <strong>Prefer native</strong>: it opens the OS wheel, already accessible.</li>
       <li><span className="fe-material" aria-hidden="true">architecture</span> Custom only to style the popup, then follow <strong>APG Select-only Combobox</strong>. Long lists: switch to an autocomplete.</li>
@@ -1490,6 +1659,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Multi-select</span><span className="fe-verdict custom">Custom</span></div>
     <p className="fe-cat-el">no good native form</p>
     <div className="fe-cat-attrs"><code>aria-multiselectable</code><code>aria-selected</code></div>
+    <div className="fe-cat-demo">
+      <fieldset className="fe-cat-group">
+        <legend className="fe-cat-lbl">Accessibility needs</legend>
+        <label className="fe-cat-choice"><input type="checkbox" defaultChecked /> Wheelchair access</label>
+        <label className="fe-cat-choice"><input type="checkbox" /> Sign language interpreter</label>
+        <label className="fe-cat-choice"><input type="checkbox" defaultChecked /> Companion seat</label>
+      </fieldset>
+      <span className="fe-help" style={{ marginTop: 0 }}>A checkbox group beats <code>select multiple</code> on touch.</span>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> <code>&lt;select multiple&gt;</code> is hostile on touch; use checkboxes or a sheet.</li>
       <li><span className="fe-material" aria-hidden="true">architecture</span> Build against <strong>APG Listbox, multi-select</strong>, or just decompose into a checkbox group.</li>
@@ -1500,6 +1678,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Checkbox</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="checkbox"&gt;</p>
     <div className="fe-cat-attrs"><code>accent-color</code><code>checked</code></div>
+    <div className="fe-cat-demo">
+      <label className="fe-cat-choice"><input type="checkbox" defaultChecked /> Send me event reminders</label>
+      <label className="fe-cat-choice"><input type="checkbox" /> Add me to the newsletter</label>
+      <label className="fe-cat-choice"><input type="checkbox" ref={(el) => { if (el) el.indeterminate = true; }} /> Select all categories (indeterminate)</label>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Target 44px; <code>accent-color</code> tints it indigo, no rebuild.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> For a group, wrap in <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>.</li>
@@ -1510,6 +1693,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Radio group</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="radio"&gt; x N</p>
     <div className="fe-cat-attrs"><code>name</code><code>accent-color</code></div>
+    <div className="fe-cat-demo">
+      <fieldset className="fe-cat-group">
+        <legend className="fe-cat-lbl">Admission</legend>
+        <label className="fe-cat-choice"><input type="radio" name="fe-d-radio" defaultChecked /> General admission</label>
+        <label className="fe-cat-choice"><input type="radio" name="fe-d-radio" /> VIP</label>
+        <label className="fe-cat-choice"><input type="radio" name="fe-d-radio" /> Student</label>
+      </fieldset>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> One shared <code>name</code>; each option a 44px target.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> <strong>APG Radio Group</strong>: one tab-stop, arrows move and select.</li>
@@ -1520,6 +1711,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Switch, toggle</span><span className="fe-verdict custom">Custom</span></div>
     <p className="fe-cat-el">checkbox as the base</p>
     <div className="fe-cat-attrs"><code>role="switch"</code><code>aria-checked</code></div>
+    <div className="fe-cat-demo">
+      <label className="fe-cat-choice"><input type="checkbox" role="switch" className="fe-switch" defaultChecked /> Publish immediately</label>
+      <label className="fe-cat-choice"><input type="checkbox" role="switch" className="fe-switch" /> Show remaining tickets</label>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> For an instant on/off setting; the change applies at once.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> <strong>APG Switch</strong>: Space toggles, and the <strong>label does not change</strong> with state.</li>
@@ -1530,42 +1725,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Range, slider</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="range"&gt;</p>
     <div className="fe-cat-attrs"><code>min</code><code>max</code><code>step</code><code>accent-color</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-range">Max ticket price</label>
+        <input id="fe-d-range" type="range" min={0} max={100} step={5} defaultValue={65} aria-describedby="fe-d-range-v" />
+        <span id="fe-d-range-v" className="fe-help" style={{ marginTop: 0 }}>Around 65 of 100. Always show the value.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Tinted by <code>accent-color</code>; pair with a visible value, dragging is imprecise.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Native covers <strong>APG Slider</strong>. Two-thumb range: <strong>APG Slider Multi-Thumb</strong>.</li>
     </ul>
-  </div>
-</div>
-
-<div className="fe-lab">
-  <div className="fe-demo">
-    <div className="fe-demo-label">Native select, styled box, native popup</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-sel">Ticket type</label>
-      <select id="fe-cat-sel" className="fe-input" defaultValue="ga">
-        <option value="ga">General admission</option>
-        <option value="vip">VIP</option>
-        <option value="student">Student</option>
-      </select>
-      <span className="fe-help">The box is styled with CSS; the popup stays native and accessible.</span>
-    </div>
-  </div>
-  <div className="fe-demo">
-    <div className="fe-demo-label">Selection controls and a custom switch</div>
-    <div className="fe-controls">
-      <div className="fe-control-row">
-        <div className="fe-checkbox"><span className="fe-material" aria-hidden="true">check</span></div>
-        <span className="fe-control-label">Send me event reminders</span>
-      </div>
-      <div className="fe-control-row">
-        <div className="fe-checkbox-off"></div>
-        <span className="fe-control-label">Add me to the newsletter</span>
-      </div>
-      <div className="fe-control-row">
-        <div className="fe-toggle"><div className="fe-toggle-knob"></div></div>
-        <span className="fe-control-label">Publish immediately</span>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1592,6 +1762,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Calendar date</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="date"&gt;</p>
     <div className="fe-cat-attrs"><code>min</code><code>max</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-date">Event date</label>
+        <input id="fe-d-date" className="fe-input" type="date" min="2026-01-01" defaultValue="2026-09-12" />
+        <span className="fe-help" style={{ marginTop: 0 }}>A future date the user picks by looking, so the calendar earns its place.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Opens the OS calendar. Right for a date the user picks by looking.</li>
       <li><span className="fe-material" aria-hidden="true">architecture</span> Custom only to style the calendar: a button opening an <strong>APG Dialog</strong> grid.</li>
@@ -1602,6 +1779,25 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Memorable date</span><span className="fe-verdict hybrid">Hybrid</span></div>
     <p className="fe-cat-el">3 x &lt;input type="text"&gt;</p>
     <div className="fe-cat-attrs"><code>inputmode="numeric"</code><code>fieldset</code><code>legend</code></div>
+    <div className="fe-cat-demo">
+      <fieldset className="fe-cat-group">
+        <legend className="fe-cat-lbl">Date of birth</legend>
+        <div style={{ display: 'flex', gap: '0.6rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <label className="fe-help" htmlFor="fe-d-dob-d" style={{ marginTop: 0 }}>Day</label>
+            <input id="fe-d-dob-d" className="fe-input" style={{ width: '3.25rem' }} type="text" inputMode="numeric" maxLength={2} defaultValue="27" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <label className="fe-help" htmlFor="fe-d-dob-m" style={{ marginTop: 0 }}>Month</label>
+            <input id="fe-d-dob-m" className="fe-input" style={{ width: '3.25rem' }} type="text" inputMode="numeric" maxLength={2} defaultValue="3" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <label className="fe-help" htmlFor="fe-d-dob-y" style={{ marginTop: 0 }}>Year</label>
+            <input id="fe-d-dob-y" className="fe-input" style={{ width: '4.5rem' }} type="text" inputMode="numeric" maxLength={4} defaultValue="1998" />
+          </div>
+        </div>
+      </fieldset>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Birthdays and issue dates: three numeric fields beat a calendar.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> The GOV.UK pattern: day, month, year, grouped in a fieldset.</li>
@@ -1612,6 +1808,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Time</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="time"&gt;</p>
     <div className="fe-cat-attrs"><code>datetime-local</code><code>step</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-time">Doors open</label>
+        <input id="fe-d-time" className="fe-input" type="time" defaultValue="19:30" />
+      </div>
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-dtl">Starts (date and time)</label>
+        <input id="fe-d-dtl" className="fe-input" type="datetime-local" defaultValue="2026-09-12T20:00" />
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Native time wheel respects the 12 or 24 hour locale.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Use <code>datetime-local</code> to capture date and time in one control.</li>
@@ -1622,32 +1828,20 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Colour</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="color"&gt;</p>
     <div className="fe-cat-attrs"><code>value</code> hex</div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-color">Brand colour</label>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <input id="fe-d-color" type="color" defaultValue="#4f46e5" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #64748b', borderRadius: '6px', background: 'white', padding: '0.2rem', flexShrink: 0 }} />
+          <input className="fe-input fe-cat-hex" type="text" defaultValue="#4F46E5" aria-label="Brand colour hex value" />
+        </div>
+        <span className="fe-help" style={{ marginTop: 0 }}>Pair the picker with a typeable hex field.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Opens the OS colour picker. <code>accent-color</code> does not apply here.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Pair with a text hex field so the value is typeable too.</li>
     </ul>
-  </div>
-</div>
-
-<div className="fe-lab">
-  <div className="fe-demo">
-    <div className="fe-demo-label rec">✓ Recommended: native picker for a future date</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-date">Event date</label>
-      <input id="fe-cat-date" className="fe-input" type="date" defaultValue="2026-09-12" />
-      <span className="fe-help">The user is choosing a date to attend, so the calendar earns its place.</span>
-    </div>
-  </div>
-  <div className="fe-demo">
-    <div className="fe-demo-label">Native time and colour</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-time">Doors open</label>
-      <input id="fe-cat-time" className="fe-input" type="time" defaultValue="19:30" />
-    </div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-color">Brand colour</label>
-      <input id="fe-cat-color" type="color" defaultValue="#4f46e5" style={{ width: '3rem', height: '2.75rem', border: '1px solid #64748b', borderRadius: '8px', background: 'white', padding: '0.2rem' }} />
-    </div>
   </div>
 </div>
 
@@ -1663,6 +1857,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">File</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="file"&gt;</p>
     <div className="fe-cat-attrs"><code>accept</code><code>capture</code><code>multiple</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-file">Event poster</label>
+        <input id="fe-d-file" type="file" accept="image/*" style={{ fontSize: '1rem', color: '#0f172a' }} />
+        <span className="fe-help" style={{ marginTop: 0 }}>Native picker; on phones <code>capture</code> can open the camera.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> <code>capture</code> can open the camera directly for a photo upload.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Style the triggering <code>&lt;label&gt;</code>, never hide the input without a label.</li>
@@ -1673,6 +1874,20 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Combobox, autocomplete</span><span className="fe-verdict custom">Custom</span></div>
     <p className="fe-cat-el">&lt;input&gt; + &lt;datalist&gt; as base</p>
     <div className="fe-cat-attrs"><code>role="combobox"</code><code>aria-autocomplete</code><code>aria-expanded</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-combo">City</label>
+        <input id="fe-d-combo" className="fe-input" type="text" list="fe-d-cities" autoComplete="off" placeholder="Start typing a city" />
+        <datalist id="fe-d-cities">
+          <option value="Bogota" />
+          <option value="Medellin" />
+          <option value="Cali" />
+          <option value="Cartagena" />
+          <option value="Barranquilla" />
+        </datalist>
+        <span className="fe-help" style={{ marginTop: 0 }}>Native <code>datalist</code> stands in for a full APG combobox.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Text keyboard; render suggestions as a sheet on small screens.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> <strong>APG Combobox</strong> with <code>aria-activedescendant</code>. Enhance a real <code>&lt;select&gt;</code>.</li>
@@ -1683,6 +1898,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">One-time code</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input&gt; single or split</p>
     <div className="fe-cat-attrs"><code>autocomplete="one-time-code"</code><code>inputmode="numeric"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-otp">Verification code</label>
+        <input id="fe-d-otp" className="fe-input" type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="123456" style={{ letterSpacing: '0.4em' }} />
+        <span className="fe-help" style={{ marginTop: 0 }}>Sent by SMS; the phone can fill it in one tap.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> iOS and Android autofill the SMS code straight into the field.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> If you split into boxes, group them and announce progress.</li>
@@ -1693,6 +1915,21 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Phone with country</span><span className="fe-verdict hybrid">Hybrid</span></div>
     <p className="fe-cat-el">&lt;input type="tel"&gt; + selector</p>
     <div className="fe-cat-attrs"><code>autocomplete="tel"</code><code>tel-country-code</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-phone">Phone</label>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <select className="fe-input" aria-label="Country calling code" defaultValue="+57" style={{ width: '5.5rem', flexShrink: 0 }}>
+            <option value="+57">+57</option>
+            <option value="+1">+1</option>
+            <option value="+44">+44</option>
+            <option value="+52">+52</option>
+          </select>
+          <input id="fe-d-phone" className="fe-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="300 123 4567" />
+        </div>
+        <span className="fe-help" style={{ marginTop: 0 }}>Native tel input; only the country picker is custom.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> The number stays a native tel input; only the country picker is custom.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Country selector follows <strong>APG Combobox or Listbox</strong>.</li>
@@ -1703,29 +1940,17 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Currency, masked</span><span className="fe-verdict custom">Custom</span></div>
     <p className="fe-cat-el">&lt;input type="text"&gt; + mask</p>
     <div className="fe-cat-attrs"><code>inputmode="decimal"</code><code>pattern</code><code>aria-describedby</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-cur">Ticket price</label>
+        <input id="fe-d-cur" className="fe-input" type="text" inputMode="decimal" defaultValue="$ 85,000" aria-describedby="fe-d-cur-h" />
+        <span id="fe-d-cur-h" className="fe-help" style={{ marginTop: 0 }}>Amount in COP. The decimal keypad keeps entry fast.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Avoid <code>type="number"</code>: it fights thousands separators. Use text plus a mask.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> State the expected format in help; do not break editing for AT.</li>
     </ul>
-  </div>
-</div>
-
-<div className="fe-lab">
-  <div className="fe-demo">
-    <div className="fe-demo-label">One-time code, SMS autofill</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-otp">Verification code</label>
-      <input id="fe-cat-otp" className="fe-input" type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="123456" style={{ letterSpacing: '0.4em' }} />
-      <span className="fe-help">Sent by SMS. Your phone can fill it in one tap.</span>
-    </div>
-  </div>
-  <div className="fe-demo">
-    <div className="fe-demo-label">Masked currency, decimal keypad</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-cur">Ticket price</label>
-      <input id="fe-cat-cur" className="fe-input" type="text" inputMode="decimal" defaultValue="$ 85,000" aria-describedby="fe-cat-cur-h" />
-      <span id="fe-cat-cur-h" className="fe-help">Amount in COP. The decimal keypad keeps entry fast.</span>
-    </div>
   </div>
 </div>
 
@@ -1741,6 +1966,22 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Tags, chips</span><span className="fe-verdict custom">Custom</span></div>
     <p className="fe-cat-el">no native form</p>
     <div className="fe-cat-attrs"><code>role="combobox"</code><code>aria-label</code> per chip</div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-tags">Event topics</label>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'center', border: '1px solid #64748b', borderRadius: '6px', padding: '0.5rem', background: 'white' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15rem', background: '#eef2ff', color: '#3730a3', borderRadius: '6px', padding: '0.15rem 0.2rem 0.15rem 0.55rem', fontSize: '0.8125rem', lineHeight: 1, fontFamily: 'Rubik, sans-serif' }}>
+            Jazz
+            <button type="button" aria-label="Remove Jazz" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', borderRadius: '4px', padding: 0 }}><span className="fe-material" aria-hidden="true" style={{ fontSize: '0.95rem' }}>close</span></button>
+          </span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15rem', background: '#eef2ff', color: '#3730a3', borderRadius: '6px', padding: '0.15rem 0.2rem 0.15rem 0.55rem', fontSize: '0.8125rem', lineHeight: 1, fontFamily: 'Rubik, sans-serif' }}>
+            Live
+            <button type="button" aria-label="Remove Live" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', borderRadius: '4px', padding: 0 }}><span className="fe-material" aria-hidden="true" style={{ fontSize: '0.95rem' }}>close</span></button>
+          </span>
+          <input id="fe-d-tags" type="text" role="combobox" aria-expanded="false" aria-label="Add a topic" placeholder="Add topic" style={{ flex: 1, minWidth: '6rem', border: 'none', outline: 'none', fontSize: '1rem', fontFamily: 'Rubik, sans-serif', color: '#0f172a', background: 'transparent' }} />
+        </div>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Chips are 44px targets; each removable by keyboard, not hover alone.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Input follows <strong>APG Combobox</strong>; each chip's remove button has a label.</li>
@@ -1751,6 +1992,23 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Rating, stars</span><span className="fe-verdict custom">Custom</span></div>
     <p className="fe-cat-el">radio group as base</p>
     <div className="fe-cat-attrs"><code>role="radiogroup"</code><code>name</code></div>
+    <div className="fe-cat-demo">
+      <fieldset className="fe-cat-group">
+        <legend className="fe-cat-lbl">Rate this event</legend>
+        <div className="fe-stars">
+          <input type="radio" id="fe-d-star5" name="fe-d-rate" value="5" aria-label="5 stars" />
+          <label htmlFor="fe-d-star5"><span className="fe-material" aria-hidden="true">star</span></label>
+          <input type="radio" id="fe-d-star4" name="fe-d-rate" value="4" defaultChecked aria-label="4 stars" />
+          <label htmlFor="fe-d-star4"><span className="fe-material" aria-hidden="true">star</span></label>
+          <input type="radio" id="fe-d-star3" name="fe-d-rate" value="3" aria-label="3 stars" />
+          <label htmlFor="fe-d-star3"><span className="fe-material" aria-hidden="true">star</span></label>
+          <input type="radio" id="fe-d-star2" name="fe-d-rate" value="2" aria-label="2 stars" />
+          <label htmlFor="fe-d-star2"><span className="fe-material" aria-hidden="true">star</span></label>
+          <input type="radio" id="fe-d-star1" name="fe-d-rate" value="1" aria-label="1 star" />
+          <label htmlFor="fe-d-star1"><span className="fe-material" aria-hidden="true">star</span></label>
+        </div>
+      </fieldset>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Each star a 44px target; never depend on hover to set a value.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> One star is one radio option, so <strong>APG Radio Group</strong> carries it.</li>
@@ -1761,6 +2019,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Stepper, plus and minus</span><span className="fe-verdict native">Native</span></div>
     <p className="fe-cat-el">&lt;input type="number"&gt;</p>
     <div className="fe-cat-attrs"><code>min</code><code>max</code><code>step</code><code>role="spinbutton"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <label className="fe-cat-lbl" htmlFor="fe-d-step">Tickets</label>
+        <div style={{ display: 'flex', alignItems: 'stretch', gap: '0.5rem' }}>
+          <button type="button" aria-label="Remove one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #64748b', borderRadius: '6px', background: 'white', color: '#0f172a', fontSize: '1.25rem', cursor: 'pointer' }}>-</button>
+          <input id="fe-d-step" className="fe-input" type="number" inputMode="numeric" min={1} max={10} defaultValue={2} style={{ width: '4rem', textAlign: 'center' }} />
+          <button type="button" aria-label="Add one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #4f46e5', borderRadius: '6px', background: '#4f46e5', color: 'white', fontSize: '1.25rem', cursor: 'pointer' }}>+</button>
+        </div>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Custom plus and minus buttons at 44px beat the tiny native spinners.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Native and custom both are <strong>APG Spinbutton</strong>: arrows, Home, End.</li>
@@ -1771,41 +2039,22 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="fe-cat-head"><span className="fe-cat-name">Rich text</span><span className="fe-verdict custom">Custom</span></div>
     <p className="fe-cat-el">contenteditable, or a library</p>
     <div className="fe-cat-attrs"><code>contenteditable</code><code>role="toolbar"</code></div>
+    <div className="fe-cat-demo">
+      <div className="fe-cat-field">
+        <span className="fe-cat-lbl" id="fe-d-rte-lbl">Description</span>
+        <div className="fe-rte-toolbar" role="toolbar" aria-label="Text formatting">
+          <button type="button" className="fe-rte-btn" aria-label="Bold" aria-pressed="false">B</button>
+          <button type="button" className="fe-rte-btn" aria-label="Italic" aria-pressed="false" style={{ fontStyle: 'italic' }}>i</button>
+          <button type="button" className="fe-rte-btn" aria-label="Bulleted list"><span className="fe-material" aria-hidden="true">format_list_bulleted</span></button>
+        </div>
+        <div className="fe-input fe-rte-area" contentEditable="true" suppressContentEditableWarning role="textbox" aria-multiline="true" aria-labelledby="fe-d-rte-lbl"><span>An intimate night of </span><strong>live jazz</strong><span> under the stars.</span></div>
+        <span className="fe-help" style={{ marginTop: 0 }}>Representative pattern; a real editor follows APG Toolbar.</span>
+      </div>
+    </div>
     <ul className="fe-cat-notes">
       <li><span className="fe-material" aria-hidden="true">smartphone</span> Expensive to make accessible; use only when formatting truly matters.</li>
       <li><span className="fe-material" aria-hidden="true">accessibility_new</span> Toolbar follows <strong>APG Toolbar</strong>; announce applied formatting.</li>
     </ul>
-  </div>
-</div>
-
-<div className="fe-lab">
-  <div className="fe-demo">
-    <div className="fe-demo-label">Stepper, 44px targets</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-step">Tickets</label>
-      <div style={{ display: 'flex', alignItems: 'stretch', gap: '0.5rem' }}>
-        <button type="button" aria-label="Remove one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #64748b', borderRadius: '8px', background: 'white', color: '#0f172a', fontSize: '1.25rem', cursor: 'pointer' }}>-</button>
-        <input id="fe-cat-step" className="fe-input" type="number" inputMode="numeric" min={1} max={10} defaultValue={2} style={{ width: '4rem', textAlign: 'center' }} />
-        <button type="button" aria-label="Add one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #4f46e5', borderRadius: '8px', background: '#4f46e5', color: 'white', fontSize: '1.25rem', cursor: 'pointer' }}>+</button>
-      </div>
-    </div>
-  </div>
-  <div className="fe-demo">
-    <div className="fe-demo-label">Tags, keyboard removable</div>
-    <div className="fe-field">
-      <label className="fe-label" htmlFor="fe-cat-tags">Event topics</label>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'center', border: '1px solid #64748b', borderRadius: '8px', padding: '0.5rem' }}>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15rem', background: '#eef2ff', color: '#3730a3', borderRadius: '6px', padding: '0.15rem 0.2rem 0.15rem 0.55rem', fontSize: '0.8125rem', lineHeight: 1, fontFamily: 'Rubik, sans-serif' }}>
-          Jazz
-          <button type="button" aria-label="Remove Jazz" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', borderRadius: '4px', padding: 0 }}><span className="fe-material" aria-hidden="true" style={{ fontSize: '0.95rem' }}>close</span></button>
-        </span>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15rem', background: '#eef2ff', color: '#3730a3', borderRadius: '6px', padding: '0.15rem 0.2rem 0.15rem 0.55rem', fontSize: '0.8125rem', lineHeight: 1, fontFamily: 'Rubik, sans-serif' }}>
-          Live
-          <button type="button" aria-label="Remove Live" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', borderRadius: '4px', padding: 0 }}><span className="fe-material" aria-hidden="true" style={{ fontSize: '0.95rem' }}>close</span></button>
-        </span>
-        <input id="fe-cat-tags" type="text" role="combobox" aria-expanded="false" aria-label="Add a topic" placeholder="Add topic" style={{ flex: 1, minWidth: '6rem', border: 'none', outline: 'none', fontSize: '1rem', fontFamily: 'Rubik, sans-serif', color: '#0f172a', background: 'transparent' }} />
-      </div>
-    </div>
   </div>
 </div>
 
