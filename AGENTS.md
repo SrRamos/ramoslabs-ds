@@ -21,13 +21,18 @@ The system ships two things today:
 Components are not shipped yet. They land in the `@ramoslabs/vue` package under the `SJ`
 prefix in a future release. Until then, build with the tokens and the documented patterns.
 
-## Install and consume tokens
+## Consume tokens
 
-```bash
-bun add @ramoslabs/tokens   # or npm/pnpm/yarn
-```
+`@ramoslabs/tokens` is not yet published to npm, so `bun add @ramoslabs/tokens` does not work
+today. Get the token names and values one of two ways:
 
-Import the CSS variables once at your app entry, then reference them everywhere:
+- Read the served flat map from the deployed site: `WebFetch ${SITE_URL}/tokens.json` (names to
+  resolved values), or `${SITE_URL}/tokens.css` for the CSS variable declarations.
+- Or build the package from source in the monorepo: `bun run --filter @ramoslabs/tokens build`,
+  which emits `dist/tokens.css`, `dist/tokens.ts`, and `dist/tokens.json`.
+
+Once the package is available in your project, import the CSS variables once at your app entry,
+then reference them everywhere:
 
 ```css
 @import '@ramoslabs/tokens/css';
