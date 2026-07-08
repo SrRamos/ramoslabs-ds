@@ -1,0 +1,9 @@
+# Cloudflare Pages redirects for the RamosLabs DS site.
+# Source of truth: apps/storybook/agentic-static/_redirects
+# Copied to the deployed site root by Storybook staticDirs on every
+# `storybook build` (see apps/storybook/.storybook/main.ts).
+#
+# No redirects are needed today: the four agent files (llms.txt, llms-full.txt,
+# AGENTS.md, registry.json) are served as real files from the site root, and
+# Storybook routes in-app via ?path= query params, so no SPA fallback is required.
+# Keep this file as the place to add future rules (format: FROM  TO  STATUS).
