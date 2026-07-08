@@ -342,32 +342,49 @@ import { Meta } from '@storybook/addon-docs/blocks';
   /* ===== PHONE MOCK ===== */
   .mf-phone {
     position: relative;
-    width: 300px;
+    width: 320px;
     max-width: 100%;
     margin: 0 auto;
     background: #0f172a;
-    border-radius: 34px;
-    padding: 10px;
-    box-shadow: 0 20px 40px -12px rgba(15,23,42,0.35);
+    border-radius: 48px;
+    padding: 12px;
+    box-shadow: 0 28px 56px -16px rgba(15,23,42,0.45), inset 0 0 0 1px rgba(148,163,184,0.25);
+  }
+  .mf-phone::before,
+  .mf-phone::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    width: 3px;
+    border-radius: 2px 0 0 2px;
+    background: #1e293b;
+  }
+  .mf-phone::before {
+    top: 108px;
+    height: 34px;
+  }
+  .mf-phone::after {
+    top: 152px;
+    height: 58px;
   }
   .mf-phone-screen {
     position: relative;
-    height: 460px;
+    height: 640px;
     background: #f8fafc;
-    border-radius: 26px;
+    border-radius: 38px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
   }
   .mf-phone-notch {
     position: absolute;
-    top: 0;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 96px;
-    height: 20px;
+    width: 110px;
+    height: 26px;
     background: #0f172a;
-    border-radius: 0 0 12px 12px;
+    border-radius: 14px;
     z-index: 5;
   }
   .mf-status {
@@ -375,7 +392,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     align-items: center;
     justify-content: space-between;
     padding: 0.4rem 1rem 0.2rem;
-    padding-top: 1.5rem;
+    padding-top: 2.75rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.7rem;
     font-weight: 600;
@@ -1227,10 +1244,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
           <span className="mf-material" aria-hidden="true">add</span>
         </button>
         <nav className="mf-bottomnav" aria-label="Primary">
-          <a className="mf-navitem" href="#mf-nav-home" aria-current="page"><span className="mf-material" aria-hidden="true">home</span>Home</a>
-          <a className="mf-navitem" href="#mf-nav-events"><span className="mf-material" aria-hidden="true">calendar_month</span>Events</a>
-          <a className="mf-navitem" href="#mf-nav-tickets"><span className="mf-material" aria-hidden="true">confirmation_number</span>Tickets</a>
-          <a className="mf-navitem" href="#mf-nav-profile"><span className="mf-material" aria-hidden="true">person</span>Profile</a>
+          <a className="mf-navitem" href="#mf-nav-home" aria-current="page" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">home</span>Home</a>
+          <a className="mf-navitem" href="#mf-nav-events" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">calendar_month</span>Events</a>
+          <a className="mf-navitem" href="#mf-nav-tickets" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">confirmation_number</span>Tickets</a>
+          <a className="mf-navitem" href="#mf-nav-profile" onClick={(e) => e.preventDefault()}><span className="mf-material" aria-hidden="true">person</span>Profile</a>
         </nav>
       </div>
     </div>
