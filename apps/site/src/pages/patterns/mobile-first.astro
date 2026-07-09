@@ -1479,4 +1479,16 @@ const page = pages.find((p) => p.id === 'mobile-first')!
     dialog.mf-sheet { transition: none; }
   }
 </style>
+
+<script is:inline>
+  // Bottom-nav demo: switch the active item on tap without navigating or reloading.
+  const navItems = document.querySelectorAll('.mf-navitem');
+  for (const item of navItems) {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      for (const other of navItems) other.removeAttribute('aria-current');
+      item.setAttribute('aria-current', 'page');
+    });
+  }
+</script>
 </BaseLayout>
