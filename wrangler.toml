@@ -1,8 +1,10 @@
 # Cloudflare deployment config for the RamosLabs Design System.
-# The site is a static Astro build served by a Workers "static assets" project
-# (the successor to Cloudflare Pages). No server code — assets only.
+# The static Astro build is served from the ASSETS binding; a tiny Worker (main) adds an
+# MCP server at POST /mcp so agents get the DS as typed tools. Static assets are served
+# directly for matching paths; only non-asset paths (e.g. /mcp) invoke the Worker.
 #
 # Production URL: https://design.ramoslabs.com (also https://ramoslabs-ds.<subdomain>.workers.dev)
+# MCP endpoint:   https://design.ramoslabs.com/mcp  (and the workers.dev mirror)
 #
 # Workers Build settings (dashboard → the ramoslabs-ds Worker → Settings → Build):
 #   Build command:  bun install && bun run build --filter=site
@@ -10,10 +12,13 @@
 #   Root directory: (repo root, blank)
 # A single Astro build (turbo compiles @ramoslabs/tokens first) renders every page and
 # runs the agentic integration that writes llms.txt / registry.json / tokens.json / etc.
-# into apps/site/dist, which is uploaded as the Worker's assets below.
+# into apps/site/dist. The MCP tools read those same assets via the ASSETS binding, so
+# they can never drift from the site.
 
 name = "ramoslabs-ds"
+main = "./apps/site/worker/index.ts"
 compatibility_date = "2026-07-08"
 
 [assets]
 directory = "./apps/site/dist"
+binding = "ASSETS"
