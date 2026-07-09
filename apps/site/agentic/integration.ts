@@ -153,6 +153,7 @@ ${bullets('patterns')}
 - [llms-full.txt](${b}/llms-full.txt): every page inlined, plus the full token table.
 - [registry.json](${b}/registry.json): tokens, patterns, and components as JSON.
 - [tokens.json](${b}/tokens.json): the flat DTCG token map (name to resolved value).
+- [stats.json](${b}/stats.json): live, cookieless usage — npm downloads for the token package.
 
 ## MCP server
 

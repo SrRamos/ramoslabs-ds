@@ -5,6 +5,7 @@
 ### A mono-indigo, taxonomy-first design system that ships the decisions, not a bundle you import.
 
 [![npm](https://img.shields.io/npm/v/@ramoslabs/tokens?label=%40ramoslabs%2Ftokens&color=4f46e5&logo=npm)](https://www.npmjs.com/package/@ramoslabs/tokens)
+[![npm downloads](https://img.shields.io/npm/dm/@ramoslabs/tokens?label=downloads&color=4f46e5&logo=npm)](https://www.npmjs.com/package/@ramoslabs/tokens)
 [![License: MIT](https://img.shields.io/badge/License-MIT-4f46e5.svg)](./LICENSE)
 [![Docs: Astro](https://img.shields.io/badge/docs-Astro_7-4f46e5.svg)](https://astro.build/)
 [![Tokens: Style Dictionary](https://img.shields.io/badge/tokens-Style_Dictionary_v5-0b0d0e.svg)](https://styledictionary.com/)

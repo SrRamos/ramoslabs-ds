@@ -8,8 +8,58 @@
  * (tokens.json, llms-full.txt, AGENTS.md), so the tools can never drift from the site.
  */
 
+// Cloudflare Analytics Engine — cookieless, no-PII, server-side usage telemetry.
+// writeDataPoint is synchronous and non-blocking (no added response latency).
+interface AnalyticsEngineDataset {
+  writeDataPoint(event: { indexes?: string[]; blobs?: (string | null)[]; doubles?: number[] }): void
+}
+
 interface Env {
   ASSETS: { fetch: (request: Request | string) => Promise<Response> }
+  // Optional so local `wrangler dev` (and any build without the binding) still runs.
+  ANALYTICS?: AnalyticsEngineDataset
+}
+
+// Files that exist to be consumed by agents/tools. We count a GET to one of these as an
+// "agent_file" hit — the adoption signal that is distinct from a human page view, and that
+// a client-side JS beacon would miss entirely (agents and curl run no JS).
+const AGENT_FILES = new Set([
+  '/llms.txt',
+  '/llms-full.txt',
+  '/tokens.json',
+  '/registry.json',
+  '/skill.md',
+  '/AGENTS.md',
+  '/robots.txt',
+])
+
+type ReqMeta = { ua: string; referer: string; country: string; colo: string }
+
+function reqMeta(request: Request): ReqMeta {
+  const cf = (request as unknown as { cf?: Record<string, unknown> }).cf ?? {}
+  return {
+    ua: (request.headers.get('user-agent') ?? '').slice(0, 256),
+    referer: (request.headers.get('referer') ?? '').slice(0, 256),
+    country: String(cf.country ?? ''),
+    colo: String(cf.colo ?? ''),
+  }
+}
+
+// Fire-and-forget. No cookies, no PII, no client JS. A safe no-op when the binding is absent.
+// Schema: index = event type (for accurate per-type sampling); blobs = the dimensions we
+// slice by; doubles[0] = 1 (a countable event). Query with SUM(_sample_interval) via the
+// Analytics Engine SQL/GraphQL API.
+function logEvent(env: Env, type: string, path: string, detail: string, meta: ReqMeta) {
+  if (!env.ANALYTICS) return
+  try {
+    env.ANALYTICS.writeDataPoint({
+      indexes: [type],
+      blobs: [type, path, detail, meta.ua, meta.referer, meta.country, meta.colo],
+      doubles: [1],
+    })
+  } catch {
+    /* telemetry must never break a response */
+  }
 }
 
 const SERVER_INFO = { name: 'ramoslabs-ds', version: '0.1.0' }
@@ -315,7 +365,7 @@ async function handleRpc(msg: any, env: Env, origin: string): Promise<object | n
   }
 }
 
-async function handleMcp(request: Request, env: Env, origin: string): Promise<Response> {
+async function handleMcp(request: Request, env: Env, origin: string, meta: ReqMeta): Promise<Response> {
   // This transport does not open a server->client SSE stream on GET, so per the
   // Streamable HTTP spec, GET is Method Not Allowed. (Discovery is via llms.txt / docs/MCP.md.)
   if (request.method !== 'POST') {
@@ -340,6 +390,13 @@ async function handleMcp(request: Request, env: Env, origin: string): Promise<Re
   const messages = Array.isArray(body) ? body : [body]
   const responses: object[] = []
   for (const msg of messages) {
+    // Count MCP usage by method, and tools/call by tool name. `initialize` is the closest
+    // thing to a "new connection" on this stateless Streamable-HTTP transport.
+    const method = String(msg?.method ?? '')
+    if (method) {
+      const detail = method === 'tools/call' ? `tools/call:${String(msg?.params?.name ?? '?')}` : method
+      logEvent(env, 'mcp', '/mcp', detail, meta)
+    }
     const r = await handleRpc(msg, env, origin)
     if (r) responses.push(r)
   }
@@ -351,16 +408,67 @@ async function handleMcp(request: Request, env: Env, origin: string): Promise<Re
   return new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json', ...CORS } })
 }
 
+// Public, cookieless usage surface. npm download counts are the canonical adoption metric
+// for the token package; they are fetched live and cached at the edge so the number stays
+// current without hammering npm. Page, agent-file, and MCP metrics are collected server-side
+// in Analytics Engine (queried out-of-band via the SQL/GraphQL API, not exposed here).
+async function handleStats(env: Env, meta: ReqMeta): Promise<Response> {
+  logEvent(env, 'agent_file', '/stats.json', 'stats.json', meta)
+  const pkg = '@ramoslabs/tokens'
+  const windows = ['last-day', 'last-week', 'last-month'] as const
+  const downloads: Record<string, number | null> = {}
+  await Promise.all(
+    windows.map(async (w) => {
+      try {
+        const res = await fetch(`https://api.npmjs.org/downloads/point/${w}/${pkg}`, {
+          cf: { cacheTtl: 3600, cacheEverything: true },
+        } as RequestInit)
+        downloads[w] = res.ok ? (((await res.json()) as { downloads?: number }).downloads ?? null) : null
+      } catch {
+        downloads[w] = null
+      }
+    })
+  )
+  const payload = {
+    package: pkg,
+    npm: { url: `https://www.npmjs.com/package/${pkg}`, downloads },
+    measurement:
+      'Page, agent-file, and MCP-usage metrics are collected server-side via Cloudflare Analytics Engine — cookieless, no PII, no client JS.',
+  }
+  return new Response(JSON.stringify(payload, null, 2), {
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600',
+      ...CORS,
+    },
+  })
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url)
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: CORS })
     }
-    if (url.pathname === '/mcp' || url.pathname === '/mcp/') {
-      return handleMcp(request, env, url.origin)
+
+    const meta = reqMeta(request)
+    const path = url.pathname
+
+    if (path === '/mcp' || path === '/mcp/') {
+      return handleMcp(request, env, url.origin, meta)
     }
-    // Everything else: static assets (only reached for non-asset paths).
+    if (path === '/stats.json') {
+      return handleStats(env, meta)
+    }
+
+    // Count meaningful GETs server-side (no cookie, no client JS, agents and bots included).
+    // Skip fonts, images, CSS/JS and other sub-resources to keep the dataset signal-dense.
+    if (request.method === 'GET') {
+      if (AGENT_FILES.has(path)) logEvent(env, 'agent_file', path, path.replace(/^\//, ''), meta)
+      else if (path === '/' || path.endsWith('/')) logEvent(env, 'page', path, '', meta)
+    }
+
+    // Static assets (served by the ASSETS binding, which also applies _headers/_redirects).
     return env.ASSETS.fetch(request)
   },
 }
