@@ -164,7 +164,12 @@ bunx wrangler secret put CF_ANALYTICS_TOKEN</pre>
       const xPct = (xvb) => (xvb / GEO.W) * 100
       const yPct = (yvb) => (yvb / GEO.H) * 100
       const yFor = (v, max) => GEO.baseline - (v / max) * (GEO.baseline - GEO.padTop)
-      const mmdd = (day) => { const p = String(day).split('-'); return p.length === 3 ? `${p[1]}/${p[2]}` : day }
+      const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      const fmtDay = (day) => {
+        const p = String(day).split('-')
+        if (p.length !== 3) return day
+        return `${p[2]}/${MONTHS[Number(p[1]) - 1] || p[1]}/${p[0]}`
+      }
       let chart = null // { co, pts, max } for hover
 
       function trend(series) {
@@ -209,7 +214,7 @@ bunx wrangler secret put CF_ANALYTICS_TOKEN</pre>
         const idxs = [...new Set([0, Math.floor((n - 1) / 2), n - 1])]
         for (const i of idxs) {
           const lab = document.createElement('span')
-          lab.className = 'mx-xaxis-lab'; lab.textContent = mmdd(co[i].day)
+          lab.className = 'mx-xaxis-lab'; lab.textContent = fmtDay(co[i].day)
           lab.style.left = xPct(co[i].x) + '%'
           if (i === 0) lab.style.transform = 'translateX(0)'
           else if (i === n - 1) lab.style.transform = 'translateX(-100%)'
@@ -253,7 +258,7 @@ bunx wrangler secret put CF_ANALYTICS_TOKEN</pre>
           cross.setAttribute('x1', String(c.x)); cross.setAttribute('x2', String(c.x)); cross.removeAttribute('hidden')
           dot.style.left = xPct(c.x) + '%'; dot.style.top = yPct(c.y) + '%'; dot.hidden = false
           tip.textContent = ''
-          const d = document.createElement('span'); d.className = 'mx-tip-day'; d.textContent = mmdd(c.day)
+          const d = document.createElement('span'); d.className = 'mx-tip-day'; d.textContent = fmtDay(c.day)
           const v = document.createElement('span'); v.className = 'mx-tip-val'; v.textContent = `${fmt(c.v)} downloads`
           tip.append(d, v)
           tip.style.left = Math.max(8, Math.min(92, xPct(c.x))) + '%'
