@@ -118,6 +118,7 @@ const page = pages.find((p) => p.id === 'modals')!
         <button
           type="button"
           class="md-btn md-btn-primary"
+          data-open-dialog="md-dialog-demo"
         >Rename event</button>
       </div>
       <p class="md-demo-note">
@@ -274,6 +275,7 @@ const page = pages.find((p) => p.id === 'modals')!
         <button
           type="button"
           class="md-btn md-btn-danger-outline"
+          data-open-dialog="md-alert-demo"
         >Delete event</button>
       </div>
       <p class="md-demo-note">
@@ -1504,4 +1506,16 @@ const page = pages.find((p) => p.id === 'modals')!
   .md-refs a { color: #4f46e5; text-decoration: none; }
   .md-refs a:hover { text-decoration: underline; }
 </style>
+
+<script is:inline>
+  // Progressive enhancement: open each demo dialog with the native showModal()
+  // (top layer, focus trap, Escape-to-close, ::backdrop). The dialogs close via their
+  // <form method="dialog"> buttons, so nothing here submits or reloads the page.
+  for (const trigger of document.querySelectorAll('[data-open-dialog]')) {
+    trigger.addEventListener('click', () => {
+      const dialog = document.getElementById(trigger.getAttribute('data-open-dialog'));
+      if (dialog && typeof dialog.showModal === 'function') dialog.showModal();
+    });
+  }
+</script>
 </BaseLayout>
