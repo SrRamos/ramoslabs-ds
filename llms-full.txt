@@ -332,6 +332,92 @@ import '@ramoslabs/tokens/css';
 
 Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.1.
 
+# Installation
+
+Source: https://design.ramoslabs.com/installation/
+
+Install `@ramoslabs/tokens` from npm, import the CSS variables once at your app entry, and reference the tokens everywhere. The tokens are the single source of truth; nothing hardcodes a value.
+
+## 1. Install the tokens
+
+The package is published on the public npm scope. Use any package manager: `bun add @ramoslabs/tokens`, `npm install @ramoslabs/tokens`, `pnpm add @ramoslabs/tokens`, or `yarn add @ramoslabs/tokens`.
+
+## 2. Import the CSS once
+
+At your app entry, import the generated CSS variables a single time: `@import '@ramoslabs/tokens/css';`. Every `--color-*`, `--space-*`, `--radius-*`, `--shadow-*`, `--font-*`, and motion variable is then available globally.
+
+## 3. Build against the contract
+
+Reference the tokens in your styles — never a raw value. For example a card reads `background: var(--color-surface); padding: var(--space-6); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);`. A raw hex or px in your CSS is a defect. Typed values are available from the package root for TypeScript, and the flat name-to-value map is `@ramoslabs/tokens/json`.
+
+## Without installing
+
+You do not have to install the package to consume the system. Read the served flat token map at `/tokens.json`, or `@import` the served stylesheet from the documentation site. This is useful for a quick prototype or a build that cannot add the dependency.
+
+## Framework notes
+
+The tokens are framework-agnostic CSS variables and typed values — they work in any stack (plain CSS, Vue, React, Svelte, Astro, Tailwind via CSS variables). Import the CSS once at the root; in a component framework that means the app entry or root layout, not each component.
+
+## For AI agents
+
+An agent should not fetch or scrape these values by hand. Connect the MCP server and use `get_token` and `check_contrast` instead — see the For Agents and MCP Server pages. Components (`SJ`/`W`) are not shipped yet; until they land, build from these tokens and the documented patterns.
+
+# For Agents
+
+Source: https://design.ramoslabs.com/agents/
+
+Agent-native. MCP-first. AI-ready by design. This design system is built to be consumed by an AI agent, not just read by a human. Every rule, token, and pattern is available as machine-readable data and as typed, verifiable tools, so an agent builds against the contract instead of guessing from rendered HTML.
+
+## The contract, in one place
+
+Six artifacts make the whole system legible to a machine. All are served from the site root and are free to fetch, read-only, and need no auth.
+
+- **MCP server** (`/mcp`) — the design system as seven typed tools: `search_tokens`, `get_token`, `check_contrast`, `list_docs`, `get_doc`, `lint_css`, `get_agents_guide`. Streamable HTTP, read-only, no auth. This is the highest-leverage way to consume the system: the tools return structured, verified data with no interpretation and no invention. See the MCP Server page.
+- **Agent skill** (`/skill.md`) — a Claude Code skill that makes an agent build and review UI strictly by this system, never inventing a token, value, or rule. Copy it to `.claude/skills/ramoslabs-ds/SKILL.md` in a project, or `~/.claude/skills/…` globally.
+- **llms.txt** (`/llms.txt`) — a concise index of every documentation page with its URL and summary.
+- **llms-full.txt** (`/llms-full.txt`) — the entire system inlined into one self-contained document, plus the full token table. Fetch this when you want everything in context at once.
+- **registry.json** (`/registry.json`) — structured tokens-by-category, the pattern list, and the components array, as JSON.
+- **AGENTS.md** (`/AGENTS.md`) — the full agent onboarding guide: the hard contract and how to apply it.
+- **tokens.json** (`/tokens.json`) — the flat DTCG token map (name to resolved value). Look up the exact token here before typing any value.
+
+## Verify, do not scrape
+
+The difference that matters: these tools are for correctness, not just discovery. `check_contrast` returns the WCAG ratio and the AA/AAA verdicts. `lint_css` flags a raw hex, rgb, px, or rem that should be a token and suggests the token. `get_token` returns the exact value and the `var(--…)` to use, and errors if the token does not exist so an agent can never invent one. An agent connected to the server builds against a contract it cannot get wrong, instead of interpreting a screenshot or a page of HTML.
+
+## The one hard rule still applies
+
+Everything an agent produces follows the same contract a human does: never hardcode a color, spacing, typography, radius, shadow, or motion value — read the token. Indigo 600 is the single action accent. WCAG 2.1 AA is the floor. The agent layer exists to make that contract easy to honor and impossible to fake.
+
+# MCP Server
+
+Source: https://design.ramoslabs.com/agents/mcp/
+
+The design system ships a Model Context Protocol (MCP) server so any MCP-capable agent (Claude Code, Cursor, Windsurf, and others) gets the system as typed, verifiable tools instead of scraping HTML or fetching files. It is stateless, read-only, and needs no auth. Transport is Streamable HTTP; the endpoint is `POST /mcp`.
+
+## The seven tools
+
+- `search_tokens(query, limit?)` — find tokens by name or value substring.
+- `get_token(name)` — the exact token value plus the `var(--…)` to use. Errors if it does not exist, so an agent never invents one.
+- `check_contrast(foreground, background)` — the WCAG ratio plus AA/AAA verdicts for normal text, large text, and UI.
+- `list_docs()` — every documentation page title (foundations and patterns).
+- `get_doc(title)` — the full distilled doctrine for one page. Read it before implementing a pattern.
+- `lint_css(code)` — flag a raw hex, rgb, px, or rem that should be a token, and suggest the matching token.
+- `get_agents_guide()` — the full AGENTS.md agent guide.
+
+## Not install — verify
+
+Most component MCP servers exist to discover and install code. This one exists so an agent gets the system right: contrast checked, CSS linted against the token contract, and token values returned exact and never invented. The tools are structured and verified, so the agent builds against a contract instead of interpreting rendered output.
+
+## Connect it
+
+Claude Code: `claude mcp add --transport http ramoslabs-ds https://design.ramoslabs.com/mcp`.
+
+Other MCP clients (Cursor, Windsurf, …): add a server entry with the URL `https://design.ramoslabs.com/mcp` and transport `http`. The agent then has `search_tokens`, `check_contrast`, `lint_css`, and the rest as first-class tools — no WebFetch, no HTML interpretation, no invented values.
+
+## Quick check
+
+Call `tools/list` against the endpoint to confirm the seven tools, then call `check_contrast` with the primary accent on white to confirm it verifies (indigo 600 on white returns roughly 6.3:1, which passes AA).
+
 # Colors
 
 Source: https://design.ramoslabs.com/foundations/colors/

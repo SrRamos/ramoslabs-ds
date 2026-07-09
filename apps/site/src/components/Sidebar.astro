@@ -1,14 +1,15 @@
 ---
 import Icon from './Icon.astro'
-import { rootPage, foundationsPages, patternsPages } from '../data/pages'
+import { rootPages, agentsPages, foundationsPages, patternsPages } from '../data/pages'
 
 // Left navigation. Grouped Foundations / Patterns, current-page highlight from the URL.
 const current = Astro.url.pathname
 const isActive = (path: string) => current === path || current === path.replace(/\/$/, '')
 
 const groups = [
-  { label: 'Foundations', tier: 'Tier 1', pages: foundationsPages },
-  { label: 'Patterns', tier: 'Tier 2', pages: patternsPages },
+  { label: 'For Agents', tier: 'MCP', pages: agentsPages, agentic: true },
+  { label: 'Foundations', tier: 'Tier 1', pages: foundationsPages, agentic: false },
+  { label: 'Patterns', tier: 'Tier 2', pages: patternsPages, agentic: false },
 ]
 ---
 <nav class="rl-nav" aria-label="Documentation">
@@ -21,18 +22,20 @@ const groups = [
   </a>
 
   <ul class="rl-nav__list rl-nav__list--root">
-    <li>
-      <a class:list={['rl-nav__link', { 'is-active': isActive(rootPage.path) }]} href={rootPage.path} aria-current={isActive(rootPage.path) ? 'page' : undefined}>
-        <Icon name={rootPage.icon} />
-        <span>{rootPage.title}</span>
-      </a>
-    </li>
+    {rootPages.map((page) => (
+      <li>
+        <a class:list={['rl-nav__link', { 'is-active': isActive(page.path) }]} href={page.path} aria-current={isActive(page.path) ? 'page' : undefined}>
+          <Icon name={page.icon} />
+          <span>{page.title}</span>
+        </a>
+      </li>
+    ))}
   </ul>
 
   {groups.map((group) => (
     <div class="rl-nav__group">
       <p class="rl-nav__group-head">
-        <span class="rl-nav__group-tier">{group.tier}</span>
+        <span class:list={['rl-nav__group-tier', { 'is-agentic': group.agentic }]}>{group.tier}</span>
         {group.label}
       </p>
       <ul class="rl-nav__list">
@@ -122,6 +125,11 @@ const groups = [
     padding: 0.15rem 0.45rem;
     border-radius: var(--radius-sm, 4px);
     letter-spacing: 0.04em;
+  }
+  /* Decorative violet marks the agent-facing group apart from the tiered doctrine. */
+  .rl-nav__group-tier.is-agentic {
+    color: var(--color-secondary, #7c3aed);
+    background: var(--color-secondary-surface, #f5f3ff);
   }
 
   .rl-nav__link {

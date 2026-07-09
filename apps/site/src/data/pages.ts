@@ -6,7 +6,7 @@
 // `contentFile` points at the distilled plain-text body under agentic/content, which
 // the agentic layer inlines for AI agents.
 
-export type PageGroup = 'root' | 'foundations' | 'patterns'
+export type PageGroup = 'root' | 'agents' | 'foundations' | 'patterns'
 
 export type Page = {
   id: string
@@ -40,6 +40,38 @@ export const pages: Page[] = [
     summary:
       'What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth',
     contentFile: 'Introduction.md',
+  },
+  {
+    id: 'installation',
+    title: 'Installation',
+    group: 'root',
+    path: '/installation/',
+    icon: 'download',
+    summary:
+      'Install @ramoslabs/tokens from npm, import the CSS variables once at your app entry, and build against the token contract — plus the no-install path and the framework notes',
+    contentFile: 'Installation.md',
+  },
+
+  // ---- For Agents ----
+  {
+    id: 'agents',
+    title: 'For Agents',
+    group: 'agents',
+    path: '/agents/',
+    icon: 'smart_toy',
+    summary:
+      'Agent-native, MCP-first, AI-ready by design: the machine-readable contract that lets any agent build against this system with typed, verifiable tools instead of scraped HTML',
+    contentFile: 'agents/ForAgents.md',
+  },
+  {
+    id: 'mcp',
+    title: 'MCP Server',
+    group: 'agents',
+    path: '/agents/mcp/',
+    icon: 'hub',
+    summary:
+      'The Model Context Protocol server: seven typed, read-only tools (search_tokens, get_token, check_contrast, list_docs, get_doc, lint_css, get_agents_guide), how to connect each client, and why the tools verify rather than just install',
+    contentFile: 'agents/MCP.md',
   },
 
   // ---- Foundations ----
@@ -238,6 +270,8 @@ export const pages: Page[] = [
   },
 ]
 
+export const rootPages = pages.filter((p) => p.group === 'root')
+export const agentsPages = pages.filter((p) => p.group === 'agents')
 export const foundationsPages = pages.filter((p) => p.group === 'foundations')
 export const patternsPages = pages.filter((p) => p.group === 'patterns')
 export const rootPage = pages.find((p) => p.group === 'root')!
