@@ -1,12 +1,19 @@
-# Cloudflare Pages config for the RamosLabs Design System (Astro static site).
-# Production URL: https://design.ramoslabs.com (also https://ramoslabs-ds.pages.dev)
+# Cloudflare deployment config for the RamosLabs Design System.
+# The site is a static Astro build served by a Workers "static assets" project
+# (the successor to Cloudflare Pages). No server code — assets only.
 #
-# The build output dir below is produced by a single Astro build:
-#   bun install && bun run build --filter=site
-# which compiles @ramoslabs/tokens first (turbo ^build), renders one HTML file per
-# clean URL, and runs the agentic integration that emits llms.txt, llms-full.txt,
-# registry.json, robots.txt, tokens.json, and AGENTS.md into the output.
+# Production URL: https://design.ramoslabs.com (also https://ramoslabs-ds.<subdomain>.workers.dev)
+#
+# Workers Build settings (dashboard → the ramoslabs-ds Worker → Settings → Build):
+#   Build command:  bun install && bun run build --filter=site
+#   Deploy command: npx wrangler deploy
+#   Root directory: (repo root, blank)
+# A single Astro build (turbo compiles @ramoslabs/tokens first) renders every page and
+# runs the agentic integration that writes llms.txt / registry.json / tokens.json / etc.
+# into apps/site/dist, which is uploaded as the Worker's assets below.
 
 name = "ramoslabs-ds"
 compatibility_date = "2026-07-08"
-pages_build_output_dir = "apps/site/dist"
+
+[assets]
+directory = "./apps/site/dist"
