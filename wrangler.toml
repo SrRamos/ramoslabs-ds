@@ -22,3 +22,17 @@ compatibility_date = "2026-07-08"
 [assets]
 directory = "./apps/site/dist"
 binding = "ASSETS"
+# Run the Worker before serving a static asset so it can count page views and agent-file
+# fetches server-side (cookieless, no client JS). The Worker then serves the asset via the
+# ASSETS binding, which still applies _headers/_redirects. Telemetry uses writeDataPoint,
+# which is non-blocking, so this adds no user-facing latency.
+run_worker_first = true
+
+# Cookieless, no-PII usage telemetry. Query via the Analytics Engine SQL/GraphQL API.
+[[analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "ramoslabs_ds"
+
+# Workers Logs for debugging and log-based metrics.
+[observability]
+enabled = true
