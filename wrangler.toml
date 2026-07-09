@@ -38,8 +38,7 @@ dataset = "ramoslabs_ds"
 enabled = true
 
 # Optional: read Analytics Engine aggregates back for the unlisted /metricas dashboard.
-# Uncomment and set your account id (not secret), then add the token as a secret:
+# This repo is PUBLIC, so set BOTH as secrets — nothing account-identifying lands in git:
+#   bunx wrangler secret put CF_ACCOUNT_ID
 #   bunx wrangler secret put CF_ANALYTICS_TOKEN   # scope: Account Analytics: Read
 # Without these, /metricas.json returns npm downloads only (usage: null). See docs/ANALYTICS.md.
-# [vars]
-# CF_ACCOUNT_ID = "<your-cloudflare-account-id>"
