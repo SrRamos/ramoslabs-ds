@@ -4,12 +4,12 @@
 
 ### A mono-indigo, taxonomy-first design system that ships the decisions, not a bundle you import.
 
-[![@ramoslabs/tokens](https://img.shields.io/github/package-json/v/SrRamos/ramoslabs-ds?filename=packages%2Ftokens%2Fpackage.json&label=%40ramoslabs%2Ftokens&color=4f46e5)](./CHANGELOG.md)
+[![npm](https://img.shields.io/npm/v/@ramoslabs/tokens?label=%40ramoslabs%2Ftokens&color=4f46e5&logo=npm)](https://www.npmjs.com/package/@ramoslabs/tokens)
 [![License: MIT](https://img.shields.io/badge/License-MIT-4f46e5.svg)](./LICENSE)
-[![Built with Storybook](https://img.shields.io/badge/docs-Storybook_10-ff4785.svg)](https://storybook.js.org/)
+[![Docs: Astro](https://img.shields.io/badge/docs-Astro_7-4f46e5.svg)](https://astro.build/)
 [![Tokens: Style Dictionary](https://img.shields.io/badge/tokens-Style_Dictionary_v5-0b0d0e.svg)](https://styledictionary.com/)
 
-[Documentation](#what-you-get) · [Tokens](#using-the-design-tokens) · [Agentic layer](#the-agentic-layer) · [Quick start](#quick-start) · [Changelog](./CHANGELOG.md) · [Contributing](./CONTRIBUTING.md) · [License](#license)
+[Live docs](https://design.ramoslabs.com) · [Tokens](#using-the-design-tokens) · [Agentic layer](#the-agentic-layer) · [Quick start](#quick-start) · [Changelog](./CHANGELOG.md) · [Contributing](./CONTRIBUTING.md) · [License](#license)
 
 </div>
 
@@ -63,8 +63,8 @@ The brand is mono-indigo. One hue, eleven steps. Indigo 600 is the single action
 | | |
 |---|---|
 | **The token package** | `@ramoslabs/tokens`. 213 tokens across color, typography, spacing, radius, shadow, motion, z-index, breakpoints, and state. DTCG JSON source compiled to CSS variables, typed TypeScript, and a flat JSON map. |
-| **The doctrine book** | A Storybook site with nine foundation pages (color, type, spacing, radius, shadow, motion, responsive, helpers, token reference) plus an introduction, and nine pattern pages (interactive, accessibility, forms, tables, modals, mobile-first, persuasion, voice and tone, AI content). |
-| **The agentic layer** | Machine-readable files (`llms.txt`, `llms-full.txt`, `registry.json`, `AGENTS.md`) so an AI coding agent can pull the whole system into context over HTTP. |
+| **The doctrine book** | A static **Astro** documentation site at [design.ramoslabs.com](https://design.ramoslabs.com): nine foundation pages (color, type, spacing, radius, shadow, motion, responsive, helpers, token reference) plus an interactive color picker and an introduction, and nine pattern pages (interactive, accessibility, forms, tables, modals, mobile-first, persuasion, voice and tone, AI content). Every page is a real HTML document at a clean URL and ships zero JavaScript except the color picker. |
+| **The agentic layer** | Machine-readable files (`llms.txt`, `llms-full.txt`, `registry.json`, `tokens.json`, `AGENTS.md`) so an AI coding agent can pull the whole system into context over HTTP. |
 | **Mobile-first architecture** | The differentiator. Patterns and tokens are built small-screen first, so what you ship reads on a phone before it reads on a desktop, not the other way around. |
 
 `@ramoslabs/vue` is an empty scaffold today. SJ components are planned for a future release, not shipped. Build with the tokens and the documented patterns until then.
@@ -74,8 +74,8 @@ The brand is mono-indigo. One hue, eleven steps. Indigo 600 is the single action
 The build generates a machine-readable layer so AI coding agents can consume the whole system. An agent pulls it into context with a single fetch:
 
 ```
-WebFetch https://ramoslabs-ds.pages.dev/llms-full.txt
-WebFetch https://ramoslabs-ds.pages.dev/registry.json
+WebFetch https://design.ramoslabs.com/llms-full.txt
+WebFetch https://design.ramoslabs.com/registry.json
 ```
 
 - **`llms.txt`** is a concise index of every page with its docs URL.
@@ -92,11 +92,14 @@ git clone https://github.com/SrRamos/ramoslabs-ds.git
 cd ramoslabs-ds
 bun install
 
-bun run storybook        # start the doctrine book at localhost:6006
-bun run build-storybook  # build the static documentation site
-bun run typecheck        # type-check every workspace
-bun run build            # turbo build: compiles tokens, then the vue lib
+bun run --filter site dev    # start the docs site (Astro) at localhost:4321
+bun run --filter site build  # build the static docs site into apps/site/dist
+bun run typecheck            # type-check every workspace
+bun run build                # turbo build: tokens, the docs site, and Storybook
 ```
+
+Storybook is retained as the component harness for the upcoming `@ramoslabs/vue`
+library (`bun run storybook`), but it is no longer the published documentation site.
 
 Tokens only:
 
@@ -147,17 +150,18 @@ packages/
   tokens/   @ramoslabs/tokens   DTCG JSON source, compiled to CSS + JS + types + JSON
   vue/      @ramoslabs/vue       Vue 3 component library (SJ prefix), scaffold only
 apps/
-  storybook/                     The doctrine book + the agentic layer generator
+  site/                          The docs site (Astro static) + the agentic layer integration
+  storybook/                     Component harness for @ramoslabs/vue (kept, out of deploy)
 ```
 
-**Stack:** Bun workspaces plus Turborepo for the monorepo, Style Dictionary v5 for token compilation (strict DTCG: `$value` and `$type`), Storybook 10 with the Vue 3 Vite framework for the documentation, TypeScript, Node 22.
+**Stack:** Bun workspaces plus Turborepo for the monorepo, Style Dictionary v5 for token compilation (strict DTCG: `$value` and `$type`), Astro 7 (static, near-zero JS) for the documentation site with a Vue island for the color picker, Storybook 10 retained as the component harness, TypeScript, Node 22.
 
 ## Roadmap
 
 These are planned, not commitments with dates:
 
-- Publish `@ramoslabs/tokens` to npm so consumers can install it directly.
-- Ship SJ components in `@ramoslabs/vue`.
+- Ship SJ components in `@ramoslabs/vue`, exercised in Storybook and documented on the site.
+- Make `ramoslabs.com` consume the design system end to end.
 
 ## Versioning
 
