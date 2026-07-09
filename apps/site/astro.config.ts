@@ -16,7 +16,8 @@ export default defineConfig({
   },
   integrations: [
     vue(),
-    sitemap(),
+    // Keep the unlisted internal dashboard out of the sitemap.
+    sitemap({ filter: (page) => !page.includes('/metricas') }),
     agentic(),
   ],
 })

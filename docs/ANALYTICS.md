@@ -28,8 +28,33 @@ country, and Cloudflare colo.
   it with the [Analytics Engine SQL API](https://developers.cloudflare.com/analytics/analytics-engine/sql-api/)
   or GraphQL. Counts are `SUM(_sample_interval)` (Analytics Engine samples under load).
 - **Workers Logs** (`[observability] enabled = true`) for debugging and log-based views.
-- **`/stats.json`** — a public, cookieless, edge-cached endpoint returning live npm download
-  counts. Extensible: it can later fold in Analytics Engine aggregates behind a read token.
+- **`/stats.json`** — **public**, cookieless, edge-cached. Returns **npm download counts only**
+  (data that is already public on npm). Linked from `/agents/` and `llms.txt`. It deliberately
+  does **not** expose server-side usage aggregates.
+- **`/metricas`** — an **unlisted internal dashboard** (standalone page, not a DS nav entry;
+  `noindex`, excluded from the sitemap, not in `llms.txt` or `robots.txt`). It reads
+  **`/metricas.json`**, an unlisted same-origin feed that returns npm downloads **plus** the
+  Analytics Engine aggregates (page views, agent-file fetches, MCP tool calls, top pages).
+  Security is by obscurity: the route is simply not advertised. Add real auth (e.g. Cloudflare
+  Access) if you need it locked down.
+
+## Enabling the live dashboard
+
+`/metricas` shows npm downloads out of the box. To light up the server-side aggregates, give
+the Worker read access to Analytics Engine:
+
+1. Create an API token with **Account Analytics: Read** at
+   [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens).
+2. Set the account id as a var and the token as a secret:
+   ```bash
+   # wrangler.toml → [vars]  (account id is not secret)
+   #   CF_ACCOUNT_ID = "<your-account-id>"
+   bunx wrangler secret put CF_ANALYTICS_TOKEN
+   ```
+3. Redeploy. `/metricas.json` will start returning the `usage` object and the dashboard fills in.
+
+Without these, `/metricas.json` returns `usage: null` and the dashboard shows a setup hint —
+nothing breaks.
 
 ## Example queries
 
