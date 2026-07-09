@@ -136,6 +136,10 @@ A mono-indigo, taxonomy-first design system. Tokens are the single source of tru
 color, spacing, typography, radius, shadow, and motion values ship as CSS variables via
 \`@ramoslabs/tokens\`. Never hardcode a raw value; read the token.
 
+## For agents
+
+${bullets('agents')}
+
 ## Foundations
 
 ${bullets('foundations')}

@@ -1,0 +1,489 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'mcp')!
+
+const MCP_URL = 'https://design.ramoslabs.com/mcp'
+
+const tools = [
+  { name: 'search_tokens', sig: 'query, limit?', purpose: 'Find tokens by name or value substring.' },
+  { name: 'get_token', sig: 'name', purpose: 'Exact token value plus the var(--…) to use. Errors if it does not exist, so an agent never invents one.' },
+  { name: 'check_contrast', sig: 'foreground, background', purpose: 'WCAG ratio plus AA/AAA verdicts for normal text, large text, and UI.' },
+  { name: 'list_docs', sig: '', purpose: 'Every documentation page title (foundations and patterns).' },
+  { name: 'get_doc', sig: 'title', purpose: 'The full distilled doctrine for one page. Read it before implementing a pattern.' },
+  { name: 'lint_css', sig: 'code', purpose: 'Flag a raw hex, rgb, px, or rem that should be a token, and suggest the matching token.' },
+  { name: 'get_agents_guide', sig: '', purpose: 'The full AGENTS.md agent guide.' },
+]
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<!-- ===== HERO ===== -->
+<div class="ag-hero">
+  <div class="ag-hero-inner">
+    <div class="ag-hero-badge">
+      <Icon name="hub" style="font-size:15px" />
+      For Agents / MCP Server
+    </div>
+    <h1 class="ag-hero-title">The design system as <em>typed tools</em>.</h1>
+    <p class="ag-hero-subtitle">
+      A Model Context Protocol server exposes this system as seven verifiable tools, so any
+      MCP-capable agent reads tokens, checks contrast, and lints CSS as first-class calls —
+      no scraping HTML, no fetching files, no invented values. Stateless, read-only, no auth.
+    </p>
+    <div class="ag-install">
+      <span class="ag-install-label">Claude Code</span>
+      <code class="ag-install-cmd" id="mcp-cmd">claude mcp add --transport http ramoslabs-ds {MCP_URL}</code>
+      <button type="button" class="ag-copy" data-copy="claude mcp add --transport http ramoslabs-ds https://design.ramoslabs.com/mcp" aria-label="Copy command">
+        <Icon name="content_copy" style="font-size:16px" />
+        <span class="ag-copy-text">Copy</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WHAT IS MCP ===== -->
+<div class="ag-section">
+  <div class="ag-head">
+    <div class="ag-head-label">What it is</div>
+    <h2 class="ag-head-title">One endpoint, seven tools</h2>
+  </div>
+  <p class="ag-text">
+    The Model Context Protocol is an open standard for connecting an AI agent to external
+    tools. This server runs on the same Worker that serves the docs, over
+    <strong>Streamable HTTP</strong> at <code>POST /mcp</code>. It is stateless, read-only,
+    and needs no auth — connect it and the agent gets the tools below.
+  </p>
+</div>
+
+<!-- ===== QUICK START ===== -->
+<div class="ag-section">
+  <div class="ag-head">
+    <div class="ag-head-label">Quick start</div>
+    <h2 class="ag-head-title">Connect your client</h2>
+  </div>
+
+  <div class="ag-clients">
+    <div class="ag-client">
+      <div class="ag-client-head"><Icon name="terminal" /> Claude Code</div>
+      <div class="ag-code">
+        <div class="ag-code-bar"><span class="ag-dot d1"></span><span class="ag-dot d2"></span><span class="ag-dot d3"></span><span class="ag-code-lang">shell</span></div>
+        <pre>claude mcp add --transport http \
+  ramoslabs-ds {MCP_URL}</pre>
+      </div>
+    </div>
+
+    <div class="ag-client">
+      <div class="ag-client-head"><Icon name="api" /> Cursor · Windsurf · VS Code</div>
+      <div class="ag-code">
+        <div class="ag-code-bar"><span class="ag-dot d1"></span><span class="ag-dot d2"></span><span class="ag-dot d3"></span><span class="ag-code-lang">json</span></div>
+        <pre set:html={`<span class="c-p">{</span>
+  <span class="c-k">"mcpServers"</span><span class="c-p">:</span> <span class="c-p">{</span>
+    <span class="c-k">"ramoslabs-ds"</span><span class="c-p">:</span> <span class="c-p">{</span>
+      <span class="c-k">"url"</span><span class="c-p">:</span> <span class="c-v">"${MCP_URL}"</span><span class="c-p">,</span>
+      <span class="c-k">"transport"</span><span class="c-p">:</span> <span class="c-v">"http"</span>
+    <span class="c-p">}</span>
+  <span class="c-p">}</span>
+<span class="c-p">}</span>`} />
+      </div>
+    </div>
+  </div>
+
+  <p class="ag-text" style="margin-top:1.5rem">
+    Then the agent has <code>search_tokens</code>, <code>check_contrast</code>,
+    <code>lint_css</code>, and the rest as first-class tools.
+  </p>
+</div>
+
+<!-- ===== TOOLS ===== -->
+<div class="ag-section">
+  <div class="ag-head">
+    <div class="ag-head-label">The tools</div>
+    <h2 class="ag-head-title">Seven, all read-only</h2>
+  </div>
+
+  <div class="ag-table-wrap">
+    <table class="ag-table">
+      <thead>
+        <tr><th scope="col">Tool</th><th scope="col">Arguments</th><th scope="col">Purpose</th></tr>
+      </thead>
+      <tbody>
+        {tools.map((t) => (
+          <tr>
+            <td><code class="ag-tool">{t.name}</code></td>
+            <td>{t.sig ? <code class="ag-args">{t.sig}</code> : <span class="ag-none">—</span>}</td>
+            <td>{t.purpose}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== VERIFY NOT INSTALL ===== -->
+<div class="ag-section">
+  <div class="ag-head">
+    <div class="ag-head-label">The difference</div>
+    <h2 class="ag-head-title">These tools verify. They don't just install.</h2>
+  </div>
+  <p class="ag-text">
+    Most component MCP servers exist to discover and install code. This one exists so an agent
+    gets the system right: contrast checked, CSS linted against the token contract, and token
+    values returned exact and never invented. The agent builds against a contract it cannot
+    get wrong, instead of interpreting rendered output.
+  </p>
+  <div class="ag-callout">
+    <Icon name="verified" />
+    <p class="ag-callout-text">
+      <code>get_token('color-primary')</code> returns the value <em>and</em> the
+      <code>var(--color-primary)</code> to use — and <strong>errors on an unknown name</strong>,
+      so an invented token fails loudly instead of shipping.
+    </p>
+  </div>
+</div>
+
+<!-- ===== QUICK CHECK ===== -->
+<div class="ag-section">
+  <div class="ag-head">
+    <div class="ag-head-label">Quick check</div>
+    <h2 class="ag-head-title">Confirm it live</h2>
+  </div>
+  <p class="ag-text">
+    List the tools, then check the accent on white — indigo 600 returns roughly 6.3:1, which
+    passes AA.
+  </p>
+  <div class="ag-code">
+    <div class="ag-code-bar"><span class="ag-dot d1"></span><span class="ag-dot d2"></span><span class="ag-dot d3"></span><span class="ag-code-lang">shell</span></div>
+    <pre set:html={`<span class="c-cm"># list the seven tools</span>
+curl -s -X POST ${MCP_URL} \\
+  -H <span class="c-v">'Content-Type: application/json'</span> \\
+  -d <span class="c-v">'{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</span>
+
+<span class="c-cm"># check_contrast: indigo 600 on white → ~6.3, AA</span>
+curl -s -X POST ${MCP_URL} \\
+  -H <span class="c-v">'Content-Type: application/json'</span> \\
+  -d <span class="c-v">'{"jsonrpc":"2.0","id":2,"method":"tools/call",</span>
+<span class="c-v">      "params":{"name":"check_contrast",</span>
+<span class="c-v">      "arguments":{"foreground":"#4f46e5","background":"#ffffff"}}}'</span>`} />
+  </div>
+  <div class="ag-note">
+    <Icon name="info" />
+    <p>
+      Prefer the branded <code>design.ramoslabs.com/mcp</code>. If a cloud-hosted client is
+      ever blocked, the same server answers at
+      <code>ramoslabs-ds.edwardramosp.workers.dev/mcp</code>, which is never bot-gated.
+    </p>
+  </div>
+</div>
+
+<script>
+  // Progressive enhancement: copy the install command. Without JS the command is still
+  // visible and selectable — the button just becomes a no-op affordance.
+  for (const btn of document.querySelectorAll('[data-copy]')) {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy') || ''
+      try {
+        await navigator.clipboard.writeText(text)
+        const label = btn.querySelector('.ag-copy-text')
+        if (label) {
+          const prev = label.textContent
+          label.textContent = 'Copied'
+          btn.classList.add('is-copied')
+          setTimeout(() => {
+            label.textContent = prev
+            btn.classList.remove('is-copied')
+          }, 1600)
+        }
+      } catch {
+        /* clipboard unavailable — the command stays visible to select by hand */
+      }
+    })
+  }
+</script>
+
+<style is:global>
+  /* ===== HERO (shared visual language with /agents/) ===== */
+  .ag-hero {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 45%, var(--color-secondary) 100%);
+    margin: -1rem -1rem 4rem -1rem;
+    padding: 5rem 3rem;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    position: relative;
+    overflow: hidden;
+  }
+  .ag-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  .ag-hero-inner { position: relative; z-index: 1; }
+  .ag-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-family: var(--font-family-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .ag-hero-title {
+    font-family: var(--font-family-display);
+    color: #fff;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem 0;
+    max-width: 18ch;
+  }
+  .ag-hero-title em { font-style: normal; color: var(--color-primary-surface); }
+  .ag-hero-subtitle {
+    font-family: var(--font-family-sans);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 48rem;
+    margin: 0 0 2rem 0;
+  }
+
+  /* ===== INSTALL ONE-LINER ===== */
+  .ag-install {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    background: rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.6rem 0.6rem 1rem;
+    max-width: 100%;
+  }
+  .ag-install-label {
+    font-family: var(--font-family-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary-surface);
+    flex-shrink: 0;
+  }
+  .ag-install-cmd {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85rem;
+    color: #fff;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+  .ag-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--color-primary-dark);
+    background: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 0.75rem;
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+  .ag-copy.is-copied { background: var(--color-success-surface); color: var(--color-success-text); }
+  .ag-copy:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+  /* ===== SECTIONS ===== */
+  .ag-section { margin-bottom: 5rem; }
+  .ag-head { margin-bottom: 2rem; }
+  .ag-head-label {
+    font-family: var(--font-family-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.6rem;
+  }
+  .ag-head-title {
+    font-family: var(--font-family-display);
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    color: var(--color-text-heading);
+    margin: 0;
+    line-height: 1.1;
+  }
+  .ag-text {
+    font-family: var(--font-family-sans);
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 44rem;
+    margin: 0 0 1.5rem 0;
+  }
+  .ag-text strong { color: var(--color-text-heading); font-weight: 600; }
+  .ag-text code, .ag-note code, .ag-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: var(--color-surface-secondary);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-dark);
+  }
+
+  /* ===== CLIENT CARDS ===== */
+  .ag-clients {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  @media (max-width: 820px) { .ag-clients { grid-template-columns: 1fr; } }
+  .ag-client-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-text-heading);
+    margin-bottom: 0.75rem;
+  }
+  .ag-client-head .material-symbols-outlined { font-size: 20px; color: var(--color-primary); }
+
+  /* ===== CODE BLOCKS (dark terminal chrome, the site's established code treatment) ===== */
+  .ag-code {
+    background: #1e293b;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .ag-code-bar {
+    background: #334155;
+    padding: 0.6rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .ag-dot { width: 11px; height: 11px; border-radius: var(--radius-pill); }
+  .ag-dot.d1 { background: #64748b; }
+  .ag-dot.d2 { background: #94a3b8; }
+  .ag-dot.d3 { background: #cbd5e1; }
+  .ag-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .ag-code pre {
+    margin: 0;
+    padding: 1.15rem 1.25rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .ag-code .c-cm { color: #94a3b8; font-style: italic; }
+  .ag-code .c-k { color: #7dd3fc; }
+  .ag-code .c-v { color: #a5f3fc; }
+  .ag-code .c-p { color: #94a3b8; }
+
+  /* ===== TOOLS TABLE ===== */
+  .ag-table-wrap { overflow-x: auto; border-radius: var(--radius-lg); border: 1px solid var(--color-border); }
+  .ag-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-surface);
+    font-family: var(--font-family-sans);
+    font-size: 0.9rem;
+  }
+  .ag-table th {
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    background: var(--color-surface-secondary);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .ag-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .ag-table tr:last-child td { border-bottom: none; }
+  .ag-tool {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    white-space: nowrap;
+  }
+  .ag-args {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+  .ag-none { color: var(--color-text-disabled); }
+
+  /* ===== CALLOUT ===== */
+  .ag-callout {
+    display: flex;
+    gap: 0.85rem;
+    background: var(--color-primary-surface);
+    border: 1px solid var(--color-primary-light);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.35rem;
+    max-width: 44rem;
+  }
+  .ag-callout .material-symbols-outlined { color: var(--color-primary-dark); font-size: 1.35rem; flex-shrink: 0; }
+  .ag-callout-text {
+    font-family: var(--font-family-sans);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-primary-dark);
+    margin: 0;
+  }
+  .ag-callout-text strong { color: var(--color-secondary-dark); font-weight: 700; }
+  .ag-callout-text em { font-style: italic; }
+
+  /* ===== NOTE ===== */
+  .ag-note {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin-top: 1.25rem;
+    max-width: 44rem;
+  }
+  .ag-note .material-symbols-outlined { color: var(--color-text-muted); font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .ag-note p {
+    font-family: var(--font-family-sans);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+</style>
+</BaseLayout>

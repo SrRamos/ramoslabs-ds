@@ -64,6 +64,29 @@ const BLURBS: Record<string, string> = {
   </div>
 </div>
 
+<!-- ===== AGENTIC BAND ===== -->
+<a class="agentic-band" href="/agents/">
+  <div class="agentic-band-glow" aria-hidden="true"></div>
+  <div class="agentic-band-inner">
+    <div class="agentic-band-badge">
+      <Icon name="smart_toy" style="font-size:15px" />
+      Built for agents
+    </div>
+    <h2 class="agentic-band-title">Agent-native. MCP-first. <em>AI-ready by design.</em></h2>
+    <p class="agentic-band-text">
+      A live MCP server exposes this system as seven typed, verifiable tools — read a token, check
+      contrast, lint CSS — so an agent builds against the contract instead of scraping HTML.
+    </p>
+    <div class="agentic-band-chips">
+      <span class="agentic-chip"><Icon name="hub" style="font-size:15px" />MCP server</span>
+      <span class="agentic-chip"><Icon name="psychology" style="font-size:15px" />Agent skill</span>
+      <span class="agentic-chip"><Icon name="description" style="font-size:15px" />llms.txt</span>
+      <span class="agentic-chip"><Icon name="data_object" style="font-size:15px" />registry.json</span>
+    </div>
+    <span class="agentic-band-cta">Explore the agent layer <Icon name="arrow_forward" style="font-size:18px" /></span>
+  </div>
+</a>
+
 <!-- ===== TAXONOMY FLOW ===== -->
 <div class="intro-section">
   <div class="intro-head">
@@ -800,6 +823,93 @@ const BLURBS: Record<string, string> = {
   }
 
   .intro-footer-sources a:hover { text-decoration: underline; }
+
+  /* ===== AGENTIC BAND ===== */
+  .agentic-band {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    overflow: hidden;
+    margin-bottom: 5rem;
+    padding: 2.5rem;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 55%, var(--color-secondary) 100%);
+    box-shadow: var(--shadow-md);
+    transition: transform 140ms ease, box-shadow 140ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .agentic-band:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  }
+  .agentic-band:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+  .agentic-band-glow {
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 60%;
+    height: 180%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .agentic-band-inner { position: relative; z-index: 1; }
+  .agentic-band-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-family: var(--font-family-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .agentic-band-title {
+    font-family: var(--font-family-display);
+    color: #fff;
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem 0;
+  }
+  .agentic-band-title em { font-style: normal; color: var(--color-primary-surface); }
+  .agentic-band-text {
+    font-family: var(--font-family-sans);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0 0 1.5rem 0;
+  }
+  .agentic-band-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .agentic-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+  }
+  .agentic-chip .material-symbols-outlined { color: var(--color-primary-surface); }
+  .agentic-band-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-family-sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+  }
 </style>
 </BaseLayout>
 </content>

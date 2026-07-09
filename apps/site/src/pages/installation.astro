@@ -1,0 +1,499 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Icon from '../components/Icon.astro'
+import { pages } from '../data/pages'
+const page = pages.find((p) => p.id === 'installation')!
+
+const managers = [
+  { label: 'bun', cmd: 'bun add @ramoslabs/tokens' },
+  { label: 'npm', cmd: 'npm install @ramoslabs/tokens' },
+  { label: 'pnpm', cmd: 'pnpm add @ramoslabs/tokens' },
+  { label: 'yarn', cmd: 'yarn add @ramoslabs/tokens' },
+]
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<!-- ===== HERO ===== -->
+<div class="in-hero">
+  <div class="in-hero-inner">
+    <div class="in-hero-badge">
+      <Icon name="download" style="font-size:15px" />
+      Getting started
+    </div>
+    <h1 class="in-hero-title">Install once. <em>Reference everywhere.</em></h1>
+    <p class="in-hero-subtitle">
+      One package, published to public npm. Import the CSS variables a single time at your app
+      entry, then every color, space, radius, shadow, and type value reads from the token contract.
+    </p>
+    <div class="in-install">
+      <span class="in-install-label">npm</span>
+      <code class="in-install-cmd">bun add @ramoslabs/tokens</code>
+      <button type="button" class="in-copy" data-copy="bun add @ramoslabs/tokens" aria-label="Copy command">
+        <Icon name="content_copy" style="font-size:16px" />
+        <span class="in-copy-text">Copy</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STEPS ===== -->
+<div class="in-section">
+  <div class="in-head">
+    <div class="in-head-label">Three steps</div>
+    <h2 class="in-head-title">From install to first token</h2>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="in-step">
+    <div class="in-step-head"><span class="in-step-num">1</span><h3 class="in-step-title">Install the tokens</h3></div>
+    <p class="in-step-text">The package lives on the public <code>@ramoslabs</code> npm scope. Any package manager works.</p>
+    <div class="in-pm-grid">
+      {managers.map((m) => (
+        <div class="in-pm">
+          <div class="in-pm-bar"><span class="in-pm-label">{m.label}</span></div>
+          <div class="in-pm-body">
+            <code class="in-pm-cmd">{m.cmd}</code>
+            <button type="button" class="in-pm-copy" data-copy={m.cmd} aria-label={`Copy the ${m.label} command`}>
+              <Icon name="content_copy" style="font-size:15px" />
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="in-step">
+    <div class="in-step-head"><span class="in-step-num">2</span><h3 class="in-step-title">Import the CSS once</h3></div>
+    <p class="in-step-text">At your app entry, import the generated variables a single time. Every <code>--color-*</code>, <code>--space-*</code>, <code>--radius-*</code>, <code>--shadow-*</code>, and type variable is then global.</p>
+    <div class="in-code">
+      <div class="in-code-bar"><span class="in-dot d1"></span><span class="in-dot d2"></span><span class="in-dot d3"></span><span class="in-code-lang">app entry</span></div>
+      <pre set:html={`<span class="c-cm">/* main.css, or your root stylesheet */</span>
+<span class="c-kw">@import</span> <span class="c-v">'@ramoslabs/tokens/css'</span><span class="c-p">;</span>`} />
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="in-step">
+    <div class="in-step-head"><span class="in-step-num">3</span><h3 class="in-step-title">Build against the contract</h3></div>
+    <p class="in-step-text">Reference the token, never a raw value. A raw hex or px in your CSS is a defect. Typed values are at the package root for TypeScript; the flat name-to-value map is <code>@ramoslabs/tokens/json</code>.</p>
+    <div class="in-code">
+      <div class="in-code-bar"><span class="in-dot d1"></span><span class="in-dot d2"></span><span class="in-dot d3"></span><span class="in-code-lang">css</span></div>
+      <pre set:html={`<span class="c-sel">.sj-card</span> <span class="c-p">{</span>
+    <span class="c-prop">background</span><span class="c-p">:</span> <span class="c-v">var(--color-surface)</span><span class="c-p">;</span>
+    <span class="c-prop">padding</span><span class="c-p">:</span> <span class="c-v">var(--space-6)</span><span class="c-p">;</span>
+    <span class="c-prop">border-radius</span><span class="c-p">:</span> <span class="c-v">var(--radius-lg)</span><span class="c-p">;</span>
+    <span class="c-prop">box-shadow</span><span class="c-p">:</span> <span class="c-v">var(--shadow-sm)</span><span class="c-p">;</span>
+<span class="c-p">}</span>`} />
+    </div>
+  </div>
+</div>
+
+<!-- ===== NO INSTALL + AGENTS ===== -->
+<div class="in-section">
+  <div class="in-cols">
+    <div class="in-panel">
+      <span class="in-panel-icon"><Icon name="public" /></span>
+      <h3 class="in-panel-title">Without installing</h3>
+      <p class="in-panel-text">
+        You don't have to add the dependency. Read the served flat token map at
+        <code>/tokens.json</code>, or <code>@import</code> the served stylesheet from this
+        site. Handy for a quick prototype or a build that can't take the package.
+      </p>
+    </div>
+    <a class="in-panel in-panel-link" href="/agents/mcp/">
+      <span class="in-panel-icon in-panel-icon-accent"><Icon name="hub" /></span>
+      <h3 class="in-panel-title">Building with an agent?</h3>
+      <p class="in-panel-text">
+        Don't scrape the values. Connect the MCP server and use <code>get_token</code> and
+        <code>check_contrast</code> as typed tools — exact values, never invented.
+      </p>
+      <span class="in-panel-cta">Open the MCP server <Icon name="arrow_forward" style="font-size:16px" /></span>
+    </a>
+  </div>
+
+  <div class="in-note">
+    <Icon name="info" />
+    <p>
+      Components (<code>SJ</code> / <code>W</code>) are not shipped yet. Until they land, build
+      from these tokens and the documented patterns — see Foundations and Patterns.
+    </p>
+  </div>
+</div>
+
+<script>
+  for (const btn of document.querySelectorAll('[data-copy]')) {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy') || ''
+      try {
+        await navigator.clipboard.writeText(text)
+        const label = btn.querySelector('.in-copy-text')
+        if (label) {
+          const prev = label.textContent
+          label.textContent = 'Copied'
+          btn.classList.add('is-copied')
+          setTimeout(() => { label.textContent = prev; btn.classList.remove('is-copied') }, 1600)
+        } else {
+          btn.classList.add('is-copied')
+          setTimeout(() => btn.classList.remove('is-copied'), 1600)
+        }
+      } catch { /* clipboard unavailable — the command stays visible to select by hand */ }
+    })
+  }
+</script>
+
+<style is:global>
+  /* ===== HERO ===== */
+  .in-hero {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 45%, var(--color-secondary) 100%);
+    margin: -1rem -1rem 4rem -1rem;
+    padding: 5rem 3rem;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    position: relative;
+    overflow: hidden;
+  }
+  .in-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  .in-hero-inner { position: relative; z-index: 1; }
+  .in-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-family: var(--font-family-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .in-hero-title {
+    font-family: var(--font-family-display);
+    color: #fff;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem 0;
+    max-width: 18ch;
+  }
+  .in-hero-title em { font-style: normal; color: var(--color-primary-surface); }
+  .in-hero-subtitle {
+    font-family: var(--font-family-sans);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 48rem;
+    margin: 0 0 2rem 0;
+  }
+
+  /* ===== INSTALL ONE-LINER ===== */
+  .in-install {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    background: rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.6rem 0.6rem 1rem;
+    max-width: 100%;
+  }
+  .in-install-label {
+    font-family: var(--font-family-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary-surface);
+    flex-shrink: 0;
+  }
+  .in-install-cmd {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.9rem;
+    color: #fff;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+  .in-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--color-primary-dark);
+    background: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 0.75rem;
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+  .in-copy.is-copied { background: var(--color-success-surface); color: var(--color-success-text); }
+  .in-copy:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+  /* ===== SECTIONS ===== */
+  .in-section { margin-bottom: 5rem; }
+  .in-head { margin-bottom: 2rem; }
+  .in-head-label {
+    font-family: var(--font-family-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.6rem;
+  }
+  .in-head-title {
+    font-family: var(--font-family-display);
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    color: var(--color-text-heading);
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  /* ===== STEPS ===== */
+  .in-step { margin-bottom: 2.5rem; }
+  .in-step-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .in-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-family-sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .in-step-title {
+    font-family: var(--font-family-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--color-text-heading);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .in-step-text {
+    font-family: var(--font-family-sans);
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 44rem;
+    margin: 0 0 1rem 0;
+  }
+  .in-step-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: var(--color-surface-secondary);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-dark);
+  }
+
+  /* ===== PACKAGE MANAGER GRID ===== */
+  .in-pm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    max-width: 44rem;
+  }
+  @media (max-width: 640px) { .in-pm-grid { grid-template-columns: 1fr; } }
+  .in-pm {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .in-pm-bar {
+    background: var(--color-surface-secondary);
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .in-pm-label {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+  }
+  .in-pm-body { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.75rem; }
+  .in-pm-cmd {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.82rem;
+    color: var(--color-text-body);
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .in-pm-copy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .in-pm-copy:hover { background: var(--color-surface-hover); color: var(--color-primary); }
+  }
+  .in-pm-copy.is-copied { color: var(--color-success-strong); }
+  .in-pm-copy:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+
+  /* ===== CODE BLOCKS (dark terminal chrome, the site's established code treatment) ===== */
+  .in-code {
+    background: #1e293b;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    max-width: 44rem;
+  }
+  .in-code-bar {
+    background: #334155;
+    padding: 0.6rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .in-dot { width: 11px; height: 11px; border-radius: var(--radius-pill); }
+  .in-dot.d1 { background: #64748b; }
+  .in-dot.d2 { background: #94a3b8; }
+  .in-dot.d3 { background: #cbd5e1; }
+  .in-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .in-code pre {
+    margin: 0;
+    padding: 1.15rem 1.25rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .in-code .c-cm { color: #94a3b8; font-style: italic; }
+  .in-code .c-kw { color: #c084fc; }
+  .in-code .c-sel { color: #fbbf24; }
+  .in-code .c-prop { color: #7dd3fc; }
+  .in-code .c-v { color: #a5f3fc; }
+  .in-code .c-p { color: #94a3b8; }
+
+  /* ===== TWO-COLUMN PANELS ===== */
+  .in-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 820px) { .in-cols { grid-template-columns: 1fr; } }
+  .in-panel {
+    display: block;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+  }
+  .in-panel-link { transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease; }
+  a.in-panel-link:hover { border-color: var(--color-primary); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  a.in-panel-link:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  .in-panel-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-secondary);
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+  .in-panel-icon-accent { background: var(--color-primary-surface); color: var(--color-primary); }
+  .in-panel-icon .material-symbols-outlined { font-size: 24px; }
+  .in-panel-title {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text-heading);
+    margin: 0 0 0.4rem 0;
+  }
+  .in-panel-text {
+    font-family: var(--font-family-sans);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .in-panel-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: var(--color-surface-secondary);
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-dark);
+  }
+  .in-panel-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 1rem;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-primary-dark);
+  }
+
+  /* ===== NOTE ===== */
+  .in-note { display: flex; gap: 0.75rem; align-items: flex-start; max-width: 44rem; }
+  .in-note .material-symbols-outlined { color: var(--color-text-muted); font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .in-note p {
+    font-family: var(--font-family-sans);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  .in-note code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: var(--color-surface-secondary);
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-dark);
+  }
+</style>
+</BaseLayout>

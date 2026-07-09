@@ -1,0 +1,431 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'agents')!
+
+// The machine-readable contract, one card each. Everything here already ships
+// and is served from the site root — this page only names it.
+const assets = [
+  {
+    icon: 'hub',
+    tag: '/mcp',
+    title: 'MCP server',
+    desc: 'Seven typed, read-only tools — search_tokens, get_token, check_contrast, list_docs, get_doc, lint_css, get_agents_guide. The highest-leverage way to consume the system.',
+    href: '/agents/mcp/',
+    featured: true,
+  },
+  {
+    icon: 'psychology',
+    tag: '/skill.md',
+    title: 'Agent skill',
+    desc: 'A Claude Code skill that makes an agent build and review strictly by this system, never inventing a token, value, or rule.',
+    href: '/skill.md',
+  },
+  {
+    icon: 'description',
+    tag: '/llms.txt',
+    title: 'llms.txt',
+    desc: 'A concise index of every documentation page with its URL and summary.',
+    href: '/llms.txt',
+  },
+  {
+    icon: 'menu_book',
+    tag: '/llms-full.txt',
+    title: 'llms-full.txt',
+    desc: 'The entire system inlined into one self-contained document, plus the full token table. Fetch it to load everything at once.',
+    href: '/llms-full.txt',
+  },
+  {
+    icon: 'data_object',
+    tag: '/registry.json',
+    title: 'registry.json',
+    desc: 'Structured tokens-by-category, the pattern list, and the components array, as JSON.',
+    href: '/registry.json',
+  },
+  {
+    icon: 'tag',
+    tag: '/tokens.json',
+    title: 'tokens.json',
+    desc: 'The flat DTCG token map, name to resolved value. Look up the exact token before typing a value.',
+    href: '/tokens.json',
+  },
+]
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<!-- ===== HERO ===== -->
+<div class="ag-hero">
+  <div class="ag-hero-inner">
+    <div class="ag-hero-badge">
+      <Icon name="smart_toy" style="font-size:15px" />
+      For Agents
+    </div>
+    <h1 class="ag-hero-title">Agent-native. MCP-first. <em>AI-ready by design.</em></h1>
+    <p class="ag-hero-subtitle">
+      Built to be consumed by an AI agent, not just read by a human. Every rule, token, and
+      pattern ships as machine-readable data and as typed, verifiable tools — so an agent
+      builds against the contract instead of guessing from rendered HTML.
+    </p>
+    <div class="ag-hero-actions">
+      <a class="ag-btn ag-btn-solid" href="/agents/mcp/">
+        <Icon name="hub" style="font-size:18px" />
+        Connect the MCP server
+      </a>
+      <a class="ag-btn ag-btn-ghost" href="/AGENTS.md">
+        <Icon name="menu_book" style="font-size:18px" />
+        Read AGENTS.md
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== THE CONTRACT ===== -->
+<div class="ag-section">
+  <div class="ag-head">
+    <div class="ag-head-label">The contract</div>
+    <h2 class="ag-head-title">One system, seven ways a machine can read it</h2>
+    <p class="ag-head-lead">
+      All of it is served from the site root, free to fetch, read-only, and needs no auth.
+    </p>
+  </div>
+
+  <div class="ag-grid">
+    {assets.map((a) => (
+      <a class:list={['ag-card', { featured: a.featured }]} href={a.href}>
+        <div class="ag-card-top">
+          <span class="ag-card-icon"><Icon name={a.icon} /></span>
+          <span class="ag-card-tag">{a.tag}</span>
+        </div>
+        <h3 class="ag-card-title">{a.title}</h3>
+        <p class="ag-card-desc">{a.desc}</p>
+        {a.featured && <span class="ag-card-cta">Open the MCP page <Icon name="arrow_forward" style="font-size:16px" /></span>}
+      </a>
+    ))}
+  </div>
+</div>
+
+<!-- ===== VERIFY, NOT SCRAPE ===== -->
+<div class="ag-section">
+  <div class="ag-head">
+    <div class="ag-head-label">Why it is different</div>
+    <h2 class="ag-head-title">The tools verify. They don't just install.</h2>
+  </div>
+
+  <p class="ag-text">
+    Most component servers exist to discover and install code. This one exists so an agent
+    gets the system <strong>right</strong>. The tools are for correctness, and they make the
+    one hard rule — never hardcode a value, read the token — easy to honor and impossible to fake.
+  </p>
+
+  <div class="ag-verify">
+    <div class="ag-verify-card">
+      <span class="ag-verify-icon"><Icon name="contrast" /></span>
+      <h3 class="ag-verify-title"><code>check_contrast</code></h3>
+      <p class="ag-verify-desc">Returns the WCAG ratio and the AA/AAA verdicts for normal text, large text, and UI — before a color ever ships.</p>
+    </div>
+    <div class="ag-verify-card">
+      <span class="ag-verify-icon"><Icon name="rule" /></span>
+      <h3 class="ag-verify-title"><code>lint_css</code></h3>
+      <p class="ag-verify-desc">Flags a raw hex, rgb, px, or rem that should be a token, and suggests the matching token to use instead.</p>
+    </div>
+    <div class="ag-verify-card">
+      <span class="ag-verify-icon"><Icon name="verified" /></span>
+      <h3 class="ag-verify-title"><code>get_token</code></h3>
+      <p class="ag-verify-desc">Returns the exact value and the <code>var(--…)</code> to use, and errors if the token does not exist — so an agent can never invent one.</p>
+    </div>
+  </div>
+
+  <div class="ag-callout">
+    <Icon name="bolt" />
+    <p class="ag-callout-text">
+      An agent connected to the server builds against a contract it <strong>cannot get wrong</strong>,
+      instead of interpreting a screenshot or a page of HTML. That is what agent-native means here.
+    </p>
+  </div>
+</div>
+
+<style is:global>
+  /* ===== HERO ===== */
+  .ag-hero {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 45%, var(--color-secondary) 100%);
+    margin: -1rem -1rem 4rem -1rem;
+    padding: 5rem 3rem;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    position: relative;
+    overflow: hidden;
+  }
+  .ag-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  .ag-hero-inner { position: relative; z-index: 1; }
+  .ag-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-family: var(--font-family-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .ag-hero-title {
+    font-family: var(--font-family-display);
+    color: #fff;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem 0;
+    max-width: 18ch;
+  }
+  .ag-hero-title em { font-style: normal; color: var(--color-primary-surface); }
+  .ag-hero-subtitle {
+    font-family: var(--font-family-sans);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 48rem;
+    margin: 0 0 2rem 0;
+  }
+  .ag-hero-actions { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+
+  /* ===== BUTTONS ===== */
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background 120ms ease, transform 120ms ease;
+  }
+  .ag-btn-solid { background: #fff; color: var(--color-primary-dark); }
+  .ag-btn-ghost {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .ag-btn-solid:hover { transform: translateY(-1px); }
+    .ag-btn-ghost:hover { background: rgba(255, 255, 255, 0.24); }
+  }
+  .ag-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+  /* ===== SECTIONS ===== */
+  .ag-section { margin-bottom: 5rem; }
+  .ag-head { margin-bottom: 2rem; }
+  .ag-head-label {
+    font-family: var(--font-family-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.6rem;
+  }
+  .ag-head-title {
+    font-family: var(--font-family-display);
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    color: var(--color-text-heading);
+    margin: 0;
+    line-height: 1.1;
+  }
+  .ag-head-lead {
+    font-family: var(--font-family-sans);
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0.75rem 0 0 0;
+    max-width: 44rem;
+  }
+  .ag-text {
+    font-family: var(--font-family-sans);
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 44rem;
+    margin: 0 0 1.75rem 0;
+  }
+  .ag-text strong { color: var(--color-text-heading); font-weight: 600; }
+
+  /* ===== ASSET GRID ===== */
+  .ag-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 900px) { .ag-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .ag-grid { grid-template-columns: 1fr; } }
+
+  .ag-card {
+    display: block;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+  }
+  a.ag-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  a.ag-card:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  .ag-card.featured {
+    grid-column: span 3;
+    background: var(--color-primary-surface);
+    border-color: var(--color-primary-light);
+  }
+  @media (max-width: 900px) { .ag-card.featured { grid-column: span 2; } }
+  @media (max-width: 560px) { .ag-card.featured { grid-column: span 1; } }
+
+  .ag-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .ag-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary-surface);
+    color: var(--color-primary);
+  }
+  .ag-card.featured .ag-card-icon { background: #fff; }
+  .ag-card-icon .material-symbols-outlined { font-size: 22px; }
+  .ag-card-tag {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    background: var(--color-surface-secondary);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+  }
+  .ag-card.featured .ag-card-tag { background: #fff; }
+  .ag-card-title {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text-heading);
+    margin: 0 0 0.4rem 0;
+  }
+  .ag-card-desc {
+    font-family: var(--font-family-sans);
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .ag-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 1rem;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-primary-dark);
+  }
+
+  /* ===== VERIFY CARDS ===== */
+  .ag-verify {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 820px) { .ag-verify { grid-template-columns: 1fr; } }
+  .ag-verify-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .ag-verify-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary-surface);
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+  .ag-verify-icon .material-symbols-outlined { font-size: 24px; }
+  .ag-verify-title {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-heading);
+    margin: 0 0 0.4rem 0;
+  }
+  .ag-verify-title code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.95em;
+    color: var(--color-primary-dark);
+  }
+  .ag-verify-desc {
+    font-family: var(--font-family-sans);
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .ag-verify-desc code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: var(--color-surface-secondary);
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-dark);
+  }
+
+  /* ===== CALLOUT ===== */
+  .ag-callout {
+    display: flex;
+    gap: 0.85rem;
+    background: var(--color-primary-surface);
+    border: 1px solid var(--color-primary-light);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.35rem;
+    max-width: 44rem;
+  }
+  .ag-callout .material-symbols-outlined { color: var(--color-primary-dark); font-size: 1.35rem; flex-shrink: 0; }
+  .ag-callout-text {
+    font-family: var(--font-family-sans);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-primary-dark);
+    margin: 0;
+  }
+  .ag-callout-text strong { color: var(--color-secondary-dark); font-weight: 700; }
+</style>
+</BaseLayout>
