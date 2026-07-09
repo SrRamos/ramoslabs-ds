@@ -18,7 +18,15 @@ interface Env {
   ASSETS: { fetch: (request: Request | string) => Promise<Response> }
   // Optional so local `wrangler dev` (and any build without the binding) still runs.
   ANALYTICS?: AnalyticsEngineDataset
+  // Set these two to let /stats.json read aggregates back from Analytics Engine.
+  // CF_ACCOUNT_ID is a plain var; CF_ANALYTICS_TOKEN is a secret (Account Analytics: Read).
+  // Absent → /stats.json still returns npm downloads, and the dashboard shows a setup hint.
+  CF_ACCOUNT_ID?: string
+  CF_ANALYTICS_TOKEN?: string
 }
+
+// The Analytics Engine dataset name (must match wrangler.toml [[analytics_engine_datasets]]).
+const AE_DATASET = 'ramoslabs_ds'
 
 // Files that exist to be consumed by agents/tools. We count a GET to one of these as an
 // "agent_file" hit — the adoption signal that is distinct from a human page view, and that
@@ -408,38 +416,101 @@ async function handleMcp(request: Request, env: Env, origin: string, meta: ReqMe
   return new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json', ...CORS } })
 }
 
-// Public, cookieless usage surface. npm download counts are the canonical adoption metric
-// for the token package; they are fetched live and cached at the edge so the number stays
-// current without hammering npm. Page, agent-file, and MCP metrics are collected server-side
-// in Analytics Engine (queried out-of-band via the SQL/GraphQL API, not exposed here).
-async function handleStats(env: Env, meta: ReqMeta): Promise<Response> {
-  logEvent(env, 'agent_file', '/stats.json', 'stats.json', meta)
-  const pkg = '@ramoslabs/tokens'
+// Query the Analytics Engine SQL API. Returns the rows, or null when no read token is
+// configured or the query fails — the caller degrades to npm-only in that case.
+async function queryAE(env: Env, sql: string): Promise<Array<Record<string, unknown>> | null> {
+  if (!env.CF_ACCOUNT_ID || !env.CF_ANALYTICS_TOKEN) return null
+  try {
+    const res = await fetch(
+      `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/analytics_engine/sql`,
+      { method: 'POST', headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` }, body: sql }
+    )
+    if (!res.ok) return null
+    const j = (await res.json()) as { data?: Array<Record<string, unknown>> }
+    return j.data ?? null
+  } catch {
+    return null
+  }
+}
+
+const NPM_PKG = '@ramoslabs/tokens'
+
+// Live npm download counts (day/week/month), edge-cached. Public adoption metric.
+async function npmDownloads(): Promise<Record<string, number | null>> {
   const windows = ['last-day', 'last-week', 'last-month'] as const
-  const downloads: Record<string, number | null> = {}
-  await Promise.all(
+  const entries = await Promise.all(
     windows.map(async (w) => {
       try {
-        const res = await fetch(`https://api.npmjs.org/downloads/point/${w}/${pkg}`, {
+        const res = await fetch(`https://api.npmjs.org/downloads/point/${w}/${NPM_PKG}`, {
           cf: { cacheTtl: 3600, cacheEverything: true },
         } as RequestInit)
-        downloads[w] = res.ok ? (((await res.json()) as { downloads?: number }).downloads ?? null) : null
+        return [w, res.ok ? (((await res.json()) as { downloads?: number }).downloads ?? null) : null] as const
       } catch {
-        downloads[w] = null
+        return [w, null] as const
       }
     })
   )
+  return Object.fromEntries(entries)
+}
+
+// Daily npm downloads for the last 30 days (a real time series for the trend chart).
+async function npmSeries(): Promise<Array<{ day: string; downloads: number }>> {
+  try {
+    const res = await fetch(`https://api.npmjs.org/downloads/range/last-month/${NPM_PKG}`, {
+      cf: { cacheTtl: 3600, cacheEverything: true },
+    } as RequestInit)
+    if (!res.ok) return []
+    const j = (await res.json()) as { downloads?: Array<{ downloads: number; day: string }> }
+    return j.downloads ?? []
+  } catch {
+    return []
+  }
+}
+
+// Analytics Engine aggregates over the last 30 days. Null when no read token is configured.
+async function usageAggregates(env: Env) {
+  if (!env.CF_ACCOUNT_ID || !env.CF_ANALYTICS_TOKEN) return null
+  const W = `timestamp > NOW() - INTERVAL '30' DAY`
+  const [byType, mcpByTool, topPages, agentFiles] = await Promise.all([
+    queryAE(env, `SELECT index1 AS type, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE ${W} GROUP BY type`),
+    queryAE(env, `SELECT blob3 AS detail, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'mcp' AND ${W} GROUP BY detail ORDER BY n DESC LIMIT 20`),
+    queryAE(env, `SELECT blob2 AS path, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'page' AND ${W} GROUP BY path ORDER BY n DESC LIMIT 15`),
+    queryAE(env, `SELECT blob3 AS file, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'agent_file' AND ${W} GROUP BY file ORDER BY n DESC LIMIT 15`),
+  ])
+  if (!byType) return null
+  return { window: 'last-30-days', byType, mcpByTool: mcpByTool ?? [], topPages: topPages ?? [], agentFiles: agentFiles ?? [] }
+}
+
+// PUBLIC surface (linked from /agents/ and llms.txt): npm downloads only — data that is
+// already public on npm. Server-side usage aggregates are deliberately NOT exposed here.
+async function handleStats(env: Env, meta: ReqMeta): Promise<Response> {
+  logEvent(env, 'agent_file', '/stats.json', 'stats.json', meta)
   const payload = {
-    package: pkg,
-    npm: { url: `https://www.npmjs.com/package/${pkg}`, downloads },
+    package: NPM_PKG,
+    npm: { url: `https://www.npmjs.com/package/${NPM_PKG}`, downloads: await npmDownloads() },
     measurement:
-      'Page, agent-file, and MCP-usage metrics are collected server-side via Cloudflare Analytics Engine — cookieless, no PII, no client JS.',
+      'npm downloads are public. Page, agent-file, and MCP metrics are collected server-side (Analytics Engine, cookieless) and are not exposed on this public endpoint.',
+  }
+  return new Response(JSON.stringify(payload, null, 2), {
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=3600', ...CORS },
+  })
+}
+
+// UNLISTED surface (not in nav, sitemap, llms.txt, or robots): full usage for the private
+// /metricas dashboard. Same-origin only (no CORS), noindex, never cached at the edge.
+async function handleMetrics(env: Env): Promise<Response> {
+  const [downloads, series, usage] = await Promise.all([npmDownloads(), npmSeries(), usageAggregates(env)])
+  const payload = {
+    package: NPM_PKG,
+    npm: { url: `https://www.npmjs.com/package/${NPM_PKG}`, downloads, series },
+    usage,
+    measurement: 'Cookieless, no PII. Page/agent-file/MCP aggregates from Cloudflare Analytics Engine (last 30 days).',
   }
   return new Response(JSON.stringify(payload, null, 2), {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600',
-      ...CORS,
+      'Cache-Control': 'private, no-store',
+      'X-Robots-Tag': 'noindex, nofollow',
     },
   })
 }
@@ -460,10 +531,15 @@ export default {
     if (path === '/stats.json') {
       return handleStats(env, meta)
     }
+    // Unlisted private dashboard data feed (see /metricas). Not advertised anywhere.
+    if (path === '/metricas.json') {
+      return handleMetrics(env)
+    }
 
     // Count meaningful GETs server-side (no cookie, no client JS, agents and bots included).
-    // Skip fonts, images, CSS/JS and other sub-resources to keep the dataset signal-dense.
-    if (request.method === 'GET') {
+    // Skip fonts, images, CSS/JS and other sub-resources, and the private dashboard itself,
+    // to keep the dataset signal-dense.
+    if (request.method === 'GET' && path !== '/metricas/' && path !== '/metricas') {
       if (AGENT_FILES.has(path)) logEvent(env, 'agent_file', path, path.replace(/^\//, ''), meta)
       else if (path === '/' || path.endsWith('/')) logEvent(env, 'page', path, '', meta)
     }
