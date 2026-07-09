@@ -83,7 +83,7 @@ then apply it. Do not restyle it as generic "do and don't" advice.
 
 ## Machine-readable sources, and how to fetch them
 
-The deployed site (default `https://ramoslabs-ds.pages.dev`) serves:
+The deployed site (`https://design.ramoslabs.com`) serves:
 
 - `/llms.txt`: concise index of every page with its live docs URL.
 - `/llms-full.txt`: one self-contained document. Every page inlined plus the full token
@@ -95,8 +95,8 @@ The deployed site (default `https://ramoslabs-ds.pages.dev`) serves:
 To pull the system into your working context, `WebFetch` the URL and read it:
 
 ```
-WebFetch https://ramoslabs-ds.pages.dev/llms-full.txt
-WebFetch https://ramoslabs-ds.pages.dev/registry.json
+WebFetch https://design.ramoslabs.com/llms-full.txt
+WebFetch https://design.ramoslabs.com/registry.json
 ```
 
 Start with `llms.txt` to find the right page, or `llms-full.txt` when you want everything.

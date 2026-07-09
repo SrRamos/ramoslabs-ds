@@ -6,6 +6,19 @@ on Keep a Changelog, and the project follows Semantic Versioning. The publishabl
 
 ## [Unreleased]
 
+### Changed
+
+- Documentation site migrated from Storybook to a static Astro build (`apps/site`), served at
+  `https://design.ramoslabs.com`. Every doc page is now a real HTML document at a clean URL
+  instead of a single query-routed Storybook SPA, so the whole book is crawlable and indexable
+  (SEO and AI-SEO). Pages ship zero JavaScript except the interactive color picker (a Vue
+  island); fonts are self-hosted and icons are inline SVG. The agentic layer (`llms.txt`,
+  `llms-full.txt`, `registry.json`, `robots.txt`, `tokens.json`, `AGENTS.md`) is now emitted by
+  an Astro build integration with clean-URL links, and the sitemap is a route-aware
+  `sitemap-index.xml`. Storybook is retained as the component harness for `@ramoslabs/vue`, out
+  of the deploy.
+- `@ramoslabs/tokens@0.1.0` published to the public npm registry under the `@ramoslabs` scope.
+
 ## [0.1.0] - 2026-07-08
 
 Initial public release.

@@ -15,7 +15,7 @@ export type Page = {
   path: string
   summary: string
   icon: string // Material Symbols ligature, used by the sidebar
-  contentFile: string // relative to apps/storybook/agentic/content
+  contentFile: string // relative to apps/site/agentic/content
   interactive?: boolean // true if the page ships a JS island
 }
 
