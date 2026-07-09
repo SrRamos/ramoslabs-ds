@@ -102,6 +102,19 @@ WebFetch https://design.ramoslabs.com/registry.json
 Start with `llms.txt` to find the right page, or `llms-full.txt` when you want everything.
 Use `registry.json` when you need structured token or pattern data rather than prose.
 
+## MCP server and agent skill
+
+Two ways to consume this as an agent, both preferred over ad-hoc fetching:
+
+- **MCP server** at `${SITE_URL}/mcp` (Streamable HTTP, read-only, no auth). Tools:
+  `search_tokens`, `get_token`, `check_contrast`, `list_docs`, `get_doc`, `lint_css`,
+  `get_agents_guide`. Connect with e.g.
+  `claude mcp add --transport http ramoslabs-ds https://ramoslabs-ds.edwardramosp.workers.dev/mcp`.
+- **Agent skill** (Claude Code) at `${SITE_URL}/skill.md`. It encodes this guide as an
+  operating procedure with the prime directive "use only what the DS defines, never invent."
+  Install by copying it to `.claude/skills/ramoslabs-ds/SKILL.md` in a project (or
+  `~/.claude/skills/…` globally). It is also versioned in the DS repo at that path.
+
 ## License and attribution
 
 RamosLabs Design System is free to use under the MIT License. Use, copy, modify, and

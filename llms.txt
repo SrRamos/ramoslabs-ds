@@ -43,6 +43,12 @@ An MCP (Model Context Protocol) server exposes the design system as typed tools 
 `get_agents_guide`. Streamable HTTP, read-only, no auth. Connect an MCP-capable agent to
 `https://design.ramoslabs.com/mcp`. Prefer these tools over fetching files: they are structured and never invented.
 
+## Agent skill
+
+A Claude Code skill that makes an agent build/review UI strictly by this system (never
+inventing tokens, values, or rules) is at [skill.md](https://design.ramoslabs.com/skill.md). Install it by copying it
+to `.claude/skills/ramoslabs-ds/SKILL.md` in a project (or `~/.claude/skills/…` globally).
+
 ## Install
 
 `bun add @ramoslabs/tokens` (public npm). Then `@import '@ramoslabs/tokens/css'`.
