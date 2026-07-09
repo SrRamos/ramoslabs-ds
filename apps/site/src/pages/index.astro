@@ -1,8 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Icon from '../components/Icon.astro'
-import { pages } from '../data/pages'
+import { pages, foundationsPages, patternsPages } from '../data/pages'
 const page = pages.find((p) => p.id === 'introduction')!
+
+// Short book-map taglines by page id. The grids below are generated from pages.ts,
+// so adding a page there automatically shows it here (no more drift).
+const BLURBS: Record<string, string> = {
+  colors: 'Mono-indigo palette',
+  typography: 'Scale and families',
+  spacing: '8px base grid',
+  'border-radius': 'Corner scale',
+  shadows: 'Elevation scale',
+  motion: 'Duration, easing',
+  responsive: 'Breakpoints',
+  helpers: 'Utility classes',
+  'token-reference': 'Every token, copyable',
+  'color-picker': 'Contrast explorer',
+  interactive: 'States, feedback',
+  accessibility: 'WCAG guidance',
+  'form-elements': 'Inputs, validation',
+  'data-tables': 'Sorting, selection',
+  modals: 'Native dialog',
+  'mobile-first': 'Small-screen first',
+  persuasion: 'Honest nudges',
+  'voice-tone': 'Copy, microcopy',
+  'ai-insights': 'Generated content',
+}
 ---
 <BaseLayout title={page.title} description={page.summary} path={page.path}>
 
@@ -163,46 +187,13 @@ const page = pages.find((p) => p.id === 'introduction')!
       <span class="book-group-count">The token contract</span>
     </div>
     <div class="book-grid">
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="palette" /></div>
-        <div class="book-card-title">Colors</div>
-        <div class="book-card-desc">Mono-indigo palette</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="format_size" /></div>
-        <div class="book-card-title">Typography</div>
-        <div class="book-card-desc">Scale and families</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="space_bar" /></div>
-        <div class="book-card-title">Spacing</div>
-        <div class="book-card-desc">8px base grid</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="rounded_corner" /></div>
-        <div class="book-card-title">Border Radius</div>
-        <div class="book-card-desc">Corner scale</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="layers" /></div>
-        <div class="book-card-title">Shadows</div>
-        <div class="book-card-desc">Elevation scale</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="animation" /></div>
-        <div class="book-card-title">Motion</div>
-        <div class="book-card-desc">Duration, easing</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="devices" /></div>
-        <div class="book-card-title">Responsive</div>
-        <div class="book-card-desc">Breakpoints</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f1"><Icon name="tag" /></div>
-        <div class="book-card-title">Token Reference</div>
-        <div class="book-card-desc">Every token, copyable</div>
-      </div>
+      {foundationsPages.map((p) => (
+        <a class="book-card" href={p.path}>
+          <div class="book-card-icon f1"><Icon name={p.icon} /></div>
+          <div class="book-card-title">{p.title}</div>
+          <div class="book-card-desc">{BLURBS[p.id] ?? ''}</div>
+        </a>
+      ))}
     </div>
   </div>
 
@@ -213,31 +204,13 @@ const page = pages.find((p) => p.id === 'introduction')!
       <span class="book-group-count">Behavior from tokens</span>
     </div>
     <div class="book-grid">
-      <div class="book-card">
-        <div class="book-card-icon f2"><Icon name="touch_app" /></div>
-        <div class="book-card-title">Interactive</div>
-        <div class="book-card-desc">States, feedback</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f2"><Icon name="accessibility" /></div>
-        <div class="book-card-title">Accessibility</div>
-        <div class="book-card-desc">WCAG guidance</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f2"><Icon name="input" /></div>
-        <div class="book-card-title">Form Elements</div>
-        <div class="book-card-desc">Inputs, validation</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f2"><Icon name="record_voice_over" /></div>
-        <div class="book-card-title">Voice and Tone</div>
-        <div class="book-card-desc">Copy, microcopy</div>
-      </div>
-      <div class="book-card">
-        <div class="book-card-icon f2"><Icon name="monitoring" /></div>
-        <div class="book-card-title">AI Insights</div>
-        <div class="book-card-desc">Generated content</div>
-      </div>
+      {patternsPages.map((p) => (
+        <a class="book-card" href={p.path}>
+          <div class="book-card-icon f2"><Icon name={p.icon} /></div>
+          <div class="book-card-title">{p.title}</div>
+          <div class="book-card-desc">{BLURBS[p.id] ?? ''}</div>
+        </a>
+      ))}
     </div>
   </div>
 
@@ -736,6 +709,20 @@ const page = pages.find((p) => p.id === 'introduction')!
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
     display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+  }
+
+  a.book-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+  }
+
+  a.book-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 
   .book-card.soon { background: var(--color-surface-secondary); }
