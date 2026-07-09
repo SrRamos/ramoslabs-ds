@@ -32,3 +32,6 @@ apps/site/.astro/
 
 # Playwright QA screenshots
 .playwright-mcp/
+
+# Wrangler local dev cache
+.wrangler/
