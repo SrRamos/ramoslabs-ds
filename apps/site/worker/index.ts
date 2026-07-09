@@ -498,21 +498,31 @@ async function handleStats(env: Env, meta: ReqMeta): Promise<Response> {
 
 // UNLISTED surface (not in nav, sitemap, llms.txt, or robots): full usage for the private
 // /metricas dashboard. Same-origin only (no CORS), noindex, never cached at the edge.
-async function handleMetrics(env: Env): Promise<Response> {
+async function handleMetrics(env: Env, url: URL): Promise<Response> {
+  // 5-minute edge cache: don't re-run the Analytics Engine SQL query (or hit npm) on every
+  // visit. Still unlisted + noindex; anyone who discovers the URL sees aggregates only.
+  const cache = (globalThis as { caches?: { default: { match: (r: Request) => Promise<Response | undefined>; put: (r: Request, res: Response) => Promise<void> } } }).caches?.default
+  const cacheKey = new Request(url.toString(), { method: 'GET' })
+  if (cache) {
+    const hit = await cache.match(cacheKey)
+    if (hit) return hit
+  }
   const [downloads, series, usage] = await Promise.all([npmDownloads(), npmSeries(), usageAggregates(env)])
   const payload = {
     package: NPM_PKG,
     npm: { url: `https://www.npmjs.com/package/${NPM_PKG}`, downloads, series },
     usage,
-    measurement: 'Cookieless, no PII. Page/agent-file/MCP aggregates from Cloudflare Analytics Engine (last 30 days).',
+    measurement: 'Cookieless, no PII (aggregates only). Page/agent-file/MCP metrics from Cloudflare Analytics Engine (last 30 days).',
   }
-  return new Response(JSON.stringify(payload, null, 2), {
+  const res = new Response(JSON.stringify(payload, null, 2), {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'private, no-store',
+      'Cache-Control': 'public, max-age=300',
       'X-Robots-Tag': 'noindex, nofollow',
     },
   })
+  if (cache) await cache.put(cacheKey, res.clone())
+  return res
 }
 
 export default {
@@ -533,7 +543,7 @@ export default {
     }
     // Unlisted private dashboard data feed (see /metricas). Not advertised anywhere.
     if (path === '/metricas.json') {
-      return handleMetrics(env)
+      return handleMetrics(env, url)
     }
 
     // Count meaningful GETs server-side (no cookie, no client JS, agents and bots included).

@@ -45,16 +45,17 @@ the Worker read access to Analytics Engine:
 
 1. Create an API token with **Account Analytics: Read** at
    [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens).
-2. Set the account id as a var and the token as a secret:
+2. This repo is **public**, so set both as **secrets** (never commit them):
    ```bash
-   # wrangler.toml → [vars]  (account id is not secret)
-   #   CF_ACCOUNT_ID = "<your-account-id>"
+   bunx wrangler secret put CF_ACCOUNT_ID
    bunx wrangler secret put CF_ANALYTICS_TOKEN
    ```
 3. Redeploy. `/metricas.json` will start returning the `usage` object and the dashboard fills in.
 
 Without these, `/metricas.json` returns `usage: null` and the dashboard shows a setup hint —
-nothing breaks.
+nothing breaks. `/metricas.json` is edge-cached for 5 minutes to avoid running the SQL query on
+every visit. **Never paste a token into chat, a commit, or an issue** — if one leaks, roll it in
+the API-tokens dashboard and set a fresh one.
 
 ## Example queries
 
