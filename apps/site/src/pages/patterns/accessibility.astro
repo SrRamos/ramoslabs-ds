@@ -1,0 +1,1210 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'accessibility')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<!-- ===== HERO ===== -->
+
+<div class="a11y-hero">
+  <p class="a11y-hero-eyebrow">Patterns / Accessibility</p>
+  <h1>Build it right once, and it works for everyone.</h1>
+  <p>
+    One in six people lives with a disability, and the same work that serves them serves everyone: keyboard users, glare on the screen, a cracked phone, a noisy room. Our floor is <strong>WCAG 2.2 Level AA</strong> on every surface, and <strong>Level AAA</strong> wherever a pattern reaches it without hurting the experience. This page is the taxonomy: the four principles, the order of operations, and the checks that keep the floor level.
+  </p>
+</div>
+
+<!-- ===== 1. POUR ===== -->
+
+<div class="a11y-section">
+  <div class="a11y-section-header">
+    <span class="a11y-section-number">1</span>
+    <h2 class="a11y-section-title">The Four Pillars: POUR</h2>
+  </div>
+
+  <p class="a11y-section-text">
+    Every WCAG success criterion hangs off four principles. Content has to be <strong>Perceivable</strong>, <strong>Operable</strong>, <strong>Understandable</strong>, and <strong>Robust</strong>. Miss one pillar and the interface locks out a real person, not an audit.
+  </p>
+
+  <div class="a11y-card-grid">
+    <div class="a11y-card">
+      <Icon name="visibility" class="a11y-card-icon" />
+      <h3 class="a11y-card-title">Perceivable</h3>
+      <p class="a11y-card-text">Reaches every sense. Text alternatives for images, captions for audio, contrast that survives low vision, and never color alone.</p>
+      <span class="a11y-card-tag">SC 1.1 to 1.4</span>
+    </div>
+    <div class="a11y-card">
+      <Icon name="keyboard" class="a11y-card-icon" />
+      <h3 class="a11y-card-title">Operable</h3>
+      <p class="a11y-card-text">Works from a keyboard. Nothing traps focus, targets are big enough to hit, and motion can be turned down.</p>
+      <span class="a11y-card-tag">SC 2.1 to 2.5</span>
+    </div>
+    <div class="a11y-card">
+      <Icon name="psychology" class="a11y-card-icon" />
+      <h3 class="a11y-card-title">Understandable</h3>
+      <p class="a11y-card-text">Reads clearly and behaves predictably. Labels stay put, errors explain themselves, and focus never surprises.</p>
+      <span class="a11y-card-tag">SC 3.1 to 3.3</span>
+    </div>
+    <div class="a11y-card">
+      <Icon name="build" class="a11y-card-icon" />
+      <h3 class="a11y-card-title">Robust</h3>
+      <p class="a11y-card-text">Valid markup, and every control exposes a name, a role, and a value that assistive technology can read.</p>
+      <span class="a11y-card-tag">SC 4.1</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 2. SEMANTIC HTML BEFORE ARIA ===== -->
+
+<div class="a11y-section">
+  <div class="a11y-section-header">
+    <span class="a11y-section-number">2</span>
+    <h2 class="a11y-section-title">Semantic HTML Before ARIA</h2>
+  </div>
+
+  <p class="a11y-section-text">
+    The first rule of ARIA is: do not use ARIA. Reach for the native element first, because it hands you the accessibility that a styled <code>&lt;div&gt;</code> makes you rebuild from scratch.
+  </p>
+
+  <div class="a11y-rule">
+    <div class="a11y-rule-label"><Icon name="gavel" />Rule</div>
+    <div class="a11y-rule-text">Reach for the native element first, and add ARIA only to fill a gap it leaves.</div>
+    <div class="a11y-rule-why"><strong>Why:</strong> a native <code>&lt;button&gt;</code>, <code>&lt;nav&gt;</code>, or <code>&lt;a href&gt;</code> ships with a role, an accessible name, keyboard behavior, and focus already wired in. ARIA changes only what a screen reader announces, so anything you build on a bare <code>&lt;div&gt;</code> you also have to make operable and focusable by hand.</div>
+  </div>
+
+  <div class="a11y-ra">
+    <div class="a11y-ra-card rec">
+      <div class="a11y-ra-head"><Icon name="check_circle" />Recommended</div>
+      <code class="a11y-ra-code">&lt;button type="button"&gt;Buy tickets&lt;/button&gt;</code>
+      <p class="a11y-ra-note">Role, accessible name, focus stop, and keyboard activation come for free, and it behaves the same in every browser and assistive tech.</p>
+    </div>
+    <div class="a11y-ra-card avoid">
+      <div class="a11y-ra-head"><Icon name="cancel" />Avoid</div>
+      <code class="a11y-ra-code">&lt;div onclick="buy()"&gt;Buy tickets&lt;/div&gt;</code>
+      <p class="a11y-ra-note">No role, no keyboard, no focus stop. You would have to rebuild <code>tabindex</code>, key handling, and the focus ring by hand, and it is easy to miss one.</p>
+    </div>
+  </div>
+
+  <ol class="a11y-numbered">
+    <li>Prefer the native element whenever it carries the semantics and behavior you need. A real <code>&lt;button&gt;</code> beats <code>&lt;div role="button" tabindex="0"&gt;</code>.</li>
+    <li>Keep native semantics intact: nest a real element inside rather than repainting one with a role.</li>
+    <li>Keep every interactive ARIA control keyboard operable. Add <code>role="button"</code> and you own <code>Enter</code>, <code>Space</code>, focus, and the ring.</li>
+    <li>Keep focusable elements visible to assistive tech: <code>aria-hidden="true"</code> and <code>role="presentation"</code> belong only on content that cannot receive focus.</li>
+    <li>Give every interactive element an accessible name: a visible <code>&lt;label&gt;</code>, its text, <code>aria-label</code>, or <code>aria-labelledby</code>.</li>
+  </ol>
+
+  <p class="a11y-section-text">
+    <strong>No ARIA is better than bad ARIA.</strong> Unsure? Drop to semantic HTML and you will almost always be more accessible, not less.
+  </p>
+</div>
+
+<!-- ===== 3. CONTRAST, COLOR, DARK MODE ===== -->
+
+<div class="a11y-section">
+  <div class="a11y-section-header">
+    <span class="a11y-section-number">3</span>
+    <h2 class="a11y-section-title">Contrast, Color, and Dark Mode</h2>
+  </div>
+
+  <p class="a11y-section-text">
+    Contrast is the most-failed criterion on the web, and the easiest to fix. <strong>SC 1.4.3</strong> asks <strong>4.5:1</strong> on text and <strong>3:1</strong> on large text (18pt, or 14pt bold); <strong>SC 1.4.11</strong> asks <strong>3:1</strong> on interactive edges and meaningful graphics. And <strong>SC 1.4.1</strong> means color is never the only signal: an error is red <em>and</em> carries an icon and text.
+  </p>
+
+  <div class="a11y-xref">
+    <span class="a11y-xref-chip"><Icon name="palette" />Measure pairings in <strong>&nbsp;Foundations / Color Picker</strong></span>
+    <span class="a11y-xref-chip"><Icon name="contrast" />Token ratios in <strong>&nbsp;Foundations / Colors</strong></span>
+  </div>
+
+  <p class="a11y-section-text" style={{ 'margin-top': '1.25rem' }}>
+    Every brand pairing clears its floor, most with AAA headroom:
+  </p>
+
+  <div class="a11y-contrast-grid">
+    <div class="a11y-contrast-item">
+      <div class="a11y-contrast-preview" style={{ background: '#ffffff', color: '#0f172a' }}>Heading on White</div>
+      <div class="a11y-contrast-info">
+        <span class="a11y-contrast-ratio">17.85:1</span>
+        <span class="a11y-pass">AAA</span>
+      </div>
+    </div>
+    <div class="a11y-contrast-item">
+      <div class="a11y-contrast-preview" style={{ background: '#ffffff', color: '#64748b' }}>Muted on White</div>
+      <div class="a11y-contrast-info">
+        <span class="a11y-contrast-ratio">4.76:1</span>
+        <span class="a11y-pass">AA</span>
+      </div>
+    </div>
+    <div class="a11y-contrast-item">
+      <div class="a11y-contrast-preview" style={{ background: '#4f46e5', color: '#ffffff' }}>White on Primary</div>
+      <div class="a11y-contrast-info">
+        <span class="a11y-contrast-ratio">6.29:1</span>
+        <span class="a11y-pass">AA</span>
+      </div>
+    </div>
+    <div class="a11y-contrast-item">
+      <div class="a11y-contrast-preview" style={{ background: '#4338ca', color: '#ffffff' }}>White on Primary Dark</div>
+      <div class="a11y-contrast-info">
+        <span class="a11y-contrast-ratio">7.90:1</span>
+        <span class="a11y-pass">AAA</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="a11y-section-text" style={{ 'margin-top': '1.25rem' }}>
+    <strong>Dark mode is not a reskin.</strong> Both themes are tuned by hand, both clear the floor, and both are wired to <code>prefers-color-scheme</code>.
+  </p>
+
+  <div class="a11y-dark-demo">
+    <div class="a11y-dark-preview light">
+      <div class="a11y-dark-label" style={{ color: '#64748b' }}>Light Mode</div>
+      <div class="a11y-dark-text" style={{ color: '#0f172a' }}>Heading text</div>
+      <div class="a11y-dark-text" style={{ color: '#64748b' }}>Body text on white surface</div>
+    </div>
+    <div class="a11y-dark-preview dark">
+      <div class="a11y-dark-label" style={{ color: '#94a3b8' }}>Dark Mode</div>
+      <div class="a11y-dark-text" style={{ color: '#f1f5f9' }}>Heading text</div>
+      <div class="a11y-dark-text" style={{ color: '#cbd5e1' }}>Body text on dark surface</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 4. KEYBOARD AND FOCUS ===== -->
+
+<div class="a11y-section">
+  <div class="a11y-section-header">
+    <span class="a11y-section-number">4</span>
+    <h2 class="a11y-section-title">Keyboard and Focus</h2>
+  </div>
+
+  <p class="a11y-section-text">
+    Many people navigate entirely by keyboard: a motor impairment, repetitive strain, a screen reader, or plain preference. <strong>SC 2.1.1 Keyboard</strong> asks that every control be reachable and operable from the keyboard, and the activation key follows the role: <strong>Tab</strong> moves focus, <strong>Space</strong> activates buttons and checkboxes, and <strong>Enter</strong> activates links and buttons. <strong>SC 2.1.2 No Keyboard Trap</strong> is a separate promise: focus that lands somewhere can always move away again through a standard mechanism, not necessarily <code>Escape</code>. Escape-to-close is a dialog and menu convention from the ARIA Authoring Practices Guide, not part of 2.1.1. Focus stays visible (<strong>SC 2.4.7</strong>) and is never hidden behind sticky UI (<strong>SC 2.4.11</strong>).
+  </p>
+
+  <div class="a11y-rule">
+    <div class="a11y-rule-label"><Icon name="gavel" />Rule</div>
+    <div class="a11y-rule-text">Keep a visible focus indicator on every focusable control.</div>
+    <div class="a11y-rule-why"><strong>Why:</strong> the focus ring is how a keyboard user knows where they are. If a design has to drop the default outline, replace it with something at least as clear, never with nothing.</div>
+  </div>
+
+  <div class="a11y-demo">
+    <div class="a11y-demo-panel">
+      <span class="a11y-demo-label">Resting</span>
+      <span class="a11y-demo-btn">Buy tickets</span>
+    </div>
+    <div class="a11y-demo-panel">
+      <span class="a11y-demo-label">Focused</span>
+      <span class="a11y-demo-btn is-focused">Buy tickets</span>
+    </div>
+    <div class="a11y-demo-panel">
+      <span class="a11y-demo-label">Operable by keyboard (SC 2.1.1)</span>
+      <div class="a11y-keys" aria-hidden="true">
+        <span class="a11y-key">Tab</span>
+        <span class="a11y-key">Enter</span>
+        <span class="a11y-key">Space</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="a11y-section-text">
+    <strong>Skip links</strong> let a keyboard user jump straight to <code>&lt;main&gt;</code> instead of tabbing through the whole nav. And <code>.sr-only</code> keeps a label in the accessibility tree while hiding it on screen.
+  </p>
+
+  <div class="a11y-helpers">
+    <div class="a11y-helper">
+      <div class="a11y-helper-name">.focus-ring</div>
+      <div class="a11y-helper-desc">Visible focus indicator: outline plus offset plus soft ring</div>
+    </div>
+    <div class="a11y-helper">
+      <div class="a11y-helper-name">.skip-link</div>
+      <div class="a11y-helper-desc">Hidden link that appears on focus and jumps to main content</div>
+    </div>
+    <div class="a11y-helper">
+      <div class="a11y-helper-name">.sr-only</div>
+      <div class="a11y-helper-desc">Visually hidden but present in the accessibility tree</div>
+    </div>
+  </div>
+
+  <div class="a11y-see-code">
+    <Icon name="arrow_downward" />
+    See CSS: Focus States, Skip Links, and Screen Reader Utilities
+  </div>
+</div>
+
+<!-- ===== 5. TARGET SIZE AND MOTION ===== -->
+
+<div class="a11y-section">
+  <div class="a11y-section-header">
+    <span class="a11y-section-number">5</span>
+    <h2 class="a11y-section-title">Target Size and Motion</h2>
+  </div>
+
+  <p class="a11y-section-text">
+    A control has to be big enough to hit. <strong>SC 2.5.8</strong> sets a floor of <strong>24 by 24 CSS pixels</strong>; we aim for <strong>44 by 44</strong>, the size Apple and WCAG AAA both recommend. Motion is the other half of Operable: honor <code>prefers-reduced-motion</code> as a floor, collapse the motion, keep the meaning (<strong>SC 2.3.3</strong>, <strong>SC 2.2.2</strong>).
+  </p>
+
+  <div class="a11y-xref">
+    <span class="a11y-xref-chip"><Icon name="straighten" />Target and spacing scale in <strong>&nbsp;Foundations / Spacing</strong></span>
+    <span class="a11y-xref-chip"><Icon name="animation" />Reduced-motion tokens in <strong>&nbsp;Foundations / Motion</strong></span>
+  </div>
+
+  <div class="a11y-helpers">
+    <div class="a11y-helper">
+      <div class="a11y-helper-name">.touch-target</div>
+      <div class="a11y-helper-desc">Pads the hit area to a minimum 44 by 44px without changing the visual</div>
+    </div>
+    <div class="a11y-helper">
+      <div class="a11y-helper-name">.no-motion</div>
+      <div class="a11y-helper-desc">Disables animation and transition on an element and its children</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 6. NAME, ROLE, VALUE ===== -->
+
+<div class="a11y-section">
+  <div class="a11y-section-header">
+    <span class="a11y-section-number">6</span>
+    <h2 class="a11y-section-title">Screen Readers: Name, Role, and Value</h2>
+  </div>
+
+  <p class="a11y-section-text">
+    A screen reader reads three things off every control, and <strong>SC 4.1.2</strong> requires all three. A native <code>&lt;input type="checkbox"&gt;</code> with a label supplies them for free. A <code>&lt;div&gt;</code> styled to look like one supplies none, so a custom widget must set each by hand and keep the value in sync.
+  </p>
+
+  <div class="a11y-card-grid">
+    <div class="a11y-card">
+      <Icon name="label" class="a11y-card-icon" />
+      <h3 class="a11y-card-title">Name</h3>
+      <p class="a11y-card-text">What it is called. "Search", "Buy tickets", "Close dialog".</p>
+    </div>
+    <div class="a11y-card">
+      <Icon name="category" class="a11y-card-icon" />
+      <h3 class="a11y-card-title">Role</h3>
+      <p class="a11y-card-text">What kind of thing it is. Button, checkbox, tab, dialog.</p>
+    </div>
+    <div class="a11y-card">
+      <Icon name="toggle_on" class="a11y-card-icon" />
+      <h3 class="a11y-card-title">Value / State</h3>
+      <p class="a11y-card-text">Where it stands now. Checked, expanded, "3 of 10".</p>
+    </div>
+  </div>
+
+  <p class="a11y-section-text">
+    <strong>Live regions</strong> announce changes away from focus: a cart count, a validation error, results loading. Use <code>role="alert"</code> to interrupt, and <code>role="status"</code> or <code>aria-live="polite"</code> to wait for a pause.
+  </p>
+
+  <div class="a11y-see-code">
+    <Icon name="arrow_downward" />
+    See HTML: ARIA Live Regions, Forms, and Modals
+  </div>
+</div>
+
+<!-- ===== 7. THE CHECKLIST ===== -->
+
+<div class="a11y-section" style={{ 'border-bottom': 'none', 'padding-bottom': '1rem' }}>
+  <div class="a11y-section-header">
+    <span class="a11y-section-number">7</span>
+    <h2 class="a11y-section-title">Before You Ship</h2>
+  </div>
+
+  <p class="a11y-section-text">
+    Run this before every PR. It catches most issues in a few minutes, and each item names the criterion it protects.
+  </p>
+
+  <ul class="a11y-checklist" role="list" aria-label="Accessibility checklist">
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Semantic HTML elements (button, nav, main, header, article)<span class="a11y-check-sc">SC 1.3.1</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Color contrast: 4.5:1 normal text, 3:1 large text and UI<span class="a11y-check-sc">SC 1.4.3 / 1.4.11</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Visible focus, never obscured behind sticky UI<span class="a11y-check-sc">SC 2.4.7 / 2.4.11</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Accessible name on every control, including icon-only buttons<span class="a11y-check-sc">SC 4.1.2</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Labels connected to form inputs (for/id)<span class="a11y-check-sc">SC 3.3.2</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Touch targets: 24x24px floor (AA), 44x44px target (AAA)<span class="a11y-check-sc">SC 2.5.8</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Live regions announce dynamic status messages<span class="a11y-check-sc">SC 4.1.3</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>prefers-reduced-motion respected<span class="a11y-check-sc">SC 2.3.3</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Keyboard: Tab reaches every control, Space and Enter activate by role, focus can always move away<span class="a11y-check-sc">SC 2.1.1 / 2.1.2</span></span>
+    </li>
+    <li class="a11y-checklist-item">
+      <div class="a11y-check" aria-hidden="true"><Icon name="check" class="a11y-check-icon" /></div>
+      <span class="a11y-checklist-text"><span class="sr-only">Done: </span>Screen reader pass (VoiceOver or NVDA)<span class="a11y-check-sc">SC 4.1.2</span></span>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== CODE REFERENCE ===== -->
+
+<div class="a11y-code-section">
+  <h2 class="a11y-code-section-title">Code Reference</h2>
+  <p class="a11y-code-section-desc">
+    Copy these patterns into your codebase. All helpers are designed to be added to <code>main.css</code>.
+  </p>
+
+  <div class="a11y-code-block">
+    <h3 class="a11y-code-block-title">
+      <Icon name="visibility" />
+      Focus States & Motion Preferences
+    </h3>
+    <div class="a11y-code">
+      <div class="a11y-code-header">
+        <span class="a11y-code-dot red" aria-hidden="true"></span>
+        <span class="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span class="a11y-code-dot green" aria-hidden="true"></span>
+        <span class="a11y-code-lang">CSS</span>
+      </div>
+      <pre style={{ padding: '2rem' }} set:html={`<span class="comment">/* Global focus ring - applies to all focusable elements */</span>
+<span class="selector">:focus-visible</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">2px solid var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">outline-offset</span><span class="punctuation">:</span> <span class="value">2px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Custom focus ring utility */</span>
+<span class="selector">.focus-ring:focus-visible</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">2px solid var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">outline-offset</span><span class="punctuation">:</span> <span class="value">2px</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 0 4px rgba(79, 70, 229, 0.15)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Respect motion preferences globally */</span>
+<span class="selector">@media (prefers-reduced-motion: reduce)</span> <span class="punctuation">{</span>
+    <span class="selector">*,
+    *::before,
+    *::after</span> <span class="punctuation">{</span>
+        <span class="property">animation-duration</span><span class="punctuation">:</span> <span class="value">0.01ms !important</span><span class="punctuation">;</span>
+        <span class="property">animation-iteration-count</span><span class="punctuation">:</span> <span class="value">1 !important</span><span class="punctuation">;</span>
+        <span class="property">transition-duration</span><span class="punctuation">:</span> <span class="value">0.01ms !important</span><span class="punctuation">;</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Manual motion disable (for JS toggle) */</span>
+<span class="selector">.no-motion,
+.no-motion *</span> <span class="punctuation">{</span>
+    <span class="property">animation</span><span class="punctuation">:</span> <span class="value">none !important</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">none !important</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Dark mode - automatic based on system preference */</span>
+<span class="selector">@media (prefers-color-scheme: dark)</span> <span class="punctuation">{</span>
+    <span class="selector">:root</span> <span class="punctuation">{</span>
+        <span class="property">--color-text-heading</span><span class="punctuation">:</span> <span class="value">#f1f5f9</span><span class="punctuation">;</span>
+        <span class="property">--color-text-body</span><span class="punctuation">:</span> <span class="value">#cbd5e1</span><span class="punctuation">;</span>
+        <span class="property">--color-surface</span><span class="punctuation">:</span> <span class="value">#1e293b</span><span class="punctuation">;</span>
+        <span class="property">--color-background</span><span class="punctuation">:</span> <span class="value">#0f172a</span><span class="punctuation">;</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Manual dark mode toggle (via class or data attr) */</span>
+<span class="selector">.dark, [data-theme="dark"]</span> <span class="punctuation">{</span>
+    <span class="property">--color-text-heading</span><span class="punctuation">:</span> <span class="value">#f1f5f9</span><span class="punctuation">;</span>
+    <span class="property">--color-text-body</span><span class="punctuation">:</span> <span class="value">#cbd5e1</span><span class="punctuation">;</span>
+    <span class="comment">/* ... all dark tokens ... */</span>
+<span class="punctuation">}</span>`} />
+    </div>
+  </div>
+
+  <div class="a11y-code-block">
+    <h3 class="a11y-code-block-title">
+      <Icon name="keyboard_tab" />
+      Skip Links & Screen Reader Utilities
+    </h3>
+    <div class="a11y-code">
+      <div class="a11y-code-header">
+        <span class="a11y-code-dot red" aria-hidden="true"></span>
+        <span class="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span class="a11y-code-dot green" aria-hidden="true"></span>
+        <span class="a11y-code-lang">CSS</span>
+      </div>
+      <pre style={{ padding: '2rem' }} set:html={`<span class="comment">/* Skip link - hidden until focused */</span>
+<span class="selector">.skip-link</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
+    <span class="property">top</span><span class="punctuation">:</span> <span class="value">-100%</span><span class="punctuation">;</span>
+    <span class="property">left</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">1rem 1.5rem</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-md)</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">600</span><span class="punctuation">;</span>
+    <span class="property">text-decoration</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">z-index</span><span class="punctuation">:</span> <span class="value">9999</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.skip-link:focus</span> <span class="punctuation">{</span>
+    <span class="property">top</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Screen reader only - visually hidden but accessible */</span>
+<span class="selector">.sr-only</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">1px</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="value">1px</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">margin</span><span class="punctuation">:</span> <span class="value">-1px</span><span class="punctuation">;</span>
+    <span class="property">overflow</span><span class="punctuation">:</span> <span class="value">hidden</span><span class="punctuation">;</span>
+    <span class="property">clip</span><span class="punctuation">:</span> <span class="value">rect(0, 0, 0, 0)</span><span class="punctuation">;</span>
+    <span class="property">white-space</span><span class="punctuation">:</span> <span class="value">nowrap</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Touch target - ensures minimum clickable area */</span>
+<span class="selector">.touch-target</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">relative</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.touch-target::after</span> <span class="punctuation">{</span>
+    <span class="property">content</span><span class="punctuation">:</span> <span class="value">''</span><span class="punctuation">;</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span>
+    <span class="property">top</span><span class="punctuation">:</span> <span class="value">50%</span><span class="punctuation">;</span>
+    <span class="property">left</span><span class="punctuation">:</span> <span class="value">50%</span><span class="punctuation">;</span>
+    <span class="property">transform</span><span class="punctuation">:</span> <span class="value">translate(-50%, -50%)</span><span class="punctuation">;</span>
+    <span class="property">min-width</span><span class="punctuation">:</span> <span class="value">44px</span><span class="punctuation">;</span>
+    <span class="property">min-height</span><span class="punctuation">:</span> <span class="value">44px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`} />
+    </div>
+  </div>
+
+  <div class="a11y-code-block">
+    <h3 class="a11y-code-block-title">
+      <Icon name="campaign" />
+      ARIA Live Regions
+    </h3>
+    <div class="a11y-code">
+      <div class="a11y-code-header">
+        <span class="a11y-code-dot red" aria-hidden="true"></span>
+        <span class="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span class="a11y-code-dot green" aria-hidden="true"></span>
+        <span class="a11y-code-lang">HTML</span>
+      </div>
+      <pre style={{ padding: '2rem' }} set:html={`<span class="comment">&lt;!-- Error - interrupts immediately --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"alert"</span><span class="tag">&gt;</span>
+    Payment failed. Please try again.
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Status - waits for pause in speech --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"status"</span><span class="tag">&gt;</span>
+    3 items in cart
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Loading state --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"status"</span> <span class="attr">aria-busy</span><span class="punctuation">=</span><span class="string">"true"</span><span class="tag">&gt;</span>
+    Loading events...
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Search results - announces full content --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">aria-live</span><span class="punctuation">=</span><span class="string">"polite"</span> <span class="attr">aria-atomic</span><span class="punctuation">=</span><span class="string">"true"</span><span class="tag">&gt;</span>
+    Showing 24 events
+<span class="tag">&lt;/div&gt;</span>`} />
+    </div>
+  </div>
+
+  <div class="a11y-code-block">
+    <h3 class="a11y-code-block-title">
+      <Icon name="edit_note" />
+      Accessible Forms
+    </h3>
+    <div class="a11y-code">
+      <div class="a11y-code-header">
+        <span class="a11y-code-dot red" aria-hidden="true"></span>
+        <span class="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span class="a11y-code-dot green" aria-hidden="true"></span>
+        <span class="a11y-code-lang">HTML</span>
+      </div>
+      <pre style={{ padding: '2rem' }} set:html={`<span class="tag">&lt;div</span> <span class="attr">class</span><span class="punctuation">=</span><span class="string">"form-field"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="punctuation">=</span><span class="string">"email"</span><span class="tag">&gt;</span>
+        Email <span class="tag">&lt;span</span> <span class="attr">aria-hidden</span><span class="punctuation">=</span><span class="string">"true"</span><span class="tag">&gt;</span>*<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class</span><span class="punctuation">=</span><span class="string">"sr-only"</span><span class="tag">&gt;</span>(required)<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/label&gt;</span>
+
+    <span class="tag">&lt;input</span>
+        <span class="attr">type</span><span class="punctuation">=</span><span class="string">"email"</span>
+        <span class="attr">id</span><span class="punctuation">=</span><span class="string">"email"</span>
+        <span class="attr">autocomplete</span><span class="punctuation">=</span><span class="string">"email"</span>
+        <span class="attr">aria-required</span><span class="punctuation">=</span><span class="string">"true"</span>
+        <span class="attr">aria-describedby</span><span class="punctuation">=</span><span class="string">"email-error"</span>
+    <span class="tag">/&gt;</span>
+
+    <span class="tag">&lt;p</span> <span class="attr">id</span><span class="punctuation">=</span><span class="string">"email-error"</span> <span class="attr">role</span><span class="punctuation">=</span><span class="string">"alert"</span> <span class="attr">hidden</span><span class="tag">&gt;</span>
+        Enter a valid email
+    <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>`} />
+    </div>
+  </div>
+
+  <div class="a11y-code-block">
+    <h3 class="a11y-code-block-title">
+      <Icon name="open_in_new" />
+      Accessible Modals
+    </h3>
+    <div class="a11y-code">
+      <div class="a11y-code-header">
+        <span class="a11y-code-dot red" aria-hidden="true"></span>
+        <span class="a11y-code-dot yellow" aria-hidden="true"></span>
+        <span class="a11y-code-dot green" aria-hidden="true"></span>
+        <span class="a11y-code-lang">HTML</span>
+      </div>
+      <pre style={{ padding: '2rem' }} set:html={`<span class="comment">&lt;!-- Modal dialog: traps focus, closes on Escape, returns focus --&gt;</span>
+<span class="tag">&lt;div</span>
+    <span class="attr">role</span><span class="punctuation">=</span><span class="string">"dialog"</span>
+    <span class="attr">aria-modal</span><span class="punctuation">=</span><span class="string">"true"</span>
+    <span class="attr">aria-labelledby</span><span class="punctuation">=</span><span class="string">"modal-title"</span>
+<span class="tag">&gt;</span>
+    <span class="tag">&lt;h2</span> <span class="attr">id</span><span class="punctuation">=</span><span class="string">"modal-title"</span><span class="tag">&gt;</span>Confirm Purchase<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Buy 2 tickets for $150?<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;button&gt;</span>Cancel<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">autofocus</span><span class="tag">&gt;</span>Confirm<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Background becomes inert --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">id</span><span class="punctuation">=</span><span class="string">"app"</span> <span class="attr">inert</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>`} />
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SOURCES ===== -->
+
+<div class="a11y-refs">
+  <p class="a11y-refs-h">Sources</p>
+  <p>
+    WCAG 2.2 success criteria: contrast SC 1.4.3 / 1.4.11, use of color 1.4.1, keyboard 2.1.1 / 2.1.2, focus 2.4.7 / 2.4.11 / 2.4.13, target size 2.5.8 / 2.5.5, motion 2.3.3 / 2.2.2, name-role-value 4.1.2, status messages 4.1.3 (<a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer">w3.org/TR/WCAG22</a>). POUR principles and the five rules of ARIA from W3C WAI and Using ARIA (<a href="https://www.w3.org/WAI/fundamentals/accessibility-principles/" target="_blank" rel="noreferrer">w3.org/WAI</a>, <a href="https://www.w3.org/TR/using-aria/" target="_blank" rel="noreferrer">w3.org/TR/using-aria</a>); widget patterns from the ARIA Authoring Practices Guide (<a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" rel="noreferrer">w3.org/WAI/ARIA/apg</a>). The one-in-six figure is WHO (<a href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" target="_blank" rel="noreferrer">who.int</a>); the 44px touch target follows the Apple Human Interface Guidelines. Ratios use the WCAG relative-luminance formula, matching the Color Picker story.
+  </p>
+</div>
+
+<style is:global>
+  /* ===== HERO ===== */
+  .a11y-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+    margin-bottom: 1rem;
+  }
+  .a11y-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .a11y-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+  .a11y-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 42rem;
+    margin: 0;
+  }
+  .a11y-hero p strong { color: #ffffff; font-weight: 700; }
+  .a11y-hero code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
+  }
+
+  /* ===== SECTIONS ===== */
+  .a11y-section {
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+  .a11y-section:last-of-type { border-bottom: none; }
+
+  .a11y-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+  }
+  .a11y-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .a11y-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .a11y-section-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 48rem;
+  }
+  .a11y-section-text strong { color: #0f172a; font-weight: 600; }
+  .a11y-section-text code {
+    background: #eef2ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4f46e5;
+  }
+
+  /* ===== HELPERS ===== */
+  .a11y-helpers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+  .a11y-helper {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .a11y-helper-name {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.875rem;
+    color: #4f46e5;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .a11y-helper-desc {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.4;
+  }
+
+  .a11y-see-code {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    color: #4f46e5;
+    font-weight: 500;
+  }
+  .a11y-see-code .material-symbols-outlined { font-size: 1rem; }
+
+  /* ===== CARDS (POUR + Name/Role/Value) ===== */
+  .a11y-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .a11y-card {
+    background: #ffffff;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border: 1px solid #e6e8eb;
+  }
+  .a11y-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #4f46e5;
+  }
+  .a11y-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.375rem;
+  }
+  .a11y-card-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #64748b;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  .a11y-card-tag {
+    display: inline-block;
+    margin-top: 0.625rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.03em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.15rem 0.4rem;
+  }
+
+  /* ===== NUMBERED RULES ===== */
+  .a11y-numbered {
+    counter-reset: rule;
+    list-style: none;
+    margin: 1.25rem 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .a11y-numbered li {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+  .a11y-numbered li::before {
+    counter-increment: rule;
+    content: counter(rule);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: #ffffff;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .a11y-numbered li strong { color: #0f172a; }
+  .a11y-numbered li code {
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+    color: #4f46e5;
+    font-family: 'SF Mono', monospace;
+  }
+
+  /* ===== RULE + WHY CALLOUT ===== */
+  .a11y-rule {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-left: 4px solid #4f46e5;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+  }
+  .a11y-rule-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #4338ca;
+    margin-bottom: 0.4rem;
+  }
+  .a11y-rule-label .material-symbols-outlined { font-size: 0.9rem; }
+  .a11y-rule-text {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.45;
+  }
+  .a11y-rule-text code {
+    background: #ffffff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #4f46e5;
+    font-family: 'SF Mono', monospace;
+  }
+  .a11y-rule-why {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+    margin-top: 0.4rem;
+  }
+  .a11y-rule-why strong { color: #4338ca; font-weight: 700; }
+  .a11y-rule-why code {
+    background: #ffffff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #4f46e5;
+    font-family: 'SF Mono', monospace;
+  }
+
+  /* ===== RECOMMENDED / AVOID PAIR ===== */
+  .a11y-ra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  @media (max-width: 700px) {
+    .a11y-ra { grid-template-columns: 1fr; }
+  }
+  .a11y-ra-card {
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    background: #f8fafc;
+  }
+  .a11y-ra-card.rec { border: 1px solid #c7d2fe; background: #eef2ff; }
+  .a11y-ra-card.avoid { border: 1px dashed #94a3b8; background: #f8fafc; }
+  .a11y-ra-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: 0.65rem;
+  }
+  .a11y-ra-card.rec .a11y-ra-head { color: #3730a3; }
+  .a11y-ra-card.avoid .a11y-ra-head { color: #334155; }
+  .a11y-ra-head .material-symbols-outlined { font-size: 1.1rem; }
+  .a11y-ra-code {
+    display: block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.78rem;
+    color: #0f172a;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.55rem;
+    overflow-x: auto;
+  }
+  .a11y-ra-note {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #475569;
+    margin: 0;
+  }
+  .a11y-ra-note code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.82em;
+    color: #334155;
+    font-family: 'SF Mono', monospace;
+  }
+
+  /* ===== CONTRAST PAIRS ===== */
+  .a11y-contrast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  .a11y-contrast-item {
+    background: #ffffff;
+    border: 1px solid #e6e8eb;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .a11y-contrast-preview {
+    padding: 1.25rem 1rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  .a11y-contrast-info {
+    padding: 0.5rem 0.75rem;
+    background: #f8fafc;
+    border-top: 1px solid #e6e8eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .a11y-contrast-ratio {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #475569;
+  }
+  .a11y-pass {
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ===== KEYBOARD / FOCUS DEMO ===== */
+  .a11y-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .a11y-demo-panel {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  .a11y-demo-label {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+  }
+  .a11y-demo-btn {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #ffffff;
+    background: #4f46e5;
+    border: none;
+    border-radius: 6px;
+    padding: 0.625rem 1.25rem;
+  }
+  .a11y-demo-btn.is-focused {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(79,70,229,0.2);
+  }
+  .a11y-keys { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+  .a11y-key {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #334155;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+  }
+
+  /* ===== DARK MODE DEMO ===== */
+  .a11y-dark-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .a11y-dark-preview {
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .a11y-dark-preview.light { background: #ffffff; border: 1px solid #e6e8eb; }
+  .a11y-dark-preview.dark { background: #1e293b; border: 1px solid #334155; }
+  .a11y-dark-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .a11y-dark-text { font-size: 0.875rem; line-height: 1.5; }
+
+  /* ===== CROSS REFERENCE CHIPS ===== */
+  .a11y-xref {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0.25rem;
+  }
+  .a11y-xref-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #4f46e5;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+  }
+  .a11y-xref-chip .material-symbols-outlined { font-size: 0.9rem; }
+
+  /* ===== CHECKLIST ===== */
+  .a11y-checklist {
+    background: #ffffff;
+    border: 1px solid #e6e8eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+  .a11y-checklist-item {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid #e6e8eb;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .a11y-checklist-item:last-child { border-bottom: none; }
+  .a11y-check {
+    width: 1.125rem;
+    height: 1.125rem;
+    background: #4f46e5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .a11y-check-icon { color: #ffffff; font-size: 0.875rem; }
+  .a11y-checklist-text { font-size: 0.8125rem; color: #0f172a; }
+  .a11y-check-sc {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    color: #475569;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+  }
+
+  /* ===== CODE REFERENCE ===== */
+  .a11y-code-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #4f46e5;
+  }
+  .a11y-code-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+  }
+  .a11y-code-section-desc {
+    color: #475569;
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+  }
+  .a11y-code-section-desc code {
+    background: #eef2ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+  .a11y-code-block { margin-bottom: 2rem; }
+  .a11y-code-block-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .a11y-code-block-title .material-symbols-outlined { font-size: 1.25rem; color: #4f46e5; }
+  .a11y-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+  .a11y-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+  .a11y-code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .a11y-code-dot.red { background: #ef4444; }
+  .a11y-code-dot.yellow { background: #f59e0b; }
+  .a11y-code-dot.green { background: #22c55e; }
+  .a11y-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .a11y-code pre {
+    margin: 0;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+  .a11y-code .comment { color: #94a3b8; font-style: italic; }
+  .a11y-code .selector { color: #fbbf24; }
+  .a11y-code .property { color: #7dd3fc; }
+  .a11y-code .value { color: #a5f3fc; }
+  .a11y-code .tag { color: #f472b6; }
+  .a11y-code .attr { color: #fbbf24; }
+  .a11y-code .string { color: #a5f3fc; }
+  .a11y-code .punctuation { color: #cbd5e1; }
+
+  /* Screen reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ===== SOURCES ===== */
+  .a11y-refs { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid #e6e8eb; }
+  .a11y-refs-h {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    margin-bottom: 0.75rem;
+  }
+  .a11y-refs p { font-size: 0.75rem; line-height: 1.7; color: #475569; margin: 0; }
+  .a11y-refs a { color: #4f46e5; text-decoration: none; }
+  .a11y-refs a:hover { text-decoration: underline; }
+</style>
+</BaseLayout>

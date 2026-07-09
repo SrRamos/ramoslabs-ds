@@ -1,0 +1,927 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'interactive')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+<div class="ix-hero">
+  <p class="ix-hero-eyebrow">Patterns / Interactive</p>
+  <h1>Most of your users can't hover.</h1>
+  <p>
+    Touch is the majority of every session, and a finger has nothing to hover with. So the press comes first, the keyboard gets a ring, and hover is a <strong>pointer only</strong> garnish laid on top. One tonal indigo layer expresses all three, stepped through the <span class="ix-hero-code">--state-*</span> scale and gated so no state lands where it does not belong.
+  </p>
+</div>
+
+
+
+
+
+<div class="ix-section">
+  <div class="ix-section-header">
+    <span class="ix-section-number">1</span>
+    <h2 class="ix-section-title">Three inputs, one state each</h2>
+  </div>
+
+  <p class="ix-text">
+    Interactive stopped meaning hover years ago. Each input arrives its own way and reads its own signal. Build for all three, or you build for a mouse alone.
+  </p>
+
+  <div class="ix-lab">
+    <div class="ix-demo">
+      <div class="ix-demo-label"><Icon name="mouse" class="ix-material" style="font-size:1rem;vertical-align:-3px;margin-right:0.35rem" />Pointer</div>
+      <p class="ix-demo-note" style={{ 'margin-top': 0 }}>Rests over a control without committing. That idle moment is <strong style={{ color: '#0f172a' }}>hover</strong>, and it belongs to the pointer alone.</p>
+    </div>
+    <div class="ix-demo">
+      <div class="ix-demo-label"><Icon name="touch_app" class="ix-material" style="font-size:1rem;vertical-align:-3px;margin-right:0.35rem" />Touch</div>
+      <p class="ix-demo-note" style={{ 'margin-top': 0 }}>No idle state. A finger commits on contact, so its signal is the <strong style={{ color: '#0f172a' }}>press</strong>, fired the instant it lands.</p>
+    </div>
+    <div class="ix-demo">
+      <div class="ix-demo-label"><Icon name="keyboard" class="ix-material" style="font-size:1rem;vertical-align:-3px;margin-right:0.35rem" />Keyboard</div>
+      <p class="ix-demo-note" style={{ 'margin-top': 0 }}>Moves by Tab, commits with Enter or Space. Its signal is <strong style={{ color: '#0f172a' }}>focus-visible</strong>, and without it the interface is unusable.</p>
+    </div>
+  </div>
+
+  <div class="ix-callout">
+    <Icon name="bolt" class="ix-material" />
+    <p class="ix-callout-text">
+      <strong>Mobile first.</strong> The press is the one state every device can make. Design <code>:active</code> first, add <code>:focus-visible</code> for keyboards, layer <code>:hover</code> for pointers. Never the reverse.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+<div class="ix-section">
+  <div class="ix-section-header">
+    <span class="ix-section-number">2</span>
+    <h2 class="ix-section-title">Feel it</h2>
+  </div>
+
+  <p class="ix-text">
+    Every state is a color, never a jump in position. Hover with a mouse, tap, or tab in and press Space. The signal changes, the layout holds still.
+  </p>
+
+  <div class="ix-lab">
+    <div class="ix-demo">
+      <div class="ix-demo-label">Live controls</div>
+      <div class="ix-demo-row">
+        <button class="ix-btn ix-btn-primary" type="button">Confirm</button>
+        <button class="ix-btn ix-btn-tonal" type="button">Learn more</button>
+        <button class="ix-btn ix-btn-primary" type="button" disabled>Disabled</button>
+        <button class="ix-btn ix-btn-primary" type="button" aria-busy="true"><span class="ix-spinner" aria-hidden="true"></span>Saving</button>
+      </div>
+      <div class="ix-card" tabindex="0" role="button" aria-label="Example selectable card" style={{ 'margin-top': '1rem' }}>
+        <div class="ix-card-image"></div>
+        <div class="ix-card-line" style={{ height: '0.875rem', width: '75%', 'margin-bottom': '0.5rem' }}></div>
+        <div class="ix-card-line" style={{ height: '0.75rem', width: '50%' }}></div>
+      </div>
+      <p class="ix-demo-note">
+        Filled deepens to indigo 700 on hover, 800 on press. The tonal button and card gain an indigo state layer instead. Tab in for the ring. Hover is gated to pointers; the press works everywhere.
+      </p>
+    </div>
+    <div class="ix-demo">
+      <div class="ix-demo-label">One overlay, four opacities</div>
+      <div class="ix-scale-row">
+        <span class="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.08)' }}></span>
+        <span class="ix-scale-txt"><b>--state-hover</b> · 0.08 · pointer only</span>
+      </div>
+      <div class="ix-scale-row">
+        <span class="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.10)' }}></span>
+        <span class="ix-scale-txt"><b>--state-focus</b> · 0.10 · keyboard</span>
+      </div>
+      <div class="ix-scale-row">
+        <span class="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.10)' }}></span>
+        <span class="ix-scale-txt"><b>--state-pressed</b> · 0.10 · all inputs</span>
+      </div>
+      <div class="ix-scale-row">
+        <span class="ix-scale-chip" style={{ background: 'rgba(79,70,229,0.16)' }}></span>
+        <span class="ix-scale-txt"><b>--state-dragged</b> · 0.16 · while dragging</span>
+      </div>
+      <p class="ix-demo-note">
+        A single translucent indigo overlay, the mechanism Material 3 standardized. One rule builds hover, press and drag alike.
+      </p>
+    </div>
+  </div>
+
+  <div class="ix-code">
+    <div class="ix-code-header">
+      <span class="ix-code-dot red" aria-hidden="true"></span>
+      <span class="ix-code-dot yellow" aria-hidden="true"></span>
+      <span class="ix-code-dot green" aria-hidden="true"></span>
+      <span class="ix-code-lang">CSS</span>
+    </div>
+    <pre set:html={`<span class="comment">/* One indigo overlay, opacity driven by the --state-* scale.
+   Works on any surface: button, card, list row. */</span>
+<span class="selector">.control</span> <span class="punctuation">{</span>
+    <span class="property">position</span><span class="punctuation">:</span> <span class="value">relative</span><span class="punctuation">;</span>
+    <span class="property">overflow</span><span class="punctuation">:</span> <span class="value">hidden</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-sm)</span><span class="punctuation">;</span> <span class="comment">/* 6px */</span>
+<span class="punctuation">}</span>
+<span class="selector">.control::after</span> <span class="punctuation">{</span>
+    <span class="property">content</span><span class="punctuation">:</span> <span class="value">''</span><span class="punctuation">;</span> <span class="property">position</span><span class="punctuation">:</span> <span class="value">absolute</span><span class="punctuation">;</span> <span class="property">inset</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-primary)</span><span class="punctuation">;</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">opacity var(--duration-fast) var(--easing-out)</span><span class="punctuation">;</span>
+    <span class="property">pointer-events</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+<span class="selector">.control:active::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-pressed)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* every input */</span>`} />
+  </div>
+
+  <div class="ix-callout">
+    <Icon name="ios" class="ix-material" />
+    <p class="ix-callout-text">
+      <strong>iOS caveat for custom controls.</strong> On iOS Safari <code>:active</code> does not fire on a non-native control, a <code>div</code> or <code>span</code> with <code>role="button"</code>, unless that element carries <code>cursor: pointer</code> or an empty <code>ontouchstart</code> handler to arm it. Real <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> are unaffected, so prefer them. The card above keeps <code>cursor: pointer</code>, which is what wakes its press on iOS. Where a native element will do, reach for it before <code>role="button"</code>.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+<div class="ix-section">
+  <div class="ix-section-header">
+    <span class="ix-section-number">3</span>
+    <h2 class="ix-section-title">Hover belongs to pointers</h2>
+  </div>
+
+  <p class="ix-text">
+    Wrap every hover rule in <code>@media (hover: hover) and (pointer: fine)</code>. It fires only where a pointer can actually rest over a control.
+  </p>
+
+  <div class="ix-callout">
+    <Icon name="warning" class="ix-material" />
+    <p class="ix-callout-text">
+      <strong>The sticky hover bug.</strong> A touchscreen has no pointer to move away, so it never clears an ungated hover. Tap one and the style <strong>sticks</strong>: buttons stay lit, cards freeze mid transition. The gate is the fix, not a nicety.
+    </p>
+  </div>
+
+  <div class="ix-code">
+    <div class="ix-code-header">
+      <span class="ix-code-dot red" aria-hidden="true"></span>
+      <span class="ix-code-dot yellow" aria-hidden="true"></span>
+      <span class="ix-code-dot green" aria-hidden="true"></span>
+      <span class="ix-code-lang">CSS</span>
+    </div>
+    <pre set:html={`<span class="comment">/* Press works everywhere, so it lives at the top level. */</span>
+<span class="selector">.control:active::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-pressed)</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+
+<span class="comment">/* Hover is a pointer-only enhancement. */</span>
+<span class="selector">@media (hover: hover) and (pointer: fine)</span> <span class="punctuation">{</span>
+    <span class="selector">.control:hover::after</span> <span class="punctuation">{</span> <span class="property">opacity</span><span class="punctuation">:</span> <span class="value">var(--state-hover)</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="punctuation">}</span>`} />
+  </div>
+</div>
+
+
+
+
+
+<div class="ix-section">
+  <div class="ix-section-header">
+    <span class="ix-section-number">4</span>
+    <h2 class="ix-section-title">A ring you can always see</h2>
+  </div>
+
+  <p class="ix-text">
+    Style <code>:focus-visible</code>, not <code>:focus</code>: the ring shows for the keyboard and stays hidden after a plain click. The harder half is making it survive every surface. A focus indicator has to clear <strong>3:1 against whatever sits behind it</strong>, and one flat color cannot promise that. White dissolves on a light page; indigo dissolves on an indigo button. <code>--shadow-focus</code> is two-tone for exactly this reason, a white gap inside an indigo edge, so whichever layer meets the surface, the other one still reads.
+  </p>
+
+  <div class="ix-ring-grid">
+    <div class="ix-ring-surface light">
+      <span class="ix-ring-surface-label">On a light surface</span>
+      <div class="ix-ring-pair">
+        <div class="ix-ring-slot">
+          <button class="ix-ring-btn mono" type="button" tabindex="-1">One color</button>
+          <span class="ix-ring-caption">White ring, <b>gone</b></span>
+        </div>
+        <div class="ix-ring-slot">
+          <button class="ix-ring-btn duo" type="button" tabindex="-1">Two-tone</button>
+          <span class="ix-ring-caption">Indigo edge <b>reads</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="ix-ring-surface brand">
+      <span class="ix-ring-surface-label">On an indigo button</span>
+      <div class="ix-ring-pair">
+        <div class="ix-ring-slot">
+          <button class="ix-ring-btn mono" type="button" tabindex="-1">One color</button>
+          <span class="ix-ring-caption">Indigo ring, <b>gone</b></span>
+        </div>
+        <div class="ix-ring-slot">
+          <button class="ix-ring-btn duo" type="button" tabindex="-1">Two-tone</button>
+          <span class="ix-ring-caption">White gap <b>reads</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="ix-text" style={{ 'margin-top': '1.25rem' }}>
+    An <code>outline</code> with <code>outline-offset</code> earns the same guarantee a different way: the offset opens a transparent gap so the page shows through, and the outline rides just outside it. Either shape works. The real mistake is <code>outline: none</code> with nothing put back, or a single-color ring that quietly fades into a matching surface.
+  </p>
+
+  <div class="ix-callout">
+    <Icon name="verified" class="ix-material" />
+    <p class="ix-callout-text">
+      <strong>WCAG 2.2.</strong> A focus indicator has to be visible (SC 2.4.7 Focus Visible, AA) and clear <strong>3:1 against its adjacent colors</strong> (SC 1.4.11 Non-text Contrast, AA). SC 2.4.13 Focus Appearance (AAA) adds a floor: an area at least a 2px perimeter thick and a 3:1 change between the unfocused and focused states. The two-tone ring is 4px of indicator and one layer always crosses 3:1, so it clears all three on light and on brand.
+    </p>
+  </div>
+
+  <div class="ix-code">
+    <div class="ix-code-header">
+      <span class="ix-code-dot red" aria-hidden="true"></span>
+      <span class="ix-code-dot yellow" aria-hidden="true"></span>
+      <span class="ix-code-dot green" aria-hidden="true"></span>
+      <span class="ix-code-lang">CSS</span>
+    </div>
+    <pre set:html={`<span class="comment">/* Do: keyboard-only ring, two-tone token, reads on any surface. */</span>
+<span class="selector">.control:focus-visible</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-focus)</span><span class="punctuation">;</span> <span class="comment">/* 0 0 0 2px #fff, 0 0 0 4px #4f46e5 */</span>
+<span class="punctuation">}</span>
+<span class="comment">/* Also fine: an outline with an offset gap does the same job. */</span>
+<span class="selector">.control:focus-visible</span> <span class="punctuation">{</span> <span class="property">outline</span><span class="punctuation">:</span> <span class="value">2px solid var(--color-primary)</span><span class="punctuation">;</span> <span class="property">outline-offset</span><span class="punctuation">:</span> <span class="value">2px</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="comment">/* Don't: remove the outline with nothing put back, or ring in
+   one color that vanishes into a surface of the same color. */</span>
+<span class="selector">.control:focus-visible</span> <span class="punctuation">{</span> <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span> <span class="punctuation">}</span>`} />
+  </div>
+</div>
+
+
+
+
+
+<div class="ix-section">
+  <div class="ix-section-header">
+    <span class="ix-section-number">5</span>
+    <h2 class="ix-section-title">The rules</h2>
+  </div>
+
+  <p class="ix-text">
+    Each rule is stated in the positive, with the reason it exists. Where the wrong turn is easy to make, a recommended and an avoid card sit side by side.
+  </p>
+
+  <div class="ix-rules">
+
+    <div class="ix-rule">
+      <p class="ix-rule-line"><span class="ix-rule-tag rule">Rule</span>Design the press first, then the keyboard ring, then hover.</p>
+      <p class="ix-rule-line"><span class="ix-rule-tag why">Why</span>The press is the one signal every device can make, so <code>:active</code> is the floor, <code>:focus-visible</code> the next layer, and hover the pointer garnish on top. Feedback built on hover alone leaves touch with nothing.</p>
+    </div>
+
+    <div class="ix-rule">
+      <p class="ix-rule-line"><span class="ix-rule-tag rule">Rule</span>Wrap every hover rule in <code>@media (hover: hover) and (pointer: fine)</code>.</p>
+      <p class="ix-rule-line"><span class="ix-rule-tag why">Why</span>A touchscreen has no pointer to move away, so an ungated hover sticks lit after a tap. The gate fires hover only where a pointer can rest.</p>
+      <div class="ix-ra">
+        <div class="ix-ra-card reco">
+          <div class="ix-ra-head"><Icon name="check_circle" class="ix-material" />Recommended</div>
+          <p class="ix-ra-body">Hover lives inside the pointer gate, so it clears the moment the finger lifts.</p>
+        </div>
+        <div class="ix-ra-card avoid">
+          <div class="ix-ra-head"><Icon name="block" class="ix-material" />Avoid</div>
+          <p class="ix-ra-body">An ungated <code>:hover</code> has no way to reset on touch, so the control freezes lit after a tap.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ix-rule">
+      <p class="ix-rule-line"><span class="ix-rule-tag rule">Rule</span>Signal every state with the tonal indigo overlay on the <code>--state-*</code> scale.</p>
+      <p class="ix-rule-line"><span class="ix-rule-tag why">Why</span>One translucent layer expresses hover, press and drag with a single rule, and color carries the meaning on every input.</p>
+      <p class="ix-rule-line"><span class="ix-rule-tag house">House rule</span>In this design system shadow is reserved for <strong>elevation, never for state</strong>. Material 3 does raise cards and buttons on hover; RamosLabs keeps the shadow still on purpose, so one mechanism carries every state. This is a RamosLabs decision, not an M3 mandate.</p>
+      <div class="ix-ra">
+        <div class="ix-ra-card reco">
+          <div class="ix-ra-head"><Icon name="check_circle" class="ix-material" />Recommended</div>
+          <p class="ix-ra-body">Deepen the tonal overlay for hover and press. The card holds its elevation.</p>
+        </div>
+        <div class="ix-ra-card avoid">
+          <div class="ix-ra-head"><Icon name="block" class="ix-material" />Avoid</div>
+          <p class="ix-ra-body">Lifting a card or swapping its shadow to signal hover. Here that spends elevation on a job the overlay already does.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ix-rule">
+      <p class="ix-rule-line"><span class="ix-rule-tag rule">Rule</span>Ring with <code>--shadow-focus</code> on <code>:focus-visible</code>, and keep the token two-tone.</p>
+      <p class="ix-rule-line"><span class="ix-rule-tag why">Why</span><code>:focus-visible</code> shows the ring for the keyboard and hides it after a plain click. A flat ring fades into a matching surface, so two tones keep one layer above 3:1 on any background.</p>
+      <div class="ix-ra">
+        <div class="ix-ra-card reco">
+          <div class="ix-ra-head"><Icon name="check_circle" class="ix-material" />Recommended</div>
+          <p class="ix-ra-body"><code>:focus-visible</code> with the two-tone <code>--shadow-focus</code>, so the ring reads on light and on brand.</p>
+        </div>
+        <div class="ix-ra-card avoid">
+          <div class="ix-ra-head"><Icon name="block" class="ix-material" />Avoid</div>
+          <p class="ix-ra-body">Styling <code>:focus</code> instead of <code>:focus-visible</code>, or a one-color ring that vanishes into a surface of the same color.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ix-rule">
+      <p class="ix-rule-line"><span class="ix-rule-tag rule">Rule</span>Gate transforms behind <code>prefers-reduced-motion</code> and let color carry the state without them.</p>
+      <p class="ix-rule-line"><span class="ix-rule-tag why">Why</span>The overlay already tells the whole story, so a reduced-motion visitor loses no information when the scale or lift is dropped.</p>
+    </div>
+
+    <div class="ix-rule">
+      <p class="ix-rule-line"><span class="ix-rule-tag rule">Rule</span>Give controls a 6px radius, <code>--radius-sm</code>, and pair each visual state with its ARIA.</p>
+      <p class="ix-rule-line"><span class="ix-rule-tag why">Why</span>A shared radius keeps controls in one family, and a pill radius stays on chips rather than wide buttons. Screen readers need <code>aria-busy</code>, <code>aria-disabled</code> and friends to hear what the color shows.</p>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<div class="ix-refs">
+  <p class="ix-refs-h">Sources</p>
+  <p>
+    State layers after Material 3 (<a href="https://m3.material.io/foundations/interaction/states/state-layers">m3.material.io</a>). The hover and pointer media features and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible">:focus-visible</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">prefers-reduced-motion</a> per MDN (<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover">hover</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer">pointer</a>). Immediate press feedback from Apple Human Interface Guidelines (<a href="https://developer.apple.com/design/human-interface-guidelines/feedback">developer.apple.com</a>). Focus floors from WCAG 2.2: visible focus (<a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html">SC 2.4.7</a>), 3:1 non-text contrast against adjacent colors (<a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html">SC 1.4.11</a>), and focus appearance size and change (<a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">SC 2.4.13</a>). The two-tone gap pattern follows GOV.UK focus styles and MDN <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset">outline-offset</a>.
+  </p>
+</div>
+<style is:global>
+  .ix-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .ix-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+  .ix-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .ix-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+  .ix-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 42rem;
+    margin: 0;
+  }
+  .ix-hero p strong { color: #ffffff; font-weight: 700; }
+  .ix-hero-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
+  }
+
+  /* ===== SECTIONS ===== */
+  .ix-section {
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .ix-section:last-of-type { border-bottom: none; }
+
+  .ix-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .ix-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .ix-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  .ix-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    max-width: 44rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .ix-text strong { color: #0f172a; font-weight: 600; }
+
+  .ix-text code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  .ix-callout {
+    display: flex;
+    gap: 0.75rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    max-width: 44rem;
+  }
+
+  .ix-callout .ix-material { color: #4338ca; font-size: 1.25rem; flex-shrink: 0; }
+
+  .ix-callout-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #3730a3;
+  }
+
+  .ix-callout-text strong { color: #312e81; font-weight: 700; }
+  .ix-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125em;
+    background: rgba(79,70,229,0.10);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #3730a3;
+  }
+
+  /* ===== DEMO LAB ===== */
+  .ix-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .ix-demo {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .ix-demo-label {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  .ix-demo-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .ix-demo-note {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
+    margin-top: 0.875rem;
+  }
+
+  .ix-demo-note code, .ix-demo-label code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: #4338ca;
+  }
+
+  /* ===== BUTTONS (state by modality) ===== */
+  .ix-btn {
+    position: relative;
+    overflow: hidden;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 150ms cubic-bezier(0, 0, 0.2, 1),
+                box-shadow 150ms cubic-bezier(0, 0, 0.2, 1),
+                transform 150ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .ix-btn-primary {
+    background: #4f46e5;
+    color: white;
+    box-shadow: 0 1px 2px rgba(79, 70, 229, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ix-btn-primary:hover { background: #4338ca; }
+  }
+
+  .ix-btn-primary:active { background: #3730a3; }
+
+  .ix-btn-tonal {
+    background: transparent;
+    color: #4338ca;
+    border: 1px solid #c7d2fe;
+  }
+
+  .ix-btn-tonal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #4f46e5;
+    opacity: 0;
+    transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ix-btn-tonal:hover::after { opacity: 0.08; }
+  }
+
+  .ix-btn-tonal:active::after { opacity: 0.10; }
+
+  .ix-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ix-btn:active { transform: scale(0.98); }
+  }
+
+  .ix-btn:disabled,
+  .ix-btn[aria-disabled='true'] {
+    background: #e2e8f0;
+    color: #64748b;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .ix-btn:disabled::after,
+  .ix-btn[aria-disabled='true']::after { opacity: 0; }
+
+  .ix-spinner {
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-top-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 0.5rem;
+    animation: ix-spin 0.7s linear infinite;
+  }
+
+  @keyframes ix-spin { to { transform: rotate(360deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ix-spinner { animation-duration: 1.4s; }
+    .ix-btn { transition-duration: 1ms; }
+  }
+
+  /* ===== SELECTABLE CARD ===== */
+  .ix-card {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 260px;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #e6e8eb;
+    box-shadow: 0 1px 2px rgba(79, 70, 229, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+    cursor: pointer;
+    transition: border-color 150ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .ix-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #4f46e5;
+    opacity: 0;
+    transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ix-card:hover { border-color: #a5b4fc; }
+    .ix-card:hover::after { opacity: 0.04; }
+  }
+
+  .ix-card:active::after { opacity: 0.10; }
+
+  .ix-card:focus-visible {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: var(--shadow-focus);
+  }
+
+  .ix-card-image {
+    height: 5.5rem;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .ix-card-line { background: #f1f5f9; border-radius: 4px; }
+
+  /* ===== STATE SCALE ===== */
+  .ix-scale-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.375rem 0;
+  }
+  .ix-scale-chip {
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid #e6e8eb;
+    flex-shrink: 0;
+  }
+  .ix-scale-txt {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #475569;
+  }
+  .ix-scale-txt b { color: #0f172a; }
+
+  /* ===== FOCUS RING ON ANY SURFACE ===== */
+  .ix-ring-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 560px) { .ix-ring-grid { grid-template-columns: 1fr; } }
+
+  .ix-ring-surface {
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .ix-ring-surface.light { background: #eef2ff; border: 1px solid #e0e7ff; }
+  .ix-ring-surface.brand { background: #4f46e5; }
+
+  .ix-ring-surface-label {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .ix-ring-surface.light .ix-ring-surface-label { color: #475569; }
+  .ix-ring-surface.brand .ix-ring-surface-label { color: #c7d2fe; }
+
+  .ix-ring-pair {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ix-ring-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .ix-ring-btn {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+  }
+
+  .ix-ring-surface.light .ix-ring-btn { background: #ffffff; color: #0f172a; border: 1px solid #e2e8f0; }
+  .ix-ring-surface.brand .ix-ring-btn { background: #4f46e5; color: #ffffff; border: 1px solid #6366f1; }
+
+  /* One color only clears 3:1 where the surface differs from the ring. */
+  .ix-ring-surface.light .ix-ring-btn.mono { box-shadow: 0 0 0 3px #ffffff; }
+  .ix-ring-surface.brand .ix-ring-btn.mono { box-shadow: 0 0 0 3px #4f46e5; }
+
+  /* Two-tone token: whichever layer meets the surface, the other one still reads. */
+  .ix-ring-btn.duo { box-shadow: var(--shadow-focus); }
+
+  .ix-ring-caption {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+  .ix-ring-surface.light .ix-ring-caption { color: #475569; }
+  .ix-ring-surface.brand .ix-ring-caption { color: #e0e7ff; }
+  .ix-ring-caption b { font-weight: 700; }
+  .ix-ring-surface.light .ix-ring-caption b { color: #0f172a; }
+  .ix-ring-surface.brand .ix-ring-caption b { color: #ffffff; }
+
+  /* ===== RULES (positive, with recommended / avoid pairs) ===== */
+  .ix-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.25rem 0;
+    max-width: 44rem;
+  }
+
+  .ix-rule {
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    background: #ffffff;
+  }
+
+  .ix-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #334155;
+    margin: 0;
+  }
+
+  .ix-rule-line + .ix-rule-line { margin-top: 0.4rem; }
+
+  .ix-rule-tag {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-right: 0.4rem;
+  }
+
+  .ix-rule-tag.rule { color: #4338ca; }
+  .ix-rule-tag.why { color: #64748b; }
+  .ix-rule-tag.house { color: #64748b; }
+
+  .ix-rule-line strong { color: #0f172a; font-weight: 600; }
+
+  .ix-rule-line code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #4338ca;
+  }
+
+  .ix-ra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.875rem;
+  }
+
+  @media (max-width: 700px) { .ix-ra { grid-template-columns: 1fr; } }
+
+  .ix-ra-card {
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+
+  /* Recommended: solid indigo tint. Avoid: dashed slate outline, so the
+     two never rely on color alone to tell apart (WCAG 1.4.1). */
+  .ix-ra-card.reco { border: 1px solid #c7d2fe; background: #eef2ff; }
+  .ix-ra-card.avoid { border: 1px dashed #94a3b8; background: #f8fafc; }
+
+  .ix-ra-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .ix-ra-card.reco .ix-ra-head { color: #3730a3; }
+  .ix-ra-card.avoid .ix-ra-head { color: #475569; }
+  .ix-ra-card.reco .ix-ra-head .ix-material { color: #4338ca; font-size: 1.1rem; }
+  .ix-ra-card.avoid .ix-ra-head .ix-material { color: #475569; font-size: 1.1rem; }
+
+  .ix-ra-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #475569;
+    margin: 0;
+  }
+
+  .ix-ra-body code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #334155;
+  }
+
+  /* ===== CODE BLOCKS ===== */
+  .ix-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 1rem 0 0;
+  }
+
+  .ix-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .ix-code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .ix-code-dot.red { background: #ef4444; }
+  .ix-code-dot.yellow { background: #f59e0b; }
+  .ix-code-dot.green { background: #22c55e; }
+
+  .ix-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .ix-code pre {
+    margin: 0;
+    padding: 1.5rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .ix-code .comment { color: #94a3b8; font-style: italic; }
+  .ix-code .selector { color: #fbbf24; }
+  .ix-code .property { color: #7dd3fc; }
+  .ix-code .value { color: #a5f3fc; }
+  .ix-code .function { color: #c4b5fd; }
+  .ix-code .punctuation { color: #cbd5e1; }
+
+  /* ===== SOURCES ===== */
+  .ix-refs { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid #e6e8eb; }
+  .ix-refs-h {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    margin-bottom: 0.75rem;
+  }
+  .ix-refs p { font-size: 0.75rem; line-height: 1.7; color: #475569; margin: 0; }
+  .ix-refs a { color: #4f46e5; text-decoration: none; }
+  .ix-refs a:hover { text-decoration: underline; }
+</style>
+</BaseLayout>

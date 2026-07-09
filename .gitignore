@@ -29,3 +29,6 @@ yarn-error.log*
 # Astro build output
 apps/site/dist/
 apps/site/.astro/
+
+# Playwright QA screenshots
+.playwright-mcp/

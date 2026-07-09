@@ -1,0 +1,1037 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { pages } from '../../data/pages'
+import Icon from '../../components/Icon.astro'
+const page = pages.find((p) => p.id === 'motion')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+<div class="mo-header">
+  <div class="mo-header-icon" aria-hidden="true">
+    <Icon name="animation" class="mo-symbol" />
+  </div>
+  <div>
+    <h1 class="mo-title">Motion With a Job to Do</h1>
+    <p class="mo-description">
+      Every animation here earns its place by answering one question for the person using the product: <strong>where did that come from, are these the same thing, did my tap register.</strong> No job, no motion. The system is deliberately small, three durations and five easings, so the whole product moves at one tempo: fast, and quiet.
+    </p>
+  </div>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Purposeful, Not Decorative</h2>
+  <p class="mo-lede">
+    Good motion orients. It carries the eye from a tap to the panel that opened, shows a row slid instead of teleported, confirms a request landed. Decoration does none of that and costs the same frame time. Motion earns its place by clarifying a change, never by dressing one up.
+  </p>
+
+  <div class="mo-purpose">
+    <div class="mo-purpose-card keep">
+      <div class="mo-purpose-tag"><Icon name="check_circle" class="mo-symbol" /> Recommended</div>
+      <ul class="mo-purpose-list">
+        <li><strong>Orientation.</strong> A menu grows from the button that opened it.</li>
+        <li><strong>Continuity.</strong> A row animates to its new spot instead of jumping.</li>
+        <li><strong>Feedback.</strong> A control settles after a tap, confirming the press.</li>
+      </ul>
+    </div>
+    <div class="mo-purpose-card">
+      <div class="mo-purpose-tag"><Icon name="cancel" class="mo-symbol" /> Avoid</div>
+      <ul class="mo-purpose-list">
+        <li>Entrances that animate with nothing to orient.</li>
+        <li>Looping, attention-grabbing movement with no status behind it.</li>
+        <li>Long, cinematic reveals that make the interface wait.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">The Three Durations</h2>
+  <p class="mo-lede">
+    Match the duration to the size of the change. A small, local change should feel instant; a surface taking over the screen earns a beat. Nothing runs past <span class="mo-inline-code">300ms</span>, where responsive starts to feel slow. Hover a card to feel each one.
+  </p>
+
+  <div class="mo-durations">
+    <div class="mo-duration-card d-fast">
+      <div class="mo-duration-stage">
+        <div class="mo-duration-track"></div>
+        <div class="mo-runner"></div>
+      </div>
+      <div>
+        <div class="mo-duration-value">150ms</div>
+        <div class="mo-duration-name">Fast</div>
+        <code class="mo-token">--duration-fast</code>
+        <p class="mo-duration-usage">Local state on a control the user is already watching: a hover tint, a focus ring, an icon toggling, a checkbox filling.</p>
+      </div>
+    </div>
+
+    <div class="mo-duration-card d-normal">
+      <div class="mo-duration-stage">
+        <div class="mo-duration-track"></div>
+        <div class="mo-runner"></div>
+      </div>
+      <div>
+        <div class="mo-duration-value">200ms</div>
+        <div class="mo-duration-name">Normal</div>
+        <code class="mo-token">--duration-normal</code>
+        <p class="mo-duration-usage">The default. Things entering, leaving, or moving a short way: a dropdown, a tooltip, a tab indicator, an accordion.</p>
+      </div>
+    </div>
+
+    <div class="mo-duration-card d-slow">
+      <div class="mo-duration-stage">
+        <div class="mo-duration-track"></div>
+        <div class="mo-runner"></div>
+      </div>
+      <div>
+        <div class="mo-duration-value">300ms</div>
+        <div class="mo-duration-name">Slow</div>
+        <code class="mo-token">--duration-slow</code>
+        <p class="mo-duration-usage">A large surface that takes over the view and needs a beat to read: a modal, a bottom sheet, a full-screen overlay.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="mo-hint"><Icon name="straighten" class="mo-symbol" /> Larger surface or longer travel, longer duration. The ceiling is 300ms, and most motion lives at 200ms.</p>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Five Easings, Five Jobs</h2>
+  <p class="mo-lede">
+    Easing is the shape of speed over time, and it is where motion says something. Fast then settling reads as arriving; slow then accelerating reads as leaving. Pick the wrong one and the interface feels laggy or mechanical. Each curve below has one job.
+  </p>
+
+  <div class="mo-easings">
+    <div class="mo-easing-card">
+      <div class="mo-easing-top">
+        <svg class="mo-curve" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="grid" d="M10 90 H90 M10 10 V90" />
+          <path class="curve" d="M10 90 L90 10" />
+        </svg>
+        <div>
+          <div class="mo-easing-name">Linear</div>
+          <div class="mo-bezier">cubic-bezier(0, 0, 1, 1)</div>
+        </div>
+      </div>
+      <p class="mo-easing-role"><code class="mo-inline-code">--easing-linear</code> Constant speed, no start or finish to shape. <strong>Only for continuous loops</strong>: spinners, indeterminate progress. On anything that begins and ends it feels robotic.</p>
+    </div>
+
+    <div class="mo-easing-card">
+      <div class="mo-easing-top">
+        <svg class="mo-curve" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="grid" d="M10 90 H90 M10 10 V90" />
+          <path class="curve" d="M10 90 C 10 90, 26 10, 90 10" />
+        </svg>
+        <div>
+          <div class="mo-easing-name">Ease out</div>
+          <div class="mo-bezier">cubic-bezier(0, 0, 0.2, 1)</div>
+        </div>
+      </div>
+      <p class="mo-easing-role"><code class="mo-inline-code">--easing-out</code> Quick start, gentle landing. The <strong>default for anything entering</strong> or answering a tap. It moves at once, which reads as responsive, then decelerates into place.</p>
+    </div>
+
+    <div class="mo-easing-card">
+      <div class="mo-easing-top">
+        <svg class="mo-curve" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="grid" d="M10 90 H90 M10 10 V90" />
+          <path class="curve" d="M10 90 C 42 90, 90 74, 90 10" />
+        </svg>
+        <div>
+          <div class="mo-easing-name">Ease in</div>
+          <div class="mo-bezier">cubic-bezier(0.4, 0, 1, 1)</div>
+        </div>
+      </div>
+      <p class="mo-easing-role"><code class="mo-inline-code">--easing-in</code> Slow start, accelerating exit. For elements <strong>leaving</strong> the screen, they gather speed and get out of the way. Never for entrances, a slow start there reads as lag.</p>
+    </div>
+
+    <div class="mo-easing-card">
+      <div class="mo-easing-top">
+        <svg class="mo-curve" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="grid" d="M10 90 H90 M10 10 V90" />
+          <path class="curve" d="M10 90 C 42 90, 58 10, 90 10" />
+        </svg>
+        <div>
+          <div class="mo-easing-name">Ease in out</div>
+          <div class="mo-bezier">cubic-bezier(0.4, 0, 0.2, 1)</div>
+        </div>
+      </div>
+      <p class="mo-easing-role"><code class="mo-inline-code">--easing-in-out</code> Eased on both ends. For an element <strong>moving between two on-screen positions</strong>, both visible the whole time: a reordering row, a toggle thumb, a tab indicator.</p>
+    </div>
+
+    <div class="mo-easing-card">
+      <div class="mo-easing-top">
+        <svg class="mo-curve" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="grid" d="M10 90 H90 M10 10 V90" />
+          <path class="curve" d="M10 90 C 30 90, 48 -6, 62 4 C 74 12, 82 10, 90 10" />
+        </svg>
+        <div>
+          <div class="mo-easing-name">Spring</div>
+          <div class="mo-bezier">cubic-bezier(0.34, 1.56, 0.64, 1)</div>
+        </div>
+      </div>
+      <p class="mo-easing-role"><code class="mo-inline-code">--easing-spring</code> Overshoots, then settles. Reserved for a <strong>small, discrete success</strong> you want to feel alive: a checkmark, a like, a badge popping in. Comfort not information, so gate it behind reduced motion and keep it off large surfaces.</p>
+    </div>
+  </div>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Anatomy of a Transition</h2>
+  <p class="mo-lede">
+    Every transition names three things: the property, a duration token, an easing token. Name the property, never <span class="mo-inline-code">transition: all</span>, which animates things you never meant to touch. Reference the tokens instead of hardcoding milliseconds, so the whole product keeps one tempo.
+  </p>
+
+  <div class="mo-anatomy">
+    <div class="mo-anatomy-line">
+      <span class="mo-part punc">transition:</span>
+      <span class="mo-part prop">opacity</span>
+      <span class="mo-part dur">var(--duration-normal)</span>
+      <span class="mo-part ease">var(--easing-out)</span>
+      <span class="mo-part punc">;</span>
+    </div>
+    <div class="mo-anatomy-legend">
+      <div class="mo-legend-item prop">
+        <div class="mo-legend-key">property</div>
+        <div class="mo-legend-text">What changes. Prefer <span style={{ 'font-family': "'SF Mono', monospace" }}>transform</span> and <span style={{ 'font-family': "'SF Mono', monospace" }}>opacity</span>. Name it, never <span style={{ 'font-family': "'SF Mono', monospace" }}>all</span>.</div>
+      </div>
+      <div class="mo-legend-item dur">
+        <div class="mo-legend-key">duration</div>
+        <div class="mo-legend-text">How long. 150ms local, 200ms to enter or leave, 300ms for a takeover.</div>
+      </div>
+      <div class="mo-legend-item ease">
+        <div class="mo-legend-key">easing</div>
+        <div class="mo-legend-text">The feel. Out to enter, in to leave, in-out to move, linear to loop, spring to celebrate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Performance Is Part of the Contract</h2>
+  <p class="mo-lede">
+    A frame at 60fps is about 16ms. The browser can animate two properties, <span class="mo-inline-code">transform</span> and <span class="mo-inline-code">opacity</span>, on the compositor, off the main thread, with no layout and no repaint. Animating geometry recomputes layout every frame, and that layout thrash is the usual cause of jank. This is how the rendering pipeline works, not a preference, so the system animates transform and opacity by default.
+  </p>
+
+  <div class="mo-perf">
+    <div class="mo-perf-card cheap">
+      <div class="mo-perf-head"><Icon name="check_circle" class="mo-symbol" /> Recommended</div>
+      <div class="mo-perf-props">
+        <span class="mo-chip">transform</span>
+        <span class="mo-chip">opacity</span>
+      </div>
+      <p class="mo-perf-text">Handled on the compositor, off the main thread. No layout, no paint. A slide is <span style={{ 'font-family': "'SF Mono', monospace" }}>translateY</span>, not a change to <span style={{ 'font-family': "'SF Mono', monospace" }}>top</span>.</p>
+    </div>
+    <div class="mo-perf-card">
+      <div class="mo-perf-head"><Icon name="cancel" class="mo-symbol" /> Avoid</div>
+      <div class="mo-perf-props">
+        <span class="mo-chip">width</span>
+        <span class="mo-chip">height</span>
+        <span class="mo-chip">top</span>
+        <span class="mo-chip">left</span>
+        <span class="mo-chip">margin</span>
+      </div>
+      <p class="mo-perf-text">Each frame recomputes layout, then repaints. On a long list or a weak device this drops frames. Express the same motion with transform.</p>
+    </div>
+  </div>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Reduced Motion Is the Floor</h2>
+  <p class="mo-lede">
+    Some people feel physically ill from on-screen movement. The browser exposes their OS setting as <span class="mo-inline-code">prefers-reduced-motion: reduce</span>, a firm request to hold still that every animation honors. It aligns with WCAG 2.1: <strong>2.3.3</strong> asks that interaction-triggered motion can be disabled, and <strong>2.2.2</strong> covers looping motion.
+  </p>
+  <p class="mo-lede">
+    Honoring it does not mean deleting meaning. Because information rides on color, opacity, and the final state, the interface stays legible without movement: collapse the animation, keep the destination. And keep a spinner turning slowly rather than freezing it, a stopped spinner reads as a hung app.
+  </p>
+
+  <div class="mo-code">
+    <div class="mo-code-header">
+      <span class="mo-code-dot red" aria-hidden="true"></span>
+      <span class="mo-code-dot yellow" aria-hidden="true"></span>
+      <span class="mo-code-dot green" aria-hidden="true"></span>
+      <span class="mo-code-lang">CSS</span>
+    </div>
+    <pre set:html={`<span class="comment">/* Default: motion is welcome. Enter fast, settle gently. */</span>
+<span class="selector">.menu</span> <span class="punctuation">{</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">opacity var(--duration-normal) var(--easing-out),
+                transform var(--duration-normal) var(--easing-out)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Firm request to hold still: collapse the movement, keep the meaning. */</span>
+<span class="selector">@media (prefers-reduced-motion: reduce)</span> <span class="punctuation">{</span>
+    <span class="selector">.menu</span> <span class="punctuation">{</span>
+        <span class="property">transition-duration</span><span class="punctuation">:</span> <span class="value">1ms</span><span class="punctuation">;</span>       <span class="comment">/* appears, does not fly in */</span>
+        <span class="property">transform</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>              <span class="comment">/* no slide */</span>
+    <span class="punctuation">}</span>
+    <span class="selector">.spinner</span> <span class="punctuation">{</span>
+        <span class="property">animation-duration</span><span class="punctuation">:</span> <span class="value">1.4s</span><span class="punctuation">;</span>    <span class="comment">/* slower, not gone */</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>`} />
+  </div>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Rules of Motion</h2>
+  <p class="mo-lede">
+    Each rule stands on its own: what to do, then why it holds. Read the why once and the rule stops feeling arbitrary.
+  </p>
+
+  <div class="mo-rulebook">
+    <div class="mo-rule">
+      <div class="mo-rule-head">
+        <span class="mo-rule-tag">Rule</span>
+        <p class="mo-rule-text">Give every animation a job: orientation, continuity, or feedback.</p>
+      </div>
+      <div class="mo-why">
+        <span class="mo-why-tag">Why</span>
+        <p class="mo-why-text">Decorative motion clarifies nothing and costs the same frame time, so it is the first thing to cut.</p>
+      </div>
+    </div>
+
+    <div class="mo-rule">
+      <div class="mo-rule-head">
+        <span class="mo-rule-tag">Rule</span>
+        <p class="mo-rule-text">Animate <code>transform</code> and <code>opacity</code>.</p>
+      </div>
+      <div class="mo-why">
+        <span class="mo-why-tag">Why</span>
+        <p class="mo-why-text">The compositor carries them off the main thread with no layout or paint. Animating <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>, or <code>margin</code> recomputes layout every frame and drops frames.</p>
+      </div>
+    </div>
+
+    <div class="mo-rule">
+      <div class="mo-rule-head">
+        <span class="mo-rule-tag">Rule</span>
+        <p class="mo-rule-text">Name the property, a duration token, and an easing token explicitly.</p>
+      </div>
+      <div class="mo-why">
+        <span class="mo-why-tag">Why</span>
+        <p class="mo-why-text"><code>transition: all</code> animates properties you never meant to touch, and hardcoded milliseconds drift from the shared tempo.</p>
+      </div>
+    </div>
+
+    <div class="mo-rule">
+      <div class="mo-rule-head">
+        <span class="mo-rule-tag">Rule</span>
+        <p class="mo-rule-text">Match the duration to the change: <code>fast</code> for local state, <code>normal</code> to enter or leave, <code>slow</code> for a takeover.</p>
+      </div>
+      <div class="mo-why">
+        <span class="mo-why-tag">Why</span>
+        <p class="mo-why-text">Anything past <code>300ms</code> reads as sluggish, so the ceiling holds and most motion sits at 200ms.</p>
+      </div>
+    </div>
+
+    <div class="mo-rule">
+      <div class="mo-rule-head">
+        <span class="mo-rule-tag">Rule</span>
+        <p class="mo-rule-text">Pick easing by job: <code>out</code> to enter, <code>in</code> to leave, <code>in-out</code> to move, <code>linear</code> to loop.</p>
+      </div>
+      <div class="mo-why">
+        <span class="mo-why-tag">Why</span>
+        <p class="mo-why-text"><code>linear</code> on anything with a start and an end feels robotic, and the wrong curve reads as lag or machinery.</p>
+      </div>
+    </div>
+
+    <div class="mo-rule">
+      <div class="mo-rule-head">
+        <span class="mo-rule-tag">Rule</span>
+        <p class="mo-rule-text">Reserve <code>spring</code> for a small, discrete success, and gate it behind reduced motion.</p>
+      </div>
+      <div class="mo-why">
+        <span class="mo-why-tag">Why</span>
+        <p class="mo-why-text">An overshooting modal looks broken, and spring is comfort, not information.</p>
+      </div>
+    </div>
+
+    <div class="mo-rule">
+      <div class="mo-rule-head">
+        <span class="mo-rule-tag">Rule</span>
+        <p class="mo-rule-text">Honor <code>prefers-reduced-motion</code>: collapse the movement, keep the meaning.</p>
+      </div>
+      <div class="mo-why">
+        <span class="mo-why-tag">Why</span>
+        <p class="mo-why-text">Motion alone must never carry meaning. Information rides on color, opacity, and the final state, so the interface stays legible without movement.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Token Reference</h2>
+
+  <table class="mo-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--duration-fast</code></td>
+        <td>150ms</td>
+        <td>Local state on one control: hover, focus, toggle</td>
+      </tr>
+      <tr>
+        <td><code>--duration-normal</code></td>
+        <td>200ms</td>
+        <td>Default. Enter, leave, or move a short distance</td>
+      </tr>
+      <tr>
+        <td><code>--duration-slow</code></td>
+        <td>300ms</td>
+        <td>A large surface taking over the view. The ceiling</td>
+      </tr>
+      <tr>
+        <td><code>--easing-linear</code></td>
+        <td>cubic-bezier(0, 0, 1, 1)</td>
+        <td>Continuous loops only: spinners, indeterminate progress</td>
+      </tr>
+      <tr>
+        <td><code>--easing-in</code></td>
+        <td>cubic-bezier(0.4, 0, 1, 1)</td>
+        <td>Elements leaving the screen</td>
+      </tr>
+      <tr>
+        <td><code>--easing-out</code></td>
+        <td>cubic-bezier(0, 0, 0.2, 1)</td>
+        <td>Elements entering, and taps. The default</td>
+      </tr>
+      <tr>
+        <td><code>--easing-in-out</code></td>
+        <td>cubic-bezier(0.4, 0, 0.2, 1)</td>
+        <td>Moving between two visible positions</td>
+      </tr>
+      <tr>
+        <td><code>--easing-spring</code></td>
+        <td>cubic-bezier(0.34, 1.56, 0.64, 1)</td>
+        <td>Small discrete successes. Overshoots, then settles</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="mo-section">
+  <h2 class="mo-section-title">Sources</h2>
+  <ul class="mo-sources-list">
+    <li>
+      <strong>Material 3, Motion.</strong> Duration buckets and easing sets; motion orients the user, maintains continuity, and gives timely feedback. <a href="https://m3.material.io/styles/motion/easing-and-duration/tokens-specs" target="_blank" rel="noreferrer">m3.material.io/styles/motion</a>
+    </li>
+    <li>
+      <strong>Apple Human Interface Guidelines, Motion.</strong> Motion should be purposeful and communicate status; gratuitous animation is discouraged and Reduce Motion must be respected. <a href="https://developer.apple.com/design/human-interface-guidelines/motion" target="_blank" rel="noreferrer">developer.apple.com/.../motion</a>
+    </li>
+    <li>
+      <strong>web.dev and MDN, animation performance.</strong> Animate transform and opacity to stay on the compositor without layout or paint; use will-change sparingly because each promoted layer costs memory. <a href="https://web.dev/articles/animations-guide" target="_blank" rel="noreferrer">web.dev/articles/animations-guide</a>
+    </li>
+    <li>
+      <strong>MDN, prefers-reduced-motion.</strong> A device-level preference to minimize non-essential motion, mapping to the OS accessibility setting. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noreferrer">developer.mozilla.org/.../prefers-reduced-motion</a>
+    </li>
+    <li>
+      <strong>W3C WCAG 2.1.</strong> 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A) target vestibular symptoms such as dizziness and nausea. <a href="https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html" target="_blank" rel="noreferrer">w3.org/WAI/WCAG21/.../animation-from-interactions</a>
+    </li>
+    <li>
+      The three durations (150ms, 200ms, 300ms), the five named easings, the 300ms ceiling, and gating spring behind reduced motion are specific to this system's tokens. <span class="mo-spa">SPA</span> House decisions, consistent with but not dictated by the cited sources.
+    </li>
+  </ul>
+</div>
+
+<style is:global>
+  .mo-symbol {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Header ===== */
+  .mo-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .mo-header-icon {
+    padding: 0.75rem;
+    background: #eef2ff;
+    color: #4f46e5;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    display: flex;
+  }
+
+  .mo-header-icon .mo-symbol { font-size: 26px; }
+
+  .mo-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .mo-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 68ch;
+  }
+
+  .mo-description strong { color: #0f172a; }
+
+  /* ===== Section shell ===== */
+  .mo-section { margin-top: 2.75rem; }
+
+  .mo-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .mo-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .mo-lede strong { color: #0f172a; }
+
+  .mo-lede code,
+  .mo-inline-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8em;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* ===== Editorial two-up: purpose vs adornment ===== */
+  .mo-purpose {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .mo-purpose-card {
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+
+  .mo-purpose-card.keep {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+
+  .mo-purpose-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+  }
+
+  .mo-purpose-card.keep .mo-purpose-tag { color: #4f46e5; }
+  .mo-purpose-tag .mo-symbol { font-size: 18px; }
+
+  .mo-purpose-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .mo-purpose-list li { margin-bottom: 0.4rem; }
+
+  /* ===== Duration ladder ===== */
+  .mo-durations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .mo-duration-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mo-duration-stage {
+    position: relative;
+    height: 56px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #eef2ff;
+  }
+
+  .mo-duration-track {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 50%;
+    height: 2px;
+    background: #e0e7ff;
+    transform: translateY(-50%);
+  }
+
+  .mo-runner {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: #4f46e5;
+    transform: translate(0, -50%);
+  }
+
+  .mo-duration-card:hover .mo-runner {
+    animation-name: mo-run;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .mo-duration-card.d-fast:hover .mo-runner { animation-duration: 150ms; }
+  .mo-duration-card.d-normal:hover .mo-runner { animation-duration: 200ms; }
+  .mo-duration-card.d-slow:hover .mo-runner { animation-duration: 300ms; }
+
+  @keyframes mo-run {
+    from { left: 12px; }
+    to { left: calc(100% - 34px); }
+  }
+
+  .mo-duration-value {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #4f46e5;
+    line-height: 1;
+  }
+
+  .mo-duration-name {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+  }
+
+  .mo-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #4f46e5;
+    display: inline-block;
+    margin-bottom: 0.6rem;
+  }
+
+  .mo-duration-usage {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .mo-hint {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .mo-hint .mo-symbol { font-size: 15px; }
+
+  /* ===== Easing cards ===== */
+  .mo-easings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .mo-easing-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .mo-easing-top {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .mo-curve {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    background: white;
+    border: 1px solid #eef2ff;
+    border-radius: 10px;
+    display: block;
+  }
+
+  .mo-curve path.grid { stroke: #eef2ff; stroke-width: 1; fill: none; }
+  .mo-curve path.curve { stroke: #4f46e5; stroke-width: 3; fill: none; stroke-linecap: round; }
+
+  .mo-easing-name {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+  }
+
+  .mo-bezier {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.68rem;
+    color: #64748b;
+    word-break: break-word;
+  }
+
+  .mo-easing-role {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .mo-easing-role strong { color: #0f172a; }
+
+  /* ===== Tables ===== */
+  .mo-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+
+  .mo-table th,
+  .mo-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .mo-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .mo-table td {
+    font-size: 0.875rem;
+    color: #475569;
+  }
+
+  .mo-table tr:last-child td { border-bottom: none; }
+
+  .mo-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* ===== Anatomy strip ===== */
+  .mo-anatomy {
+    background: #0f172a;
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-top: 1rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    overflow-x: auto;
+  }
+
+  .mo-anatomy-line {
+    font-size: 1rem;
+    color: #e2e8f0;
+    white-space: nowrap;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .mo-part { position: relative; padding-bottom: 0.15rem; }
+  .mo-part.prop { color: #7dd3fc; }
+  .mo-part.dur { color: #a5b4fc; }
+  .mo-part.ease { color: #c4b5fd; }
+  .mo-part.punc { color: #94a3b8; }
+
+  .mo-anatomy-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .mo-legend-item {
+    border-left: 3px solid #4f46e5;
+    padding-left: 0.85rem;
+  }
+
+  .mo-legend-key {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .mo-legend-item.prop .mo-legend-key { color: #7dd3fc; }
+  .mo-legend-item.dur .mo-legend-key { color: #a5b4fc; }
+  .mo-legend-item.ease .mo-legend-key { color: #c4b5fd; }
+
+  .mo-legend-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #cbd5e1;
+    line-height: 1.5;
+  }
+
+  /* ===== Performance columns ===== */
+  .mo-perf {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .mo-perf-card {
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+
+  .mo-perf-card.cheap { border-color: #c7d2fe; background: #eef2ff; }
+
+  .mo-perf-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+  }
+
+  .mo-perf-head .mo-symbol { font-size: 20px; color: #4f46e5; }
+  .mo-perf-card:not(.cheap) .mo-perf-head .mo-symbol { color: #64748b; }
+
+  .mo-perf-props {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .mo-chip {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+  }
+
+  .mo-perf-card.cheap .mo-chip { border-color: #c7d2fe; color: #4f46e5; }
+
+  .mo-perf-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  /* ===== Rulebook (Rule + Why) ===== */
+  .mo-rulebook {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .mo-rule {
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #4f46e5;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .mo-rule-head {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .mo-why {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .mo-rule-tag,
+  .mo-why-tag {
+    flex-shrink: 0;
+    width: 3rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    padding-top: 0.05rem;
+  }
+
+  .mo-rule-tag { color: #4f46e5; }
+  .mo-why-tag { color: #64748b; }
+
+  .mo-rule-text {
+    margin: 0;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.55;
+  }
+
+  .mo-why-text {
+    margin: 0;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .mo-rule code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* ===== Code block ===== */
+  .mo-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .mo-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .mo-code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .mo-code-dot.red { background: #ef4444; }
+  .mo-code-dot.yellow { background: #f59e0b; }
+  .mo-code-dot.green { background: #22c55e; }
+
+  .mo-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mo-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .mo-code .comment { color: #94a3b8; font-style: italic; }
+  .mo-code .selector { color: #fbbf24; }
+  .mo-code .property { color: #7dd3fc; }
+  .mo-code .value { color: #a5f3fc; }
+  .mo-code .function { color: #c4b5fd; }
+  .mo-code .punctuation { color: #94a3b8; }
+
+  /* ===== Sources ===== */
+  .mo-sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .mo-sources-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .mo-sources-list li:last-child { border-bottom: none; }
+  .mo-sources-list strong { color: #0f172a; }
+  .mo-sources-list a { color: #4f46e5; text-decoration: none; }
+  .mo-sources-list a:hover { text-decoration: underline; }
+
+  .mo-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mo-duration-card:hover .mo-runner { animation: none; }
+  }
+</style>
+</BaseLayout>

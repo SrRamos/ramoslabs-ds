@@ -1,0 +1,1388 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'token-reference')!
+
+const ramps = {
+  indigo: [['50','#eef2ff'],['100','#e0e7ff'],['200','#c7d2fe'],['300','#a5b4fc'],['400','#818cf8'],['500','#6366f1'],['600','#4f46e5'],['700','#4338ca'],['800','#3730a3'],['900','#312e81'],['950','#1e1b4b']],
+  slate: [['50','#f8fafc'],['100','#f1f5f9'],['200','#e2e8f0'],['300','#cbd5e1'],['400','#94a3b8'],['500','#64748b'],['600','#475569'],['700','#334155'],['800','#1e293b'],['900','#0f172a'],['950','#020617']],
+  emerald: [['50','#ecfdf5'],['100','#d1fae5'],['200','#a7f3d0'],['300','#6ee7b7'],['400','#34d399'],['500','#10b981'],['600','#059669'],['700','#047857'],['800','#065f46'],['900','#064e3b'],['950','#022c22']],
+  green: [['50','#f0fdf4'],['100','#dcfce7'],['200','#bbf7d0'],['300','#86efac'],['400','#4ade80'],['500','#22c55e'],['600','#16a34a'],['700','#15803d'],['800','#166534'],['900','#14532d'],['950','#052e16']],
+  amber: [['50','#fffbeb'],['100','#fef3c7'],['200','#fde68a'],['300','#fcd34d'],['400','#fbbf24'],['500','#f59e0b'],['600','#d97706'],['700','#b45309'],['800','#92400e'],['900','#78350f'],['950','#451a03']],
+  red: [['50','#fef2f2'],['100','#fee2e2'],['200','#fecaca'],['300','#fca5a5'],['400','#f87171'],['500','#ef4444'],['600','#dc2626'],['700','#b91c1c'],['800','#991b1b'],['900','#7f1d1d'],['950','#450a0a']],
+  blue: [['50','#eff6ff'],['100','#dbeafe'],['200','#bfdbfe'],['300','#93c5fd'],['400','#60a5fa'],['500','#3b82f6'],['600','#2563eb'],['700','#1d4ed8'],['800','#1e40af'],['900','#1e3a8a'],['950','#172554']],
+  violet: [['50','#f5f3ff'],['100','#ede9fe'],['200','#ddd6fe'],['300','#c4b5fd'],['400','#a78bfa'],['500','#8b5cf6'],['600','#7c3aed'],['700','#6d28d9'],['800','#5b21b6'],['900','#4c1d95'],['950','#2e1065']],
+};
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<div class="token-ref-header">
+  <div class="tr-hero">
+    <p class="tr-hero-eyebrow">Foundations / Tokens</p>
+    <h1>Every design decision, named once.</h1>
+    <p>
+      A token is the smallest unit of the language: <strong>one color, one step of space, one shadow</strong>, authored as data and published to CSS and TypeScript from a single source. This is the canonical list of all 213, and the two-tier system that generates them. Click any token to copy its <span class="tr-hero-code">var(...)</span> reference.
+    </p>
+  </div>
+
+  <div class="toc">
+    <a href="#architecture">Architecture</a>
+    <a href="#primitives">Primitives</a>
+    <a href="#semantic-color">Semantic color</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#radius">Radius</a>
+    <a href="#shadow">Shadow</a>
+    <a href="#state">State</a>
+    <a href="#typography">Typography</a>
+    <a href="#motion">Motion</a>
+    <a href="#z-index">Z-index</a>
+    <a href="#breakpoints">Breakpoints</a>
+    <a href="#taxonomy">Taxonomy rules</a>
+  </div>
+</div>
+
+<div class="quick-ref">
+  <div class="quick-ref-item">
+    <div class="quick-ref-value">213</div>
+    <div class="quick-ref-label">Total Tokens</div>
+  </div>
+  <div class="quick-ref-item">
+    <div class="quick-ref-value">2</div>
+    <div class="quick-ref-label">Tiers</div>
+  </div>
+  <div class="quick-ref-item">
+    <div class="quick-ref-value">8</div>
+    <div class="quick-ref-label">Radius Steps</div>
+  </div>
+  <div class="quick-ref-item">
+    <div class="quick-ref-value">3</div>
+    <div class="quick-ref-label">Elevation Shadows</div>
+  </div>
+</div>
+
+<div class="token-ref-section" id="architecture">
+  <h2 class="token-ref-section-title"><Icon name="account_tree" /> Tokens as a Contract</h2>
+  <p class="token-ref-lede">
+    Every token is authored as data, not CSS, in the W3C Design Tokens Community Group format: a JSON object with a reserved <code>$value</code> and a <code>$type</code> like <code>color</code> or <code>dimension</code>. One authored decision publishes to CSS, TypeScript, and native from the same source. The JSON is the contract, and everything downstream honors it. It runs in two tiers.
+  </p>
+
+  <div class="tier-grid">
+    <div class="arch-card">
+      <span class="arch-card-badge">Tier 1</span>
+      <div class="arch-card-title">Primitive</div>
+      <p class="arch-card-text">
+        The raw palette. Eight color ramps of eleven shades each, plus pure white and black. These carry a value and nothing else, no role, no meaning. Product code rarely touches this tier directly. It exists so the semantic tier has something concrete to point at. Naming is descriptive: <code>--color-indigo-600</code>.
+      </p>
+    </div>
+    <div class="arch-card">
+      <span class="arch-card-badge">Tier 2</span>
+      <div class="arch-card-title">Semantic</div>
+      <p class="arch-card-text">
+        The layer you build with. Each token names a role, not a hue, and aliases a primitive: <code>--color-primary</code>, <code>--color-text-body</code>, <code>--color-border</code>. This indirection is what makes the system themeable. Change one alias, and every consumer moves with it. Naming is intentional: role first, variant second.
+      </p>
+    </div>
+  </div>
+
+  <p class="token-ref-lede" style={{ 'margin-top': '1.5rem' }}>
+    Style Dictionary reads that JSON, resolves the aliases, and formats each target. The CSS output is a flat block of custom properties on <code>:root</code>, a parallel TypeScript output exposes the same values as typed constants. Both carry a do-not-edit banner: they are build output, not source.
+  </p>
+
+  <div class="pipeline">
+    <div class="pipeline-stage">
+      <div class="pipeline-kicker">Source</div>
+      <div class="pipeline-title">JSON tokens</div>
+      <p class="pipeline-text">Authored by hand in DTCG format under <code>packages/tokens/src/tokens/</code>. One file per category, each token a <code>$value</code> plus a <code>$type</code>.</p>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-stage">
+      <div class="pipeline-kicker">Build</div>
+      <div class="pipeline-title">Style Dictionary</div>
+      <p class="pipeline-text">Resolves aliases, applies transforms, and formats each platform target. Run once, every output stays in lockstep.</p>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-stage">
+      <div class="pipeline-kicker">Generated</div>
+      <div class="pipeline-title">CSS and TS</div>
+      <p class="pipeline-text"><code>dist/tokens.css</code> as <code>:root</code> custom properties, <code>dist/tokens.ts</code> as typed constants. Do not edit, they are regenerated.</p>
+    </div>
+  </div>
+</div>
+
+<div class="token-ref-section" id="primitives">
+  <h2 class="token-ref-section-title"><Icon name="palette" /> Tier 1: Primitive Palette</h2>
+  <p class="token-ref-lede">
+    The raw material. These ramps are Tailwind CSS's open-source (MIT) default palette, adopted hex-for-hex as the primitive layer; what this system owns sits on top, the mono-indigo constraint and the semantic mapping. Indigo is the brand ramp and the single action accent of the whole system. Slate carries text, surfaces, and borders. The four status ramps, emerald and green for success, amber for warning, red for error, blue for info, feed the feedback tokens. Violet backs the secondary role, a decorative accent only, never for action. Click any shade to copy its variable.
+  </p>
+
+  {['indigo', 'slate', 'emerald', 'green', 'amber', 'red', 'blue', 'violet'].map((name) => (
+    <div class="palette-block">
+      <div class="palette-head">
+        <span class="palette-name">{name}</span>
+        <code class="palette-pattern">--color-{name}-50 … 950</code>
+      </div>
+      <div class="palette-strip">
+        {ramps[name].map(([shade, hex]) => {
+          const dark = Number(shade) <= 400;
+          return (
+            <button
+              class="swatch"
+              data-token={`--color-${name}-${shade}`}
+              style={{ background: hex, color: dark ? '#0f172a' : '#ffffff', border: shade === '50' ? '1px solid #e2e8f0' : 'none' }}
+            >
+              <span class="swatch-shade">{shade}</span>
+              <span class="swatch-hex">{hex}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+
+  <table class="token-table" style={{ 'margin-top': '1.25rem' }}>
+    <thead>
+      <tr><th>Preview</th><th>Token</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="color-dot" style={{ background: '#ffffff', border: '1px solid #e2e8f0' }}></div></td>
+        <td><span class="token-name" data-token="--color-white">--color-white</span></td>
+        <td><span class="token-value">#ffffff</span></td>
+      </tr>
+      <tr>
+        <td><div class="color-dot" style={{ background: '#000000' }}></div></td>
+        <td><span class="token-name" data-token="--color-black">--color-black</span></td>
+        <td><span class="token-value">#000000</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="token-ref-section" id="semantic-color">
+  <h2 class="token-ref-section-title"><Icon name="category" /> Tier 2: Semantic Color</h2>
+  <p class="token-ref-lede">
+    The layer product code consumes. Each token names a role and aliases a primitive. Build with these, never with raw palette shades, so a theme change stays a one-line edit at the alias.
+  </p>
+
+  <div class="two-col-layout">
+    <div>
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Brand</h3>
+      <table class="token-table">
+        <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--color-primary', '#4f46e5', 'indigo 600, the single accent'],
+            ['--color-primary-light', '#6366f1', 'indigo 500'],
+            ['--color-primary-dark', '#4338ca', 'indigo 700'],
+            ['--color-primary-surface', '#eef2ff', 'indigo 50, tinted fill'],
+            ['--color-secondary', '#8b5cf6', 'violet 500'],
+            ['--color-secondary-light', '#a78bfa', 'violet 400'],
+            ['--color-secondary-dark', '#7c3aed', 'violet 600'],
+            ['--color-secondary-surface', '#f5f3ff', 'violet 50, tinted fill'],
+          ].map(([name, hex, role]) => (
+            <tr>
+              <td><div class="color-dot" style={{ background: hex, border: hex === '#eef2ff' || hex === '#f5f3ff' ? '1px solid #e2e8f0' : 'none' }}></div></td>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{hex}</span><div class="token-description">{role}</div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Text</h3>
+      <table class="token-table">
+        <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--color-text-heading', '#0f172a', 'slate 900, headings'],
+            ['--color-text-strong', '#1e293b', 'slate 800, emphasis'],
+            ['--color-text-secondary', '#475569', 'slate 600, supporting'],
+            ['--color-text-body', '#64748b', 'slate 500, body copy'],
+            ['--color-text-muted', '#64748b', 'slate 500, muted'],
+            ['--color-text-disabled', '#cbd5e1', 'slate 300, disabled'],
+          ].map(([name, hex, role]) => (
+            <tr>
+              <td><div class="color-dot" style={{ background: hex }}></div></td>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{hex}</span><div class="token-description">{role}</div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Surface and Border</h3>
+      <table class="token-table">
+        <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--color-surface', '#ffffff', 'cards, panels'],
+            ['--color-surface-secondary', '#f8fafc', 'slate 50, sunken fill'],
+            ['--color-surface-hover', '#f1f5f9', 'slate 100, hover fill'],
+            ['--color-background', '#f8fafc', 'slate 50, page canvas'],
+            ['--color-border', '#e6e8eb', 'default divider'],
+            ['--color-border-light', '#e2e8f0', 'slate 200, soft divider'],
+            ['--color-border-subtle', '#f1f5f9', 'slate 100, hairline'],
+            ['--color-focus', '#4f46e5', 'indigo 600, focus ring'],
+          ].map(([name, hex, role]) => (
+            <tr>
+              <td><div class="color-dot" style={{ background: hex, border: '1px solid #e2e8f0' }}></div></td>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{hex}</span><div class="token-description">{role}</div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <div class="callout-title">Borders are dividers, not control outlines</div>
+        <div class="callout-body">
+          <strong>Rule:</strong> use <code>--color-border</code> and <code>--color-border-light</code> only to separate regions, dividers, table rows, card edges. <strong>Why:</strong> both sit near 1.2:1 against the surface, below the 3:1 floor WCAG 1.4.11 requires for the boundary of an interactive control. For the visible edge of an input, select, or checkbox, reach for a token that clears 3:1, for example <code>--color-text-muted</code> at #64748b, which is 4.55:1 on white. Never let a subtle border be the only thing marking a control's bounds.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Feedback</h3>
+      <table class="token-table">
+        <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--color-success', '#10b981', 'emerald 500'],
+            ['--color-success-strong', '#059669', 'emerald 600, AA fill for a white glyph'],
+            ['--color-success-surface', '#f0fdf4', 'green 50, fill'],
+            ['--color-success-border', '#bbf7d0', 'green 200'],
+            ['--color-success-text', '#166534', 'green 800, on-surface text'],
+            ['--color-warning', '#f59e0b', 'amber 500'],
+            ['--color-warning-surface', '#fffbeb', 'amber 50, fill'],
+            ['--color-warning-border', '#fde68a', 'amber 200'],
+            ['--color-warning-text', '#78350f', 'amber 900, on-surface text'],
+            ['--color-error', '#ef4444', 'red 500'],
+            ['--color-error-strong', '#dc2626', 'red 600, AA fill for white text'],
+            ['--color-error-surface', '#fef2f2', 'red 50, fill'],
+            ['--color-error-border', '#fecaca', 'red 200'],
+            ['--color-error-text', '#991b1b', 'red 800, on-surface text'],
+            ['--color-info', '#3b82f6', 'blue 500'],
+            ['--color-info-surface', '#eff6ff', 'blue 50, fill'],
+            ['--color-info-border', '#bfdbfe', 'blue 200'],
+            ['--color-info-text', '#1e40af', 'blue 800, on-surface text'],
+          ].map(([name, hex, role]) => (
+            <tr>
+              <td><div class="color-dot" style={{ background: hex, border: '1px solid #e2e8f0' }}></div></td>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{hex}</span><div class="token-description">{role}</div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="token-ref-section" id="spacing">
+  <h2 class="token-ref-section-title"><Icon name="straighten" /> Spacing Scale</h2>
+  <p class="token-ref-lede">
+    A single scale for margin, padding, and gap. One <code>--space-*</code> step in, one step out, so rhythm stays consistent across every component.
+  </p>
+  <table class="token-table">
+    <thead>
+      <tr><th style={{ width: '150px' }}>Preview</th><th>Token</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      {[
+        ['--space-0', '0', 0],
+        ['--space-1', '0.25rem (4px)', 4],
+        ['--space-2', '0.5rem (8px)', 8],
+        ['--space-3', '0.75rem (12px)', 12],
+        ['--space-4', '1rem (16px)', 16],
+        ['--space-5', '1.25rem (20px)', 20],
+        ['--space-6', '1.5rem (24px)', 24],
+        ['--space-8', '2rem (32px)', 32],
+        ['--space-10', '2.5rem (40px)', 40],
+        ['--space-12', '3rem (48px)', 48],
+        ['--space-16', '4rem (64px)', 64],
+        ['--space-20', '5rem (80px)', 80],
+        ['--space-24', '6rem (96px)', 96],
+        ['--space-32', '8rem (128px)', 128],
+      ].map(([name, val, px]) => (
+        <tr>
+          <td><div class="spacing-bar" style={{ width: `${Math.max(px, 2)}px` }}></div></td>
+          <td><span class="token-name" data-token={name}>{name}</span></td>
+          <td><span class="token-value">{val}</span></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<div class="two-col-layout">
+  <div class="token-ref-section" id="radius">
+    <h2 class="token-ref-section-title"><Icon name="rounded_corner" /> Border Radius</h2>
+    <p class="token-ref-lede">
+      Eight steps. <code>sm</code> at 6px is the signature control radius. <code>pill</code> is the fully rounded accent, for chips, tags, and toggles, never for wide buttons or cards.
+    </p>
+    <table class="token-table">
+      <thead>
+        <tr><th>Preview</th><th>Token</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        {[
+          ['--radius-none', '0', '0'],
+          ['--radius-xs', '0.25rem (4px)', '4px'],
+          ['--radius-sm', '0.375rem (6px)', '6px'],
+          ['--radius-md', '0.5rem (8px)', '8px'],
+          ['--radius-lg', '0.75rem (12px)', '12px'],
+          ['--radius-xl', '1rem (16px)', '16px'],
+          ['--radius-2xl', '1.25rem (20px)', '20px'],
+          ['--radius-pill', '9999px', '9999px'],
+        ].map(([name, val, css]) => (
+          <tr>
+            <td><div class="radius-box" style={{ 'border-radius': css }}></div></td>
+            <td><span class="token-name" data-token={name}>{name}</span></td>
+            <td><span class="token-value">{val}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="token-ref-section" id="state">
+    <h2 class="token-ref-section-title"><Icon name="touch_app" /> State Layers</h2>
+    <p class="token-ref-lede">
+      Interaction feedback is opacity, not elevation. Each token is the opacity of an indigo overlay painted on a control for hover, focus, press, and drag. Numbers only, so the same layer works on any surface color.
+    </p>
+    <table class="token-table">
+      <thead>
+        <tr><th>Preview</th><th>Token</th><th>Value</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        {[
+          ['--state-hover', '0.08', 'Hover on pointer devices, gate with @media (hover: hover)'],
+          ['--state-focus', '0.1', 'Focus-visible, the keyboard state'],
+          ['--state-pressed', '0.1', 'Active press, primary feedback on touch'],
+          ['--state-dragged', '0.16', 'While dragging'],
+        ].map(([name, val, role]) => (
+          <tr>
+            <td><div class="state-chip"><span style={{ position: 'absolute', inset: 0, background: '#4f46e5', opacity: Number(val) }}></span></div></td>
+            <td><span class="token-name" data-token={name}>{name}</span></td>
+            <td><span class="token-value">{val}</span></td>
+            <td><span class="token-description">{role}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="token-ref-section" id="shadow">
+  <h2 class="token-ref-section-title"><Icon name="layers" /> Shadow and Elevation</h2>
+  <p class="token-ref-lede">
+    Three elevation levels plus a focus ring. Each level is two soft, indigo-tinted layers rather than one hard black drop. Shadow means height, never state. See <strong>Foundations / Shadows</strong> for the full rationale.
+  </p>
+  <table class="token-table">
+    <thead>
+      <tr><th>Preview</th><th>Token</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="shadow-box" style={{ 'box-shadow': '0 1px 2px 0 rgba(79, 70, 229, 0.06), 0 1px 3px 0 rgba(15, 23, 42, 0.04)' }}></div></td>
+        <td><span class="token-name" data-token="--shadow-sm">--shadow-sm</span><div class="token-description">Raised. Buttons and resting cards.</div></td>
+        <td><span class="token-value">0 1px 2px 0 rgba(79, 70, 229, .06), 0 1px 3px 0 rgba(15, 23, 42, .04)</span></td>
+      </tr>
+      <tr>
+        <td><div class="shadow-box" style={{ 'box-shadow': '0 2px 4px -1px rgba(79, 70, 229, 0.06), 0 8px 16px -4px rgba(79, 70, 229, 0.10)' }}></div></td>
+        <td><span class="token-name" data-token="--shadow-md">--shadow-md</span><div class="token-description">Overlay. Dropdowns, popovers, menus.</div></td>
+        <td><span class="token-value">0 2px 4px -1px rgba(79, 70, 229, .06), 0 8px 16px -4px rgba(79, 70, 229, .10)</span></td>
+      </tr>
+      <tr>
+        <td><div class="shadow-box" style={{ 'box-shadow': '0 4px 8px -2px rgba(79, 70, 229, 0.06), 0 16px 32px -8px rgba(79, 70, 229, 0.12)' }}></div></td>
+        <td><span class="token-name" data-token="--shadow-lg">--shadow-lg</span><div class="token-description">Floating. Modals, sheets. The ceiling.</div></td>
+        <td><span class="token-value">0 4px 8px -2px rgba(79, 70, 229, .06), 0 16px 32px -8px rgba(79, 70, 229, .12)</span></td>
+      </tr>
+      <tr>
+        <td><div class="shadow-box" style={{ 'box-shadow': '0 0 0 2px #ffffff, 0 0 0 4px #4f46e5' }}></div></td>
+        <td><span class="token-name" data-token="--shadow-focus">--shadow-focus</span><div class="token-description">Focus ring. Pairs with :focus-visible.</div></td>
+        <td><span class="token-value">0 0 0 2px #ffffff, 0 0 0 4px #4f46e5</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="token-ref-section" id="typography">
+  <h2 class="token-ref-section-title"><Icon name="text_fields" /> Typography</h2>
+  <p class="token-ref-lede">
+    Three families, eight weights, a ten-step size scale, and the line-height and letter-spacing tokens that pair with them. Rubik carries UI and body, Red Hat Display carries headings.
+  </p>
+
+  <div class="two-col-layout">
+    <div>
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Families</h3>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><span class="token-name" data-token="--font-family-sans">--font-family-sans</span></td><td><span class="token-value" style={{ 'font-family': "'Rubik', sans-serif" }}>Rubik, system-ui, sans-serif</span></td></tr>
+          <tr><td><span class="token-name" data-token="--font-family-display">--font-family-display</span></td><td><span class="token-value" style={{ 'font-family': "'Red Hat Display', sans-serif" }}>'Red Hat Display', system-ui, sans-serif</span></td></tr>
+          <tr><td><span class="token-name" data-token="--font-family-alt">--font-family-alt</span></td><td><span class="token-value" style={{ 'font-family': "'Roboto', sans-serif" }}>Roboto, system-ui, sans-serif</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Weights</h3>
+      <table class="token-table">
+        <thead><tr><th>Sample</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--font-weight-thin', '100'],
+            ['--font-weight-extralight', '200'],
+            ['--font-weight-light', '300'],
+            ['--font-weight-normal', '400'],
+            ['--font-weight-medium', '500'],
+            ['--font-weight-semibold', '600'],
+            ['--font-weight-bold', '700'],
+            ['--font-weight-extrabold', '800'],
+          ].map(([name, w]) => (
+            <tr>
+              <td><span class="weight-sample" style={{ 'font-weight': Number(w) }}>Ag</span></td>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{w}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Line Height</h3>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
+        <tbody>
+          {[
+            ['--leading-none', '1', 'Display text'],
+            ['--leading-tight', '1.1', 'Headlines'],
+            ['--leading-snug', '1.25', 'Subheadings'],
+            ['--leading-normal', '1.5', 'Body text'],
+            ['--leading-relaxed', '1.625', 'Long-form'],
+          ].map(([name, val, role]) => (
+            <tr>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{val}</span></td>
+              <td><span class="token-description">{role}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Sizes</h3>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--font-size-xs', '0.75rem (12px)'],
+            ['--font-size-sm', '0.875rem (14px)'],
+            ['--font-size-base', '1rem (16px)'],
+            ['--font-size-lg', '1.125rem (18px)'],
+            ['--font-size-xl', '1.25rem (20px)'],
+            ['--font-size-2xl', '1.5rem (24px)'],
+            ['--font-size-3xl', '1.875rem (30px)'],
+            ['--font-size-4xl', '2.25rem (36px)'],
+            ['--font-size-5xl', '3rem (48px)'],
+            ['--font-size-6xl', '3.75rem (60px)'],
+          ].map(([name, val]) => (
+            <tr>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{val}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Letter Spacing</h3>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
+        <tbody>
+          {[
+            ['--tracking-tighter', '-0.05em', 'Display text'],
+            ['--tracking-tight', '-0.025em', 'Headlines'],
+            ['--tracking-normal', '0em', 'Body text'],
+            ['--tracking-wide', '0.025em', 'Uppercase labels'],
+            ['--tracking-wider', '0.05em', 'Small caps'],
+          ].map(([name, val, role]) => (
+            <tr>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{val}</span></td>
+              <td><span class="token-description">{role}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="two-col-layout">
+  <div class="token-ref-section" id="motion">
+    <h2 class="token-ref-section-title"><Icon name="animation" /> Motion</h2>
+    <p class="token-ref-lede">Three durations and five easing curves. Pair a short duration with an ease-out for enters, an ease-in for exits.</p>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
+      <tbody>
+        {[
+          ['--duration-fast', '150ms', 'Buttons, toggles'],
+          ['--duration-normal', '200ms', 'Cards, panels'],
+          ['--duration-slow', '300ms', 'Modals, reveals'],
+        ].map(([name, val, role]) => (
+          <tr>
+            <td><span class="token-name" data-token={name}>{name}</span></td>
+            <td><span class="token-value">{val}</span></td>
+            <td><span class="token-description">{role}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <table class="token-table" style={{ 'margin-top': '1rem' }}>
+      <thead><tr><th>Token</th><th>Value</th></tr></thead>
+      <tbody>
+        {[
+          ['--easing-linear', 'cubic-bezier(0, 0, 1, 1)'],
+          ['--easing-in', 'cubic-bezier(0.4, 0, 1, 1)'],
+          ['--easing-out', 'cubic-bezier(0, 0, 0.2, 1)'],
+          ['--easing-in-out', 'cubic-bezier(0.4, 0, 0.2, 1)'],
+          ['--easing-spring', 'cubic-bezier(0.34, 1.56, 0.64, 1)'],
+        ].map(([name, val]) => (
+          <tr>
+            <td><span class="token-name" data-token={name}>{name}</span></td>
+            <td><span class="token-value">{val}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <div class="token-ref-section" id="z-index" style={{ 'margin-top': '3rem' }}>
+      <h2 class="token-ref-section-title"><Icon name="stacks" /> Z-Index Scale</h2>
+      <p class="token-ref-lede">A stepped stacking order. Use the token, never a raw integer, so overlays never fight.</p>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
+        <tbody>
+          {[
+            ['--z-dropdown', '100', 'Dropdown menus'],
+            ['--z-sticky', '200', 'Sticky headers'],
+            ['--z-fixed', '300', 'Fixed navbars'],
+            ['--z-fab', '400', 'Floating action buttons'],
+            ['--z-modal-backdrop', '500', 'Modal overlays'],
+            ['--z-modal', '600', 'Modal content'],
+            ['--z-popover', '700', 'Popovers'],
+            ['--z-tooltip', '800', 'Tooltips'],
+            ['--z-toast', '900', 'Toast notifications'],
+          ].map(([name, val, role]) => (
+            <tr>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{val}</span></td>
+              <td><span class="token-description">{role}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="token-ref-section" id="breakpoints">
+      <h2 class="token-ref-section-title"><Icon name="devices" /> Breakpoints</h2>
+      <p class="token-ref-lede">Minimum widths for the responsive scale. See <strong>Foundations / Responsive</strong> for usage.</p>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--breakpoint-sm', '576px'],
+            ['--breakpoint-md', '769px'],
+            ['--breakpoint-lg', '992px'],
+            ['--breakpoint-xl', '1200px'],
+            ['--breakpoint-2xl', '1366px'],
+          ].map(([name, val]) => (
+            <tr>
+              <td><span class="token-name" data-token={name}>{name}</span></td>
+              <td><span class="token-value">{val}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="token-ref-section" id="taxonomy">
+  <h2 class="token-ref-section-title"><Icon name="rule" /> Taxonomy Rules</h2>
+  <p class="token-ref-lede">
+    Three rules keep the system coherent: how to consume a token, how to name a new one, and how a change reaches the screen.
+  </p>
+
+  <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '1rem', color: '#0f172a', 'margin-top': '1.5rem', 'margin-bottom': '0.5rem' }}>How to consume a token</h3>
+  <p class="token-ref-lede">
+    Reference the variable, never the literal. Reach for the semantic tier first, because it carries the meaning and stays stable across themes. Drop to a primitive only when no semantic token fits, and if you find yourself wanting a raw hex, that is the signal a semantic token is missing, not that you should hardcode.
+  </p>
+
+  <div class="rl-code">
+    <div class="rl-code-header">
+      <span class="rl-code-dot red"></span>
+      <span class="rl-code-dot yellow"></span>
+      <span class="rl-code-dot green"></span>
+      <span class="rl-code-lang">CSS</span>
+    </div>
+    <pre set:html={`<span class="comment">/* Yes: reference the semantic token */</span>
+<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">var(--color-surface)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">var(--color-text-body)</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">var(--radius-lg)</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">var(--shadow-sm)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* No: a hardcoded value drifts from the system on the next theme change */</span>
+<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">#ffffff</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">12px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>`} />
+  </div>
+
+  <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '1rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.5rem' }}>How to name a new token</h3>
+  <div class="decision">
+    <div class="decision-step">
+      <div class="decision-text">Pick the tier. Is it a raw value with no role? It belongs in <strong>primitive</strong>, named by description, for example a new palette shade. Does it carry meaning? It belongs in <strong>semantic</strong>, named by role.</div>
+    </div>
+    <div class="decision-step">
+      <div class="decision-text">Name a semantic token role first, variant second: <strong>category, role, variant</strong>. So <code>color</code>, <code>text</code>, <code>secondary</code> becomes <code>--color-text-secondary</code>. Never encode the hue in the name.</div>
+    </div>
+    <div class="decision-step">
+      <div class="decision-text">Alias, do not copy. A semantic token points at a primitive with <code>{`{color.slate.600}`}</code>, so the value has one home. If two tokens share a value, both alias the same primitive.</div>
+    </div>
+    <div class="decision-step">
+      <div class="decision-text">Add a <code>$description</code> when the role is not obvious from the name. It becomes the comment in the generated CSS and the note in this reference.</div>
+    </div>
+  </div>
+
+  <h3 style={{ 'font-family': "'Red Hat Display', sans-serif", 'font-size': '1rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.5rem' }}>How a change propagates</h3>
+  <p class="token-ref-lede">
+    A change starts in the JSON and ends on the screen without a single manual edit downstream. Edit the <code>$value</code> in <code>packages/tokens/src/tokens/</code>, run the Style Dictionary build, and the generated <code>tokens.css</code> and <code>tokens.ts</code> update together. Because every consumer references the variable, the new value reaches every product surface at once. Never edit the generated files: they carry a do-not-edit banner and the next build overwrites them.
+  </p>
+
+  <div class="callout">
+    <div class="callout-title">One source, many outputs</div>
+    <div class="callout-body">
+      The JSON is the only file a person edits. <code>dist/tokens.css</code>, <code>dist/tokens.ts</code>, and <code>dist/tokens.json</code> are all build output. If a value looks wrong on screen, fix it in the source token and rebuild, never in the CSS.
+    </div>
+  </div>
+
+  <div class="rules-grid">
+    <div class="rules-col do">
+      <div class="rules-col-title"><span class="rules-badge">&#10003;</span> Recommended</div>
+      <ul class="rules-list">
+        <li>Consume <code>var(--token)</code> references, and prefer the semantic tier.</li>
+        <li>Author new tokens in the JSON source, then rebuild.</li>
+        <li>Name semantic tokens by role, category first, hue never.</li>
+        <li>Alias a primitive instead of repeating a hex.</li>
+        <li>Add a <code>$description</code> for any non-obvious role.</li>
+      </ul>
+    </div>
+    <div class="rules-col dont">
+      <div class="rules-col-title"><span class="rules-badge">&#10005;</span> Avoid</div>
+      <ul class="rules-list">
+        <li>Hardcode a hex, px, or raw integer that a token already covers.</li>
+        <li>Edit <code>dist/tokens.css</code> or <code>dist/tokens.ts</code> by hand.</li>
+        <li>Reach for a primitive when a semantic token fits.</li>
+        <li>Encode a color name into a semantic token.</li>
+        <li>Duplicate a value across tokens instead of aliasing.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="token-ref-section">
+  <h2 class="token-ref-section-title"><Icon name="menu_book" /> Sources</h2>
+  <ul class="sources-list">
+    <li>
+      <strong>Design Tokens Community Group, format specification.</strong> The open standard, developed under the W3C, that defines a token as a JSON object with a reserved <code>$value</code> and <code>$type</code>, and the alias syntax the semantic tier relies on. design-tokens.org and tr.designtokens.org/format
+    </li>
+    <li>
+      <strong>Style Dictionary.</strong> The build tool that reads the token source, resolves aliases, applies transforms, and formats the CSS and TypeScript outputs this system ships. styledictionary.com
+    </li>
+    <li>
+      <strong>Salesforce, primitive and semantic token tiers.</strong> The two-tier model, raw primitive values referenced by role-named semantic aliases, popularized for design systems at scale.
+    </li>
+    <li>
+      Every token name, value, and description in this page is quoted from this system's source JSON and generated CSS. <span class="source-spa">SPA</span> The elevation ceiling and the pill-as-accent-only rule are house rules specific to this system.
+    </li>
+  </ul>
+</div>
+
+<div id="copy-toast" class="copy-toast">
+  <span class="check"></span>
+  <span id="copy-toast-text">Copied!</span>
+</div>
+
+<style is:global>
+  .token-ref-header { margin-bottom: 2rem; }
+
+  .tr-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+
+  .tr-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+
+  .tr-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+
+  .tr-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .tr-hero p strong { color: #ffffff; font-weight: 700; }
+
+  .tr-hero-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
+  }
+
+  .token-ref-section { margin-top: 3rem; scroll-margin-top: 2rem; }
+
+  .token-ref-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .token-ref-section-title .material-symbols-outlined {
+    font-size: 20px;
+    color: #4f46e5;
+  }
+
+  .token-ref-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    max-width: 70ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .token-ref-lede code, .arch-card-text code, .decision-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.78em;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* On this page nav */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .toc a {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4f46e5;
+    background: #eef2ff;
+    border: 1px solid #e0e7ff;
+    border-radius: 9999px;
+    padding: 0.3rem 0.75rem;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .toc a:hover { background: #e0e7ff; }
+
+  /* Architecture pipeline */
+  .pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .pipeline-stage {
+    flex: 1 1 200px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+  }
+
+  .pipeline-kicker {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #4f46e5;
+    margin-bottom: 0.5rem;
+  }
+
+  .pipeline-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.4rem;
+  }
+
+  .pipeline-text {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .pipeline-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    color: #4f46e5;
+  }
+
+  .pipeline-arrow {
+    align-self: center;
+    color: #c7d2fe;
+    font-size: 1.5rem;
+    line-height: 1;
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 760px) {
+    .pipeline-arrow { transform: rotate(90deg); }
+  }
+
+  /* Tier cards */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .arch-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .arch-card-badge {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.15rem 0.45rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .arch-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+  }
+
+  .arch-card-text {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  /* Quick ref stats */
+  .quick-ref {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .quick-ref-item { text-align: center; }
+
+  .quick-ref-value {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #4f46e5;
+  }
+
+  .quick-ref-label {
+    font-size: 0.75rem;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Tables */
+  .token-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+
+  .token-table th, .token-table td {
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+
+  .token-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .token-table td { font-size: 0.875rem; }
+  .token-table tr:last-child td { border-bottom: none; }
+  .token-table tr:hover td { background: #f8fafc; }
+
+  .token-name {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #4f46e5;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.15s ease;
+    border: none;
+  }
+
+  .token-name:hover { background: #e2e8f0; }
+  .token-name:active { transform: scale(0.98); }
+  .token-name.copied { background: #dcfce7; color: #16a34a; }
+
+  .token-name::after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'%3E%3C/path%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    transition: opacity 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .token-name:hover::after { opacity: 0.8; }
+
+  .token-name.copied::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316a34a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    opacity: 1;
+  }
+
+  .token-value {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+  }
+
+  .spacing-bar {
+    height: 12px;
+    background: linear-gradient(90deg, #6366f1, #4f46e5);
+    border-radius: 3px;
+  }
+
+  .radius-box { width: 32px; height: 32px; background: #4f46e5; }
+  .shadow-box { width: 40px; height: 28px; background: white; border-radius: 6px; }
+
+  .token-description { font-size: 0.75rem; color: #64748b; max-width: 260px; }
+
+  .weight-sample {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.125rem;
+    color: #0f172a;
+  }
+
+  .state-chip {
+    width: 40px;
+    height: 28px;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: inset 0 0 0 1px #e2e8f0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Palettes */
+  .palette-block { margin-bottom: 1.25rem; }
+
+  .palette-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .palette-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #0f172a;
+    text-transform: capitalize;
+  }
+
+  .palette-pattern {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #64748b;
+  }
+
+  .palette-strip {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .swatch {
+    flex: 1 0 62px;
+    min-width: 62px;
+    height: 64px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0.35rem 0.4rem;
+    cursor: pointer;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    transition: transform 0.12s ease;
+  }
+
+  .swatch:active { transform: scale(0.97); }
+  .swatch.copied { outline: 2px solid #16a34a; outline-offset: 2px; }
+  .swatch-shade { font-size: 0.6875rem; font-weight: 700; }
+  .swatch-hex { font-size: 0.5625rem; opacity: 0.85; }
+
+  .two-col-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .two-col-layout { grid-template-columns: 1fr; }
+  }
+
+  /* Callout */
+  .callout {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .callout-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #3730a3;
+    margin-bottom: 0.5rem;
+  }
+
+  .callout-body { font-size: 0.8125rem; color: #475569; line-height: 1.6; }
+
+  .callout-body code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Do / Don't */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .rules-col {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.5rem;
+  }
+
+  .rules-col-title {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .rules-col.do .rules-col-title { color: #4f46e5; }
+  .rules-col.dont .rules-col-title { color: #475569; }
+
+  .rules-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .rules-col.do .rules-badge { background: #4f46e5; color: white; }
+  .rules-col.dont .rules-badge { background: #e2e8f0; color: #475569; }
+
+  .rules-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .rules-list li { padding-left: 1.25rem; position: relative; margin-bottom: 0.6rem; }
+  .rules-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+  .rules-col.do .rules-list li::before { content: '\2713'; color: #4f46e5; }
+  .rules-col.dont .rules-list li::before { content: '\2715'; color: #475569; }
+
+  .rules-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    color: #4f46e5;
+  }
+
+  /* Decision / naming steps */
+  .decision {
+    counter-reset: step;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .decision-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+
+  .decision-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .decision-text { font-size: 0.875rem; color: #334155; line-height: 1.5; }
+  .decision-text strong { color: #0f172a; }
+
+  /* Code block */
+  .rl-code {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .rl-code-header {
+    background: #334155;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+
+  .rl-code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .rl-code-dot.red { background: #ef4444; }
+  .rl-code-dot.yellow { background: #f59e0b; }
+  .rl-code-dot.green { background: #22c55e; }
+
+  .rl-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .rl-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+
+  .rl-code .comment { color: #64748b; font-style: italic; }
+  .rl-code .selector { color: #fbbf24; }
+  .rl-code .property { color: #7dd3fc; }
+  .rl-code .value { color: #a5f3fc; }
+  .rl-code .punctuation { color: #94a3b8; }
+
+  /* Sources */
+  .sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .sources-list li { padding: 0.6rem 0; border-bottom: 1px solid #f1f5f9; }
+  .sources-list li:last-child { border-bottom: none; }
+  .sources-list strong { color: #0f172a; }
+
+  .source-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
+
+  .copy-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #0f172a;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+    font-family: 'SF Mono', monospace;
+  }
+
+  .copy-toast.show { opacity: 1; transform: translateY(0); }
+
+  .copy-toast .check {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+</style>
+
+<script is:inline>
+  // Reimplementation of the source CopySetup useEffect (click-to-copy).
+  document.addEventListener('click', (e) => {
+    const token = e.target.closest('[data-token]');
+    if (!token) return;
+    const textToCopy = `var(${token.dataset.token})`;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      const toast = document.getElementById('copy-toast');
+      const toastText = document.getElementById('copy-toast-text');
+      if (toast && toastText) {
+        toastText.textContent = `Copied: ${textToCopy}`;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      }
+      token.classList.add('copied');
+      setTimeout(() => token.classList.remove('copied'), 1000);
+    });
+  });
+</script>
+</BaseLayout>

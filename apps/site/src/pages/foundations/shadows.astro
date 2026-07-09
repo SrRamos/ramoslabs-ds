@@ -1,0 +1,574 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'shadows')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+<div class="sh">
+
+<div class="sh-hero">
+  <p class="sh-hero-eyebrow">Foundations / Elevation</p>
+  <h1>Elevation you feel, not a shadow you notice.</h1>
+  <p>
+    Every floating surface picks one of <strong>three heights</strong>, each a soft two-layer shadow tinted with the brand indigo instead of hard black. Three levels build every overlay a product needs, and a shadow says one thing only: this surface sits above another. Add a focus ring at <span class="sh-hero-code">--shadow-focus</span> and that is the entire system.
+  </p>
+</div>
+
+<div class="sh-section">
+  <span class="sh-num">01</span>
+  <h2 class="sh-h2">The elevation ladder</h2>
+  <p class="sh-intro">
+    Flat on the page, raised, overlay, floating. The taller a surface reads, the higher it sits, and <code>lg</code> is the ceiling every surface stays within.
+  </p>
+
+  <div class="sh-ladder">
+    <div class="sh-step">
+      <div class="sh-chip l0">flat</div>
+      <div class="sh-step-meta">
+        <div class="sh-step-role">On the page</div>
+        <div class="sh-step-token">no shadow</div>
+      </div>
+    </div>
+    <div class="sh-step">
+      <div class="sh-chip l1">sm</div>
+      <div class="sh-step-meta">
+        <div class="sh-step-role">Raised</div>
+        <div class="sh-step-token">--shadow-sm</div>
+      </div>
+    </div>
+    <div class="sh-step">
+      <div class="sh-chip l2">md</div>
+      <div class="sh-step-meta">
+        <div class="sh-step-role">Overlay</div>
+        <div class="sh-step-token">--shadow-md</div>
+      </div>
+    </div>
+    <div class="sh-step">
+      <div class="sh-chip l3">lg</div>
+      <div class="sh-step-meta">
+        <div class="sh-step-role">Floating, the ceiling</div>
+        <div class="sh-step-token">--shadow-lg</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sh-section">
+  <span class="sh-num">02</span>
+  <h2 class="sh-h2">Three levels, plus a ring</h2>
+  <p class="sh-intro">
+    Each height is one token, shown on a real surface. The <strong>focus ring</strong> is the fourth token and the only one that is not elevation.
+  </p>
+
+  <div class="sh-grid">
+    <div class="sh-card">
+      <div class="sh-preview sm">sm</div>
+      <div>
+        <div class="sh-name">Raised</div>
+        <code class="sh-tok">--shadow-sm</code>
+        <p class="sh-use">Buttons and resting cards. A whisper of lift that separates an element from the page.</p>
+      </div>
+    </div>
+
+    <div class="sh-card">
+      <div class="sh-preview md">md</div>
+      <div>
+        <div class="sh-name">Overlay</div>
+        <code class="sh-tok">--shadow-md</code>
+        <p class="sh-use">Dropdowns, popovers, and menus. Content that opens over the current view and closes again.</p>
+      </div>
+    </div>
+
+    <div class="sh-card">
+      <div class="sh-preview lg">lg</div>
+      <div>
+        <div class="sh-name">Floating, the ceiling</div>
+        <code class="sh-tok">--shadow-lg</code>
+        <p class="sh-use">Modals, sheets, command palettes. The highest surface. If something must feel higher, add a scrim, not more blur.</p>
+      </div>
+    </div>
+
+    <div class="sh-card">
+      <div class="sh-preview focus">focus</div>
+      <div>
+        <div class="sh-name">Focus ring</div>
+        <code class="sh-tok">--shadow-focus</code>
+        <p class="sh-use">A two-tone ring, a white gap inside an indigo edge, paired with <code>:focus-visible</code> to show keyboard position on any surface. Accessibility, never decoration.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sh-section">
+  <span class="sh-num">03</span>
+  <h2 class="sh-h2">Two layers, tinted indigo</h2>
+  <p class="sh-intro">
+    Real shadows are two things at once: a crisp contact shadow close to the object, and a soft ambient shadow far from it. Stacking one near layer and one far layer reproduces that falloff, so the surface reads as lifted, not pasted on. Tinting both with indigo lets the shadow belong to the surface instead of staining it.
+  </p>
+
+  <div class="sh-anatomy">
+    <div class="sh-anatomy-card">
+      <div class="sh-swatch near"></div>
+      <div class="sh-anatomy-label">Near layer</div>
+      <p class="sh-anatomy-text">Short offset, tight blur. The crisp contact shadow that grounds the object.</p>
+    </div>
+    <div class="sh-anatomy-card">
+      <div class="sh-swatch far"></div>
+      <div class="sh-anatomy-label">Far layer</div>
+      <p class="sh-anatomy-text">Long offset, wide blur, negative spread. The soft ambient shadow that gives height.</p>
+    </div>
+    <div class="sh-anatomy-card">
+      <div class="sh-swatch both"></div>
+      <div class="sh-anatomy-label">Both, tinted indigo</div>
+      <p class="sh-anatomy-text">The two combined and tinted. This is <code>--shadow-md</code>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sh-section">
+  <span class="sh-num">04</span>
+  <h2 class="sh-h2">Shadow is height</h2>
+  <p class="sh-intro">
+    A shadow says one thing: this surface sits physically above another. Match that meaning and elevation stays a clean, single-purpose channel.
+  </p>
+
+  <div class="sh-rule">
+    <p class="sh-rule-line"><span class="sh-rule-key">Rule</span>Pick one of the three elevation levels for a surface and keep it fixed for the surface's whole life.</p>
+    <p class="sh-rule-line"><span class="sh-rule-key">Why</span>A constant elevation reads as real, physical height, so the surface feels solid and hover, press, and selection stay legible in their own channel: color.</p>
+  </div>
+
+  <div class="sh-contrast">
+    <div class="sh-contrast-card sh-ok">
+      <div class="sh-contrast-head"><span class="sh-contrast-icon" aria-hidden="true">&#10003;</span> Recommended</div>
+      <p class="sh-contrast-text">Fix each surface at one level, then carry hover, press, and selection in color and state layers. Color answers "what is happening to this control", shadow answers "how high does this surface sit", and both channels stay quiet.</p>
+    </div>
+    <div class="sh-contrast-card sh-no">
+      <div class="sh-contrast-head"><span class="sh-contrast-icon" aria-hidden="true">&#10007;</span> Avoid</div>
+      <p class="sh-contrast-text">Swelling a dramatic shadow on hover, usually paired with a <code>translateY</code> lift. It fakes physics the surface does not have and collides with the rule against transform-based hover.</p>
+    </div>
+  </div>
+
+  <div class="sh-callout">
+    <div class="sh-callout-bar"></div>
+    <p class="sh-callout-body">
+      <strong>State feedback lives in color.</strong> Hover, press, and selection ride on color and state layers rather than elevation. See <strong>Patterns / Interactive</strong> for the state-layer model.
+    </p>
+  </div>
+</div>
+
+<div class="sh-section">
+  <span class="sh-num">05</span>
+  <h2 class="sh-h2">In the dark, tint carries height</h2>
+  <p class="sh-intro">
+    Shadow is not the only way to say "higher". As a surface rises it can take a stronger indigo tint, and in dark themes a drop shadow nearly vanishes against a dark background. A lighter, more tinted surface is the clearer signal there. Prefer tint in the dark, shadow in the light, and the two can combine.
+  </p>
+
+  <div class="sh-tonal">
+    <div class="sh-tonal-chip t0"><span class="sh-tonal-level">L0</span>base</div>
+    <div class="sh-tonal-chip t1"><span class="sh-tonal-level">L1</span>+tint</div>
+    <div class="sh-tonal-chip t2"><span class="sh-tonal-level">L2</span>+tint</div>
+    <div class="sh-tonal-chip t3"><span class="sh-tonal-level">L3</span>+tint</div>
+  </div>
+  <p class="sh-caption">Dark surface rising through indigo-tinted levels with no shadow at all. Height reads from lightness, not from ink.</p>
+</div>
+
+<div class="sh-section">
+  <span class="sh-num">06</span>
+  <h2 class="sh-h2">Token reference</h2>
+  <p class="sh-intro">
+    Four tokens, the whole system. The scale stays closed at these four: <code>lg</code> is the top, and hover reuses the resting shadow, so every surface maps to one of the four.
+  </p>
+
+  <table class="sh-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Role</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--shadow-sm</code></td>
+        <td>Raised, buttons and resting cards</td>
+        <td class="sh-val">0 1px 2px rgba(79, 70, 229, .06), 0 1px 3px rgba(15, 23, 42, .04)</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-md</code></td>
+        <td>Overlay, dropdowns and popovers</td>
+        <td class="sh-val">0 2px 4px -1px rgba(79, 70, 229, .06), 0 8px 16px -4px rgba(79, 70, 229, .10)</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-lg</code></td>
+        <td>Floating ceiling, modals and sheets</td>
+        <td class="sh-val">0 4px 8px -2px rgba(79, 70, 229, .06), 0 16px 32px -8px rgba(79, 70, 229, .12)</td>
+      </tr>
+      <tr>
+        <td><code>--shadow-focus</code></td>
+        <td>Focus ring, pairs with :focus-visible</td>
+        <td class="sh-val">0 0 0 2px #ffffff, 0 0 0 4px #4f46e5</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sh-refs">
+  <p class="sh-refs-h">Sources</p>
+  <p>
+    <strong>Material 3, elevation and tonal elevation:</strong> level count and the surface-tint approach where a tint of the primary color expresses height, with dark surfaces lightening as they rise (m3.material.io/styles/elevation). <strong>Tobias Ahlin, layered smooth shadows:</strong> stacking soft box-shadow layers instead of one hard shadow for a natural falloff (tobiasahlin.com/blog/layered-smooth-box-shadows). <strong>Apple Human Interface Guidelines, Materials:</strong> soft, minimal shadows for depth over heavy drops (developer.apple.com/design/human-interface-guidelines/materials). Exact rgba layer values are specific to this system's tokens, and reading <code>lg</code> as an absolute ceiling is a house rule, not a rule from the cited sources.<span class="sh-spa">SPA</span>
+  </p>
+</div>
+
+</div>
+
+<style is:global>
+  .sh {
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --ink-3: #475569;
+    --muted: #64748b;
+    --accent: #4f46e5;
+    --line: #e6e8eb;
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: var(--ink-2);
+  }
+
+  /* ---------- Hero ---------- */
+  .sh-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+  .sh-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .sh-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+  .sh-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 44rem;
+    margin: 0;
+  }
+  .sh-hero p strong { color: #ffffff; font-weight: 700; }
+  .sh-hero-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
+  }
+
+  /* ---------- Section frame ---------- */
+  .sh-section { margin-top: 4rem; }
+  .sh-num {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .sh-h2 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0.25rem 0 0.5rem;
+  }
+  .sh-intro {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--ink-3);
+    max-width: 46rem;
+    margin: 0 0 1.75rem;
+  }
+  .sh-intro strong { color: var(--ink); }
+  .sh-intro code, .sh-mono { font-family: 'SF Mono', 'Monaco', monospace; }
+  .sh-intro code {
+    font-size: 0.8125rem;
+    background: #eef2ff;
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    color: var(--accent);
+  }
+
+  /* ---------- Elevation ladder ---------- */
+  .sh-ladder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.5rem;
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2.75rem 2rem;
+  }
+  .sh-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1 1 130px;
+  }
+  .sh-chip {
+    width: 100%;
+    max-width: 150px;
+    border-radius: 12px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.9375rem;
+  }
+  .sh-chip.l0 { height: 56px; color: var(--muted); border: 1px dashed #cbd5e1; }
+  .sh-chip.l1 { height: 68px; box-shadow: var(--shadow-sm); }
+  .sh-chip.l2 { height: 88px; box-shadow: var(--shadow-md); }
+  .sh-chip.l3 { height: 112px; box-shadow: var(--shadow-lg); }
+  .sh-step-meta { text-align: center; }
+  .sh-step-role { font-weight: 700; font-size: 0.8125rem; color: var(--ink); }
+  .sh-step-token { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.6875rem; color: var(--muted); }
+
+  /* ---------- Level cards ---------- */
+  .sh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+  .sh-card {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid var(--line);
+  }
+  .sh-preview {
+    width: 100%;
+    height: 92px;
+    background: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+  }
+  .sh-preview.sm { box-shadow: var(--shadow-sm); }
+  .sh-preview.md { box-shadow: var(--shadow-md); }
+  .sh-preview.lg { box-shadow: var(--shadow-lg); }
+  .sh-preview.focus { box-shadow: var(--shadow-focus); color: var(--accent); }
+  .sh-name { font-weight: 700; font-size: 0.9375rem; color: var(--ink); margin-bottom: 0.35rem; }
+  .sh-tok {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #eef2ff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: var(--accent);
+    display: inline-block;
+    margin-bottom: 0.6rem;
+  }
+  .sh-use { font-size: 0.8125rem; color: var(--ink-3); line-height: 1.5; }
+  .sh-use code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--accent); }
+
+  /* ---------- Anatomy ---------- */
+  .sh-anatomy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+  .sh-anatomy-card {
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .sh-swatch { height: 76px; border-radius: 10px; background: #ffffff; margin-bottom: 1rem; }
+  .sh-swatch.near { box-shadow: 0 1px 2px rgba(79, 70, 229, 0.06); }
+  .sh-swatch.far { box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.10); }
+  .sh-swatch.both { box-shadow: var(--shadow-md); }
+  .sh-anatomy-label { font-weight: 700; font-size: 0.8125rem; color: var(--ink); margin-bottom: 0.25rem; }
+  .sh-anatomy-text { font-size: 0.8125rem; color: var(--ink-3); line-height: 1.5; }
+  .sh-anatomy-text code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--accent); }
+
+  /* ---------- Callout ---------- */
+  .sh-callout {
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    gap: 1rem;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.5rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+  }
+  .sh-callout-bar { border-radius: 4px; background: var(--accent); }
+  .sh-callout-body { font-size: 0.875rem; line-height: 1.55; color: var(--ink-3); }
+  .sh-callout-body strong { color: #3730a3; }
+
+  /* ---------- Rule + contrast ---------- */
+  .sh-rule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .sh-rule-line { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-3); margin: 0; }
+  .sh-rule-key {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+  }
+  .sh-rule-line code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.8125rem; color: var(--accent); }
+
+  .sh-contrast {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .sh-contrast-card {
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+  }
+  .sh-ok { border-left: 3px solid var(--accent); }
+  .sh-no { border-left: 3px dashed #94a3b8; }
+  .sh-contrast-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .sh-contrast-icon { font-weight: 700; font-size: 0.9375rem; line-height: 1; }
+  .sh-ok .sh-contrast-icon { color: var(--accent); }
+  .sh-no .sh-contrast-icon { color: var(--ink-3); }
+  .sh-contrast-text { font-size: 0.8125rem; line-height: 1.55; color: var(--ink-3); margin: 0; }
+  .sh-contrast-text code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--accent); }
+
+  /* ---------- Tonal (dark) stage ---------- */
+  .sh-tonal {
+    background: #0f172a;
+    border-radius: 16px;
+    padding: 2.75rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .sh-tonal-chip {
+    flex: 1 1 90px;
+    max-width: 120px;
+    height: 96px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #c7d2fe;
+    border: 1px solid rgba(199, 210, 254, 0.12);
+  }
+  .sh-tonal-chip.t0 { background: #0f172a; }
+  .sh-tonal-chip.t1 { background: #1a1f3d; }
+  .sh-tonal-chip.t2 { background: #242a52; }
+  .sh-tonal-chip.t3 { background: #2f3668; }
+  .sh-tonal-level { font-weight: 700; color: #e0e7ff; font-size: 0.75rem; }
+  .sh-caption { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; margin: 0.9rem 0 0; }
+
+  /* ---------- Token table ---------- */
+  .sh-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .sh-table th, .sh-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .sh-table th {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    background: #f8fafc;
+  }
+  .sh-table td { font-size: 0.875rem; color: var(--ink-3); }
+  .sh-table tr:last-child td { border-bottom: none; }
+  .sh-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #eef2ff;
+    padding: 0.2rem 0.45rem;
+    border-radius: 4px;
+    color: var(--accent);
+  }
+  .sh-val { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.7rem; color: var(--muted); word-break: break-word; }
+
+  /* ---------- Refs ---------- */
+  .sh-refs { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+  .sh-refs-h { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; }
+  .sh-refs p { font-size: 0.75rem; line-height: 1.7; color: var(--muted); margin: 0; }
+  .sh-refs strong { color: var(--ink-2); }
+  .sh-refs code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--accent); }
+  .sh-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.25rem;
+  }
+</style>
+</BaseLayout>

@@ -1,0 +1,609 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'typography')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<div class="ty">
+
+<div class="ty-hero">
+  <p class="ty-hero-eyebrow">Foundations / Typography</p>
+  <h1>You don't choose a size. You choose a role.</h1>
+  <p>
+    RamosLabs types on <strong>three families</strong> and <strong>one ten-step scale</strong>. Every piece of text
+    takes a role, Display, Headline, Title, Body or Label, and the role hands it a family, a size, a weight, a
+    line-height and a tracking. Body and UI are <strong>Rubik</strong>, headlines are <strong>Red Hat Display</strong>,
+    and <strong>Roboto</strong> waits as the fallback. Pick the role; the type takes care of itself.
+  </p>
+</div>
+
+<div class="ty-section">
+  <span class="ty-num">01</span>
+  <h2 class="ty-h2">Three voices</h2>
+  <p class="ty-intro">
+    Two families with a job, plus a safe substitute. One geometric face with presence for headings, one humanist face
+    that disappears into reading, one metric-friendly fallback for when the others cannot load.
+  </p>
+
+  <div class="ty-fam-grid">
+    <div class="ty-fam">
+      <div class="ty-fam-head">
+        <span class="ty-fam-role">Display and headings</span>
+        <span class="ty-fam-token">--font-family-display</span>
+      </div>
+      <div class="ty-fam-body">
+        <div class="ty-fam-specimen" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-weight': 800, 'letter-spacing': '-0.025em' }}>
+          Red Hat Display
+        </div>
+        <div class="ty-fam-glyphs" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif" }}>
+          AaBbCc 0123456789 &amp; Your next adventure starts here
+        </div>
+        <p class="ty-fam-note">
+          Geometric, slightly condensed, built to carry weight above 36px. Reserved for Display and Headline. Below the
+          Title role its personality stops helping and starts costing legibility.
+        </p>
+      </div>
+    </div>
+
+    <div class="ty-fam">
+      <div class="ty-fam-head">
+        <span class="ty-fam-role">Body and UI</span>
+        <span class="ty-fam-token">--font-family-sans</span>
+      </div>
+      <div class="ty-fam-body">
+        <div class="ty-fam-specimen" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 500 }}>
+          Rubik
+        </div>
+        <div class="ty-fam-glyphs" style={{ 'font-family': "'Rubik', system-ui, sans-serif" }}>
+          AaBbCc 0123456789 &amp; Good typography is invisible and lets the reader keep moving.
+        </div>
+        <p class="ty-fam-note">
+          Humanist, large x-height, open apertures, which is what keeps letters distinct at small sizes on real screens.
+          The default for the whole product. If you are unsure which family to use, it is this one.
+        </p>
+      </div>
+    </div>
+
+    <div class="ty-fam">
+      <div class="ty-fam-head">
+        <span class="ty-fam-role">Fallback and alt</span>
+        <span class="ty-fam-token">--font-family-alt</span>
+      </div>
+      <div class="ty-fam-body">
+        <div class="ty-fam-specimen" style={{ 'font-family': "'Roboto', system-ui, sans-serif", 'font-weight': 500 }}>
+          Roboto
+        </div>
+        <div class="ty-fam-glyphs" style={{ 'font-family': "'Roboto', system-ui, sans-serif" }}>
+          AaBbCc 0123456789 &amp; A safe, familiar face for constrained surfaces.
+        </div>
+        <p class="ty-fam-note">
+          A metric-compatible substitute for dense system UI, embedded documents, or while the web fonts load. Use it
+          for a whole block on its own, never mixed with Rubik, since it is a stand-in, not a third accent.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ty-section">
+  <span class="ty-num">02</span>
+  <h2 class="ty-h2">One scale, ten steps</h2>
+  <p class="ty-intro">
+    Every legal size, from 12px metadata to 60px display, built as a modular scale so the jumps read as composed rather
+    than arbitrary. <strong>16px</strong> is the floor for body reading. Nothing on a surface sits between these steps.
+  </p>
+
+  <div class="ty-scale">
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-6xl</span>
+      <span class="ty-pill">Display</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '3.75rem', 'font-weight': 800, 'letter-spacing': '-0.025em' }}>3.75rem 60px</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-5xl</span>
+      <span class="ty-pill">Display</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '3rem', 'font-weight': 800, 'letter-spacing': '-0.025em' }}>3rem 48px</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-4xl</span>
+      <span class="ty-pill">Display</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '2.25rem', 'font-weight': 700 }}>2.25rem 36px</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-3xl</span>
+      <span class="ty-pill">Headline</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '1.875rem', 'font-weight': 700 }}>1.875rem 30px</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-2xl</span>
+      <span class="ty-pill">Headline</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '1.5rem', 'font-weight': 700 }}>1.5rem 24px</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-xl</span>
+      <span class="ty-pill">Title</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1.25rem', 'font-weight': 600 }}>1.25rem 20px</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-lg</span>
+      <span class="ty-pill">Title</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1.125rem', 'font-weight': 600 }}>1.125rem 18px</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-base</span>
+      <span class="ty-pill">Body</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1rem', 'font-weight': 400 }}>1rem 16px, the body reading floor</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-sm</span>
+      <span class="ty-pill">Label</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '0.875rem', 'font-weight': 500 }}>0.875rem 14px, helper and labels</span>
+    </div>
+    <div class="ty-scale-row">
+      <span class="ty-scale-tok">--font-size-xs</span>
+      <span class="ty-pill">Label</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '0.75rem', 'font-weight': 500 }}>0.75rem 12px, metadata only</span>
+    </div>
+  </div>
+</div>
+
+<div class="ty-section">
+  <span class="ty-num">03</span>
+  <h2 class="ty-h2">Every role, one recipe</h2>
+  <p class="ty-intro">
+    The role owns family, weight, leading and tracking. Design and build against the role in this table, never against a
+    raw pixel. Five groups, after the Material 3 model.
+  </p>
+
+  <div class="ty-table-wrap">
+    <table class="ty-table">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Family</th>
+          <th>Weight</th>
+          <th>Leading</th>
+          <th>Tracking</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="role">Display</span></td>
+          <td>Red Hat Display</td>
+          <td><code>bold</code> / <code>extrabold</code></td>
+          <td><code>none</code> / <code>tight</code></td>
+          <td><code>tighter</code> / <code>tight</code></td>
+        </tr>
+        <tr>
+          <td><span class="role">Headline</span></td>
+          <td>Red Hat Display</td>
+          <td><code>bold</code></td>
+          <td><code>tight</code> / <code>snug</code></td>
+          <td><code>tight</code></td>
+        </tr>
+        <tr>
+          <td><span class="role">Title</span></td>
+          <td>Display or Sans</td>
+          <td><code>semibold</code></td>
+          <td><code>snug</code></td>
+          <td><code>normal</code></td>
+        </tr>
+        <tr>
+          <td><span class="role">Body</span></td>
+          <td>Rubik</td>
+          <td><code>normal</code></td>
+          <td><code>normal</code> / <code>relaxed</code></td>
+          <td><code>normal</code></td>
+        </tr>
+        <tr>
+          <td><span class="role">Label</span></td>
+          <td>Rubik</td>
+          <td><code>medium</code> / <code>semibold</code></td>
+          <td><code>none</code> / <code>snug</code></td>
+          <td><code>wide</code> / <code>wider</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="ty-section">
+  <span class="ty-num">04</span>
+  <h2 class="ty-h2">Three axes carry the rest</h2>
+  <p class="ty-intro">
+    Weight, line-height and tracking express hierarchy without inventing a single new size. Used well, one family covers
+    Display down to Label. Used carelessly, they are the fastest way to break legibility.
+  </p>
+
+  <div class="ty-axes">
+    <div class="ty-axis">
+      <div class="ty-axis-title">Weight, a working range of five</div>
+      <div class="ty-weights">
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 400 }}>Aa</div><div class="ty-weight-l">400 body</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 500 }}>Aa</div><div class="ty-weight-l">500 label</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 600 }}>Aa</div><div class="ty-weight-l">600 title</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-weight': 700 }}>Aa</div><div class="ty-weight-l">700 head</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-weight': 800 }}>Aa</div><div class="ty-weight-l">800 display</div></div>
+      </div>
+      <p class="ty-axis-note">
+        The scale runs 100 to 800.<br />
+        <strong>Rule:</strong> keep the three light weights for display sizes, and set text at 16px and under in 400 or heavier.<br />
+        <strong>Why:</strong> below 16px, thin strokes lose effective contrast and fail low-vision readers.
+      </p>
+    </div>
+
+    <div class="ty-axis">
+      <div class="ty-axis-title">Line height, inverse to size</div>
+      <div class="ty-lead-demo">
+        <span class="ty-lead-l">--leading-tight 1.1 · display</span>
+        <p style={{ 'line-height': 1.1 }}>Big text needs little leading so a stacked title holds together as one block.</p>
+      </div>
+      <div class="ty-lead-demo">
+        <span class="ty-lead-l">--leading-normal 1.5 · body floor</span>
+        <p style={{ 'line-height': 1.5 }}>Body sits at 1.5 or more, the authorial floor WCAG 1.4.8 sets for paragraphs.</p>
+      </div>
+      <p class="ty-axis-note">
+        <strong>Rule:</strong> set body at 1.5 line-height or more, and move long-form to <code>--leading-relaxed</code> 1.625.<br />
+        <strong>Why:</strong> 1.5 within paragraphs is the WCAG 1.4.8 Visual Presentation (AAA) target, and generous
+        leading keeps the eye on the right line. WCAG 1.4.12 Text Spacing (AA) is a separate promise: text must stay
+        readable when a reader forces 1.5x spacing, which a rem scale that reflows cleanly already meets. A paragraph
+        under 1.5 misses the AAA target, so 1.5 stays the house floor.
+      </p>
+    </div>
+
+    <div class="ty-axis">
+      <div class="ty-axis-title">Tracking, tight for big, wide for caps</div>
+      <div class="ty-track-row">
+        <span style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '1.5rem', 'font-weight': 800, 'letter-spacing': '-0.05em', color: '#0f172a' }}>Headline</span>
+        <span class="ty-track-l">tighter -0.05em</span>
+      </div>
+      <div class="ty-track-row">
+        <span style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1rem', 'letter-spacing': '0', color: '#0f172a' }}>Body copy</span>
+        <span class="ty-track-l">normal 0em</span>
+      </div>
+      <div class="ty-track-row">
+        <span style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '0.75rem', 'font-weight': 600, 'letter-spacing': '0.05em', 'text-transform': 'uppercase', color: '#0f172a' }}>Label</span>
+        <span class="ty-track-l">wider 0.05em</span>
+      </div>
+      <p class="ty-axis-note">
+        <strong>Rule:</strong> reserve positive tracking for uppercase Labels, and leave lowercase body at 0.<br />
+        <strong>Why:</strong> extra space restores the legibility all-caps removes, while any tracking on lowercase body
+        only distorts word shape.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="ty-section">
+  <span class="ty-num">05</span>
+  <h2 class="ty-h2">The measure</h2>
+  <p class="ty-intro">
+    Line length decides whether a paragraph is calm or exhausting, and font size has nothing to do with it. Cap running
+    text between <strong>45 and 75 characters</strong> with <code>max-width</code> in <code>ch</code>. Around 66 is the
+    sweet spot.
+  </p>
+
+  <div class="ty-measure">
+    <span class="ty-measure-tag">✓ Recommended · 45 to 75ch</span>
+    <p class="ty-measure-good">
+      At this width the eye finds the start of the next line without effort and the paragraph feels calm. Cap body
+      columns in ch, never leave running text at full container width.
+    </p>
+    <span class="ty-measure-tag bad">✕ Avoid · over 75ch</span>
+    <p class="ty-measure-bad">
+      When a line runs much past seventy-five characters the reader has to travel too far back to the start of the next line, loses their place, and rereads. This is the single most common readability failure in dashboards and admin tools, where a paragraph is dropped into a wide container and allowed to stretch edge to edge. The words are fine. The width is the bug, and this line is set to a 120ch cap so you can feel it.
+    </p>
+  </div>
+
+  <div class="ty-callout">
+    <div class="ty-callout-bar"></div>
+    <p class="ty-callout-body">
+      <strong>Hierarchy must survive one color.</strong> Distinguish levels with size, weight and space, and back every
+      color step with a real size or weight difference so structure holds for readers who cannot perceive the shift. The
+      scale is defined in <code>rem</code>, so text still scales to 200% (WCAG 1.4.4), and body holds at 1.5
+      line-height or more (WCAG 1.4.8).
+    </p>
+  </div>
+</div>
+
+<div class="ty-refs">
+  <p class="ty-refs-h">Sources</p>
+  <p>
+    Role groups after Material 3 type scale (<a href="https://m3.material.io/styles/typography/type-scale-tokens">m3.material.io</a>).
+    The 45 to 75ch measure from Butterick, Practical Typography (<a href="https://practicaltypography.com/line-length.html">practicaltypography.com</a>)
+    and Baymard (<a href="https://baymard.com/blog/line-length-readability">baymard.com</a>). Fluid type with clamp() from
+    Utopia (<a href="https://utopia.fyi/type/calculator/">utopia.fyi</a>) and web.dev (<a href="https://web.dev/articles/min-max-clamp">web.dev</a>).
+    Accessibility floors from WCAG 2.1 SC 1.4.4 Resize Text, 1.4.12 Text Spacing and 1.4.8 Visual Presentation (<a href="https://www.w3.org/TR/WCAG21/">w3.org/TR/WCAG21</a>).
+  </p>
+</div>
+
+</div>
+
+<style is:global>
+  .ty {
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --ink-3: #475569;
+    --muted: #64748b;
+    --accent: #4f46e5;
+    --line: #e6e8eb;
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: var(--ink-2);
+  }
+
+  /* ---------- Hero ---------- */
+  .ty-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+  .ty-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .ty-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+  .ty-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 44rem;
+    margin: 0;
+  }
+  .ty-hero p strong { color: #ffffff; font-weight: 700; }
+
+  /* ---------- Section frame ---------- */
+  .ty-section { margin-top: 4rem; }
+  .ty-num {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .ty-h2 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0.25rem 0 0.5rem;
+  }
+  .ty-intro {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--ink-3);
+    max-width: 44rem;
+    margin: 0 0 1.75rem;
+  }
+  .ty-intro strong { color: var(--ink-2); }
+  .ty-intro code, .ty-mono { font-family: 'SF Mono', 'Monaco', monospace; }
+
+  /* ---------- Families ---------- */
+  .ty-fam-grid { display: grid; gap: 1rem; }
+  .ty-fam {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .ty-fam-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+    padding: 0.75rem 1.5rem;
+  }
+  .ty-fam-role {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .ty-fam-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .ty-fam-body { padding: 1.5rem; }
+  .ty-fam-specimen {
+    color: var(--ink);
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .ty-fam-glyphs {
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+  .ty-fam-note {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 60ch;
+  }
+
+  /* ---------- Scale ramp ---------- */
+  .ty-scale { display: grid; gap: 0.5rem; }
+  .ty-scale-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .ty-scale-tok {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    min-width: 150px;
+    flex-shrink: 0;
+  }
+  .ty-pill {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #3730a3;
+    background: #eef2ff;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    min-width: 72px;
+    text-align: center;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .ty-scale-sample {
+    flex: 1;
+    color: var(--ink);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ---------- Roles table ---------- */
+  .ty-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .ty-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    min-width: 560px;
+  }
+  .ty-table th, .ty-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eef0f2;
+    vertical-align: middle;
+  }
+  .ty-table th {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    background: #f8fafc;
+  }
+  .ty-table td { font-size: 0.8125rem; color: var(--ink-3); }
+  .ty-table tr:last-child td { border-bottom: none; }
+  .ty-table .role { font-family: 'Red Hat Display', system-ui, sans-serif; font-weight: 700; color: var(--ink); }
+  .ty-table code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.75rem; color: var(--accent); }
+
+  /* ---------- Axes ---------- */
+  .ty-axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .ty-axis {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+  }
+  .ty-axis-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .ty-weights { display: flex; align-items: baseline; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .ty-weight { text-align: center; }
+  .ty-weight-g { font-size: 2rem; color: var(--ink); line-height: 1; }
+  .ty-weight-l { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.625rem; color: var(--muted); margin-top: 0.35rem; }
+  .ty-lead-demo { border-left: 3px solid #e0e7ff; padding-left: 0.75rem; margin-bottom: 0.75rem; }
+  .ty-lead-demo p { margin: 0; font-size: 0.8125rem; color: var(--ink-2); }
+  .ty-lead-l { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.625rem; color: var(--accent); display: block; margin-bottom: 0.25rem; }
+  .ty-track-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px dashed #eef0f2; }
+  .ty-track-row:last-child { border-bottom: none; }
+  .ty-track-l { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.625rem; color: var(--muted); white-space: nowrap; }
+  .ty-axis-note { font-size: 0.75rem; line-height: 1.55; color: var(--muted); margin-top: 1rem; }
+  .ty-axis-note code { font-family: 'SF Mono', 'Monaco', monospace; color: var(--accent); }
+
+  /* ---------- Measure ---------- */
+  .ty-measure {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+  .ty-measure-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    background: #eef2ff;
+    color: #3730a3;
+  }
+  .ty-measure-tag.bad { background: #f1f5f9; color: var(--muted); }
+  .ty-measure-good {
+    font-size: 1rem;
+    line-height: 1.625;
+    color: var(--ink);
+    max-width: 66ch;
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin: 0 0 1.75rem;
+  }
+  .ty-measure-bad {
+    font-size: 1rem;
+    line-height: 1.625;
+    color: var(--muted);
+    max-width: 120ch;
+    border-left: 3px solid #cbd5e1;
+    padding-left: 1rem;
+    margin: 0;
+  }
+
+  /* ---------- Callout ---------- */
+  .ty-callout {
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    gap: 1rem;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.5rem;
+    background: #eef2ff;
+  }
+  .ty-callout-bar { border-radius: 4px; background: var(--accent); }
+  .ty-callout-body { font-size: 0.875rem; line-height: 1.55; color: #334155; }
+  .ty-callout-body strong { color: var(--ink); }
+  .ty-callout-body code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.75rem; color: var(--accent); }
+
+  /* ---------- Refs ---------- */
+  .ty-refs { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+  .ty-refs-h { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; }
+  .ty-refs p { font-size: 0.75rem; line-height: 1.7; color: var(--muted); margin: 0; }
+  .ty-refs a { color: var(--accent); text-decoration: none; }
+  .ty-refs a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .ty-scale-row { flex-wrap: wrap; }
+    .ty-scale-tok { min-width: 0; }
+  }
+</style>
+</BaseLayout>

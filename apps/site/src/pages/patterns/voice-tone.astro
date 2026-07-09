@@ -1,0 +1,1179 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'voice-tone')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<!-- ============================================ -->
+<!-- HERO                                         -->
+<!-- ============================================ -->
+
+<div class="vt-hero">
+  <p class="vt-hero-eyebrow">Patterns / Voice &amp; Tone</p>
+  <h1>One voice, every screen. The tone reads the room.</h1>
+  <p>
+    Every label, empty state, and error is the product talking, and the words are not a coat applied after the design; <strong>they are the design</strong>. The voice never changes. The tone bends to the moment: warm at a win, calm at a break, plain when it counts.
+  </p>
+</div>
+
+<div class="vt-doctrine">
+  <div class="vt-doctrine-card accent">
+    <Icon name="chat" class="vt-material vt-doctrine-icon" />
+    <div class="vt-doctrine-title">The UI is a conversation</div>
+    <p class="vt-doctrine-text">Every label, hint, and message is the product speaking. Content is a design material, weighed like spacing and color, not poured in last.</p>
+  </div>
+  <div class="vt-doctrine-card">
+    <Icon name="visibility" class="vt-material vt-doctrine-icon" />
+    <div class="vt-doctrine-title">Read before it is read</div>
+    <p class="vt-doctrine-text">People scan, they do not study. Front-load the point, cut the dead words, let someone act on a glance.</p>
+  </div>
+  <div class="vt-doctrine-card">
+    <Icon name="favorite" class="vt-material vt-doctrine-icon" />
+    <div class="vt-doctrine-title">Respect on the worst day</div>
+    <p class="vt-doctrine-text">The tone that matters most is the one for when something breaks. No blame, no jargon, no dead ends: name it, hand back a step.</p>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- VOICE VS TONE                                -->
+<!-- ============================================ -->
+
+<div class="vt-section">
+  <div class="vt-section-label">The core distinction</div>
+  <h2 class="vt-section-title">Voice Is Constant, Tone Adapts</h2>
+  <p class="vt-section-sub">
+    <strong>Voice</strong> is who the product is: one personality that never shifts. <strong>Tone</strong> is how that voice modulates for the situation, warmer at a win, quieter at a failure, plainer under pressure. Get the pair right and the product feels human without ever feeling inconsistent.
+  </p>
+
+  <div class="vt-vs">
+    <div class="vt-vs-card constant">
+      <div class="vt-vs-tag"><Icon name="anchor" class="vt-material" /> Voice, constant</div>
+      <div class="vt-vs-title">One personality, every screen</div>
+      <p class="vt-vs-text">Set once, held everywhere. Redact the logo and you should still know it is us.</p>
+      <ul class="vt-vs-list">
+        <li>Clear before clever, always.</li>
+        <li>Human, not corporate or robotic.</li>
+        <li>Honest, never hype.</li>
+        <li>Plain enough for a nine-year-old.</li>
+      </ul>
+    </div>
+    <div class="vt-vs-card variable">
+      <div class="vt-vs-tag"><Icon name="tune" class="vt-material" /> Tone, variable</div>
+      <div class="vt-vs-title">Same voice, read the room</div>
+      <p class="vt-vs-text">The dial the voice turns for context. One person, spoken differently mid-win and mid-error.</p>
+      <ul class="vt-vs-list">
+        <li>Success: brief and glad, then gone.</li>
+        <li>Error: calm, specific, pointed at the fix.</li>
+        <li>Destructive: slow, plain, no cheer.</li>
+        <li>Onboarding: encouraging, never flooding.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="vt-rule-label">Where our voice sits on each dial</div>
+  <div class="vt-dims">
+    <div class="vt-dim">
+      <div class="vt-dim-ends"><span>Funny</span><span class="here">Serious, with warmth</span><span>Serious</span></div>
+      <div class="vt-dim-track"><span class="vt-dim-marker" style={{ left: '72%' }}></span></div>
+      <p class="vt-dim-note">We take the goal seriously. Wit is welcome only when it never costs a second of comprehension.</p>
+    </div>
+    <div class="vt-dim">
+      <div class="vt-dim-ends"><span>Formal</span><span class="here">Casual, but clear</span><span>Casual</span></div>
+      <div class="vt-dim-track"><span class="vt-dim-marker" style={{ left: '62%' }}></span></div>
+      <p class="vt-dim-note">We say "you" and "we", we use contractions, we skip the ceremony. Casual is not sloppy; it is plain.</p>
+    </div>
+    <div class="vt-dim">
+      <div class="vt-dim-ends"><span>Respectful</span><span class="here">Respectful</span><span>Irreverent</span></div>
+      <div class="vt-dim-track"><span class="vt-dim-marker" style={{ left: '12%' }}></span></div>
+      <p class="vt-dim-note">Never at the user's expense. No sarcasm in errors, no jokes where they are stuck.</p>
+    </div>
+    <div class="vt-dim">
+      <div class="vt-dim-ends"><span>Enthusiastic</span><span class="here">Measured, warm at wins</span><span>Matter-of-fact</span></div>
+      <div class="vt-dim-track"><span class="vt-dim-marker" style={{ left: '58%' }}></span></div>
+      <p class="vt-dim-note">Mostly matter-of-fact so the interface stays quiet. Enthusiasm is saved for real moments and spent sparingly.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- VOICE PRINCIPLES                             -->
+<!-- ============================================ -->
+
+<div class="vt-section">
+  <div class="vt-section-label">Our voice</div>
+  <h2 class="vt-section-title">Three Principles That Never Bend</h2>
+  <p class="vt-section-sub">
+    They hold on every surface and in every state. When a line is hard to write, one of these three is usually being tested. Return to it and the sentence resolves.
+  </p>
+</div>
+
+<div class="vt-principle">
+  <div class="vt-principle-head">
+    <span class="vt-num">1</span>
+    <h2 class="vt-principle-title">Clarity Over Creativity</h2>
+  </div>
+  <p class="vt-lede">
+    A clever line that makes someone stop to decode it has already failed. Copy exists to let a person act without thinking about the words. Write for scanning: outcome first, cut every word that does not change what they do, plain term over the impressive one. Label versus joke, the label wins.
+  </p>
+  <p class="vt-lede">
+    In practice: headline the result (<strong>"Saved"</strong>, not "Your changes were successfully saved"), name buttons for what they do (<strong>"Delete event"</strong>, not "Confirm"), and drop filler like "please", "simply", and "in order to".
+  </p>
+</div>
+
+<div class="vt-principle">
+  <div class="vt-principle-head">
+    <span class="vt-num">2</span>
+    <h2 class="vt-principle-title">Human, Not Robotic</h2>
+  </div>
+  <p class="vt-lede">
+    Machine copy hides in the passive voice and the system's point of view: "an error occurred". Human copy says "you" and "we", takes responsibility, and prefers the active voice so it is always clear who does what. It sounds like one careful person helping another.
+  </p>
+  <p class="vt-lede">
+    Human does not mean chatty; warmth comes from plainness, not exclamation marks. The test: read the line aloud. If no real person would say it to another across a desk, rewrite it.
+  </p>
+</div>
+
+<div class="vt-principle">
+  <div class="vt-principle-head">
+    <span class="vt-num">3</span>
+    <h2 class="vt-principle-title">Honest, Never Hype</h2>
+  </div>
+  <p class="vt-lede">
+    Every number, claim, and countdown on screen must be literally true. No inflation ("the best", "in seconds"), no manufactured urgency, no cost buried in a cheerful phrase. Honesty is completeness too: say what will happen before someone commits, above all when it spends money, shares data, or cannot be undone.
+  </p>
+  <p class="vt-lede">
+    This runs straight into the ethics band below and into <strong>Patterns / Persuasion</strong>, where the line between honest persuasion and manipulation is drawn technique by technique.
+  </p>
+</div>
+
+<!-- ============================================ -->
+<!-- MICROCOPY LIBRARY                            -->
+<!-- ============================================ -->
+
+<div class="vt-section">
+  <div class="vt-section-label">Reference</div>
+  <h2 class="vt-section-title">Microcopy, Pattern by Pattern</h2>
+  <p class="vt-section-sub">
+    The small text does the heavy lifting: labels, hints, empty states, errors, confirmations. It sits exactly where a person decides what to do, so it is the highest-leverage writing in the product. Each pattern pairs what to say with what to avoid.
+  </p>
+
+  <div class="vt-rule-label">Buttons &amp; calls to action</div>
+  <p class="vt-section-sub" style={{ 'margin-bottom': '0.25rem' }}>
+    A button names its own action, so the label reads as a promise of what happens next. Verb plus object beats a vague "Submit".
+  </p>
+  <div class="vt-pair">
+    <div class="vt-pair-col do">
+      <div class="vt-pair-head"><Icon name="check_circle" class="vt-material" /> Recommended</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Create event</span><span class="why">Names the exact outcome of the tap.</span></li>
+        <li><span class="say">Delete event</span><span class="why">A destructive action says so, plainly.</span></li>
+        <li><span class="say">Save changes</span><span class="why">Verb plus object; no guesswork.</span></li>
+        <li><span class="say">Send invites</span><span class="why">The user knows what leaves and to whom.</span></li>
+      </ul>
+    </div>
+    <div class="vt-pair-col dont">
+      <div class="vt-pair-head"><Icon name="cancel" class="vt-material" /> Avoid</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Submit</span><span class="why">Submit what, to where? A form word, not an action.</span></li>
+        <li><span class="say">Confirm</span><span class="why">On a delete dialog, hides the consequence.</span></li>
+        <li><span class="say">OK</span><span class="why">Agrees to nothing in particular.</span></li>
+        <li><span class="say">Click here</span><span class="why">Describes the mechanic, not the result.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="vt-rule-label">Labels &amp; hints</div>
+  <p class="vt-section-sub" style={{ 'margin-bottom': '0.25rem' }}>
+    A label says what the field is; a hint removes doubt before the user types. Keep both short, and put help next to the field, not in a distant tooltip.
+  </p>
+  <div class="vt-pair">
+    <div class="vt-pair-col do">
+      <div class="vt-pair-head"><Icon name="check_circle" class="vt-material" /> Recommended</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Work email</span><span class="why">Specific enough to prevent the wrong entry.</span></li>
+        <li><span class="say">Doors open at</span><span class="why">Plain label paired with an example time.</span></li>
+        <li><span class="say">We will only use this to send your tickets.</span><span class="why">Answers the unspoken "why do you need it?".</span></li>
+      </ul>
+    </div>
+    <div class="vt-pair-col dont">
+      <div class="vt-pair-head"><Icon name="cancel" class="vt-material" /> Avoid</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Email *</span><span class="why">Which email, and why? The asterisk is not an answer.</span></li>
+        <li><span class="say">Time</span><span class="why">Of what? Ambiguous on a busy form.</span></li>
+        <li><span class="say">Enter valid input</span><span class="why">Tells the user nothing they can act on.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="vt-rule-label">Empty states</div>
+  <p class="vt-section-sub" style={{ 'margin-bottom': '0.25rem' }}>
+    An empty state is not a dead end; it is the first step. Say what will be here, then hand over the one action that fills it.
+  </p>
+  <div class="vt-pair">
+    <div class="vt-pair-col do">
+      <div class="vt-pair-head"><Icon name="check_circle" class="vt-material" /> Recommended</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">No events yet. Create your first one to get started.</span><span class="why">Names the state, offers the next step.</span></li>
+        <li><span class="say">Nothing matches "jazz". Try a broader search.</span><span class="why">Explains the blank and suggests a fix.</span></li>
+      </ul>
+    </div>
+    <div class="vt-pair-col dont">
+      <div class="vt-pair-head"><Icon name="cancel" class="vt-material" /> Avoid</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Your story starts now.</span><span class="why">Evocative, but tells the user nothing to do.</span></li>
+        <li><span class="say">No results found.</span><span class="why">A dead end with no way forward.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="vt-rule-label">Errors</div>
+  <p class="vt-section-sub" style={{ 'margin-bottom': '0.25rem' }}>
+    An error line has one job: get the user unstuck. Say what happened in their words, drop the blame and the codes, point at the fix.
+  </p>
+  <div class="vt-pair">
+    <div class="vt-pair-col do">
+      <div class="vt-pair-head"><Icon name="check_circle" class="vt-material" /> Recommended</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">That email is missing an @. Check and try again.</span><span class="why">Names the problem and the exact fix.</span></li>
+        <li><span class="say">This card was declined. Try another card or contact your bank.</span><span class="why">Says what happened and two ways forward.</span></li>
+      </ul>
+    </div>
+    <div class="vt-pair-col dont">
+      <div class="vt-pair-head"><Icon name="cancel" class="vt-material" /> Avoid</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Invalid input.</span><span class="why">Which input, invalid how, fixed how? Nothing to act on.</span></li>
+        <li><span class="say">Error 402: transaction failed.</span><span class="why">A code and blame, no path out.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="vt-rule-label">Confirmations</div>
+  <p class="vt-section-sub" style={{ 'margin-bottom': '0.25rem' }}>
+    Confirm in the fewest words that close the loop. State what happened and, if there is one, the next thing the user might want. Then get out of the way.
+  </p>
+  <div class="vt-pair">
+    <div class="vt-pair-col do">
+      <div class="vt-pair-head"><Icon name="check_circle" class="vt-material" /> Recommended</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Event created. It is now visible to your audience.</span><span class="why">Confirms and states the consequence.</span></li>
+        <li><span class="say">Invites sent to 12 people.</span><span class="why">Specific, verifiable, done.</span></li>
+      </ul>
+    </div>
+    <div class="vt-pair-col dont">
+      <div class="vt-pair-head"><Icon name="cancel" class="vt-material" /> Avoid</div>
+      <ul class="vt-pair-list">
+        <li><span class="say">Success!</span><span class="why">Success at what? The exclamation carries no information.</span></li>
+        <li><span class="say">Your request has been processed.</span><span class="why">Robotic, and vague about what happened.</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- TONE BY CONTEXT                              -->
+<!-- ============================================ -->
+
+<div class="vt-section">
+  <div class="vt-section-label">Reading the room</div>
+  <h2 class="vt-section-title">Tone by Context</h2>
+  <p class="vt-section-sub">
+    One voice, four registers. The words stay plain throughout; only the temperature changes. The register is set by how the user feels arriving, not how the team feels shipping.
+  </p>
+
+  <div class="vt-tone-grid">
+    <div class="vt-tone-card">
+      <div class="vt-tone-head">
+        <div class="vt-tone-badge"><Icon name="celebration" class="vt-material" /></div>
+        <div>
+          <div class="vt-tone-name">Success</div>
+          <div class="vt-tone-register">Brief · warm · then gone</div>
+        </div>
+      </div>
+      <div class="vt-tone-example">"Event created. It is live for your audience now."</div>
+      <p class="vt-tone-guide">Acknowledge the win, name the result, step aside. A little warmth is earned; a paragraph is not. <strong>Confirm, do not celebrate at length.</strong></p>
+    </div>
+
+    <div class="vt-tone-card">
+      <div class="vt-tone-head">
+        <div class="vt-tone-badge"><Icon name="error" class="vt-material" /></div>
+        <div>
+          <div class="vt-tone-name">Error</div>
+          <div class="vt-tone-register">Calm · specific · fixable</div>
+        </div>
+      </div>
+      <div class="vt-tone-example">"This card was declined. Try another card or contact your bank."</div>
+      <p class="vt-tone-guide">Stay level. No exclamation, no blame, no code. Name what happened, give the next step. <strong>The tone that reassures is a clear path out.</strong></p>
+    </div>
+
+    <div class="vt-tone-card">
+      <div class="vt-tone-head">
+        <div class="vt-tone-badge"><Icon name="warning" class="vt-material" /></div>
+        <div>
+          <div class="vt-tone-name">Destructive</div>
+          <div class="vt-tone-register">Slow · plain · no cheer</div>
+        </div>
+      </div>
+      <div class="vt-tone-example">"Delete this event? Its 240 tickets will be cancelled. This cannot be undone."</div>
+      <p class="vt-tone-guide">Slow the user with facts, not fear. State the real consequence and label the button "Delete event", not "Confirm". <strong>Never cheerful, never coy.</strong></p>
+    </div>
+
+    <div class="vt-tone-card">
+      <div class="vt-tone-head">
+        <div class="vt-tone-badge"><Icon name="waving_hand" class="vt-material" /></div>
+        <div>
+          <div class="vt-tone-name">Onboarding</div>
+          <div class="vt-tone-register">Encouraging · unhurried</div>
+        </div>
+      </div>
+      <div class="vt-tone-example">"Let us set up your first event. It takes about two minutes."</div>
+      <p class="vt-tone-guide">One step at a time, honest about effort, generous with progress. <strong>Invite; do not flood.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- ACTIONABLE ERRORS                            -->
+<!-- ============================================ -->
+
+<div class="vt-section">
+  <div class="vt-section-label">The hardest lines to get right</div>
+  <h2 class="vt-section-title">Writing Errors People Can Act On</h2>
+  <p class="vt-section-sub">
+    Error copy is tested hardest, because the reader is already stuck. A good message answers three questions in the user's words: <strong>what happened, why (if it helps), and how to fix it.</strong> Everything else, blame, apology theatre, codes, jargon, is noise to wade through.
+  </p>
+
+  <div class="vt-anatomy">
+    <div class="vt-anatomy-step">
+      <div class="vt-anatomy-n">01</div>
+      <div class="vt-anatomy-title">What happened</div>
+      <p class="vt-anatomy-text">Name the problem in plain words, from the user's side. "This card was declined", not "Gateway returned 402".</p>
+    </div>
+    <div class="vt-anatomy-step">
+      <div class="vt-anatomy-n">02</div>
+      <div class="vt-anatomy-title">Why, if it helps</div>
+      <p class="vt-anatomy-text">Add a reason only when it guides the fix. "The file is over the 10 MB limit" earns its place; a stack trace does not.</p>
+    </div>
+    <div class="vt-anatomy-step">
+      <div class="vt-anatomy-n">03</div>
+      <div class="vt-anatomy-title">How to fix it</div>
+      <p class="vt-anatomy-text">Hand back a next step, ideally more than one. "Try another card or contact your bank." Never leave the user at a wall.</p>
+    </div>
+  </div>
+
+  <div class="vt-demo">
+    <span class="vt-demo-label">Email address</span>
+    <input class="vt-demo-input" type="text" value="ada.example.com" aria-invalid="true" aria-describedby="vt-err-hint" readonly />
+    <p id="vt-err-hint" class="vt-demo-msg">
+      <Icon name="error" class="vt-material" />
+      <span>This email is missing an @. It should look like name@example.com.</span>
+    </p>
+  </div>
+  <p class="vt-section-sub" style={{ 'margin-top': '1rem' }}>
+    The field, the error border, and the <code>var(--color-error)</code> token live in <strong>Patterns / Form Elements</strong>. Voice owns the words, Form Elements owns the field; written well, the user cannot tell where one ends.
+  </p>
+</div>
+
+<!-- ============================================ -->
+<!-- ETHICS OF COPY                               -->
+<!-- ============================================ -->
+
+<div class="vt-ethics">
+  <h2 class="vt-ethics-title">Copy Has Ethics</h2>
+  <p class="vt-ethics-lede">
+    Words persuade, so words can manipulate. The same sentence that helps a person decide can be twisted to trap them. This system draws the line in the copy itself: <strong>no dark patterns, no false urgency, no shame.</strong> A phrase that only works because the user is rushed, confused, or embarrassed is banned, not discouraged. The technique-by-technique treatment is in <strong>Patterns / Persuasion</strong>; the language rules are here.
+  </p>
+
+  <div class="vt-ethics-grid">
+    <div class="vt-ethics-card">
+      <div class="vt-ethics-card-title"><Icon name="timer_off" class="vt-material" /> No false urgency</div>
+      <p class="vt-ethics-card-text">No invented countdowns, no "only 2 left" the data cannot back, no fake "selling fast". Urgency is stated only when it is literally true.</p>
+    </div>
+    <div class="vt-ethics-card">
+      <div class="vt-ethics-card-title"><Icon name="sentiment_dissatisfied" class="vt-material" /> No confirmshaming</div>
+      <p class="vt-ethics-card-text">The decline option is neutral. "No thanks" is a valid answer, never "No, I like paying full price". Guilt is not a button label.</p>
+    </div>
+    <div class="vt-ethics-card">
+      <div class="vt-ethics-card-title"><Icon name="price_check" class="vt-material" /> No hidden cost</div>
+      <p class="vt-ethics-card-text">Every charge, fee, and commitment is named before the user agrees, in the same breath as the benefit. No cost buried in cheerful phrasing.</p>
+    </div>
+    <div class="vt-ethics-card">
+      <div class="vt-ethics-card-title"><Icon name="visibility" class="vt-material" /> No dark patterns</div>
+      <p class="vt-ethics-card-text">Copy never works by being missed. If a line only lands because the user did not read it closely, it is manipulation and it is out.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- RULES + SHIP CHECKLIST                       -->
+<!-- ============================================ -->
+
+<div class="vt-section">
+  <h2 class="vt-rule-label" style={{ 'margin-top': 0 }}>Rules of the Voice</h2>
+  <p class="vt-section-sub" style={{ 'margin-bottom': '1rem' }}>
+    Each rule stands on its own as an instruction; the reason follows, so you can weigh it whenever a line resists.
+  </p>
+
+  <div class="vt-ruleset">
+    <div class="vt-rule-item">
+      <p class="vt-rule-stmt"><span class="vt-rule-tag">Rule</span>Lead with the outcome; put the point in the first three words.</p>
+      <p class="vt-rule-why"><span class="vt-rule-tag why">Why</span>People scan before they study, so a clever line that must be decoded has already failed.</p>
+    </div>
+    <div class="vt-rule-item">
+      <p class="vt-rule-stmt"><span class="vt-rule-tag">Rule</span>Name every action button with a verb and its object.</p>
+      <p class="vt-rule-why"><span class="vt-rule-tag why">Why</span>"Submit", "Confirm", and "OK" hide what happens next; "Delete event" reads as a promise.</p>
+    </div>
+    <div class="vt-rule-item">
+      <p class="vt-rule-stmt"><span class="vt-rule-tag">Rule</span>Write in the active voice and speak to the reader as "you".</p>
+      <p class="vt-rule-why"><span class="vt-rule-tag why">Why</span>The passive voice and the system's point of view sound like a machine, not a person.</p>
+    </div>
+    <div class="vt-rule-item">
+      <p class="vt-rule-stmt"><span class="vt-rule-tag">Rule</span>Keep every line plain enough to read at a glance.</p>
+      <p class="vt-rule-why"><span class="vt-rule-tag why">Why</span>Jargon and filler like "please", "simply", and "in order to" cost comprehension and add nothing.</p>
+    </div>
+    <div class="vt-rule-item">
+      <p class="vt-rule-stmt"><span class="vt-rule-tag">Rule</span>In an error, say what happened and how to fix it.</p>
+      <p class="vt-rule-why"><span class="vt-rule-tag why">Why</span>"An error occurred" or a raw code leaves the reader stuck at a wall.</p>
+    </div>
+    <div class="vt-rule-item">
+      <p class="vt-rule-stmt"><span class="vt-rule-tag">Rule</span>Match the register to the reader's moment, not the team's.</p>
+      <p class="vt-rule-why"><span class="vt-rule-tag why">Why</span>Cheer on a destructive step, or a buried consequence, breaks trust exactly where it counts.</p>
+    </div>
+    <div class="vt-rule-item">
+      <p class="vt-rule-stmt"><span class="vt-rule-tag">Rule</span>Keep every number and claim literally true.</p>
+      <p class="vt-rule-why"><span class="vt-rule-tag why">Why</span>Invented urgency, a shamed decline, or a hidden cost is manipulation, and it stays out.</p>
+    </div>
+  </div>
+</div>
+
+<div class="vt-section">
+  <h2 class="vt-rule-label" style={{ 'margin-top': 0 }}>Before You Ship a Line</h2>
+
+  <div class="vt-decision">
+    <div class="vt-decision-step">
+      <div class="vt-decision-text"><strong>Can the user act on it at a glance?</strong> If the outcome is not clear in the first few words, rewrite it leading with the result.</div>
+    </div>
+    <div class="vt-decision-step">
+      <div class="vt-decision-text"><strong>Would a real person say this out loud?</strong> Read it aloud. If it sounds like a machine or a form, make it human, active, and personal.</div>
+    </div>
+    <div class="vt-decision-step">
+      <div class="vt-decision-text"><strong>Does the register fit the moment?</strong> Warm at a win, calm at an error, plain and cheerless at a destructive step.</div>
+    </div>
+    <div class="vt-decision-step">
+      <div class="vt-decision-text"><strong>Is every word true and free of pressure?</strong> No invented urgency, no shame, no hidden cost, no claim the user could catch out. In doubt, see <strong>Patterns / Persuasion</strong>.</div>
+    </div>
+    <div class="vt-decision-step">
+      <div class="vt-decision-text"><strong>Only now, ship it,</strong> in the DS primitives. See <strong>Patterns / Form Elements</strong> for the fields and error states that carry these words.</div>
+    </div>
+  </div>
+
+  <span class="vt-xlink"><Icon name="link" class="vt-material" /> Related: Patterns / Form Elements · Patterns / Persuasion · Patterns / Accessibility</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SOURCES                                      -->
+<!-- ============================================ -->
+
+<div class="vt-section">
+  <h2 class="vt-rule-label" style={{ 'margin-top': 0 }}>Sources</h2>
+  <ul class="vt-sources-list">
+    <li>
+      <strong>Mailchimp Content Style Guide, "Voice and Tone".</strong> The canonical distinction: one voice, many tones; the voice stays the same, the tone changes with context. <code>styleguide.mailchimp.com/voice-and-tone</code>
+    </li>
+    <li>
+      <strong>Nielsen Norman Group, "The Four Dimensions of Tone of Voice".</strong> Product tone measured on four independent scales: funny to serious, formal to casual, respectful to irreverent, enthusiastic to matter-of-fact. <code>nngroup.com/articles/tone-of-voice-dimensions</code>
+    </li>
+    <li>
+      <strong>Nielsen Norman Group, reading behavior.</strong> "How Users Read on the Web" (79 percent of users always scan, 16 percent read word by word) and "Concise, SCANNABLE, and Objective" (concise, front-loaded copy up to 124 percent more usable). <code>nngroup.com/articles/how-users-read-on-the-web</code> · <code>nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web</code>
+    </li>
+    <li>
+      <strong>Nielsen Norman Group, microcopy and errors.</strong> "The 3 Cs of Microcopy" (clarity, concision, character) and "Error-Message Guidelines" (polite, precise, constructive, blame-free, placed in context). <code>nngroup.com/articles/3-cs-microcopy</code> · <code>nngroup.com/articles/error-message-guidelines</code>
+    </li>
+    <li>
+      <strong>Nielsen, "10 Usability Heuristics" (H9).</strong> Help users recognize, diagnose, and recover from errors: plain language, precise, constructive. <code>nngroup.com/articles/ten-usability-heuristics</code>
+    </li>
+    <li>
+      <strong>GOV.UK writing standards.</strong> Write in plain English for everyone, front-load content, active voice, conversational tone; the reading-age-of-9 target runs across the UK government design ecosystem. <code>guidance.publishing.service.gov.uk/writing-to-gov-uk-standards</code> · <code>design.homeoffice.gov.uk/accessibility/written-content/readability</code>
+    </li>
+    <li>
+      <strong>U.S. plain language guidance</strong> (formerly plainlanguage.gov). Write for your audience, use simple words, active voice, personal pronouns; the basis of the Plain Writing Act. <code>digital.gov/guides/plain-language</code>
+    </li>
+    <li>
+      <strong>Shopify Polaris, content guidelines.</strong> Product voice and tone, actionable and accurate language, and ready patterns for buttons, banners, and empty states. <code>polaris.shopify.com/content</code>
+    </li>
+    <li>
+      <strong>Deceptive patterns.</strong> Brignull's deceptive.design catalogue and NN/g's "Deceptive Patterns" name the harms this system's copy ethics prohibit: false urgency, confirmshaming, hidden cost. <code>deceptive.design</code> · <code>nngroup.com/articles/deceptive-patterns</code>
+    </li>
+    <li>
+      <span class="vt-spa">Note</span> Exact article URLs may shift as these sites are reorganized; each landing page above resolves to the current version. The four-dial positions chosen for our voice, and the framing of copy ethics as hard prohibitions rather than guidance, are house doctrine, not claims made by the cited authors.
+    </li>
+  </ul>
+</div>
+
+<style is:global>
+  .vt-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Hero ===== */
+  .vt-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.25rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+
+  .vt-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+
+  .vt-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw + 1rem, 3.1rem);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.15rem;
+    max-width: 20ch;
+  }
+
+  .vt-hero p {
+    color: #e0e7ff;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .vt-hero p strong { color: #ffffff; font-weight: 700; }
+
+  /* ===== Doctrine band ===== */
+  .vt-doctrine {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .vt-doctrine-card {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.25rem 1.35rem;
+  }
+
+  .vt-doctrine-card.accent { border-color: #c7d2fe; background: #eef2ff; }
+
+  .vt-doctrine-icon { color: #4f46e5; font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+  .vt-doctrine-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+  }
+
+  .vt-doctrine-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .vt-doctrine-text code, .vt-lede code, .vt-section-sub code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125em;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+
+  /* ===== Section shell ===== */
+  .vt-section { margin-top: 2.75rem; }
+
+  .vt-section-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #4f46e5;
+    margin-bottom: 0.6rem;
+  }
+
+  .vt-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.6rem;
+  }
+
+  .vt-section-sub {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    max-width: 70ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .vt-section-sub strong { color: #0f172a; font-weight: 600; }
+
+  .vt-rule-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    margin: 2.5rem 0 1rem;
+  }
+
+  /* ===== Voice vs Tone ===== */
+  .vt-vs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .vt-vs-card {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.4rem 1.5rem;
+  }
+
+  .vt-vs-card.constant { border-color: #c7d2fe; background: #eef2ff; }
+
+  .vt-vs-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.7rem;
+  }
+
+  .vt-vs-card.constant .vt-vs-tag { color: #4338ca; }
+  .vt-vs-card.variable .vt-vs-tag { color: #475569; }
+
+  .vt-vs-tag .vt-material { font-size: 1.05rem; }
+
+  .vt-vs-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin-bottom: 0.4rem;
+  }
+
+  .vt-vs-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .vt-vs-text strong { color: #0f172a; }
+
+  .vt-vs-list {
+    margin: 0.8rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .vt-vs-list li { padding-left: 1.15rem; position: relative; margin-bottom: 0.4rem; }
+
+  .vt-vs-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #a5b4fc;
+  }
+
+  .vt-vs-card.constant .vt-vs-list li::before { background: #4f46e5; }
+
+  /* ===== Tone dials ===== */
+  .vt-dims { display: flex; flex-direction: column; gap: 1.15rem; margin-top: 0.5rem; }
+
+  .vt-dim {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+
+  .vt-dim-ends {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #475569;
+    margin-bottom: 0.5rem;
+  }
+
+  .vt-dim-ends .here { color: #4338ca; font-weight: 700; }
+
+  .vt-dim-track { position: relative; height: 6px; border-radius: 9999px; background: #e2e8f0; }
+
+  .vt-dim-marker {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #4f46e5;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #c7d2fe;
+    transform: translate(-50%, -50%);
+  }
+
+  .vt-dim-note {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.5;
+    margin-top: 0.6rem;
+  }
+
+  /* ===== Principles ===== */
+  .vt-principle { margin-top: 2.25rem; padding-bottom: 1.75rem; border-bottom: 1px solid #e6e8eb; }
+
+  .vt-principle-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+
+  .vt-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .vt-principle-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .vt-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    max-width: 70ch;
+  }
+
+  .vt-lede + .vt-lede { margin-top: 0.75rem; }
+  .vt-lede strong { color: #0f172a; font-weight: 600; }
+
+  /* ===== Recommended / Avoid microcopy pairs ===== */
+  .vt-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 640px) { .vt-pair { grid-template-columns: 1fr; } }
+
+  .vt-pair-head {
+    padding: 0.7rem 1.1rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .vt-pair-head .vt-material { font-size: 1.05rem; }
+
+  .vt-pair-col.do .vt-pair-head { color: #4338ca; background: #eef2ff; border-bottom: 1px solid #c7d2fe; }
+  .vt-pair-col.dont .vt-pair-head { color: #475569; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+
+  .vt-pair-col.do { border-right: 1px solid #e2e8f0; }
+
+  @media (max-width: 640px) {
+    .vt-pair-col.do { border-right: none; border-bottom: 1px solid #e2e8f0; }
+  }
+
+  .vt-pair-list {
+    margin: 0;
+    padding: 0.85rem 1.1rem;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .vt-pair-list li { padding: 0.4rem 0; border-bottom: 1px dashed #eef2f7; color: #475569; }
+  .vt-pair-list li:last-child { border-bottom: none; }
+
+  .vt-pair-list .say {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.78rem;
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  .vt-pair-col.do .vt-pair-list .say { color: #4338ca; }
+
+  .vt-pair-col.dont .vt-pair-list .say {
+    text-decoration: line-through;
+    text-decoration-color: #94a3b8;
+    text-decoration-thickness: 1px;
+  }
+
+  .vt-pair-list .why { display: block; font-size: 0.72rem; color: #475569; margin-top: 0.15rem; }
+
+  /* ===== Tone by context ===== */
+  .vt-tone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .vt-tone-card { border: 1px solid #e2e8f0; border-radius: 12px; background: white; padding: 1.25rem 1.35rem; }
+
+  .vt-tone-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.7rem; }
+
+  .vt-tone-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #eef2ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .vt-tone-badge .vt-material { font-size: 1.2rem; }
+
+  .vt-tone-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0f172a;
+  }
+
+  .vt-tone-register {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+  }
+
+  .vt-tone-example {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #0f172a;
+    line-height: 1.5;
+    padding: 0.6rem 0.8rem;
+    background: #f8fafc;
+    border-left: 3px solid #4f46e5;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 0.6rem;
+  }
+
+  .vt-tone-guide {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .vt-tone-guide strong { color: #0f172a; }
+
+  /* ===== Error anatomy ===== */
+  .vt-anatomy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 0.5rem 0 1.25rem;
+  }
+
+  .vt-anatomy-step { border: 1px solid #e2e8f0; border-radius: 10px; background: #f8fafc; padding: 1rem 1.15rem; }
+
+  .vt-anatomy-n {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #4338ca;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+
+  .vt-anatomy-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #0f172a;
+    margin-bottom: 0.3rem;
+  }
+
+  .vt-anatomy-text { font-family: 'Rubik', system-ui, sans-serif; font-size: 0.78rem; color: #475569; line-height: 1.5; }
+
+  .vt-demo { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-top: 0.5rem; }
+
+  .vt-demo-label {
+    display: block;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.35rem;
+  }
+
+  .vt-demo-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ef4444;
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #0f172a;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+  }
+
+  .vt-demo-msg {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8rem;
+    color: #991b1b;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .vt-demo-msg .vt-material { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; color: #dc2626; }
+
+  /* ===== Ethics band ===== */
+  .vt-ethics { margin-top: 2.75rem; background: #0f172a; border-radius: 16px; padding: 2rem 2.25rem; }
+
+  .vt-ethics-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #e0e7ff;
+    margin-bottom: 0.6rem;
+  }
+
+  .vt-ethics-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #c7d2fe;
+    line-height: 1.65;
+    max-width: 70ch;
+  }
+
+  .vt-ethics-lede strong { color: #ffffff; }
+
+  .vt-ethics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .vt-ethics-card { background: #1a1f3d; border: 1px solid rgba(199, 210, 254, 0.14); border-radius: 10px; padding: 1.1rem 1.2rem; }
+
+  .vt-ethics-card-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #e0e7ff;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .vt-ethics-card-title .vt-material { font-size: 1.05rem; color: #a5b4fc; }
+
+  .vt-ethics-card-text { font-family: 'Rubik', system-ui, sans-serif; font-size: 0.78rem; color: #a5b4fc; line-height: 1.55; }
+
+  /* ===== Rules (Rule / Why) ===== */
+  .vt-ruleset {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .vt-rule-item {
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #4f46e5;
+    border-radius: 10px;
+    background: #f8fafc;
+    padding: 1.1rem 1.35rem;
+  }
+
+  .vt-rule-stmt {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.5;
+    margin: 0 0 0.5rem;
+  }
+
+  .vt-rule-why {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .vt-rule-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.4rem;
+    margin-right: 0.45rem;
+  }
+
+  .vt-rule-tag.why { color: #475569; background: #f1f5f9; }
+
+  /* ===== Ship checklist ===== */
+  .vt-decision { counter-reset: step; display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .vt-decision-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+
+  .vt-decision-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #4f46e5;
+    color: white;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vt-decision-text { font-family: 'Rubik', system-ui, sans-serif; font-size: 0.875rem; color: #334155; line-height: 1.55; }
+  .vt-decision-text strong { color: #0f172a; }
+
+  .vt-xlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #4338ca;
+    margin-top: 0.9rem;
+  }
+
+  .vt-xlink .vt-material { font-size: 1rem; }
+
+  /* ===== Sources ===== */
+  .vt-sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .vt-sources-list li { padding: 0.55rem 0; border-bottom: 1px solid #f1f5f9; }
+  .vt-sources-list li:last-child { border-bottom: none; }
+  .vt-sources-list strong { color: #0f172a; }
+
+  .vt-sources-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.78em;
+    color: #475569;
+    word-break: break-word;
+  }
+
+  .vt-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-right: 0.35rem;
+  }
+</style>
+</BaseLayout>
+</content>
+</invoke>
