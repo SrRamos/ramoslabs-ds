@@ -83,6 +83,15 @@ WebFetch https://design.ramoslabs.com/registry.json
 - **`registry.json`** is a structured registry: token totals by category, the pattern list with URLs, and a components array (empty until the Vue library ships).
 - **`AGENTS.md`** is onboarding for an agent that builds UI consuming this design system.
 
+Two higher-leverage ways to consume it as an agent:
+
+- **MCP server** at `https://design.ramoslabs.com/mcp` — the DS as typed tools
+  (`search_tokens`, `get_token`, `check_contrast`, `list_docs`, `get_doc`, `lint_css`,
+  `get_agents_guide`). See [`docs/MCP.md`](./docs/MCP.md).
+- **Agent skill** (Claude Code) at [`.claude/skills/ramoslabs-ds/SKILL.md`](./.claude/skills/ramoslabs-ds/SKILL.md)
+  (also served at `/skill.md`) — makes an agent build/review strictly by this system, never
+  inventing tokens or rules. Copy it into a project's `.claude/skills/` or `~/.claude/skills/`.
+
 See [`AGENTS.md`](./AGENTS.md) for the full agent workflow.
 
 ## Quick start

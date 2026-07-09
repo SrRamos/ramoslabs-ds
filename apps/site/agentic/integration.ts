@@ -20,6 +20,7 @@ const contentDir = path.join(agenticDir, 'content')
 const tokensJsonPath = path.join(repoRoot, 'packages', 'tokens', 'dist', 'tokens.json')
 const tokensPkgPath = path.join(repoRoot, 'packages', 'tokens', 'package.json')
 const agentsMdPath = path.join(repoRoot, 'AGENTS.md')
+const skillPath = path.join(repoRoot, '.claude', 'skills', 'ramoslabs-ds', 'SKILL.md')
 
 // Only non-interactive doc pages carry agent-facing prose; the color picker is an app feature.
 const docPages = pages.filter((p) => !p.interactive)
@@ -156,6 +157,12 @@ An MCP (Model Context Protocol) server exposes the design system as typed tools 
 \`get_agents_guide\`. Streamable HTTP, read-only, no auth. Connect an MCP-capable agent to
 \`${b}/mcp\`. Prefer these tools over fetching files: they are structured and never invented.
 
+## Agent skill
+
+A Claude Code skill that makes an agent build/review UI strictly by this system (never
+inventing tokens, values, or rules) is at [skill.md](${b}/skill.md). Install it by copying it
+to \`.claude/skills/ramoslabs-ds/SKILL.md\` in a project (or \`~/.claude/skills/…\` globally).
+
 ## Install
 
 \`bun add @ramoslabs/tokens\` (public npm). Then \`@import '@ramoslabs/tokens/css'\`.
@@ -279,6 +286,10 @@ export function agentic(): AstroIntegration {
         fs.copyFileSync(tokensJsonPath, path.join(outDir, 'tokens.json'))
         if (fs.existsSync(agentsMdPath)) {
           fs.copyFileSync(agentsMdPath, path.join(outDir, 'AGENTS.md'))
+        }
+        // Serve the agent skill so any project can discover and install it.
+        if (fs.existsSync(skillPath)) {
+          fs.copyFileSync(skillPath, path.join(outDir, 'skill.md'))
         }
 
         const missing = resolved.filter((p) => !p.present).length
