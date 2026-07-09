@@ -106,12 +106,15 @@ bun run --filter @ramoslabs/tokens build
 
 ## Using the design tokens
 
-`@ramoslabs/tokens` is a real workspace package, but its `dist/` output is generated and git-ignored, and the package is not yet published to npm. `bun add @ramoslabs/tokens` does not work for an external consumer today. Until it is published, you consume tokens one of two ways:
+`@ramoslabs/tokens` is published to npm under the public `@ramoslabs` scope. Install it in any project:
 
-1. Build from source in this monorepo (`bun run --filter @ramoslabs/tokens build`), which produces `dist/tokens.css`, `dist/tokens.js` plus `dist/tokens.d.ts`, and `dist/tokens.json`.
-2. Read the token names and values from the served `tokens.json` (or `tokens.css`) that the documentation site publishes.
+```bash
+bun add @ramoslabs/tokens   # or npm / pnpm / yarn
+```
 
-Once the package is available in your project, import the CSS variables once at your app entry, then reference them everywhere:
+Its `dist/` output is generated (git-ignored in this repo, built on publish). You can also consume tokens without installing: build from source in this monorepo (`bun run --filter @ramoslabs/tokens build`), or read the served `tokens.json` / `tokens.css` from the documentation site.
+
+Import the CSS variables once at your app entry, then reference them everywhere:
 
 ```css
 @import '@ramoslabs/tokens/css';

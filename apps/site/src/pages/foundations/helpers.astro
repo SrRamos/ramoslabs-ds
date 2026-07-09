@@ -1,0 +1,733 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'helpers')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+<div class="hl">
+
+<div class="hl-hero">
+  <p class="hl-hero-eyebrow">Foundations / Helpers</p>
+  <h1>One class. One job. Straight from a token.</h1>
+  <p>
+    Utilities are the <strong>stagehands</strong> of the system: small, single-purpose classes that do exactly one thing and take no bow. One aligns a row, one spaces two cards, one hides a label from sight while keeping it for a screen reader. This is a curated set, not a dump, and every value traces back to a token. If a helper would type <span class="hl-hero-code">16px</span> by hand instead of reading <span class="hl-hero-code">--space-4</span>, it does not belong here.
+  </p>
+</div>
+
+<div class="hl-section">
+  <span class="hl-num">01</span>
+  <h2 class="hl-h2">Token, utility, or component</h2>
+  <p class="hl-intro">
+    Three layers carry style, and choosing the right one is most of the craft. Reach for the layer that answers the question you actually have.
+  </p>
+
+  <div class="hl-triad">
+    <div class="hl-triad-card">
+      <span class="hl-triad-tag">Layer 1</span>
+      <div class="hl-triad-name">Token</div>
+      <div class="hl-triad-role">The value, named once. <code>--space-4</code>, <code>--color-primary</code>, <code>--radius-lg</code>. Everything else points back here.</div>
+      <span class="hl-triad-q">What is the value?</span>
+    </div>
+    <div class="hl-triad-card util">
+      <span class="hl-triad-tag">Layer 2</span>
+      <div class="hl-triad-name">Utility</div>
+      <div class="hl-triad-role">One class, one declaration, sourced from a token. <code>.gap-4</code> sets <code>gap: var(--space-4)</code>. A quick, local fix in markup.</div>
+      <span class="hl-triad-q">Apply one value, here, now.</span>
+    </div>
+    <div class="hl-triad-card">
+      <span class="hl-triad-tag">Layer 3</span>
+      <div class="hl-triad-name">Component</div>
+      <div class="hl-triad-role">A named pattern with scoped styles, structure, and states. An event card, a button, a checkout row. The main act.</div>
+      <span class="hl-triad-q">A whole reusable thing.</span>
+    </div>
+  </div>
+
+  <div class="hl-rule">
+    <div><span class="hl-rule-k">Rule</span><span class="hl-rule-text">Source every utility value from a token, never a hand-typed value.</span></div>
+    <span class="hl-rule-why"><span class="hl-rule-k why">Why</span>That is what separates a design-system utility from a loose grab bag of CSS. Every helper is a thin, named shortcut to a decision the tokens already made.</span>
+  </div>
+
+  <div class="hl-pair">
+    <div class="hl-pair-col rec">
+      <div class="hl-pair-head"><span class="hl-pair-mark" aria-hidden="true">&#10003;</span> Recommended</div>
+      <div class="hl-pair-body">
+        <code class="hl-pair-code">.gap-4 &#123; gap: var(--space-4); &#125;</code>
+        <span class="hl-pair-why">Reads the token, so one change to the scale updates every gap at once.</span>
+      </div>
+    </div>
+    <div class="hl-pair-col avoid">
+      <div class="hl-pair-head"><span class="hl-pair-mark" aria-hidden="true">&#10005;</span> Avoid</div>
+      <div class="hl-pair-body">
+        <code class="hl-pair-code">.gap-4 &#123; gap: 16px; &#125;</code>
+        <span class="hl-pair-why">A hand-typed pixel drifts from the token and quietly breaks the system.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hl-section">
+  <span class="hl-num">02</span>
+  <h2 class="hl-h2">The catalog</h2>
+  <p class="hl-intro">
+    Every class below is one declaration, and every sized value traces to a token. These stay in markup so you read the layout at a glance.
+  </p>
+
+  <div class="hl-cols">
+    <div>
+      <h3 class="hl-tblhead">Display</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>Declaration</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.d-none</code></td><td><code>display: none</code></td></tr>
+          <tr><td><code class="cls">.d-block</code></td><td><code>display: block</code></td></tr>
+          <tr><td><code class="cls">.d-inline</code></td><td><code>display: inline</code></td></tr>
+          <tr><td><code class="cls">.d-inline-block</code></td><td><code>display: inline-block</code></td></tr>
+          <tr><td><code class="cls">.d-flex</code></td><td><code>display: flex</code></td></tr>
+          <tr><td><code class="cls">.d-inline-flex</code></td><td><code>display: inline-flex</code></td></tr>
+          <tr><td><code class="cls">.d-grid</code></td><td><code>display: grid</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="hl-tblhead">Flexbox</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>Declaration</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.flex-row</code></td><td><code>flex-direction: row</code></td></tr>
+          <tr><td><code class="cls">.flex-col</code></td><td><code>flex-direction: column</code></td></tr>
+          <tr><td><code class="cls">.flex-wrap</code></td><td><code>flex-wrap: wrap</code></td></tr>
+          <tr><td><code class="cls">.flex-1</code></td><td><code>flex: 1 1 0%</code></td></tr>
+          <tr><td><code class="cls">.flex-auto</code></td><td><code>flex: 1 1 auto</code></td></tr>
+          <tr><td><code class="cls">.flex-none</code></td><td><code>flex: none</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="hl-tblhead">Alignment</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>Declaration</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.items-start</code></td><td><code>align-items: flex-start</code></td></tr>
+          <tr><td><code class="cls">.items-center</code></td><td><code>align-items: center</code></td></tr>
+          <tr><td><code class="cls">.items-end</code></td><td><code>align-items: flex-end</code></td></tr>
+          <tr><td><code class="cls">.justify-center</code></td><td><code>justify-content: center</code></td></tr>
+          <tr><td><code class="cls">.justify-between</code></td><td><code>justify-content: space-between</code></td></tr>
+          <tr><td><code class="cls">.justify-end</code></td><td><code>justify-content: flex-end</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="hl-tblhead">Layout &amp; overflow</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.w-full</code></td><td><code>width: 100%</code></td></tr>
+          <tr><td><code class="cls">.h-full</code></td><td><code>height: 100%</code></td></tr>
+          <tr><td><code class="cls">.min-w-0</code></td><td>Lets a flex child shrink so truncation works.</td></tr>
+          <tr><td><code class="cls">.overflow-auto</code></td><td><code>overflow: auto</code></td></tr>
+          <tr><td><code class="cls">.truncate</code></td><td>One line, ellipsis: hidden overflow, nowrap, ellipsis, together.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h3 class="hl-tblhead">Gap (every step is a token)</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.gap-1</code></td><td><code class="tok">var(--space-1)</code></td><td><code>0.25rem</code></td></tr>
+          <tr><td><code class="cls">.gap-2</code></td><td><code class="tok">var(--space-2)</code></td><td><code>0.5rem</code></td></tr>
+          <tr><td><code class="cls">.gap-3</code></td><td><code class="tok">var(--space-3)</code></td><td><code>0.75rem</code></td></tr>
+          <tr><td><code class="cls">.gap-4</code></td><td><code class="tok">var(--space-4)</code></td><td><code>1rem</code></td></tr>
+          <tr><td><code class="cls">.gap-6</code></td><td><code class="tok">var(--space-6)</code></td><td><code>1.5rem</code></td></tr>
+          <tr><td><code class="cls">.gap-8</code></td><td><code class="tok">var(--space-8)</code></td><td><code>2rem</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="hl-tblhead">Typography</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>Token or property</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.text-center</code></td><td><code>text-align: center</code></td></tr>
+          <tr><td><code class="cls">.text-sm</code></td><td><code class="tok">var(--font-size-sm)</code></td></tr>
+          <tr><td><code class="cls">.text-base</code></td><td><code class="tok">var(--font-size-base)</code></td></tr>
+          <tr><td><code class="cls">.text-lg</code></td><td><code class="tok">var(--font-size-lg)</code></td></tr>
+          <tr><td><code class="cls">.text-xl</code></td><td><code class="tok">var(--font-size-xl)</code></td></tr>
+          <tr><td><code class="cls">.font-medium</code></td><td><code class="tok">var(--font-weight-medium)</code></td></tr>
+          <tr><td><code class="cls">.font-semibold</code></td><td><code class="tok">var(--font-weight-semibold)</code></td></tr>
+          <tr><td><code class="cls">.font-bold</code></td><td><code class="tok">var(--font-weight-bold)</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="hl-tblhead">Text color (semantic tokens only)</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.text-primary</code></td><td><code class="tok">var(--color-text-heading)</code></td></tr>
+          <tr><td><code class="cls">.text-secondary</code></td><td><code class="tok">var(--color-text-secondary)</code></td></tr>
+          <tr><td><code class="cls">.text-muted</code></td><td><code class="tok">var(--color-text-muted)</code></td></tr>
+          <tr><td><code class="cls">.text-error</code></td><td><code class="tok">var(--color-error-text)</code></td></tr>
+          <tr><td><code class="cls">.text-success</code></td><td><code class="tok">var(--color-success-text)</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="hl-tblhead">Border radius</h3>
+      <table class="hl-table">
+        <thead><tr><th>Class</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><code class="cls">.rounded-sm</code></td><td><code class="tok">var(--radius-sm)</code></td><td><code>0.375rem</code></td></tr>
+          <tr><td><code class="cls">.rounded-md</code></td><td><code class="tok">var(--radius-md)</code></td><td><code>0.5rem</code></td></tr>
+          <tr><td><code class="cls">.rounded-lg</code></td><td><code class="tok">var(--radius-lg)</code></td><td><code>0.75rem</code></td></tr>
+          <tr><td><code class="cls">.rounded-xl</code></td><td><code class="tok">var(--radius-xl)</code></td><td><code>1rem</code></td></tr>
+          <tr><td><code class="cls">.rounded-pill</code></td><td><code class="tok">var(--radius-pill)</code></td><td><code>9999px</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="hl-rule">
+    <div><span class="hl-rule-k">Rule</span><span class="hl-rule-text">Name each helper after the token it reads, so one vocabulary runs top to bottom.</span></div>
+    <span class="hl-rule-why"><span class="hl-rule-k why">Why</span>A class named for a value the token layer never uses is exactly the drift that erodes trust in the system.</span>
+  </div>
+
+  <div class="hl-pair">
+    <div class="hl-pair-col rec">
+      <div class="hl-pair-head"><span class="hl-pair-mark" aria-hidden="true">&#10003;</span> Recommended</div>
+      <div class="hl-pair-body">
+        <code class="hl-pair-code">.rounded-pill &rarr; var(--radius-pill)</code>
+        <span class="hl-pair-why">The class mirrors the token name, so the two always stay in sync.</span>
+      </div>
+    </div>
+    <div class="hl-pair-col avoid">
+      <div class="hl-pair-head"><span class="hl-pair-mark" aria-hidden="true">&#10005;</span> Avoid</div>
+      <div class="hl-pair-body">
+        <code class="hl-pair-code">.rounded-full</code>
+        <span class="hl-pair-why">Describes a scale the tokens never define; the mismatch invites drift.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hl-section">
+  <span class="hl-num">03</span>
+  <h2 class="hl-h2">Utilities at work</h2>
+  <p class="hl-intro">
+    A handful of structural helpers, read in one glance. This is fair use. The moment the same cluster becomes a card you build twenty times, give it a name and let the helpers go.
+  </p>
+
+  <div class="hl-code">
+    <div class="hl-code-head">
+      <span class="hl-code-dot"></span>
+      <span class="hl-code-lang">HTML</span>
+    </div>
+    <pre set:html={`<span class="c">&lt;!-- Ticket status: label left, state right, one token gap --&gt;</span>
+&lt;<span class="k">div</span> class="<span class="v">d-flex items-center justify-between gap-4</span>"&gt;
+    &lt;<span class="k">span</span> class="<span class="v">text-muted text-sm</span>"&gt;Ticket status&lt;/<span class="k">span</span>&gt;
+    &lt;<span class="k">span</span> class="<span class="v">font-semibold text-success</span>"&gt;Confirmed&lt;/<span class="k">span</span>&gt;
+&lt;/<span class="k">div</span>&gt;
+
+<span class="c">&lt;!-- Long venue name that must never break the row --&gt;</span>
+&lt;<span class="k">div</span> class="<span class="v">d-flex items-center gap-2 min-w-0</span>"&gt;
+    &lt;<span class="k">span</span> class="<span class="v">truncate</span>"&gt;Teatro Metropolitano Jose Gutierrez Gomez&lt;/<span class="k">span</span>&gt;
+&lt;/<span class="k">div</span>&gt;
+
+<span class="c">&lt;!-- Icon-only button: eyes see the X, screen readers hear the label --&gt;</span>
+&lt;<span class="k">button</span> class="<span class="v">d-inline-flex items-center focus-ring cursor-pointer</span>"&gt;
+    &lt;<span class="k">span</span> class="<span class="v">sr-only</span>"&gt;Close ticket details&lt;/<span class="k">span</span>&gt;
+    &lt;<span class="k">svg</span> <span class="x">aria-hidden</span>="true"&gt;...&lt;/<span class="k">svg</span>&gt;
+&lt;/<span class="k">button</span>&gt;`} />
+  </div>
+</div>
+
+<div class="hl-section">
+  <span class="hl-num">04</span>
+  <h2 class="hl-h2">The two helpers that matter most</h2>
+  <p class="hl-intro">
+    Two exist purely to serve assistive technology. Treat them as required infrastructure, not decoration.
+  </p>
+
+  <table class="hl-table">
+    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code class="cls">.sr-only</code></td><td>Visually hidden, still announced by screen readers. For icon-button labels, form hints, and status that is obvious by sight but silent to the tree.</td></tr>
+      <tr><td><code class="cls">.focus-ring</code></td><td>Applies the system focus treatment on <code>:focus-visible</code>, pairing with <code class="tok">var(--color-focus)</code> so keyboard users always see where they are.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hl-kicker">Inside .sr-only, declaration by declaration</div>
+  <p class="hl-intro">
+    Visually hidden is a solved problem with a canonical recipe. The common shortcut of <code>display: none</code> is wrong for it: that also drops the element from the accessibility tree, the opposite of the goal. This hides the pixels while keeping the text for a screen reader.
+  </p>
+
+  <div class="hl-anatomy">
+    <div class="hl-anatomy-card">
+      <span class="hl-anatomy-decl">position: absolute</span>
+      <p class="hl-anatomy-text">Pulls the element out of flow so its collapsed box disturbs nothing around it.</p>
+    </div>
+    <div class="hl-anatomy-card">
+      <span class="hl-anatomy-decl">width: 1px; height: 1px</span>
+      <p class="hl-anatomy-text">Collapses the box to one pixel. Not zero, since a zero-sized box can be dropped from the tree.</p>
+    </div>
+    <div class="hl-anatomy-card">
+      <span class="hl-anatomy-decl">overflow: hidden</span>
+      <p class="hl-anatomy-text">Clips the real content down to that one-pixel box so none of it paints.</p>
+    </div>
+    <div class="hl-anatomy-card">
+      <span class="hl-anatomy-decl">clip + clip-path: inset(50%)</span>
+      <p class="hl-anatomy-text">Clips the visible region to nothing. The clip-path rule does the work in modern engines; the deprecated clip stays as a fallback.</p>
+    </div>
+    <div class="hl-anatomy-card">
+      <span class="hl-anatomy-decl">white-space: nowrap</span>
+      <p class="hl-anatomy-text">Stops the collapsed text from wrapping, which could reintroduce a sliver of layout.</p>
+    </div>
+    <div class="hl-anatomy-card">
+      <span class="hl-anatomy-decl">margin: -1px; border: 0</span>
+      <p class="hl-anatomy-text">Zeroes the box model and nudges it off-screen so nothing leaks, not a border, not a background.</p>
+    </div>
+  </div>
+
+  <div class="hl-code">
+    <div class="hl-code-head">
+      <span class="hl-code-dot"></span>
+      <span class="hl-code-lang">CSS</span>
+    </div>
+    <pre set:html={`<span class="c">/* The canonical visually-hidden utility */</span>
+<span class="k">.sr-only</span> <span class="x">{</span>
+    <span class="p">position</span><span class="x">:</span> <span class="v">absolute</span><span class="x">;</span>
+    <span class="p">width</span><span class="x">:</span> <span class="v">1px</span><span class="x">;</span>
+    <span class="p">height</span><span class="x">:</span> <span class="v">1px</span><span class="x">;</span>
+    <span class="p">padding</span><span class="x">:</span> <span class="v">0</span><span class="x">;</span>
+    <span class="p">margin</span><span class="x">:</span> <span class="v">-1px</span><span class="x">;</span>
+    <span class="p">overflow</span><span class="x">:</span> <span class="v">hidden</span><span class="x">;</span>
+    <span class="p">clip</span><span class="x">:</span> <span class="v">rect(0, 0, 0, 0)</span><span class="x">;</span>
+    <span class="p">clip-path</span><span class="x">:</span> <span class="v">inset(50%)</span><span class="x">;</span>
+    <span class="p">white-space</span><span class="x">:</span> <span class="v">nowrap</span><span class="x">;</span>
+    <span class="p">border</span><span class="x">:</span> <span class="v">0</span><span class="x">;</span>
+<span class="x">}</span>`} />
+  </div>
+
+  <div class="hl-rule">
+    <div><span class="hl-rule-k">Rule</span><span class="hl-rule-text">Use <code>.sr-only</code> for meaning that is obvious by sight but silent to the tree, never to stuff invisible keywords.</span></div>
+    <span class="hl-rule-why"><span class="hl-rule-k why">Why</span>The word behind an icon-only button, the meaning of a required asterisk. A skip link that must reveal itself on keyboard focus uses the focusable variant. See <strong>Patterns / Accessibility</strong>.</span>
+  </div>
+
+  <div class="hl-pair">
+    <div class="hl-pair-col rec">
+      <div class="hl-pair-head"><span class="hl-pair-mark" aria-hidden="true">&#10003;</span> Recommended</div>
+      <div class="hl-pair-body">
+        <code class="hl-pair-code">&lt;span class="sr-only"&gt;Close&lt;/span&gt;</code>
+        <span class="hl-pair-why">Keeps the pixels hidden while the label still reaches assistive tech.</span>
+      </div>
+    </div>
+    <div class="hl-pair-col avoid">
+      <div class="hl-pair-head"><span class="hl-pair-mark" aria-hidden="true">&#10005;</span> Avoid</div>
+      <div class="hl-pair-body">
+        <code class="hl-pair-code">display: none</code>
+        <span class="hl-pair-why">Drops the element from the accessibility tree, so a screen reader never hears it.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hl-section">
+  <span class="hl-num">05</span>
+  <h2 class="hl-h2">Which layer, in five questions</h2>
+  <p class="hl-intro">
+    When you are unsure which tool to reach for, walk down until one fits.
+  </p>
+
+  <div class="hl-ladder">
+    <div class="hl-step">
+      <div class="hl-step-text">Just need the <strong>value</strong>, inside a component's own scoped CSS? Reference the <strong>token</strong>, for example <code>var(--space-4)</code>. No utility needed.</div>
+    </div>
+    <div class="hl-step">
+      <div class="hl-step-text">One structural adjustment in markup, a gap, an alignment, a width? Use the matching <strong>utility</strong>.</div>
+    </div>
+    <div class="hl-step">
+      <div class="hl-step-text">The same three or four utilities always travel together on the same kind of element? That pattern has a name. Extract a <strong>component</strong>.</div>
+    </div>
+    <div class="hl-step">
+      <div class="hl-step-text">The element needs structure, states, or behavior, a card, a modal, a checkout row? Build it as a named <strong>component</strong> with its own scoped styles from the start.</div>
+    </div>
+    <div class="hl-step">
+      <div class="hl-step-text">The need is purely for assistive tech, hiding a label or showing focus? Use <strong><code>.sr-only</code></strong> or <strong><code>.focus-ring</code></strong>. Infrastructure, not styling.</div>
+    </div>
+  </div>
+</div>
+
+<div class="hl-refs">
+  <p class="hl-refs-h">Sources</p>
+  <p>
+    Utility-first model and the extract-to-component threshold: Tailwind CSS (<a href="https://tailwindcss.com/docs/styling-with-utility-classes">tailwindcss.com</a>) and Adam Wathan, CSS Utility Classes and Separation of Concerns (<a href="https://adamwathan.me/css-utility-classes-and-separation-of-concerns/">adamwathan.me</a>). The composition-plus-blocks balance follows Andy Bell, CUBE CSS (<a href="https://cube.fyi/">cube.fyi</a>). The visually-hidden recipe: W3C WAI WCAG technique C7 (<a href="https://www.w3.org/WAI/WCAG22/Techniques/css/C7">w3.org</a>) and Scott O'Hara, Inclusively Hidden (<a href="https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html">scottohara.me</a>); it ships near-identically as Bootstrap <code>.visually-hidden</code> and Tailwind <code>.sr-only</code>. Visible focus is WCAG 2.1 SC 2.4.7 (<a href="https://www.w3.org/WAI/WCAG21/Understanding/focus-visible">w3.org</a>). The exact class names, token bindings, and the reading of <code>.sr-only</code> and <code>.focus-ring</code> as required infrastructure are specific to this system.
+  </p>
+</div>
+
+</div>
+
+<style is:global>
+  .hl {
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --ink-3: #475569;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --wash: #f8fafc;
+    --wash-2: #f1f5f9;
+    --indigo: #4f46e5;
+    --indigo-700: #4338ca;
+    --indigo-900: #3730a3;
+    --indigo-100: #e0e7ff;
+    --indigo-50: #eef2ff;
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: var(--ink-2);
+  }
+
+  /* ---------- Hero ---------- */
+  .hl-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.5rem 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+  .hl-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .hl-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 16ch;
+  }
+  .hl-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 44rem;
+    margin: 0;
+  }
+  .hl-hero p strong { color: #ffffff; font-weight: 700; }
+  .hl-hero-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    background: rgba(255,255,255,0.14);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    color: #ffffff;
+  }
+
+  /* ---------- Section frame ---------- */
+  .hl-section { margin-top: 4rem; }
+  .hl-num {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: 0.1em;
+  }
+  .hl-h2 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0.25rem 0 0.5rem;
+  }
+  .hl-intro {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 46rem;
+    margin: 0 0 1.75rem;
+  }
+  .hl-intro strong { color: var(--ink-2); }
+  .hl-intro code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    background: var(--wash-2);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: var(--indigo-700);
+  }
+  .hl-kicker {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    margin: 2.25rem 0 0.875rem;
+  }
+
+  /* ---------- Triad ---------- */
+  .hl-triad {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .hl-triad-card {
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: var(--wash);
+    padding: 1.5rem;
+  }
+  .hl-triad-card.util { border-color: #c7d2fe; background: var(--indigo-50); }
+  .hl-triad-tag {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .hl-triad-card.util .hl-triad-tag { color: var(--indigo); }
+  .hl-triad-name {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+  .hl-triad-role { font-size: 0.8125rem; color: var(--ink-3); line-height: 1.55; }
+  .hl-triad-role code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--indigo-700); }
+  .hl-triad-q {
+    display: block;
+    margin-top: 0.75rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed #dbe0e6;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--ink-3);
+  }
+
+  /* ---------- Tables ---------- */
+  .hl-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 2rem;
+  }
+  @media (max-width: 900px) { .hl-cols { grid-template-columns: 1fr; } }
+
+  .hl-tblhead {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 1.5rem 0 0.5rem;
+  }
+  .hl-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .hl-table th, .hl-table td {
+    padding: 0.6rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .hl-table th {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    background: var(--wash);
+  }
+  .hl-table td { font-size: 0.8125rem; color: var(--muted); }
+  .hl-table tr:last-child td { border-bottom: none; }
+  .hl-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: var(--wash-2);
+    padding: 0.2rem 0.45rem;
+    border-radius: 4px;
+    color: var(--ink-3);
+  }
+  .hl-table .cls { color: var(--indigo); font-weight: 500; background: var(--indigo-50); }
+  .hl-table .tok { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--indigo-700); background: transparent; padding: 0; }
+
+  /* ---------- Rule + Why ---------- */
+  .hl-rule {
+    background: var(--indigo-50);
+    border: 1px solid #c7d2fe;
+    border-left: 4px solid var(--indigo);
+    border-radius: 12px;
+    padding: 1.125rem 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .hl-rule-k {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--indigo);
+    margin-right: 0.5rem;
+  }
+  .hl-rule-k.why { color: var(--ink-3); }
+  .hl-rule-text {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.9375rem;
+    color: var(--indigo-900);
+    line-height: 1.5;
+  }
+  .hl-rule-why {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+  .hl-rule code, .hl-rule-why code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: rgba(79,70,229,0.1);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: var(--indigo-700);
+  }
+
+  /* ---------- Recommended / Avoid pair ---------- */
+  .hl-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 640px) { .hl-pair { grid-template-columns: 1fr; } }
+  .hl-pair-col {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  .hl-pair-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.8125rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .hl-pair-col.rec .hl-pair-head { color: var(--indigo-700); background: var(--indigo-50); border-bottom-color: #c7d2fe; }
+  .hl-pair-col.avoid .hl-pair-head { color: var(--ink-3); background: var(--wash); }
+  .hl-pair-mark { font-weight: 900; font-size: 0.9375rem; line-height: 1; }
+  .hl-pair-body { padding: 0.9rem 1rem; }
+  .hl-pair-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-2);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .hl-pair-col.rec .hl-pair-code { color: var(--indigo-700); }
+  .hl-pair-why { font-size: 0.75rem; color: var(--muted); line-height: 1.55; }
+
+  /* ---------- Anatomy ---------- */
+  .hl-anatomy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .hl-anatomy-card { background: var(--wash); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem; }
+  .hl-anatomy-decl {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    color: var(--indigo-700);
+    background: var(--indigo-50);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 0.55rem;
+  }
+  .hl-anatomy-text { font-size: 0.8125rem; color: var(--ink-3); line-height: 1.55; }
+
+  /* ---------- Code ---------- */
+  .hl-code { background: #1e293b; border-radius: 12px; overflow: hidden; margin-top: 1rem; }
+  .hl-code-head {
+    background: #0f172a;
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #334155;
+  }
+  .hl-code-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--indigo); }
+  .hl-code-lang {
+    margin-left: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #c7d2fe;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .hl-code pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    overflow-x: auto;
+  }
+  .hl-code .c { color: #94a3b8; font-style: italic; }
+  .hl-code .k { color: #c7d2fe; }
+  .hl-code .p { color: #e2e8f0; }
+  .hl-code .v { color: #a5b4fc; }
+  .hl-code .x { color: #94a3b8; }
+
+  /* ---------- Decision ladder ---------- */
+  .hl-ladder { counter-reset: step; display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+  .hl-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--wash);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .hl-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: #ffffff;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hl-step-text { font-size: 0.875rem; color: var(--ink-2); line-height: 1.5; }
+  .hl-step-text strong { color: var(--ink); }
+  .hl-step-text code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.75rem; background: var(--indigo-50); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--indigo-700); }
+
+  /* ---------- Refs ---------- */
+  .hl-refs { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+  .hl-refs-h { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; }
+  .hl-refs p { font-size: 0.75rem; line-height: 1.7; color: var(--muted); margin: 0; }
+  .hl-refs a { color: var(--indigo); text-decoration: none; }
+  .hl-refs a:hover { text-decoration: underline; }
+  .hl-refs code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.72rem; color: var(--indigo-700); }
+</style>
+</BaseLayout>

@@ -1,0 +1,2153 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'form-elements')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+<div class="fe-hero">
+  <p class="fe-hero-eyebrow">Patterns / Form Elements</p>
+  <h1>Every screen persuades. The form is where they act.</h1>
+  <p>
+    It is also the single easiest place to lose the people the rest of the product worked to earn. A hidden label, the wrong keyboard, an error that only says <strong>"invalid"</strong>: each is a small tax, and forms are where small taxes compound into abandonment. This page is the last word on how we build them. The spine is one rule: <strong>reach for the native control first</strong>, tune it with the right attributes, and build custom only where the platform genuinely falls short.
+  </p>
+</div>
+
+
+
+
+
+<div class="fe-part">
+  <span class="fe-part-kicker">Part 1</span>
+  <span class="fe-part-title">Doctrine, the rules under every field</span>
+</div>
+
+
+
+
+
+<div class="fe-section">
+  <div class="fe-section-header">
+    <span class="fe-section-number">1</span>
+    <h2 class="fe-section-title">Native-first, and doubly so on mobile</h2>
+  </div>
+
+  <p class="fe-text">
+    The default is always the plain HTML control with the right <code>type</code>, <code>inputmode</code> and <code>autocomplete</code>. On a phone this is not a preference, it is leverage: a semantic <code>&lt;input type&gt;</code> raises the correct on-screen keyboard, opens the platform picker, and arrives with keyboard support, focus handling and screen-reader semantics already built in. MDN is blunt about it: prefer the semantic input type over hacks, for better accessibility and built-in validation.
+  </p>
+
+  <p class="fe-text">
+    Go custom only when one of two things is true: the pattern <strong>does not exist in HTML</strong> (a real multi-select, a filtering combobox, tags, rating), or the brand <strong>must style something the platform will not let you style</strong> (the popup of a <code>&lt;select&gt;</code>, the calendar of a date picker). When you do, prefer desktop, keep a native control underneath as the progressive-enhancement base, and follow the matching WAI-ARIA APG pattern to the letter. On mobile, bias even harder toward native: the OS picker is already accessible and familiar.
+  </p>
+
+  <div class="fe-callout">
+    <Icon name="info" class="fe-material" />
+    <p class="fe-callout-text">
+      <strong>Native controls are hard to style, and that is the whole tension.</strong> web.dev says it plainly: today's HTML form elements are difficult to customize. You can style the field box (border, radius, padding, type) of almost anything. What you cannot reliably restyle cross-browser is the <code>&lt;select&gt;</code> arrow and popup, and the date and time picker widgets. That single limit, not taste, is what pushes a control from native to custom.
+    </p>
+  </div>
+
+  <p class="fe-text">
+    The clearest case is a date. GOV.UK research is the reference here: for a date the user <strong>already knows or can look up</strong> without a calendar, such as a birthday or an issue date, do not open a calendar at all. Use three plain text inputs, grouped in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>, each with <code>inputmode="numeric"</code>. Reserve the native calendar picker for dates the user picks by looking, like choosing a future session to attend.
+  </p>
+
+  <div class="fe-lab">
+    <div class="fe-demo">
+      <div class="fe-demo-label rec">✓ Recommended: a memorable date, as three fields</div>
+      <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
+        <legend class="fe-label" style={{ 'margin-bottom': '0.5rem' }}>Date of birth</legend>
+        <span class="fe-help" style={{ 'margin-top': 0, 'margin-bottom': '0.6rem', display: 'block' }}>For example, 27 3 1998.</span>
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', 'flex-direction': 'column', gap: '0.2rem' }}>
+            <label class="fe-help" for="fe-dob-d" style={{ 'margin-top': 0 }}>Day</label>
+            <input id="fe-dob-d" class="fe-input" style={{ width: '3.5rem' }} type="text" inputmode="numeric" maxlength="2" value="27" />
+          </div>
+          <div style={{ display: 'flex', 'flex-direction': 'column', gap: '0.2rem' }}>
+            <label class="fe-help" for="fe-dob-m" style={{ 'margin-top': 0 }}>Month</label>
+            <input id="fe-dob-m" class="fe-input" style={{ width: '3.5rem' }} type="text" inputmode="numeric" maxlength="2" value="3" />
+          </div>
+          <div style={{ display: 'flex', 'flex-direction': 'column', gap: '0.2rem' }}>
+            <label class="fe-help" for="fe-dob-y" style={{ 'margin-top': 0 }}>Year</label>
+            <input id="fe-dob-y" class="fe-input" style={{ width: '5rem' }} type="text" inputmode="numeric" maxlength="4" value="1998" />
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="fe-demo avoid">
+      <div class="fe-demo-label avoid">✕ Avoid: a calendar for a birthday</div>
+      <div class="fe-field">
+        <label class="fe-label" for="fe-dob-bad">Date of birth</label>
+        <input id="fe-dob-bad" class="fe-input" type="date" value="1998-03-27" />
+        <span class="fe-help">A picker that opens on the current month forces the user to page back through decades to reach a year they could have simply typed.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-section">
+  <div class="fe-section-header">
+    <span class="fe-section-number">2</span>
+    <h2 class="fe-section-title">Theming the accent without giving up native</h2>
+  </div>
+
+  <p class="fe-text">
+    You can brand native controls without rebuilding them. Three CSS properties carry it, and each one has a precise reach. Set them once at the root and every native checkbox, radio, range and text caret in the product turns indigo, and every control follows the OS light or dark theme, with zero per-control work.
+  </p>
+
+  <div class="fe-code" set:html={`<span class="fe-c-sel">:root</span> {
+  <span class="fe-c-prop">color-scheme</span>: light dark;               <span class="fe-c-com">/* native controls follow the OS theme */</span>
+  <span class="fe-c-prop">accent-color</span>: var(--color-primary);    <span class="fe-c-com">/* tints checkbox, radio, range, progress */</span>
+  <span class="fe-c-prop">caret-color</span>: var(--color-primary);     <span class="fe-c-com">/* the text insertion cursor */</span>
+}
+<span class="fe-c-com">&lt;!-- in &lt;head&gt;, prevents a theme flash on load --&gt;</span>
+&lt;meta name=<span class="fe-c-prop">"color-scheme"</span> content=<span class="fe-c-prop">"light dark"</span>&gt;`} />
+
+  <p class="fe-text">
+    <strong>Read the coverage exactly.</strong> <code>accent-color</code> tints four controls and nothing else. It does not touch <code>&lt;select&gt;</code>, the date and time inputs, <code>type="color"</code>, <code>type="file"</code>, or any text field. Getting this wrong is the usual reason a "themed" form still shows a stock blue selected option.
+  </p>
+
+  <div class="fe-table-scroll">
+    <table class="fe-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>What it does</th>
+          <th>Reaches</th>
+          <th>Does not reach</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fe-kbd"><code>accent-color</code></td>
+          <td>Tints the control's accent to the brand, keeping native behaviour</td>
+          <td><span class="fe-yes">checkbox, radio, <code>range</code>, <code>progress</code></span></td>
+          <td><span class="fe-no">select, date, time, color, file, text</span></td>
+        </tr>
+        <tr>
+          <td class="fe-kbd"><code>caret-color</code></td>
+          <td>Colours the text insertion cursor</td>
+          <td><span class="fe-yes">text, search, tel, email, password, textarea</span></td>
+          <td><span class="fe-no">date, color, checkbox, radio</span></td>
+        </tr>
+        <tr>
+          <td class="fe-kbd"><code>color-scheme</code></td>
+          <td>Native controls adopt the OS dark or light look, no extra CSS</td>
+          <td><span class="fe-yes">all native controls, scrollbars</span></td>
+          <td><span class="fe-no">your own custom colours</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="fe-text">
+    Here it is live. Every control below is a stock browser control tinted with <code>accent-color: var(--color-primary)</code>. No custom markup, no JavaScript. Toggle your OS theme and they follow it, while the indigo accent stays put in both.
+  </p>
+
+  <div class="fe-accent-lab">
+    <div class="fe-accent-group">
+      <span class="fe-accent-cap">accent-color, checkbox</span>
+      <label class="fe-accent-row"><input type="checkbox" checked /> Send event reminders</label>
+      <label class="fe-accent-row"><input type="checkbox" /> Add me to the newsletter</label>
+    </div>
+    <div class="fe-accent-group">
+      <span class="fe-accent-cap">accent-color, radio</span>
+      <label class="fe-accent-row"><input type="radio" name="fe-accent-radio" checked /> General admission</label>
+      <label class="fe-accent-row"><input type="radio" name="fe-accent-radio" /> VIP</label>
+    </div>
+    <div class="fe-accent-group">
+      <span class="fe-accent-cap">accent-color, range</span>
+      <input type="range" min="0" max="100" value="65" aria-label="Accent-tinted range demo" />
+      <span class="fe-accent-cap" style={{ 'margin-top': '0.4rem' }}>progress</span>
+      <progress max="100" value="65" aria-label="Accent-tinted progress demo">65%</progress>
+    </div>
+    <div class="fe-accent-group">
+      <span class="fe-accent-cap">caret-color, text</span>
+      <label class="fe-help" for="fe-caret" style={{ 'margin-top': 0 }}>Click in, the cursor is indigo</label>
+      <input id="fe-caret" class="fe-input" type="text" value="Ramos" />
+    </div>
+  </div>
+
+  <div class="fe-callout">
+    <Icon name="lightbulb" class="fe-material" />
+    <p class="fe-callout-text">
+      <strong>Trust the browser on accent contrast.</strong> Provide the brand colour and the browser picks a legible checkmark or thumb colour against it for you. For the controls <code>accent-color</code> cannot reach, take the decision ladder: accept the native chrome (best on mobile), style only the field box and keep the native popup, or, only if the brand demands it, rebuild with the matching APG pattern on desktop with a native control underneath.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-section">
+  <div class="fe-section-header">
+    <span class="fe-section-number">3</span>
+    <h2 class="fe-section-title">The anatomy of a field</h2>
+  </div>
+
+  <p class="fe-text">
+    A field is four parts, and dropping any one shifts the work onto the user. The <strong>label</strong> asks and stays visible. The <strong>control</strong> takes the answer. <strong>Help</strong> pre-empts the mistake. The <strong>error</strong> appears only when something is wrong, and says exactly how to fix it.
+  </p>
+
+  <div class="fe-anatomy">
+    <div class="fe-anatomy-part">
+      <span class="fe-anatomy-tag">Label</span>
+      <label class="fe-label" for="fe-anatomy-input">Email address <span class="fe-req" aria-hidden="true">*</span><span class="sr-only"> (required)</span></label>
+    </div>
+    <div class="fe-anatomy-part">
+      <span class="fe-anatomy-tag">Control</span>
+      <input id="fe-anatomy-input" class="fe-input" type="email" autocomplete="email" placeholder="you@example.com" required aria-required="true" aria-describedby="fe-anatomy-help" />
+    </div>
+    <div class="fe-anatomy-part">
+      <span class="fe-anatomy-tag">Help</span>
+      <span id="fe-anatomy-help" class="fe-help">We send your tickets and receipts here. Never shared.</span>
+    </div>
+    <div class="fe-anatomy-part">
+      <span class="fe-anatomy-tag">Error</span>
+      <span class="fe-error"><Icon name="error" class="fe-material" /> Enter an email like name@domain.com so we can reach you.</span>
+    </div>
+  </div>
+
+  <p class="fe-text">
+    <strong>The label stays visible, above the field, never inside it.</strong> A placeholder is not a label: it vanishes the instant someone types, exactly when they want to re-read the question, and screen readers treat it as unreliable. A single top-aligned column is also the fastest form to scan, because the eye runs straight down from question to answer.
+  </p>
+
+  <p class="fe-text">
+    Marking the required field is not optional decoration. The <code>*</code> is drawn with <code>aria-hidden</code>, and the word "required" rides along in an <code>sr-only</code> span so a screen reader announces it in full. Pair the real <code>required</code> attribute with that text, and state the convention once at the top of the form.
+  </p>
+
+  <div class="fe-callout">
+    <Icon name="lightbulb" class="fe-material" />
+    <p class="fe-callout-text">
+      <strong>Mark the rarer one.</strong> If most fields are required, mark the few <em>optional</em> ones in words; if most are optional, mark the required ones. An asterisk alone is not accessible, so pair it with text or an <code>aria-label</code> and state the convention once.
+    </p>
+  </div>
+
+  <div class="fe-lab">
+    <div class="fe-demo">
+      <div class="fe-demo-label rec">✓ Recommended: label above, help visible</div>
+      <div class="fe-field">
+        <label class="fe-label" for="fe-good">Event name</label>
+        <input id="fe-good" class="fe-input" type="text" placeholder="Summer Jazz Festival" aria-describedby="fe-good-help" />
+        <span id="fe-good-help" class="fe-help">Shown on the public page and on every ticket.</span>
+      </div>
+    </div>
+    <div class="fe-demo avoid">
+      <div class="fe-demo-label avoid">✕ Avoid: placeholder as the label</div>
+      <div class="fe-field">
+        <input class="fe-input" type="text" placeholder="Event name" aria-label="Event name (placeholder-as-label anti-pattern)" />
+        <span class="fe-help">The question disappears the instant the user types, with nowhere left to put help.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-section">
+  <div class="fe-section-header">
+    <span class="fe-section-number">4</span>
+    <h2 class="fe-section-title">Validate at the right moment, in the right words</h2>
+  </div>
+
+  <p class="fe-text">
+    Start from HTML constraint validation, <code>required</code>, <code>type</code>, <code>pattern</code>, <code>min</code>, <code>max</code>, <code>step</code>. It is free, works without JavaScript, and is the source of truth. Present its state with the newer <code>:user-invalid</code> and <code>:user-valid</code> pseudo-classes, not <code>:invalid</code> and <code>:valid</code>. The user variants only match after the person has interacted or tried to submit, which is exactly what stops a pristine form from lighting up red on load.
+  </p>
+
+  <div class="fe-code" set:html={`<span class="fe-c-com">/* matches only after interaction, never on first paint */</span>
+<span class="fe-c-sel">input:user-invalid</span> { <span class="fe-c-prop">border-color</span>: var(--color-error); }
+<span class="fe-c-sel">input:user-valid</span>   { <span class="fe-c-prop">border-color</span>: var(--color-success-strong); }`} />
+
+  <p class="fe-text">
+    On timing, the rule is <strong>reward early, punish late</strong>. Confirm a field as valid while the user types, but hold a new error until they leave it. Flagging the first letter of an email as a broken email is technically true and deeply unhelpful.
+  </p>
+
+  <p class="fe-text">
+    The rule has a second half that starts the moment a field has <em>already</em> shown an error. From then on, switch that field to re-validate on every keystroke and <strong>clear the error the instant the value becomes valid</strong>. Once someone is fixing a known problem, the reassurance that they succeeded should arrive immediately, never held back until they leave and re-enter the field.
+  </p>
+
+  <div class="fe-timeline">
+    <div class="fe-tl-step">
+      <span class="fe-tl-when"><Icon name="keyboard" class="fe-material" style="font-size:0.85rem" /> While typing</span>
+      <div class="fe-tl-title">Reward, never punish</div>
+      <div class="fe-tl-body">Show a success tick the moment input becomes valid. Hold the first error back; an incomplete field is not yet a wrong one. After a field has erred, though, re-check on input and clear it the instant it is valid.</div>
+    </div>
+    <div class="fe-tl-step">
+      <span class="fe-tl-when"><Icon name="logout" class="fe-material" style="font-size:0.85rem" /> On blur</span>
+      <div class="fe-tl-title">Now you may correct</div>
+      <div class="fe-tl-body">When focus leaves the field, the answer is final enough to judge. Surface the inline error, right under the field.</div>
+    </div>
+    <div class="fe-tl-step">
+      <span class="fe-tl-when"><Icon name="send" class="fe-material" style="font-size:0.85rem" /> On submit</span>
+      <div class="fe-tl-title">Catch the rest</div>
+      <div class="fe-tl-body">Re-check everything, move focus to the first error, summarise in a live region. Never let a form fail silently.</div>
+    </div>
+  </div>
+
+  <p class="fe-text">
+    A good error message is <strong>visible and specific</strong>, says <strong>what went wrong in plain language</strong>, and tells the user <strong>how to fix it</strong>. "Invalid input" fails all three. "Enter a date after today, the event cannot start in the past" passes all three. WCAG 3.3.1 requires the error to be identified in text, so the field carries <code>aria-invalid="true"</code> and points at the message with <code>aria-describedby</code>. The colour reinforces; the words are the message.
+  </p>
+
+  <div class="fe-lab">
+    <div class="fe-demo">
+      <div class="fe-demo-label">Reward: valid while typing</div>
+      <div class="fe-field">
+        <label class="fe-label" for="fe-ok">Email address</label>
+        <input id="fe-ok" class="fe-input success" type="email" value="ana@ramoslabs.co" aria-describedby="fe-ok-msg" />
+        <span id="fe-ok-msg" class="fe-success-text"><Icon name="check_circle" class="fe-material" /> Looks good.</span>
+      </div>
+    </div>
+    <div class="fe-demo">
+      <div class="fe-demo-label">Punish late: actionable error on blur</div>
+      <div class="fe-field">
+        <label class="fe-label" for="fe-bad">Email address</label>
+        <input id="fe-bad" class="fe-input error" type="email" value="ana@ramoslabs" aria-invalid="true" aria-describedby="fe-bad-msg" />
+        <span id="fe-bad-msg" class="fe-error"><Icon name="error" class="fe-material" /> Add the domain ending, like .co or .com, so the address can receive mail.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fe-callout">
+    <Icon name="palette" class="fe-material" />
+    <p class="fe-callout-text">
+      <strong>Errors use <code>--color-error</code>, the only warm colour on the page.</strong> Everything interactive stays indigo; red's single job is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so its appearance always means something is wrong.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-section">
+  <div class="fe-section-header">
+    <span class="fe-section-number">5</span>
+    <h2 class="fe-section-title">Built for the thumb: the mobile contract</h2>
+  </div>
+
+  <p class="fe-text">
+    On a phone the <code>type</code> attribute is the biggest usability lever in the form. It tells the OS which keyboard to raise. <code>inputmode</code> tunes that keyboard without changing meaning, <code>enterkeyhint</code> relabels the return key, and <code>autocomplete</code> lets the browser fill the field from a saved profile in one tap, which also satisfies WCAG 1.3.5 Identify Input Purpose. Avoid <code>autocomplete="off"</code> except for genuine one-offs like a CAPTCHA answer.
+  </p>
+
+  <div class="fe-table-scroll">
+    <table class="fe-table">
+      <thead>
+        <tr>
+          <th>You are asking for</th>
+          <th>Use</th>
+          <th>Keyboard raised</th>
+          <th>Autofill token</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fe-kbd">Email</td>
+          <td><code>type="email"</code></td>
+          <td>Text with a visible @, no shift needed</td>
+          <td><code>autocomplete="email"</code></td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">Phone</td>
+          <td><code>type="tel"</code></td>
+          <td>Large numeric dial pad</td>
+          <td><code>autocomplete="tel"</code></td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">Website</td>
+          <td><code>type="url"</code></td>
+          <td>Text with .com and / shortcuts</td>
+          <td><code>autocomplete="url"</code></td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">One-time code</td>
+          <td><code>inputmode="numeric"</code></td>
+          <td>Digits only, text semantics kept</td>
+          <td><code>autocomplete="one-time-code"</code></td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">Amount of money</td>
+          <td><code>inputmode="decimal"</code></td>
+          <td>Digits with a decimal separator</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">Quantity of tickets</td>
+          <td><code>type="number"</code></td>
+          <td>Number pad with stepper</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">Full name</td>
+          <td><code>type="text"</code></td>
+          <td>Standard, autocapitalized words</td>
+          <td><code>autocomplete="name"</code></td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">Search</td>
+          <td><code>type="search"</code></td>
+          <td>Text with a Search return key</td>
+          <td><code>enterkeyhint="search"</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="fe-text">
+    Two numbers are non-negotiable. Inputs render at <strong><code>font-size: 16px</code> or larger</strong>, because iOS Safari auto-zooms any field below that on focus, and the fix is the size, never disabling <code>user-scalable</code>, which breaks zoom for everyone. Interactive targets are at least <strong>24 by 24 CSS pixels</strong> to clear WCAG 2.5.8, and the comfortable goal is <strong>44 by 44</strong>, the AAA target size and Apple's minimum. Native UA controls are exempt from the strict measure, which is one more reason to lean native on small screens.
+  </p>
+
+  <div class="fe-callout">
+    <Icon name="devices_other" class="fe-material" />
+    <p class="fe-callout-text">
+      <strong>Every input on this page renders at 16px.</strong> The <code>type</code> validates and picks the keyboard; <code>inputmode</code> only hints at it, so use the semantic type first and reach for <code>inputmode</code> to fine-tune. For SMS logins, <code>autocomplete="one-time-code"</code> lets iOS and Android drop the texted code straight into the field.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-section">
+  <div class="fe-section-header">
+    <span class="fe-section-number">6</span>
+    <h2 class="fe-section-title">The accessibility floor</h2>
+  </div>
+
+  <p class="fe-text">
+    An accessible form is the same form built correctly. Four WCAG criteria carry most of it, and each maps straight to a habit from the sections above. This is the floor, AA is the minimum we ship, and we reach for AAA target sizing wherever the layout allows.
+  </p>
+
+  <div class="fe-table-scroll">
+    <table class="fe-table">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th>Level</th>
+          <th>What it requires</th>
+          <th>How the field meets it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fe-kbd">3.3.2 Labels or Instructions</td>
+          <td>A</td>
+          <td>Every control has a visible label or instruction.</td>
+          <td>A persistent <code>&lt;label for&gt;</code> above each field; help linked with <code>aria-describedby</code>.</td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">3.3.1 Error Identification</td>
+          <td>A</td>
+          <td>Errors are identified and described in text.</td>
+          <td>Inline text message plus <code>aria-invalid="true"</code>; red reinforces, never carries it alone.</td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">3.3.3 Error Suggestion</td>
+          <td>AA</td>
+          <td>When a fix is known, suggest it.</td>
+          <td>The message says how to correct the value, not only that it is wrong.</td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">1.3.5 Identify Input Purpose</td>
+          <td>AA</td>
+          <td>Common fields expose their purpose programmatically.</td>
+          <td>Correct <code>autocomplete</code> tokens, which also drive autofill.</td>
+        </tr>
+        <tr>
+          <td class="fe-kbd">2.5.8 Target Size</td>
+          <td>AA</td>
+          <td>Interactive targets are at least 24 by 24 CSS pixels.</td>
+          <td>Checkboxes and toggles clear 24px; the comfortable target is 44px (AAA 2.5.5).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fe-callout">
+    <Icon name="accessibility_new" class="fe-material" />
+    <p class="fe-callout-text">
+      <strong>The label is a click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input's <code>id</code> names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. Group related controls in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> so the group's question is announced too. This is the accessible default, not optional polish.
+    </p>
+  </div>
+
+  <div>
+    <a class="fe-xlink" href="/patterns/accessibility/"><Icon name="arrow_forward" class="fe-material" />Patterns / Accessibility: focus order, live regions, contrast</a>
+    <a class="fe-xlink" href="/patterns/interactive/"><Icon name="arrow_forward" class="fe-material" />Patterns / Interactive: the full state model</a>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-part">
+  <span class="fe-part-kicker">Part 2</span>
+  <span class="fe-part-title">The catalog, every control we reach for</span>
+</div>
+
+<p class="fe-text" style={{ 'margin-top': '1.25rem' }}>
+  One card per control, grouped by family. Each names the native element, a verdict of <strong class="fe-yes">Native</strong>, <strong class="fe-verdict custom" style={{ padding: '0.05rem 0.4rem' }}>Custom</strong> or <strong class="fe-verdict hybrid" style={{ padding: '0.05rem 0.4rem' }}>Hybrid</strong>, the attributes that matter, and the two notes that decide quality: what happens on mobile, and the accessibility pattern to follow. When a control has no good native form, the note names the WAI-ARIA APG pattern to build against.
+</p>
+
+
+
+<div class="fe-family">
+  <Icon name="edit" class="fe-material" />
+  <span class="fe-family-title">Text and numeric fields</span>
+</div>
+
+<div class="fe-catalog">
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Text</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="text"&gt;</p>
+    <div class="fe-cat-attrs"><code>autocomplete</code><code>enterkeyhint</code><code>maxlength</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-text">Full name</label>
+        <input id="fe-d-text" class="fe-input" type="text" autocomplete="name" enterkeyhint="next" placeholder="Ada Lovelace" />
+      </div>
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-text-err">Full name, on-blur error</label>
+        <input id="fe-d-text-err" class="fe-input error" type="text" value="A" aria-invalid="true" aria-describedby="fe-d-text-err-m" />
+        <span id="fe-d-text-err-m" class="fe-error"><Icon name="error" class="fe-material" /> Enter your full name so tickets match your ID.</span>
+      </div>
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-text-dis">Full name, disabled while saving</label>
+        <input id="fe-d-text-dis" class="fe-input" type="text" value="Ada Lovelace" disabled />
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Standard keyboard; keep <strong>font-size at 16px</strong>.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Visible <code>&lt;label for&gt;</code>; error via <code>aria-describedby</code> and <code>aria-invalid</code>.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Email</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="email"&gt;</p>
+    <div class="fe-cat-attrs"><code>inputmode="email"</code><code>autocomplete="email"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-email">Email</label>
+        <input id="fe-d-email" class="fe-input" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" />
+      </div>
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-email-ok">Email, valid while typing</label>
+        <input id="fe-d-email-ok" class="fe-input success" type="email" inputmode="email" autocomplete="email" value="ana@ramoslabs.co" aria-describedby="fe-d-email-ok-m" />
+        <span id="fe-d-email-ok-m" class="fe-success-text"><Icon name="check_circle" class="fe-material" /> Looks good.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Raises a keyboard with @ and a dot, no shift needed.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Built-in format validation; still write a fix-it error message.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Password</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="password"&gt;</p>
+    <div class="fe-cat-attrs"><code>autocomplete="current-password"</code><code>new-password</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-pass">Password, masked</label>
+        <input id="fe-d-pass" class="fe-input" type="password" autocomplete="new-password" value="ramoslabs" />
+      </div>
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-pass-show">Password, revealed by the show toggle</label>
+        <input id="fe-d-pass-show" class="fe-input" type="text" autocomplete="off" value="ramoslabs" />
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="visibility" class="fe-material" /> Offer a show-password toggle; <strong>never block paste</strong>.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Use <code>new-password</code> on sign-up so managers offer a strong one.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Number</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="number"&gt;</p>
+    <div class="fe-cat-attrs"><code>inputmode="numeric"</code><code>min</code><code>max</code><code>step</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-num">Tickets (1 to 10)</label>
+        <input id="fe-d-num" class="fe-input" type="number" inputmode="numeric" min="1" max="10" step="1" value="2" />
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> For true quantities. For codes and IDs use <code>text</code> plus <code>inputmode</code>.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Native role is spinbutton; arrows step the value.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Tel</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="tel"&gt;</p>
+    <div class="fe-cat-attrs"><code>inputmode="tel"</code><code>autocomplete="tel"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-tel">Phone</label>
+        <input id="fe-d-tel" class="fe-input" type="tel" inputmode="tel" autocomplete="tel" placeholder="300 123 4567" />
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Raises the phone dial pad. No format validation, so pair with a hint.</li>
+      <li><Icon name="public" class="fe-material" /> Add a country selector only when you serve many regions (see Composite).</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">URL</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="url"&gt;</p>
+    <div class="fe-cat-attrs"><code>inputmode="url"</code><code>autocomplete="url"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-url">Website</label>
+        <input id="fe-d-url" class="fe-input" type="url" inputmode="url" autocomplete="url" placeholder="ramoslabs.co" />
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Keyboard adds / and .com shortcuts.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Validates for a scheme; accept input without <code>https://</code> and normalise it.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Search</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="search"&gt;</p>
+    <div class="fe-cat-attrs"><code>enterkeyhint="search"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-search">Search events</label>
+        <input id="fe-d-search" class="fe-input" type="search" enterkeyhint="search" value="jazz" placeholder="Search events" />
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Type to see the native clear button appear.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Return key reads "Search"; a clear button appears on many browsers.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Carries an implicit searchbox role.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Textarea</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;textarea&gt;</p>
+    <div class="fe-cat-attrs"><code>rows</code><code>maxlength</code><code>enterkeyhint="enter"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-ta">Event description</label>
+        <textarea id="fe-d-ta" class="fe-input" rows="3" maxlength="140" aria-describedby="fe-d-ta-c" style={{ resize: 'vertical' }}>An intimate night of live jazz under the stars.</textarea>
+        <span id="fe-d-ta-c" class="fe-help" style={{ 'margin-top': 0 }} aria-live="polite">92 characters left</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Keep 16px; let it auto-grow rather than trapping text in a scroll.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> If you show a counter, mirror it in an <code>aria-live</code> region.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+<div class="fe-family">
+  <Icon name="checklist" class="fe-material" />
+  <span class="fe-family-title">Selection controls</span>
+</div>
+
+<div class="fe-catalog">
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Select, single</span><span class="fe-verdict hybrid">Hybrid</span></div>
+    <p class="fe-cat-el">&lt;select&gt;</p>
+    <div class="fe-cat-attrs"><code>&lt;option&gt;</code><code>required</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-sel">Ticket type</label>
+        <select id="fe-d-sel" class="fe-input">
+          <option value="ga" selected>General admission</option>
+          <option value="vip">VIP</option>
+          <option value="student">Student</option>
+        </select>
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Styled box, native popup.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> <strong>Prefer native</strong>: it opens the OS wheel, already accessible.</li>
+      <li><Icon name="architecture" class="fe-material" /> Custom only to style the popup, then follow <strong>APG Select-only Combobox</strong>. Long lists: switch to an autocomplete.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Multi-select</span><span class="fe-verdict custom">Custom</span></div>
+    <p class="fe-cat-el">no good native form</p>
+    <div class="fe-cat-attrs"><code>aria-multiselectable</code><code>aria-selected</code></div>
+    <div class="fe-cat-demo">
+      <fieldset class="fe-cat-group">
+        <legend class="fe-cat-lbl">Accessibility needs</legend>
+        <label class="fe-cat-choice"><input type="checkbox" checked /> Wheelchair access</label>
+        <label class="fe-cat-choice"><input type="checkbox" /> Sign language interpreter</label>
+        <label class="fe-cat-choice"><input type="checkbox" checked /> Companion seat</label>
+      </fieldset>
+      <span class="fe-help" style={{ 'margin-top': 0 }}>A checkbox group beats <code>select multiple</code> on touch.</span>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> <code>&lt;select multiple&gt;</code> is hostile on touch; use checkboxes or a sheet.</li>
+      <li><Icon name="architecture" class="fe-material" /> Build against <strong>APG Listbox, multi-select</strong>, or just decompose into a checkbox group.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Checkbox</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="checkbox"&gt;</p>
+    <div class="fe-cat-attrs"><code>accent-color</code><code>checked</code></div>
+    <div class="fe-cat-demo">
+      <label class="fe-cat-choice"><input type="checkbox" checked /> Send me event reminders</label>
+      <label class="fe-cat-choice"><input type="checkbox" /> Add me to the newsletter</label>
+      <label class="fe-cat-choice"><input type="checkbox" /> Select all categories (indeterminate)</label>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Target 44px; <code>accent-color</code> tints it indigo, no rebuild.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> For a group, wrap in <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Radio group</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="radio"&gt; x N</p>
+    <div class="fe-cat-attrs"><code>name</code><code>accent-color</code></div>
+    <div class="fe-cat-demo">
+      <fieldset class="fe-cat-group">
+        <legend class="fe-cat-lbl">Admission</legend>
+        <label class="fe-cat-choice"><input type="radio" name="fe-d-radio" checked /> General admission</label>
+        <label class="fe-cat-choice"><input type="radio" name="fe-d-radio" /> VIP</label>
+        <label class="fe-cat-choice"><input type="radio" name="fe-d-radio" /> Student</label>
+      </fieldset>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> One shared <code>name</code>; each option a 44px target.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> <strong>APG Radio Group</strong>: one tab-stop, arrows move and select.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Switch, toggle</span><span class="fe-verdict custom">Custom</span></div>
+    <p class="fe-cat-el">checkbox as the base</p>
+    <div class="fe-cat-attrs"><code>role="switch"</code><code>aria-checked</code></div>
+    <div class="fe-cat-demo">
+      <label class="fe-cat-choice"><input type="checkbox" role="switch" class="fe-switch" checked /> Publish immediately</label>
+      <label class="fe-cat-choice"><input type="checkbox" role="switch" class="fe-switch" /> Show remaining tickets</label>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> For an instant on/off setting; the change applies at once.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> <strong>APG Switch</strong>: Space toggles, and the <strong>label does not change</strong> with state.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Range, slider</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="range"&gt;</p>
+    <div class="fe-cat-attrs"><code>min</code><code>max</code><code>step</code><code>accent-color</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-range">Max ticket price</label>
+        <input id="fe-d-range" type="range" min="0" max="100" step="5" value="65" aria-describedby="fe-d-range-v" />
+        <span id="fe-d-range-v" class="fe-help" style={{ 'margin-top': 0 }}>Around 65 of 100. Always show the value.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Tinted by <code>accent-color</code>; pair with a visible value, dragging is imprecise.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Native covers <strong>APG Slider</strong>. Two-thumb range: <strong>APG Slider Multi-Thumb</strong>.</li>
+    </ul>
+  </div>
+</div>
+
+<p class="fe-text">
+  Look at those defaults: the reminder is pre-checked because people want it, the newsletter is left off because it costs their attention. A default must be the choice the user would make with full attention, and it must stay editable. Pre-fill to save effort, never to extract a choice.
+</p>
+
+<div>
+  <a class="fe-xlink" href="/patterns/persuasion/"><Icon name="arrow_forward" class="fe-material" />Patterns / Persuasion: the ethics of defaults</a>
+</div>
+
+
+
+<div class="fe-family">
+  <Icon name="calendar_month" class="fe-material" />
+  <span class="fe-family-title">Date, time and colour</span>
+</div>
+
+<div class="fe-catalog">
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Calendar date</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="date"&gt;</p>
+    <div class="fe-cat-attrs"><code>min</code><code>max</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-date">Event date</label>
+        <input id="fe-d-date" class="fe-input" type="date" min="2026-01-01" value="2026-09-12" />
+        <span class="fe-help" style={{ 'margin-top': 0 }}>A future date the user picks by looking, so the calendar earns its place.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Opens the OS calendar. Right for a date the user picks by looking.</li>
+      <li><Icon name="architecture" class="fe-material" /> Custom only to style the calendar: a button opening an <strong>APG Dialog</strong> grid.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Memorable date</span><span class="fe-verdict hybrid">Hybrid</span></div>
+    <p class="fe-cat-el">3 x &lt;input type="text"&gt;</p>
+    <div class="fe-cat-attrs"><code>inputmode="numeric"</code><code>fieldset</code><code>legend</code></div>
+    <div class="fe-cat-demo">
+      <fieldset class="fe-cat-group">
+        <legend class="fe-cat-lbl">Date of birth</legend>
+        <div style={{ display: 'flex', gap: '0.6rem' }}>
+          <div style={{ display: 'flex', 'flex-direction': 'column', gap: '0.2rem' }}>
+            <label class="fe-help" for="fe-d-dob-d" style={{ 'margin-top': 0 }}>Day</label>
+            <input id="fe-d-dob-d" class="fe-input" style={{ width: '3.25rem' }} type="text" inputmode="numeric" maxlength="2" value="27" />
+          </div>
+          <div style={{ display: 'flex', 'flex-direction': 'column', gap: '0.2rem' }}>
+            <label class="fe-help" for="fe-d-dob-m" style={{ 'margin-top': 0 }}>Month</label>
+            <input id="fe-d-dob-m" class="fe-input" style={{ width: '3.25rem' }} type="text" inputmode="numeric" maxlength="2" value="3" />
+          </div>
+          <div style={{ display: 'flex', 'flex-direction': 'column', gap: '0.2rem' }}>
+            <label class="fe-help" for="fe-d-dob-y" style={{ 'margin-top': 0 }}>Year</label>
+            <input id="fe-d-dob-y" class="fe-input" style={{ width: '4.5rem' }} type="text" inputmode="numeric" maxlength="4" value="1998" />
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Birthdays and issue dates: three numeric fields beat a calendar.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> The GOV.UK pattern: day, month, year, grouped in a fieldset.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Time</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="time"&gt;</p>
+    <div class="fe-cat-attrs"><code>datetime-local</code><code>step</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-time">Doors open</label>
+        <input id="fe-d-time" class="fe-input" type="time" value="19:30" />
+      </div>
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-dtl">Starts (date and time)</label>
+        <input id="fe-d-dtl" class="fe-input" type="datetime-local" value="2026-09-12T20:00" />
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Native time wheel respects the 12 or 24 hour locale.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Use <code>datetime-local</code> to capture date and time in one control.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Colour</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="color"&gt;</p>
+    <div class="fe-cat-attrs"><code>value</code> hex</div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-color">Brand colour</label>
+        <div style={{ display: 'flex', gap: '0.5rem', 'align-items': 'center' }}>
+          <input id="fe-d-color" type="color" value="#4f46e5" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #64748b', 'border-radius': '6px', background: 'white', padding: '0.2rem', 'flex-shrink': 0 }} />
+          <input class="fe-input fe-cat-hex" type="text" value="#4F46E5" aria-label="Brand colour hex value" />
+        </div>
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Pair the picker with a typeable hex field.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Opens the OS colour picker. <code>accent-color</code> does not apply here.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Pair with a text hex field so the value is typeable too.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+<div class="fe-family">
+  <Icon name="tune" class="fe-material" />
+  <span class="fe-family-title">Specialized inputs</span>
+</div>
+
+<div class="fe-catalog">
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">File</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="file"&gt;</p>
+    <div class="fe-cat-attrs"><code>accept</code><code>capture</code><code>multiple</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-file">Event poster</label>
+        <input id="fe-d-file" type="file" accept="image/*" style={{ 'font-size': '1rem', color: '#0f172a' }} />
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Native picker; on phones <code>capture</code> can open the camera.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> <code>capture</code> can open the camera directly for a photo upload.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Style the triggering <code>&lt;label&gt;</code>, never hide the input without a label.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Combobox, autocomplete</span><span class="fe-verdict custom">Custom</span></div>
+    <p class="fe-cat-el">&lt;input&gt; + &lt;datalist&gt; as base</p>
+    <div class="fe-cat-attrs"><code>role="combobox"</code><code>aria-autocomplete</code><code>aria-expanded</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-combo">City</label>
+        <input id="fe-d-combo" class="fe-input" type="text" list="fe-d-cities" autocomplete="off" placeholder="Start typing a city" />
+        <datalist id="fe-d-cities">
+          <option value="Bogota" />
+          <option value="Medellin" />
+          <option value="Cali" />
+          <option value="Cartagena" />
+          <option value="Barranquilla" />
+        </datalist>
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Native <code>datalist</code> stands in for a full APG combobox.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Text keyboard; render suggestions as a sheet on small screens.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> <strong>APG Combobox</strong> with <code>aria-activedescendant</code>. Enhance a real <code>&lt;select&gt;</code>.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">One-time code</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input&gt; single or split</p>
+    <div class="fe-cat-attrs"><code>autocomplete="one-time-code"</code><code>inputmode="numeric"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-otp">Verification code</label>
+        <input id="fe-d-otp" class="fe-input" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456" style={{ 'letter-spacing': '0.4em' }} />
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Sent by SMS; the phone can fill it in one tap.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> iOS and Android autofill the SMS code straight into the field.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> If you split into boxes, group them and announce progress.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Phone with country</span><span class="fe-verdict hybrid">Hybrid</span></div>
+    <p class="fe-cat-el">&lt;input type="tel"&gt; + selector</p>
+    <div class="fe-cat-attrs"><code>autocomplete="tel"</code><code>tel-country-code</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-phone">Phone</label>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <select class="fe-input" aria-label="Country calling code" style={{ width: '5.5rem', 'flex-shrink': 0 }}>
+            <option value="+57" selected>+57</option>
+            <option value="+1">+1</option>
+            <option value="+44">+44</option>
+            <option value="+52">+52</option>
+          </select>
+          <input id="fe-d-phone" class="fe-input" type="tel" inputmode="tel" autocomplete="tel" placeholder="300 123 4567" />
+        </div>
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Native tel input; only the country picker is custom.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> The number stays a native tel input; only the country picker is custom.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Country selector follows <strong>APG Combobox or Listbox</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Currency, masked</span><span class="fe-verdict custom">Custom</span></div>
+    <p class="fe-cat-el">&lt;input type="text"&gt; + mask</p>
+    <div class="fe-cat-attrs"><code>inputmode="decimal"</code><code>pattern</code><code>aria-describedby</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-cur">Ticket price</label>
+        <input id="fe-d-cur" class="fe-input" type="text" inputmode="decimal" value="$ 85,000" aria-describedby="fe-d-cur-h" />
+        <span id="fe-d-cur-h" class="fe-help" style={{ 'margin-top': 0 }}>Amount in COP. The decimal keypad keeps entry fast.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Avoid <code>type="number"</code>: it fights thousands separators. Use text plus a mask.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> State the expected format in help; do not break editing for AT.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+<div class="fe-family">
+  <Icon name="widgets" class="fe-material" />
+  <span class="fe-family-title">Composite and advanced</span>
+</div>
+
+<div class="fe-catalog">
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Tags, chips</span><span class="fe-verdict custom">Custom</span></div>
+    <p class="fe-cat-el">no native form</p>
+    <div class="fe-cat-attrs"><code>role="combobox"</code><code>aria-label</code> per chip</div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-tags">Event topics</label>
+        <div style={{ display: 'flex', 'flex-wrap': 'wrap', gap: '0.4rem', 'align-items': 'center', border: '1px solid #64748b', 'border-radius': '6px', padding: '0.5rem', background: 'white' }}>
+          <span style={{ display: 'inline-flex', 'align-items': 'center', gap: '0.15rem', background: '#eef2ff', color: '#3730a3', 'border-radius': '6px', padding: '0.15rem 0.2rem 0.15rem 0.55rem', 'font-size': '0.75rem', 'line-height': 1, 'font-family': 'Rubik, sans-serif' }}>Jazz<button type="button" aria-label="Remove Jazz" style={{ display: 'inline-flex', 'align-items': 'center', 'justify-content': 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', 'border-radius': '4px', padding: 0 }}><Icon name="close" class="fe-material" style="font-size:0.8rem" /></button></span>
+          <span style={{ display: 'inline-flex', 'align-items': 'center', gap: '0.15rem', background: '#eef2ff', color: '#3730a3', 'border-radius': '6px', padding: '0.15rem 0.2rem 0.15rem 0.55rem', 'font-size': '0.75rem', 'line-height': 1, 'font-family': 'Rubik, sans-serif' }}>Live<button type="button" aria-label="Remove Live" style={{ display: 'inline-flex', 'align-items': 'center', 'justify-content': 'center', width: '1.5rem', height: '1.5rem', border: 'none', background: 'transparent', color: '#4338ca', cursor: 'pointer', 'border-radius': '4px', padding: 0 }}><Icon name="close" class="fe-material" style="font-size:0.8rem" /></button></span>
+          <input id="fe-d-tags" type="text" role="combobox" aria-expanded="false" aria-label="Add a topic" placeholder="Add topic" style={{ flex: 1, 'min-width': '6rem', border: 'none', outline: 'none', 'font-size': '1rem', 'font-family': 'Rubik, sans-serif', color: '#0f172a', background: 'transparent' }} />
+        </div>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Chips are 44px targets; each removable by keyboard, not hover alone.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Input follows <strong>APG Combobox</strong>; each chip's remove button has a label.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Rating, stars</span><span class="fe-verdict custom">Custom</span></div>
+    <p class="fe-cat-el">radio group as base</p>
+    <div class="fe-cat-attrs"><code>role="radiogroup"</code><code>name</code></div>
+    <div class="fe-cat-demo">
+      <fieldset class="fe-cat-group">
+        <legend class="fe-cat-lbl">Rate this event</legend>
+        <div class="fe-stars">
+          <input type="radio" id="fe-d-star5" name="fe-d-rate" value="5" aria-label="5 stars" />
+          <label for="fe-d-star5"><Icon name="star" class="fe-material" /></label>
+          <input type="radio" id="fe-d-star4" name="fe-d-rate" value="4" checked aria-label="4 stars" />
+          <label for="fe-d-star4"><Icon name="star" class="fe-material" /></label>
+          <input type="radio" id="fe-d-star3" name="fe-d-rate" value="3" aria-label="3 stars" />
+          <label for="fe-d-star3"><Icon name="star" class="fe-material" /></label>
+          <input type="radio" id="fe-d-star2" name="fe-d-rate" value="2" aria-label="2 stars" />
+          <label for="fe-d-star2"><Icon name="star" class="fe-material" /></label>
+          <input type="radio" id="fe-d-star1" name="fe-d-rate" value="1" aria-label="1 star" />
+          <label for="fe-d-star1"><Icon name="star" class="fe-material" /></label>
+        </div>
+      </fieldset>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Each star a 44px target; never depend on hover to set a value.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> One star is one radio option, so <strong>APG Radio Group</strong> carries it.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Stepper, plus and minus</span><span class="fe-verdict native">Native</span></div>
+    <p class="fe-cat-el">&lt;input type="number"&gt;</p>
+    <div class="fe-cat-attrs"><code>min</code><code>max</code><code>step</code><code>role="spinbutton"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <label class="fe-cat-lbl" for="fe-d-step">Tickets</label>
+        <div style={{ display: 'flex', 'align-items': 'stretch', gap: '0.5rem' }}>
+          <button type="button" aria-label="Remove one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #64748b', 'border-radius': '6px', background: 'white', color: '#0f172a', 'font-size': '1.25rem', cursor: 'pointer' }}>-</button>
+          <input id="fe-d-step" class="fe-input" type="number" inputmode="numeric" min="1" max="10" value="2" style={{ width: '4rem', 'text-align': 'center' }} />
+          <button type="button" aria-label="Add one ticket" style={{ width: '2.75rem', height: '2.75rem', border: '1px solid #4f46e5', 'border-radius': '6px', background: '#4f46e5', color: 'white', 'font-size': '1.25rem', cursor: 'pointer' }}>+</button>
+        </div>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Custom plus and minus buttons at 44px beat the tiny native spinners.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Native and custom both are <strong>APG Spinbutton</strong>: arrows, Home, End.</li>
+    </ul>
+  </div>
+
+  <div class="fe-cat">
+    <div class="fe-cat-head"><span class="fe-cat-name">Rich text</span><span class="fe-verdict custom">Custom</span></div>
+    <p class="fe-cat-el">contenteditable, or a library</p>
+    <div class="fe-cat-attrs"><code>contenteditable</code><code>role="toolbar"</code></div>
+    <div class="fe-cat-demo">
+      <div class="fe-cat-field">
+        <span class="fe-cat-lbl" id="fe-d-rte-lbl">Description</span>
+        <div class="fe-rte-toolbar" role="toolbar" aria-label="Text formatting">
+          <button type="button" class="fe-rte-btn" aria-label="Bold" aria-pressed="false">B</button>
+          <button type="button" class="fe-rte-btn" aria-label="Italic" aria-pressed="false" style={{ 'font-style': 'italic' }}>i</button>
+          <button type="button" class="fe-rte-btn" aria-label="Bulleted list"><Icon name="format_list_bulleted" class="fe-material" /></button>
+        </div>
+        <div class="fe-input fe-rte-area" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="fe-d-rte-lbl"><span>An intimate night of </span><strong>live jazz</strong><span> under the stars.</span></div>
+        <span class="fe-help" style={{ 'margin-top': 0 }}>Representative pattern; a real editor follows APG Toolbar.</span>
+      </div>
+    </div>
+    <ul class="fe-cat-notes">
+      <li><Icon name="devices_other" class="fe-material" /> Expensive to make accessible; use only when formatting truly matters.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Toolbar follows <strong>APG Toolbar</strong>; announce applied formatting.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-part">
+  <span class="fe-part-kicker">Close</span>
+  <span class="fe-part-title">Rules of the form</span>
+</div>
+
+<div class="fe-section" style={{ 'border-bottom': 'none' }}>
+  <div class="fe-rules" style={{ 'margin-top': '1.5rem' }}>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Reach for the native control before building a custom one.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> A native <code>&lt;select&gt;</code>, date input or checkbox ships the keyboard, picker and accessibility a hand-built widget has to re-earn from scratch.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Brand native controls with <code>accent-color</code>, <code>caret-color</code> and <code>color-scheme</code>, and know their reach.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> They tint checkbox, radio, range, progress and the caret without a rebuild; select, date and text they do not touch, so plan for those.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Keep the label visible above every field, and mark the rarer of required or optional in words.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> A placeholder vanishes on the first keystroke and takes the question with it; an asterisk alone reaches no screen reader.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Match <code>type</code>, <code>inputmode</code>, <code>enterkeyhint</code> and <code>autocomplete</code> to the answer.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> The right keyboard rises on the first tap and a saved profile fills the field in one, instead of a manual retype.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Render inputs at 16px or larger and give interactive targets at least 24px, ideally 44px.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> Below 16px iOS Safari auto-zooms on focus; below 24px the target fails WCAG 2.5.8, and the thumb misses.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Reward valid input while typing with <code>:user-valid</code>, and surface errors on blur.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> Flagging a half-typed value as wrong punishes progress; once a field has already erred, re-check on input and clear it the instant it is valid.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Write errors that name the fix, in text, with <code>aria-invalid</code> and <code>aria-describedby</code>.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> "Invalid" leaves no way to recover, and a red border alone reaches no screen reader; the words carry the message.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> Reserve <code>--color-error</code> for genuine errors and nothing else.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> One warm colour on an otherwise indigo page means its appearance always signals a real problem.</p>
+    </div>
+    <div class="fe-rule">
+      <p class="fe-rule-line"><span class="fe-tag rule">Rule</span> When you must go custom, build against the matching WAI-ARIA APG pattern and keep a native base underneath.</p>
+      <p class="fe-rule-why"><span class="fe-tag why">Why</span> The APG pattern encodes the keyboard and roles users expect, and the native base keeps the field working if the script fails.</p>
+    </div>
+  </div>
+
+  <p class="fe-text" style={{ 'margin-top': '1.5rem' }}>
+    <strong>Decision ladder.</strong> Adding a field? Stop at the first rung that resolves it.
+  </p>
+
+  <div class="fe-ladder">
+    <div class="fe-ladder-step">
+      <p class="fe-ladder-text"><strong>Does this field need to exist?</strong> Every field is a cost. If you can infer it, default it, or drop it, do that before styling anything.</p>
+    </div>
+    <div class="fe-ladder-step">
+      <p class="fe-ladder-text"><strong>Can a native control answer it?</strong> A <code>&lt;select&gt;</code>, <code>type="date"</code>, a checkbox. Use it, and keyboard and accessibility come built in.</p>
+    </div>
+    <div class="fe-ladder-step">
+      <p class="fe-ladder-text"><strong>What is the answer's shape?</strong> Pick the <code>type</code> and <code>inputmode</code> that raise the matching keyboard, add <code>enterkeyhint</code> and the <code>autocomplete</code> token, and brand it with <code>accent-color</code>.</p>
+    </div>
+    <div class="fe-ladder-step">
+      <p class="fe-ladder-text"><strong>What can go wrong, and how is it fixed?</strong> Write the help and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.</p>
+    </div>
+    <div class="fe-ladder-step">
+      <p class="fe-ladder-text"><strong>Only now, assemble it</strong> from the primitives: visible label, control, help, error, in one column, states inherited from Patterns / Interactive. If the pattern is not in HTML, build the matching APG pattern over a native base.</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="fe-section">
+  <h2 class="fe-section-title">Sources</h2>
+  <ul class="fe-sources-list">
+    <li>
+      <strong>MDN Web Docs, CSS and HTML references.</strong> <code>accent-color</code> (tints checkbox, radio, range, progress, and its limits), <code>caret-color</code>, <code>color-scheme</code>, <code>&lt;input&gt;</code> types, the <code>inputmode</code> and <code>enterkeyhint</code> global attributes, the <code>autocomplete</code> token list, and the <code>:user-invalid</code> pseudo-class. developer.mozilla.org/en-US/docs/Web/CSS/accent-color
+    </li>
+    <li>
+      <strong>web.dev, "accent-color" and the Learn Forms course.</strong> Four themable controls, automatic accent contrast, interaction with <code>color-scheme</code>, and the note that HTML form elements are difficult to customize. web.dev/articles/accent-color
+    </li>
+    <li>
+      <strong>caniuse, accent-color support.</strong> Roughly 94 percent, available since Chrome and Edge 93, Firefox 92, Safari 15.4 (March 2022), so widely available with a Safari caveat to check in QA. caniuse.com/mdn-css_properties_accent-color
+    </li>
+    <li>
+      <strong>WAI-ARIA Authoring Practices Guide (APG).</strong> Patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog and Toolbar. The canonical path is w3.org/WAI/ARIA/apg/patterns/{'{'}pattern{'}'}. <span class="fe-spa">SPA</span> The index is a single-page app; individual pattern pages open directly.
+    </li>
+    <li>
+      <strong>GOV.UK Design System and Service Manual.</strong> Progressive enhancement (build on working HTML, enhance after), the Select component (long drop-downs are not user friendly), and the Date input (three text fields with <code>inputmode="numeric"</code> in a fieldset for memorable dates). design-system.service.gov.uk/components/date-input
+    </li>
+    <li>
+      <strong>W3C, Understanding WCAG 2.2.</strong> SC 3.3.2 (A), 3.3.1 (A) with technique ARIA21 <code>aria-invalid</code>, 3.3.3 (AA), 1.3.5 Identify Input Purpose (AA), 2.5.8 Target Size Minimum 24px (AA) and 2.5.5 44px (AAA). w3.org/WAI/WCAG22/Understanding
+    </li>
+    <li>
+      <strong>Mihael Konjevic, "Inline Validation in Web Forms" (Smashing Magazine, 2022).</strong> Source of "reward early, punish late": validate to a positive while typing, hold errors until the user leaves the field, then clear on input once corrected. smashingmagazine.com/2022/09/inline-validation-web-forms-ux
+    </li>
+    <li>
+      <strong>CSS-Tricks and defensivecss.dev, iOS input zoom.</strong> Inputs at 16px or larger prevent Safari iOS from auto-zooming on focus; do not disable user scaling. css-tricks.com/16px-or-larger-text-prevents-ios-form-zoom
+    </li>
+    <li>
+      <strong>Apple Human Interface Guidelines, Text fields.</strong> Content-appropriate keyboards, a 44pt minimum target, content types for autofill, and secure entry. developer.apple.com/design/human-interface-guidelines/text-fields <span class="fe-spa">SPA</span>
+    </li>
+    <li>
+      <strong>Nielsen Norman Group and Baymard Institute.</strong> Placeholders cannot replace labels; error messages must be visible, specific and constructive; single-column forms complete faster and validate on blur. nngroup.com/articles/form-design-placeholders, baymard.com/blog/avoid-multi-column-forms
+    </li>
+    <li>
+      The reward-while-typing timing and the single-accent, error-only use of <code>--color-error</code> are this system's house rules layered on the cited guidance, not verbatim claims from the authors.
+    </li>
+  </ul>
+</div>
+<style is:global>
+  /* ===== FONT IMPORTS ===== */
+
+  .fe-material {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .fe-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3.25rem 2.5rem;
+    margin-bottom: 3rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
+  }
+
+  .fe-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+
+  .fe-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw + 1rem, 3.1rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 22ch;
+  }
+
+  .fe-hero p {
+    color: #e0e7ff;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 44rem;
+    margin: 0;
+  }
+
+  .fe-hero p strong { color: #ffffff; font-weight: 700; }
+
+  /* ===== PART BANNER ===== */
+  .fe-part {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin: 3.5rem 0 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #4f46e5;
+  }
+
+  .fe-part-kicker {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #4338ca;
+    background: #e0e7ff;
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .fe-part-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  /* ===== SECTIONS ===== */
+  .fe-section {
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e6e8eb;
+  }
+
+  .fe-section:last-of-type { border-bottom: none; }
+
+  .fe-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .fe-section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .fe-section-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .fe-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 48rem;
+  }
+
+  .fe-text + .fe-text { margin-top: 1rem; }
+
+  .fe-text strong { color: #0f172a; font-weight: 600; }
+
+  .fe-text code, .fe-inline-code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #4338ca;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  /* ===== CALLOUT ===== */
+  .fe-callout {
+    display: flex;
+    gap: 0.75rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+
+  .fe-callout .fe-material {
+    color: #4338ca;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .fe-callout-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #3730a3;
+  }
+
+  .fe-callout-text strong { color: #312e81; font-weight: 700; }
+
+  .fe-callout-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: rgba(79,70,229,0.1);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #3730a3;
+  }
+
+  /* ===== LAB / DEMO ===== */
+  .fe-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-demo {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .fe-demo-label {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  /* ===== FIELD PRIMITIVES ===== */
+  .fe-field { margin-bottom: 1.25rem; }
+  .fe-field:last-child { margin-bottom: 0; }
+
+  .fe-label {
+    display: block;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+
+  .fe-label .fe-req { color: #dc2626; margin-left: 0.15rem; }
+  .fe-label .fe-opt {
+    color: #64748b;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    margin-left: 0.35rem;
+  }
+
+  .fe-help {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .fe-input {
+    width: 100%;
+    box-sizing: border-box;
+    background: white;
+    border: 1px solid #64748b;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #0f172a;
+    font-family: 'Rubik', sans-serif;
+    caret-color: var(--color-primary);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .fe-input::placeholder { color: #64748b; }
+
+  .fe-input:focus-visible {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #4f46e5;
+  }
+
+  .fe-input.error {
+    border-color: #ef4444;
+  }
+
+  .fe-input.error:focus-visible {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #dc2626;
+  }
+
+  .fe-input.success { border-color: #059669; }
+
+  select.fe-input { appearance: auto; cursor: pointer; }
+
+  .fe-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.35rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #991b1b;
+    margin-top: 0.35rem;
+    line-height: 1.45;
+  }
+
+  .fe-error .fe-material { font-size: 1rem; color: #dc2626; flex-shrink: 0; margin-top: 0.05rem; }
+
+  .fe-success-text {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #166534;
+    margin-top: 0.35rem;
+  }
+
+  .fe-success-text .fe-material { font-size: 1rem; color: #059669; }
+
+  /* ===== ANATOMY ===== */
+  .fe-anatomy {
+    position: relative;
+    background: #f8fafc;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-anatomy-part {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  @media (max-width: 560px) {
+    .fe-anatomy-part { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+
+  .fe-anatomy-tag {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4338ca;
+    background: #e0e7ff;
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+    align-self: start;
+  }
+
+  /* ===== TABLE ===== */
+  .fe-table-scroll {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+  }
+
+  .fe-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    min-width: 680px;
+  }
+
+  .fe-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #e6e8eb;
+    white-space: nowrap;
+  }
+
+  .fe-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+    vertical-align: top;
+  }
+
+  .fe-table tr:last-child td { border-bottom: none; }
+
+  .fe-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: #4338ca;
+    background: #eef2ff;
+    padding: 1px 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .fe-table .fe-kbd {
+    font-weight: 600;
+    color: #0f172a;
+    white-space: nowrap;
+  }
+
+  .fe-yes { color: #166534; font-weight: 700; }
+  .fe-no { color: #991b1b; font-weight: 700; }
+  .fe-yes .fe-material, .fe-no .fe-material { font-size: 0.95rem; vertical-align: -0.15rem; }
+
+  /* ===== TIMELINE (validation) ===== */
+  .fe-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-tl-step {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .fe-tl-when {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 6px;
+    padding: 0.15rem 0.55rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .fe-tl-title {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 0.3rem;
+  }
+
+  .fe-tl-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  /* ===== NATIVE ACCENT LAB ===== */
+  .fe-accent-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    background: #f8fafc;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .fe-accent-lab input[type="checkbox"],
+  .fe-accent-lab input[type="radio"],
+  .fe-accent-lab input[type="range"],
+  .fe-accent-lab progress {
+    accent-color: var(--color-primary);
+  }
+
+  .fe-accent-lab input[type="checkbox"],
+  .fe-accent-lab input[type="radio"] {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+  }
+
+  .fe-accent-lab input[type="range"] { width: 100%; }
+  .fe-accent-lab progress { width: 100%; height: 0.75rem; }
+
+  .fe-accent-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .fe-accent-cap {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #475569;
+    margin-bottom: 0.15rem;
+  }
+
+  .fe-accent-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: #0f172a;
+  }
+
+  /* ===== CODE BLOCK ===== */
+  .fe-code {
+    background: #0f172a;
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+  }
+
+  .fe-code .fe-c-com { color: #94a3b8; }
+  .fe-code .fe-c-prop { color: #a5b4fc; }
+  .fe-code .fe-c-sel { color: #c4b5fd; }
+
+  /* ===== RECOMMENDED / AVOID DEMO ===== */
+  .fe-demo.avoid {
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background: #fbfcfd;
+  }
+
+  .fe-demo-label.rec { color: #166534; }
+  .fe-demo-label.avoid { color: #991b1b; }
+
+  /* ===== RULES (Rule / Why) ===== */
+  .fe-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+
+  .fe-rule {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-left: 3px solid #4f46e5;
+    border-radius: 10px;
+    padding: 0.9rem 1.125rem;
+  }
+
+  .fe-rule-line {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .fe-rule-why {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #64748b;
+    margin: 0.35rem 0 0;
+  }
+
+  .fe-tag {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+    vertical-align: 0.08em;
+  }
+
+  .fe-tag.rule { color: #4338ca; background: #e0e7ff; }
+  .fe-tag.why { color: #475569; background: #f1f5f9; }
+
+  .fe-rule code {
+    background: rgba(15, 23, 42, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8125em;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    color: #334155;
+  }
+
+  /* ===== LADDER ===== */
+  .fe-ladder {
+    counter-reset: fe-step;
+    margin: 1.25rem 0;
+    max-width: 48rem;
+  }
+
+  .fe-ladder-step {
+    display: flex;
+    gap: 0.875rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+
+  .fe-ladder-step:last-child { border-bottom: none; }
+
+  .fe-ladder-step::before {
+    counter-increment: fe-step;
+    content: counter(fe-step);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #eef2ff;
+    color: #4338ca;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .fe-ladder-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #334155;
+  }
+
+  .fe-ladder-text strong { color: #0f172a; }
+
+  /* ===== CROSS-LINK CHIP ===== */
+  .fe-xlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #4338ca;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    margin: 1rem 0.5rem 0 0;
+    text-decoration: none;
+  }
+
+  .fe-xlink:hover { background: #e0e7ff; }
+  .fe-xlink .fe-material { font-size: 1rem; }
+
+  /* ===== CATALOG CARDS ===== */
+  .fe-family {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 2rem 0 0.5rem;
+  }
+
+  .fe-family .fe-material {
+    color: #4f46e5;
+    font-size: 1.35rem;
+  }
+
+  .fe-family-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .fe-catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .fe-cat {
+    background: white;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .fe-cat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .fe-cat-name {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .fe-verdict {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 6px;
+    padding: 0.15rem 0.55rem;
+    white-space: nowrap;
+  }
+
+  .fe-verdict.native { color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .fe-verdict.custom { color: #4338ca; background: #eef2ff; border: 1px solid #c7d2fe; }
+  .fe-verdict.hybrid { color: #475569; background: #f1f5f9; border: 1px solid #e2e8f0; }
+
+  .fe-cat-el {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8125rem;
+    color: #4338ca;
+    margin: 0;
+  }
+
+  .fe-cat-attrs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .fe-cat-attrs code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+  }
+
+  .fe-cat-notes {
+    list-style: none;
+    margin: 0.15rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .fe-cat-notes li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: #475569;
+  }
+
+  .fe-cat-notes li .fe-material {
+    font-size: 0.95rem;
+    color: #64748b;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .fe-cat-notes li strong { color: #0f172a; font-weight: 600; }
+
+  /* ===== IN-CARD LIVE DEMO ===== */
+  .fe-cat-demo {
+    background: #f8fafc;
+    border: 1px solid #e6e8eb;
+    border-radius: 8px;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .fe-cat-demo .fe-input { border-radius: 6px; padding: 0.6rem 0.75rem; }
+
+  .fe-cat-field { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .fe-cat-lbl {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #0f172a;
+  }
+
+  .fe-cat-demo legend.fe-cat-lbl { margin-bottom: 0.4rem; padding: 0; }
+
+  .fe-cat-demo input[type="checkbox"],
+  .fe-cat-demo input[type="radio"],
+  .fe-cat-demo input[type="range"] {
+    accent-color: var(--color-primary, #4f46e5);
+  }
+
+  .fe-cat-demo input[type="checkbox"]:not(.fe-switch),
+  .fe-cat-demo input[type="radio"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .fe-cat-demo input[type="range"] { width: 100%; }
+
+  .fe-cat-choice {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: #0f172a;
+    min-height: 1.75rem;
+    cursor: pointer;
+  }
+
+  .fe-cat-group {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .fe-cat-hex {
+    width: 7rem;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    text-transform: uppercase;
+  }
+
+  /* ===== LIVE SWITCH (APG role="switch") ===== */
+  .fe-switch {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    background: #94a3b8;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 0;
+    transition: background 0.15s ease;
+  }
+
+  .fe-switch:checked { background: var(--color-primary, #4f46e5); }
+
+  .fe-switch::before {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 9999px;
+    background: white;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+    transition: transform 0.15s ease;
+  }
+
+  .fe-switch:checked::before { transform: translateX(1.25rem); }
+
+  .fe-switch:focus-visible {
+    outline: 2px solid var(--color-primary, #4f46e5);
+    outline-offset: 2px;
+  }
+
+  /* ===== LIVE STAR RATING (radio group, no JS) ===== */
+  .fe-stars {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+
+  .fe-stars > input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .fe-stars > label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: #cbd5e1;
+    cursor: pointer;
+  }
+
+  .fe-stars > label .fe-material { font-size: 1.75rem; }
+
+  .fe-stars > input:checked ~ label { color: var(--color-primary, #4f46e5); }
+
+  .fe-stars > input:focus-visible + label {
+    outline: 2px solid var(--color-primary, #4f46e5);
+    outline-offset: -2px;
+    border-radius: 6px;
+  }
+
+  /* ===== RICH TEXT REPRESENTATIVE ===== */
+  .fe-rte-toolbar {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .fe-rte-btn {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: white;
+    color: #0f172a;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fe-rte-btn .fe-material { font-size: 1.05rem; }
+
+  .fe-rte-area {
+    min-height: 3.5rem;
+    line-height: 1.5;
+  }
+
+  /* ===== SOURCES ===== */
+  .fe-sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .fe-sources-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .fe-sources-list li:last-child { border-bottom: none; }
+  .fe-sources-list strong { color: #0f172a; }
+
+  .fe-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
+</style>
+</BaseLayout>

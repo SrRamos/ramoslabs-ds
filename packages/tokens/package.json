@@ -7,7 +7,7 @@
   "homepage": "https://ramoslabs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SrRamos/ramoslabs-ds.git",
+    "url": "git+https://github.com/SrRamos/ramoslabs-ds.git",
     "directory": "packages/tokens"
   },
   "keywords": [

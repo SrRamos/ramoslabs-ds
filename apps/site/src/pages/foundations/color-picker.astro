@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import TokenPicker from '../../components/TokenPicker.vue'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'color-picker')!
+
+const allColors = [
+  { name: 'Primary', token: '--color-primary', value: '#4f46e5' },
+  { name: 'Primary Light', token: '--color-primary-light', value: '#6366f1' },
+  { name: 'Primary Dark', token: '--color-primary-dark', value: '#4338ca' },
+  { name: 'Secondary', token: '--color-secondary', value: '#8B5CF6' },
+  { name: 'Heading', token: '--color-text-heading', value: '#0f172a' },
+  { name: 'Body', token: '--color-text-body', value: '#64748b' },
+  { name: 'Muted', token: '--color-text-muted', value: '#64748b' },
+  { name: 'Surface', token: '--color-surface', value: '#ffffff' },
+  { name: 'Background', token: '--color-background', value: '#f8fafc' },
+  { name: 'Border', token: '--color-border', value: '#e6e8eb' },
+  { name: 'Success', token: '--color-success', value: '#10b981' },
+  { name: 'Warning', token: '--color-warning', value: '#f59e0b' },
+  { name: 'Error', token: '--color-error', value: '#ef4444' },
+  { name: 'Info', token: '--color-info', value: '#3b82f6' },
+]
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+<div class="tp-doc">
+  <div class="tp-hero">
+    <p class="tp-hero-eyebrow">Foundations / Color Picker</p>
+    <h1>Pick a token. Read whether text can legibly sit on it.</h1>
+    <p>
+      Every ratio here is the exact WCAG 2.x math, so the number on screen is the number an auditor measures. Contrast is the most common accessibility failure on the web, and it is a numeric floor to clear, not a look to eyeball.
+    </p>
+  </div>
+
+  <TokenPicker client:visible title="Complete Palette" colors={allColors} />
+
+  <section class="tp-guide">
+    <h2>How to use it</h2>
+    <ol>
+      <li><strong>Click a swatch.</strong> It becomes the tested surface, measured against white text and black text.</li>
+      <li><strong>Read the badge.</strong> Each candidate shows its ratio (e.g. <code>6.29:1</code>) and a level. Pick the text color whose badge covers the text size you will actually render.</li>
+      <li><strong>Copy the token.</strong> One click copies the <code>var(--color-token)</code> reference, so product code consumes the semantic role, never a raw hex.</li>
+    </ol>
+
+    <table class="tp-table">
+      <thead>
+        <tr><th>Badge</th><th>Ratio</th><th>Clears</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>AAA</strong></td><td>7:1+</td><td>Normal text at AAA and everything under it</td></tr>
+        <tr><td><strong>AA</strong></td><td>4.5 to 6.99</td><td>Normal text at AA; large text at AAA</td></tr>
+        <tr><td><strong>AA Large</strong></td><td>3 to 4.49</td><td>Large text (1.4.3) and non-text / UI (1.4.11) only, never body text</td></tr>
+        <tr><td><strong>Fail</strong></td><td>below 3</td><td>Nothing a user must read</td></tr>
+      </tbody>
+    </table>
+    <p>Text size decides which badge you may accept: <strong>AA Large</strong> passes a 24px heading, a button edge, or a meaningful icon, and fails a 16px paragraph.</p>
+
+    <h2>WCAG floors</h2>
+    <p>WCAG 2.2 is the W3C Recommendation this system certifies against:</p>
+    <ul>
+      <li><strong>Normal text:</strong> 4.5:1 (AA), 7:1 (AAA). Target 7.</li>
+      <li><strong>Large text</strong> (24px, or 18.66px bold): 3:1 (AA), 4.5:1 (AAA).</li>
+      <li><strong>UI boundaries, focus rings, meaningful icons and chart marks:</strong> 3:1 (1.4.11).</li>
+      <li><strong>Disabled controls and pure decoration:</strong> exempt, so never carrying information a user must read.</li>
+    </ul>
+    <p>"Large" is a spatial exemption, not a license: anything under 24px (or 18.66px bold) is normal text and owes the full 4.5:1. The tool runs the WCAG formula verbatim: ratio <code>(L1 + 0.05) / (L2 + 0.05)</code> over relative luminance <code>L = 0.2126 R + 0.7152 G + 0.0722 B</code> on linearized sRGB. Green dominates the weight because the eye is most sensitive to it.</p>
+    <p><strong>On the horizon (draft, not normative):</strong> the 2.x ratio is a plain luminance division that misjudges the extremes and ignores font weight. <strong>APCA</strong> models perceived lightness, weight, size, and polarity instead, on a signed <code>Lc</code> scale. It is associated with WCAG 3.0, but that is an early Working Draft still specifying ratio-based contrast. WCAG 2.2 stays the floor we ship; track APCA, do not certify against it.</p>
+
+    <h2>Deriving pairs from the mono-indigo ramp</h2>
+    <p>One accent hue means accessible pairings come from walking the indigo ramp, not reaching for a second color:</p>
+    <ul>
+      <li><strong>Indigo 600</strong> (<code>--color-primary</code>, #4f46e5) on white is <strong>6.29:1</strong>: AA for text, AAA for large. Safe for links, accent labels, and as a fill under white text.</li>
+      <li>Hover and active step to <strong>indigo 700</strong> (<code>--color-primary-dark</code>, #4338ca), where white text rises to <strong>7.90:1</strong> (AAA). Contrast climbs as a control engages, never weakens.</li>
+      <li>For tinted zones pair <strong>indigo 50</strong> (<code>--color-primary-surface</code>, #eef2ff) with deep indigo text (700+), and confirm the ratio rather than assume it.</li>
+      <li>Indigo 300 and 400 fail as text on white; the tool badges them <strong>Fail</strong>, and that verdict is the point.</li>
+    </ul>
+
+    <div class="tp-rule">
+      <strong>Rule: color is never the whole message (1.4.1).</strong> <strong>Why:</strong> a passing ratio proves a color is legible, not that its meaning survives once the hue is gone. Signal every state twice, once by color and once by shape or words — pair each status with an icon and a text label, mark an invalid field with a message and not only a red border, and keep focus a visible ring.
+    </div>
+
+    <p class="tp-sources">
+      Sources: <a href="https://www.w3.org/TR/WCAG22/#contrast-minimum">1.4.3 Contrast (Minimum)</a> · <a href="https://www.w3.org/TR/WCAG22/#non-text-contrast">1.4.11 Non-text Contrast</a> · <a href="https://www.w3.org/TR/WCAG22/#contrast-enhanced">1.4.6 Contrast (Enhanced)</a> · <a href="https://www.w3.org/TR/WCAG22/#dfn-relative-luminance">relative luminance</a> · <a href="https://github.com/Myndex/SAPC-APCA">APCA</a> · <a href="https://www.w3.org/TR/wcag-3.0/">WCAG 3.0 Working Draft</a> · <a href="https://www.w3.org/TR/WCAG22/#use-of-color">1.4.1 Use of Color</a>
+    </p>
+  </section>
+</div>
+
+<style is:global>
+  .tp-doc {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #334155;
+  }
+  .tp-hero {
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3rem 2.5rem;
+    margin-bottom: 2.5rem;
+    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    box-shadow: 0 16px 32px -8px rgba(79, 70, 229, 0.12);
+  }
+  .tp-hero-eyebrow {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #c7d2fe;
+    margin: 0 0 1rem;
+  }
+  .tp-hero h1 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #fff;
+    font-size: clamp(2rem, 4vw + 1rem, 3rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1rem;
+    max-width: 22ch;
+  }
+  .tp-hero p {
+    color: #e0e7ff;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 44rem;
+    margin: 0;
+  }
+  .tp-guide {
+    margin-top: 3rem;
+    max-width: 46rem;
+  }
+  .tp-guide h2 {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin: 2.5rem 0 1rem;
+  }
+  .tp-guide p { line-height: 1.65; margin: 0 0 1rem; }
+  .tp-guide ul, .tp-guide ol { line-height: 1.7; padding-left: 1.25rem; }
+  .tp-guide li { margin-bottom: 0.5rem; }
+  .tp-guide code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.85em;
+    background: #f1f5f9;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+  .tp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+  .tp-table th, .tp-table td {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .tp-table th {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tp-rule {
+    background: #eef2ff;
+    border-left: 4px solid #4f46e5;
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.35rem;
+    line-height: 1.6;
+    color: #3730a3;
+    margin: 1.5rem 0;
+  }
+  .tp-rule strong { color: #312e81; }
+  .tp-sources {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: #64748b;
+  }
+  .tp-sources a { color: #4f46e5; text-decoration: none; }
+</style>
+</BaseLayout>

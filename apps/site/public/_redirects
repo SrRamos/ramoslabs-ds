@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects for the RamosLabs DS site.
+# Every page is a real static HTML file at a clean URL, and the agent files
+# (llms.txt, llms-full.txt, AGENTS.md, registry.json, tokens.json) are real files
+# at the site root, so no SPA fallback is required. Add future rules here as:
+#   FROM  TO  STATUS

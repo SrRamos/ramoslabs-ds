@@ -1,0 +1,808 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'border-radius')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+
+<div class="radius-header">
+  <h1 class="radius-title">Shape, With Intent</h1>
+  <p class="radius-description">
+    A corner sets personality. Sharp reads technical, fully round reads playful, and the considered middle reads premium. This system commits to one <code>6px</code> signature on every control, a short ladder up to hero surfaces, and keeps the fully round pill as an accent, never a default.
+  </p>
+</div>
+
+<div class="radius-section">
+  <h2 class="radius-section-title">The Radius Scale</h2>
+  <p class="radius-lede">
+    Eight tokens, each with a role. The four middle steps do almost all the work in a real interface. Every box below renders with its real <code>var(--radius-*)</code> token, so what you see is what ships.
+  </p>
+
+  <div class="scale-grid">
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-none)' }}>0</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-none</div>
+        <div class="scale-role">Square. Tables, full-bleed media, dividers.</div>
+      </div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-xs)' }}>4px</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-xs</div>
+        <div class="scale-role">Nested inner corners, tight inline elements.</div>
+      </div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-sm)' }}>6px</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-sm</div>
+        <div class="scale-role">Signature. Buttons, inputs, selects.</div>
+      </div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-md)' }}>8px</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-md</div>
+        <div class="scale-role">Comfortable controls, small badges.</div>
+      </div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-lg)' }}>12px</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-lg</div>
+        <div class="scale-role">Cards, menus, popovers, dropdowns.</div>
+      </div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-xl)' }}>16px</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-xl</div>
+        <div class="scale-role">Modals, sheets, large surfaces.</div>
+      </div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-2xl)' }}>20px</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-2xl</div>
+        <div class="scale-role">Hero panels, feature surfaces.</div>
+      </div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-box" style={{ 'border-radius': 'var(--radius-pill)' }}>pill</div>
+      <div class="scale-meta">
+        <div class="scale-token">--radius-pill</div>
+        <div class="scale-role">Accent only. Chips, tags, avatars, toggles.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="radius-section">
+  <h2 class="radius-section-title">The Golden Rule</h2>
+
+  <div class="golden">
+    <div class="golden-kicker">Read this before you round anything</div>
+    <div class="golden-headline">
+      The pill is an accent, not a default. Buttons are not pills. Scale the radius to the size and role of the surface.
+    </div>
+    <p class="golden-body">
+      A fully round corner is a strong statement, and a statement repeated everywhere stops meaning anything. Reserve <code>--radius-pill</code> for small, single-line elements where the round shape is the point: chips, tags, avatars, toggles, status badges. Every button, input, and select takes the <code>6px</code> signature. Beyond that, bigger surfaces earn bigger radii: a card is not shaped like a button, and a modal is not shaped like a card.
+    </p>
+  </div>
+
+  <div class="pill-demo">
+    <div class="pill-demo-card good">
+      <button class="demo-button signature">Get started</button>
+      <div class="pill-demo-caption">
+        <div class="pill-demo-verdict">Do</div>
+        Wide button at <code>--radius-sm</code>, the 6px signature. Calm, precise, unmistakably a control.
+      </div>
+    </div>
+    <div class="pill-demo-card bad">
+      <button class="demo-button wrong">Get started</button>
+      <div class="pill-demo-caption">
+        <div class="pill-demo-verdict">Don't</div>
+        The same button forced to a pill. The larger corners read as a toy, not a product.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="radius-section">
+  <h2 class="radius-section-title">The Law of Concentric Corners</h2>
+  <p class="radius-lede">
+    Nest one rounded element inside another and the corners must stay concentric: parallel curves sharing a center, like a screen inside its housing. The inner radius equals the outer radius minus the padding between them.
+  </p>
+
+  <div class="formula">inner radius = outer radius - padding</div>
+
+  <p class="radius-lede">
+    Both cards below use <code>--radius-xl</code> (16px) outside with 8px of padding. On the left the inner surface is set to <code>--radius-md</code> (16 minus 8), so the corners run parallel. On the right it keeps the full 16px and the arcs collide. Apple ships this rule as a first-class API: <code>ConcentricRectangle</code> and <code>containerShape</code> in SwiftUI.
+  </p>
+
+  <div class="concentric-stage">
+    <div class="concentric-outer right">
+      <div class="concentric-inner">inner 8px = 16px - 8px padding</div>
+    </div>
+    <div class="concentric-label right">
+      <strong>Concentric</strong>
+      Inner radius reduced by the padding. Curves stay parallel, corners feel machined.
+    </div>
+    <div class="concentric-outer wrong">
+      <div class="concentric-inner">inner 16px, ignores the padding</div>
+    </div>
+    <div class="concentric-label wrong">
+      <strong>Fighting</strong>
+      Inner radius left at the outer value. The two arcs pinch and the nesting looks loose.
+    </div>
+  </div>
+</div>
+
+<div class="radius-section">
+  <h2 class="radius-section-title">Continuous Corners, When the Browser Allows</h2>
+  <p class="radius-lede">
+    A plain CSS corner is a quarter circle: the curvature jumps from zero to its maximum at a single point. Apple rounds corners as a squircle instead, where the curvature eases in and out, and the eye reads that gradual onset as softer at the same nominal radius. The CSS <code>corner-shape</code> property brings it to the web, with <code>corner-shape: squircle</code> defined as <code>superellipse(2)</code>. We ship it as progressive enhancement inside an <code>@supports</code> query, so the base <code>border-radius</code> works everywhere and supporting browsers get the smoother curve for free.
+  </p>
+
+  <div class="squircle-stage">
+    <div class="squircle-card">
+      <div class="squircle-shape arc"></div>
+      <div class="squircle-name">Circular arc</div>
+      <p class="squircle-text">The universal fallback. Plain <code>border-radius</code>, a quarter-circle corner. Renders identically in every browser.</p>
+    </div>
+    <div class="squircle-card">
+      <div class="squircle-shape continuous"></div>
+      <div class="squircle-name">Continuous (squircle)</div>
+      <p class="squircle-text">Same nominal radius, upgraded with <code>corner-shape: squircle</code> where supported. If your browser lacks it, this shape falls back to the arc on the left, which is the point.</p>
+    </div>
+  </div>
+
+  <div class="radius-note">
+    <div class="radius-note-title">Honest about support</div>
+    <div class="radius-note-body">
+      <code>corner-shape</code> is new, landing first in recent Chromium. That is exactly why it is an enhancement, not a requirement. Never gate layout, hit targets, or legibility on it. The base <code>border-radius</code> carries the design, and the squircle is a quiet reward for browsers that can render it.
+    </div>
+  </div>
+</div>
+
+<div class="radius-section">
+  <h2 class="radius-section-title">The Scale at Real Size</h2>
+  <p class="radius-lede">
+    The same philosophy on real components. A chip stays a pill because it is small and one line. A button takes the 6px signature. A card steps up to 12px, and a modal to 16px. Each surface renders with its actual token, so the size-to-shape relationship is visible at a glance.
+  </p>
+
+  <div class="specimen">
+    <div class="specimen-item" style={{ flex: '0 1 auto' }}>
+      <div class="specimen-surface chip">New</div>
+      <div class="specimen-meta">
+        <div class="specimen-role">Chip</div>
+        <div class="specimen-token">--radius-pill</div>
+      </div>
+    </div>
+    <div class="specimen-item">
+      <div class="specimen-surface button">Button</div>
+      <div class="specimen-meta">
+        <div class="specimen-role">Button</div>
+        <div class="specimen-token">--radius-sm, 6px</div>
+      </div>
+    </div>
+    <div class="specimen-item">
+      <div class="specimen-surface card">Card</div>
+      <div class="specimen-meta">
+        <div class="specimen-role">Card</div>
+        <div class="specimen-token">--radius-lg, 12px</div>
+      </div>
+    </div>
+    <div class="specimen-item">
+      <div class="specimen-surface modal">Modal</div>
+      <div class="specimen-meta">
+        <div class="specimen-role">Modal</div>
+        <div class="specimen-token">--radius-xl, 16px</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="radius-section">
+  <h2 class="radius-section-title">Token Reference</h2>
+
+  <table class="radius-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Preview</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--radius-none</code></td>
+        <td>0</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-none)' }}></span></td>
+        <td>Square. Tables, full-bleed media, section dividers.</td>
+      </tr>
+      <tr>
+        <td><code>--radius-xs</code></td>
+        <td>4px</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-xs)' }}></span></td>
+        <td>Nested inner corners, tight inline elements.</td>
+      </tr>
+      <tr>
+        <td><code>--radius-sm</code></td>
+        <td>6px</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-sm)' }}></span></td>
+        <td>Signature control radius. Buttons, inputs, selects.</td>
+      </tr>
+      <tr>
+        <td><code>--radius-md</code></td>
+        <td>8px</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-md)' }}></span></td>
+        <td>Comfortable controls, small badges, compact containers.</td>
+      </tr>
+      <tr>
+        <td><code>--radius-lg</code></td>
+        <td>12px</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-lg)' }}></span></td>
+        <td>Cards, menus, popovers, dropdowns.</td>
+      </tr>
+      <tr>
+        <td><code>--radius-xl</code></td>
+        <td>16px</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-xl)' }}></span></td>
+        <td>Modals, sheets, large surfaces.</td>
+      </tr>
+      <tr>
+        <td><code>--radius-2xl</code></td>
+        <td>20px</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-2xl)' }}></span></td>
+        <td>Hero panels, feature surfaces.</td>
+      </tr>
+      <tr>
+        <td><code>--radius-pill</code></td>
+        <td>9999px</td>
+        <td><span class="radius-preview" style={{ 'border-radius': 'var(--radius-pill)' }}></span></td>
+        <td>Accent only. Chips, tags, avatars, toggles, one-line status. Never wide buttons or cards.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="radius-section">
+  <h2 class="radius-section-title">Sources</h2>
+  <ul class="sources-list">
+    <li>
+      <strong>Material 3, Shape scale.</strong> Shape as a role-based scale rather than one global radius. Our step values are tuned to this brand. m3.material.io/styles/shape
+    </li>
+    <li>
+      <strong>Vercel Geist.</strong> Uses a <code>6px</code> control radius on buttons and inputs, a concrete example of a moderate signature reading as premium. vercel.com/geist
+    </li>
+    <li>
+      <strong>Apple, SwiftUI.</strong> <code>RoundedRectangle(style: .continuous)</code> draws the squircle, and <code>ConcentricRectangle</code> with <code>containerShape</code> formalizes concentric nesting. Apple does not publish exact corner-radius values. <span class="source-spa">SPA</span> developer.apple.com/documentation/swiftui/roundedrectangle
+    </li>
+    <li>
+      <strong>CSS corner-shape.</strong> The CSS Borders draft defines <code>corner-shape</code>, where <code>squircle</code> equals <code>superellipse(2)</code>. Support is limited and landing first in recent Chromium, so we treat it as progressive enhancement. developer.mozilla.org/en-US/docs/Web/CSS/corner-shape
+    </li>
+    <li>
+      The token mapping, the pill-as-accent reading, and the 6px signature are house rules specific to this system. <span class="source-spa">SPA</span>
+    </li>
+  </ul>
+</div>
+
+<style is:global>
+  .radius-header {
+    margin-bottom: 2rem;
+  }
+
+  .radius-title {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    color: #0f172a;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .radius-description {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 68ch;
+  }
+
+  .radius-section {
+    margin-top: 2.75rem;
+  }
+
+  .radius-section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .radius-lede {
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .radius-lede code,
+  .radius-description code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8em;
+    background: #eef2ff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+
+  /* The scale */
+  .scale-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .scale-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .scale-box {
+    width: 100%;
+    max-width: 7rem;
+    height: 5rem;
+    background: white;
+    border: 2px solid #4f46e5;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-weight: 700;
+    color: #4338ca;
+    font-size: 0.9375rem;
+  }
+
+  .scale-meta { text-align: center; }
+
+  .scale-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #64748b;
+  }
+
+  .scale-role {
+    font-size: 0.75rem;
+    color: #475569;
+    line-height: 1.4;
+    margin-top: 0.2rem;
+    max-width: 14ch;
+  }
+
+  /* Golden rule callout */
+  .golden {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-left: 4px solid #4f46e5;
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    margin-top: 1rem;
+  }
+
+  .golden-kicker {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #4338ca;
+    margin-bottom: 0.6rem;
+  }
+
+  .golden-headline {
+    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #3730a3;
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+  }
+
+  .golden-body {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.6;
+    max-width: 64ch;
+  }
+
+  .golden-body code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.8em;
+    background: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+
+  /* Button-vs-pill demo */
+  .pill-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .pill-demo-card {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .pill-demo-card.good { border-color: #c7d2fe; background: #eef2ff; }
+
+  .demo-button {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
+    background: #4f46e5;
+    padding: 0.65rem 2.5rem;
+    border: none;
+    width: 100%;
+    max-width: 15rem;
+  }
+
+  .demo-button.signature { border-radius: var(--radius-sm); }
+  .demo-button.wrong { border-radius: var(--radius-pill); }
+
+  .pill-demo-caption {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .pill-demo-card.good .pill-demo-caption { color: #3730a3; }
+  .pill-demo-card.bad .pill-demo-caption { color: #475569; }
+
+  .pill-demo-verdict {
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .pill-demo-card.good .pill-demo-verdict { color: #4338ca; }
+  .pill-demo-card.bad .pill-demo-verdict { color: #475569; }
+
+  /* Concentric nesting */
+  .formula {
+    display: inline-block;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.9rem;
+    color: #3730a3;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0 1.25rem;
+  }
+
+  .concentric-stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .concentric-outer {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: var(--radius-xl);
+    padding: 8px;
+  }
+
+  .concentric-inner {
+    background: white;
+    height: 84px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.7rem;
+    color: #64748b;
+    text-align: center;
+    padding: 0 0.75rem;
+  }
+
+  .concentric-outer.right .concentric-inner { border-radius: var(--radius-md); }
+  .concentric-outer.wrong .concentric-inner { border-radius: var(--radius-xl); }
+
+  .concentric-label {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin-top: 0.75rem;
+  }
+
+  .concentric-label.right { color: #3730a3; }
+  .concentric-label.wrong { color: #475569; }
+
+  .concentric-label strong { display: block; margin-bottom: 0.2rem; }
+
+  /* Squircle */
+  .squircle-stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .squircle-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .squircle-shape {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 1rem;
+    background: #4f46e5;
+    border-radius: var(--radius-2xl);
+  }
+
+  @supports (corner-shape: squircle) {
+    .squircle-shape.continuous {
+      corner-shape: squircle;
+    }
+  }
+
+  .squircle-name {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+  }
+
+  .squircle-text {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .squircle-text code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+
+  /* Real-scale specimen row */
+  .specimen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+  }
+
+  .specimen-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1 1 150px;
+  }
+
+  .specimen-surface {
+    width: 100%;
+    background: white;
+    border: 1px solid #e2e8f0;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .specimen-surface.chip {
+    height: 34px;
+    width: auto;
+    padding: 0 0.9rem;
+    border-radius: var(--radius-pill);
+    background: #eef2ff;
+    border-color: #c7d2fe;
+    color: #4338ca;
+    font-weight: 600;
+  }
+
+  .specimen-surface.button {
+    height: 44px;
+    max-width: 12rem;
+    border-radius: var(--radius-sm);
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: white;
+    font-weight: 600;
+  }
+
+  .specimen-surface.card {
+    height: 96px;
+    border-radius: var(--radius-lg);
+  }
+
+  .specimen-surface.modal {
+    height: 120px;
+    border-radius: var(--radius-xl);
+  }
+
+  .specimen-meta { text-align: center; }
+
+  .specimen-role {
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #0f172a;
+  }
+
+  .specimen-token {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.6875rem;
+    color: #475569;
+  }
+
+  /* Callout */
+  .radius-note {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .radius-note-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #3730a3;
+    margin-bottom: 0.5rem;
+  }
+
+  .radius-note-body {
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .radius-note-body code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+
+  /* Table */
+  .radius-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+
+  .radius-table th,
+  .radius-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+
+  .radius-table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.05em;
+    background: #f8fafc;
+  }
+
+  .radius-table td {
+    font-size: 0.875rem;
+    color: #475569;
+  }
+
+  .radius-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .radius-table code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: #eef2ff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+
+  .radius-preview {
+    display: inline-block;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: #4f46e5;
+    vertical-align: middle;
+  }
+
+  /* Sources */
+  .sources-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .sources-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .sources-list li:last-child { border-bottom: none; }
+
+  .sources-list strong { color: #0f172a; }
+
+  .sources-list code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.72rem;
+    background: #eef2ff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    color: #4338ca;
+  }
+
+  .source-spa {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4338ca;
+    background: #eef2ff;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+  }
+</style>
+</BaseLayout>

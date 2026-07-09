@@ -1,6 +1,6 @@
 # RamosLabs Design System
 
-> What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth
+> A mono-indigo, taxonomy-first design system. Tokens are the single source of truth.
 
 A mono-indigo, taxonomy-first design system. Tokens are the single source of truth:
 color, spacing, typography, radius, shadow, and motion values ship as CSS variables via
@@ -8,33 +8,37 @@ color, spacing, typography, radius, shadow, and motion values ship as CSS variab
 
 ## Foundations
 
-- [Colors](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-colors--docs): Mono-indigo accent, slate neutral ramp, reserved status colors, role tokens over raw hex, and measured contrast floors
-- [Typography](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-typography--docs): Three font families, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules
-- [Spacing](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-spacing--docs): 4px base with an 8px rhythm, fourteen fixed steps, touch-target floors, and density rules
-- [Border Radius](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-border-radius--docs): Eight radius steps, the 6px control signature, pill as accent only, and the concentric and squircle rules
-- [Shadows](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-shadows--docs): Three indigo-tinted two-layer elevation levels plus a focus ring, with shadow meaning height and never state
-- [Motion](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-motion--docs): Three durations, five easings, the transform-and-opacity performance contract, and reduced-motion as the floor
-- [Responsive](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-responsive--docs): Mobile-first discipline, five min-width breakpoints, media vs container queries, intrinsic layout, and safe areas
-- [Helpers](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-helpers--docs): Single-purpose utility classes sourced from tokens, the token-utility-component decision, and the sr-only and focus-ring infrastructure
-- [Token Reference](https://ramoslabs-ds.pages.dev/?path=/docs/foundations-token-reference--docs): How the 213 tokens are named, the two-tier primitive and semantic model, categories, and how to consume and author them
+- [Colors](https://design.ramoslabs.com/foundations/colors/): Mono-indigo accent, slate neutral ramp, reserved status colors, role tokens over raw hex, and measured contrast floors
+- [Typography](https://design.ramoslabs.com/foundations/typography/): Three font families, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules
+- [Spacing](https://design.ramoslabs.com/foundations/spacing/): A 4px base with an 8px rhythm, fourteen fixed steps, touch-target floors, and density rules
+- [Border Radius](https://design.ramoslabs.com/foundations/border-radius/): Eight radius steps, the 6px control signature, pill as accent only, and the concentric and squircle rules
+- [Shadows](https://design.ramoslabs.com/foundations/shadows/): Three indigo-tinted two-layer elevation levels plus a focus ring, with shadow meaning height and never state
+- [Motion](https://design.ramoslabs.com/foundations/motion/): Three durations, five easings, the transform-and-opacity performance contract, and reduced-motion as the floor
+- [Responsive](https://design.ramoslabs.com/foundations/responsive/): Mobile-first discipline, five min-width breakpoints, media vs container queries, intrinsic layout, and safe areas
+- [Helpers](https://design.ramoslabs.com/foundations/helpers/): Single-purpose utility classes sourced from tokens, the token-utility-component decision, and the sr-only and focus-ring infrastructure
+- [Token Reference](https://design.ramoslabs.com/foundations/token-reference/): How the 213 tokens are named, the two-tier primitive and semantic model, categories, and how to consume and author them
 
 ## Patterns
 
-- [Interactive](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-interactive--docs): The three-modality state model, the tonal indigo --state-* overlay, the pointer-only hover gate, and the two-tone --shadow-focus ring
-- [Accessibility](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-accessibility--docs): The POUR taxonomy, semantic-HTML-before-ARIA, contrast ratios, keyboard and focus, target size, name-role-value, and a pre-ship checklist keyed to WCAG 2.2
-- [Form Elements](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-form-elements--docs): The canonical, exhaustive form guide: native-first doctrine, the accent-color theming recipe, field anatomy, validation timing, the mobile keyboard contract, the a11y floor, and a per-control catalog of 25 controls
-- [Data Tables](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-data-tables--docs): Native <table> first, the table vs role=grid fork, accessible sorting and row selection, density and alignment, pagination vs infinite scroll, filters, row actions, states, and the four mobile patterns
-- [Modals](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-modals--docs): The six accessibility requirements of a modal, native <dialog>.showModal() as the way to get them, dialog vs alertdialog, when not to use a modal, the Popover API, pitfalls, and the mobile bottom sheet
-- [Mobile First](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-mobile-first--docs): The desktop-to-mobile pattern map, bottom sheets from native <dialog>, thumb-zone and sticky CTAs, bottom nav and FAB, snackbars, the gesture-alternative rules, safe-area insets, and capability-not-user-agent activation
-- [Persuasion](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-persuasion--docs): The standing six UX persuasion principles (smart defaults, endowed progress, reciprocity, IKEA/endowment, loss aversion, contrast) each gated by a hard truth-and-reversibility line, with dark patterns banned
-- [Voice & Tone](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-voice-tone--docs): One constant brand voice, tone that adapts to context, three unbending voice principles, a microcopy library, tone by context, the error-writing framing rule, and the copy ethics prohibitions
-- [AI Content](https://ramoslabs-ds.pages.dev/?path=/docs/patterns-ai-content--docs): The AI-content pattern: label generated output, communicate uncertainty, show generation states, keep a human in the loop, plan for wrong answers, one-tap feedback, and data disclosure, under a disclosed-bounded-checkable-reversible contract
+- [Interactive](https://design.ramoslabs.com/patterns/interactive/): The three-modality state model, the tonal indigo --state-* overlay, the pointer-only hover gate, and the two-tone --shadow-focus ring
+- [Accessibility](https://design.ramoslabs.com/patterns/accessibility/): The POUR taxonomy, semantic-HTML-before-ARIA, contrast ratios, keyboard and focus, target size, name-role-value, and a pre-ship checklist keyed to WCAG 2.2
+- [Form Elements](https://design.ramoslabs.com/patterns/form-elements/): The canonical form guide: native-first doctrine, the accent-color theming recipe, field anatomy, validation timing, the mobile keyboard contract, the a11y floor, and a catalog of 25 controls
+- [Data Tables](https://design.ramoslabs.com/patterns/data-tables/): Native <table> first, the table vs role=grid fork, accessible sorting and row selection, density and alignment, pagination vs infinite scroll, filters, row actions, states, and the four mobile patterns
+- [Modals](https://design.ramoslabs.com/patterns/modals/): The six accessibility requirements of a modal, native <dialog>.showModal() as the way to get them, dialog vs alertdialog, when not to use a modal, the Popover API, pitfalls, and the mobile bottom sheet
+- [Mobile First](https://design.ramoslabs.com/patterns/mobile-first/): The desktop-to-mobile pattern map, bottom sheets from native <dialog>, thumb-zone and sticky CTAs, bottom nav and FAB, snackbars, the gesture-alternative rules, safe-area insets, and capability-not-user-agent activation
+- [Persuasion](https://design.ramoslabs.com/patterns/persuasion/): The standing six UX persuasion principles (smart defaults, endowed progress, reciprocity, IKEA/endowment, loss aversion, contrast) each gated by a hard truth-and-reversibility line, with dark patterns banned
+- [Voice & Tone](https://design.ramoslabs.com/patterns/voice-tone/): One constant brand voice, tone that adapts to context, three unbending voice principles, a microcopy library, tone by context, the error-writing framing rule, and the copy ethics prohibitions
+- [AI Content](https://design.ramoslabs.com/patterns/ai-content/): The AI-content pattern: label generated output, communicate uncertainty, show generation states, keep a human in the loop, plan for wrong answers, one-tap feedback, and data disclosure, under a disclosed-bounded-checkable-reversible contract
 
 ## Machine-readable
 
-- [llms-full.txt](https://ramoslabs-ds.pages.dev/llms-full.txt): every page inlined, plus the full token table.
-- [registry.json](https://ramoslabs-ds.pages.dev/registry.json): tokens, patterns, and components as JSON.
-- [tokens.json](https://ramoslabs-ds.pages.dev/tokens.json): the flat DTCG token map (name to resolved value).
+- [llms-full.txt](https://design.ramoslabs.com/llms-full.txt): every page inlined, plus the full token table.
+- [registry.json](https://design.ramoslabs.com/registry.json): tokens, patterns, and components as JSON.
+- [tokens.json](https://design.ramoslabs.com/tokens.json): the flat DTCG token map (name to resolved value).
+
+## Install
+
+`bun add @ramoslabs/tokens` (public npm). Then `@import '@ramoslabs/tokens/css'`.
 
 ## License
 

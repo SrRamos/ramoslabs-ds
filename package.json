@@ -25,6 +25,7 @@
     "build-storybook": "bun run --filter storybook build-storybook"
   },
   "devDependencies": {
+    "@material-symbols/svg-400": "^0.45.5",
     "turbo": "^2.10.0",
     "typescript": "^5.9.0"
   }
