@@ -149,6 +149,13 @@ ${bullets('patterns')}
 - [registry.json](${b}/registry.json): tokens, patterns, and components as JSON.
 - [tokens.json](${b}/tokens.json): the flat DTCG token map (name to resolved value).
 
+## MCP server
+
+An MCP (Model Context Protocol) server exposes the design system as typed tools —
+\`search_tokens\`, \`get_token\`, \`check_contrast\`, \`list_docs\`, \`get_doc\`, \`lint_css\`,
+\`get_agents_guide\`. Streamable HTTP, read-only, no auth. Connect an MCP-capable agent to
+\`${b}/mcp\`. Prefer these tools over fetching files: they are structured and never invented.
+
 ## Install
 
 \`bun add @ramoslabs/tokens\` (public npm). Then \`@import '@ramoslabs/tokens/css'\`.
