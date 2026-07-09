@@ -1,11 +1,13 @@
 # RamosLabs Design System
 
-> What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth
+> A mono-indigo, taxonomy-first design system. Tokens are the single source of truth.
 
 This is the complete, self-contained reference for AI agents building UI on the
 RamosLabs Design System. It inlines every documentation page and the full token table.
 
 Free to use under the MIT License. Keep the copyright and license notice, and credit RamosLabs. © 2026 RAMOS SOLUTIONS S.A.S.. https://ramoslabs.com
+
+Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
 ## Token reference (213 tokens)
 
@@ -284,7 +286,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 # Introduction
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/introduction--docs
+Source: https://design.ramoslabs.com/
 
 The RamosLabs Design System is a taxonomy book, not a component bundle. One indigo accent, one token contract, and the rules that turn them into a UI library you own.
 
@@ -332,7 +334,7 @@ Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.1.
 
 # Colors
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-colors--docs
+Source: https://design.ramoslabs.com/foundations/colors/
 
 RamosLabs runs on a single action accent. Indigo carries every deliberate action and nothing else competes for it. One voice for action, a deep neutral ramp for everything else, reserved signals for state. The action accent is `#4f46e5`. Violet appears as a decorative accent only, never for action.
 
@@ -390,7 +392,7 @@ WCAG 2.2 contrast floors SC 1.4.3 / 1.4.6 / 1.4.11 and use of color SC 1.4.1. Ro
 
 # Typography
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-typography--docs
+Source: https://design.ramoslabs.com/foundations/typography/
 
 RamosLabs types on three families and one ten-step scale. Every piece of text takes a role (Display, Headline, Title, Body, or Label), and the role hands it a family, size, weight, line-height, and tracking. Pick the role; the type takes care of itself.
 
@@ -452,7 +454,7 @@ Role groups after Material 3 type scale. The 45 to 75ch measure from Butterick, 
 
 # Spacing
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-spacing--docs
+Source: https://design.ramoslabs.com/foundations/spacing/
 
 Space is picked once: a 4px base, an 8px rhythm, and 14 fixed steps. Every gap in the product is one of those steps. No 13px here, no 15px there.
 
@@ -511,7 +513,7 @@ Touch-target floors: WCAG 2.2 SC 2.5.8 Target Size Minimum, 24px AA; Apple HIG 4
 
 # Border Radius
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-border-radius--docs
+Source: https://design.ramoslabs.com/foundations/border-radius/
 
 A corner sets personality. Sharp reads technical, fully round reads playful, the considered middle reads premium. This system commits to one 6px signature on every control, a short ladder up to hero surfaces, and keeps the fully round pill as an accent, never a default.
 
@@ -581,7 +583,7 @@ Material 3, Shape scale: shape as a role-based scale rather than one global radi
 
 # Shadows
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-shadows--docs
+Source: https://design.ramoslabs.com/foundations/shadows/
 
 Every floating surface picks one of three heights, each a soft two-layer shadow tinted with brand indigo instead of hard black. A shadow says one thing only: this surface sits above another. Add a focus ring at `--shadow-focus` and that is the entire system.
 
@@ -643,7 +645,7 @@ Material 3 elevation and tonal elevation: level count and the surface-tint appro
 
 # Motion
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-motion--docs
+Source: https://design.ramoslabs.com/foundations/motion/
 
 Every animation earns its place by answering one question: where did that come from, are these the same thing, did my tap register. No job, no motion. The system is deliberately small, three durations and five easings, so the whole product moves at one tempo: fast, and quiet.
 
@@ -755,7 +757,7 @@ Material 3 Motion: duration buckets and easing sets. Apple HIG Motion: purposefu
 
 # Responsive
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-responsive--docs
+Source: https://design.ramoslabs.com/foundations/responsive/
 
 Design for the content, not the device. Start from the smallest reasonable screen, let the content decide where it strains, and reach for a fixed breakpoint last. A layout keyed to a few famous device widths breaks the moment someone opens a split view, rotates a foldable, or reads at 200% zoom.
 
@@ -826,7 +828,7 @@ Mobile-first and progressive enhancement: Wroblewski, Mobile First, and Marcotte
 
 # Helpers
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-helpers--docs
+Source: https://design.ramoslabs.com/foundations/helpers/
 
 Utilities are single-purpose classes that do exactly one thing, and every value traces back to a token. This is a curated set, not a dump. If a helper would type `16px` by hand instead of reading `--space-4`, it does not belong here.
 
@@ -944,7 +946,7 @@ Utility-first model and the extract-to-component threshold: Tailwind CSS and Ada
 
 # Token Reference
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/foundations-token-reference--docs
+Source: https://design.ramoslabs.com/foundations/token-reference/
 
 A token is the smallest unit of the language: one color, one step of space, one shadow, authored as data and published to CSS and TypeScript from a single source. There are 213 tokens across 2 tiers, 8 radius steps, and 3 elevation shadows.
 
@@ -1016,7 +1018,7 @@ Design Tokens Community Group format specification: the open W3C standard defini
 
 # Interactive
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-interactive--docs
+Source: https://design.ramoslabs.com/patterns/interactive/
 
 Touch is the majority of every session, and a finger has nothing to hover with. So the press comes first, the keyboard gets a ring, and hover is a pointer-only garnish laid on top. One tonal indigo layer expresses all three, stepped through the `--state-*` scale.
 
@@ -1130,7 +1132,7 @@ State layers after Material 3 (m3.material.io). The hover and pointer media feat
 
 # Accessibility
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-accessibility--docs
+Source: https://design.ramoslabs.com/patterns/accessibility/
 
 Our floor is WCAG 2.2 Level AA on every surface, and Level AAA wherever a pattern reaches it without hurting the experience.
 
@@ -1373,7 +1375,7 @@ WCAG 2.2 success criteria (w3.org/TR/WCAG22): contrast 1.4.3 / 1.4.11, use of co
 
 # Form Elements
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-form-elements--docs
+Source: https://design.ramoslabs.com/patterns/form-elements/
 
 The spine is one rule: reach for the native control first, tune it with the right attributes, and build custom only where the platform genuinely falls short.
 
@@ -1573,7 +1575,7 @@ MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<
 
 # Data Tables
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-data-tables--docs
+Source: https://design.ramoslabs.com/patterns/data-tables/
 
 A data table is a native `<table>` first, always. Density, sorting, pagination, and the mobile transform are behavior layered on top of correct structure. Reach for an ARIA role only when native HTML genuinely cannot express the interaction.
 
@@ -1756,7 +1758,7 @@ MDN Web Docs, the `<table>` element and its accessibility: semantic markup, corr
 
 # Modals
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-modals--docs
+Source: https://design.ramoslabs.com/patterns/modals/
 
 A modal steals the whole room: it stops the task, blanks the background, and traps the keyboard until the user answers. Reach for the native `<dialog>` with `showModal()` first, use it rarely, and never open one where a page, an inline message, or a popover would have done the job.
 
@@ -1897,7 +1899,7 @@ The six requirements, roles, and keyboard model from the WAI-ARIA APG: Dialog (M
 
 # Mobile First
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-mobile-first--docs
+Source: https://design.ramoslabs.com/patterns/mobile-first/
 
 The same content does not deserve the same container. A modal is centered on desktop because a cursor reaches the middle of a wide screen without effort; a thumb on a 375px phone cannot. So the mobile equivalent of a centered modal is a bottom sheet anchored to the bottom edge, where the thumb already rests. This is a different container for the same content, kept operable by keyboard and announced correctly.
 
@@ -2032,7 +2034,7 @@ Steven Hoober, How Do Users Really Hold Mobile Devices? (UXmatters, 2013): 1,333
 
 # Persuasion
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-persuasion--docs
+Source: https://design.ramoslabs.com/patterns/persuasion/
 
 Behavioral design works, which is why it needs a limit. Six principles, each drawn to move a person toward something they already want, each gated by a hard line: honest persuasion that serves the user, never a dark pattern that extracts against them. The test: if a technique only works while the user does not notice it, it does not ship.
 
@@ -2154,7 +2156,7 @@ The mechanics are identical on both sides of the line. What separates honest per
 
 # Voice & Tone
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-voice-tone--docs
+Source: https://design.ramoslabs.com/patterns/voice-tone/
 
 Every label, empty state, and error is the product talking, and the words are the design, not a coat applied after. The voice never changes. The tone bends to the moment: warm at a win, calm at a break, plain when it counts.
 
@@ -2281,7 +2283,7 @@ Mailchimp Content Style Guide, "Voice and Tone": one voice, many tones. Nielsen 
 
 # AI Content
 
-Source: https://ramoslabs-ds.pages.dev/?path=/docs/patterns-ai-content--docs
+Source: https://design.ramoslabs.com/patterns/ai-content/
 
 A model can write, summarize, and suggest in seconds, and it can be confidently wrong just as fast. Show plainly what a machine produced, how sure it is, and where it came from, then keep a person in the loop before anything acts. The goal is not to hide the AI. It is to make its output legible, checkable, and reversible.
 

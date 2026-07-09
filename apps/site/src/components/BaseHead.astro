@@ -1,0 +1,65 @@
+---
+import { SITE } from '../data/pages'
+
+// Per-page <head>: SEO, canonical, OpenGraph/Twitter, JSON-LD, and font preloads.
+interface Props {
+  title: string
+  description: string
+  path: string // clean path with trailing slash, e.g. '/foundations/colors/'
+  ogType?: string
+}
+const { title, description, path, ogType = 'website' } = Astro.props
+
+const site = Astro.site ?? new URL('https://design.ramoslabs.com')
+const canonical = new URL(path, site).href
+const ogImage = new URL('/og.png', site).href
+const isHome = path === '/'
+const fullTitle = isHome ? `${SITE.title} — Documentation` : `${title} · ${SITE.title}`
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': isHome ? 'WebSite' : 'TechArticle',
+  name: fullTitle,
+  headline: title,
+  description,
+  url: canonical,
+  ...(isHome
+    ? { publisher: { '@type': 'Organization', name: 'RAMOS SOLUTIONS S.A.S.', url: SITE.website } }
+    : {
+        author: { '@type': 'Organization', name: 'RAMOS SOLUTIONS S.A.S.', url: SITE.website },
+        isPartOf: { '@type': 'WebSite', name: SITE.title, url: site.href },
+      }),
+  license: 'https://opensource.org/licenses/MIT',
+}
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="theme-color" content="#4f46e5" />
+
+<!-- OpenGraph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Preload the two render-critical faces -->
+<link rel="preload" href="/fonts/red-hat-display-var.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/rubik-var.woff2" as="font" type="font/woff2" crossorigin />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

@@ -1,0 +1,29 @@
+---
+import { ICONS } from './icons/icons.generated'
+
+// Inline SVG icon (Material Symbols Outlined, Apache-2.0), zero webfont.
+// Renders an <svg> carrying the `material-symbols-outlined` class so the ported
+// page CSS that sizes/colors icons by `font-size`/`color` keeps working unchanged:
+// the svg is 1em square and fills with currentColor.
+interface Props {
+  name: string
+  label?: string
+  class?: string
+  style?: string
+}
+const { name, label, class: className, style } = Astro.props
+const inner = ICONS[name]
+if (!inner) {
+  throw new Error(`<Icon>: unknown icon "${name}". Add it to icons.generated.ts.`)
+}
+---
+<svg
+  class:list={['material-symbols-outlined', className]}
+  style={style}
+  viewBox="0 -960 960 960"
+  fill="currentColor"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  set:html={inner}
+/>

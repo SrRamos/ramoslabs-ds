@@ -1,0 +1,141 @@
+---
+import '../styles/global.css'
+import BaseHead from '../components/BaseHead.astro'
+import Sidebar from '../components/Sidebar.astro'
+import SiteFooter from '../components/SiteFooter.astro'
+import Icon from '../components/Icon.astro'
+
+interface Props {
+  title: string
+  description: string
+  path: string
+  ogType?: string
+}
+const { title, description, path, ogType } = Astro.props
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} path={path} ogType={ogType} />
+  </head>
+  <body>
+    <div class="rl-shell">
+      <!-- Mobile drawer toggle (CSS-only, no JS) -->
+      <input type="checkbox" id="rl-drawer" class="rl-drawer-toggle" hidden />
+
+      <header class="rl-topbar">
+        <label for="rl-drawer" class="rl-topbar__btn" aria-label="Toggle navigation">
+          <Icon name="menu_book" />
+          <span>Menu</span>
+        </label>
+        <a class="rl-topbar__title" href="/">RamosLabs DS</a>
+      </header>
+
+      <aside class="rl-sidebar">
+        <Sidebar />
+      </aside>
+      <label for="rl-drawer" class="rl-scrim" aria-hidden="true"></label>
+
+      <main class="rl-main" id="main">
+        <div class="rl-main__inner">
+          <slot />
+          <SiteFooter />
+        </div>
+      </main>
+    </div>
+
+    <style>
+      .rl-shell {
+        --rl-sidebar-w: 280px;
+        min-height: 100vh;
+      }
+
+      .rl-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: var(--rl-sidebar-w);
+        overflow-y: auto;
+        background: var(--color-surface, #fff);
+        border-right: 1px solid var(--color-border, #e2e8f0);
+        z-index: 40;
+      }
+
+      .rl-main {
+        margin-left: var(--rl-sidebar-w);
+        min-height: 100vh;
+      }
+      .rl-main__inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: var(--space-8, 2rem) var(--space-6, 1.5rem) var(--space-10, 3rem);
+      }
+
+      /* Topbar + scrim only matter on mobile */
+      .rl-topbar {
+        display: none;
+      }
+      .rl-scrim {
+        display: none;
+      }
+
+      @media (max-width: 860px) {
+        .rl-topbar {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          display: flex;
+          align-items: center;
+          gap: var(--space-3, 0.75rem);
+          padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+          background: var(--color-surface, #fff);
+          border-bottom: 1px solid var(--color-border, #e2e8f0);
+        }
+        .rl-topbar__btn {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-2, 0.5rem);
+          font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
+          font-weight: 600;
+          font-size: 0.9rem;
+          color: var(--color-text-heading, #0f172a);
+          background: var(--color-surface-secondary, #f1f5f9);
+          border-radius: var(--radius-md, 8px);
+          padding: 0.5rem 0.85rem;
+          cursor: pointer;
+        }
+        .rl-topbar__title {
+          font-family: var(--font-family-display, 'Red Hat Display', system-ui, sans-serif);
+          font-weight: 800;
+          color: var(--color-text-heading, #0f172a);
+          text-decoration: none;
+        }
+
+        .rl-sidebar {
+          transform: translateX(-100%);
+          transition: transform 200ms ease;
+          box-shadow: var(--shadow-lg);
+        }
+        .rl-main {
+          margin-left: 0;
+        }
+
+        .rl-drawer-toggle:checked ~ .rl-sidebar {
+          transform: translateX(0);
+        }
+        .rl-drawer-toggle:checked ~ .rl-scrim {
+          display: block;
+          position: fixed;
+          inset: 0;
+          background: rgba(15, 23, 42, 0.45);
+          z-index: 39;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .rl-sidebar {
+          transition: none;
+        }
+      }
+    </style>
+  </body>
+</html>

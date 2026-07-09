@@ -1,6 +1,6 @@
 # RamosLabs Design System robots policy.
 # Public, free-to-use design system (MIT). We welcome AI ingestion.
-# AI agents: structured docs at https://ramoslabs-ds.pages.dev/llms.txt and https://ramoslabs-ds.pages.dev/llms-full.txt
+# AI agents: structured docs at https://design.ramoslabs.com/llms.txt and https://design.ramoslabs.com/llms-full.txt
 
 User-agent: *
 Allow: /
@@ -56,4 +56,4 @@ Allow: /
 User-agent: Timpibot
 Allow: /
 
-Sitemap: https://ramoslabs-ds.pages.dev/sitemap.xml
+Sitemap: https://design.ramoslabs.com/sitemap-index.xml

@@ -1,0 +1,56 @@
+---
+import { SITE } from '../data/pages'
+const licenseUrl = `${SITE.repo}/blob/main/LICENSE`
+---
+<footer class="rl-footer">
+  <p class="rl-footer__brand">RamosLabs Design System</p>
+  <p class="rl-footer__line">{SITE.copyright}</p>
+  <p class="rl-footer__line">Free to use with attribution under the MIT License.</p>
+  <p class="rl-footer__links">
+    <a class="rl-footer__link" href={SITE.website} target="_blank" rel="noreferrer">ramoslabs.com</a>
+    <span class="rl-footer__sep" aria-hidden="true">·</span>
+    <a class="rl-footer__link" href="https://www.npmjs.com/package/@ramoslabs/tokens" target="_blank" rel="noreferrer">npm</a>
+    <span class="rl-footer__sep" aria-hidden="true">·</span>
+    <a class="rl-footer__link" href={licenseUrl} target="_blank" rel="noreferrer">License</a>
+    <span class="rl-footer__sep" aria-hidden="true">·</span>
+    <a class="rl-footer__link" href={SITE.repo} target="_blank" rel="noreferrer">Repository</a>
+  </p>
+</footer>
+
+<style>
+  .rl-footer {
+    margin-top: var(--space-16, 4rem);
+    padding: var(--space-6, 1.5rem) 0 var(--space-8, 2rem);
+    border-top: 1px solid var(--color-border, #e2e8f0);
+    font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
+    line-height: 1.6;
+    color: var(--color-text-muted, #64748b);
+    text-align: center;
+  }
+  .rl-footer__brand {
+    font-family: var(--font-family-display, 'Red Hat Display', system-ui, sans-serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-heading, #0f172a);
+    margin: 0 0 var(--space-2, 0.5rem);
+  }
+  .rl-footer__line {
+    margin: 0;
+    font-size: 0.78rem;
+  }
+  .rl-footer__links {
+    margin-top: var(--space-3, 0.75rem);
+    font-size: 0.78rem;
+  }
+  .rl-footer__sep {
+    margin: 0 var(--space-2, 0.5rem);
+  }
+  .rl-footer__link {
+    color: var(--color-primary, #4f46e5);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .rl-footer__link:hover {
+    text-decoration: underline;
+  }
+</style>
