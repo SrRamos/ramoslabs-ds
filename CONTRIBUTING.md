@@ -1,21 +1,24 @@
 # Contributing
 
 Thanks for helping build the RamosLabs Design System. This is a documentation-first project:
-most contributions are to the doctrine (the Storybook book) and the tokens, not to shipped
+most contributions are to the doctrine (the Astro docs site) and the tokens, not to shipped
 components.
 
 ## Run it locally
 
 ```bash
 bun install
-bun run storybook   # doctrine book at localhost:6006
+bun run --filter site dev   # docs site (Astro) at localhost:4321
 ```
+
+Storybook is kept as the component harness for the upcoming `@ramoslabs/vue` library
+(`bun run storybook`), but it is no longer the published documentation site.
 
 Useful checks before you open a PR:
 
 ```bash
 bun run typecheck   # type-check every workspace
-bun run build       # turbo build: tokens, then the vue lib
+bun run build       # turbo build: tokens, the docs site, and Storybook
 ```
 
 ## Branch and PR convention
@@ -42,20 +45,17 @@ Every contribution must follow these. They are the point of the system, not deco
 
 ## Keep the doctrine and its distilled files in sync
 
-The agentic layer is generated from a distilled copy of each book page. When you change doctrine
-in a Storybook MDX page, you must update its distilled file and regenerate the artifacts:
+The agentic layer is generated from a distilled copy of each doc page. When you change doctrine
+on a page, you must update its distilled file in the same change:
 
-1. Edit the source MDX in `apps/storybook`.
-2. Update the matching distilled file in `apps/storybook/agentic/content/**` (same rule, token
+1. Edit the source page in `apps/site/src/pages/**/*.astro`.
+2. Update the matching distilled file in `apps/site/agentic/content/**` (same rule, token
    name, hex, ratio, px, or threshold, never invented or dropped).
-3. Regenerate:
+3. Rebuild: `bun run --filter site build` regenerates `llms.txt`, `llms-full.txt`,
+   `registry.json`, and `robots.txt` via the Astro build integration.
 
-   ```bash
-   bun run --filter storybook agentic:build
-   ```
-
-A doctrine change that skips step 2 or 3 ships an agentic layer that contradicts the book. See
-`apps/storybook/agentic/CONTRACT.md` for the full distillation rules.
+A doctrine change that skips step 2 ships an agentic layer that contradicts the site. See
+`apps/site/agentic/CONTRACT.md` for the full distillation rules.
 
 ## License
 

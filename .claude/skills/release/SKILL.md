@@ -40,10 +40,10 @@ While at `0.x`, a breaking change bumps MINOR, not MAJOR.
    number.
 3. In `CHANGELOG.md`, rename the `## [Unreleased]` block to `## [X.Y.Z] - YYYY-MM-DD` and
    leave a fresh empty `## [Unreleased]` on top.
-4. If a change altered doctrine or a token, sync the distilled agentic content and
-   regenerate, so `llms-full.txt` and `registry.json` match the release:
-   edit `apps/storybook/agentic/content/**.md`, then
-   `bun run --filter storybook agentic:build`.
+4. If a change altered doctrine or a token, sync the distilled agentic content so
+   `llms-full.txt` and `registry.json` match the release: edit
+   `apps/site/agentic/content/**.md`, then `bun run --filter site build` (the Astro build
+   integration regenerates the agentic artifacts).
 5. Commit: `chore(release): vX.Y.Z`.
 6. Tag: `git tag -a vX.Y.Z -m "vX.Y.Z"`, and push with `--tags`. Tag on `main` after the
    release branch is merged, so the tag points at the released commit.
