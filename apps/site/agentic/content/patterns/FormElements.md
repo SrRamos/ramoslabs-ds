@@ -25,16 +25,16 @@ The clearest case is a date. GOV.UK: for a date the user already knows or can lo
 
 ## 2. Theming the accent without giving up native
 
-You can brand native controls without rebuilding them. Three CSS properties carry it. Set them once at the root and every native checkbox, radio, range, and text caret in the product turns indigo, and every control follows the OS light or dark theme, with zero per-control work.
+You can brand native controls without rebuilding them. Three CSS properties carry it. Set them once at the root and every native checkbox, radio, range, and text caret in the product turns indigo, and every native control matches the theme your surfaces ship, with zero per-control work.
 
 ```css
 :root {
-  color-scheme: light dark;               /* native controls follow the OS theme */
+  color-scheme: light;                    /* match the themes your surfaces ship; switch to `light dark` when a dark token set lands */
   accent-color: var(--color-primary);     /* tints checkbox, radio, range, progress */
   caret-color: var(--color-primary);      /* the text insertion cursor */
 }
 <!-- in <head>, prevents a theme flash on load -->
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 ```
 
 Read the coverage exactly. `accent-color` tints four controls and nothing else. It does not touch `<select>`, the date and time inputs, `type="color"`, `type="file"`, or any text field. Getting this wrong is the usual reason a "themed" form still shows a stock blue selected option.
@@ -200,4 +200,4 @@ On defaults: pre-check the reminder because people want it, leave the newsletter
 
 ## Sources
 
-MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<input>` types, `inputmode` and `enterkeyhint`, the `autocomplete` token list, `:user-invalid`. web.dev "accent-color" and Learn Forms (four themable controls, automatic accent contrast, HTML form elements are difficult to customize). caniuse: `accent-color` roughly 94 percent, since Chrome/Edge 93, Firefox 92, Safari 15.4 (March 2022). WAI-ARIA APG patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog, Toolbar. GOV.UK Design System: progressive enhancement, the Select component, and the Date input three-field memorable-date pattern. W3C Understanding WCAG 2.2: SC 3.3.2 (A), 3.3.1 (A) with ARIA21 `aria-invalid`, 3.3.3 (AA), 1.3.5 (AA), 2.5.8 (24px, AA), 2.5.5 (44px, AAA). Mihael Konjevic, "Inline Validation in Web Forms" (Smashing, 2022), source of "reward early, punish late". CSS-Tricks and defensivecss.dev: 16px prevents iOS input zoom. Apple HIG Text fields: content-appropriate keyboards, 44pt minimum. NN/g and Baymard: placeholders cannot replace labels, error messages must be visible/specific/constructive, single-column forms complete faster. The reward-while-typing timing and single-accent error-only use of `--color-error` are house rules layered on the cited guidance.
+MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<input>` types, `inputmode` and `enterkeyhint`, the `autocomplete` token list, `:user-invalid`. web.dev "accent-color" and Learn Forms (four themable controls, automatic accent contrast, HTML form elements are difficult to customize). caniuse: `accent-color` roughly 97 percent (2026), baseline since Chrome/Edge 93, Firefox 92, Safari 15.4 (March 2022). WAI-ARIA APG patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog, Toolbar. GOV.UK Design System: progressive enhancement, the Select component, and the Date input three-field memorable-date pattern. W3C Understanding WCAG 2.2: SC 3.3.2 (A), 3.3.1 (A) with ARIA21 `aria-invalid`, 3.3.3 (AA), 1.3.5 (AA), 2.5.8 (24px, AA), 2.5.5 (44px, AAA). Mihael Konjevic, "Inline Validation in Web Forms" (Smashing, 2022), source of "reward early, punish late". CSS-Tricks and defensivecss.dev: 16px prevents iOS input zoom. Apple HIG Text fields: content-appropriate keyboards, 44pt minimum. NN/g and Baymard: placeholders cannot replace labels, error messages must be visible/specific/constructive, single-column forms complete faster. The reward-while-typing timing and single-accent error-only use of `--color-error` are house rules layered on the cited guidance.

@@ -9,7 +9,7 @@ Agent-native. MCP-first. AI-ready by design. This design system is built to be c
 
 ## The contract, in one place
 
-Six artifacts make the whole system legible to a machine. All are served from the site root and are free to fetch, read-only, and need no auth.
+Seven artifacts make the whole system legible to a machine. All are served from the site root and are free to fetch, read-only, and need no auth.
 
 - **MCP server** (`/mcp`) — the design system as seven typed tools: `search_tokens`, `get_token`, `check_contrast`, `list_docs`, `get_doc`, `lint_css`, `get_agents_guide`. Streamable HTTP, read-only, no auth. This is the highest-leverage way to consume the system: the tools return structured, verified data with no interpretation and no invention. See the MCP Server page.
 - **Agent skill** (`/skill.md`) — a Claude Code skill that makes an agent build and review UI strictly by this system, never inventing a token, value, or rule. Copy it to `.claude/skills/ramoslabs-ds/SKILL.md` in a project, or `~/.claude/skills/…` globally.
@@ -25,4 +25,4 @@ The difference that matters: these tools are for correctness, not just discovery
 
 ## The one hard rule still applies
 
-Everything an agent produces follows the same contract a human does: never hardcode a color, spacing, typography, radius, shadow, or motion value — read the token. Indigo 600 is the single action accent. WCAG 2.1 AA is the floor. The agent layer exists to make that contract easy to honor and impossible to fake.
+Everything an agent produces follows the same contract a human does: never hardcode a color, spacing, typography, radius, shadow, or motion value — read the token. Indigo 600 is the single action accent. WCAG 2.2 AA is the floor. The agent layer exists to make that contract easy to honor and impossible to fake.

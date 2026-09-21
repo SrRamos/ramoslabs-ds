@@ -64,7 +64,7 @@ A frame at 60fps is about 16ms. The browser can animate `transform` and `opacity
 
 ## Reduced motion is the floor
 
-The browser exposes the OS setting as `prefers-reduced-motion: reduce`, a firm request to hold still that every animation honors. It aligns with WCAG 2.1: 2.3.3 asks that interaction-triggered motion can be disabled, and 2.2.2 covers looping motion.
+The browser exposes the OS setting as `prefers-reduced-motion: reduce`, a firm request to hold still that every animation honors. It aligns with WCAG 2.2: 2.3.3 asks that interaction-triggered motion can be disabled, and 2.2.2 covers looping motion.
 
 Honoring it does not mean deleting meaning. Because information rides on color, opacity, and the final state, the interface stays legible without movement: collapse the animation, keep the destination. Keep a spinner turning slowly rather than freezing it, a stopped spinner reads as a hung app.
 
@@ -112,4 +112,4 @@ Honoring it does not mean deleting meaning. Because information rides on color, 
 
 ## Sources
 
-Material 3 Motion: duration buckets and easing sets. Apple HIG Motion: purposeful, communicates status, respects Reduce Motion. web.dev and MDN: animate transform and opacity to stay on the compositor. MDN prefers-reduced-motion. W3C WCAG 2.1: 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A). The three durations, five easings, 300ms ceiling, and gating spring behind reduced motion are specific to this system's tokens.
+Material 3 Motion: duration buckets and easing sets. Apple HIG Motion: purposeful, communicates status, respects Reduce Motion. web.dev and MDN: animate transform and opacity to stay on the compositor. MDN prefers-reduced-motion. W3C WCAG 2.2: 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A). The three durations, five easings, 300ms ceiling, and gating spring behind reduced motion are specific to this system's tokens.

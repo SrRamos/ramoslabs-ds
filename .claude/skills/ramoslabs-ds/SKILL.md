@@ -64,7 +64,7 @@ These are the DS's own invariant rules. Enforce them on everything you write:
   signals an interactive or action affordance. Violet is a decorative accent only, never for
   interactive/action affordances. Reach for a role token (`--color-primary`, etc.), never a
   raw hue.
-- **WCAG 2.1 AA floors.** Text contrast at least 4.5:1; large text and UI components at least
+- **WCAG 2.2 AA floors.** Text contrast at least 4.5:1; large text and UI components at least
   3:1. Muted text is never lighter than `#64748b` (slate 500) on white — slate 400 or lighter
   fails and is not allowed for text. Every interactive element is keyboard reachable with a
   visible focus state; never remove the focus outline without an equivalent replacement.

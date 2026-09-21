@@ -3,10 +3,10 @@ id: token-reference
 title: Token Reference
 group: foundations
 storybookTitle: Foundations/Token Reference
-summary: How the 213 tokens are named, the two-tier primitive and semantic model, categories, and how to consume and author them
+summary: How the 214 tokens are named, the two-tier primitive and semantic model, categories, and how to consume and author them
 ---
 
-A token is the smallest unit of the language: one color, one step of space, one shadow, authored as data and published to CSS and TypeScript from a single source. There are 213 tokens across 2 tiers, 8 radius steps, and 3 elevation shadows.
+A token is the smallest unit of the language: one color, one step of space, one shadow, authored as data and published to CSS and TypeScript from a single source. There are 214 tokens across 2 tiers, 8 radius steps, and 3 elevation shadows.
 
 The exhaustive table of every token name and value is auto-generated from `tokens.json` into `llms-full.txt`. This page distills the naming, categories, and consumption rules that govern that table.
 
@@ -17,7 +17,7 @@ Every token is authored as data, not CSS, in the W3C Design Tokens Community Gro
 - Tier 1, Primitive: the raw palette. Eight color ramps of eleven shades each, plus pure white and black. These carry a value and nothing else, no role, no meaning. Product code rarely touches this tier directly. Naming is descriptive: `--color-indigo-600`.
 - Tier 2, Semantic: the layer you build with. Each token names a role, not a hue, and aliases a primitive: `--color-primary`, `--color-text-body`, `--color-border`. This indirection makes the system themeable. Change one alias, and every consumer moves with it. Naming is intentional: role first, variant second.
 
-Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file per category) to Style Dictionary (resolves aliases, applies transforms, formats each target) to generated `dist/tokens.css` (`:root` custom properties) and `dist/tokens.ts` (typed constants). Both carry a do-not-edit banner: they are build output, not source.
+Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file per category) to Style Dictionary (resolves aliases, applies transforms, formats each target) to generated `dist/tokens.css` (`:root` custom properties) and `dist/tokens.js` with `dist/tokens.d.ts` typings (typed constants). Both carry a do-not-edit banner: they are build output, not source.
 
 ## Categories
 
@@ -32,7 +32,7 @@ Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file 
 - Z-index: `--z-*`, a stepped stacking order.
 - Breakpoints: `--breakpoint-*`, five minimum widths.
 
-Borders are dividers, not control outlines. Rule: use `--color-border` and `--color-border-light` only to separate regions (dividers, table rows, card edges). Why: both sit near 1.2:1 against the surface, below the 3:1 floor WCAG 1.4.11 requires for the boundary of an interactive control. For the visible edge of an input, select, or checkbox, reach for a token that clears 3:1, for example `--color-text-muted` at `#64748b`, which is 4.55:1 on white. Never let a subtle border be the only thing marking a control's bounds.
+Borders are dividers, not control outlines. Rule: use `--color-border` and `--color-border-light` only to separate regions (dividers, table rows, card edges). Why: both sit near 1.2:1 against the surface, below the 3:1 floor WCAG 1.4.11 requires for the boundary of an interactive control. For the visible edge of an input, select, or checkbox, reach for a token that clears 3:1, for example `--color-text-muted` at `#64748b`, which is 4.76:1 on white. Never let a subtle border be the only thing marking a control's bounds.
 
 State layers are opacity: each `--state-*` token is the opacity of an indigo overlay painted on a control. Numbers only, so the same layer works on any surface color. `--state-hover` 0.08 (gate with `@media (hover: hover)`), `--state-focus` 0.1 (focus-visible), `--state-pressed` 0.1 (active press, primary feedback on touch), `--state-dragged` 0.16.
 

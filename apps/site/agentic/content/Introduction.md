@@ -10,7 +10,7 @@ The RamosLabs Design System is a taxonomy book, not a component bundle. One indi
 
 The whole system in four numbers:
 
-- 213 design tokens
+- 214 design tokens
 - 3 taxonomy tiers
 - AA contrast floor
 - 1 accent color
@@ -19,7 +19,7 @@ The whole system in four numbers:
 
 - Tier 1, Foundations: the token contract. Color, type, space, radius, shadow, motion. Start here. References primitives.
 - Tier 2, Patterns: recipes built from foundations. States, forms, accessibility, voice. References foundations.
-- Tier 3, Components: SJ and W UI, built only from patterns and foundations. References patterns and foundations.
+- Tier 3, Components: SJ and W UI, built only from patterns and foundations. References patterns and foundations. Not shipped yet — the `@ramoslabs/vue` library lands in a future release; until then, build with the tokens and the documented patterns.
 
 The one rule: a tier may reference the tier below, never above. That single constraint keeps the system coherent as it grows.
 
@@ -48,4 +48,4 @@ import '@ramoslabs/tokens/css';
 
 ## Sources
 
-Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.1.
+Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.2.

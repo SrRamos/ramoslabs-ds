@@ -62,4 +62,4 @@ Hierarchy must survive one color. Distinguish levels with size, weight, and spac
 
 ## Sources
 
-Role groups after Material 3 type scale. The 45 to 75ch measure from Butterick, Practical Typography, and Baymard. Fluid type with clamp() from Utopia and web.dev. Accessibility floors from WCAG 2.1 SC 1.4.4 Resize Text, 1.4.12 Text Spacing, and 1.4.8 Visual Presentation.
+Role groups after Material 3 type scale. The 45 to 75ch measure from Butterick, Practical Typography, and Baymard. Fluid type with clamp() from Utopia and web.dev. Accessibility floors from WCAG 2.2 SC 1.4.4 Resize Text, 1.4.12 Text Spacing, and 1.4.8 Visual Presentation.

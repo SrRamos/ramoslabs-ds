@@ -63,9 +63,9 @@ The brand is mono-indigo. One hue, eleven steps. Indigo 600 is the single action
 
 | | |
 |---|---|
-| **The token package** | `@ramoslabs/tokens`. 213 tokens across color, typography, spacing, radius, shadow, motion, z-index, breakpoints, and state. DTCG JSON source compiled to CSS variables, typed TypeScript, and a flat JSON map. |
+| **The token package** | `@ramoslabs/tokens`. 214 tokens across color, typography, spacing, radius, shadow, motion, z-index, breakpoints, and state. DTCG JSON source compiled to CSS variables, typed TypeScript, and a flat JSON map. |
 | **The doctrine book** | A static **Astro** documentation site at [design.ramoslabs.com](https://design.ramoslabs.com): nine foundation pages (color, type, spacing, radius, shadow, motion, responsive, helpers, token reference) plus an interactive color picker and an introduction, and nine pattern pages (interactive, accessibility, forms, tables, modals, mobile-first, persuasion, voice and tone, AI content). Every page is a real HTML document at a clean URL and ships zero JavaScript except the color picker. |
-| **The agentic layer** | Machine-readable files (`llms.txt`, `llms-full.txt`, `registry.json`, `tokens.json`, `AGENTS.md`) so an AI coding agent can pull the whole system into context over HTTP. |
+| **The agentic layer** | Machine-readable files (`llms.txt`, `llms-full.txt`, `registry.json`, `tokens.json`, `tokens.css`, `AGENTS.md`, `skill.md`, `stats.json`) plus an MCP server, so an AI coding agent can pull the whole system into context over HTTP. |
 | **Mobile-first architecture** | The differentiator. Patterns and tokens are built small-screen first, so what you ship reads on a phone before it reads on a desktop, not the other way around. |
 
 `@ramoslabs/vue` is an empty scaffold today. SJ components are planned for a future release, not shipped. Build with the tokens and the documented patterns until then.
@@ -86,9 +86,10 @@ WebFetch https://design.ramoslabs.com/registry.json
 
 Two higher-leverage ways to consume it as an agent:
 
-- **MCP server** at `https://design.ramoslabs.com/mcp` — the DS as typed tools
-  (`search_tokens`, `get_token`, `check_contrast`, `list_docs`, `get_doc`, `lint_css`,
-  `get_agents_guide`). See [`docs/MCP.md`](./docs/MCP.md).
+- **MCP server** at `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` (mirror of
+  `https://design.ramoslabs.com/mcp`; prefer the `workers.dev` host, which is not behind Bot
+  Fight Mode) — the DS as typed tools (`search_tokens`, `get_token`, `check_contrast`,
+  `list_docs`, `get_doc`, `lint_css`, `get_agents_guide`). See [`docs/MCP.md`](./docs/MCP.md).
 - **Agent skill** (Claude Code) at [`.claude/skills/ramoslabs-ds/SKILL.md`](./.claude/skills/ramoslabs-ds/SKILL.md)
   (also served at `/skill.md`) — makes an agent build/review strictly by this system, never
   inventing tokens or rules. Copy it into a project's `.claude/skills/` or `~/.claude/skills/`.

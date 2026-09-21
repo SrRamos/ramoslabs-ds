@@ -23,9 +23,11 @@ Most component MCP servers exist to discover and install code. This one exists s
 
 ## Connect it
 
-Claude Code: `claude mcp add --transport http ramoslabs-ds https://design.ramoslabs.com/mcp`.
+Claude Code: `claude mcp add --transport http ramoslabs-ds https://ramoslabs-ds.edwardramosp.workers.dev/mcp`.
 
-Other MCP clients (Cursor, Windsurf, …): add a server entry with the URL `https://design.ramoslabs.com/mcp` and transport `http`. The agent then has `search_tokens`, `check_contrast`, `lint_css`, and the rest as first-class tools — no WebFetch, no HTML interpretation, no invented values.
+Other MCP clients (Cursor, Windsurf, …): add a server entry with the URL `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` and transport `http`. The agent then has `search_tokens`, `check_contrast`, `lint_css`, and the rest as first-class tools — no WebFetch, no HTML interpretation, no invented values.
+
+Both hosts serve the same server. Prefer the `workers.dev` endpoint above: the branded `https://design.ramoslabs.com/mcp` sits behind Bot Fight Mode, which can block cloud-hosted agents, while the `workers.dev` mirror always answers.
 
 ## Quick check
 

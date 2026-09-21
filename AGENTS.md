@@ -30,7 +30,8 @@ names and values one of two ways:
 - Read the served flat map from the deployed site: `WebFetch ${SITE_URL}/tokens.json` (names to
   resolved values), or `${SITE_URL}/tokens.css` for the CSS variable declarations.
 - Or build the package from source in the monorepo: `bun run --filter @ramoslabs/tokens build`,
-  which emits `dist/tokens.css`, `dist/tokens.ts`, and `dist/tokens.json`.
+  which emits `dist/tokens.css`, `dist/tokens.js` (with `dist/tokens.d.ts` typings), and
+  `dist/tokens.json`.
 
 Import the CSS variables once at your app entry, then reference them everywhere:
 
@@ -49,7 +50,7 @@ Import the CSS variables once at your app entry, then reference them everywhere:
 Typed values are available from the package root when you need them in TS:
 
 ```ts
-import { colorIndigo600 } from '@ramoslabs/tokens'
+import { colorPrimary } from '@ramoslabs/tokens'
 ```
 
 The flat token map (name to resolved value) is `@ramoslabs/tokens/json`.
@@ -62,9 +63,12 @@ is a defect. The JSON source is authoritative; the CSS and TS are always generat
 
 ## Component convention
 
-Components use the `SJ` prefix (for example `SJButton`, `SJInput`, `SJState`). When the
-Vue library ships, import from `@ramoslabs/vue` and reuse an existing `SJ` component before
-you build a new one. Do not reinvent a primitive the system already owns.
+Shared, domain-free components use the `SJ` prefix (for example `SJButton`, `SJInput`,
+`SJState`): built only from tokens and patterns, no business logic. App-specific widgets
+that compose `SJ` components and hold domain logic use the `W` prefix (for example
+`WEventCard`) and live in the consuming app, not in the shared library. When the Vue library
+ships, import `SJ` components from `@ramoslabs/vue` and reuse an existing `SJ` component
+before you build a new one. Do not reinvent a primitive the system already owns.
 
 ## The Framing Rule
 
@@ -72,7 +76,7 @@ The docs frame every guideline as `✓ Recommended` and `✕ Avoid`, each with a
 `Why:`. Keep that framing when you reason about a choice: state the rule, state the reason,
 then apply it. Do not restyle it as generic "do and don't" advice.
 
-## Accessibility floors, WCAG 2.1 AA minimum
+## Accessibility floors, WCAG 2.2 AA minimum
 
 - Text contrast at least 4.5:1. Large text and UI components at least 3:1.
 - Muted text has a floor: never lighter than `#64748b` (slate 500) on white. Slate 400 or
@@ -91,6 +95,9 @@ The deployed site (`https://design.ramoslabs.com`) serves:
 - `/registry.json`: machine-readable registry. Token totals by category, the pattern list
   with URLs, and a components array (empty until the Vue library ships).
 - `/tokens.json`: the flat DTCG token map.
+- `/tokens.css`: the same tokens as `:root` CSS variable declarations, ready to import.
+- `/skill.md`: the Claude Code agent skill (copy it to `.claude/skills/ramoslabs-ds/SKILL.md`).
+- `/stats.json`: live, cookieless usage — npm downloads for the token package.
 
 To pull the system into your working context, `WebFetch` the URL and read it:
 

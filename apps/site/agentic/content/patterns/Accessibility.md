@@ -48,7 +48,7 @@ Brand pairings, all clearing their floor:
 | White on Primary (`#ffffff` on `#4f46e5`) | 6.29:1 | AA |
 | White on Primary Dark (`#ffffff` on `#4338ca`) | 7.90:1 | AAA |
 
-Dark mode is not a reskin. Both themes are tuned by hand, both clear the floor, and both are wired to `prefers-color-scheme`.
+Dark mode is planned, not a reskin. When it ships, the dark theme will be tuned by hand, clear the same floor, and wire to `prefers-color-scheme` — a dark set of semantic tokens re-pointing the roles, never a renamed role. The system ships a single light theme today.
 
 Measure pairings in Foundations / Color Picker; token ratios in Foundations / Colors.
 
@@ -112,11 +112,11 @@ Focus states and motion preferences:
     outline-offset: 2px;
 }
 
-/* Custom focus ring utility */
+/* Custom focus ring utility — the canonical two-tone ring token */
 .focus-ring:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid transparent;   /* stays visible in forced-colors mode */
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    box-shadow: var(--shadow-focus);  /* 0 0 0 2px white, 0 0 0 4px primary */
 }
 
 /* Respect motion preferences globally */
@@ -125,6 +125,13 @@ Focus states and motion preferences:
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    /* Keep indeterminate progress turning slowly — a frozen spinner reads as a hung
+       app, not a still one (see Foundations / Motion). Do not collapse these. */
+    [role="progressbar"], .spinner, [data-indeterminate] {
+        animation-duration: 1.4s !important;
+        animation-iteration-count: infinite !important;
     }
 }
 
@@ -134,22 +141,11 @@ Focus states and motion preferences:
     transition: none !important;
 }
 
-/* Dark mode - automatic based on system preference */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-text-heading: #f1f5f9;
-        --color-text-body: #cbd5e1;
-        --color-surface: #1e293b;
-        --color-background: #0f172a;
-    }
-}
-
-/* Manual dark mode toggle (via class or data attr) */
-.dark, [data-theme="dark"] {
-    --color-text-heading: #f1f5f9;
-    --color-text-body: #cbd5e1;
-    /* ... all dark tokens ... */
-}
+/* Dark mode is planned, not shipped. A future release adds a dark set of SEMANTIC
+   tokens that re-points the roles (surface, background, text, border, feedback) under
+   both prefers-color-scheme and a [data-theme="dark"] override. It re-points role
+   tokens — product CSS never hardcodes a dark hex. The system ships one light theme
+   today; consume the light roles and they will move with the theme when dark lands. */
 ```
 
 Skip links and screen reader utilities:
@@ -162,7 +158,7 @@ Skip links and screen reader utilities:
     left: 1rem;
     padding: 1rem 1.5rem;
     background: var(--color-primary);
-    color: white;
+    color: var(--color-white);
     border-radius: var(--radius-md);
     font-weight: 600;
     text-decoration: none;
@@ -179,6 +175,7 @@ Skip links and screen reader utilities:
     margin: -1px;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
 }
