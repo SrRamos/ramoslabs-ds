@@ -3,6 +3,7 @@ import '../styles/global.css'
 import BaseHead from '../components/BaseHead.astro'
 import Sidebar from '../components/Sidebar.astro'
 import SiteFooter from '../components/SiteFooter.astro'
+import CookieConsent from '../components/CookieConsent.astro'
 import Icon from '../components/Icon.astro'
 
 interface Props {
@@ -44,6 +45,8 @@ const { title, description, path, ogType } = Astro.props
       </main>
     </div>
 
+    <CookieConsent />
+
     <style>
       .rl-shell {
         --rl-sidebar-w: 280px;
@@ -55,8 +58,8 @@ const { title, description, path, ogType } = Astro.props
         inset: 0 auto 0 0;
         width: var(--rl-sidebar-w);
         overflow-y: auto;
-        background: var(--color-surface, #fff);
-        border-right: 1px solid var(--color-border, #e2e8f0);
+        background: var(--color-surface);
+        border-right: 1px solid var(--color-border);
         z-index: 40;
       }
 
@@ -87,8 +90,8 @@ const { title, description, path, ogType } = Astro.props
           align-items: center;
           gap: var(--space-3, 0.75rem);
           padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
-          background: var(--color-surface, #fff);
-          border-bottom: 1px solid var(--color-border, #e2e8f0);
+          background: var(--color-surface);
+          border-bottom: 1px solid var(--color-border);
         }
         .rl-topbar__btn {
           display: inline-flex;
@@ -97,8 +100,8 @@ const { title, description, path, ogType } = Astro.props
           font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
           font-weight: 600;
           font-size: 0.9rem;
-          color: var(--color-text-heading, #0f172a);
-          background: var(--color-surface-secondary, #f1f5f9);
+          color: var(--color-text-heading);
+          background: var(--color-surface-secondary);
           border-radius: var(--radius-md, 8px);
           padding: 0.5rem 0.85rem;
           cursor: pointer;
@@ -106,7 +109,7 @@ const { title, description, path, ogType } = Astro.props
         .rl-topbar__title {
           font-family: var(--font-family-display, 'Red Hat Display', system-ui, sans-serif);
           font-weight: 800;
-          color: var(--color-text-heading, #0f172a);
+          color: var(--color-text-heading);
           text-decoration: none;
         }
 

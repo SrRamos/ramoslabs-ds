@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const title = 'Privacy & Cookies'
+const description =
+  'How the RamosLabs Design System documentation site uses analytics cookies, what we collect, and how to opt out.'
+---
+<BaseLayout title={title} description={description} path="/privacy/">
+  <article class="pv">
+    <h1 class="pv__title">Privacy &amp; cookies</h1>
+    <p class="pv__lead">
+      This is the documentation site for the RamosLabs Design System. We use a small amount of
+      privacy-conscious analytics to understand how the docs are used and make them better — nothing
+      more. You are in control, and you can opt out at any time.
+    </p>
+
+    <h2 class="pv__h2">What we use</h2>
+    <ul class="pv__list">
+      <li>
+        <strong>Google Analytics 4</strong> — aggregate usage metrics (pages viewed, referrers,
+        rough geography). We enable IP anonymization, so your full IP address is never stored.
+      </li>
+      <li>
+        <strong>Microsoft Clarity</strong> — anonymized heatmaps and session replays that show where
+        people click and scroll. We enable text masking, so the content you see or type is never
+        captured — only interaction patterns.
+      </li>
+    </ul>
+
+    <h2 class="pv__h2">Opt-out model</h2>
+    <p class="pv__p">
+      Analytics loads by default. The first time you visit, a notice tells you so and lets you
+      <strong>Reject</strong> or <strong>Accept</strong>. If you reject, both trackers are disabled
+      and their cookies are cleared from your browser. Your choice is remembered in a first-party
+      cookie for about 180 days.
+    </p>
+    <p class="pv__p">
+      Changed your mind? Use <button type="button" class="pv__inline-btn" data-rl-cookie-prefs
+        >Cookie preferences</button
+      > in the footer of any page to reopen the notice.
+    </p>
+
+    <h2 class="pv__h2">Cookies these tools set</h2>
+    <p class="pv__p">
+      When analytics is active: <code>_ga</code>, <code>_ga_*</code>, <code>_gid</code> (Google
+      Analytics), and <code>_clck</code>, <code>_clsk</code>, <code>MUID</code>, <code>CLID</code>,
+      <code>ANONCHK</code> (Microsoft Clarity). We also set one first-party cookie,
+      <code>rlds_consent</code>, to remember your choice. Rejecting clears the analytics cookies and
+      stops new ones from being set.
+    </p>
+
+    <h2 class="pv__h2">Contact</h2>
+    <p class="pv__p">
+      This site is operated by RAMOS SOLUTIONS S.A.S. For privacy questions, reach us via
+      <a class="pv__link" href="https://ramoslabs.com" target="_blank" rel="noreferrer"
+        >ramoslabs.com</a
+      >.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .pv {
+    max-width: 68ch;
+    font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
+    color: var(--color-text-body);
+    line-height: 1.65;
+  }
+  .pv__title {
+    font-family: var(--font-family-display, 'Red Hat Display', system-ui, sans-serif);
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    font-weight: 800;
+    color: var(--color-text-heading);
+    margin: 0 0 var(--space-4, 1rem);
+  }
+  .pv__lead {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-8, 2rem);
+  }
+  .pv__h2 {
+    font-family: var(--font-family-display, 'Red Hat Display', system-ui, sans-serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin: var(--space-8, 2rem) 0 var(--space-3, 0.75rem);
+  }
+  .pv__p {
+    margin: 0 0 var(--space-4, 1rem);
+  }
+  .pv__list {
+    margin: 0 0 var(--space-4, 1rem);
+    padding-left: var(--space-5, 1.25rem);
+  }
+  .pv__list li {
+    margin-bottom: var(--space-2, 0.5rem);
+  }
+  .pv strong {
+    color: var(--color-text-strong);
+    font-weight: 600;
+  }
+  .pv code {
+    font-family: var(--font-family-mono, ui-monospace, monospace);
+    font-size: 0.85em;
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs, 0.25rem);
+    padding: 0.05em 0.4em;
+  }
+  .pv__link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+  /* Reuse the exact footer trigger from anywhere, styled as an inline link. */
+  .pv__inline-btn {
+    font: inherit;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .pv__inline-btn:focus-visible {
+    outline: none;
+    border-radius: var(--radius-xs, 0.25rem);
+    box-shadow: var(--shadow-focus);
+  }
+</style>

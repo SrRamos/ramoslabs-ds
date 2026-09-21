@@ -10,6 +10,13 @@ interface Props {
 }
 const { title, description, path, ogType = 'website' } = Astro.props
 
+// Client analytics config (GA4 + Microsoft Clarity), injected below as
+// window.RLDS_ANALYTICS_CONFIG. IDs are baked at build time from env, with the
+// design system's own IDs as defaults; they are client-side identifiers (public by
+// nature). Set PUBLIC_GA4_ID / PUBLIC_CLARITY_ID to override, or to '' to disable.
+const ga4Id = import.meta.env.PUBLIC_GA4_ID ?? 'G-61S577384E'
+const clarityId = import.meta.env.PUBLIC_CLARITY_ID ?? 'ylv5ql7xqz'
+
 const site = Astro.site ?? new URL('https://design.ramoslabs.com')
 const canonical = new URL(path, site).href
 const ogImage = new URL('/og.png', site).href
@@ -35,6 +42,11 @@ const jsonLd = {
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Analytics config only; loads nothing. The consent script reads this. -->
+<script is:inline define:vars={{ ga4Id, clarityId }}>
+  window.RLDS_ANALYTICS_CONFIG = { ga4Id: ga4Id, clarityId: clarityId };
+</script>
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />

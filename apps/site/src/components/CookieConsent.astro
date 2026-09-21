@@ -1,0 +1,156 @@
+---
+// Opt-out cookie banner for the RamosLabs DS documentation site.
+//
+// Informational, NOT modal: analytics already loads by default; this notice lets a
+// visitor opt out and links to the full policy. It is shown only when no choice has
+// been made yet (consent === 'unset'), revealed by JS after the cookie is read — so
+// the prerendered HTML ships hidden and returning visitors never see a flash.
+// As a non-blocking region it uses role="region" and does not steal focus on load.
+---
+<section
+  class="rl-cc"
+  data-rl-cookie-consent
+  role="region"
+  aria-label="Cookie notice"
+  hidden
+>
+  <p class="rl-cc__text">
+    We use analytics cookies to understand how this documentation is used and make it better.
+    You can opt out anytime. See our <a class="rl-cc__link" href="/privacy/">privacy &amp; cookies notice</a>.
+  </p>
+  <div class="rl-cc__actions">
+    <button type="button" class="rl-cc__btn rl-cc__btn--ghost" data-rl-cc-reject>Reject</button>
+    <button type="button" class="rl-cc__btn rl-cc__btn--primary" data-rl-cc-accept>Accept</button>
+  </div>
+</section>
+
+<style>
+  /* Compact card pinned bottom-left — informational, not a modal overlay. */
+  .rl-cc {
+    position: fixed;
+    left: var(--space-4, 1rem);
+    bottom: var(--space-4, 1rem);
+    z-index: 80;
+    width: min(420px, calc(100% - (2 * var(--space-4, 1rem))));
+    padding: var(--space-4, 1rem);
+    padding-bottom: calc(var(--space-4, 1rem) + env(safe-area-inset-bottom));
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg, 0.75rem);
+    box-shadow: var(--shadow-lg);
+    font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
+  }
+  .rl-cc[hidden] {
+    display: none;
+  }
+
+  .rl-cc__text {
+    margin: 0 0 var(--space-3, 0.75rem);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+  .rl-cc__link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .rl-cc__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2, 0.5rem);
+  }
+  .rl-cc__btn {
+    min-height: 44px;
+    padding: 0 var(--space-4, 1rem);
+    border-radius: var(--radius-pill, 9999px);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background 160ms var(--easing-in-out, ease),
+      border-color 160ms var(--easing-in-out, ease),
+      color 160ms var(--easing-in-out, ease);
+  }
+  /* Never remove the focus outline without an equivalent — DS a11y floor. */
+  .rl-cc__btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .rl-cc__btn--ghost {
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-secondary);
+  }
+  .rl-cc__btn--ghost:hover {
+    background: var(--color-surface-secondary);
+  }
+  .rl-cc__btn--primary {
+    border: 1px solid var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+  .rl-cc__btn--primary:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+  }
+
+  /* Mobile: full-width card, buttons share the row. */
+  @media (max-width: 480px) {
+    .rl-cc {
+      left: var(--space-3, 0.75rem);
+      right: var(--space-3, 0.75rem);
+      width: auto;
+    }
+    .rl-cc__actions {
+      justify-content: stretch;
+    }
+    .rl-cc__btn {
+      flex: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rl-cc__btn {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { readConsent, writeConsent, applyConsent } from '../scripts/analytics'
+
+  const banner = document.querySelector<HTMLElement>('[data-rl-cookie-consent]')
+
+  // Opt-out model: honor any prior decision and load by default on every visit.
+  applyConsent()
+
+  const show = () => banner?.removeAttribute('hidden')
+  const hide = () => banner?.setAttribute('hidden', '')
+
+  // First-time visitors (no decision yet) see the notice.
+  if (readConsent() === 'unset') show()
+
+  banner?.querySelector('[data-rl-cc-accept]')?.addEventListener('click', () => {
+    writeConsent('accepted')
+    applyConsent()
+    hide()
+  })
+  banner?.querySelector('[data-rl-cc-reject]')?.addEventListener('click', () => {
+    writeConsent('rejected')
+    applyConsent()
+    hide()
+  })
+
+  // Footer "Cookie preferences" reopens the notice (reset to no-decision).
+  document.querySelectorAll('[data-rl-cookie-prefs]').forEach((el) =>
+    el.addEventListener('click', (e) => {
+      e.preventDefault()
+      writeConsent('unset')
+      show()
+    }),
+  )
+</script>

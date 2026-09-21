@@ -14,6 +14,10 @@ const licenseUrl = `${SITE.repo}/blob/main/LICENSE`
     <a class="rl-footer__link" href={licenseUrl} target="_blank" rel="noreferrer">License</a>
     <span class="rl-footer__sep" aria-hidden="true">·</span>
     <a class="rl-footer__link" href={SITE.repo} target="_blank" rel="noreferrer">Repository</a>
+    <span class="rl-footer__sep" aria-hidden="true">·</span>
+    <a class="rl-footer__link" href="/privacy/">Privacy</a>
+    <span class="rl-footer__sep" aria-hidden="true">·</span>
+    <button type="button" class="rl-footer__link rl-footer__btn" data-rl-cookie-prefs>Cookie preferences</button>
   </p>
 </footer>
 
@@ -21,17 +25,17 @@ const licenseUrl = `${SITE.repo}/blob/main/LICENSE`
   .rl-footer {
     margin-top: var(--space-16, 4rem);
     padding: var(--space-6, 1.5rem) 0 var(--space-8, 2rem);
-    border-top: 1px solid var(--color-border, #e2e8f0);
+    border-top: 1px solid var(--color-border);
     font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
     line-height: 1.6;
-    color: var(--color-text-muted, #64748b);
+    color: var(--color-text-muted);
     text-align: center;
   }
   .rl-footer__brand {
     font-family: var(--font-family-display, 'Red Hat Display', system-ui, sans-serif);
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--color-text-heading, #0f172a);
+    color: var(--color-text-heading);
     margin: 0 0 var(--space-2, 0.5rem);
   }
   .rl-footer__line {
@@ -46,11 +50,24 @@ const licenseUrl = `${SITE.repo}/blob/main/LICENSE`
     margin: 0 var(--space-2, 0.5rem);
   }
   .rl-footer__link {
-    color: var(--color-primary, #4f46e5);
+    color: var(--color-primary);
     font-weight: 500;
     text-decoration: none;
   }
   .rl-footer__link:hover {
     text-decoration: underline;
+  }
+  /* The cookie-preferences trigger is a button styled as an inline link. */
+  .rl-footer__btn {
+    font: inherit;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .rl-footer__link:focus-visible {
+    outline: none;
+    border-radius: var(--radius-xs, 0.25rem);
+    box-shadow: var(--shadow-focus);
   }
 </style>
