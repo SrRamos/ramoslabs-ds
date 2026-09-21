@@ -6,7 +6,7 @@ import { pages, SITE, type Page } from '../src/data/pages'
 
 // RamosLabs DS agentic layer, as an Astro integration.
 // On `astro:build:done` it emits, into the build output (dist/):
-//   llms.txt, llms-full.txt, registry.json, robots.txt, AGENTS.md, tokens.json
+//   llms.txt, llms-full.txt, registry.json, robots.txt, AGENTS.md, tokens.json, tokens.css
 // It also writes the committed copies at the repo root for versioning.
 // The production URL comes from Astro's `site` config — the single source of truth,
 // so page links in every artifact are clean, crawlable URLs.
@@ -18,6 +18,7 @@ const agenticDir = __dirname
 const repoRoot = path.resolve(agenticDir, '..', '..', '..')
 const contentDir = path.join(agenticDir, 'content')
 const tokensJsonPath = path.join(repoRoot, 'packages', 'tokens', 'dist', 'tokens.json')
+const tokensCssPath = path.join(repoRoot, 'packages', 'tokens', 'dist', 'tokens.css')
 const tokensPkgPath = path.join(repoRoot, 'packages', 'tokens', 'package.json')
 const agentsMdPath = path.join(repoRoot, 'AGENTS.md')
 const skillPath = path.join(repoRoot, '.claude', 'skills', 'ramoslabs-ds', 'SKILL.md')
@@ -289,6 +290,11 @@ export function agentic(): AstroIntegration {
           fs.writeFileSync(path.join(outDir, name), content)
         }
         fs.copyFileSync(tokensJsonPath, path.join(outDir, 'tokens.json'))
+        // Serve the compiled CSS variables so agents without npm can consume the tokens
+        // directly (announced in AGENTS.md / README as a machine source).
+        if (fs.existsSync(tokensCssPath)) {
+          fs.copyFileSync(tokensCssPath, path.join(outDir, 'tokens.css'))
+        }
         if (fs.existsSync(agentsMdPath)) {
           fs.copyFileSync(agentsMdPath, path.join(outDir, 'AGENTS.md'))
         }

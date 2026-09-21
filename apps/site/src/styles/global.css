@@ -46,8 +46,8 @@ html {
 body {
   margin: 0;
   font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
-  color: var(--color-text-body, #334155);
-  background: var(--color-background, #f8fafc);
+  color: var(--color-text-body);
+  background: var(--color-background);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -87,6 +87,6 @@ h6 {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary, #4f46e5);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }

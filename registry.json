@@ -8,10 +8,10 @@
   "install": "bun add @ramoslabs/tokens",
   "generatedFrom": "@ramoslabs/tokens dist JSON + distilled page content",
   "tokens": {
-    "total": 213,
+    "total": 214,
     "byCategory": {
       "breakpoint": 5,
-      "color": 130,
+      "color": 131,
       "duration": 3,
       "easing": 5,
       "radius": 8,

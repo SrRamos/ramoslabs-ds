@@ -118,4 +118,4 @@ Walk down until one fits.
 
 ## Sources
 
-Utility-first model and the extract-to-component threshold: Tailwind CSS and Adam Wathan, CSS Utility Classes and Separation of Concerns. The composition-plus-blocks balance follows Andy Bell, CUBE CSS. The visually-hidden recipe: W3C WAI WCAG technique C7 and Scott O'Hara, Inclusively Hidden. Visible focus is WCAG 2.1 SC 2.4.7. The exact class names, token bindings, and the reading of `.sr-only` and `.focus-ring` as required infrastructure are specific to this system.
+Utility-first model and the extract-to-component threshold: Tailwind CSS and Adam Wathan, CSS Utility Classes and Separation of Concerns. The composition-plus-blocks balance follows Andy Bell, CUBE CSS. The visually-hidden recipe: W3C WAI WCAG technique C7 and Scott O'Hara, Inclusively Hidden. Visible focus is WCAG 2.2 SC 2.4.7. The exact class names, token bindings, and the reading of `.sr-only` and `.focus-ring` as required infrastructure are specific to this system.

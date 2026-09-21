@@ -277,24 +277,24 @@ const page = pages.find((p) => p.id === 'responsive')!
 
 <style is:global>
   .rs {
-    --ink: #0f172a;
-    --ink-2: #334155;
-    --ink-3: #475569;
-    --muted: #64748b;
-    --line: #e6e8eb;
-    --line-2: #e2e8f0;
-    --surface: #ffffff;
-    --wash: #f8fafc;
-    --wash-2: #f1f5f9;
-    --indigo: #4f46e5;
-    --indigo-700: #4338ca;
-    --indigo-800: #3730a3;
-    --indigo-500: #6366f1;
-    --indigo-400: #818cf8;
-    --indigo-300: #a5b4fc;
-    --indigo-200: #c7d2fe;
-    --indigo-100: #e0e7ff;
-    --indigo-50: #eef2ff;
+    --ink: var(--color-slate-900);
+    --ink-2: var(--color-slate-700);
+    --ink-3: var(--color-slate-600);
+    --muted: var(--color-slate-500);
+    --line: var(--color-border);
+    --line-2: var(--color-slate-200);
+    --surface: var(--color-white);
+    --wash: var(--color-slate-50);
+    --wash-2: var(--color-slate-100);
+    --indigo: var(--color-indigo-600);
+    --indigo-700: var(--color-indigo-700);
+    --indigo-800: var(--color-indigo-800);
+    --indigo-500: var(--color-indigo-500);
+    --indigo-400: var(--color-indigo-400);
+    --indigo-300: var(--color-indigo-300);
+    --indigo-200: var(--color-indigo-200);
+    --indigo-100: var(--color-indigo-100);
+    --indigo-50: var(--color-indigo-50);
     font-family: 'Rubik', system-ui, sans-serif;
     color: var(--ink-2);
   }
@@ -305,7 +305,7 @@ const page = pages.find((p) => p.id === 'responsive')!
     border-radius: 20px;
     overflow: hidden;
     padding: 3.5rem 2.5rem;
-    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    background: radial-gradient(120% 140% at 100% 0%, var(--color-indigo-600) 0%, var(--color-indigo-700) 42%, var(--color-indigo-900) 100%);
     box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
   .rs-hero-eyebrow {
@@ -313,12 +313,12 @@ const page = pages.find((p) => p.id === 'responsive')!
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: #c7d2fe;
+    color: var(--color-indigo-200);
     margin: 0 0 1rem;
   }
   .rs-hero h1 {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #ffffff;
+    color: var(--color-white);
     font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
     font-weight: 900;
     line-height: 1.05;
@@ -327,19 +327,19 @@ const page = pages.find((p) => p.id === 'responsive')!
     max-width: 18ch;
   }
   .rs-hero p {
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
     font-size: 1.0625rem;
     line-height: 1.6;
     max-width: 44rem;
     margin: 0;
   }
-  .rs-hero p strong { color: #ffffff; font-weight: 700; }
+  .rs-hero p strong { color: var(--color-white); font-weight: 700; }
   .rs-hero-code {
     font-family: 'SF Mono', 'Monaco', monospace;
     background: rgba(255,255,255,0.14);
     padding: 0.05rem 0.4rem;
     border-radius: 4px;
-    color: #ffffff;
+    color: var(--color-white);
   }
 
   /* ---------- Section frame ---------- */
@@ -414,12 +414,12 @@ const page = pages.find((p) => p.id === 'responsive')!
     border-radius: 8px;
     overflow: hidden;
   }
-  .rs-scale-seg.base { background: #e2e8f0; }
-  .rs-scale-seg.sm { background: #c7d2fe; }
-  .rs-scale-seg.md { background: #a5b4fc; }
-  .rs-scale-seg.lg { background: #818cf8; }
-  .rs-scale-seg.xl { background: #6366f1; }
-  .rs-scale-seg.xxl { background: #4f46e5; }
+  .rs-scale-seg.base { background: var(--color-slate-200); }
+  .rs-scale-seg.sm { background: var(--color-indigo-200); }
+  .rs-scale-seg.md { background: var(--color-indigo-300); }
+  .rs-scale-seg.lg { background: var(--color-indigo-400); }
+  .rs-scale-seg.xl { background: var(--color-indigo-500); }
+  .rs-scale-seg.xxl { background: var(--color-indigo-600); }
   .rs-scale-labels { display: flex; margin-top: 0.75rem; }
   .rs-scale-tick {
     display: flex;
@@ -453,7 +453,7 @@ const page = pages.find((p) => p.id === 'responsive')!
     font-weight: 700;
     font-size: 0.6875rem;
     text-transform: uppercase;
-    color: #475569;
+    color: var(--color-slate-600);
     letter-spacing: 0.06em;
     background: var(--wash);
   }
@@ -641,7 +641,7 @@ const page = pages.find((p) => p.id === 'responsive')!
     aspect-ratio: 9 / 17;
     max-width: 210px;
     margin: 0 auto;
-    border: 10px solid #0f172a;
+    border: 10px solid var(--color-slate-900);
     border-radius: 34px;
     background: var(--indigo-50);
     overflow: hidden;
@@ -650,7 +650,7 @@ const page = pages.find((p) => p.id === 'responsive')!
     position: absolute; top: 0; left: 50%;
     transform: translateX(-50%);
     width: 44%; height: 20px;
-    background: #0f172a;
+    background: var(--color-slate-900);
     border-radius: 0 0 12px 12px;
     z-index: 2;
   }
@@ -668,7 +668,7 @@ const page = pages.find((p) => p.id === 'responsive')!
     height: 30px; border-radius: 8px;
     background: var(--indigo);
     display: flex; align-items: center; justify-content: center;
-    color: #ffffff;
+    color: var(--color-white);
     font-size: 0.6875rem; font-weight: 600;
     z-index: 1;
   }
@@ -677,7 +677,7 @@ const page = pages.find((p) => p.id === 'responsive')!
     transform: translateX(-50%);
     width: 36%; height: 4px;
     border-radius: 999px;
-    background: #94a3b8;
+    background: var(--color-slate-400);
     z-index: 2;
   }
   .rs-safearea-note { font-size: 0.8125rem; color: var(--muted); line-height: 1.55; margin: 0.75rem 0 0; }

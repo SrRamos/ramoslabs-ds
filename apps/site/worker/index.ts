@@ -35,6 +35,7 @@ const AGENT_FILES = new Set([
   '/llms.txt',
   '/llms-full.txt',
   '/tokens.json',
+  '/tokens.css',
   '/registry.json',
   '/skill.md',
   '/AGENTS.md',

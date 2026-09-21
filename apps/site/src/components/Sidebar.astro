@@ -73,7 +73,7 @@ const groups = [
     width: 28px;
     height: 28px;
     border-radius: var(--radius-md, 8px);
-    background: linear-gradient(135deg, var(--color-primary, #4f46e5), var(--color-secondary, #7c3aed));
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     flex-shrink: 0;
     box-shadow: var(--shadow-sm);
   }
@@ -82,7 +82,7 @@ const groups = [
     font-weight: 800;
     font-size: 1.05rem;
     line-height: 1.05;
-    color: var(--color-text-heading, #0f172a);
+    color: var(--color-text-heading);
     display: flex;
     flex-direction: column;
   }
@@ -92,7 +92,7 @@ const groups = [
     font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-text-muted, #64748b);
+    color: var(--color-text-muted);
     margin-top: 2px;
   }
 
@@ -115,21 +115,21 @@ const groups = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-text-muted, #64748b);
+    color: var(--color-text-muted);
   }
   .rl-nav__group-tier {
     font-size: 0.6rem;
     font-weight: 700;
-    color: var(--color-primary, #4f46e5);
-    background: var(--color-primary-surface, #eef2ff);
+    color: var(--color-primary);
+    background: var(--color-primary-surface);
     padding: 0.15rem 0.45rem;
     border-radius: var(--radius-sm, 4px);
     letter-spacing: 0.04em;
   }
   /* Decorative violet marks the agent-facing group apart from the tiered doctrine. */
   .rl-nav__group-tier.is-agentic {
-    color: var(--color-secondary, #7c3aed);
-    background: var(--color-secondary-surface, #f5f3ff);
+    color: var(--color-secondary);
+    background: var(--color-secondary-surface);
   }
 
   .rl-nav__link {
@@ -139,7 +139,7 @@ const groups = [
     padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
     border-radius: var(--radius-md, 8px);
     text-decoration: none;
-    color: var(--color-text-secondary, #334155);
+    color: var(--color-text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
     line-height: 1.2;
@@ -147,20 +147,20 @@ const groups = [
   }
   .rl-nav__link .material-symbols-outlined {
     font-size: 20px;
-    color: var(--color-text-muted, #64748b);
+    color: var(--color-text-muted);
   }
   @media (hover: hover) {
     .rl-nav__link:hover {
-      background: var(--color-surface-hover, #f1f5f9);
-      color: var(--color-text-heading, #0f172a);
+      background: var(--color-surface-hover);
+      color: var(--color-text-heading);
     }
   }
   .rl-nav__link.is-active {
-    background: var(--color-primary-surface, #eef2ff);
-    color: var(--color-primary-dark, #3730a3);
+    background: var(--color-primary-surface);
+    color: var(--color-primary-dark);
     font-weight: 600;
   }
   .rl-nav__link.is-active .material-symbols-outlined {
-    color: var(--color-primary, #4f46e5);
+    color: var(--color-primary);
   }
 </style>

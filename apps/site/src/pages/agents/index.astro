@@ -176,7 +176,7 @@ const assets = [
     gap: 0.5rem;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: var(--color-white);
     font-family: var(--font-family-sans);
     font-size: 0.72rem;
     font-weight: 600;
@@ -188,7 +188,7 @@ const assets = [
   }
   .ag-hero-title {
     font-family: var(--font-family-display);
-    color: #fff;
+    color: var(--color-white);
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 900;
     line-height: 1.03;
@@ -221,17 +221,17 @@ const assets = [
     text-decoration: none;
     transition: background 120ms ease, transform 120ms ease;
   }
-  .ag-btn-solid { background: #fff; color: var(--color-primary-dark); }
+  .ag-btn-solid { background: var(--color-white); color: var(--color-primary-dark); }
   .ag-btn-ghost {
     background: rgba(255, 255, 255, 0.14);
-    color: #fff;
+    color: var(--color-white);
     border: 1px solid rgba(255, 255, 255, 0.35);
   }
   @media (hover: hover) and (pointer: fine) {
     .ag-btn-solid:hover { transform: translateY(-1px); }
     .ag-btn-ghost:hover { background: rgba(255, 255, 255, 0.24); }
   }
-  .ag-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .ag-btn:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 
   /* ===== SECTIONS ===== */
   .ag-section { margin-bottom: 5rem; }
@@ -323,7 +323,7 @@ const assets = [
     background: var(--color-primary-surface);
     color: var(--color-primary);
   }
-  .ag-card.featured .ag-card-icon { background: #fff; }
+  .ag-card.featured .ag-card-icon { background: var(--color-white); }
   .ag-card-icon .material-symbols-outlined { font-size: 22px; }
   .ag-card-tag {
     font-family: 'SF Mono', 'Monaco', monospace;
@@ -334,7 +334,7 @@ const assets = [
     padding: 0.25rem 0.6rem;
     border-radius: var(--radius-sm);
   }
-  .ag-card.featured .ag-card-tag { background: #fff; }
+  .ag-card.featured .ag-card-tag { background: var(--color-white); }
   .ag-card-title {
     font-family: var(--font-family-display);
     font-weight: 700;

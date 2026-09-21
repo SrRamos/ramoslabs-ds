@@ -166,7 +166,7 @@ const managers = [
     gap: 0.5rem;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: var(--color-white);
     font-family: var(--font-family-sans);
     font-size: 0.72rem;
     font-weight: 600;
@@ -178,7 +178,7 @@ const managers = [
   }
   .in-hero-title {
     font-family: var(--font-family-display);
-    color: #fff;
+    color: var(--color-white);
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 900;
     line-height: 1.03;
@@ -221,7 +221,7 @@ const managers = [
   .in-install-cmd {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.9rem;
-    color: #fff;
+    color: var(--color-white);
     overflow-x: auto;
     white-space: nowrap;
     flex: 1;
@@ -236,7 +236,7 @@ const managers = [
     font-weight: 600;
     font-size: 0.82rem;
     color: var(--color-primary-dark);
-    background: #fff;
+    background: var(--color-white);
     border: none;
     border-radius: var(--radius-sm);
     padding: 0.45rem 0.75rem;
@@ -244,7 +244,7 @@ const managers = [
     transition: background 120ms ease;
   }
   .in-copy.is-copied { background: var(--color-success-surface); color: var(--color-success-text); }
-  .in-copy:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .in-copy:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 
   /* ===== SECTIONS ===== */
   .in-section { margin-bottom: 5rem; }
@@ -278,7 +278,7 @@ const managers = [
     width: 1.75rem;
     height: 1.75rem;
     background: var(--color-primary);
-    color: #fff;
+    color: var(--color-white);
     border-radius: var(--radius-pill);
     font-family: var(--font-family-sans);
     font-size: 0.85rem;
@@ -368,28 +368,28 @@ const managers = [
 
   /* ===== CODE BLOCKS (dark terminal chrome, the site's established code treatment) ===== */
   .in-code {
-    background: #1e293b;
+    background: var(--color-slate-800);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     max-width: 44rem;
   }
   .in-code-bar {
-    background: #334155;
+    background: var(--color-slate-700);
     padding: 0.6rem 0.9rem;
     display: flex;
     align-items: center;
     gap: 0.45rem;
   }
   .in-dot { width: 11px; height: 11px; border-radius: var(--radius-pill); }
-  .in-dot.d1 { background: #64748b; }
-  .in-dot.d2 { background: #94a3b8; }
-  .in-dot.d3 { background: #cbd5e1; }
+  .in-dot.d1 { background: var(--color-slate-500); }
+  .in-dot.d2 { background: var(--color-slate-400); }
+  .in-dot.d3 { background: var(--color-slate-300); }
   .in-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    color: #cbd5e1;
+    color: var(--color-slate-300);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
@@ -399,16 +399,16 @@ const managers = [
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.82rem;
     line-height: 1.75;
-    color: #e2e8f0;
+    color: var(--color-slate-200);
     overflow-x: auto;
     white-space: pre;
   }
-  .in-code .c-cm { color: #94a3b8; font-style: italic; }
-  .in-code .c-kw { color: #c084fc; }
-  .in-code .c-sel { color: #fbbf24; }
-  .in-code .c-prop { color: #7dd3fc; }
-  .in-code .c-v { color: #a5f3fc; }
-  .in-code .c-p { color: #94a3b8; }
+  .in-code .c-cm { color: var(--color-slate-400); font-style: italic; }
+  .in-code .c-kw { color: var(--color-violet-400); }
+  .in-code .c-sel { color: var(--color-amber-400); }
+  .in-code .c-prop { color: var(--color-indigo-300); }
+  .in-code .c-v { color: var(--color-indigo-200); }
+  .in-code .c-p { color: var(--color-slate-400); }
 
   /* ===== TWO-COLUMN PANELS ===== */
   .in-cols {

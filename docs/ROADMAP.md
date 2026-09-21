@@ -1,8 +1,12 @@
 # RamosLabs Design System — Roadmap: npm publish → Astro site → Cloudflare Pages
 
-This is the consolidated delivery plan for shipping the two remaining artifacts of the
-RamosLabs DS: the npm package and the public documentation site. It records the decisions,
-their rationale, and the execution sequence.
+> **Historical planning record — partially superseded.** This roadmap captures the original
+> plan. Two decisions changed in execution: the site deploys as a **Cloudflare Workers
+> static-assets** app (a `main` Worker in `wrangler.toml` that also serves `/mcp` and the
+> Analytics Engine telemetry), **not** Cloudflare Pages / `pages_build_output_dir`; and the
+> build runs on **Astro 7**, not Astro 5. The sitemap ships as `sitemap-index.xml`. See
+> `DEPLOY.md` for the current, authoritative deploy steps. The rationale below is kept for
+> context.
 
 ## Decisions & rationale
 

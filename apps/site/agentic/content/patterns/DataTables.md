@@ -15,7 +15,7 @@ A data table is a native `<table>` first, always. Density, sorting, pagination, 
 Build the table from real elements: a `<table>` with a `<caption>`, a `<thead>` and `<tbody>`, and `<th>` cells that carry `scope`. Without `<th>`, `scope`, and the table role, a screen reader cannot announce "column Amount, row Order 4521". The row and column relationship is simply lost.
 
 **Rule:** Use a real `<table>` with `<caption>`, `<thead>` / `<tbody>`, and `<th scope="col">` for column headers plus `<th scope="row">` for each row's identifying cell.
-**Why:** WCAG 2.1 SC 1.3.1 Info and Relationships (Level A) requires that structure conveyed visually be programmatically determinable. Scope is inferred in simple tables, but MDN and GOV.UK both advise setting it explicitly, because some assistive technology draws the wrong inference.
+**Why:** WCAG 2.2 SC 1.3.1 Info and Relationships (Level A) requires that structure conveyed visually be programmatically determinable. Scope is inferred in simple tables, but MDN and GOV.UK both advise setting it explicitly, because some assistive technology draws the wrong inference.
 
 **Rule:** The `<caption>` is the table's accessible name. Give every table one.
 **Why:** GOV.UK: a caption helps users find, navigate, and understand tables. It lets a screen reader user decide whether to read on or skip the table.

@@ -232,13 +232,13 @@ const copyToken = async () => {
   font-family: 'Red Hat Display', system-ui, sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text-heading, #0f172a);
+  color: var(--color-text-heading, var(--color-slate-900));
   margin: 0 0 0.25rem;
 }
 
 .token-picker__subtitle {
   font-size: 0.875rem;
-  color: var(--color-text-muted, #94a3b8);
+  color: var(--color-text-muted, var(--color-slate-400));
   margin: 0;
 }
 
@@ -260,13 +260,13 @@ const copyToken = async () => {
   gap: 0.25rem;
   padding: 0.75rem;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  color: #ffffff;
+  color: var(--color-white);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 .token-picker__swatch--light {
-  color: #0f172a;
+  color: var(--color-slate-900);
   text-shadow: none;
 }
 
@@ -277,7 +277,7 @@ const copyToken = async () => {
 
 .token-picker__swatch:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--color-primary, #4f46e5);
+  box-shadow: 0 0 0 3px var(--color-primary, var(--color-indigo-600));
 }
 
 .token-picker__swatch-name {
@@ -295,8 +295,8 @@ const copyToken = async () => {
 .token-picker__details {
   margin-top: 1.5rem;
   padding: 1.5rem;
-  background: var(--color-surface, #ffffff);
-  border: 1px solid var(--color-border, #e6e8eb);
+  background: var(--color-surface, var(--color-white));
+  border: 1px solid var(--color-border, var(--color-border));
   border-radius: 16px;
 }
 
@@ -329,15 +329,15 @@ const copyToken = async () => {
   font-family: 'Red Hat Display', sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--color-text-heading, #0f172a);
+  color: var(--color-text-heading, var(--color-slate-900));
   text-transform: capitalize;
 }
 
 .token-picker__selected-token {
   font-family: 'SF Mono', 'Monaco', monospace;
   font-size: 0.8125rem;
-  color: var(--color-primary, #4f46e5);
-  background: var(--color-surface-secondary, #f8fafc);
+  color: var(--color-primary, var(--color-indigo-600));
+  background: var(--color-surface-secondary, var(--color-slate-50));
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   display: inline-block;
@@ -347,7 +347,7 @@ const copyToken = async () => {
 .token-picker__selected-value {
   font-family: 'SF Mono', 'Monaco', monospace;
   font-size: 0.75rem;
-  color: var(--color-text-muted, #94a3b8);
+  color: var(--color-text-muted, var(--color-slate-400));
 }
 
 .token-picker__contrast {
@@ -359,7 +359,7 @@ const copyToken = async () => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-text-muted, #94a3b8);
+  color: var(--color-text-muted, var(--color-slate-400));
   margin: 0 0 0.75rem;
 }
 
@@ -393,7 +393,7 @@ const copyToken = async () => {
   font-family: 'SF Mono', 'Monaco', monospace;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text-heading, #0f172a);
+  color: var(--color-text-heading, var(--color-slate-900));
 }
 
 .token-picker__contrast-badge {
@@ -406,23 +406,23 @@ const copyToken = async () => {
 }
 
 .token-picker__contrast-badge--aaa {
-  background: #dcfce7;
-  color: #166534;
+  background: var(--color-green-100);
+  color: var(--color-green-800);
 }
 
 .token-picker__contrast-badge--aa {
-  background: #d1fae5;
-  color: #047857;
+  background: var(--color-emerald-100);
+  color: var(--color-emerald-700);
 }
 
 .token-picker__contrast-badge--aa-large {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--color-amber-100);
+  color: var(--color-amber-800);
 }
 
 .token-picker__contrast-badge--fail {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-red-100);
+  color: var(--color-red-600);
 }
 
 .token-picker__copy {
@@ -432,7 +432,7 @@ const copyToken = async () => {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.875rem 1.5rem;
-  background: var(--color-primary, #4f46e5);
+  background: var(--color-primary, var(--color-indigo-600));
   color: white;
   border: none;
   border-radius: 9999px;
@@ -444,7 +444,7 @@ const copyToken = async () => {
 }
 
 .token-picker__copy:hover {
-  background: var(--color-primary-dark, #4338ca);
+  background: var(--color-primary-dark, var(--color-indigo-700));
 }
 
 .token-picker__copy:active {
@@ -455,14 +455,14 @@ const copyToken = async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #22c55e;
+  color: var(--color-green-500);
 }
 
 .token-picker__toast {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: #0f172a;
+  background: var(--color-slate-900);
   color: white;
   padding: 0.75rem 1.25rem;
   border-radius: 8px;
@@ -475,7 +475,7 @@ const copyToken = async () => {
 }
 
 .token-picker__toast svg {
-  color: #22c55e;
+  color: var(--color-green-500);
 }
 
 /* Transitions */
@@ -504,88 +504,88 @@ const copyToken = async () => {
 /* Dark mode support */
 .dark .token-picker,
 :global([data-theme="dark"]) .token-picker {
-  color: #f1f5f9;
+  color: var(--color-slate-100);
 }
 
 .dark .token-picker__title,
 :global([data-theme="dark"]) .token-picker__title {
-  color: #f1f5f9;
+  color: var(--color-slate-100);
 }
 
 .dark .token-picker__subtitle,
 :global([data-theme="dark"]) .token-picker__subtitle {
-  color: #64748b;
+  color: var(--color-slate-500);
 }
 
 .dark .token-picker__details,
 :global([data-theme="dark"]) .token-picker__details {
-  background: #1e293b;
-  border-color: #334155;
+  background: var(--color-slate-800);
+  border-color: var(--color-slate-700);
 }
 
 .dark .token-picker__selected-name,
 :global([data-theme="dark"]) .token-picker__selected-name {
-  color: #f1f5f9;
+  color: var(--color-slate-100);
 }
 
 .dark .token-picker__selected-token,
 :global([data-theme="dark"]) .token-picker__selected-token {
-  background: #0f172a;
-  color: #818cf8;
+  background: var(--color-slate-900);
+  color: var(--color-indigo-400);
 }
 
 .dark .token-picker__selected-value,
 :global([data-theme="dark"]) .token-picker__selected-value {
-  color: #64748b;
+  color: var(--color-slate-500);
 }
 
 .dark .token-picker__contrast-title,
 :global([data-theme="dark"]) .token-picker__contrast-title {
-  color: #64748b;
+  color: var(--color-slate-500);
 }
 
 .dark .token-picker__contrast-value,
 :global([data-theme="dark"]) .token-picker__contrast-value {
-  color: #f1f5f9;
+  color: var(--color-slate-100);
 }
 
 .dark .token-picker__contrast-badge--aaa,
 :global([data-theme="dark"]) .token-picker__contrast-badge--aaa {
-  background: #052e16;
-  color: #4ade80;
+  background: var(--color-green-950);
+  color: var(--color-green-400);
 }
 
 .dark .token-picker__contrast-badge--aa,
 :global([data-theme="dark"]) .token-picker__contrast-badge--aa {
-  background: #064e3b;
-  color: #34d399;
+  background: var(--color-emerald-900);
+  color: var(--color-emerald-400);
 }
 
 .dark .token-picker__contrast-badge--aa-large,
 :global([data-theme="dark"]) .token-picker__contrast-badge--aa-large {
-  background: #422006;
-  color: #fbbf24;
+  background: var(--color-amber-950);
+  color: var(--color-amber-400);
 }
 
 .dark .token-picker__contrast-badge--fail,
 :global([data-theme="dark"]) .token-picker__contrast-badge--fail {
-  background: #450a0a;
-  color: #f87171;
+  background: var(--color-red-950);
+  color: var(--color-red-400);
 }
 
 .dark .token-picker__copy,
 :global([data-theme="dark"]) .token-picker__copy {
-  background: #6366f1;
+  background: var(--color-indigo-500);
 }
 
 .dark .token-picker__copy:hover,
 :global([data-theme="dark"]) .token-picker__copy:hover {
-  background: #4f46e5;
+  background: var(--color-indigo-600);
 }
 
 .dark .token-picker__toast,
 :global([data-theme="dark"]) .token-picker__toast {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--color-slate-100);
+  color: var(--color-slate-900);
 }
 </style>

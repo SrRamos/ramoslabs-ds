@@ -297,7 +297,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
 
   .radius-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
+    color: var(--color-slate-900);
     font-size: 1.875rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
@@ -305,7 +305,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
 
   .radius-description {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 1rem;
     line-height: 1.65;
     max-width: 68ch;
@@ -319,14 +319,14 @@ const page = pages.find((p) => p.id === 'border-radius')!
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--color-slate-500);
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
   }
 
   .radius-lede {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 0.95rem;
     line-height: 1.65;
     max-width: 68ch;
@@ -337,10 +337,10 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .radius-description code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8em;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   /* The scale */
@@ -363,14 +363,14 @@ const page = pages.find((p) => p.id === 'border-radius')!
     max-width: 7rem;
     height: 5rem;
     background: white;
-    border: 2px solid #4f46e5;
+    border: 2px solid var(--color-indigo-600);
     box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
-    color: #4338ca;
+    color: var(--color-indigo-700);
     font-size: 0.9375rem;
   }
 
@@ -379,12 +379,12 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .scale-token {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
-    color: #64748b;
+    color: var(--color-slate-500);
   }
 
   .scale-role {
     font-size: 0.75rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.4;
     margin-top: 0.2rem;
     max-width: 14ch;
@@ -392,9 +392,9 @@ const page = pages.find((p) => p.id === 'border-radius')!
 
   /* Golden rule callout */
   .golden {
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
-    border-left: 4px solid #4f46e5;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
+    border-left: 4px solid var(--color-indigo-600);
     border-radius: 12px;
     padding: 1.75rem 2rem;
     margin-top: 1rem;
@@ -405,7 +405,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #4338ca;
+    color: var(--color-indigo-700);
     margin-bottom: 0.6rem;
   }
 
@@ -413,7 +413,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #3730a3;
+    color: var(--color-indigo-800);
     line-height: 1.35;
     margin-bottom: 0.75rem;
   }
@@ -421,7 +421,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .golden-body {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.9rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
     max-width: 64ch;
   }
@@ -432,7 +432,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
     background: white;
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   /* Button-vs-pill demo */
@@ -445,8 +445,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
 
   .pill-demo-card {
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border: 1px solid var(--color-slate-200);
+    background: var(--color-slate-50);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -454,14 +454,14 @@ const page = pages.find((p) => p.id === 'border-radius')!
     gap: 1rem;
   }
 
-  .pill-demo-card.good { border-color: #c7d2fe; background: #eef2ff; }
+  .pill-demo-card.good { border-color: var(--color-indigo-200); background: var(--color-indigo-50); }
 
   .demo-button {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
     color: white;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     padding: 0.65rem 2.5rem;
     border: none;
     width: 100%;
@@ -478,8 +478,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
     text-align: center;
   }
 
-  .pill-demo-card.good .pill-demo-caption { color: #3730a3; }
-  .pill-demo-card.bad .pill-demo-caption { color: #475569; }
+  .pill-demo-card.good .pill-demo-caption { color: var(--color-indigo-800); }
+  .pill-demo-card.bad .pill-demo-caption { color: var(--color-slate-600); }
 
   .pill-demo-verdict {
     font-weight: 700;
@@ -488,17 +488,17 @@ const page = pages.find((p) => p.id === 'border-radius')!
     letter-spacing: 0.06em;
   }
 
-  .pill-demo-card.good .pill-demo-verdict { color: #4338ca; }
-  .pill-demo-card.bad .pill-demo-verdict { color: #475569; }
+  .pill-demo-card.good .pill-demo-verdict { color: var(--color-indigo-700); }
+  .pill-demo-card.bad .pill-demo-verdict { color: var(--color-slate-600); }
 
   /* Concentric nesting */
   .formula {
     display: inline-block;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.9rem;
-    color: #3730a3;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    color: var(--color-indigo-800);
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 8px;
     padding: 0.6rem 1rem;
     margin: 0.5rem 0 1.25rem;
@@ -512,8 +512,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
   }
 
   .concentric-outer {
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: var(--radius-xl);
     padding: 8px;
   }
@@ -521,13 +521,13 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .concentric-inner {
     background: white;
     height: 84px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.7rem;
-    color: #64748b;
+    color: var(--color-slate-500);
     text-align: center;
     padding: 0 0.75rem;
   }
@@ -542,8 +542,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
     margin-top: 0.75rem;
   }
 
-  .concentric-label.right { color: #3730a3; }
-  .concentric-label.wrong { color: #475569; }
+  .concentric-label.right { color: var(--color-indigo-800); }
+  .concentric-label.wrong { color: var(--color-slate-600); }
 
   .concentric-label strong { display: block; margin-bottom: 0.2rem; }
 
@@ -556,8 +556,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
   }
 
   .squircle-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
@@ -567,7 +567,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
     width: 96px;
     height: 96px;
     margin: 0 auto 1rem;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     border-radius: var(--radius-2xl);
   }
 
@@ -580,24 +580,24 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .squircle-name {
     font-weight: 700;
     font-size: 0.8125rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.35rem;
   }
 
   .squircle-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.5;
   }
 
   .squircle-text code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   /* Real-scale specimen row */
@@ -606,8 +606,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
     flex-wrap: wrap;
     align-items: flex-end;
     gap: 1.5rem;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 16px;
     padding: 2.5rem 2rem;
   }
@@ -623,14 +623,14 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .specimen-surface {
     width: 100%;
     background: white;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--color-slate-500);
   }
 
   .specimen-surface.chip {
@@ -638,9 +638,9 @@ const page = pages.find((p) => p.id === 'border-radius')!
     width: auto;
     padding: 0 0.9rem;
     border-radius: var(--radius-pill);
-    background: #eef2ff;
-    border-color: #c7d2fe;
-    color: #4338ca;
+    background: var(--color-indigo-50);
+    border-color: var(--color-indigo-200);
+    color: var(--color-indigo-700);
     font-weight: 600;
   }
 
@@ -648,8 +648,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
     height: 44px;
     max-width: 12rem;
     border-radius: var(--radius-sm);
-    background: #4f46e5;
-    border-color: #4f46e5;
+    background: var(--color-indigo-600);
+    border-color: var(--color-indigo-600);
     color: white;
     font-weight: 600;
   }
@@ -669,19 +669,19 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .specimen-role {
     font-weight: 700;
     font-size: 0.8125rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
   }
 
   .specimen-token {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
-    color: #475569;
+    color: var(--color-slate-600);
   }
 
   /* Callout */
   .radius-note {
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
     margin-top: 1.5rem;
@@ -690,13 +690,13 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .radius-note-title {
     font-weight: 700;
     font-size: 0.875rem;
-    color: #3730a3;
+    color: var(--color-indigo-800);
     margin-bottom: 0.5rem;
   }
 
   .radius-note-body {
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
@@ -706,7 +706,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
     background: white;
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   /* Table */
@@ -716,7 +716,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     margin-top: 1rem;
   }
 
@@ -724,7 +724,7 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .radius-table td {
     padding: 0.75rem 1rem;
     text-align: left;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--color-slate-200);
     vertical-align: middle;
   }
 
@@ -732,14 +732,14 @@ const page = pages.find((p) => p.id === 'border-radius')!
     font-weight: 600;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #475569;
+    color: var(--color-slate-600);
     letter-spacing: 0.05em;
-    background: #f8fafc;
+    background: var(--color-slate-50);
   }
 
   .radius-table td {
     font-size: 0.875rem;
-    color: #475569;
+    color: var(--color-slate-600);
   }
 
   .radius-table tr:last-child td {
@@ -749,17 +749,17 @@ const page = pages.find((p) => p.id === 'border-radius')!
   .radius-table code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   .radius-preview {
     display: inline-block;
     width: 2.25rem;
     height: 2.25rem;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     vertical-align: middle;
   }
 
@@ -770,26 +770,26 @@ const page = pages.find((p) => p.id === 'border-radius')!
     list-style: none;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
   .sources-list li {
     padding: 0.6rem 0;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--color-slate-200);
   }
 
   .sources-list li:last-child { border-bottom: none; }
 
-  .sources-list strong { color: #0f172a; }
+  .sources-list strong { color: var(--color-slate-900); }
 
   .sources-list code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   .source-spa {
@@ -798,8 +798,8 @@ const page = pages.find((p) => p.id === 'border-radius')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #4338ca;
-    background: #eef2ff;
+    color: var(--color-indigo-700);
+    background: var(--color-indigo-50);
     border-radius: 4px;
     padding: 0.05rem 0.35rem;
     margin-left: 0.35rem;

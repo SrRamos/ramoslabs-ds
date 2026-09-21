@@ -27,8 +27,13 @@ The pill is an accent, not a default. Buttons are not pills. Scale the radius to
 
 Reserve `--radius-pill` for small, single-line elements where the round shape is the point: chips, tags, avatars, toggles, status badges. Every button, input, and select takes the 6px signature. Bigger surfaces earn bigger radii: a card is not shaped like a button, and a modal is not shaped like a card.
 
-- Do: wide button at `--radius-sm`, the 6px signature. Calm, precise, unmistakably a control.
-- Don't: the same button forced to a pill. The larger corners read as a toy, not a product.
+✓ Recommended: a wide button at `--radius-sm`, the 6px signature.
+Rule: give every button, input, and select the 6px control radius.
+Why: it reads as calm, precise, and unmistakably a control; the shape matches the role.
+
+✕ Avoid: the same button forced to `--radius-pill`.
+Rule: reserve the pill for small, single-line accents (chips, tags, badges), never full-width controls.
+Why: oversized corners on a large surface read as a toy, not a product.
 
 ## The law of concentric corners
 

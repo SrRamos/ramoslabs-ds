@@ -88,7 +88,7 @@ A popover opens in the top layer, so normal CSS cannot place it next to its trig
 }
 ```
 
-Anchor positioning is not in Firefox or Safari yet (2026), so keep the rules inside `@supports` and give a sensible fallback (a centered, usable popover) for browsers without it.
+Anchor positioning is not in Firefox yet; Safari shipped it in 26 (2025) and Chromium since 125 (2024). Keep the rules inside `@supports` and give a sensible fallback (a centered, usable popover) for browsers without it.
 
 - Tooltip: a brief description on hover or focus over a control. Takes no focus of its own, holds no interactive content. Not a dialog.
 - Popover: a light interactive layer. Background stays active, dismiss is light, focus is not trapped. Menus, toasts, pickers.
@@ -141,4 +141,4 @@ On a phone a centered modal usually becomes a bottom sheet, a panel that rises f
 
 ## Sources
 
-The six requirements, roles, and keyboard model from the WAI-ARIA APG: Dialog (Modal) Pattern and Alert Dialog Pattern. The native element, `showModal()` vs `show()`, `::backdrop`, top layer, `method="dialog"`, the `open` and `tabindex` warnings, and Baseline support from MDN: `<dialog>`, `inert`, and the Popover API. The legal focus trap from WCAG 2.1 SC 2.1.2 No Keyboard Trap and the name/role floor from SC 4.1.2. The cost of interrupting from Nielsen Norman Group, Modal & Nonmodal Dialogs. The animation-breaks-focus-return caveat and focus-on-Cancel from web.dev, Building a dialog component. The one-thing-per-page stance from the GOV.UK Design System.
+The six requirements, roles, and keyboard model from the WAI-ARIA APG: Dialog (Modal) Pattern and Alert Dialog Pattern. The native element, `showModal()` vs `show()`, `::backdrop`, top layer, `method="dialog"`, the `open` and `tabindex` warnings, and Baseline support from MDN: `<dialog>`, `inert`, and the Popover API. The legal focus trap from WCAG 2.2 SC 2.1.2 No Keyboard Trap and the name/role floor from SC 4.1.2. The cost of interrupting from Nielsen Norman Group, Modal & Nonmodal Dialogs. The animation-breaks-focus-return caveat and focus-on-Cancel from web.dev, Building a dialog component. The one-thing-per-page stance from the GOV.UK Design System.

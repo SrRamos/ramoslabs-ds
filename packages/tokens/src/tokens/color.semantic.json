@@ -24,6 +24,10 @@
     "success-border": { "$value": "{color.green.200}" },
     "success-text": { "$value": "{color.green.800}" },
     "warning": { "$value": "{color.amber.500}" },
+    "warning-strong": {
+      "$value": "{color.amber.600}",
+      "$description": "AA-safe amber fill for a white glyph on the warning color (amber 500 is only 2.15:1 with white; amber 600 #d97706 is ~3.18:1, clearing the 3:1 non-text floor)."
+    },
     "warning-surface": { "$value": "{color.amber.50}" },
     "warning-border": { "$value": "{color.amber.200}" },
     "warning-text": { "$value": "{color.amber.900}" },
@@ -42,14 +46,17 @@
     "text-heading": { "$value": "{color.slate.900}" },
     "text-strong": { "$value": "{color.slate.800}" },
     "text-secondary": { "$value": "{color.slate.600}" },
-    "text-body": { "$value": "{color.slate.500}" },
+    "text-body": {
+      "$value": "{color.slate.700}",
+      "$description": "Reading body copy. Slate 700 for comfortable long-form contrast; muted stays at slate 500 (the AA floor)."
+    },
     "text-muted": { "$value": "{color.slate.500}" },
     "text-disabled": { "$value": "{color.slate.300}" },
     "surface": { "$value": "{color.white}" },
     "surface-secondary": { "$value": "{color.slate.50}" },
     "surface-hover": { "$value": "{color.slate.100}" },
     "background": { "$value": "{color.slate.50}" },
-    "border": { "$value": "#e6e8eb" },
+    "border": { "$value": "{color.slate.200}" },
     "border-light": { "$value": "{color.slate.200}" },
     "border-subtle": { "$value": "{color.slate.100}" },
     "focus": { "$value": "{color.indigo.600}" }
