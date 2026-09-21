@@ -459,8 +459,8 @@ const page = pages.find((p) => p.id === 'motion')!
 
   .mo-header-icon {
     padding: 0.75rem;
-    background: #eef2ff;
-    color: #4f46e5;
+    background: var(--color-indigo-50);
+    color: var(--color-indigo-600);
     border-radius: 9999px;
     flex-shrink: 0;
     display: flex;
@@ -470,7 +470,7 @@ const page = pages.find((p) => p.id === 'motion')!
 
   .mo-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
+    color: var(--color-slate-900);
     font-size: 1.875rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
@@ -478,13 +478,13 @@ const page = pages.find((p) => p.id === 'motion')!
 
   .mo-description {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 1rem;
     line-height: 1.65;
     max-width: 68ch;
   }
 
-  .mo-description strong { color: #0f172a; }
+  .mo-description strong { color: var(--color-slate-900); }
 
   /* ===== Section shell ===== */
   .mo-section { margin-top: 2.75rem; }
@@ -493,30 +493,30 @@ const page = pages.find((p) => p.id === 'motion')!
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--color-slate-500);
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
   }
 
   .mo-lede {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 0.95rem;
     line-height: 1.65;
     max-width: 68ch;
     margin-bottom: 1.25rem;
   }
 
-  .mo-lede strong { color: #0f172a; }
+  .mo-lede strong { color: var(--color-slate-900); }
 
   .mo-lede code,
   .mo-inline-code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8em;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
   }
 
   /* ===== Editorial two-up: purpose vs adornment ===== */
@@ -530,13 +530,13 @@ const page = pages.find((p) => p.id === 'motion')!
   .mo-purpose-card {
     border-radius: 12px;
     padding: 1.5rem;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border: 1px solid var(--color-slate-200);
+    background: var(--color-slate-50);
   }
 
   .mo-purpose-card.keep {
-    border-color: #c7d2fe;
-    background: #eef2ff;
+    border-color: var(--color-indigo-200);
+    background: var(--color-indigo-50);
   }
 
   .mo-purpose-tag {
@@ -547,11 +547,11 @@ const page = pages.find((p) => p.id === 'motion')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #64748b;
+    color: var(--color-slate-500);
     margin-bottom: 0.75rem;
   }
 
-  .mo-purpose-card.keep .mo-purpose-tag { color: #4f46e5; }
+  .mo-purpose-card.keep .mo-purpose-tag { color: var(--color-indigo-600); }
   .mo-purpose-tag .mo-symbol { font-size: 18px; }
 
   .mo-purpose-list {
@@ -559,7 +559,7 @@ const page = pages.find((p) => p.id === 'motion')!
     padding-left: 1.1rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
@@ -573,8 +573,8 @@ const page = pages.find((p) => p.id === 'motion')!
   }
 
   .mo-duration-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     padding: 1.5rem;
     display: flex;
@@ -588,7 +588,7 @@ const page = pages.find((p) => p.id === 'motion')!
     background: white;
     border-radius: 10px;
     overflow: hidden;
-    border: 1px solid #eef2ff;
+    border: 1px solid var(--color-indigo-50);
   }
 
   .mo-duration-track {
@@ -597,7 +597,7 @@ const page = pages.find((p) => p.id === 'motion')!
     right: 12px;
     top: 50%;
     height: 2px;
-    background: #e0e7ff;
+    background: var(--color-indigo-100);
     transform: translateY(-50%);
   }
 
@@ -608,7 +608,7 @@ const page = pages.find((p) => p.id === 'motion')!
     width: 22px;
     height: 22px;
     border-radius: 7px;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     transform: translate(0, -50%);
   }
 
@@ -631,37 +631,37 @@ const page = pages.find((p) => p.id === 'motion')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 1.5rem;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     line-height: 1;
   }
 
   .mo-duration-name {
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.35rem;
   }
 
   .mo-token {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     display: inline-block;
     margin-bottom: 0.6rem;
   }
 
   .mo-duration-usage {
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.5;
   }
 
   .mo-hint {
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--color-slate-500);
     margin-top: 0.75rem;
     display: flex;
     align-items: center;
@@ -678,8 +678,8 @@ const page = pages.find((p) => p.id === 'motion')!
   }
 
   .mo-easing-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     padding: 1.5rem;
   }
@@ -696,35 +696,35 @@ const page = pages.find((p) => p.id === 'motion')!
     height: 72px;
     flex-shrink: 0;
     background: white;
-    border: 1px solid #eef2ff;
+    border: 1px solid var(--color-indigo-50);
     border-radius: 10px;
     display: block;
   }
 
-  .mo-curve path.grid { stroke: #eef2ff; stroke-width: 1; fill: none; }
-  .mo-curve path.curve { stroke: #4f46e5; stroke-width: 3; fill: none; stroke-linecap: round; }
+  .mo-curve path.grid { stroke: var(--color-indigo-50); stroke-width: 1; fill: none; }
+  .mo-curve path.curve { stroke: var(--color-indigo-600); stroke-width: 3; fill: none; stroke-linecap: round; }
 
   .mo-easing-name {
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.35rem;
   }
 
   .mo-bezier {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.68rem;
-    color: #64748b;
+    color: var(--color-slate-500);
     word-break: break-word;
   }
 
   .mo-easing-role {
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.55;
   }
 
-  .mo-easing-role strong { color: #0f172a; }
+  .mo-easing-role strong { color: var(--color-slate-900); }
 
   /* ===== Tables ===== */
   .mo-table {
@@ -733,7 +733,7 @@ const page = pages.find((p) => p.id === 'motion')!
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     margin-top: 1rem;
   }
 
@@ -741,7 +741,7 @@ const page = pages.find((p) => p.id === 'motion')!
   .mo-table td {
     padding: 0.75rem 1rem;
     text-align: left;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--color-slate-200);
     vertical-align: top;
   }
 
@@ -749,14 +749,14 @@ const page = pages.find((p) => p.id === 'motion')!
     font-weight: 600;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--color-slate-500);
     letter-spacing: 0.05em;
-    background: #f8fafc;
+    background: var(--color-slate-50);
   }
 
   .mo-table td {
     font-size: 0.875rem;
-    color: #475569;
+    color: var(--color-slate-600);
   }
 
   .mo-table tr:last-child td { border-bottom: none; }
@@ -764,15 +764,15 @@ const page = pages.find((p) => p.id === 'motion')!
   .mo-table code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
   }
 
   /* ===== Anatomy strip ===== */
   .mo-anatomy {
-    background: #0f172a;
+    background: var(--color-slate-900);
     border-radius: 14px;
     padding: 1.75rem;
     margin-top: 1rem;
@@ -782,7 +782,7 @@ const page = pages.find((p) => p.id === 'motion')!
 
   .mo-anatomy-line {
     font-size: 1rem;
-    color: #e2e8f0;
+    color: var(--color-slate-200);
     white-space: nowrap;
     display: flex;
     align-items: baseline;
@@ -790,10 +790,10 @@ const page = pages.find((p) => p.id === 'motion')!
   }
 
   .mo-part { position: relative; padding-bottom: 0.15rem; }
-  .mo-part.prop { color: #7dd3fc; }
-  .mo-part.dur { color: #a5b4fc; }
-  .mo-part.ease { color: #c4b5fd; }
-  .mo-part.punc { color: #94a3b8; }
+  .mo-part.prop { color: var(--color-indigo-300); }
+  .mo-part.dur { color: var(--color-indigo-300); }
+  .mo-part.ease { color: var(--color-violet-300); }
+  .mo-part.punc { color: var(--color-slate-400); }
 
   .mo-anatomy-legend {
     display: grid;
@@ -803,7 +803,7 @@ const page = pages.find((p) => p.id === 'motion')!
   }
 
   .mo-legend-item {
-    border-left: 3px solid #4f46e5;
+    border-left: 3px solid var(--color-indigo-600);
     padding-left: 0.85rem;
   }
 
@@ -814,14 +814,14 @@ const page = pages.find((p) => p.id === 'motion')!
     margin-bottom: 0.2rem;
   }
 
-  .mo-legend-item.prop .mo-legend-key { color: #7dd3fc; }
-  .mo-legend-item.dur .mo-legend-key { color: #a5b4fc; }
-  .mo-legend-item.ease .mo-legend-key { color: #c4b5fd; }
+  .mo-legend-item.prop .mo-legend-key { color: var(--color-indigo-300); }
+  .mo-legend-item.dur .mo-legend-key { color: var(--color-indigo-300); }
+  .mo-legend-item.ease .mo-legend-key { color: var(--color-violet-300); }
 
   .mo-legend-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #cbd5e1;
+    color: var(--color-slate-300);
     line-height: 1.5;
   }
 
@@ -836,11 +836,11 @@ const page = pages.find((p) => p.id === 'motion')!
   .mo-perf-card {
     border-radius: 12px;
     padding: 1.5rem;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border: 1px solid var(--color-slate-200);
+    background: var(--color-slate-50);
   }
 
-  .mo-perf-card.cheap { border-color: #c7d2fe; background: #eef2ff; }
+  .mo-perf-card.cheap { border-color: var(--color-indigo-200); background: var(--color-indigo-50); }
 
   .mo-perf-head {
     display: flex;
@@ -848,12 +848,12 @@ const page = pages.find((p) => p.id === 'motion')!
     gap: 0.5rem;
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.75rem;
   }
 
-  .mo-perf-head .mo-symbol { font-size: 20px; color: #4f46e5; }
-  .mo-perf-card:not(.cheap) .mo-perf-head .mo-symbol { color: #64748b; }
+  .mo-perf-head .mo-symbol { font-size: 20px; color: var(--color-indigo-600); }
+  .mo-perf-card:not(.cheap) .mo-perf-head .mo-symbol { color: var(--color-slate-500); }
 
   .mo-perf-props {
     display: flex;
@@ -868,16 +868,16 @@ const page = pages.find((p) => p.id === 'motion')!
     padding: 0.2rem 0.55rem;
     border-radius: 6px;
     background: white;
-    border: 1px solid #e2e8f0;
-    color: #475569;
+    border: 1px solid var(--color-slate-200);
+    color: var(--color-slate-600);
   }
 
-  .mo-perf-card.cheap .mo-chip { border-color: #c7d2fe; color: #4f46e5; }
+  .mo-perf-card.cheap .mo-chip { border-color: var(--color-indigo-200); color: var(--color-indigo-600); }
 
   .mo-perf-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.55;
   }
 
@@ -889,10 +889,10 @@ const page = pages.find((p) => p.id === 'motion')!
   }
 
   .mo-rule {
-    border: 1px solid #e2e8f0;
-    border-left: 3px solid #4f46e5;
+    border: 1px solid var(--color-slate-200);
+    border-left: 3px solid var(--color-indigo-600);
     border-radius: 12px;
-    background: #f8fafc;
+    background: var(--color-slate-50);
     padding: 1.25rem 1.5rem;
   }
 
@@ -919,15 +919,15 @@ const page = pages.find((p) => p.id === 'motion')!
     padding-top: 0.05rem;
   }
 
-  .mo-rule-tag { color: #4f46e5; }
-  .mo-why-tag { color: #64748b; }
+  .mo-rule-tag { color: var(--color-indigo-600); }
+  .mo-why-tag { color: var(--color-slate-500); }
 
   .mo-rule-text {
     margin: 0;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--color-slate-900);
     line-height: 1.55;
   }
 
@@ -935,46 +935,46 @@ const page = pages.find((p) => p.id === 'motion')!
     margin: 0;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
   .mo-rule code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
   }
 
   /* ===== Code block ===== */
   .mo-code {
-    background: #1e293b;
+    background: var(--color-slate-800);
     border-radius: 12px;
     overflow: hidden;
     margin-top: 1rem;
   }
 
   .mo-code-header {
-    background: #334155;
+    background: var(--color-slate-700);
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    border-bottom: 1px solid #475569;
+    border-bottom: 1px solid var(--color-slate-600);
   }
 
   .mo-code-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .mo-code-dot.red { background: #ef4444; }
-  .mo-code-dot.yellow { background: #f59e0b; }
-  .mo-code-dot.green { background: #22c55e; }
+  .mo-code-dot.red { background: var(--color-red-500); }
+  .mo-code-dot.yellow { background: var(--color-amber-500); }
+  .mo-code-dot.green { background: var(--color-green-500); }
 
   .mo-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    color: #cbd5e1;
+    color: var(--color-slate-300);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -985,16 +985,16 @@ const page = pages.find((p) => p.id === 'motion')!
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
     font-size: 0.8125rem;
     line-height: 1.7;
-    color: #e2e8f0;
+    color: var(--color-slate-200);
     overflow-x: auto;
   }
 
-  .mo-code .comment { color: #94a3b8; font-style: italic; }
-  .mo-code .selector { color: #fbbf24; }
-  .mo-code .property { color: #7dd3fc; }
-  .mo-code .value { color: #a5f3fc; }
-  .mo-code .function { color: #c4b5fd; }
-  .mo-code .punctuation { color: #94a3b8; }
+  .mo-code .comment { color: var(--color-slate-400); font-style: italic; }
+  .mo-code .selector { color: var(--color-amber-400); }
+  .mo-code .property { color: var(--color-indigo-300); }
+  .mo-code .value { color: var(--color-indigo-200); }
+  .mo-code .function { color: var(--color-violet-300); }
+  .mo-code .punctuation { color: var(--color-slate-400); }
 
   /* ===== Sources ===== */
   .mo-sources-list {
@@ -1003,18 +1003,18 @@ const page = pages.find((p) => p.id === 'motion')!
     list-style: none;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
   .mo-sources-list li {
     padding: 0.6rem 0;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--color-slate-100);
   }
 
   .mo-sources-list li:last-child { border-bottom: none; }
-  .mo-sources-list strong { color: #0f172a; }
-  .mo-sources-list a { color: #4f46e5; text-decoration: none; }
+  .mo-sources-list strong { color: var(--color-slate-900); }
+  .mo-sources-list a { color: var(--color-indigo-600); text-decoration: none; }
   .mo-sources-list a:hover { text-decoration: underline; }
 
   .mo-spa {
@@ -1023,8 +1023,8 @@ const page = pages.find((p) => p.id === 'motion')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #4f46e5;
-    background: #eef2ff;
+    color: var(--color-indigo-600);
+    background: var(--color-indigo-50);
     border-radius: 4px;
     padding: 0.05rem 0.35rem;
     margin-left: 0.35rem;

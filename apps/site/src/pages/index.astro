@@ -319,7 +319,7 @@ const BLURBS: Record<string, string> = {
 
   .intro-hero-title em {
     font-style: normal;
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
   }
 
   .intro-hero-subtitle {
@@ -518,7 +518,7 @@ const BLURBS: Record<string, string> = {
     line-height: 1.55;
   }
 
-  .flow-rule strong { color: #312e81; }
+  .flow-rule strong { color: var(--color-indigo-900); }
 
   /* ===== NAMING CARDS ===== */
   .name-grid {
@@ -635,14 +635,14 @@ const BLURBS: Record<string, string> = {
   .pipe-line strong { color: var(--color-text-heading); font-weight: 600; }
 
   .intro-code {
-    background: #1e293b;
+    background: var(--color-slate-800);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
   }
 
   .intro-code-header {
-    background: #334155;
+    background: var(--color-slate-700);
     padding: 0.7rem 1rem;
     display: flex;
     align-items: center;
@@ -650,15 +650,15 @@ const BLURBS: Record<string, string> = {
   }
 
   .intro-code-dot { width: 11px; height: 11px; border-radius: var(--radius-pill); }
-  .intro-code-dot.d1 { background: #64748b; }
-  .intro-code-dot.d2 { background: #94a3b8; }
-  .intro-code-dot.d3 { background: #cbd5e1; }
+  .intro-code-dot.d1 { background: var(--color-slate-500); }
+  .intro-code-dot.d2 { background: var(--color-slate-400); }
+  .intro-code-dot.d3 { background: var(--color-slate-300); }
 
   .intro-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    color: #cbd5e1;
+    color: var(--color-slate-300);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
@@ -669,16 +669,16 @@ const BLURBS: Record<string, string> = {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.82rem;
     line-height: 1.75;
-    color: #e2e8f0;
+    color: var(--color-slate-200);
     overflow-x: auto;
   }
 
-  .intro-code .c-cm { color: #94a3b8; font-style: italic; }
-  .intro-code .c-sel { color: #fbbf24; }
-  .intro-code .c-prop { color: #7dd3fc; }
-  .intro-code .c-val { color: #a5f3fc; }
-  .intro-code .c-kw { color: #c084fc; }
-  .intro-code .c-p { color: #94a3b8; }
+  .intro-code .c-cm { color: var(--color-slate-400); font-style: italic; }
+  .intro-code .c-sel { color: var(--color-amber-400); }
+  .intro-code .c-prop { color: var(--color-indigo-300); }
+  .intro-code .c-val { color: var(--color-indigo-200); }
+  .intro-code .c-kw { color: var(--color-violet-400); }
+  .intro-code .c-p { color: var(--color-slate-400); }
 
   /* ===== BOOK MAP ===== */
   .book-group { margin-bottom: 2rem; }
@@ -762,7 +762,7 @@ const BLURBS: Record<string, string> = {
 
   .book-card-icon .material-symbols-outlined { font-size: 20px; }
   .book-card-icon.f1 { background: var(--color-primary-surface); color: var(--color-primary); }
-  .book-card-icon.f2 { background: #e0e7ff; color: var(--color-primary-dark); }
+  .book-card-icon.f2 { background: var(--color-indigo-100); color: var(--color-primary-dark); }
   .book-card-icon.f3 { background: var(--color-secondary-surface); color: var(--color-secondary); }
 
   .book-card-title {
@@ -857,7 +857,7 @@ const BLURBS: Record<string, string> = {
     gap: 0.5rem;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: var(--color-white);
     font-family: var(--font-family-sans);
     font-size: 0.7rem;
     font-weight: 600;
@@ -869,7 +869,7 @@ const BLURBS: Record<string, string> = {
   }
   .agentic-band-title {
     font-family: var(--font-family-display);
-    color: #fff;
+    color: var(--color-white);
     font-size: clamp(1.75rem, 4vw, 2.6rem);
     font-weight: 900;
     line-height: 1.05;
@@ -894,7 +894,7 @@ const BLURBS: Record<string, string> = {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8rem;
     font-weight: 500;
-    color: #fff;
+    color: var(--color-white);
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.22);
     padding: 0.35rem 0.75rem;
@@ -908,7 +908,7 @@ const BLURBS: Record<string, string> = {
     font-family: var(--font-family-sans);
     font-weight: 700;
     font-size: 0.95rem;
-    color: #fff;
+    color: var(--color-white);
   }
 </style>
 </BaseLayout>

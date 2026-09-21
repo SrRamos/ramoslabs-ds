@@ -535,7 +535,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     border-radius: 20px;
     overflow: hidden;
     padding: 3.5rem 2.5rem;
-    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    background: radial-gradient(120% 140% at 100% 0%, var(--color-indigo-600) 0%, var(--color-indigo-700) 42%, var(--color-indigo-900) 100%);
     box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
   .aic-hero-eyebrow {
@@ -543,12 +543,12 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: #c7d2fe;
+    color: var(--color-indigo-200);
     margin: 0 0 1rem;
   }
   .aic-hero h1 {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #ffffff;
+    color: var(--color-white);
     font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
     font-weight: 900;
     line-height: 1.06;
@@ -557,13 +557,13 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     max-width: 22ch;
   }
   .aic-hero p {
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
     font-size: 1.0625rem;
     line-height: 1.6;
     max-width: 46rem;
     margin: 0;
   }
-  .aic-hero p strong { color: #ffffff; font-weight: 700; }
+  .aic-hero p strong { color: var(--color-white); font-weight: 700; }
 
   /* ===== Intro doctrine band ===== */
   .aic-doctrine {
@@ -574,16 +574,16 @@ const page = pages.find((p) => p.id === 'ai-insights')!
   }
   .aic-doctrine-card {
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border: 1px solid var(--color-slate-200);
+    background: var(--color-slate-50);
     padding: 1.25rem 1.35rem;
   }
   .aic-doctrine-card.accent {
-    border-color: #c7d2fe;
-    background: #eef2ff;
+    border-color: var(--color-indigo-200);
+    background: var(--color-indigo-50);
   }
   .aic-doctrine-icon {
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
   }
@@ -591,13 +591,13 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.35rem;
   }
   .aic-doctrine-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.55;
   }
 
@@ -605,7 +605,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
   .aic-principle {
     margin-top: 2.75rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid #e6e8eb;
+    border-bottom: 1px solid var(--color-border);
   }
   .aic-principle-head {
     display: flex;
@@ -619,7 +619,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     justify-content: center;
     width: 1.75rem;
     height: 1.75rem;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     color: white;
     border-radius: 50%;
     font-family: 'Red Hat Display', system-ui, sans-serif;
@@ -631,29 +631,29 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--color-slate-900);
   }
   .aic-lede {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 0.9375rem;
     line-height: 1.7;
     max-width: 64ch;
   }
-  .aic-lede strong { color: #0f172a; font-weight: 600; }
+  .aic-lede strong { color: var(--color-slate-900); font-weight: 600; }
   .aic-lede code, .aic-doctrine-text code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8125em;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
   }
 
   /* Prescriptive rule: positive imperative + reason */
   .aic-rule {
-    border-left: 3px solid #4f46e5;
-    background: #f8fafc;
+    border-left: 3px solid var(--color-indigo-600);
+    background: var(--color-slate-50);
     border-radius: 0 10px 10px 0;
     padding: 0.85rem 1.15rem;
     margin: 1.1rem 0;
@@ -661,21 +661,21 @@ const page = pages.find((p) => p.id === 'ai-insights')!
   .aic-rule-line {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    color: #334155;
+    color: var(--color-slate-700);
     line-height: 1.6;
   }
   .aic-rule-line + .aic-rule-line { margin-top: 0.4rem; }
   .aic-rule-key {
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     margin-right: 0.45rem;
   }
 
   /* Evidence callout: one finding, one cite */
   .aic-evidence {
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 12px;
     padding: 1rem 1.3rem;
     margin: 1.1rem 0;
@@ -684,29 +684,29 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     align-items: flex-start;
   }
   .aic-evidence .aic-material {
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     font-size: 1.3rem;
     flex-shrink: 0;
   }
   .aic-evidence-body {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
-  .aic-evidence-body strong { color: #3730a3; }
+  .aic-evidence-body strong { color: var(--color-indigo-800); }
   .aic-cite {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.7rem;
-    color: #475569;
+    color: var(--color-slate-600);
     display: block;
     margin-top: 0.35rem;
   }
 
   /* Apply-in-product block holds the demo */
   .aic-apply {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     padding: 1.35rem 1.5rem;
     margin: 1.1rem 0;
@@ -715,34 +715,34 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.875rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.6rem;
     display: flex;
     align-items: center;
     gap: 0.45rem;
   }
-  .aic-apply-title .aic-material { color: #4f46e5; font-size: 1.15rem; }
+  .aic-apply-title .aic-material { color: var(--color-indigo-600); font-size: 1.15rem; }
   .aic-apply-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
   .aic-apply-text code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8125em;
     background: white;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
   }
 
   /* ===== Generated-content demo card ===== */
   .aic-gen {
     margin-top: 1rem;
     background: white;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     overflow: hidden;
   }
@@ -752,8 +752,8 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     gap: 0.5rem;
     flex-wrap: wrap;
     padding: 0.7rem 1rem;
-    border-bottom: 1px solid #eef2ff;
-    background: #f8fafc;
+    border-bottom: 1px solid var(--color-indigo-50);
+    background: var(--color-slate-50);
   }
   .aic-gen-badge {
     display: inline-flex;
@@ -764,9 +764,9 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #4f46e5;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    color: var(--color-indigo-600);
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 6px;
     padding: 0.2rem 0.6rem;
   }
@@ -774,21 +774,21 @@ const page = pages.find((p) => p.id === 'ai-insights')!
   .aic-gen-model {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
-    color: #64748b;
+    color: var(--color-slate-500);
     margin-left: auto;
   }
   .aic-gen-body {
     padding: 1rem 1.15rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    color: #334155;
+    color: var(--color-slate-700);
     line-height: 1.65;
   }
   .aic-caret {
     display: inline-block;
     width: 0.5rem;
     height: 1.05em;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     vertical-align: text-bottom;
     margin-left: 2px;
     border-radius: 1px;
@@ -799,7 +799,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     gap: 0.4rem;
     flex-wrap: wrap;
     padding: 0.65rem 1rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--color-slate-100);
   }
   .aic-btn {
     display: inline-flex;
@@ -808,17 +808,17 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #334155;
+    color: var(--color-slate-700);
     background: white;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--color-slate-300);
     border-radius: 8px;
     padding: 0.35rem 0.65rem;
   }
   .aic-btn .aic-material { font-size: 0.95rem; }
   .aic-btn.primary {
-    color: #4f46e5;
-    border-color: #c7d2fe;
-    background: #eef2ff;
+    color: var(--color-indigo-600);
+    border-color: var(--color-indigo-200);
+    background: var(--color-indigo-50);
   }
   .aic-btn.icon { padding: 0.35rem 0.45rem; }
   .aic-btn-spacer { margin-left: auto; }
@@ -831,9 +831,9 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.6875rem;
     font-weight: 600;
-    color: #475569;
+    color: var(--color-slate-600);
   }
-  .aic-conf .aic-material { font-size: 0.9rem; color: #4f46e5; }
+  .aic-conf .aic-material { font-size: 0.9rem; color: var(--color-indigo-600); }
   .aic-conf-bars {
     display: inline-flex;
     gap: 2px;
@@ -842,17 +842,17 @@ const page = pages.find((p) => p.id === 'ai-insights')!
   }
   .aic-conf-bars i {
     width: 4px;
-    background: #cbd5e1;
+    background: var(--color-slate-300);
     border-radius: 1px;
     display: inline-block;
   }
   .aic-conf-bars i:nth-child(1) { height: 5px; }
   .aic-conf-bars i:nth-child(2) { height: 8px; }
   .aic-conf-bars i:nth-child(3) { height: 12px; }
-  .aic-conf-bars.high i { background: #4f46e5; }
+  .aic-conf-bars.high i { background: var(--color-indigo-600); }
   .aic-conf-bars.medium i:nth-child(1),
-  .aic-conf-bars.medium i:nth-child(2) { background: #4f46e5; }
-  .aic-conf-bars.low i:nth-child(1) { background: #4f46e5; }
+  .aic-conf-bars.medium i:nth-child(2) { background: var(--color-indigo-600); }
+  .aic-conf-bars.low i:nth-child(1) { background: var(--color-indigo-600); }
 
   .aic-source {
     display: inline-flex;
@@ -860,9 +860,9 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     gap: 0.3rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #4f46e5;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    color: var(--color-indigo-600);
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 8px;
     padding: 0.25rem 0.55rem;
     margin: 0.15rem 0.3rem 0.15rem 0;
@@ -875,14 +875,14 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     align-items: flex-start;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--color-slate-500);
     line-height: 1.55;
     padding: 0.7rem 0.9rem;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 10px;
   }
-  .aic-disclaimer .aic-material { font-size: 1rem; color: #64748b; flex-shrink: 0; }
+  .aic-disclaimer .aic-material { font-size: 1rem; color: var(--color-slate-500); flex-shrink: 0; }
 
   /* Recommended vs avoid */
   .aic-line {
@@ -893,15 +893,15 @@ const page = pages.find((p) => p.id === 'ai-insights')!
   }
   .aic-line-col {
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     padding: 1.15rem 1.35rem;
-    background: #f8fafc;
+    background: var(--color-slate-50);
   }
-  .aic-line-col.ok { border-color: #c7d2fe; background: #eef2ff; }
+  .aic-line-col.ok { border-color: var(--color-indigo-200); background: var(--color-indigo-50); }
   .aic-line-col.avoid {
     border-style: dashed;
-    border-color: #cbd5e1;
-    background: #ffffff;
+    border-color: var(--color-slate-300);
+    background: var(--color-white);
   }
   .aic-line-tag {
     display: flex;
@@ -914,21 +914,21 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     letter-spacing: 0.06em;
     margin-bottom: 0.6rem;
   }
-  .aic-line-col.ok .aic-line-tag { color: #4f46e5; }
-  .aic-line-col.avoid .aic-line-tag { color: #475569; }
+  .aic-line-col.ok .aic-line-tag { color: var(--color-indigo-600); }
+  .aic-line-col.avoid .aic-line-tag { color: var(--color-slate-600); }
   .aic-line-tag .aic-material { font-size: 1.05rem; }
   .aic-line-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
-  .aic-line-text strong { color: #0f172a; }
+  .aic-line-text strong { color: var(--color-slate-900); }
 
   /* Ethics band */
   .aic-ethics {
     margin-top: 2.75rem;
-    background: #0f172a;
+    background: var(--color-slate-900);
     border-radius: 16px;
     padding: 2rem 2.25rem;
   }
@@ -936,17 +936,17 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-size: 1.35rem;
     font-weight: 700;
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
     margin-bottom: 0.6rem;
   }
   .aic-ethics-lede {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.9375rem;
-    color: #c7d2fe;
+    color: var(--color-indigo-200);
     line-height: 1.7;
     max-width: 64ch;
   }
-  .aic-ethics-lede strong { color: #ffffff; }
+  .aic-ethics-lede strong { color: var(--color-white); }
   .aic-ethics-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -954,7 +954,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     margin-top: 1.5rem;
   }
   .aic-ethics-card {
-    background: #1a1f3d;
+    background: var(--color-slate-900);
     border: 1px solid rgba(199, 210, 254, 0.14);
     border-radius: 10px;
     padding: 1.1rem 1.2rem;
@@ -963,17 +963,17 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
     margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
   }
-  .aic-ethics-card-title .aic-material { font-size: 1.05rem; color: #a5b4fc; }
+  .aic-ethics-card-title .aic-material { font-size: 1.05rem; color: var(--color-indigo-300); }
   .aic-ethics-card-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.78rem;
-    color: #a5b4fc;
+    color: var(--color-indigo-300);
     line-height: 1.55;
   }
 
@@ -983,7 +983,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--color-slate-500);
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
   }
@@ -999,8 +999,8 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 10px;
     padding: 1rem 1.25rem;
   }
@@ -1011,7 +1011,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     color: white;
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
@@ -1023,10 +1023,10 @@ const page = pages.find((p) => p.id === 'ai-insights')!
   .aic-decision-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    color: #334155;
+    color: var(--color-slate-700);
     line-height: 1.55;
   }
-  .aic-decision-text strong { color: #0f172a; }
+  .aic-decision-text strong { color: var(--color-slate-900); }
 
   /* Sources */
   .aic-sources-list {
@@ -1035,19 +1035,19 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     list-style: none;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
   .aic-sources-list li {
     padding: 0.65rem 0;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--color-slate-100);
   }
   .aic-sources-list li:last-child { border-bottom: none; }
-  .aic-sources-list strong { color: #0f172a; }
+  .aic-sources-list strong { color: var(--color-slate-900); }
   .aic-sources-list code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     word-break: break-all;
   }
   .aic-spa {
@@ -1056,8 +1056,8 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #4f46e5;
-    background: #eef2ff;
+    color: var(--color-indigo-600);
+    background: var(--color-indigo-50);
     border-radius: 4px;
     padding: 0.05rem 0.35rem;
     margin-left: 0.35rem;
@@ -1069,7 +1069,7 @@ const page = pages.find((p) => p.id === 'ai-insights')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     margin-top: 0.9rem;
   }
   .aic-xlink .aic-material { font-size: 1rem; }

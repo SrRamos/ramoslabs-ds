@@ -225,7 +225,7 @@ curl -s -X POST ${MCP_URL} \\
     gap: 0.5rem;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: var(--color-white);
     font-family: var(--font-family-sans);
     font-size: 0.72rem;
     font-weight: 600;
@@ -237,7 +237,7 @@ curl -s -X POST ${MCP_URL} \\
   }
   .ag-hero-title {
     font-family: var(--font-family-display);
-    color: #fff;
+    color: var(--color-white);
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 900;
     line-height: 1.03;
@@ -280,7 +280,7 @@ curl -s -X POST ${MCP_URL} \\
   .ag-install-cmd {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.85rem;
-    color: #fff;
+    color: var(--color-white);
     overflow-x: auto;
     white-space: nowrap;
     flex: 1;
@@ -295,7 +295,7 @@ curl -s -X POST ${MCP_URL} \\
     font-weight: 600;
     font-size: 0.82rem;
     color: var(--color-primary-dark);
-    background: #fff;
+    background: var(--color-white);
     border: none;
     border-radius: var(--radius-sm);
     padding: 0.45rem 0.75rem;
@@ -303,7 +303,7 @@ curl -s -X POST ${MCP_URL} \\
     transition: background 120ms ease;
   }
   .ag-copy.is-copied { background: var(--color-success-surface); color: var(--color-success-text); }
-  .ag-copy:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .ag-copy:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 
   /* ===== SECTIONS ===== */
   .ag-section { margin-bottom: 5rem; }
@@ -366,27 +366,27 @@ curl -s -X POST ${MCP_URL} \\
 
   /* ===== CODE BLOCKS (dark terminal chrome, the site's established code treatment) ===== */
   .ag-code {
-    background: #1e293b;
+    background: var(--color-slate-800);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
   }
   .ag-code-bar {
-    background: #334155;
+    background: var(--color-slate-700);
     padding: 0.6rem 0.9rem;
     display: flex;
     align-items: center;
     gap: 0.45rem;
   }
   .ag-dot { width: 11px; height: 11px; border-radius: var(--radius-pill); }
-  .ag-dot.d1 { background: #64748b; }
-  .ag-dot.d2 { background: #94a3b8; }
-  .ag-dot.d3 { background: #cbd5e1; }
+  .ag-dot.d1 { background: var(--color-slate-500); }
+  .ag-dot.d2 { background: var(--color-slate-400); }
+  .ag-dot.d3 { background: var(--color-slate-300); }
   .ag-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.72rem;
-    color: #cbd5e1;
+    color: var(--color-slate-300);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
@@ -396,14 +396,14 @@ curl -s -X POST ${MCP_URL} \\
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.82rem;
     line-height: 1.7;
-    color: #e2e8f0;
+    color: var(--color-slate-200);
     overflow-x: auto;
     white-space: pre;
   }
-  .ag-code .c-cm { color: #94a3b8; font-style: italic; }
-  .ag-code .c-k { color: #7dd3fc; }
-  .ag-code .c-v { color: #a5f3fc; }
-  .ag-code .c-p { color: #94a3b8; }
+  .ag-code .c-cm { color: var(--color-slate-400); font-style: italic; }
+  .ag-code .c-k { color: var(--color-indigo-300); }
+  .ag-code .c-v { color: var(--color-indigo-200); }
+  .ag-code .c-p { color: var(--color-slate-400); }
 
   /* ===== TOOLS TABLE ===== */
   .ag-table-wrap { overflow-x: auto; border-radius: var(--radius-lg); border: 1px solid var(--color-border); }

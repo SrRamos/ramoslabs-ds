@@ -484,8 +484,8 @@ const page = pages.find((p) => p.id === 'persuasion')!
 
   .pers-icon {
     padding: 0.75rem;
-    background: #eef2ff;
-    color: #4f46e5;
+    background: var(--color-indigo-50);
+    color: var(--color-indigo-600);
     border-radius: 9999px;
     flex-shrink: 0;
     display: flex;
@@ -493,7 +493,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
 
   .pers-title {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #0f172a;
+    color: var(--color-slate-900);
     font-size: 1.875rem;
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -503,13 +503,13 @@ const page = pages.find((p) => p.id === 'persuasion')!
 
   .pers-description {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 1rem;
     line-height: 1.65;
     max-width: 62ch;
   }
 
-  .pers-description strong { color: #0f172a; font-weight: 600; }
+  .pers-description strong { color: var(--color-slate-900); font-weight: 600; }
 
   /* ===== Intro doctrine band ===== */
   .pers-doctrine {
@@ -521,18 +521,18 @@ const page = pages.find((p) => p.id === 'persuasion')!
 
   .pers-doctrine-card {
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border: 1px solid var(--color-slate-200);
+    background: var(--color-slate-50);
     padding: 1.25rem 1.35rem;
   }
 
   .pers-doctrine-card.accent {
-    border-color: #c7d2fe;
-    background: #eef2ff;
+    border-color: var(--color-indigo-200);
+    background: var(--color-indigo-50);
   }
 
   .pers-doctrine-icon {
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
   }
@@ -541,14 +541,14 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.35rem;
   }
 
   .pers-doctrine-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.55;
   }
 
@@ -556,7 +556,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-principle {
     margin-top: 2.75rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid #e6e8eb;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .pers-principle-head {
@@ -572,7 +572,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
     justify-content: center;
     width: 1.75rem;
     height: 1.75rem;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     color: white;
     border-radius: 50%;
     font-family: 'Red Hat Display', system-ui, sans-serif;
@@ -585,32 +585,32 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--color-slate-900);
   }
 
   .pers-lede {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 0.9375rem;
     line-height: 1.7;
     max-width: 64ch;
   }
 
-  .pers-lede strong { color: #0f172a; font-weight: 600; }
+  .pers-lede strong { color: var(--color-slate-900); font-weight: 600; }
 
   .pers-lede code, .pers-doctrine-text code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8125em;
-    background: #eef2ff;
+    background: var(--color-indigo-50);
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
   }
 
   /* Prescriptive rule: positive imperative + reason */
   .pers-rule {
-    border-left: 3px solid #4f46e5;
-    background: #f8fafc;
+    border-left: 3px solid var(--color-indigo-600);
+    background: var(--color-slate-50);
     border-radius: 0 10px 10px 0;
     padding: 0.85rem 1.15rem;
     margin: 1.1rem 0;
@@ -619,7 +619,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-rule-line {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    color: #334155;
+    color: var(--color-slate-700);
     line-height: 1.6;
   }
 
@@ -628,14 +628,14 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-rule-key {
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     margin-right: 0.45rem;
   }
 
   /* Evidence callout: one finding, one cite */
   .pers-evidence {
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 12px;
     padding: 1rem 1.3rem;
     margin: 1.1rem 0;
@@ -645,7 +645,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
   }
 
   .pers-evidence .pers-material {
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     font-size: 1.3rem;
     flex-shrink: 0;
   }
@@ -653,16 +653,16 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-evidence-body {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
-  .pers-evidence-body strong { color: #3730a3; }
+  .pers-evidence-body strong { color: var(--color-indigo-800); }
 
   .pers-cite {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.7rem;
-    color: #475569;
+    color: var(--color-slate-600);
     display: block;
     margin-top: 0.35rem;
   }
@@ -673,9 +673,9 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #4f46e5;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    color: var(--color-indigo-600);
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 4px;
     padding: 0.05rem 0.4rem;
     margin-left: 0.4rem;
@@ -684,8 +684,8 @@ const page = pages.find((p) => p.id === 'persuasion')!
 
   /* Apply-in-product block holds the demo */
   .pers-apply {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     padding: 1.35rem 1.5rem;
     margin: 1.1rem 0;
@@ -695,19 +695,19 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.875rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     margin-bottom: 0.6rem;
     display: flex;
     align-items: center;
     gap: 0.45rem;
   }
 
-  .pers-apply-title .pers-material { color: #4f46e5; font-size: 1.15rem; }
+  .pers-apply-title .pers-material { color: var(--color-indigo-600); font-size: 1.15rem; }
 
   .pers-apply-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
@@ -715,17 +715,17 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8125em;
     background: white;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
   }
 
   /* Demos */
   .pers-demo {
     margin-top: 1rem;
     background: white;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     border-radius: 10px;
     padding: 1.25rem;
   }
@@ -735,32 +735,32 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #334155;
+    color: var(--color-slate-700);
     margin-bottom: 0.35rem;
   }
 
   .pers-field {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--color-slate-300);
     border-radius: 8px;
     padding: 0.6rem 0.75rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
     background: white;
     margin-bottom: 0.9rem;
   }
 
   .pers-field.filled {
-    border-color: #4f46e5;
-    background: #f5f6ff;
+    border-color: var(--color-indigo-600);
+    background: var(--color-slate-50);
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10);
   }
 
   .pers-hint {
     font-size: 0.6875rem;
-    color: #64748b;
+    color: var(--color-slate-500);
     margin: -0.6rem 0 0.9rem;
   }
 
@@ -769,16 +769,16 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-opt {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #334155;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
+    color: var(--color-slate-700);
+    background: var(--color-slate-100);
+    border: 1px solid var(--color-slate-200);
     border-radius: 9999px;
     padding: 0.3rem 0.75rem;
   }
   .pers-opt.sel {
-    background: #eef2ff;
-    border-color: #4f46e5;
-    color: #3730a3;
+    background: var(--color-indigo-50);
+    border-color: var(--color-indigo-600);
+    color: var(--color-indigo-800);
     font-weight: 600;
   }
 
@@ -786,7 +786,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-progress-track {
     height: 10px;
     border-radius: 9999px;
-    background: #e2e8f0;
+    background: var(--color-slate-200);
     overflow: hidden;
     margin: 0.35rem 0;
   }
@@ -794,7 +794,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-progress-fill {
     height: 100%;
     border-radius: 9999px;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
   }
 
   .pers-progress-meta {
@@ -802,7 +802,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
     justify-content: space-between;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--color-slate-500);
   }
 
   .pers-steps {
@@ -815,10 +815,10 @@ const page = pages.find((p) => p.id === 'persuasion')!
     flex: 1;
     height: 6px;
     border-radius: 9999px;
-    background: #e2e8f0;
+    background: var(--color-slate-200);
   }
 
-  .pers-step.done { background: #4f46e5; }
+  .pers-step.done { background: var(--color-indigo-600); }
 
   /* Pricing / contrast demo */
   .pers-price-row {
@@ -833,15 +833,15 @@ const page = pages.find((p) => p.id === 'persuasion')!
   }
 
   .pers-price-anchor {
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
+    background: var(--color-slate-50);
+    border: 1px dashed var(--color-slate-300);
     border-radius: 10px;
     padding: 1rem;
   }
 
   .pers-price-offer {
-    background: #eef2ff;
-    border: 1px solid #4f46e5;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-600);
     border-radius: 10px;
     padding: 1rem;
   }
@@ -850,23 +850,23 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #475569;
+    color: var(--color-slate-600);
     margin-bottom: 0.35rem;
   }
 
-  .pers-price-offer .pers-price-cap { color: #4f46e5; }
+  .pers-price-offer .pers-price-cap { color: var(--color-indigo-600); }
 
   .pers-price-value {
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 1.5rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
   }
 
   .pers-price-note {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #475569;
+    color: var(--color-slate-600);
     margin-top: 0.25rem;
     line-height: 1.5;
   }
@@ -881,17 +881,17 @@ const page = pages.find((p) => p.id === 'persuasion')!
 
   .pers-line-col {
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     padding: 1.15rem 1.35rem;
-    background: #f8fafc;
+    background: var(--color-slate-50);
   }
 
-  .pers-line-col.ok { border-color: #c7d2fe; background: #eef2ff; }
+  .pers-line-col.ok { border-color: var(--color-indigo-200); background: var(--color-indigo-50); }
 
   .pers-line-col.avoid {
     border-style: dashed;
-    border-color: #cbd5e1;
-    background: #ffffff;
+    border-color: var(--color-slate-300);
+    background: var(--color-white);
   }
 
   .pers-line-tag {
@@ -906,24 +906,24 @@ const page = pages.find((p) => p.id === 'persuasion')!
     margin-bottom: 0.6rem;
   }
 
-  .pers-line-col.ok .pers-line-tag { color: #4f46e5; }
-  .pers-line-col.avoid .pers-line-tag { color: #475569; }
+  .pers-line-col.ok .pers-line-tag { color: var(--color-indigo-600); }
+  .pers-line-col.avoid .pers-line-tag { color: var(--color-slate-600); }
 
   .pers-line-tag .pers-material { font-size: 1.05rem; }
 
   .pers-line-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
-  .pers-line-text strong { color: #0f172a; }
+  .pers-line-text strong { color: var(--color-slate-900); }
 
   /* Ethics band */
   .pers-ethics {
     margin-top: 2.75rem;
-    background: #0f172a;
+    background: var(--color-slate-900);
     border-radius: 16px;
     padding: 2rem 2.25rem;
   }
@@ -932,19 +932,19 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-size: 1.35rem;
     font-weight: 700;
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
     margin-bottom: 0.6rem;
   }
 
   .pers-ethics-lede {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.9375rem;
-    color: #c7d2fe;
+    color: var(--color-indigo-200);
     line-height: 1.7;
     max-width: 64ch;
   }
 
-  .pers-ethics-lede strong { color: #ffffff; }
+  .pers-ethics-lede strong { color: var(--color-white); }
 
   .pers-ethics-grid {
     display: grid;
@@ -954,7 +954,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
   }
 
   .pers-ethics-card {
-    background: #1a1f3d;
+    background: var(--color-slate-900);
     border: 1px solid rgba(199, 210, 254, 0.14);
     border-radius: 10px;
     padding: 1.1rem 1.2rem;
@@ -964,19 +964,19 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
     margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
   }
 
-  .pers-ethics-card-title .pers-material { font-size: 1.05rem; color: #a5b4fc; }
+  .pers-ethics-card-title .pers-material { font-size: 1.05rem; color: var(--color-indigo-300); }
 
   .pers-ethics-card-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.78rem;
-    color: #a5b4fc;
+    color: var(--color-indigo-300);
     line-height: 1.55;
   }
 
@@ -987,7 +987,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--color-slate-500);
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
   }
@@ -1004,8 +1004,8 @@ const page = pages.find((p) => p.id === 'persuasion')!
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border: 1px solid var(--color-slate-200);
     border-radius: 10px;
     padding: 1rem 1.25rem;
   }
@@ -1017,7 +1017,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     color: white;
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
@@ -1030,11 +1030,11 @@ const page = pages.find((p) => p.id === 'persuasion')!
   .pers-decision-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    color: #334155;
+    color: var(--color-slate-700);
     line-height: 1.55;
   }
 
-  .pers-decision-text strong { color: #0f172a; }
+  .pers-decision-text strong { color: var(--color-slate-900); }
 
   /* Sources */
   .pers-sources-list {
@@ -1043,18 +1043,18 @@ const page = pages.find((p) => p.id === 'persuasion')!
     list-style: none;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.6;
   }
 
   .pers-sources-list li {
     padding: 0.65rem 0;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--color-slate-100);
   }
 
   .pers-sources-list li:last-child { border-bottom: none; }
 
-  .pers-sources-list strong { color: #0f172a; }
+  .pers-sources-list strong { color: var(--color-slate-900); }
 
   .pers-spa {
     display: inline-block;
@@ -1062,8 +1062,8 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #4f46e5;
-    background: #eef2ff;
+    color: var(--color-indigo-600);
+    background: var(--color-indigo-50);
     border-radius: 4px;
     padding: 0.05rem 0.35rem;
     margin-left: 0.35rem;
@@ -1076,7 +1076,7 @@ const page = pages.find((p) => p.id === 'persuasion')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
-    color: #4f46e5;
+    color: var(--color-indigo-600);
     margin-top: 0.9rem;
   }
 

@@ -258,9 +258,9 @@ const page = pages.find((p) => p.id === 'modals')!
       <div class="md-ra-head"><Icon name="description" class="md-material" />role dialog</div>
       <p class="md-ra-body">Forms, pickers, multi-step content. Nothing is destroyed by opening it. Focus the first field or the primary control.</p>
     </div>
-    <div class="md-ra-card avoid" style={{ border: '1px solid #fecaca', background: '#fef2f2' }}>
-      <div class="md-ra-head" style={{ color: '#991b1b' }}><Icon name="warning" class="md-material" style="color:#b91c1c" />role alertdialog</div>
-      <p class="md-ra-body" style={{ color: '#7f1d1d' }}>Delete, cancel, wipe, anything irreversible. Requires <code>aria-describedby</code> on the message, and focus starts on Cancel.</p>
+    <div class="md-ra-card avoid" style={{ border: '1px solid var(--color-red-200)', background: 'var(--color-red-50)' }}>
+      <div class="md-ra-head" style={{ color: 'var(--color-red-800)' }}><Icon name="warning" class="md-material" style="color:var(--color-red-700)" />role alertdialog</div>
+      <p class="md-ra-body" style={{ color: 'var(--color-red-900)' }}>Delete, cancel, wipe, anything irreversible. Requires <code>aria-describedby</code> on the message, and focus starts on Cancel.</p>
     </div>
   </div>
 
@@ -696,7 +696,7 @@ const page = pages.find((p) => p.id === 'modals')!
     border-radius: 20px;
     overflow: hidden;
     padding: 3.5rem 2.5rem;
-    background: radial-gradient(120% 140% at 100% 0%, #4f46e5 0%, #4338ca 42%, #312e81 100%);
+    background: radial-gradient(120% 140% at 100% 0%, var(--color-indigo-600) 0%, var(--color-indigo-700) 42%, var(--color-indigo-900) 100%);
     box-shadow: 0 16px 32px -8px rgba(79,70,229,0.12), 0 4px 8px -2px rgba(79,70,229,0.06);
   }
   .md-hero-eyebrow {
@@ -704,12 +704,12 @@ const page = pages.find((p) => p.id === 'modals')!
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: #c7d2fe;
+    color: var(--color-indigo-200);
     margin: 0 0 1rem;
   }
   .md-hero h1 {
     font-family: 'Red Hat Display', system-ui, sans-serif;
-    color: #ffffff;
+    color: var(--color-white);
     font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
     font-weight: 900;
     line-height: 1.05;
@@ -718,26 +718,26 @@ const page = pages.find((p) => p.id === 'modals')!
     max-width: 20ch;
   }
   .md-hero p {
-    color: #e0e7ff;
+    color: var(--color-indigo-100);
     font-size: 1.0625rem;
     line-height: 1.6;
     max-width: 44rem;
     margin: 0;
   }
-  .md-hero p strong { color: #ffffff; font-weight: 700; }
+  .md-hero p strong { color: var(--color-white); font-weight: 700; }
   .md-hero-code {
     font-family: 'SF Mono', 'Monaco', monospace;
     background: rgba(255,255,255,0.14);
     padding: 0.05rem 0.4rem;
     border-radius: 4px;
-    color: #ffffff;
+    color: var(--color-white);
   }
 
   /* ===== SECTIONS ===== */
   .md-section {
     margin-top: 3rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid #e6e8eb;
+    border-bottom: 1px solid var(--color-border);
   }
   .md-section:last-of-type { border-bottom: none; }
 
@@ -752,7 +752,7 @@ const page = pages.find((p) => p.id === 'modals')!
     justify-content: center;
     width: 1.75rem;
     height: 1.75rem;
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     color: white;
     border-radius: 50%;
     font-size: 0.875rem;
@@ -764,67 +764,67 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-size: 1.375rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--color-slate-900);
     letter-spacing: -0.02em;
   }
 
   .md-text {
     font-family: 'Rubik', system-ui, sans-serif;
-    color: #475569;
+    color: var(--color-slate-600);
     font-size: 0.9375rem;
     line-height: 1.65;
     max-width: 44rem;
     margin: 0 0 1.25rem;
   }
-  .md-text strong { color: #0f172a; font-weight: 600; }
+  .md-text strong { color: var(--color-slate-900); font-weight: 600; }
   .md-text code {
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.875em;
-    color: #4338ca;
+    color: var(--color-indigo-700);
     font-family: 'SF Mono', 'Monaco', monospace;
   }
-  .md-text a { color: #4f46e5; text-decoration: none; font-weight: 600; }
+  .md-text a { color: var(--color-indigo-600); text-decoration: none; font-weight: 600; }
   .md-text a:hover { text-decoration: underline; }
 
   /* ===== CALLOUT ===== */
   .md-callout {
     display: flex;
     gap: 0.75rem;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 10px;
     padding: 1rem 1.25rem;
     margin: 1.25rem 0;
     max-width: 44rem;
   }
-  .md-callout .md-material { color: #4338ca; font-size: 1.25rem; flex-shrink: 0; }
+  .md-callout .md-material { color: var(--color-indigo-700); font-size: 1.25rem; flex-shrink: 0; }
   .md-callout-text {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
     line-height: 1.55;
-    color: #3730a3;
+    color: var(--color-indigo-800);
   }
-  .md-callout-text strong { color: #312e81; font-weight: 700; }
+  .md-callout-text strong { color: var(--color-indigo-900); font-weight: 700; }
   .md-callout-text code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8125em;
     background: rgba(79,70,229,0.10);
     padding: 1px 5px;
     border-radius: 4px;
-    color: #3730a3;
+    color: var(--color-indigo-800);
   }
 
   /* Warning-toned callout still stays inside the indigo family for chrome,
      using the error token only where the meaning is truly destructive. */
-  .md-callout.warn { background: #fef2f2; border-color: #fecaca; }
-  .md-callout.warn .md-material { color: #b91c1c; }
-  .md-callout.warn .md-callout-text { color: #991b1b; }
-  .md-callout.warn .md-callout-text strong { color: #7f1d1d; }
+  .md-callout.warn { background: var(--color-red-50); border-color: var(--color-red-200); }
+  .md-callout.warn .md-material { color: var(--color-red-700); }
+  .md-callout.warn .md-callout-text { color: var(--color-red-800); }
+  .md-callout.warn .md-callout-text strong { color: var(--color-red-900); }
   .md-callout.warn .md-callout-text code {
     background: rgba(153,27,27,0.08);
-    color: #991b1b;
+    color: var(--color-red-800);
   }
 
   /* ===== DEMO LAB ===== */
@@ -836,7 +836,7 @@ const page = pages.find((p) => p.id === 'modals')!
   }
   .md-demo {
     background: white;
-    border: 1px solid #e6e8eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 1.5rem;
   }
@@ -844,7 +844,7 @@ const page = pages.find((p) => p.id === 'modals')!
     font-weight: 700;
     font-size: 0.6875rem;
     text-transform: uppercase;
-    color: #475569;
+    color: var(--color-slate-600);
     letter-spacing: 0.08em;
     margin-bottom: 1rem;
   }
@@ -856,14 +856,14 @@ const page = pages.find((p) => p.id === 'modals')!
   }
   .md-demo-note {
     font-size: 0.8125rem;
-    color: #475569;
+    color: var(--color-slate-600);
     line-height: 1.5;
     margin-top: 0.875rem;
   }
   .md-demo-note code {
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.85em;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   /* ===== BUTTONS ===== */
@@ -882,55 +882,55 @@ const page = pages.find((p) => p.id === 'modals')!
   .md-btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
 
   .md-btn-primary {
-    background: #4f46e5;
+    background: var(--color-indigo-600);
     color: white;
     box-shadow: 0 1px 2px rgba(79, 70, 229, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-primary:hover { background: #4338ca; }
+    .md-btn-primary:hover { background: var(--color-indigo-700); }
   }
-  .md-btn-primary:active { background: #3730a3; }
+  .md-btn-primary:active { background: var(--color-indigo-800); }
 
   .md-btn-tonal {
     background: transparent;
-    color: #4338ca;
-    border: 1px solid #c7d2fe;
+    color: var(--color-indigo-700);
+    border: 1px solid var(--color-indigo-200);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-tonal:hover { background: #eef2ff; }
+    .md-btn-tonal:hover { background: var(--color-indigo-50); }
   }
-  .md-btn-tonal:active { background: #e0e7ff; }
+  .md-btn-tonal:active { background: var(--color-indigo-100); }
 
   .md-btn-ghost {
-    background: #ffffff;
-    color: #334155;
-    border: 1px solid #e2e8f0;
+    background: var(--color-white);
+    color: var(--color-slate-700);
+    border: 1px solid var(--color-slate-200);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-ghost:hover { background: #f8fafc; }
+    .md-btn-ghost:hover { background: var(--color-slate-50); }
   }
-  .md-btn-ghost:active { background: #f1f5f9; }
+  .md-btn-ghost:active { background: var(--color-slate-100); }
 
   /* Destructive uses the error token with an AA-safe red under white text.
-     Red 500 is only 3.76:1 on white, so the fill is red 600 (#dc2626). */
+     Red 500 is only 3.76:1 on white, so the fill is red 600 (var(--color-red-600)). */
   .md-btn-danger {
-    background: var(--color-error-strong, #dc2626);
-    color: #ffffff;
+    background: var(--color-error-strong, var(--color-red-600));
+    color: var(--color-white);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-danger:hover { background: #b91c1c; }
+    .md-btn-danger:hover { background: var(--color-red-700); }
   }
-  .md-btn-danger:active { background: #991b1b; }
+  .md-btn-danger:active { background: var(--color-red-800); }
 
   .md-btn-danger-outline {
-    background: #ffffff;
-    color: #991b1b;
-    border: 1px solid #fecaca;
+    background: var(--color-white);
+    color: var(--color-red-800);
+    border: 1px solid var(--color-red-200);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-danger-outline:hover { background: #fef2f2; }
+    .md-btn-danger-outline:hover { background: var(--color-red-50); }
   }
-  .md-btn-danger-outline:active { background: #fee2e2; }
+  .md-btn-danger-outline:active { background: var(--color-red-100); }
 
   /* ===== NATIVE DIALOG ===== */
   .md-dialog {
@@ -939,7 +939,7 @@ const page = pages.find((p) => p.id === 'modals')!
     padding: 0;
     width: min(92vw, 30rem);
     box-shadow: 0 24px 48px -12px rgba(15,23,42,0.30), 0 8px 16px -8px rgba(15,23,42,0.18);
-    color: #334155;
+    color: var(--color-slate-700);
   }
   .md-dialog::backdrop {
     background: rgba(15, 23, 42, 0.55);
@@ -961,7 +961,7 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-size: 1.125rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--color-slate-900);
     letter-spacing: -0.01em;
     margin: 0;
   }
@@ -969,10 +969,10 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
     line-height: 1.55;
-    color: #475569;
+    color: var(--color-slate-600);
     margin: 0;
   }
-  .md-dialog-text strong { color: #0f172a; font-weight: 600; }
+  .md-dialog-text strong { color: var(--color-slate-900); font-weight: 600; }
   .md-dialog-field {
     display: flex;
     flex-direction: column;
@@ -982,20 +982,20 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #334155;
+    color: var(--color-slate-700);
   }
   .md-dialog-field input {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.9375rem;
     padding: 0.55rem 0.75rem;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--color-slate-300);
     border-radius: 6px;
-    color: #0f172a;
-    background: #ffffff;
+    color: var(--color-slate-900);
+    background: var(--color-white);
   }
   .md-dialog-field input:focus-visible {
     outline: none;
-    border-color: #4f46e5;
+    border-color: var(--color-indigo-600);
     box-shadow: var(--shadow-focus);
   }
   .md-dialog-actions {
@@ -1014,12 +1014,12 @@ const page = pages.find((p) => p.id === 'modals')!
     background: none;
     border: none;
     border-radius: 6px;
-    color: #64748b;
+    color: var(--color-slate-500);
     cursor: pointer;
     flex-shrink: 0;
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-dialog-close:hover { background: #f1f5f9; color: #334155; }
+    .md-dialog-close:hover { background: var(--color-slate-100); color: var(--color-slate-700); }
   }
   .md-dialog-close:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
   .md-dialog-close .md-material { font-size: 1.25rem; }
@@ -1031,8 +1031,8 @@ const page = pages.find((p) => p.id === 'modals')!
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 8px;
-    background: #fef2f2;
-    color: #b91c1c;
+    background: var(--color-red-50);
+    color: var(--color-red-700);
     flex-shrink: 0;
   }
   .md-alert-mark .md-material { font-size: 1.35rem; }
@@ -1040,11 +1040,11 @@ const page = pages.find((p) => p.id === 'modals')!
   /* ===== POPOVER (non-modal) ===== */
   .md-popover {
     margin: auto;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     padding: 0.375rem;
     width: 13rem;
-    background: #ffffff;
+    background: var(--color-white);
     box-shadow: 0 12px 24px -8px rgba(15,23,42,0.18), 0 4px 8px -4px rgba(15,23,42,0.10);
   }
   .md-popover::backdrop { background: transparent; }
@@ -1066,7 +1066,7 @@ const page = pages.find((p) => p.id === 'modals')!
     text-align: left;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
-    color: #334155;
+    color: var(--color-slate-700);
     background: none;
     border: none;
     border-radius: 6px;
@@ -1074,10 +1074,10 @@ const page = pages.find((p) => p.id === 'modals')!
     cursor: pointer;
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-menu-item:hover { background: #f1f5f9; }
+    .md-menu-item:hover { background: var(--color-slate-100); }
   }
   .md-menu-item:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
-  .md-menu-item .md-material { font-size: 1.1rem; color: #64748b; }
+  .md-menu-item .md-material { font-size: 1.1rem; color: var(--color-slate-500); }
 
   /* ===== DESKTOP WINDOW STANDARD RENDER ===== */
   .md-standard { margin: 1.25rem 0 0; }
@@ -1090,18 +1090,18 @@ const page = pages.find((p) => p.id === 'modals')!
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #475569;
+    color: var(--color-slate-600);
     margin: 0 0 0.6rem;
   }
-  .md-standard-cap .md-material { font-size: 0.95rem; color: #4338ca; }
+  .md-standard-cap .md-material { font-size: 0.95rem; color: var(--color-indigo-700); }
 
   .md-window {
     max-width: 520px;
     margin: 0 auto;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--color-white);
     box-shadow: 0 24px 48px -12px rgba(15,23,42,0.30), 0 8px 16px -8px rgba(15,23,42,0.18);
   }
   .md-window-bar {
@@ -1110,11 +1110,11 @@ const page = pages.find((p) => p.id === 'modals')!
     align-items: center;
     gap: 0.5rem;
     padding: 0.55rem 0.85rem;
-    background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
+    background: var(--color-slate-50);
+    border-bottom: 1px solid var(--color-slate-200);
   }
   .md-window-dots { display: inline-flex; gap: 0.35rem; justify-self: start; }
-  .md-window-dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; }
+  .md-window-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-slate-300); }
   .md-window-url {
     justify-self: center;
     display: inline-flex;
@@ -1122,20 +1122,20 @@ const page = pages.find((p) => p.id === 'modals')!
     gap: 0.35rem;
     max-width: 240px;
     padding: 0.22rem 0.75rem;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: var(--color-white);
+    border: 1px solid var(--color-slate-200);
     border-radius: 999px;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--color-slate-500);
     white-space: nowrap;
   }
-  .md-window-url .md-material { font-size: 0.85rem; color: #94a3b8; }
+  .md-window-url .md-material { font-size: 0.85rem; color: var(--color-slate-400); }
   .md-window-body {
     position: relative;
     height: 300px;
     overflow: hidden;
-    background: #f1f5f9;
+    background: var(--color-slate-100);
   }
   /* The scene is authored at a reference desktop resolution and scaled down to
      fit the window body, so every element inside reads to scale like a real
@@ -1150,7 +1150,7 @@ const page = pages.find((p) => p.id === 'modals')!
     height: 600px;
     transform: scale(0.5);
     transform-origin: top left;
-    background: #f1f5f9;
+    background: var(--color-slate-100);
   }
   .md-window-faux {
     position: absolute;
@@ -1173,7 +1173,7 @@ const page = pages.find((p) => p.id === 'modals')!
     font-weight: 800;
     font-size: 1.75rem;
     letter-spacing: -0.02em;
-    color: #0f172a;
+    color: var(--color-slate-900);
   }
   .md-window-avatar {
     display: inline-flex;
@@ -1182,14 +1182,14 @@ const page = pages.find((p) => p.id === 'modals')!
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: #e0e7ff;
-    color: #4338ca;
+    background: var(--color-indigo-100);
+    color: var(--color-indigo-700);
     flex-shrink: 0;
   }
   .md-window-avatar .md-material { font-size: 1.6rem; }
   .md-window-card {
-    background: #ffffff;
-    border: 1px solid #e6e8eb;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
     border-radius: 14px;
     padding: 1.25rem 1.5rem;
     display: flex;
@@ -1200,9 +1200,9 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-weight: 700;
     font-size: 1.05rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
   }
-  .md-window-cardline { height: 0.85rem; border-radius: 6px; background: #e6e8eb; }
+  .md-window-cardline { height: 0.85rem; border-radius: 6px; background: var(--color-border); }
   .md-window-cardline.short { width: 38%; }
   .md-window-cardline.mid { width: 60%; }
   .md-window-scrim {
@@ -1221,7 +1221,7 @@ const page = pages.find((p) => p.id === 'modals')!
     /* The static render reuses .md-dialog on a div, which has no UA white
        backdrop of a real <dialog>, so the card is made opaque here to sit
        crisp in front of the scrim. */
-    background: #ffffff;
+    background: var(--color-white);
   }
   .md-window-menu {
     position: absolute;
@@ -1229,8 +1229,8 @@ const page = pages.find((p) => p.id === 'modals')!
     top: 5.25rem;
     right: 2.5rem;
     width: 14rem;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: var(--color-white);
+    border: 1px solid var(--color-slate-200);
     border-radius: 12px;
     padding: 0.5rem;
     box-shadow: 0 12px 24px -8px rgba(15,23,42,0.18), 0 4px 8px -4px rgba(15,23,42,0.10);
@@ -1244,10 +1244,10 @@ const page = pages.find((p) => p.id === 'modals')!
     margin: 1.25rem 0;
   }
   .md-req {
-    border: 1px solid #e6e8eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 1.1rem 1.25rem;
-    background: #ffffff;
+    background: var(--color-white);
   }
   .md-req-head {
     display: flex;
@@ -1262,8 +1262,8 @@ const page = pages.find((p) => p.id === 'modals')!
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 6px;
-    background: #eef2ff;
-    color: #4338ca;
+    background: var(--color-indigo-50);
+    color: var(--color-indigo-700);
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
     font-weight: 700;
@@ -1273,33 +1273,33 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'Red Hat Display', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #0f172a;
+    color: var(--color-slate-900);
   }
   .md-req-body {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
     line-height: 1.5;
-    color: #475569;
+    color: var(--color-slate-600);
     margin: 0 0 0.5rem;
   }
   .md-req-body code {
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     padding: 1px 5px;
     border-radius: 4px;
     font-size: 0.85em;
     font-family: 'SF Mono', 'Monaco', monospace;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
   .md-req-cite {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
     line-height: 1.45;
-    color: #64748b;
-    border-left: 2px solid #c7d2fe;
+    color: var(--color-slate-500);
+    border-left: 2px solid var(--color-indigo-200);
     padding-left: 0.625rem;
     margin: 0;
   }
-  .md-req-cite b { color: #475569; font-weight: 600; }
+  .md-req-cite b { color: var(--color-slate-600); font-weight: 600; }
 
   /* ===== COMPACT TYPE CHIPS ===== */
   .md-chips { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin: 0.5rem 0 0; }
@@ -1307,16 +1307,16 @@ const page = pages.find((p) => p.id === 'modals')!
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    background: var(--color-indigo-50);
+    border: 1px solid var(--color-indigo-200);
     border-radius: 6px;
     padding: 0.15rem 0.5rem;
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #3730a3;
+    color: var(--color-indigo-800);
   }
-  .md-chip .md-material { font-size: 0.85rem; color: #4338ca; }
+  .md-chip .md-material { font-size: 0.85rem; color: var(--color-indigo-700); }
 
   /* ===== DECISION LADDER ===== */
   .md-ladder {
@@ -1330,10 +1330,10 @@ const page = pages.find((p) => p.id === 'modals')!
     display: flex;
     align-items: flex-start;
     gap: 0.875rem;
-    border: 1px solid #e6e8eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 0.9rem 1.1rem;
-    background: #ffffff;
+    background: var(--color-white);
   }
   .md-rung-step {
     display: inline-flex;
@@ -1342,8 +1342,8 @@ const page = pages.find((p) => p.id === 'modals')!
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 8px;
-    background: #eef2ff;
-    color: #4338ca;
+    background: var(--color-indigo-50);
+    color: var(--color-indigo-700);
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.8125rem;
     font-weight: 700;
@@ -1353,19 +1353,19 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
     line-height: 1.5;
-    color: #475569;
+    color: var(--color-slate-600);
     margin: 0;
   }
-  .md-rung-body b { color: #0f172a; font-weight: 700; }
+  .md-rung-body b { color: var(--color-slate-900); font-weight: 700; }
   .md-rung-body code {
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     padding: 1px 5px;
     border-radius: 4px;
     font-size: 0.85em;
     font-family: 'SF Mono', 'Monaco', monospace;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
-  .md-rung-body a { color: #4f46e5; text-decoration: none; font-weight: 600; }
+  .md-rung-body a { color: var(--color-indigo-600); text-decoration: none; font-weight: 600; }
   .md-rung-body a:hover { text-decoration: underline; }
 
   /* ===== RULES ===== */
@@ -1377,16 +1377,16 @@ const page = pages.find((p) => p.id === 'modals')!
     max-width: 44rem;
   }
   .md-rule {
-    border: 1px solid #e6e8eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 1.1rem 1.25rem;
-    background: #ffffff;
+    background: var(--color-white);
   }
   .md-rule-line {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.875rem;
     line-height: 1.55;
-    color: #334155;
+    color: var(--color-slate-700);
     margin: 0;
   }
   .md-rule-line + .md-rule-line { margin-top: 0.4rem; }
@@ -1398,16 +1398,16 @@ const page = pages.find((p) => p.id === 'modals')!
     text-transform: uppercase;
     margin-right: 0.4rem;
   }
-  .md-rule-tag.rule { color: #4338ca; }
-  .md-rule-tag.why { color: #64748b; }
-  .md-rule-line strong { color: #0f172a; font-weight: 600; }
+  .md-rule-tag.rule { color: var(--color-indigo-700); }
+  .md-rule-tag.why { color: var(--color-slate-500); }
+  .md-rule-line strong { color: var(--color-slate-900); font-weight: 600; }
   .md-rule-line code {
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     padding: 1px 5px;
     border-radius: 4px;
     font-size: 0.8125em;
     font-family: 'SF Mono', 'Monaco', monospace;
-    color: #4338ca;
+    color: var(--color-indigo-700);
   }
 
   .md-ra {
@@ -1418,8 +1418,8 @@ const page = pages.find((p) => p.id === 'modals')!
   }
   @media (max-width: 700px) { .md-ra { grid-template-columns: 1fr; } }
   .md-ra-card { border-radius: 10px; padding: 0.85rem 1rem; }
-  .md-ra-card.reco { border: 1px solid #c7d2fe; background: #eef2ff; }
-  .md-ra-card.avoid { border: 1px dashed #94a3b8; background: #f8fafc; }
+  .md-ra-card.reco { border: 1px solid var(--color-indigo-200); background: var(--color-indigo-50); }
+  .md-ra-card.avoid { border: 1px dashed var(--color-slate-400); background: var(--color-slate-50); }
   .md-ra-head {
     display: flex;
     align-items: center;
@@ -1429,15 +1429,15 @@ const page = pages.find((p) => p.id === 'modals')!
     font-size: 0.8125rem;
     margin-bottom: 0.45rem;
   }
-  .md-ra-card.reco .md-ra-head { color: #3730a3; }
-  .md-ra-card.avoid .md-ra-head { color: #475569; }
-  .md-ra-card.reco .md-ra-head .md-material { color: #4338ca; font-size: 1.1rem; }
-  .md-ra-card.avoid .md-ra-head .md-material { color: #475569; font-size: 1.1rem; }
+  .md-ra-card.reco .md-ra-head { color: var(--color-indigo-800); }
+  .md-ra-card.avoid .md-ra-head { color: var(--color-slate-600); }
+  .md-ra-card.reco .md-ra-head .md-material { color: var(--color-indigo-700); font-size: 1.1rem; }
+  .md-ra-card.avoid .md-ra-head .md-material { color: var(--color-slate-600); font-size: 1.1rem; }
   .md-ra-body {
     font-family: 'Rubik', system-ui, sans-serif;
     font-size: 0.8125rem;
     line-height: 1.5;
-    color: #475569;
+    color: var(--color-slate-600);
     margin: 0;
   }
   .md-ra-body code {
@@ -1446,33 +1446,33 @@ const page = pages.find((p) => p.id === 'modals')!
     border-radius: 4px;
     font-size: 0.8125em;
     font-family: 'SF Mono', 'Monaco', monospace;
-    color: #334155;
+    color: var(--color-slate-700);
   }
 
   /* ===== CODE BLOCKS ===== */
   .md-code {
-    background: #1e293b;
+    background: var(--color-slate-800);
     border-radius: 12px;
     overflow: hidden;
     margin: 1rem 0 0;
   }
   .md-code-header {
-    background: #334155;
+    background: var(--color-slate-700);
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    border-bottom: 1px solid #475569;
+    border-bottom: 1px solid var(--color-slate-600);
   }
   .md-code-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .md-code-dot.red { background: #ef4444; }
-  .md-code-dot.yellow { background: #f59e0b; }
-  .md-code-dot.green { background: #22c55e; }
+  .md-code-dot.red { background: var(--color-red-500); }
+  .md-code-dot.yellow { background: var(--color-amber-500); }
+  .md-code-dot.green { background: var(--color-green-500); }
   .md-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
-    color: #cbd5e1;
+    color: var(--color-slate-300);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -1482,28 +1482,28 @@ const page = pages.find((p) => p.id === 'modals')!
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
     font-size: 0.8125rem;
     line-height: 1.7;
-    color: #e2e8f0;
+    color: var(--color-slate-200);
     overflow-x: auto;
   }
-  .md-code .comment { color: #94a3b8; font-style: italic; }
-  .md-code .tag { color: #fbbf24; }
-  .md-code .attr { color: #7dd3fc; }
-  .md-code .value { color: #a5f3fc; }
-  .md-code .function { color: #c4b5fd; }
-  .md-code .punctuation { color: #cbd5e1; }
+  .md-code .comment { color: var(--color-slate-400); font-style: italic; }
+  .md-code .tag { color: var(--color-amber-400); }
+  .md-code .attr { color: var(--color-indigo-300); }
+  .md-code .value { color: var(--color-indigo-200); }
+  .md-code .function { color: var(--color-violet-300); }
+  .md-code .punctuation { color: var(--color-slate-300); }
 
   /* ===== SOURCES ===== */
-  .md-refs { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid #e6e8eb; }
+  .md-refs { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--color-border); }
   .md-refs-h {
     font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #475569;
+    color: var(--color-slate-600);
     margin-bottom: 0.75rem;
   }
-  .md-refs p { font-size: 0.75rem; line-height: 1.7; color: #475569; margin: 0; }
-  .md-refs a { color: #4f46e5; text-decoration: none; }
+  .md-refs p { font-size: 0.75rem; line-height: 1.7; color: var(--color-slate-600); margin: 0; }
+  .md-refs a { color: var(--color-indigo-600); text-decoration: none; }
   .md-refs a:hover { text-decoration: underline; }
 </style>
 

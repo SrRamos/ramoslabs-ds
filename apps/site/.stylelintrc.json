@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/stylelintrc",
+  "//": "Dogfooding gate for the RamosLabs DS reference site. The hard rule (AGENTS.md): never hardcode a color, spacing, typography, radius, shadow, or motion value; always read the token. This config enforces the color half of that rule inside every <style> block. Swatch/reference pages are ignored because they render raw hex as content on purpose.",
+  "overrides": [
+    {
+      "files": ["**/*.astro", "**/*.vue"],
+      "customSyntax": "postcss-html"
+    }
+  ],
+  "rules": {
+    "color-no-hex": true
+  },
+  "ignoreFiles": [
+    "src/pages/foundations/colors.astro",
+    "src/pages/foundations/token-reference.astro",
+    "src/pages/foundations/color-picker.astro",
+    "dist/**",
+    ".astro/**"
+  ]
+}
