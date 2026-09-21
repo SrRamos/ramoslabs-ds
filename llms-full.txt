@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (213 tokens)
+## Token reference (214 tokens)
 
 ### breakpoint (5)
 
@@ -21,7 +21,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--breakpoint-xl` | `1200px` |
 | `--breakpoint-2xl` | `1366px` |
 
-### color (130)
+### color (131)
 
 | Token | Value |
 | --- | --- |
@@ -129,6 +129,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-success-border` | `#bbf7d0` |
 | `--color-success-text` | `#166534` |
 | `--color-warning` | `#f59e0b` |
+| `--color-warning-strong` | `#d97706` |
 | `--color-warning-surface` | `#fffbeb` |
 | `--color-warning-border` | `#fde68a` |
 | `--color-warning-text` | `#78350f` |
@@ -144,14 +145,14 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-text-heading` | `#0f172a` |
 | `--color-text-strong` | `#1e293b` |
 | `--color-text-secondary` | `#475569` |
-| `--color-text-body` | `#64748b` |
+| `--color-text-body` | `#334155` |
 | `--color-text-muted` | `#64748b` |
 | `--color-text-disabled` | `#cbd5e1` |
 | `--color-surface` | `#ffffff` |
 | `--color-surface-secondary` | `#f8fafc` |
 | `--color-surface-hover` | `#f1f5f9` |
 | `--color-background` | `#f8fafc` |
-| `--color-border` | `#e6e8eb` |
+| `--color-border` | `#e2e8f0` |
 | `--color-border-light` | `#e2e8f0` |
 | `--color-border-subtle` | `#f1f5f9` |
 | `--color-focus` | `#4f46e5` |
@@ -292,7 +293,7 @@ The RamosLabs Design System is a taxonomy book, not a component bundle. One indi
 
 The whole system in four numbers:
 
-- 213 design tokens
+- 214 design tokens
 - 3 taxonomy tiers
 - AA contrast floor
 - 1 accent color
@@ -301,7 +302,7 @@ The whole system in four numbers:
 
 - Tier 1, Foundations: the token contract. Color, type, space, radius, shadow, motion. Start here. References primitives.
 - Tier 2, Patterns: recipes built from foundations. States, forms, accessibility, voice. References foundations.
-- Tier 3, Components: SJ and W UI, built only from patterns and foundations. References patterns and foundations.
+- Tier 3, Components: SJ and W UI, built only from patterns and foundations. References patterns and foundations. Not shipped yet — the `@ramoslabs/vue` library lands in a future release; until then, build with the tokens and the documented patterns.
 
 The one rule: a tier may reference the tier below, never above. That single constraint keeps the system coherent as it grows.
 
@@ -330,7 +331,7 @@ import '@ramoslabs/tokens/css';
 
 ## Sources
 
-Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.1.
+Built on the W3C Design Tokens spec, Atomic Design, and WCAG 2.2.
 
 # Installation
 
@@ -370,7 +371,7 @@ Agent-native. MCP-first. AI-ready by design. This design system is built to be c
 
 ## The contract, in one place
 
-Six artifacts make the whole system legible to a machine. All are served from the site root and are free to fetch, read-only, and need no auth.
+Seven artifacts make the whole system legible to a machine. All are served from the site root and are free to fetch, read-only, and need no auth.
 
 - **MCP server** (`/mcp`) — the design system as seven typed tools: `search_tokens`, `get_token`, `check_contrast`, `list_docs`, `get_doc`, `lint_css`, `get_agents_guide`. Streamable HTTP, read-only, no auth. This is the highest-leverage way to consume the system: the tools return structured, verified data with no interpretation and no invention. See the MCP Server page.
 - **Agent skill** (`/skill.md`) — a Claude Code skill that makes an agent build and review UI strictly by this system, never inventing a token, value, or rule. Copy it to `.claude/skills/ramoslabs-ds/SKILL.md` in a project, or `~/.claude/skills/…` globally.
@@ -386,7 +387,7 @@ The difference that matters: these tools are for correctness, not just discovery
 
 ## The one hard rule still applies
 
-Everything an agent produces follows the same contract a human does: never hardcode a color, spacing, typography, radius, shadow, or motion value — read the token. Indigo 600 is the single action accent. WCAG 2.1 AA is the floor. The agent layer exists to make that contract easy to honor and impossible to fake.
+Everything an agent produces follows the same contract a human does: never hardcode a color, spacing, typography, radius, shadow, or motion value — read the token. Indigo 600 is the single action accent. WCAG 2.2 AA is the floor. The agent layer exists to make that contract easy to honor and impossible to fake.
 
 # MCP Server
 
@@ -410,9 +411,11 @@ Most component MCP servers exist to discover and install code. This one exists s
 
 ## Connect it
 
-Claude Code: `claude mcp add --transport http ramoslabs-ds https://design.ramoslabs.com/mcp`.
+Claude Code: `claude mcp add --transport http ramoslabs-ds https://ramoslabs-ds.edwardramosp.workers.dev/mcp`.
 
-Other MCP clients (Cursor, Windsurf, …): add a server entry with the URL `https://design.ramoslabs.com/mcp` and transport `http`. The agent then has `search_tokens`, `check_contrast`, `lint_css`, and the rest as first-class tools — no WebFetch, no HTML interpretation, no invented values.
+Other MCP clients (Cursor, Windsurf, …): add a server entry with the URL `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` and transport `http`. The agent then has `search_tokens`, `check_contrast`, `lint_css`, and the rest as first-class tools — no WebFetch, no HTML interpretation, no invented values.
+
+Both hosts serve the same server. Prefer the `workers.dev` endpoint above: the branded `https://design.ramoslabs.com/mcp` sits behind Bot Fight Mode, which can block cloud-hosted agents, while the `workers.dev` mirror always answers.
 
 ## Quick check
 
@@ -449,10 +452,10 @@ The ramps are primitives: raw hues, named by number, never by meaning. Product c
 
 - Primary action: rest `--color-primary`, hover `--color-primary-dark`, focus ring at `--color-focus`. The one accent for submit, confirm, active nav.
 - Selected / accent zone: ✓ Recommended: `--color-primary-surface` tint with primary-colored text. ✕ Avoid: white text on the tint, it fails contrast on the pale surface.
-- Text scale, one neutral hue: `--text-heading` 17.85:1, `--text-strong` 14.63:1, `--text-secondary` 7.58:1, `--text-body` 4.76:1, `--text-disabled` state only.
+- Text scale, one neutral hue: `--color-text-heading` 17.85:1, `--color-text-strong` 14.63:1, `--color-text-body` 10.36:1, `--color-text-secondary` 7.58:1, `--color-text-muted` 4.76:1, `--color-text-disabled` state only.
 - Feedback, each a full triad (strong solid + surface + text):
   - Success: `--color-success-strong` + `-surface` + `-text`. Strong solid for the icon so the white check clears 3:1.
-  - Warning: `--color-warning` + `-surface` + `-text`. Amber is bright, so it carries dark text, never white.
+  - Warning: `--color-warning-strong` + `-surface` + `-text`. Amber is bright: reach for `--color-warning-strong` when a white glyph sits on a solid fill (it clears the 3:1 non-text floor), keep dark text on the surface, never white text.
   - Error: `--color-error` + `-surface` + `-text`. For a red button with white text, use `--color-error-strong`.
   - Info: `--color-info` + `-surface` + `-text`. Kept distinct from indigo so context never reads as an action.
 
@@ -463,11 +466,13 @@ Contrast is a floor. WCAG 2.2 asks 4.5:1 for normal text, 3:1 for large text and
 - Primary on white: 6.29, AA
 - White on primary-dark: 7.90, AAA
 - Heading on white: 17.85, AAA
-- Body / muted on white: 4.76, AA
+- Body on white: 10.36, AAA
+- Muted on white: 4.76, AA
 - White on error-strong: 4.83, AA
 - White on error (red 500): 3.76, large only
 - Dark text on warning: 8.31, AAA
-- White on warning: 2.15, fail
+- White on warning (amber 500): 2.15, fail — use warning-strong instead
+- White on warning-strong (amber 600): 3.18, UI / large only
 - Disabled on white: 1.48, by design
 
 Rule: pair every status color with an icon and a label, give every invalid field real text, and make focus a visible ring. Why: color is never the only channel (WCAG 2.2 SC 1.4.1), so meaning survives for color-blind and low-vision users. Color reinforces, it never carries meaning by itself.
@@ -536,7 +541,7 @@ Hierarchy must survive one color. Distinguish levels with size, weight, and spac
 
 ## Sources
 
-Role groups after Material 3 type scale. The 45 to 75ch measure from Butterick, Practical Typography, and Baymard. Fluid type with clamp() from Utopia and web.dev. Accessibility floors from WCAG 2.1 SC 1.4.4 Resize Text, 1.4.12 Text Spacing, and 1.4.8 Visual Presentation.
+Role groups after Material 3 type scale. The 45 to 75ch measure from Butterick, Practical Typography, and Baymard. Fluid type with clamp() from Utopia and web.dev. Accessibility floors from WCAG 2.2 SC 1.4.4 Resize Text, 1.4.12 Text Spacing, and 1.4.8 Visual Presentation.
 
 # Spacing
 
@@ -622,8 +627,13 @@ The pill is an accent, not a default. Buttons are not pills. Scale the radius to
 
 Reserve `--radius-pill` for small, single-line elements where the round shape is the point: chips, tags, avatars, toggles, status badges. Every button, input, and select takes the 6px signature. Bigger surfaces earn bigger radii: a card is not shaped like a button, and a modal is not shaped like a card.
 
-- Do: wide button at `--radius-sm`, the 6px signature. Calm, precise, unmistakably a control.
-- Don't: the same button forced to a pill. The larger corners read as a toy, not a product.
+✓ Recommended: a wide button at `--radius-sm`, the 6px signature.
+Rule: give every button, input, and select the 6px control radius.
+Why: it reads as calm, precise, and unmistakably a control; the shape matches the role.
+
+✕ Avoid: the same button forced to `--radius-pill`.
+Rule: reserve the pill for small, single-line accents (chips, tags, badges), never full-width controls.
+Why: oversized corners on a large surface read as a toy, not a product.
 
 ## The law of concentric corners
 
@@ -791,7 +801,7 @@ A frame at 60fps is about 16ms. The browser can animate `transform` and `opacity
 
 ## Reduced motion is the floor
 
-The browser exposes the OS setting as `prefers-reduced-motion: reduce`, a firm request to hold still that every animation honors. It aligns with WCAG 2.1: 2.3.3 asks that interaction-triggered motion can be disabled, and 2.2.2 covers looping motion.
+The browser exposes the OS setting as `prefers-reduced-motion: reduce`, a firm request to hold still that every animation honors. It aligns with WCAG 2.2: 2.3.3 asks that interaction-triggered motion can be disabled, and 2.2.2 covers looping motion.
 
 Honoring it does not mean deleting meaning. Because information rides on color, opacity, and the final state, the interface stays legible without movement: collapse the animation, keep the destination. Keep a spinner turning slowly rather than freezing it, a stopped spinner reads as a hung app.
 
@@ -839,7 +849,7 @@ Honoring it does not mean deleting meaning. Because information rides on color, 
 
 ## Sources
 
-Material 3 Motion: duration buckets and easing sets. Apple HIG Motion: purposeful, communicates status, respects Reduce Motion. web.dev and MDN: animate transform and opacity to stay on the compositor. MDN prefers-reduced-motion. W3C WCAG 2.1: 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A). The three durations, five easings, 300ms ceiling, and gating spring behind reduced motion are specific to this system's tokens.
+Material 3 Motion: duration buckets and easing sets. Apple HIG Motion: purposeful, communicates status, respects Reduce Motion. web.dev and MDN: animate transform and opacity to stay on the compositor. MDN prefers-reduced-motion. W3C WCAG 2.2: 2.3.3 Animation from Interactions (AAA) and 2.2.2 Pause, Stop, Hide (A). The three durations, five easings, 300ms ceiling, and gating spring behind reduced motion are specific to this system's tokens.
 
 # Responsive
 
@@ -1028,13 +1038,13 @@ Walk down until one fits.
 
 ## Sources
 
-Utility-first model and the extract-to-component threshold: Tailwind CSS and Adam Wathan, CSS Utility Classes and Separation of Concerns. The composition-plus-blocks balance follows Andy Bell, CUBE CSS. The visually-hidden recipe: W3C WAI WCAG technique C7 and Scott O'Hara, Inclusively Hidden. Visible focus is WCAG 2.1 SC 2.4.7. The exact class names, token bindings, and the reading of `.sr-only` and `.focus-ring` as required infrastructure are specific to this system.
+Utility-first model and the extract-to-component threshold: Tailwind CSS and Adam Wathan, CSS Utility Classes and Separation of Concerns. The composition-plus-blocks balance follows Andy Bell, CUBE CSS. The visually-hidden recipe: W3C WAI WCAG technique C7 and Scott O'Hara, Inclusively Hidden. Visible focus is WCAG 2.2 SC 2.4.7. The exact class names, token bindings, and the reading of `.sr-only` and `.focus-ring` as required infrastructure are specific to this system.
 
 # Token Reference
 
 Source: https://design.ramoslabs.com/foundations/token-reference/
 
-A token is the smallest unit of the language: one color, one step of space, one shadow, authored as data and published to CSS and TypeScript from a single source. There are 213 tokens across 2 tiers, 8 radius steps, and 3 elevation shadows.
+A token is the smallest unit of the language: one color, one step of space, one shadow, authored as data and published to CSS and TypeScript from a single source. There are 214 tokens across 2 tiers, 8 radius steps, and 3 elevation shadows.
 
 The exhaustive table of every token name and value is auto-generated from `tokens.json` into `llms-full.txt`. This page distills the naming, categories, and consumption rules that govern that table.
 
@@ -1045,7 +1055,7 @@ Every token is authored as data, not CSS, in the W3C Design Tokens Community Gro
 - Tier 1, Primitive: the raw palette. Eight color ramps of eleven shades each, plus pure white and black. These carry a value and nothing else, no role, no meaning. Product code rarely touches this tier directly. Naming is descriptive: `--color-indigo-600`.
 - Tier 2, Semantic: the layer you build with. Each token names a role, not a hue, and aliases a primitive: `--color-primary`, `--color-text-body`, `--color-border`. This indirection makes the system themeable. Change one alias, and every consumer moves with it. Naming is intentional: role first, variant second.
 
-Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file per category) to Style Dictionary (resolves aliases, applies transforms, formats each target) to generated `dist/tokens.css` (`:root` custom properties) and `dist/tokens.ts` (typed constants). Both carry a do-not-edit banner: they are build output, not source.
+Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file per category) to Style Dictionary (resolves aliases, applies transforms, formats each target) to generated `dist/tokens.css` (`:root` custom properties) and `dist/tokens.js` with `dist/tokens.d.ts` typings (typed constants). Both carry a do-not-edit banner: they are build output, not source.
 
 ## Categories
 
@@ -1060,7 +1070,7 @@ Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file 
 - Z-index: `--z-*`, a stepped stacking order.
 - Breakpoints: `--breakpoint-*`, five minimum widths.
 
-Borders are dividers, not control outlines. Rule: use `--color-border` and `--color-border-light` only to separate regions (dividers, table rows, card edges). Why: both sit near 1.2:1 against the surface, below the 3:1 floor WCAG 1.4.11 requires for the boundary of an interactive control. For the visible edge of an input, select, or checkbox, reach for a token that clears 3:1, for example `--color-text-muted` at `#64748b`, which is 4.55:1 on white. Never let a subtle border be the only thing marking a control's bounds.
+Borders are dividers, not control outlines. Rule: use `--color-border` and `--color-border-light` only to separate regions (dividers, table rows, card edges). Why: both sit near 1.2:1 against the surface, below the 3:1 floor WCAG 1.4.11 requires for the boundary of an interactive control. For the visible edge of an input, select, or checkbox, reach for a token that clears 3:1, for example `--color-text-muted` at `#64748b`, which is 4.76:1 on white. Never let a subtle border be the only thing marking a control's bounds.
 
 State layers are opacity: each `--state-*` token is the opacity of an indigo overlay painted on a control. Numbers only, so the same layer works on any surface color. `--state-hover` 0.08 (gate with `@media (hover: hover)`), `--state-focus` 0.1 (focus-visible), `--state-pressed` 0.1 (active press, primary feedback on touch), `--state-dragged` 0.16.
 
@@ -1262,7 +1272,7 @@ Brand pairings, all clearing their floor:
 | White on Primary (`#ffffff` on `#4f46e5`) | 6.29:1 | AA |
 | White on Primary Dark (`#ffffff` on `#4338ca`) | 7.90:1 | AAA |
 
-Dark mode is not a reskin. Both themes are tuned by hand, both clear the floor, and both are wired to `prefers-color-scheme`.
+Dark mode is planned, not a reskin. When it ships, the dark theme will be tuned by hand, clear the same floor, and wire to `prefers-color-scheme` — a dark set of semantic tokens re-pointing the roles, never a renamed role. The system ships a single light theme today.
 
 Measure pairings in Foundations / Color Picker; token ratios in Foundations / Colors.
 
@@ -1326,11 +1336,11 @@ Focus states and motion preferences:
     outline-offset: 2px;
 }
 
-/* Custom focus ring utility */
+/* Custom focus ring utility — the canonical two-tone ring token */
 .focus-ring:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid transparent;   /* stays visible in forced-colors mode */
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    box-shadow: var(--shadow-focus);  /* 0 0 0 2px white, 0 0 0 4px primary */
 }
 
 /* Respect motion preferences globally */
@@ -1339,6 +1349,13 @@ Focus states and motion preferences:
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    /* Keep indeterminate progress turning slowly — a frozen spinner reads as a hung
+       app, not a still one (see Foundations / Motion). Do not collapse these. */
+    [role="progressbar"], .spinner, [data-indeterminate] {
+        animation-duration: 1.4s !important;
+        animation-iteration-count: infinite !important;
     }
 }
 
@@ -1348,22 +1365,11 @@ Focus states and motion preferences:
     transition: none !important;
 }
 
-/* Dark mode - automatic based on system preference */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-text-heading: #f1f5f9;
-        --color-text-body: #cbd5e1;
-        --color-surface: #1e293b;
-        --color-background: #0f172a;
-    }
-}
-
-/* Manual dark mode toggle (via class or data attr) */
-.dark, [data-theme="dark"] {
-    --color-text-heading: #f1f5f9;
-    --color-text-body: #cbd5e1;
-    /* ... all dark tokens ... */
-}
+/* Dark mode is planned, not shipped. A future release adds a dark set of SEMANTIC
+   tokens that re-points the roles (surface, background, text, border, feedback) under
+   both prefers-color-scheme and a [data-theme="dark"] override. It re-points role
+   tokens — product CSS never hardcodes a dark hex. The system ships one light theme
+   today; consume the light roles and they will move with the theme when dark lands. */
 ```
 
 Skip links and screen reader utilities:
@@ -1376,7 +1382,7 @@ Skip links and screen reader utilities:
     left: 1rem;
     padding: 1rem 1.5rem;
     background: var(--color-primary);
-    color: white;
+    color: var(--color-white);
     border-radius: var(--radius-md);
     font-weight: 600;
     text-decoration: none;
@@ -1393,6 +1399,7 @@ Skip links and screen reader utilities:
     margin: -1px;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
 }
@@ -1482,16 +1489,16 @@ The clearest case is a date. GOV.UK: for a date the user already knows or can lo
 
 ## 2. Theming the accent without giving up native
 
-You can brand native controls without rebuilding them. Three CSS properties carry it. Set them once at the root and every native checkbox, radio, range, and text caret in the product turns indigo, and every control follows the OS light or dark theme, with zero per-control work.
+You can brand native controls without rebuilding them. Three CSS properties carry it. Set them once at the root and every native checkbox, radio, range, and text caret in the product turns indigo, and every native control matches the theme your surfaces ship, with zero per-control work.
 
 ```css
 :root {
-  color-scheme: light dark;               /* native controls follow the OS theme */
+  color-scheme: light;                    /* match the themes your surfaces ship; switch to `light dark` when a dark token set lands */
   accent-color: var(--color-primary);     /* tints checkbox, radio, range, progress */
   caret-color: var(--color-primary);      /* the text insertion cursor */
 }
 <!-- in <head>, prevents a theme flash on load -->
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 ```
 
 Read the coverage exactly. `accent-color` tints four controls and nothing else. It does not touch `<select>`, the date and time inputs, `type="color"`, `type="file"`, or any text field. Getting this wrong is the usual reason a "themed" form still shows a stock blue selected option.
@@ -1657,7 +1664,7 @@ On defaults: pre-check the reminder because people want it, leave the newsletter
 
 ## Sources
 
-MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<input>` types, `inputmode` and `enterkeyhint`, the `autocomplete` token list, `:user-invalid`. web.dev "accent-color" and Learn Forms (four themable controls, automatic accent contrast, HTML form elements are difficult to customize). caniuse: `accent-color` roughly 94 percent, since Chrome/Edge 93, Firefox 92, Safari 15.4 (March 2022). WAI-ARIA APG patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog, Toolbar. GOV.UK Design System: progressive enhancement, the Select component, and the Date input three-field memorable-date pattern. W3C Understanding WCAG 2.2: SC 3.3.2 (A), 3.3.1 (A) with ARIA21 `aria-invalid`, 3.3.3 (AA), 1.3.5 (AA), 2.5.8 (24px, AA), 2.5.5 (44px, AAA). Mihael Konjevic, "Inline Validation in Web Forms" (Smashing, 2022), source of "reward early, punish late". CSS-Tricks and defensivecss.dev: 16px prevents iOS input zoom. Apple HIG Text fields: content-appropriate keyboards, 44pt minimum. NN/g and Baymard: placeholders cannot replace labels, error messages must be visible/specific/constructive, single-column forms complete faster. The reward-while-typing timing and single-accent error-only use of `--color-error` are house rules layered on the cited guidance.
+MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<input>` types, `inputmode` and `enterkeyhint`, the `autocomplete` token list, `:user-invalid`. web.dev "accent-color" and Learn Forms (four themable controls, automatic accent contrast, HTML form elements are difficult to customize). caniuse: `accent-color` roughly 97 percent (2026), baseline since Chrome/Edge 93, Firefox 92, Safari 15.4 (March 2022). WAI-ARIA APG patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog, Toolbar. GOV.UK Design System: progressive enhancement, the Select component, and the Date input three-field memorable-date pattern. W3C Understanding WCAG 2.2: SC 3.3.2 (A), 3.3.1 (A) with ARIA21 `aria-invalid`, 3.3.3 (AA), 1.3.5 (AA), 2.5.8 (24px, AA), 2.5.5 (44px, AAA). Mihael Konjevic, "Inline Validation in Web Forms" (Smashing, 2022), source of "reward early, punish late". CSS-Tricks and defensivecss.dev: 16px prevents iOS input zoom. Apple HIG Text fields: content-appropriate keyboards, 44pt minimum. NN/g and Baymard: placeholders cannot replace labels, error messages must be visible/specific/constructive, single-column forms complete faster. The reward-while-typing timing and single-accent error-only use of `--color-error` are house rules layered on the cited guidance.
 
 # Data Tables
 
@@ -1672,7 +1679,7 @@ A data table is a native `<table>` first, always. Density, sorting, pagination, 
 Build the table from real elements: a `<table>` with a `<caption>`, a `<thead>` and `<tbody>`, and `<th>` cells that carry `scope`. Without `<th>`, `scope`, and the table role, a screen reader cannot announce "column Amount, row Order 4521". The row and column relationship is simply lost.
 
 **Rule:** Use a real `<table>` with `<caption>`, `<thead>` / `<tbody>`, and `<th scope="col">` for column headers plus `<th scope="row">` for each row's identifying cell.
-**Why:** WCAG 2.1 SC 1.3.1 Info and Relationships (Level A) requires that structure conveyed visually be programmatically determinable. Scope is inferred in simple tables, but MDN and GOV.UK both advise setting it explicitly, because some assistive technology draws the wrong inference.
+**Why:** WCAG 2.2 SC 1.3.1 Info and Relationships (Level A) requires that structure conveyed visually be programmatically determinable. Scope is inferred in simple tables, but MDN and GOV.UK both advise setting it explicitly, because some assistive technology draws the wrong inference.
 
 **Rule:** The `<caption>` is the table's accessible name. Give every table one.
 **Why:** GOV.UK: a caption helps users find, navigate, and understand tables. It lets a screen reader user decide whether to read on or skip the table.
@@ -1928,7 +1935,7 @@ A popover opens in the top layer, so normal CSS cannot place it next to its trig
 }
 ```
 
-Anchor positioning is not in Firefox or Safari yet (2026), so keep the rules inside `@supports` and give a sensible fallback (a centered, usable popover) for browsers without it.
+Anchor positioning is not in Firefox yet; Safari shipped it in 26 (2025) and Chromium since 125 (2024). Keep the rules inside `@supports` and give a sensible fallback (a centered, usable popover) for browsers without it.
 
 - Tooltip: a brief description on hover or focus over a control. Takes no focus of its own, holds no interactive content. Not a dialog.
 - Popover: a light interactive layer. Background stays active, dismiss is light, focus is not trapped. Menus, toasts, pickers.
@@ -1981,7 +1988,7 @@ On a phone a centered modal usually becomes a bottom sheet, a panel that rises f
 
 ## Sources
 
-The six requirements, roles, and keyboard model from the WAI-ARIA APG: Dialog (Modal) Pattern and Alert Dialog Pattern. The native element, `showModal()` vs `show()`, `::backdrop`, top layer, `method="dialog"`, the `open` and `tabindex` warnings, and Baseline support from MDN: `<dialog>`, `inert`, and the Popover API. The legal focus trap from WCAG 2.1 SC 2.1.2 No Keyboard Trap and the name/role floor from SC 4.1.2. The cost of interrupting from Nielsen Norman Group, Modal & Nonmodal Dialogs. The animation-breaks-focus-return caveat and focus-on-Cancel from web.dev, Building a dialog component. The one-thing-per-page stance from the GOV.UK Design System.
+The six requirements, roles, and keyboard model from the WAI-ARIA APG: Dialog (Modal) Pattern and Alert Dialog Pattern. The native element, `showModal()` vs `show()`, `::backdrop`, top layer, `method="dialog"`, the `open` and `tabindex` warnings, and Baseline support from MDN: `<dialog>`, `inert`, and the Popover API. The legal focus trap from WCAG 2.2 SC 2.1.2 No Keyboard Trap and the name/role floor from SC 4.1.2. The cost of interrupting from Nielsen Norman Group, Modal & Nonmodal Dialogs. The animation-breaks-focus-return caveat and focus-on-Cancel from web.dev, Building a dialog component. The one-thing-per-page stance from the GOV.UK Design System.
 
 # Mobile First
 
@@ -2496,4 +2503,4 @@ Every generated pixel makes an implicit promise about what it is and how far to 
 
 ## Notes and Sources
 
-Google People + AI Guidebook (PAIR): Mental Models, Explainability + Trust, Errors + Graceful Failure, Feedback + Controls, Data Collection + Evaluation. Microsoft HAX, Guidelines for Human-AI Interaction (Amershi et al., CHI 2019): G1, G2, G9, G11, G17. Apple Human Interface Guidelines: Generative AI and Machine learning. Nielsen Norman Group: AI Hallucinations (citing sources, first-person uncertainty), Explainable AI in Chat Interfaces (disclaimer placement near the input), AI Chatbot design guidelines (streaming). House doctrine: the strict disclose, bound, verify, and reverse gate around each pattern, and the mono-indigo, icon-plus-text treatment of every state. Confidence is shown by fill and label, never hue alone, to satisfy WCAG 2.1 SC 1.4.1 Use of Color.
+Google People + AI Guidebook (PAIR): Mental Models, Explainability + Trust, Errors + Graceful Failure, Feedback + Controls, Data Collection + Evaluation. Microsoft HAX, Guidelines for Human-AI Interaction (Amershi et al., CHI 2019): G1, G2, G9, G11, G17. Apple Human Interface Guidelines: Generative AI and Machine learning. Nielsen Norman Group: AI Hallucinations (citing sources, first-person uncertainty), Explainable AI in Chat Interfaces (disclaimer placement near the input), AI Chatbot design guidelines (streaming). House doctrine: the strict disclose, bound, verify, and reverse gate around each pattern, and the mono-indigo, icon-plus-text treatment of every state. Confidence is shown by fill and label, never hue alone, to satisfy WCAG 2.2 SC 1.4.1 Use of Color.
