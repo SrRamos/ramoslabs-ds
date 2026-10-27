@@ -21,7 +21,8 @@
     "lint": "stylelint \"src/**/*.css\" --allow-empty-input",
     "format:check": "prettier --check . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "new": "node src/_template/generate.mjs"
   },
   "peerDependencies": {
     "@ramoslabs/tokens": ">=0.1.0"
