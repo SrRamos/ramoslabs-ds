@@ -203,9 +203,10 @@ function buildLlmsFull(site: string, resolved: LoadedPage[], tokens: Tokens) {
 }
 
 const AI_CRAWLERS = [
-  'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'anthropic-ai',
-  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'CCBot',
-  'Bytespider', 'Amazonbot', 'Meta-ExternalAgent', 'cohere-ai', 'Diffbot', 'Timpibot',
+  'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot', 'Applebot-Extended', 'bingbot',
+  'DuckAssistBot', 'MistralAI-User', 'CCBot', 'Bytespider', 'Amazonbot', 'Meta-ExternalAgent',
+  'cohere-ai', 'Diffbot', 'Timpibot',
 ]
 
 function buildRobots(site: string) {
@@ -216,6 +217,7 @@ function buildRobots(site: string) {
     `# AI agents: structured docs at ${b}/llms.txt and ${b}/llms-full.txt`,
     '',
     'User-agent: *',
+    'Content-Signal: search=yes, ai-input=yes, ai-train=yes',
     'Allow: /',
     '',
   ]
