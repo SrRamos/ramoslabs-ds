@@ -1,87 +1,16 @@
-[
-  {
-    "pattern": "tooltip",
-    "at": "NVDA",
-    "at_version": "not specified by APG",
-    "browser": "Chrome or Firefox",
-    "browser_version": "not specified by APG",
-    "platform": "Windows",
-    "behavior": "APG requires role=tooltip and trigger aria-describedby, with focus retained on the trigger and Escape dismissal; its tooltip pattern is explicitly work in progress.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use a noninteractive tooltip referenced by aria-describedby; present essential help persistently and keep focus on the trigger.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
+{
+  "pattern": "tooltip",
+  "recommended": {
+    "variant": "Noninteractive role=tooltip referenced by trigger aria-describedby; focus stays on the trigger, Escape dismisses, and touch uses persistent text or an explicit disclosure.",
+    "constraints": { "focusStrategy": "trigger", "mustNot": ["interactive-tooltip-content", "hover-only", "dynamic-description-only"] },
+    "supportedBy": ["crossat-crossbrowser-apg-tooltip"]
   },
-  {
-    "pattern": "tooltip",
-    "at": "JAWS",
-    "at_version": "not specified by APG",
-    "browser": "Chrome or Edge",
-    "browser_version": "not specified by APG",
-    "platform": "Windows",
-    "behavior": "APG defines description semantics and Escape behavior but no JAWS speech result; dynamic description changes cannot be assumed to announce.",
-    "impact": "degraded",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use aria-describedby for supplemental text; do not depend on a late description change as the only announcement path.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "tooltip",
-    "at": "TalkBack",
-    "at_version": "not specified by APG",
-    "browser": "Chrome",
-    "browser_version": "not specified by APG",
-    "platform": "Android",
-    "behavior": "APG's hover/focus model has no reliable touch-hover equivalent; description semantics do not make a hover-only tooltip discoverable.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use persistent associated text or an explicit info disclosure on touch; never require hover or long-press for essential content.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "tooltip",
-    "at": "VoiceOver",
-    "at_version": "historical matrix versions vary; current version pending",
-    "browser": "Safari",
-    "browser_version": "historical matrix versions vary; current version pending",
-    "platform": "macOS",
-    "behavior": "The published aria-describedby matrix reports partial contribution to the accessible description and only partial support for description changes while focused; current behavior is unmeasured.",
-    "impact": "degraded",
-    "source_url": "https://a11ysupport.io/tech/aria/aria-describedby_attribute",
-    "source_date": "2021-10-19; results approximately 2018-2021",
-    "retrieved": "2026-10-27",
-    "source_tier": "T2",
-    "decision": "Keep supplemental descriptions available before focus and verify focus/hover/Escape behavior; do not rely on dynamic description announcement.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "tooltip",
-    "at": "VoiceOver",
-    "at_version": "historical matrix versions vary; current version pending",
-    "browser": "Safari",
-    "browser_version": "historical matrix versions vary; current version pending",
-    "platform": "iOS",
-    "behavior": "The historical matrix reports partial description contribution and no support for description changes while focused; touch discovery and current output remain unmeasured.",
-    "impact": "degraded",
-    "source_url": "https://a11ysupport.io/tech/aria/aria-describedby_attribute",
-    "source_date": "2021-10-19; results approximately 2018-2021",
-    "retrieved": "2026-10-27",
-    "source_tier": "T2",
-    "decision": "Use an explicit touch alternative and persistent accessible description; verify that focused/swipe navigation reads the text without requiring hover.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  }
-]
+  "entries": [
+    { "id": "crossat-crossbrowser-apg-tooltip", "pattern": "tooltip", "kind": "contract", "at": "cross-AT", "at_version": null, "browser": "cross-browser", "browser_version": null, "platform": "cross-platform", "behavior": "APG requires role=tooltip, trigger aria-describedby, focus on the trigger, and Escape dismissal; the pattern is explicitly work in progress without task-force consensus.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use only noninteractive supplemental tooltip text and provide a touch alternative.", "constraints": { "focusStrategy": "trigger", "mustNot": ["interactive-tooltip-content", "hover-only"] }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "nvda-chrome-ariaat541-tooltip-trigger", "pattern": "tooltip", "kind": "observation", "at": "NVDA", "at_version": "2023.3", "browser": "Chrome", "browser_version": "120.0.0", "platform": "Windows", "behavior": "CANDIDATE Command Button report used only as trigger-semantics evidence: 27 MUST assertions passed and 1 failed, with no negative side effects. ARIA-AT has no tooltip-pattern report here; this does not measure tooltip announcement.", "impact": "degraded", "source_url": "https://aria-at.w3.org/report/163671/targets/541", "source_date": "results completed 2023-12-15; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use a native trigger and do not infer tooltip description support from trigger results.", "constraints": { "focusStrategy": "trigger" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "jaws-chrome-ariaat567-tooltip-trigger", "pattern": "tooltip", "kind": "observation", "at": "JAWS", "at_version": "2025.2508.120", "browser": "Chrome", "browser_version": "148", "platform": "Windows", "behavior": "CANDIDATE Command Button report used only as trigger-semantics evidence: 28 MUST assertions passed, 0 failed, and no negative side effects. Tooltip output itself was not measured.", "impact": "none", "source_url": "https://aria-at.w3.org/report/163671/targets/567", "source_date": "results completed 2026-05-19; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use a native trigger; keep tooltip claims limited to the describedby observations.", "constraints": { "focusStrategy": "trigger" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "vo-macos-safari-ariaat539-tooltip-trigger", "pattern": "tooltip", "kind": "observation", "at": "VoiceOver", "at_version": "15.6.1", "browser": "Safari", "browser_version": "18.6", "platform": "macOS", "behavior": "CANDIDATE Command Button report used only as trigger-semantics evidence: 18 MUST assertions passed and 2 failed, with one severe harness-cursor effect. Tooltip output itself was not measured.", "impact": "degraded", "source_url": "https://aria-at.w3.org/report/163671/targets/539", "source_date": "results completed through 2025-11-02; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Verify actual focus/hover tooltip speech and Escape in the real VoiceOver lane.", "constraints": { "focusStrategy": "trigger" }, "test_status": "pending-real-test", "next_review": "2027-01-27" },
+    { "id": "talkback-chrome-apg-tooltip", "pattern": "tooltip", "kind": "contract", "at": "TalkBack", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Android", "behavior": "No measured tooltip evidence located for this registry; implemented to the APG contract with an explicit touch alternative.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Make no TalkBack support claim beyond the contract and never require hover or long-press.", "constraints": { "focusStrategy": "trigger", "mustNot": ["hover-only"] }, "test_status": "no-measured-evidence", "next_review": "2027-01-27" },
+    { "id": "vo-ios-safari-a11ysupport-describedby", "pattern": "tooltip", "kind": "observation", "at": "VoiceOver", "at_version": "historical versions in linked matrix", "browser": "Safari", "browser_version": "historical versions in linked matrix", "platform": "iOS", "behavior": "The historical describedby matrix reports partial description contribution and no support for description changes while focused; it is not a current tooltip test.", "impact": "degraded", "source_url": "https://a11ysupport.io/tech/aria/aria-describedby_attribute", "source_date": "2021-10-19; results approximately 2018-2021", "retrieved": "2026-10-27", "source_tier": "T2", "decision": "Keep supplemental descriptions available before focus and provide an explicit touch alternative; verify current iOS output.", "constraints": { "focusStrategy": "trigger", "mustNot": ["dynamic-description-only"] }, "test_status": "pending-real-test", "next_review": "2027-01-27" }
+  ]
+}

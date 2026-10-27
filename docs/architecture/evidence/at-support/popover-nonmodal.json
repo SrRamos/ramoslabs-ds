@@ -1,87 +1,16 @@
-[
-  {
-    "pattern": "popover-nonmodal",
-    "at": "NVDA",
-    "at_version": "not specified by HTML Standard",
-    "browser": "Chrome or Firefox",
-    "browser_version": "browser floor applies; AT result not specified",
-    "platform": "Windows",
-    "behavior": "HTML popover=auto supplies top-layer display, light dismiss, close requests, and focus restoration; it does not supply widget semantics or prove NVDA output.",
-    "impact": "blocker",
-    "source_url": "https://html.spec.whatwg.org/multipage/popover.html#the-popover-attribute",
-    "source_date": "HTML Living Standard updated 2026-10-26",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use popover=auto with a native invoker, explicit content semantics, adjacent DOM order where possible, and synchronized aria-expanded.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
+{
+  "pattern": "popover-nonmodal",
+  "recommended": {
+    "variant": "Native popover=auto with a native invoker, explicit content semantics, adjacent DOM order, synchronized aria-expanded, and explicit close for interactive content.",
+    "constraints": { "focusStrategy": "popover-native", "domAdjacent": true, "mustNot": ["manual-without-dismiss", "remote-portal"] },
+    "supportedBy": ["crossat-crossbrowser-html-popover"]
   },
-  {
-    "pattern": "popover-nonmodal",
-    "at": "JAWS",
-    "at_version": "not specified by HTML Standard",
-    "browser": "Chrome or Edge",
-    "browser_version": "browser floor applies; AT result not specified",
-    "platform": "Windows",
-    "behavior": "HTML supplies nonmodal top-layer and dismissal behavior but no role for generic content; JAWS announcement remains implementation-dependent.",
-    "impact": "blocker",
-    "source_url": "https://html.spec.whatwg.org/multipage/popover.html#the-popover-attribute",
-    "source_date": "HTML Living Standard updated 2026-10-26",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use popover=auto with a native invoker, appropriate role for the content, adjacent DOM order, and synchronized aria-expanded.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "popover-nonmodal",
-    "at": "TalkBack",
-    "at_version": "not specified by HTML Standard",
-    "browser": "Chrome",
-    "browser_version": "browser floor applies; AT result not specified",
-    "platform": "Android",
-    "behavior": "HTML recommends placing the popover immediately after its invoker to preserve programmatic reading order; TalkBack swipe order is not measured by the specification.",
-    "impact": "blocker",
-    "source_url": "https://html.spec.whatwg.org/multipage/popover.html#the-popover-attribute",
-    "source_date": "HTML Living Standard updated 2026-10-26",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use popover=auto, keep content adjacent to the invoker, and expose an explicit close action for interactive content.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "popover-nonmodal",
-    "at": "VoiceOver",
-    "at_version": "macOS 15.4 in later related-bug comment",
-    "browser": "Safari",
-    "browser_version": "18.4 in later related-bug comment",
-    "platform": "macOS",
-    "behavior": "Native popover supplies focus and dismissal mechanics; WebKit 284804's later desktop comment passed changed aria-expanded announcements for a disclosure, not for every popover variant.",
-    "impact": "degraded",
-    "source_url": "https://bugs.webkit.org/show_bug.cgi?id=284804",
-    "source_date": "opened 2024-12-17; later passing comment 2025-04-07",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use native popover=auto and verify invoker state, focus movement, reading order, Escape, outside interaction, and focus return.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "popover-nonmodal",
-    "at": "VoiceOver",
-    "at_version": "iOS 18.1.1 in original related-bug report",
-    "browser": "Safari",
-    "browser_version": "current version pending",
-    "platform": "iOS",
-    "behavior": "The related expanded-state report included iOS, but its later desktop passing comment does not certify current iOS popover output or swipe order.",
-    "impact": "degraded",
-    "source_url": "https://bugs.webkit.org/show_bug.cgi?id=284804",
-    "source_date": "opened 2024-12-17; desktop follow-up 2025-04-07",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use popover=auto and test touch exploration, double-tap activation, explicit dismissal, adjacent reading order, and changed expanded state.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  }
-]
+  "entries": [
+    { "id": "crossat-crossbrowser-html-popover", "pattern": "popover-nonmodal", "kind": "contract", "at": "cross-AT", "at_version": null, "browser": "cross-browser", "browser_version": null, "platform": "cross-platform", "behavior": "HTML popover=auto supplies top-layer rendering, light dismiss, close requests, and focus return; it does not supply content semantics and recommends DOM placement immediately after the invoker.", "source_url": "https://html.spec.whatwg.org/multipage/popover.html#the-popover-attribute", "source_date": "HTML Living Standard updated 2026-10-26", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use popover=auto with explicit semantics and adjacent DOM order; never treat the attribute as an accessibility role.", "constraints": { "focusStrategy": "popover-native", "domAdjacent": true, "mustNot": ["manual-without-dismiss", "remote-portal"] }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "nvda-chrome-html-popover", "pattern": "popover-nonmodal", "kind": "contract", "at": "NVDA", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Windows", "behavior": "No measured popover evidence located for this registry; implemented to the HTML/APG contract.", "source_url": "https://html.spec.whatwg.org/multipage/popover.html#the-popover-attribute", "source_date": "HTML Living Standard updated 2026-10-26", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Make no NVDA support claim beyond the native contract.", "constraints": { "focusStrategy": "popover-native", "domAdjacent": true }, "test_status": "no-measured-evidence", "next_review": "2027-01-27" },
+    { "id": "jaws-chrome-html-popover", "pattern": "popover-nonmodal", "kind": "contract", "at": "JAWS", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Windows", "behavior": "No measured popover evidence located for this registry; implemented to the HTML/APG contract.", "source_url": "https://html.spec.whatwg.org/multipage/popover.html#the-popover-attribute", "source_date": "HTML Living Standard updated 2026-10-26", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Make no JAWS support claim beyond the native contract.", "constraints": { "focusStrategy": "popover-native", "domAdjacent": true }, "test_status": "no-measured-evidence", "next_review": "2027-01-27" },
+    { "id": "talkback-chrome-html-popover", "pattern": "popover-nonmodal", "kind": "contract", "at": "TalkBack", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Android", "behavior": "No measured popover evidence located for this registry; implemented to the HTML contract with adjacent reading order.", "source_url": "https://html.spec.whatwg.org/multipage/popover.html#the-popover-attribute", "source_date": "HTML Living Standard updated 2026-10-26", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Make no TalkBack support claim beyond the native contract.", "constraints": { "focusStrategy": "popover-native", "domAdjacent": true }, "test_status": "no-measured-evidence", "next_review": "2027-01-27" },
+    { "id": "vo-macos-safari-webkit284804", "pattern": "popover-nonmodal", "kind": "observation", "at": "VoiceOver", "at_version": "macOS 15.4 in later bug comment", "browser": "Safari", "browser_version": "18.4 in later bug comment", "platform": "macOS", "behavior": "WebKit 284804 originally reported missing changed aria-expanded announcements; a later desktop comment passed for a disclosure. That is related invoker evidence, not a popover measurement or universal fixed-version claim.", "impact": "degraded", "source_url": "https://bugs.webkit.org/show_bug.cgi?id=284804", "source_date": "opened 2024-12-17; later passing comment 2025-04-07", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Verify actual popover invoker state, focus, dismissal, and return in the real VoiceOver lane.", "constraints": { "focusStrategy": "popover-native", "domAdjacent": true }, "test_status": "pending-real-test", "next_review": "2027-01-27" },
+    { "id": "vo-ios-safari-webkit284804", "pattern": "popover-nonmodal", "kind": "observation", "at": "VoiceOver", "at_version": "iOS 18.1.1 in original related report", "browser": "Safari", "browser_version": "version in original related report", "platform": "iOS", "behavior": "The original expanded-state report included iOS, but its later desktop passing comment does not measure or certify a current iOS popover.", "impact": "degraded", "source_url": "https://bugs.webkit.org/show_bug.cgi?id=284804", "source_date": "opened 2024-12-17; desktop follow-up 2025-04-07", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Verify current iOS touch exploration, changed state, explicit dismissal, reading order, and focus return.", "constraints": { "focusStrategy": "popover-native", "domAdjacent": true }, "test_status": "pending-real-test", "next_review": "2027-01-27" }
+  ]
+}

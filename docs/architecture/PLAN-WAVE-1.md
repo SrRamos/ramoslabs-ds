@@ -8,7 +8,7 @@ Scope: the eleven components of Section 4 plus everything they need. Date: 2026-
 
 | # | Decision | Effect on this plan |
 |---|---|---|
-| D1 (provisional until the owner confirms) | Keep the floor Chromium 114 / Firefox 125 / Safari-iOS 17 (ADR-001 option B, the owner table's option A) | Geometry fallback, close tiers, `:user-invalid` fallback, `<details name>` fallback and the floor lane stay in scope. |
+| D1 (resolved 2026-10-27: A, owner-delegated) | Keep the floor Chromium 114 / Firefox 125 / Safari-iOS 17 (ADR-001 option B, the owner table's option A) | Geometry fallback, close tiers, `:user-invalid` fallback, `<details name>` fallback and the floor lane stay in scope. |
 | D2 (resolved, ADR-015) | Real AT testing on **VoiceOver only**: macOS + Safari and a physical iPhone + Safari. NVDA, JAWS, TalkBack are `evidence-only` (implemented from the registry at `docs/architecture/evidence/at-support/`, never labelled tested). Optional later NVDA lane on the owner's Windows PC. No JAWS licence, no Android or iOS 17 floor device. | Device tasks are VoiceOver macOS and iPhone only. Android, JAWS and NVDA device tasks are removed. The floor real lane is desktop Chromium 114 plus Firefox 125. iOS 17 and Android-floor rows are reported `not run` (ADR-013), covered by forced-false path parity and evidence. |
 
 Everything except the VoiceOver sign-off (W1-512, W1-513) proceeds before the owner's devices are used.

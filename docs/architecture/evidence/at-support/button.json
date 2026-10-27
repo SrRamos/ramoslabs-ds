@@ -1,87 +1,16 @@
-[
-  {
-    "pattern": "button",
-    "at": "NVDA",
-    "at_version": "not specified by APG",
-    "browser": "Chrome or Firefox",
-    "browser_version": "not specified by APG",
-    "platform": "Windows",
-    "behavior": "APG requires an accessible name, button role, and Enter/Space activation. This is a design contract, not an NVDA test result.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use a native button with a persistent accessible name; do not simulate a button on a generic element.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
+{
+  "pattern": "button",
+  "recommended": {
+    "variant": "Native button with a stable accessible name; native disabled and aria-pressed only for a true toggle.",
+    "constraints": { "focusStrategy": "native", "mustNot": ["generic-button-host", "changing-toggle-label"] },
+    "supportedBy": ["crossat-crossbrowser-apg-button"]
   },
-  {
-    "pattern": "button",
-    "at": "JAWS",
-    "at_version": "not specified by APG",
-    "browser": "Chrome or Edge",
-    "browser_version": "not specified by APG",
-    "platform": "Windows",
-    "behavior": "APG requires an accessible name, button role, and Enter/Space activation. This is a design contract, not a JAWS test result.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use a native button with a persistent accessible name; do not simulate a button on a generic element.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "button",
-    "at": "TalkBack",
-    "at_version": "not specified by APG",
-    "browser": "Chrome",
-    "browser_version": "not specified by APG",
-    "platform": "Android",
-    "behavior": "APG's button role and accessible-name contract provides the semantics needed for touch exploration and activation; no TalkBack output is claimed.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use a native button with a persistent accessible name; do not simulate a button on a generic element.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "button",
-    "at": "VoiceOver",
-    "at_version": "pending current macOS measurement",
-    "browser": "Safari",
-    "browser_version": "pending current macOS measurement",
-    "platform": "macOS",
-    "behavior": "APG requires name, role, and Enter/Space behavior; actual VoiceOver announcement and activation remain unmeasured.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use a native button; verify name, role, disabled state, activation, and focus after activation.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "button",
-    "at": "VoiceOver",
-    "at_version": "pending current iOS measurement",
-    "browser": "Safari",
-    "browser_version": "pending current iOS measurement",
-    "platform": "iOS",
-    "behavior": "APG supplies the semantic contract; touch exploration, double-tap activation, and rotor output remain unmeasured.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use a native button; verify touch exploration, double-tap activation, accessible name, and disabled state.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  }
-]
+  "entries": [
+    { "id": "crossat-crossbrowser-apg-button", "pattern": "button", "kind": "contract", "at": "cross-AT", "at_version": null, "browser": "cross-browser", "browser_version": null, "platform": "cross-platform", "behavior": "APG requires an accessible name, button role, Enter/Space activation, and a stable toggle label; this is a contract, not an observation.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use a native button and preserve native activation and state.", "constraints": { "focusStrategy": "native", "mustNot": ["generic-button-host", "changing-toggle-label"] }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "nvda-chrome-ariaat541", "pattern": "button", "kind": "observation", "at": "NVDA", "at_version": "2023.3", "browser": "Chrome", "browser_version": "120.0.0", "platform": "Windows", "behavior": "CANDIDATE Command Button report: 27 MUST assertions passed and 1 failed; no negative side effects recorded. This APG-example result does not certify every native-button implementation.", "impact": "degraded", "source_url": "https://aria-at.w3.org/report/163671/targets/541", "source_date": "results completed 2023-12-15; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Keep native semantics and verify the failed assertion class in implementation QA.", "constraints": { "focusStrategy": "native" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "jaws-chrome-ariaat567", "pattern": "button", "kind": "observation", "at": "JAWS", "at_version": "2025.2508.120", "browser": "Chrome", "browser_version": "148", "platform": "Windows", "behavior": "CANDIDATE Command Button report: 28 MUST assertions passed, 0 failed, and no negative side effects recorded.", "impact": "none", "source_url": "https://aria-at.w3.org/report/163671/targets/567", "source_date": "results completed 2026-05-19; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Retain the native-button variant.", "constraints": { "focusStrategy": "native" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "vo-macos-safari-ariaat539", "pattern": "button", "kind": "observation", "at": "VoiceOver", "at_version": "15.6.1", "browser": "Safari", "browser_version": "18.6", "platform": "macOS", "behavior": "CANDIDATE Command Button report: 18 MUST assertions passed and 2 failed; one severe unexpected reading-cursor movement was recorded, involving movement to the test setup button.", "impact": "degraded", "source_url": "https://aria-at.w3.org/report/163671/targets/539", "source_date": "results completed through 2025-11-02; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Retain native button; run the real VoiceOver lane on the library fixture and distinguish harness cursor jumps from control failures.", "constraints": { "focusStrategy": "native" }, "test_status": "pending-real-test", "next_review": "2027-01-27" },
+    { "id": "talkback-chrome-apg-button", "pattern": "button", "kind": "contract", "at": "TalkBack", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Android", "behavior": "No measured evidence located for this registry; implemented to the APG native-button contract.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use native button; make no TalkBack support claim beyond the contract.", "constraints": { "focusStrategy": "native" }, "test_status": "no-measured-evidence", "next_review": "2027-01-27" },
+    { "id": "vo-ios-safari-apg-button", "pattern": "button", "kind": "contract", "at": "VoiceOver", "at_version": null, "browser": "Safari", "browser_version": null, "platform": "iOS", "behavior": "No measured evidence located for this registry; implemented to the APG native-button contract and awaiting the real iOS lane.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use native button and verify touch exploration and double-tap activation.", "constraints": { "focusStrategy": "native" }, "test_status": "pending-real-test", "next_review": "2027-01-27" }
+  ]
+}

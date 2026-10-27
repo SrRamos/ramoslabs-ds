@@ -1,87 +1,16 @@
-[
-  {
-    "pattern": "tabs",
-    "at": "NVDA",
-    "at_version": "not specified by APG",
-    "browser": "Chrome or Firefox",
-    "browser_version": "not specified by APG",
-    "platform": "Windows",
-    "behavior": "APG requires tablist/tab/tabpanel relationships, one tab stop, arrow navigation, and synchronized aria-selected; this is not an NVDA test result.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use APG tabs with roving DOM focus and manual activation by default; use automatic activation only for preloaded, latency-free panels.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
+{
+  "pattern": "tabs",
+  "recommended": {
+    "variant": "APG tablist/tab/tabpanel with roving DOM focus; manual activation is the library's conservative default, while automatic activation is permitted only for preloaded latency-free panels.",
+    "constraints": { "focusStrategy": "roving", "mustNot": ["automatic-activation-with-latency", "all-tabs-tabbable"] },
+    "supportedBy": ["crossat-crossbrowser-apg-tabs"]
   },
-  {
-    "pattern": "tabs",
-    "at": "JAWS",
-    "at_version": "not specified by APG",
-    "browser": "Chrome or Edge",
-    "browser_version": "not specified by APG",
-    "platform": "Windows",
-    "behavior": "APG's single-tab-stop and explicit activation model avoids changing panels merely while a user navigates; JAWS forms/virtual-cursor output is not measured by the pattern.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use APG tabs with roving DOM focus and manual activation by default; preserve normal reading outside the composite.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "tabs",
-    "at": "TalkBack",
-    "at_version": "not specified by APG",
-    "browser": "Chrome",
-    "browser_version": "not specified by APG",
-    "platform": "Android",
-    "behavior": "APG supplies role, selected state, and panel relationships, but touch exploration and double-tap activation are not measured; desktop arrow behavior alone is insufficient.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use APG tabs with directly activatable tab elements and adjacent selected panel; verify swipe order and double-tap activation.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "tabs",
-    "at": "VoiceOver",
-    "at_version": "pending current macOS measurement",
-    "browser": "Safari",
-    "browser_version": "pending current macOS measurement",
-    "platform": "macOS",
-    "behavior": "APG defines the roles, states, keyboard map, and relationships; actual VoiceOver announcement and focus movement remain unmeasured.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use APG tabs with roving DOM focus; verify selected state, position, activation, panel label, and focus entry into the panel.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "tabs",
-    "at": "VoiceOver",
-    "at_version": "pending current iOS measurement",
-    "browser": "Safari",
-    "browser_version": "pending current iOS measurement",
-    "platform": "iOS",
-    "behavior": "APG's semantics do not certify touch behavior; swipe navigation, double-tap activation, and panel discovery remain unmeasured.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
-    "source_date": "living document; no publication date shown",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use APG tabs with native-button-based tabs where feasible and manual activation; verify swipe and double-tap on current iOS.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  }
-]
+  "entries": [
+    { "id": "crossat-crossbrowser-apg-tabs", "pattern": "tabs", "kind": "contract", "at": "cross-AT", "at_version": null, "browser": "cross-browser", "browser_version": null, "platform": "cross-platform", "behavior": "APG defines the roles, relationships, one tab stop, and keyboard map; it recommends automatic activation only when panels appear without noticeable latency.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use APG tabs; choose manual activation conservatively and allow automatic activation only without latency.", "constraints": { "focusStrategy": "roving", "mustNot": ["automatic-activation-with-latency"] }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "nvda-chrome-ariaat517", "pattern": "tabs", "kind": "observation", "at": "NVDA", "at_version": "2025.3", "browser": "Chrome", "browser_version": "141 and 99.0.4844.84 across finalized results", "platform": "Windows", "behavior": "CANDIDATE Tabs with Manual Activation report: 82 MUST assertions passed and 6 failed; no negative side effects recorded.", "impact": "degraded", "source_url": "https://aria-at.w3.org/report/163664/targets/517", "source_date": "results completed through 2025-10-22; test plan V25.10.20", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Retain APG relationships and test the failed assertion classes in the library fixture.", "constraints": { "focusStrategy": "roving" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "jaws-chrome-ariaat518", "pattern": "tabs", "kind": "observation", "at": "JAWS", "at_version": "2025.2508.120", "browser": "Chrome", "browser_version": "141", "platform": "Windows", "behavior": "CANDIDATE Tabs with Manual Activation report: 98 MUST assertions passed, 0 failed; three moderate excessive-verbosity side effects were recorded, including repeated selected/state output.", "impact": "degraded", "source_url": "https://aria-at.w3.org/report/163664/targets/518", "source_date": "results completed through 2025-10-30; test plan V25.10.20", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Retain APG tabs and check duplicate state speech without adding a second announcement channel.", "constraints": { "focusStrategy": "roving" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "vo-macos-safari-ariaat516", "pattern": "tabs", "kind": "observation", "at": "VoiceOver", "at_version": "15.6 and 15.6.1", "browser": "Safari", "browser_version": "18.6", "platform": "macOS", "behavior": "CANDIDATE Tabs with Manual Activation report: 49 MUST assertions passed and 25 failed; ten severe side effects were recorded, including cursor failures and focus landing in a visually hidden panel.", "impact": "degraded", "source_url": "https://aria-at.w3.org/report/163664/targets/516", "source_date": "results completed through 2025-11-03; test plan V25.10.20", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Keep manual default but do not ship a support claim until the real fixture verifies panel visibility, focus, and reading order.", "constraints": { "focusStrategy": "roving", "mustNot": ["hidden-panel-in-reading-order"] }, "test_status": "pending-real-test", "next_review": "2027-01-27" },
+    { "id": "talkback-chrome-apg-tabs", "pattern": "tabs", "kind": "contract", "at": "TalkBack", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Android", "behavior": "No measured evidence located for this registry; implemented to the APG tabs contract.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use APG tabs and make no TalkBack support claim beyond the contract.", "constraints": { "focusStrategy": "roving" }, "test_status": "no-measured-evidence", "next_review": "2027-01-27" },
+    { "id": "vo-ios-safari-apg-tabs", "pattern": "tabs", "kind": "contract", "at": "VoiceOver", "at_version": null, "browser": "Safari", "browser_version": null, "platform": "iOS", "behavior": "No measured evidence located for this registry; implemented to the APG tabs contract and awaiting the real iOS lane.", "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/", "source_date": "living document; no publication date shown", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Verify swipe order, double-tap activation, selected state, and panel discovery.", "constraints": { "focusStrategy": "roving" }, "test_status": "pending-real-test", "next_review": "2027-01-27" }
+  ]
+}

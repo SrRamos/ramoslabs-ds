@@ -1,87 +1,18 @@
-[
-  {
-    "pattern": "live-region",
-    "at": "NVDA",
-    "at_version": "2025.1 original; 2025.3.2 later log",
-    "browser": "Edge",
-    "browser_version": "144 in maintainer reproduction",
-    "platform": "Windows 10 original; Windows 11 later log",
-    "behavior": "NVDA 18721 reported a live-region problem, but maintainers could not reproduce it on Edge 144 and closed it works-for-me on 2026-01-08; it is not evidence of universal reliability or failure.",
-    "impact": "degraded",
-    "source_url": "https://github.com/nvaccess/nvda/issues/18721",
-    "source_date": "opened 2025-08-15; closed 2026-01-08",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use persistent role=status for nonurgent updates and role=alert only for urgent interruptions; test exact browser/AT pairs and avoid timer workarounds from one report.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
+{
+  "pattern": "live-region",
+  "recommended": {
+    "variant": "Persistent role=status for nonurgent updates and role=alert only for urgent interruptions; mount empty before changes, deduplicate, and avoid duplicate description/live channels.",
+    "constraints": { "focusStrategy": "unchanged", "mustNot": ["duplicate-description-live", "assertive-routine-updates"] },
+    "supportedBy": ["crossat-crossbrowser-waiaria-status"]
   },
-  {
-    "pattern": "live-region",
-    "at": "JAWS",
-    "at_version": "not stated in issue summary",
-    "browser": "Chrome",
-    "browser_version": "not stated in issue summary",
-    "platform": "Windows",
-    "behavior": "JAWS 469 reports duplicate speech when a textarea aria-describedby references a live character counter; the same content was heard through description and live announcement paths.",
-    "impact": "degraded",
-    "source_url": "https://github.com/FreedomScientific/standards-support/issues/469",
-    "source_date": "2020-11-06",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Do not make the same frequently updated text both a focused description and a live region; choose one announcement path and deduplicate messages.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "live-region",
-    "at": "TalkBack",
-    "at_version": "not specified by WAI-ARIA",
-    "browser": "Chrome",
-    "browser_version": "not specified by WAI-ARIA",
-    "platform": "Android",
-    "behavior": "WAI-ARIA defines status as polite/atomic and alert as assertive/atomic; it does not specify or certify TalkBack speech timing.",
-    "impact": "blocker",
-    "source_url": "https://www.w3.org/TR/wai-aria-1.2/#status",
-    "source_date": "W3C Recommendation 2023-06-06",
-    "retrieved": "2026-10-27",
-    "source_tier": "T1",
-    "decision": "Use persistent status/alert containers mounted before text changes; verify actual TalkBack output rather than adding redundant regions.",
-    "test_status": "evidence-only",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "live-region",
-    "at": "VoiceOver",
-    "at_version": "multiple versions in TetraLogical tests; current version pending",
-    "browser": "Safari",
-    "browser_version": "multiple versions in TetraLogical tests; current version pending",
-    "platform": "macOS",
-    "behavior": "TetraLogical's published tests explain that initial-content behavior and insertion/update timing vary; current announcement, duplication, and interruption behavior remain unmeasured.",
-    "impact": "degraded",
-    "source_url": "https://tetralogical.com/blog/2024/05/01/why-are-my-live-regions-not-working/",
-    "source_date": "published 2024-05-01; updated 2026-04-07",
-    "retrieved": "2026-10-27",
-    "source_tier": "T2",
-    "decision": "Prime an empty persistent region before updating its text and test one announcement; do not claim a universal timer or initial-content workaround.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  },
-  {
-    "pattern": "live-region",
-    "at": "VoiceOver",
-    "at_version": "multiple versions in TetraLogical tests; current version pending",
-    "browser": "Safari",
-    "browser_version": "multiple versions in TetraLogical tests; current version pending",
-    "platform": "iOS",
-    "behavior": "TetraLogical documents platform/browser-dependent live-region behavior, including iOS cases; this is measured guidance for its fixtures, not a single open WebKit defect or fixed-version claim.",
-    "impact": "degraded",
-    "source_url": "https://tetralogical.com/blog/2024/05/01/why-are-my-live-regions-not-working/",
-    "source_date": "published 2024-05-01; updated 2026-04-07",
-    "retrieved": "2026-10-27",
-    "source_tier": "T2",
-    "decision": "Use persistent empty regions and test insert-plus-update, visibility changes, politeness, and one-announcement behavior on current iOS.",
-    "test_status": "pending-real-test",
-    "next_review": "2027-01-27"
-  }
-]
+  "entries": [
+    { "id": "crossat-crossbrowser-waiaria-status", "pattern": "live-region", "kind": "contract", "at": "cross-AT", "at_version": null, "browser": "cross-browser", "browser_version": null, "platform": "cross-platform", "behavior": "WAI-ARIA defines status as polite/atomic and alert as assertive/atomic for important time-sensitive content; the specification does not guarantee announcement timing.", "source_url": "https://www.w3.org/TR/wai-aria-1.2/#status", "source_date": "W3C Recommendation 2023-06-06", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Use persistent status/alert semantics according to urgency and test actual announcement behavior.", "constraints": { "focusStrategy": "unchanged", "mustNot": ["assertive-routine-updates"] }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "nvda-chrome-ariaat544", "pattern": "live-region", "kind": "observation", "at": "NVDA", "at_version": "2023.3", "browser": "Chrome", "browser_version": "120.0.6099.110", "platform": "Windows", "behavior": "CANDIDATE Alert Example report: 4 MUST assertions passed, 0 failed, and no negative side effects recorded.", "impact": "none", "source_url": "https://aria-at.w3.org/report/163670/targets/544", "source_date": "results completed 2023-12-14; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Retain alert for urgent messages; do not infer polite-status reliability from this alert fixture.", "constraints": { "focusStrategy": "unchanged" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "jaws-chrome-ariaat565", "pattern": "live-region", "kind": "observation", "at": "JAWS", "at_version": "2025.2508.120", "browser": "Chrome", "browser_version": "148", "platform": "Windows", "behavior": "CANDIDATE Alert Example report: 4 MUST assertions passed, 0 failed, and no negative side effects recorded.", "impact": "none", "source_url": "https://aria-at.w3.org/report/163670/targets/565", "source_date": "results completed 2026-05-19; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Retain alert semantics and avoid duplicate live/description channels.", "constraints": { "focusStrategy": "unchanged" }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "vo-macos-safari-ariaat545", "pattern": "live-region", "kind": "observation", "at": "VoiceOver", "at_version": "14.2", "browser": "Safari", "browser_version": "17.2.0", "platform": "macOS", "behavior": "CANDIDATE Alert Example report: 3 MUST assertions passed, 0 failed, and no negative side effects recorded; current implementation output remains pending.", "impact": "none", "source_url": "https://aria-at.w3.org/report/163670/targets/545", "source_date": "results completed 2023-12-14; test plan V25.11.02", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Run current real VoiceOver tests for one announcement, insertion timing, and politeness.", "constraints": { "focusStrategy": "unchanged" }, "test_status": "pending-real-test", "next_review": "2027-01-27" },
+    { "id": "talkback-chrome-waiaria-status", "pattern": "live-region", "kind": "contract", "at": "TalkBack", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Android", "behavior": "No measured TalkBack evidence located for this registry; implemented to the WAI-ARIA status/alert contract.", "source_url": "https://www.w3.org/TR/wai-aria-1.2/#status", "source_date": "W3C Recommendation 2023-06-06", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Make no TalkBack support claim beyond the contract; do not use the JAWS report as TalkBack evidence.", "constraints": { "focusStrategy": "unchanged" }, "test_status": "no-measured-evidence", "next_review": "2027-01-27" },
+    { "id": "vo-ios-safari-tetralogical-live", "pattern": "live-region", "kind": "observation", "at": "VoiceOver", "at_version": "multiple versions in published fixtures", "browser": "Safari", "browser_version": "multiple versions in published fixtures", "platform": "iOS", "behavior": "TetraLogical's measured fixtures document platform/browser-dependent initial-content and insertion/update behavior, including iOS; they do not establish one universal timer or fixed version.", "impact": "degraded", "source_url": "https://tetralogical.com/blog/2024/05/01/why-are-my-live-regions-not-working/", "source_date": "published 2024-05-01; updated 2026-04-07", "retrieved": "2026-10-27", "source_tier": "T2", "decision": "Prime an empty persistent region and test insert-plus-update and one-announcement behavior on current iOS.", "constraints": { "focusStrategy": "unchanged" }, "test_status": "pending-real-test", "next_review": "2027-01-27" },
+    { "id": "jaws-chrome-jaws469", "pattern": "live-region", "kind": "observation", "at": "JAWS", "at_version": null, "browser": "Chrome", "browser_version": null, "platform": "Windows", "behavior": "JAWS 469 reports duplicate speech when a focused textarea description is also a live character counter; the same update arrives through two channels.", "impact": "degraded", "source_url": "https://github.com/FreedomScientific/standards-support/issues/469", "source_date": "2020-11-06", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Choose one announcement path for frequently changing text and deduplicate messages.", "constraints": { "focusStrategy": "unchanged", "mustNot": ["duplicate-description-live"] }, "test_status": "evidence-only", "next_review": "2027-01-27" },
+    { "id": "nvda-edge-nvda18721", "pattern": "live-region", "kind": "observation", "at": "NVDA", "at_version": "2025.1 original; 2025.3.2 later log", "browser": "Edge", "browser_version": "144 in maintainer reproduction", "platform": "Windows 10 original; Windows 11 later log", "behavior": "NVDA 18721 was not reproduced on Edge 144 and closed works-for-me on 2026-01-08; it cannot justify a universal delay or a universal failure claim.", "impact": "degraded", "source_url": "https://github.com/nvaccess/nvda/issues/18721", "source_date": "opened 2025-08-15; closed 2026-01-08", "retrieved": "2026-10-27", "source_tier": "T1", "decision": "Test exact pairs and avoid global timer workarounds based on this unreproduced report.", "constraints": { "focusStrategy": "unchanged" }, "test_status": "evidence-only", "next_review": "2027-01-27" }
+  ]
+}

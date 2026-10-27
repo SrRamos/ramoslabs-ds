@@ -2,13 +2,10 @@
 
 ## Recommended variant
 
-Use native `input type="text"` with a persistent visible `label`. Link both hint and visible error through `aria-describedby`, and set `aria-invalid="true"` only while the value is invalid. Keep error text in reading order. After failed submission, focus an error summary or the first invalid field so error discovery does not depend on a live mutation of the current description. HTML provides native input/label semantics ([HTML Standard, updated 2026-05-26](https://html.spec.whatwg.org/multipage/forms.html#the-label-element)); the T1 decision is also grounded in the WAI-ARIA relationship/state model, with dated T2 support evidence in the JSON.
+Use native `input type="text"` with a persistent visible `label`, visible hint and error linked through `aria-describedby`, `aria-invalid` only while invalid, and an explicit post-submit focus path. `aria-errormessage` is additive only for measured pairs, never the baseline association ([HTML label, updated 2026-10-26](https://html.spec.whatwg.org/multipage/forms.html#the-label-element); [WAI-ARIA aria-invalid, 2023-06-06](https://www.w3.org/TR/wai-aria-1.2/#aria-invalid)).
 
-## Discarded alternatives
+## Pair-specific errormessage evidence
 
-- **`aria-errormessage` as the only error association**: blocked because the published NVDA 2023.1/Edge test reports no support for conveying the pertinent error; retain `aria-describedby` even if `aria-errormessage` is added ([a11ysupport, 2023-06-20](https://a11ysupport.io/tests/tech__aria__aria-errormessage-with-aria-invalid-true/aria__aria-errormessage_attribute/convey_pertinent/nvda/edge)).
-- **Placeholder as the only label or error**: blocked because it is not a persistent visible label and disappears during entry; the native label remains the recommended variant ([HTML Standard, updated 2026-05-26](https://html.spec.whatwg.org/multipage/forms.html#the-label-element)).
-- **Only mutating the focused field's description to announce a new error**: blocked as the sole path because the historical matrix reports partial/no dynamic-description support in VoiceOver and TalkBack ([a11ysupport, 2021-10-19](https://a11ysupport.io/tech/aria/aria-describedby_attribute)).
-- **Color/icon-only invalid state**: blocked because `aria-invalid` and visible textual error must carry the state independently of styling ([WAI-ARIA 1.2, Recommendation 2023-06-06](https://www.w3.org/TR/wai-aria-1.2/#aria-invalid)).
+The 2025-12-24 a11ysupport update is now explicit: VoiceOver macOS 15.7.3/Safari 18.6 **fails** to speak the pertinent error; VoiceOver iOS 18.5 and TalkBack 16.2/Chrome 143 **pass**. JAWS 2023.2306.38 passes on Chrome and Edge but fails on Firefox. The older NVDA 2023.1/Edge 114 failure remains a blocker for an errormessage-only design ([published test and pair links, updated 2025-12-24](https://a11ysupport.io/tests/tech__aria__aria-errormessage-with-aria-invalid-true)). Therefore `aria-describedby` stays universal and additive errormessage is enabled only where the target pair passes.
 
-The T2 description results are old and must not be presented as current failures. VoiceOver macOS/iOS remains pending real testing, including initial description, invalid state, post-submit focus, and error discovery.
+Discarded: placeholder-only labels, dynamic-description-only errors, and color/icon-only invalid state. These either remove persistent semantics or depend on announcement channels with measured gaps. Both VoiceOver implementation lanes remain pending real testing despite the published fixture results.

@@ -2,12 +2,10 @@
 
 ## Recommended variant
 
-Use APG `tablist` → `tab` → `tabpanel`, bidirectional `aria-controls`/`aria-labelledby`, one roving tab stop, `aria-selected`, and **manual activation by default** with Enter/Space. Left/Right navigate horizontal tabs; do not capture Up/Down in horizontal orientation. Give a panel `tabindex="0"` when its content otherwise cannot receive focus. Prefer native buttons as the tab host where feasible. APG supplies the complete contract ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)).
+Use APG `tablist` → `tab` → `tabpanel`, reciprocal relationships, one roving tab stop, and `aria-selected`. **Manual activation is the library's conservative default**, not an APG default: APG recommends automatic activation when panels appear without noticeable latency. Automatic mode is permitted only for preloaded latency-free panels; asynchronous panels stay manual ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)).
 
-## Discarded alternatives
+## Measured evidence and alternatives
 
-- **Automatic activation for asynchronous or noticeably delayed panels**: blocked because APG says latency slows focus movement and significantly hampers navigation; automatic activation is allowed only when panels display without noticeable latency ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)).
-- **Every tab in the page Tab order**: blocked because it violates APG's composite model and makes users traverse every tab before reaching the panel ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)).
-- **Links styled as tabs without tab semantics and keyboard behavior**: blocked when the UI actually switches layered panels; role and interaction must match the function ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)).
+CANDIDATE ARIA-AT manual-tabs results are recorded per pair: JAWS passed 98/98 MUST assertions but logged three moderate duplicate/verbosity effects; NVDA passed 82/88; VoiceOver macOS passed 49/74 with ten severe cursor/focus side effects, including a hidden-panel case ([ARIA-AT, test plan V25.10.20, results through 2025-11-03](https://aria-at.w3.org/report/163664)). These results require fixture-level focus and reading-order tests; they are not a current VoiceOver certification.
 
-No current pattern-specific AT blocker was established by the verified sources. That absence is not proof of support: all VoiceOver macOS/iOS checks remain pending, and NVDA/JAWS/TalkBack implementation is evidence-only.
+Discarded: automatic activation with noticeable latency, every tab in the page Tab order, and links styled as tabs without the composite semantics/keyboard map, all contrary to APG. TalkBack has no measured evidence; VoiceOver iOS is pending real testing.

@@ -2,12 +2,10 @@
 
 ## Recommended variant
 
-Use native `input type="radio"` elements with a shared `name`, an individual visible `label` per option, and `fieldset`/`legend` for the group name. Preserve native arrow-key selection and one-group Tab stop rather than reimplementing them. HTML defines the native group and labels ([HTML Standard, updated 2026-10-14](https://html.spec.whatwg.org/multipage/input.html#radio-button-state-(type=radio))); APG defines the equivalent custom contract and confirms expected arrow/Space behavior ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)).
+Use native `input type="radio"` with shared `name`, individual visible labels, and `fieldset`/`legend`. `constraints.focusStrategy` is `native-roving`: the kernel observes focus for the active indicator but does not reimplement native arrow behavior. This follows [APG's radio contract](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) (retrieved 2026-10-27) and the native-first tie-break.
 
-## Discarded alternatives
+## Measured evidence and alternatives
 
-- **Custom `role="radio"` collection as the default**: blocked because it recreates native selection, focus, checked state, and keyboard behavior without a support advantage ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)).
-- **`aria-activedescendant` for the shared radio group**: discarded in favor of real native input focus; APG allows a custom active-descendant example, but it adds ID lifecycle and scrolling responsibilities with no native-support tie-break advantage ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)).
-- **Essential instructions only in a group `aria-describedby`**: blocked as the sole channel because NVDA 12718 documents a browse-mode group-description gap ([NVDA, 2021-08-06](https://github.com/nvaccess/nvda/issues/12718)). Keep instructions visible and associated with individual controls when essential.
+CANDIDATE ARIA-AT roving-radio results are the custom comparison baseline: JAWS 2025.2505.43/Chrome 137 passed 151/151 MUST assertions; NVDA 2023.3/Chrome 133 passed 134/141; VoiceOver macOS 15.3.1/Safari 18 passed 88/98 and recorded cursor and verbosity side effects ([ARIA-AT, test plan V25.10.27](https://aria-at.w3.org/report/163667)).
 
-The NVDA issue is historical and implementation-specific, not a current universal failure. VoiceOver macOS/iOS real tests remain pending.
+Discarded: custom radio hosts and active-descendant as defaults because they add focus/state responsibilities without a native-support advantage. NVDA 12718 was removed from this file: it reports a checkbox-group browse-mode description gap and explicitly says radios behaved as expected in focus mode ([NVDA, 2021-08-06](https://github.com/nvaccess/nvda/issues/12718)). The corrected observation now lives in `checkbox.json`. TalkBack has no measured evidence; VoiceOver iOS is pending.

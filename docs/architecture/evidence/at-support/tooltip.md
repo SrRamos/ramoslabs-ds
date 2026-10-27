@@ -2,12 +2,10 @@
 
 ## Recommended variant
 
-Use `role="tooltip"` for short, noninteractive supplemental text referenced by the trigger's `aria-describedby`. Show on keyboard focus and hover, keep DOM focus on the trigger, dismiss on Escape, and never put essential instructions or errors only in a tooltip. On touch, use persistent text or an explicit info disclosure instead of hover/long-press. This follows APG, with the important caveat that APG labels its tooltip pattern **work in progress without task-force consensus** ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)).
+Use `role="tooltip"` only for short noninteractive supplemental text referenced by the trigger's `aria-describedby`; show on focus and hover, keep focus on the trigger, and dismiss on Escape. Touch gets persistent text or an explicit disclosure. APG supplies the contract but labels it **work in progress without task-force consensus** ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)).
 
-## Discarded alternatives
+## Measured evidence and alternatives
 
-- **Interactive links/buttons inside a tooltip**: blocked because APG says tooltips do not receive focus and interactive hover content needs a nonmodal dialog/popover pattern ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)).
-- **Hover-only or long-press-only discovery**: blocked for keyboard/touch because APG defines focus as well as hover, and touch has no equivalent reliable hover ([APG, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)).
-- **Depending on a late `aria-describedby` text change for announcement**: blocked as the sole path because the historical a11ysupport matrix reports partial/no support for description changes while focused, including VoiceOver and TalkBack ([a11ysupport, 2021-10-19](https://a11ysupport.io/tech/aria/aria-describedby_attribute)). Keep the description available before focus where practical.
+ARIA-AT has no tooltip report in the verified candidate set. The JSON therefore cites Command Button reports only as **trigger-semantics** observations and explicitly says they do not measure tooltip speech ([ARIA-AT Command Button, test plan V25.11.02](https://aria-at.w3.org/report/163671)). Historical `aria-describedby` results report partial/no dynamic-description support on VoiceOver iOS, so a late description mutation cannot be the sole announcement path ([a11ysupport, 2021-10-19](https://a11ysupport.io/tech/aria/aria-describedby_attribute)).
 
-The old T2 matrix is not current compatibility certification. VoiceOver macOS/iOS tests are pending, including Escape, focus persistence, touch discovery, and actual description speech.
+Discarded: interactive content inside a tooltip, hover/long-press-only discovery, and dynamic-description-only announcement, contrary to APG or contradicted by the dated observation. TalkBack has no measured tooltip evidence; both VoiceOver lanes remain pending real testing.

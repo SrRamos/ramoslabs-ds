@@ -1288,11 +1288,11 @@ must land in `packages/tokens` before styling work; otherwise raw values will te
 ## Decisions needed from owner
 
 None of the five audit MUSTs required a product decision; all were resolved technically. Two
-product-level choices underpin the architecture; D1 awaits confirmation and D2 is resolved:
+product-level choices underpin the architecture; both are resolved:
 
 | # | Decision | Options | Recommendation |
 |---|---|---|---|
-| D1 | Browser floor (ADR-001) | A: keep Chromium 114 / Firefox 125 / Safari-iOS 17 and carry the geometry and close fallbacks. B: raise to Safari-iOS 26 / Chromium 125 / Firefox 147, dropping fallbacks, excluding about two iOS generations | A for the initial release; revisit per major release with installed-base data |
+| D1 | Browser floor (ADR-001) | A: keep Chromium 114 / Firefox 125 / Safari-iOS 17 and carry the geometry and close fallbacks. B: raise to Safari-iOS 26 / Chromium 125 / Firefox 147, dropping fallbacks, excluding about two iOS generations | **Resolved 2026-10-27: A** (owner delegated the call to the orchestrator; keep the floor). Revisit per major release with installed-base data |
 | D2 | AT testing lane (ADR-013, ADR-015) | **Resolved 2026-10-27 by owner:** real testing on VoiceOver only (macOS + iPhone); NVDA, JAWS and TalkBack implemented from documented evidence (`evidence-only`), never labelled tested; optional later NVDA lane on the owner's Windows PC; no JAWS licence, no physical Android or iOS 17 floor devices | Adopted as ADR-015. Re-open if a licence, device or hosted service becomes available |
 
 ---
