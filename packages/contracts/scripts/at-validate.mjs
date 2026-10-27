@@ -139,7 +139,23 @@ function semanticErrors(data, fileName) {
   if (rec.atEvidence && typeof rec.atEvidence === 'object') {
     for (const [key, value] of Object.entries(rec.atEvidence)) {
       const pair = PRIMARY_PAIRS[key];
-      if (!pair || value === 'no-measured-evidence' || !Array.isArray(value)) continue;
+      if (!pair) continue;
+      if (value === 'no-measured-evidence') {
+        const stray = data.entries.find(
+          (e) =>
+            e &&
+            e.kind === 'observation' &&
+            String(e.at).toLowerCase() === pair.at &&
+            String(e.platform).toLowerCase() === pair.platform,
+        );
+        if (stray)
+          add(
+            `/recommended/atEvidence/${key}`,
+            `declared no-measured-evidence but observation "${stray.id}" exists for ${stray.at}/${stray.platform}; reference it or remove it`,
+          );
+        continue;
+      }
+      if (!Array.isArray(value)) continue;
       const found = [];
       value.forEach((id, i) => {
         const e = byId.get(id);

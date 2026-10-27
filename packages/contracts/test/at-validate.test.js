@@ -112,6 +112,21 @@ describe('at-support schema and rules (W1-315)', () => {
       /T3 evidence alone never decides/,
     );
     expect(bad((f) => (f.recommended.atEvidence.nvda = ['apg']))).toMatch(/needs an observation/);
+    // radio-group shape: voiceover-ios declared no-measured-evidence while a VoiceOver iOS observation exists
+    expect(
+      bad((f) =>
+        f.entries.push(
+          entry({
+            id: 'vo-ios-safari-a11ysupport-radio',
+            at: 'VoiceOver',
+            browser: 'Safari',
+            platform: 'iOS',
+          }),
+        ),
+      ),
+    ).toMatch(
+      /atEvidence\/voiceover-ios: declared no-measured-evidence but observation "vo-ios-safari-a11ysupport-radio"/,
+    );
     expect(bad((f) => (f.recommended.atEvidence.jaws = ['nvda-chrome-x']))).toMatch(
       /not jaws\/windows/,
     );
