@@ -8,6 +8,10 @@
  * (tokens.json, llms-full.txt, AGENTS.md), so the tools can never drift from the site.
  */
 
+import { pages, mdPathFor } from '../src/data/pages';
+import { prefersMarkdown } from './negotiate';
+import { aiBotsSql, aiReferralsSql, summarizeAiBots, summarizeAiReferrals } from './ai-traffic';
+
 // Cloudflare Analytics Engine — cookieless, no-PII, server-side usage telemetry.
 // writeDataPoint is synchronous and non-blocking (no added response latency).
 interface AnalyticsEngineDataset {
@@ -45,6 +49,11 @@ const AGENT_FILES = new Set([
   '/AGENTS.md',
   '/robots.txt',
 ]);
+
+// Doc pages that have a Markdown twin (/<route>.md), written by the agentic build.
+const MD_TWINS = new Map(
+  pages.filter((p) => !p.interactive).map((p) => [p.path, mdPathFor(p.path)]),
+);
 
 type ReqMeta = { ua: string; referer: string; country: string; colo: string };
 
@@ -502,7 +511,11 @@ async function queryAE(env: Env, sql: string): Promise<Array<Record<string, unkn
   try {
     const res = await fetch(
       `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/analytics_engine/sql`,
-      { method: 'POST', headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` }, body: sql },
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` },
+        body: sql,
+      },
     );
     if (!res.ok) return null;
     const j = (await res.json()) as { data?: Array<Record<string, unknown>> };
@@ -553,7 +566,7 @@ async function npmSeries(): Promise<Array<{ day: string; downloads: number }>> {
 async function usageAggregates(env: Env) {
   if (!env.CF_ACCOUNT_ID || !env.CF_ANALYTICS_TOKEN) return null;
   const W = `timestamp > NOW() - INTERVAL '30' DAY`;
-  const [byType, mcpByTool, topPages, agentFiles] = await Promise.all([
+  const [byType, mcpByTool, topPages, agentFiles, botRows, referralRows] = await Promise.all([
     queryAE(
       env,
       `SELECT index1 AS type, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE ${W} GROUP BY type`,
@@ -570,6 +583,8 @@ async function usageAggregates(env: Env) {
       env,
       `SELECT blob3 AS file, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'agent_file' AND ${W} GROUP BY file ORDER BY n DESC LIMIT 15`,
     ),
+    queryAE(env, aiBotsSql(AE_DATASET, W)),
+    queryAE(env, aiReferralsSql(AE_DATASET, W)),
   ]);
   if (!byType) return null;
   return {
@@ -578,6 +593,9 @@ async function usageAggregates(env: Env) {
     mcpByTool: mcpByTool ?? [],
     topPages: topPages ?? [],
     agentFiles: agentFiles ?? [],
+    // Hits by AI bot (matched on User-Agent) and human visits sent by an AI assistant (Referer).
+    aiBots: summarizeAiBots(botRows ?? []),
+    aiReferrals: summarizeAiReferrals(referralRows ?? []),
   };
 }
 
@@ -606,7 +624,7 @@ async function handleMetrics(env: Env, url: URL): Promise<Response> {
   // 5-minute edge cache: don't re-run the Analytics Engine SQL query (or hit npm) on every
   // visit. Still unlisted + noindex; anyone who discovers the URL sees aggregates only.
   const cache = (
-    globalThis as {
+    globalThis as unknown as {
       caches?: {
         default: {
           match: (r: Request) => Promise<Response | undefined>;
@@ -643,6 +661,14 @@ async function handleMetrics(env: Env, url: URL): Promise<Response> {
   return res;
 }
 
+function markdownResponse(res: Response): Response {
+  const out = new Response(res.body, res);
+  out.headers.set('Content-Type', 'text/markdown; charset=utf-8');
+  out.headers.set('Access-Control-Allow-Origin', '*');
+  out.headers.append('Vary', 'Accept');
+  return out;
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -664,6 +690,27 @@ export default {
       return handleMetrics(env, url);
     }
 
+    const isRead = request.method === 'GET' || request.method === 'HEAD';
+
+    // Markdown twin by extension: /foundations/colors.md. /skill.md and /AGENTS.md are agent
+    // files with their own headers and counter, so they fall through.
+    if (isRead && path.endsWith('.md') && !AGENT_FILES.has(path)) {
+      const res = await env.ASSETS.fetch(request);
+      if (!res.ok) return res;
+      logEvent(env, 'markdown', path, 'extension', meta);
+      return markdownResponse(res);
+    }
+
+    // Markdown by content negotiation on the normal URL: Accept: text/markdown.
+    const twin = MD_TWINS.get(path);
+    if (isRead && twin && prefersMarkdown(request.headers.get('accept'))) {
+      const res = await env.ASSETS.fetch(new Request(new URL(twin, url.origin).href, request));
+      if (res.ok) {
+        logEvent(env, 'markdown', twin, 'negotiated', meta);
+        return markdownResponse(res);
+      }
+    }
+
     // Count meaningful GETs server-side (no cookie, no client JS, agents and bots included).
     // Skip fonts, images, CSS/JS and other sub-resources, and the private dashboard itself,
     // to keep the dataset signal-dense.
@@ -673,6 +720,17 @@ export default {
     }
 
     // Static assets (served by the ASSETS binding, which also applies _headers/_redirects).
-    return env.ASSETS.fetch(request);
+    const asset = await env.ASSETS.fetch(request);
+    if (isRead && twin && asset.ok) {
+      // Advertise the Markdown twin and tell caches the body depends on Accept.
+      const res = new Response(asset.body, asset);
+      res.headers.append(
+        'Link',
+        `<${new URL(twin, url.origin).href}>; rel="alternate"; type="text/markdown"`,
+      );
+      res.headers.append('Vary', 'Accept');
+      return res;
+    }
+    return asset;
   },
 };

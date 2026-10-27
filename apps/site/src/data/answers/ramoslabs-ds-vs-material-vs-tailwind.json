@@ -1,0 +1,211 @@
+{
+  "id": "ramoslabs-ds-vs-material-vs-tailwind",
+  "title": "RamosLabs DS, Material Web, and Tailwind CSS: what each one ships",
+  "summary": "A sourced side-by-side of what RamosLabs DS, Material Web (@material/web), and Tailwind CSS each provide, with only claims their own docs support.",
+  "short": "RamosLabs DS ships tokens and documented patterns and no components yet{ref:ds-agents}. Material Web is a web-components library on Material 3, in maintenance mode according to its README as of 2026-10-27{ref:md-web}. Tailwind is a utility-first CSS framework{ref:tw-home} whose docs have you build reusable components yourself{ref:tw-utility}. All three expose design tokens as CSS variables{ref:ds-pkg}{ref:md-theming}{ref:tw-theme}.",
+  "sections": [
+    {
+      "heading": "What each one ships",
+      "body": [
+        "Every cell cites a primary source. External sources were read on 2026-10-27; Tailwind statements are from its v4.3 docs. The Material column describes Material Web (`@material/web`) only; the Material 3 specification site was not consulted, so this page makes no claim about Material Design as a whole."
+      ],
+      "table": {
+        "caption": "Sourced comparison",
+        "head": ["Question", "RamosLabs DS", "Material (Material Web)", "Tailwind CSS"],
+        "rows": [
+          [
+            "What is it?",
+            "A mono-indigo design system documented as tokens and patterns{ref:ds-agents}",
+            "Material Web is a library of Google's Material components; its README says it uses Material 3, \"the latest version\"{ref:md-web}",
+            "A utility-first CSS framework{ref:tw-home}: you combine single-purpose presentational classes in your markup{ref:tw-utility}"
+          ],
+          [
+            "Ready-made components?",
+            "Not shipped yet; planned as `@ramoslabs/vue` with the `SJ` prefix{ref:ds-agents}",
+            "`@material/web` is a library of web components; its README says \"MWC is in maintenance mode pending new maintainers\"{ref:md-web}",
+            "Its docs describe building reusable components yourself, with a framework component, a template partial, or custom CSS{ref:tw-utility}"
+          ],
+          [
+            "Tokens as CSS variables?",
+            "Compiled to CSS variables, typed values and flat JSON; `./css`, `./json` and the root are exported{ref:ds-pkg}",
+            "On the web, design tokens are CSS custom properties{ref:md-theming}",
+            "Theme variables defined with `@theme` are compiled into regular CSS variables{ref:tw-theme}"
+          ],
+          [
+            "How is color organized?",
+            "One action accent, Indigo 600 (#4f46e5); violet is decorative only{ref:ds-agents}",
+            "Color roles assigned to components, as `--md-sys-color-<token>`; each has an `on` token for content color with accessible contrast{ref:md-color}. Schemes can be generated from a single color with `material-color-utilities`{ref:md-utils}",
+            "Importing `tailwindcss` includes a default theme with a color palette, type scale, shadows and fonts; you add colors as theme variables such as `--color-mint-500`{ref:tw-theme}"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Using Tailwind with RamosLabs tokens",
+      "body": [
+        "Import the RamosLabs CSS once{ref:ds-install}. The variables then exist as regular CSS custom properties that any CSS can read{ref:mdn-var}. Tailwind documents square-bracket arbitrary properties as a way to write completely arbitrary CSS, and its own `var()` example is the arbitrary-value shorthand `fill-(--my-brand-color)`{ref:tw-custom}. Whether a given Tailwind build emits the DS variables in arbitrary properties was not measured here."
+      ],
+      "code": [
+        {
+          "label": "CSS entry, imported once",
+          "lang": "css",
+          "source": "@import '@ramoslabs/tokens/css';"
+        }
+      ]
+    },
+    {
+      "heading": "What this means if you need components today",
+      "body": [
+        "RamosLabs DS does not ship components yet{ref:ds-agents}. Material Web is a components library, flagged in maintenance mode by its own README as of 2026-10-27{ref:md-web}. Tailwind's docs expect you to build components from utilities{ref:tw-utility}. Check each project's current status before committing; these statements are dated 2026-10-27."
+      ]
+    },
+    {
+      "heading": "What was not compared",
+      "body": [
+        "Licenses of the other two, accessibility quality, bundle size, popularity and AI tooling are not compared: no primary source was gathered for them, so this page makes no claim. The RamosLabs license is MIT{ref:npm-tokens}."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does RamosLabs DS include ready-made components?",
+      "a": "Not yet. They are planned as `@ramoslabs/vue` with the `SJ` prefix{ref:ds-agents}."
+    },
+    {
+      "q": "Is Material Web still maintained?",
+      "a": "Its README states \"MWC is in maintenance mode pending new maintainers\"{ref:md-web}. This is the README wording as of 2026-10-27. Check the repository for the current state."
+    },
+    {
+      "q": "Does Tailwind ship components?",
+      "a": "Its docs describe building reusable components yourself from utilities{ref:tw-utility}."
+    },
+    {
+      "q": "Can I use RamosLabs tokens with Tailwind?",
+      "a": "The tokens are regular CSS variables once the CSS is imported{ref:ds-pkg}{ref:ds-install}, and Tailwind documents arbitrary properties that take completely arbitrary CSS{ref:tw-custom}. This page did not measure a Tailwind build that reads them."
+    },
+    {
+      "q": "How does Material Web expose its tokens?",
+      "a": "As CSS custom properties; color tokens follow `--md-sys-color-<token>`{ref:md-theming}{ref:md-color}."
+    },
+    {
+      "q": "Is RamosLabs DS free to use?",
+      "a": "Yes, under the MIT license{ref:npm-tokens}."
+    }
+  ],
+  "references": [
+    {
+      "id": "ds-agents",
+      "kind": "ds",
+      "title": "AGENTS.md: accessibility floors, the hard rule, and component status",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-pkg",
+      "kind": "ds",
+      "title": "packages/tokens/package.json: the exports map (\".\", \"./css\", \"./json\")",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/packages/tokens/package.json",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-install",
+      "kind": "ds",
+      "title": "Installation: the install and import steps (source Installation.md)",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/Installation.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "npm-tokens",
+      "kind": "external",
+      "title": "npm registry record for @ramoslabs/tokens (license MIT; 0.1.0 is the only version)",
+      "publisher": "npm",
+      "url": "https://registry.npmjs.org/@ramoslabs/tokens",
+      "date": "0.1.0 published 2026-07-08",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-custom",
+      "kind": "external",
+      "title": "Tailwind CSS: adding custom styles (arbitrary properties and values)",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/docs/adding-custom-styles",
+      "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-web",
+      "kind": "external",
+      "title": "material-web README: what @material/web is and its status",
+      "publisher": "Material Components (GitHub)",
+      "url": "https://github.com/material-components/material-web/blob/main/README.md",
+      "date": "undated README, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-color",
+      "kind": "external",
+      "title": "material-web: color theming (color roles and --md-sys-color tokens)",
+      "publisher": "Material Components (GitHub)",
+      "url": "https://github.com/material-components/material-web/blob/main/docs/theming/color.md",
+      "date": "undated doc, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-theming",
+      "kind": "external",
+      "title": "material-web: theming (design tokens are CSS custom properties on the web)",
+      "publisher": "Material Components (GitHub)",
+      "url": "https://github.com/material-components/material-web/blob/main/docs/theming/README.md",
+      "date": "undated doc, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-utils",
+      "kind": "external",
+      "title": "material-color-utilities README",
+      "publisher": "Material Foundation (GitHub)",
+      "url": "https://github.com/material-foundation/material-color-utilities",
+      "date": "undated README, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-utility",
+      "kind": "external",
+      "title": "Tailwind CSS: styling with utility classes",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/docs/styling-with-utility-classes",
+      "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-theme",
+      "kind": "external",
+      "title": "Tailwind CSS: theme variables",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/docs/theme",
+      "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "mdn-var",
+      "kind": "external",
+      "title": "MDN: var() CSS function",
+      "publisher": "MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var",
+      "date": "last modified 2026-09-10",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-home",
+      "kind": "external",
+      "title": "Tailwind CSS homepage: \"A utility-first CSS framework\"",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/",
+      "date": "live homepage, undated",
+      "accessed": "2026-10-27"
+    }
+  ]
+}

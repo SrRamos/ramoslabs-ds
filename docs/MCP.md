@@ -9,9 +9,9 @@ HTML or fetching files. It runs inside the same Worker that serves the site
 - Transport: Streamable HTTP (JSON responses).
 - Endpoint: `POST /mcp`.
 - URLs:
-  - `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` — works from anywhere (no zone bot protection).
-  - `https://design.ramoslabs.com/mcp` — the branded URL; reachable from local clients, and from
-    cloud clients once the zone's Bot Fight Mode is relaxed (see below).
+  - `https://design.ramoslabs.com/mcp` — the branded URL.
+  - `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` — the same Worker on the `workers.dev` host,
+    outside the `ramoslabs.com` zone. Keep it as the fallback (see the note below).
 
 ## Tools
 
@@ -61,15 +61,24 @@ curl -s -X POST https://ramoslabs-ds.edwardramosp.workers.dev/mcp \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"check_contrast","arguments":{"foreground":"#4f46e5","background":"#ffffff"}}}'
 ```
 
-## Note on the branded URL and bot protection
+## Note on the branded URL and bot protection (monitor, not a blocker)
 
-`design.ramoslabs.com` sits on the `ramoslabs.com` zone, whose **Bot Fight Mode** blocks
-server-side/cloud fetchers (that is why `WebFetch` to the agent files 403s from cloud IPs).
-MCP clients running locally use a residential IP and pass; cloud-hosted agents may be blocked
-on the branded URL. To make `design.ramoslabs.com/mcp` (and the agent files) reachable from
-every client, in the Cloudflare dashboard → zone `ramoslabs.com` → **Security → Bots**: turn
-**Bot Fight Mode off** and set any **"Block AI bots"** control to **Allow** (the DS welcomes
-AI ingestion). Until then, use the `*.workers.dev` URL, which is never bot-blocked.
+An earlier version of this note said the `ramoslabs.com` zone's **Bot Fight Mode** blocked
+server-side fetchers on `design.ramoslabs.com`. That is out of date. Checked on 2026-10-27:
+a `WebFetch` from a cloud-hosted agent to `https://design.ramoslabs.com/llms.txt` and to
+`https://design.ramoslabs.com/foundations/colors/` returned the content with no challenge page
+(the tool does not expose the HTTP status code, so "no challenge, content intact" is what was
+observed). `POST https://design.ramoslabs.com/mcp` with `tools/list` also answered normally from a
+local machine.
+
+Treat this as something to keep watching, not as a known problem:
+
+- Re-run the two fetches above (and a `tools/list` call) after any change to the zone's Security
+  settings, and now and then. Cloudflare's bot settings can change per plan and over time.
+- If a cloud client ever gets a 403 or a challenge page on the branded host, point it at the
+  `workers.dev` URL, which is on a separate hostname, and review **Security → Bots** and
+  **AI Crawl Control** in the Cloudflare dashboard for the `ramoslabs.com` zone.
+- `docs/distribution/SEARCH-CONSOLES.md` has the review steps and the `curl` checks.
 
 ## How it is built and deployed
 

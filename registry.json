@@ -87,5 +87,31 @@
       "summary": "The AI-content pattern: label generated output, communicate uncertainty, show generation states, keep a human in the loop, plan for wrong answers, one-tap feedback, and data disclosure, under a disclosed-bounded-checkable-reversible contract"
     }
   ],
+  "answers": [
+    {
+      "id": "muted-text-token",
+      "title": "Which token should I use for muted text?",
+      "url": "https://design.ramoslabs.com/answers/muted-text-token/",
+      "summary": "The muted text token, its measured contrast, and where it fails"
+    },
+    {
+      "id": "indigo-contrast-wcag",
+      "title": "Does RamosLabs indigo (#4f46e5) meet WCAG contrast requirements?",
+      "url": "https://design.ramoslabs.com/answers/indigo-contrast-wcag/",
+      "summary": "Measured WCAG contrast of the indigo accent against white and its tints"
+    },
+    {
+      "id": "install-tokens-vue-react-html",
+      "title": "How do I install the RamosLabs design tokens in Vue, React, or plain HTML?",
+      "url": "https://design.ramoslabs.com/answers/install-tokens-vue-react-html/",
+      "summary": "Copyable install and import steps for Vue, React, and plain HTML"
+    },
+    {
+      "id": "ramoslabs-ds-vs-material-vs-tailwind",
+      "title": "RamosLabs DS, Material Web, and Tailwind CSS: what each one ships",
+      "url": "https://design.ramoslabs.com/answers/ramoslabs-ds-vs-material-vs-tailwind/",
+      "summary": "A sourced side-by-side of what each one ships, with only claims their own docs support"
+    }
+  ],
   "components": []
 }

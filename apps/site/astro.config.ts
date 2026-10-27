@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import vue from '@astrojs/vue';
 import sitemap from '@astrojs/sitemap';
 import { agentic } from './agentic/integration';
+import { lastModifiedForUrl } from './src/data/lastmod';
 
 // The public documentation site for the RamosLabs Design System.
 // Static output, one real HTML file per clean URL. Deployed to Cloudflare Pages
@@ -17,7 +18,15 @@ export default defineConfig({
   integrations: [
     vue(),
     // Keep the unlisted internal dashboard out of the sitemap.
-    sitemap({ filter: (page) => !page.includes('/metricas') }),
+    // <lastmod> comes from git history of each page's sources (see src/data/lastmod.ts).
+    sitemap({
+      filter: (page) => !page.includes('/metricas'),
+      serialize(item) {
+        const lastmod = lastModifiedForUrl(item.url);
+        if (lastmod) item.lastmod = lastmod;
+        return item;
+      },
+    }),
     agentic(),
   ],
 });

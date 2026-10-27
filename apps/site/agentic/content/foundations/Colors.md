@@ -33,7 +33,7 @@ The ramps are primitives: raw hues, named by number, never by meaning. Product c
 
 - Primary action: rest `--color-primary`, hover `--color-primary-dark`, focus ring at `--color-focus`. The one accent for submit, confirm, active nav.
 - Selected / accent zone: ✓ Recommended: `--color-primary-surface` tint with primary-colored text. ✕ Avoid: white text on the tint, it fails contrast on the pale surface.
-- Text scale, one neutral hue: `--color-text-heading` 17.85:1, `--color-text-strong` 14.63:1, `--color-text-body` 10.36:1, `--color-text-secondary` 7.58:1, `--color-text-muted` 4.76:1, `--color-text-disabled` state only.
+- Text scale, one neutral hue: `--color-text-heading` 17.85:1, `--color-text-strong` 14.63:1, `--color-text-body` 10.35:1, `--color-text-secondary` 7.58:1, `--color-text-muted` 4.76:1, `--color-text-disabled` state only.
 - Feedback, each a full triad (strong solid + surface + text):
   - Success: `--color-success-strong` + `-surface` + `-text`. Strong solid for the icon so the white check clears 3:1.
   - Warning: `--color-warning-strong` + `-surface` + `-text`. Amber is bright: reach for `--color-warning-strong` when a white glyph sits on a solid fill (it clears the 3:1 non-text floor), keep dark text on the surface, never white text.
@@ -47,7 +47,7 @@ Contrast is a floor. WCAG 2.2 asks 4.5:1 for normal text, 3:1 for large text and
 - Primary on white: 6.29, AA
 - White on primary-dark: 7.90, AAA
 - Heading on white: 17.85, AAA
-- Body on white: 10.36, AAA
+- Body on white: 10.35, AAA
 - Muted on white: 4.76, AA
 - White on error-strong: 4.83, AA
 - White on error (red 500): 3.76, large only

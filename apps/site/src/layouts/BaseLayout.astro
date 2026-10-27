@@ -11,13 +11,14 @@ interface Props {
   description: string
   path: string
   ogType?: string
+  extraJsonLd?: Record<string, unknown>[]
 }
-const { title, description, path, ogType } = Astro.props
+const { title, description, path, ogType, extraJsonLd } = Astro.props
 ---
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} path={path} ogType={ogType} />
+    <BaseHead title={title} description={description} path={path} ogType={ogType} extraJsonLd={extraJsonLd} />
   </head>
   <body>
     <div class="rl-shell">

@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/pages'
+import { lastModifiedForPath } from '../data/lastmod'
 
 // Per-page <head>: SEO, canonical, OpenGraph/Twitter, JSON-LD, and font preloads.
 interface Props {
@@ -7,8 +8,9 @@ interface Props {
   description: string
   path: string // clean path with trailing slash, e.g. '/foundations/colors/'
   ogType?: string
+  extraJsonLd?: Record<string, unknown>[] // additional schema.org blocks (FAQPage, HowTo)
 }
-const { title, description, path, ogType = 'website' } = Astro.props
+const { title, description, path, ogType = 'website', extraJsonLd = [] } = Astro.props
 
 // Client analytics config (GA4 + Microsoft Clarity), injected below as
 // window.RLDS_ANALYTICS_CONFIG. IDs are baked at build time from env, with the
@@ -22,6 +24,8 @@ const canonical = new URL(path, site).href
 const ogImage = new URL('/og.png', site).href
 const isHome = path === '/'
 const fullTitle = isHome ? `${SITE.title} — Documentation` : `${title} · ${SITE.title}`
+
+const dateModified = lastModifiedForPath(path)
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -37,6 +41,7 @@ const jsonLd = {
         isPartOf: { '@type': 'WebSite', name: SITE.title, url: site.href },
       }),
   license: 'https://opensource.org/licenses/MIT',
+  ...(dateModified ? { dateModified } : {}),
 }
 ---
 <meta charset="utf-8" />
@@ -75,3 +80,4 @@ const jsonLd = {
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+{extraJsonLd.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}

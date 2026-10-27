@@ -1,0 +1,162 @@
+{
+  "id": "muted-text-token",
+  "title": "Which token should I use for muted text?",
+  "summary": "Use --color-text-muted (#64748b) on white: 4.76:1 measured. On pale indigo it fails; use --color-text-secondary.",
+  "short": "Use `--color-text-muted` (#64748b){ref:ds-tokens} for muted text on white. It measures 4.76:1 against `--color-surface` (#ffffff){ref:measured}, above the 4.5:1 that WCAG requires for normal text{ref:sc143}. On the pale indigo `--color-primary-surface` it measures 4.26:1 and falls below that minimum{ref:measured}, so use `--color-text-secondary` there.",
+  "sections": [
+    {
+      "heading": "Measured contrast of the six text roles",
+      "body": [
+        "The six text roles are neutral slate tokens{ref:ds-tokens}. The table gives each one measured against white (`--color-surface`). The last column states whether the ratio reaches the 4.5:1 minimum for normal text{ref:sc143}. The DS presents the first five as one neutral-hue text scale and `--color-text-disabled` as state only{ref:ds-colors}."
+      ],
+      "table": {
+        "caption": "Text role tokens, hex values{ref:ds-tokens}, and ratios on white{ref:measured}",
+        "head": ["Token", "Hex", "Ratio on white", "Reaches 4.5:1"],
+        "rows": [
+          ["`--color-text-heading`", "#0f172a{ref:ds-tokens}", "17.85:1{ref:measured}", "Yes"],
+          ["`--color-text-strong`", "#1e293b{ref:ds-tokens}", "14.63:1{ref:measured}", "Yes"],
+          ["`--color-text-body`", "#334155{ref:ds-tokens}", "10.35:1{ref:measured}", "Yes"],
+          ["`--color-text-secondary`", "#475569{ref:ds-tokens}", "7.58:1{ref:measured}", "Yes"],
+          ["`--color-text-muted`", "#64748b{ref:ds-tokens}", "4.76:1{ref:measured}", "Yes"],
+          ["`--color-text-disabled`", "#cbd5e1{ref:ds-tokens}", "1.48:1{ref:measured}", "No"]
+        ]
+      }
+    },
+    {
+      "heading": "Where muted text stops working",
+      "body": [
+        "Muted text clears the minimum on white and on the light gray surface, with a thin margin on the gray. It does not clear it on the indigo tint.{ref:measured}{ref:sc143}"
+      ],
+      "table": {
+        "caption": "`--color-text-muted` (#64748b) on other surfaces{ref:ds-tokens}, measured{ref:measured}",
+        "head": ["Background", "Hex", "Ratio", "Reaches 4.5:1"],
+        "rows": [
+          ["`--color-surface`", "#ffffff{ref:ds-tokens}", "4.76:1{ref:measured}", "Yes"],
+          [
+            "`--color-surface-secondary`",
+            "#f8fafc{ref:ds-tokens}",
+            "4.55:1{ref:measured}",
+            "Yes, barely"
+          ],
+          ["`--color-primary-surface`", "#eef2ff{ref:ds-tokens}", "4.26:1{ref:measured}", "No"]
+        ]
+      }
+    },
+    {
+      "heading": "The DS floor for muted text",
+      "body": [
+        "Rule: muted text is never lighter than #64748b (slate 500) on white{ref:ds-agents}. Why: lighter slate values fall below 4.5:1; slate 400 (#94a3b8) measures 2.56:1 on white{ref:measured}, below the 4.5:1 minimum{ref:sc143}.",
+        "On `--color-primary-surface` use `--color-text-secondary` (#475569): it measures 6.78:1 there{ref:measured}."
+      ]
+    },
+    {
+      "heading": "Copyable CSS",
+      "body": [
+        "Import the tokens once at the app entry, then reference the role token. Never hardcode the hex{ref:ds-agents}."
+      ],
+      "code": [
+        {
+          "label": "app entry stylesheet",
+          "lang": "css",
+          "source": "@import '@ramoslabs/tokens/css';"
+        },
+        {
+          "label": "muted caption, and the replacement on an indigo tint",
+          "lang": "css",
+          "source": ".card-meta {\n  color: var(--color-text-muted);\n  background: var(--color-surface);\n}\n\n.card-meta--on-indigo-tint {\n  color: var(--color-text-secondary);\n  background: var(--color-primary-surface);\n}"
+        }
+      ]
+    },
+    {
+      "heading": "Reproduce the numbers",
+      "body": [
+        "The ratios on this page come from the script below, which applies the WCAG relative-luminance and contrast-ratio definitions{ref:wcag22} to the published token values. Run it in a project that has `@ramoslabs/tokens` installed; it prints 4.76 and 6.29."
+      ],
+      "code": [
+        {
+          "label": "contrast.mjs (Node 18 or newer)",
+          "lang": "js",
+          "source": "import { readFileSync } from 'node:fs'\n\n// WCAG 2.2 relative luminance and contrast ratio, applied to the published token values.\nconst lin = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)\nconst lum = (hex) => {\n  const n = parseInt(hex.slice(1), 16)\n  return 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255)\n}\nconst ratio = (a, b) => {\n  const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x)\n  return (hi + 0.05) / (lo + 0.05)\n}\n\nconst tokens = JSON.parse(readFileSync('node_modules/@ramoslabs/tokens/dist/tokens.json', 'utf8'))\nconst pair = (fg, bg) => ratio(tokens[fg], tokens[bg]).toFixed(2)\n\nconsole.log(pair('color-text-muted', 'color-surface')) // 4.76\nconsole.log(pair('color-primary', 'color-surface')) // 6.29"
+        }
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which token should I use for muted text on a white background?",
+      "a": "Use `--color-text-muted` (#64748b){ref:ds-tokens}. It measures 4.76:1 on white{ref:measured}, above the 4.5:1 minimum for normal text{ref:sc143}."
+    },
+    {
+      "q": "Can I use a lighter gray for muted text?",
+      "a": "Not on white under the DS rule: muted text is never lighter than #64748b{ref:ds-agents}. Slate 400 (#94a3b8) measures 2.56:1 on white{ref:measured}, below 4.5:1{ref:sc143}."
+    },
+    {
+      "q": "What should I use for muted text on an indigo tinted background?",
+      "a": "Use `--color-text-secondary` (#475569). `--color-text-muted` measures 4.26:1 on `--color-primary-surface` (#eef2ff), below 4.5:1, while secondary text measures 6.78:1 there{ref:measured}."
+    },
+    {
+      "q": "Is --color-text-disabled a good choice for less important text?",
+      "a": "No. It measures 1.48:1 on white{ref:measured} and the DS reserves it for the disabled state, not readable text{ref:ds-colors}."
+    },
+    {
+      "q": "Does muted text pass on the light gray surface?",
+      "a": "Yes, with a thin margin: 4.55:1 on `--color-surface-secondary` (#f8fafc){ref:measured}, against a 4.5:1 minimum{ref:sc143}."
+    },
+    {
+      "q": "Should I hardcode the muted gray value?",
+      "a": "No. Reference `var(--color-text-muted)` after importing `@ramoslabs/tokens/css` once; a raw hex in CSS is a defect under the DS rules{ref:ds-agents}."
+    }
+  ],
+  "references": [
+    {
+      "id": "ds-tokens",
+      "kind": "ds",
+      "title": "Source tokens: color.primitive.json and color.semantic.json (@ramoslabs/tokens)",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/tree/71b8bac/packages/tokens/src/tokens",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-colors",
+      "kind": "ds",
+      "title": "Colors: the foundation page (roles and measured contrast pairings; source Colors.md)",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/foundations/Colors.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-agents",
+      "kind": "ds",
+      "title": "AGENTS.md: accessibility floors, the hard rule, and component status",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "wcag22",
+      "kind": "external",
+      "title": "WCAG 2.2: definitions of relative luminance and contrast ratio",
+      "publisher": "W3C",
+      "url": "https://www.w3.org/TR/WCAG22/#dfn-relative-luminance",
+      "date": "W3C Recommendation, 2024-12-12",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "sc143",
+      "kind": "external",
+      "title": "Understanding SC 1.4.3: Contrast (Minimum)",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "date": "updated 2026-09-06",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "measured",
+      "kind": "measured",
+      "title": "Contrast ratios computed from the token hex values with the script on this page (WCAG relative-luminance and contrast-ratio formulas), rounded to two decimals",
+      "publisher": "RamosLabs DS",
+      "url": "https://design.ramoslabs.com/answers/muted-text-token/#reproduce-the-numbers",
+      "date": "2026-10-27"
+    }
+  ]
+}

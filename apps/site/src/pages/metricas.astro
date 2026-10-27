@@ -98,16 +98,21 @@ bunx wrangler secret put CF_ANALYTICS_TOKEN</pre>
         </div>
 
         <div id="mx-data" hidden>
-          <div class="mx-stats">
+          <div class="mx-stats mx-stats-4">
             <div class="mx-stat alt"><div class="mx-stat-value" id="u-page">—</div><div class="mx-stat-label">Page views</div></div>
             <div class="mx-stat alt"><div class="mx-stat-value" id="u-mcp">—</div><div class="mx-stat-label">MCP tool calls</div></div>
             <div class="mx-stat alt"><div class="mx-stat-value" id="u-file">—</div><div class="mx-stat-label">Agent-file fetches</div></div>
+            <div class="mx-stat alt"><div class="mx-stat-value" id="u-md">—</div><div class="mx-stat-label">Markdown fetches</div></div>
           </div>
           <div class="mx-cols">
             <div class="mx-panel"><h3 class="mx-panel-title"><Icon name="hub" />MCP by tool</h3><div class="mx-bars" id="u-tools"></div></div>
             <div class="mx-panel"><h3 class="mx-panel-title"><Icon name="description" />Agent files</h3><div class="mx-bars" id="u-files"></div></div>
           </div>
           <div class="mx-panel"><h3 class="mx-panel-title"><Icon name="menu_book" />Top pages</h3><div class="mx-bars" id="u-pages"></div></div>
+          <div class="mx-cols">
+            <div class="mx-panel"><h3 class="mx-panel-title"><Icon name="smart_toy" />AI bots (by user agent)</h3><div class="mx-bars" id="u-bots"></div></div>
+            <div class="mx-panel"><h3 class="mx-panel-title"><Icon name="hub" />Visits from AI assistants (referrer)</h3><div class="mx-bars" id="u-refs"></div></div>
+          </div>
         </div>
       </section>
 
@@ -285,9 +290,11 @@ bunx wrangler secret put CF_ANALYTICS_TOKEN</pre>
             if (!u) { show('mx-setup'); return }
             const byType = {}
             for (const row of u.byType || []) byType[row.type] = num(row.n)
-            set('u-page', byType.page || 0); set('u-mcp', byType.mcp || 0); set('u-file', byType.agent_file || 0)
+            set('u-page', byType.page || 0); set('u-mcp', byType.mcp || 0); set('u-file', byType.agent_file || 0); set('u-md', byType.markdown || 0)
             bars('u-tools', (u.mcpByTool || []).map((r) => ({ label: r.detail, value: num(r.n) })), 'No MCP calls yet.')
             bars('u-files', (u.agentFiles || []).map((r) => ({ label: r.file, value: num(r.n) })), 'No agent-file fetches yet.')
+            bars('u-bots', (u.aiBots || []).map((r) => ({ label: r.bot + ' · ' + r.vendor + ' · ' + r.kind, value: num(r.total) })), 'No AI bot hits yet.')
+            bars('u-refs', (u.aiReferrals || []).map((r) => ({ label: r.assistant, value: num(r.n) })), 'No visits from AI assistants yet.')
             bars('u-pages', (u.topPages || []).map((r) => ({ label: r.path, value: num(r.n) })), 'No page views yet.')
             show('mx-data')
           })
@@ -323,7 +330,9 @@ bunx wrangler secret put CF_ANALYTICS_TOKEN</pre>
       .mx-label { font-family: var(--font-family-sans); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary); letter-spacing: 0.12em; margin-bottom: 1rem; }
 
       .mx-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
-      @media (max-width: 640px) { .mx-stats { grid-template-columns: 1fr; } }
+      .mx-stats-4 { grid-template-columns: repeat(4, 1fr); }
+      @media (max-width: 900px) { .mx-stats-4 { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 640px) { .mx-stats, .mx-stats-4 { grid-template-columns: 1fr; } }
       .mx-stat { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.75rem 1rem; text-align: center; box-shadow: var(--shadow-sm); }
       .mx-stat-value { font-family: var(--font-family-display); font-size: 2.75rem; font-weight: 900; line-height: 1; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.4rem; }
       .mx-stat.alt .mx-stat-value { background: none; -webkit-text-fill-color: initial; color: var(--color-text-heading); }

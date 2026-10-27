@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.SrRamos/ramoslabs-ds",
+  "title": "RamosLabs Design System",
+  "description": "Read-only design tokens, WCAG contrast checks, and CSS linting for the RamosLabs DS.",
+  "repository": {
+    "url": "https://github.com/SrRamos/ramoslabs-ds",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "websiteUrl": "https://design.ramoslabs.com/agents/mcp/",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://design.ramoslabs.com/mcp"
+    }
+  ]
+}
