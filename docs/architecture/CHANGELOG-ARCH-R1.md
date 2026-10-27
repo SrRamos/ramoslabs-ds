@@ -25,3 +25,17 @@ Round 1 audit: `audits/AUDIT-architecture.md` (NOT-CERTIFIED, 5 MUST). Revision 
 | NICE 19 | `$schema` URL served by site deploy (release gate) | ADR-010 |
 | NICE 20 | Pinned, lockfile-verified devDependencies in provenance gate | Section 5.2 risk 8 |
 | (new) | "Decisions needed from owner" section (D1 floor, D2 device lab); no MUST required one | Section 6 |
+
+## Owner decision D2 revision (2026-10-27)
+
+Owner can test VoiceOver (macOS + iPhone) and has a Windows PC; no JAWS licence. Real testing is VoiceOver only; NVDA, JAWS, TalkBack are evidence-only.
+
+| Change | Section |
+|---|---|
+| New ADR-015 Evidence-based AT support: registry schema (`evidence/at-support/<pattern>.json`), source tiers T1/T2/T3, decision rule (>=1 T1 or >=2 independent T2, T3 never decides, conservative on conflict), "most recommendable" selection rule, honesty labels, wave-1 certification meaning, 6-month staleness CI gate, optional NVDA lane | ADR-015 |
+| Contract schema carries per-AT `atSupport` with `test_status`, `tested_on`, evidence refs; CI gate against labelling evidence-only ATs as tested; registry/MCP expose `test_status` | ADR-010 |
+| Layer 4 changed to VoiceOver macOS + iPhone real protocol; evidence gate 4b added; Guidepup cannot upgrade status; real floor lane limited to desktop Chromium 114 / Firefox 125, physical iOS 17 and Android floor reported "not run"; release gates and manifest updated | ADR-013 |
+| Support matrix vs evidence level distinguished | Section 2 |
+| Risk 5 rewritten (untested ATs); Q4 and ADR-005 evidence wording aligned | Section 5, ADR-005 |
+| D2 marked resolved by owner | Decisions needed from owner |
+| Last line set to REVISION-2-FOR-AUDIT | end of file |

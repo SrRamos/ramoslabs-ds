@@ -1,6 +1,6 @@
 # RamosLabs component library: architecture
 
-Status: revision 1 for audit (addresses AUDIT-architecture round 1; see CHANGELOG-ARCH-R1.md). Inputs: [BRIEF.md](BRIEF.md), research [01](research/01-platform-primitives.md)
+Status: revision 2 for audit (round 1 corrections plus owner decision D2; see CHANGELOG-ARCH-R1.md). Inputs: [BRIEF.md](BRIEF.md), research [01](research/01-platform-primitives.md)
 to [07](research/07-testing-certification.md) (audit round 2: 7/7 PASS) and
 [audits/AUDIT-research-R2.md](audits/AUDIT-research-R2.md). No component code is written until this
 document is certified.
@@ -107,10 +107,13 @@ In every table cell, versions are ordered Chromium / Firefox / Safari-iOS; "none
 | `interactive-widget` viewport meta | Chrome Android 108 / Firefox Android 133 / iOS none | VisualViewport residual |
 
 **Assistive-technology floor** ([03 §Required AT test matrix](research/03-a11y-engine.md#required-at-test-matrix)).
-Supported and certified per release: NVDA current + Chrome and Firefox; JAWS current + Chrome or
-Edge; VoiceOver current + Safari on macOS and on physical iPhone/iPad; TalkBack current + Chrome on
-a physical Android device. Quarterly: Narrator + Edge; VoiceOver + Chrome; JAWS + Firefox. The
-matrix is "current stable plus previous major where lab access permits", with exact builds recorded.
+The **support matrix** (what we design for) is: NVDA current + Chrome and Firefox; JAWS current +
+Chrome or Edge; VoiceOver current + Safari on macOS and on iPhone/iPad; TalkBack current + Chrome on
+Android. Secondary: Narrator + Edge; VoiceOver + Chrome; JAWS + Firefox. What differs is the
+**evidence level** per AT, defined by ADR-015: for now only VoiceOver (macOS + Safari, iOS + Safari)
+is `tested-real`; NVDA, JAWS and TalkBack are `evidence-only` (implemented from documented evidence,
+not hands-on tested) and are never labelled tested or certified. The matrix is "current stable plus
+previous major where lab access permits", with exact builds recorded.
 Also required: keyboard-only, 200%/400% zoom and reflow, forced colors, reduced motion, RTL, and
 switch/voice activation where available.
 
@@ -439,7 +442,7 @@ in the evidence; Q4 is the revision path:
                   "evidence": ["WebKit 289338", "APG 2855"] }
 ```
 `inline` renders the listbox adjacent to the trigger within the same container. The mapping flips
-for a platform class only by an ADR citing dated P1 AT evidence. The evidence (research 03):
+for a platform class only by an ADR citing dated evidence-registry entries (ADR-015) or VoiceOver real-test logs. The evidence (research 03):
 VoiceOver iOS does not move into a listbox mounted at the end of `<body>` (WebKit 289338, NEW,
 2025-03-07); TalkBack/Chrome shows a selection failure for select-only combobox, with
 active-descendant suspected and not confirmed (APG issue 2855). These are leads, not permanent
@@ -776,7 +779,19 @@ schema violation or registry drift).
   ],
   "a11y": { "wcag": ["2.1.1", "2.4.3", "2.4.7", "2.4.11", "2.5.8", "4.1.2"],
             "liveRegions": [{ "id": "result-count", "politeness": "polite" }],
-            "atAssertions": ["manual-speech-trigger-name", "manual-active-option"] },
+            "atAssertions": ["manual-speech-trigger-name", "manual-active-option"],
+            "atSupport": [
+              { "at": "voiceover", "platform": "macos", "browser": "safari",
+                "test_status": "tested-real", "tested_on": "2026-10-27", "evidence": [] },
+              { "at": "voiceover", "platform": "ios", "browser": "safari",
+                "test_status": "tested-real", "tested_on": "2026-10-27", "evidence": [] },
+              { "at": "nvda", "platform": "windows", "browser": "chrome",
+                "test_status": "evidence-only", "evidence": ["at-support/combobox-select-only.json#nvda-chrome"] },
+              { "at": "jaws", "platform": "windows", "browser": "chrome",
+                "test_status": "evidence-only", "evidence": ["at-support/combobox-select-only.json#jaws-chrome"] },
+              { "at": "talkback", "platform": "android", "browser": "chrome",
+                "test_status": "evidence-only", "evidence": ["at-support/combobox-select-only.json#talkback-chrome"] }
+            ] },
   "events": [{ "name": "valueChange", "payload": "{ value: string }" }],
   "props": [], "slots": [],
   "fixtures": ["empty", "one", "many", "long-label", "disabled-item"],
@@ -791,10 +806,11 @@ from the contract; the `kind` union type is generated from `kinds`.
 - **Tests:** the shared semantic spec (ADR-013) is derived from `actions`, `keyboard`, `focus` and
 `fixtures`.
 - **Registry and MCP:** `registry.json`'s `components` array lists name, status, anatomy,
-roles, keyboard map, kinds, support floor and doc links; the MCP server adds `get_component` and
+roles, keyboard map, kinds, support floor, per-AT `test_status` with evidence references, and doc links; the MCP server adds `get_component` and
 `list_components` tools, and `lint_css` rules reference parts and data-attributes from contracts.
 - **Lint:** the contract drives ESLint/stylelint rules (unknown `kind`, preset using internals, raw
 values, missing label).
+- **AT honesty gate:** the schema allows `tested-real` only with a `tested_on` date and an evidence log reference, and CI fails if docs, registry or MCP output label an `evidence-only` AT as tested or certified (ADR-015).
 - **Fallback gating:** `support[].nativeFrom/fallbackUntil` determines which fallback code is bundled
 per entry point and which forced-false capability runs exist in tests.
 
@@ -980,10 +996,18 @@ enabled explicitly. WCAG 2.2 named gates:
 | 3.3.8 Accessible Authentication | Release (PR if changed): OTP/auth presets pass without cognitive test; paste, manager and one-time-code work |
 | 3.2.6 Consistent Help | Release: help/contact order consistent across preset views |
 
-4. **Real-AT manual protocol:** the P1/P2 matrix of Section 2, run on the release candidate; each
-component run records environment, initial announcement, every key/gesture, expected vs actual
-speech, focus before/after, reading order, state changes, and pass/fail. Guidepup (MIT, test-only)
-drives NVDA and VoiceOver as a regression net only.
+4. **Real-AT manual protocol (VoiceOver only, for now):** run on the release candidate on
+**VoiceOver + Safari on macOS** and **VoiceOver + Safari on a physical iPhone**; each component run
+records environment, initial announcement, every key/gesture, expected vs actual speech, focus
+before/after, reading order, state changes, and pass/fail. NVDA, JAWS and TalkBack are **not**
+hands-on tested: they are covered by the evidence registry (ADR-015) with `test_status:
+evidence-only`, checked by the evidence gate below. Optional later lane: NVDA is free and the owner
+has a Windows PC, so NVDA real testing can be added and upgrades the affected entries to
+`tested-real`. Guidepup (MIT, test-only) may drive NVDA and VoiceOver as a regression net only; a
+Guidepup run alone never upgrades `test_status`.
+4b. **Evidence gate:** every pattern a component uses must have an up-to-date registry file with an
+entry for each AT in the support matrix; `next_review` older than today fails CI; a `decision`
+conflicting with the component's focus strategy or `listboxMount` fails CI (ADR-015).
 5. **Visual regression:** hermetic; production fonts, `font-display: block`; baselines per
 `engine x platform x DPR`; mandatory human review; no "update all".
 6. **Cross-framework parity matrix:** rows `component / scenario / action / browser / adapter / path`,
@@ -991,22 +1015,26 @@ where `path` is `native` or the named fallback. Engine feature detection is an i
 map, so each fallback-bearing component runs once with real detection and once per capability forced
 false, on every adapter.
 
-*Real floor lane.* The same interaction suite runs on actual Chromium 114, Firefox 125, physical iOS
-17 devices and Android/Chrome at the declared floor, per release and on every change to a
-fallback-bearing component. Emulation and a patched current WebKit are not substitutes.
+*Real floor lane.* The same interaction suite runs on actual Chromium 114 and Firefox 125 (desktop
+builds, automatable) per release and on every change to a fallback-bearing component. Physical iOS
+17 and the Android floor are **not available** under the owner decision: their rows are reported as
+`not run` in the manifest, the iOS 17 / Android floor paths are verified only through forced-false
+capability runs (path parity) and evidence, and the documentation does not claim hands-on iOS 17 or
+Android-floor verification. If the owner's iPhone runs iOS 17, that device covers the iOS row.
+Emulation and a patched current WebKit are not substitutes.
 
 *Gates.* Every PR: unit/invariant, adapter x engine interaction for affected components, axe, ID/focus/
 keyboard assertions, deterministic visual diffs reviewed, bundle/tree-shaking budgets (ADR-011),
 SSR/hydration checks comparing full IDREF relationships, contract schema validation and
 `registry.json` regeneration, build-time contrast, no skipped test without issue and owner. Every
-release: full P1 AT protocol on the RC, physical mobile input/keyboard scenarios, stable branded
+release: VoiceOver (macOS and iPhone) protocol on the RC, the evidence gate for NVDA/JAWS/TalkBack, physical iPhone input/keyboard scenarios, stable branded
 browsers, parity report, control/candidate performance runs for changed hot paths, licence/provenance
 check confirming no behavioral runtime dependency, updated contracts and dated AT evidence.
 Flaky tests are failures; retries diagnose but never certify.
 
 *Evidence manifest* per release: spec version, source revision, tool versions, environment matrix,
 case totals (executed/passed/failed/not-applicable with reasons), axe scope, visual baseline
-revision, AT result log, known upstream issues, performance traces, BCD dataset version, signer and
+revision, AT result log with per-AT `test_status`, the evidence-registry snapshot, known upstream issues, performance traces, BCD dataset version, signer and
 date. It is an internal reproducible record, not an external WCAG certification.
 
 **Consequences.** Expensive matrix and manual release time (licences, devices). No "ship now, certify
@@ -1055,6 +1083,100 @@ relationships.
 
 ---
 
+### ADR-015: Evidence-based assistive-technology support
+
+**Context.** The architecture targets VoiceOver (macOS, iOS), NVDA, JAWS and TalkBack (research 03),
+but the owner can hands-on test only VoiceOver for now (owner decision 2026-10-27: VoiceOver on
+macOS and iPhone, a Windows PC, no JAWS licence). Without a rule, support for the other ATs would be
+either unverified guesswork or silently claimed as tested. Research 03 already requires dated
+issue records and forbids unmeasured browser-specific workarounds ([03 rec. 8](research/03-a11y-engine.md#recommendations-for-architecturemd)).
+
+**Options considered.**
+A. Claim support for all ATs and test none. Dishonest.
+B. Support only VoiceOver. Contradicts the 2026 usage data (JAWS/NVDA lead desktop, TalkBack
+substantial, [03 §Required AT test matrix](research/03-a11y-engine.md#required-at-test-matrix)).
+C. Evidence-based support: design from documented evidence for untested ATs, label them
+`evidence-only`, test VoiceOver for real, and upgrade evidence entries to `tested-real` as lanes appear.
+
+**Decision.** Option C.
+
+*Evidence registry.* One file per APG pattern at
+`docs/architecture/evidence/at-support/<pattern>.json` (combobox-select-only, combobox-editable,
+listbox, menu-button, tabs, dialog, tooltip, disclosure, radio-group, switch), each an array of entries:
+
+| Field | Meaning |
+|---|---|
+| `pattern` | APG pattern id and variant |
+| `at`, `at_version` | NVDA, JAWS, VoiceOver, TalkBack, Narrator and exact version |
+| `browser`, `browser_version`, `platform` | Pairing the behavior applies to |
+| `behavior` | Observable behavior in one or two sentences |
+| `impact` | `blocker` (task cannot be completed), `degraded`, or `cosmetic` |
+| `source_url`, `source_date`, `retrieved` | Primary link, the source's own date, and our retrieval date |
+| `source_tier` | `T1`, `T2` or `T3` (below) |
+| `decision` | The design rule adopted because of this entry (for example `listboxMount: inline on any-pointer coarse`) |
+| `test_status` | `tested-real` or `evidence-only` |
+| `next_review` | Date, at most 6 months after `retrieved` |
+
+A JSON Schema validates the files; contracts reference entries by `file#id` (ADR-010).
+
+*Source tiers.*
+- **T1:** vendor documentation and issue trackers (NV Access, Freedom Scientific, Apple/WebKit,
+  Google/Chromium), WAI-ARIA APG and its AT support tables, and specifications.
+- **T2:** published cross-AT test data from established accessibility organizations (a11ysupport.io,
+  PowerMapper screen-reader compatibility, TPGi, Deque; WebAIM's screen reader survey for usage
+  weighting only, not for behavior).
+- **T3:** practitioner write-ups and blog posts.
+
+*Rules of evidence.* A `decision` requires at least one T1 source or at least two independent T2
+sources. T3 never decides alone; it may only motivate a test. Independent means different
+organizations that did not derive their results from one another. Conflicting evidence is resolved
+toward the more conservative pattern (the one with fewer reported failures and fewer ARIA
+dependencies), and the conflict is recorded in the entry.
+
+*Selection rule ("most recommendable").* For each pattern the library ships the variant with the
+widest documented support across VoiceOver macOS/iOS, NVDA, JAWS and TalkBack. Ties are broken in
+order: native element over simpler ARIA over fewer live-region dependencies. **A variant with a
+documented `blocker` on any AT in the matrix is never shipped if an alternative exists.** If none
+exists, the component ships behind an explicit documented limitation and the contract records the
+blocker. Worked example: ADR-005 step 8 (inline listbox on touch-capable devices) and ADR-008
+(native `<select>` on touch) are exactly this rule applied to the VoiceOver iOS and TalkBack
+select-only evidence.
+
+*Honesty.* Contracts, docs, `registry.json` and MCP output expose `test_status` per AT and platform.
+`evidence-only` ATs are never labelled "tested", "verified" or "certified"; the permitted wording is
+"implemented to documented evidence, not hands-on tested". CI scans generated docs and registry
+output for the forbidden labels on evidence-only entries.
+
+*Certification meaning for wave 1.* A wave-1 component is certified when it is `tested-real` on
+**VoiceOver + Safari (macOS)** and **VoiceOver + Safari (iOS)** and **evidence-conformant** for NVDA,
+JAWS and TalkBack, meaning its design follows the registry decisions and the evidence gate passes.
+The evidence manifest states this split explicitly and is not a claim of tested support for the
+evidence-only ATs.
+
+*Staleness.* `next_review` is at most 6 months after `retrieved`; CI fails if any entry used by a
+shipping component is past `next_review`. A re-review re-fetches the source, records the new
+`retrieved` date and either confirms or revises `decision`. NVDA real testing on the owner's Windows
+PC is an optional later lane (NVDA is free): when run, it upgrades the matching entries to
+`tested-real` with a `tested_on` date and a session log. JAWS and TalkBack remain `evidence-only`
+until a licence or device exists.
+
+**Consequences.**
+- Support claims for three of four ATs rest on documents, not on our own observation; real
+  regressions there can ship undetected until reported. Mitigation: conservative-conflict rule,
+  blocker-avoidance rule, a visible issue channel, and the optional NVDA lane.
+- The registry is maintenance work (six-month reviews), but it makes every AT-driven design choice
+  traceable and reviewable.
+- Users and agents see exactly what is tested, which is a product feature of an accessibility-first
+  library.
+
+**Sources.** [03 rec. 7-8](research/03-a11y-engine.md#recommendations-for-architecturemd),
+[03 §Known AT x browser evidence](research/03-a11y-engine.md#known-at--browser-evidence-facts-not-folklore),
+[03 §Required AT test matrix](research/03-a11y-engine.md#required-at-test-matrix),
+[07 rec. 4](research/07-testing-certification.md#recommendations-for-architecturemd),
+owner decision D2 (2026-10-27).
+
+---
+
 ## 4. First component wave (proposal only)
 
 Eleven components, chosen so that **each kernel capability is exercised by at least one component
@@ -1090,7 +1212,7 @@ dependency on kernel parts and by AT risk; it is revisited after wave-1 AT evide
 | Q1 | Measured sizes of reference libraries (informational; no decision depends on it) | Wave-1 evidence task, recorded in `evidence/`; may revise ADR-011 only via ADR |
 | Q2 | Are the provisional shared-kernel ceilings of ADR-011 right? | First prototype measurement; ADR-gated revision (no longer blocking) |
 | Q3 | Is `maximum-scale`/zoom handling plus 16 px control text enough to avoid iOS focus zoom on all kinds? | Physical-device matrix (ADR-007) |
-| Q4 | Do iOS/TalkBack AT results justify flipping `listboxMount` for any pointer class? | P1 evidence in wave 1 (SJSelect); ADR amendment |
+| Q4 | Do iOS/TalkBack AT results justify flipping `listboxMount` for any pointer class? | VoiceOver real tests plus registry evidence in wave 1 (SJSelect); ADR amendment |
 | Q5 | Week-start data on Chromium 114-129 and Firefox 125-152 (no `getWeekInfo`): explicit prop only, or a generated CLDR-derived table (data licence, size)? | Decide in wave 3, before the calendar |
 | Q6 | (closed) Vue peer `>=3.5.0` is decided in ADR-002; the scaffold is unpublished and its devDependency is already `^3.5.0` | - |
 | Q7 | Do we publish a Svelte/Angular adapter spike to validate the store-bridge claim before certification? | Optional timeboxed spike after wave 1 |
@@ -1110,8 +1232,7 @@ WebKit 289338 and APG 2855 with the softened wording, and does not cite the corr
 Mitigation: ADR-gated revision, first prototype measures and sets them.
 4. **Floor drift.** Baseline-2026 rises monthly; keeping Safari 17 costs fallback weight. Mitigation:
 per-release floor review with installed-base data.
-5. **Hardware and licence cost** (physical iOS 17, Android floor devices, JAWS) can stall releases.
-Mitigation: budget a device lab / hosted real-device service before wave 1 certification. Floor devices are pinned to their OS versions with auto-update disabled; iOS 17 hardware cannot be downgraded once updated.
+5. **Untested ATs.** NVDA, JAWS and TalkBack are `evidence-only` and iOS 17 / Android-floor devices are unavailable, so regressions there can ship undetected. Mitigation: ADR-015 rules (blocker avoidance, conservative conflicts, six-month staleness gate), forced-false path parity, and the optional NVDA lane on the owner's Windows PC. If a VoiceOver test device runs an OS newer than iOS 17, pin its version and record it.
 6. **Contract-first friction.** Schema design delays the first component. Mitigation: build the
 Button and Switch contracts first to shake out the schema before composite contracts.
 7. **Native-on-touch fragments visual identity.** Equivalence tests protect behavior, not looks;
@@ -1129,13 +1250,13 @@ must land in `packages/tokens` before styling work; otherwise raw values will te
 ## Decisions needed from owner
 
 None of the five audit MUSTs required a product decision; all were resolved technically. Two
-product-level choices underpin the architecture and are recorded for explicit confirmation:
+product-level choices underpin the architecture; D1 awaits confirmation and D2 is resolved:
 
 | # | Decision | Options | Recommendation |
 |---|---|---|---|
 | D1 | Browser floor (ADR-001) | A: keep Chromium 114 / Firefox 125 / Safari-iOS 17 and carry the geometry and close fallbacks. B: raise to Safari-iOS 26 / Chromium 125 / Firefox 147, dropping fallbacks, excluding about two iOS generations | A for the initial release; revisit per major release with installed-base data |
-| D2 | Real-device lab budget (ADR-013, risk 5) | A: owned devices (physical iOS 17, Android floor) plus licences (JAWS). B: hosted real-device service. C: defer floor lane (then iOS 17 support cannot be claimed) | A or B before wave 1 certification; C only if D1 moves to option B |
+| D2 | AT testing lane (ADR-013, ADR-015) | **Resolved 2026-10-27 by owner:** real testing on VoiceOver only (macOS + iPhone); NVDA, JAWS and TalkBack implemented from documented evidence (`evidence-only`), never labelled tested; optional later NVDA lane on the owner's Windows PC; no JAWS licence, no physical Android or iOS 17 floor devices | Adopted as ADR-015. Re-open if a licence, device or hosted service becomes available |
 
 ---
 
-STATUS: CERTIFIED (ds-fable, audits/AUDIT-architecture-R2.md, 2026-10-27). Pending owner confirmations: D1, D2.
+STATUS: REVISION-2-FOR-AUDIT
