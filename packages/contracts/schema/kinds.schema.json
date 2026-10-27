@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.ramoslabs.com/schema/kinds.v1.json",
+  "title": "RamosLabs field kinds table v1",
+  "description": "ADR-007 intent-to-native table: one row per kind. Source of resolveKind, the generated kind union, lint rules and the MCP get_kind tool.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "contractVersion", "kinds", "rules", "certification"],
+  "properties": {
+    "$schema": { "const": "https://design.ramoslabs.com/schema/kinds.v1.json" },
+    "contractVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "kinds": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/kind" } },
+    "rules": {
+      "description": "The rules attached to the ADR-007 table, verbatim in intent.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text"],
+        "properties": {
+          "id": { "$ref": "#/$defs/kindName" },
+          "text": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "certification": {
+      "type": "object",
+      "description": "Each kind row is certified on physical iOS Safari; Android Chrome rows are `not run` until a device exists (ADR-007, ADR-013).",
+      "additionalProperties": false,
+      "required": ["ios-safari", "android-chrome", "scenarios"],
+      "properties": {
+        "ios-safari": { "enum": ["owner-iphone"] },
+        "android-chrome": { "enum": ["not-run"] },
+        "scenarios": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/kindName" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "kindName": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+    "kind": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "type",
+        "inputmode",
+        "autocomplete",
+        "enter",
+        "autocapitalize",
+        "autocorrect",
+        "spellcheck",
+        "noMaxlength"
+      ],
+      "properties": {
+        "kind": { "$ref": "#/$defs/kindName" },
+        "group": {
+          "description": "Kinds sharing one ADR-007 table row (postal/reference/account; cc-exp, -month, -year).",
+          "$ref": "#/$defs/kindName"
+        },
+        "variantOf": { "$ref": "#/$defs/kindName" },
+        "type": {
+          "description": "Native element or input type; first entry is the default.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "text",
+              "email",
+              "url",
+              "tel",
+              "search",
+              "password",
+              "date",
+              "time",
+              "number",
+              "select",
+              "textarea"
+            ]
+          }
+        },
+        "forbiddenTypes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["number"] }
+        },
+        "inputmode": {
+          "description": "null where the row says n/a (date, time, select).",
+          "enum": [null, "text", "numeric", "decimal", "tel", "email", "url", "search"]
+        },
+        "inputmodeWhen": { "type": "string", "minLength": 1 },
+        "autocomplete": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["policy"],
+          "properties": {
+            "policy": {
+              "description": "token: always these tokens; conditional: tokens only `when`; context: chosen from the field's context; omitted: attribute omitted; off: usually off.",
+              "enum": ["token", "conditional", "context", "omitted", "off"]
+            },
+            "tokens": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "variants": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "default": { "enum": ["on", "off"] },
+            "when": { "type": "string", "minLength": 1 }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "policy": { "enum": ["token", "conditional"] } } },
+              "then": {
+                "required": ["tokens"],
+                "properties": { "tokens": { "type": "array", "minItems": 1 } }
+              }
+            },
+            {
+              "if": { "properties": { "policy": { "const": "conditional" } } },
+              "then": { "required": ["when"] }
+            }
+          ]
+        },
+        "enter": {
+          "description": "Default enterkeyhint when the form owner gives no position. `position` = computed by the form owner.",
+          "enum": ["position", "go", "search", "done", "enter"]
+        },
+        "enterAlternatives": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["go", "done"] }
+        },
+        "excludeFromEnterPosition": { "type": "boolean" },
+        "autocapitalize": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value"],
+          "properties": {
+            "value": { "enum": [null, "none", "sentences", "words", "characters"] },
+            "when": { "type": "string", "minLength": 1 },
+            "hint": { "type": "boolean" }
+          }
+        },
+        "autocorrect": { "enum": [null, "on", "off"] },
+        "spellcheck": { "enum": [null, true, false] },
+        "noMaxlength": { "type": "boolean" },
+        "requiresSignControl": { "type": "boolean" },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
