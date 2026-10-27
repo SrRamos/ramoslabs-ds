@@ -1,0 +1,21 @@
+# Generated, vendored or owned by another toolchain.
+node_modules
+dist
+coverage
+.turbo
+.astro
+storybook-static
+bun.lock
+CHANGELOG.md
+llms.txt
+llms-full.txt
+registry.json
+robots.txt
+# Docs site and Storybook have their own formatting (Astro/MDX); not covered by the root check.
+apps
+docs
+# Fixtures that must contain seeded violations.
+**/fixtures
+# Token source is generated-adjacent; kept byte-stable.
+packages/tokens/README.md
+packages/tokens/src/tokens

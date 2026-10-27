@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint:css": "stylelint \"src/**/*.{astro,vue,css}\""
+    "lint:css": "stylelint \"src/**/*.{astro,vue,css}\"",
+    "lint": "bun run lint:css"
   },
   "dependencies": {
     "@ramoslabs/tokens": "workspace:*",
