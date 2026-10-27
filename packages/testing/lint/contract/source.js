@@ -227,3 +227,50 @@ export function lintSource(source, index, options = {}) {
   }
   return out;
 }
+
+/**
+ * Reducer rule (G1 SHOULD-4, ADR-003 "Controlled/uncontrolled"): a reducer never reads or writes a
+ * field the contract lists as `state.controllable`. Controlled values live only in `view()`; the
+ * prop getter computes the next value from `view()` and submits `request(field, next)`.
+ *
+ * Honest scope: this is a textual check of `core/src/<slug>/reducer.ts` (comments removed). It
+ * flags, per controllable field name `f`: a property read `.f` / `?.f` / `['f']`, an object key
+ * `f:` or shorthand `{ f }` (a transition that sets it or a destructured read), and a bare
+ * destructure `{ f }` in a parameter list. It cannot see aliasing (`const k = 'open'; s[k]`),
+ * computed keys, values passed through helpers defined elsewhere, or a field the reducer reaches
+ * under a different name. A clean result means "no direct mention", not "provably independent".
+ * @param {string} source reducer module text
+ * @param {string[]} controllable the contract's `state.controllable` names
+ * @param {string} [file]
+ * @returns {SourceFinding[]}
+ */
+export function lintReducerSource(source, controllable, file = '<reducer>') {
+  // Blank comments but keep newlines so line numbers survive; leave strings (bracket access).
+  const code = source.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (m) => m.replace(/[^\n]/g, ' '));
+  /** @type {SourceFinding[]} */
+  const out = [];
+  for (const f of controllable) {
+    const id = f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const patterns = [
+      new RegExp(`\\??\\.${id}\\b`, 'g'), // state.open, state?.open
+      new RegExp(`\\[\\s*['"\`]${id}['"\`]\\s*\\]`, 'g'), // state['open']
+      new RegExp(`[{,]\\s*${id}\\s*(?::|,|\\})`, 'g'), // { open: ..}, { open }, { a, open }
+    ];
+    /** @type {Set<number>} */
+    const seen = new Set();
+    for (const re of patterns) {
+      for (const m of code.matchAll(re)) {
+        const line = lineAt(code, m.index ?? 0);
+        if (seen.has(line)) continue;
+        seen.add(line);
+        out.push({
+          rule: 'contract/reducer-controlled-field',
+          file,
+          line,
+          message: `reducer touches controllable field "${f}": a reducer never reads or writes a controlled field; the prop getter computes the next value from view() and calls request("${f}", next) (ADR-003)`,
+        });
+      }
+    }
+  }
+  return out.sort((a, b) => a.line - b.line);
+}

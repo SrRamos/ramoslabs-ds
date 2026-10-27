@@ -1,5 +1,16 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { buildIndex, lintContractData, lintSource, lintContracts, loadContracts } from './index.js';
+import {
+  buildIndex,
+  lintContractData,
+  lintReducerSource,
+  lintReducers,
+  lintSource,
+  lintContracts,
+  loadContracts,
+} from './index.js';
 
 const index = buildIndex({
   contracts: [
@@ -98,5 +109,62 @@ describe('preset-internals', () => {
     expect(rules(`import { x } from '../runtime/ids'`, 'packages/vue/src/primitives/a.ts')).toEqual(
       [],
     );
+  });
+});
+
+describe('reducer-controlled-field', () => {
+  const lint = (/** @type {string} */ src, fields = ['open', 'value']) =>
+    lintReducerSource(src, fields, 'core/src/x/reducer.ts');
+  it('passes a reducer that only uses machine state', () => {
+    const src = `export const reducerEvents = ['toggle'];
+export function reduce(state, event) { return event.type === 'toggle' ? (state === 'on' ? 'off' : 'on') : state; }`;
+    expect(lint(src)).toEqual([]);
+  });
+  it('fails a read, a bracket read, a write key and a shorthand', () => {
+    for (const src of [
+      `reduce(state, e) { return state.open ? 'a' : 'b'; }`,
+      `reduce(state, e) { return state?.open; }`,
+      `reduce(state, e) { return state['value']; }`,
+      `reduce(state, e) { return { ...state, open: true }; }`,
+      `reduce({ open }, e) { return open; }`,
+    ])
+      expect(
+        lint(src).map((f) => f.rule),
+        src,
+      ).toEqual(['contract/reducer-controlled-field']);
+  });
+  it('reports the line and ignores comments', () => {
+    const f = lint(`// state.open is forbidden\nconst a = 1;\nreduce(s) { return s.open; }`);
+    expect(f.map((x) => x.line)).toEqual([3]);
+  });
+  it('does not match a longer identifier', () => {
+    expect(lint(`reduce(s) { return s.opened + s.reopen; }`)).toEqual([]);
+  });
+  it('the shipped reducers pass', () => {
+    expect(lintReducers()).toEqual([]);
+  });
+  it('lintReducers reads reducer.ts per contract and flags a seeded one', () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'rl-'));
+    const cdir = path.join(tmp, 'contracts');
+    const core = path.join(tmp, 'core');
+    fs.mkdirSync(cdir);
+    fs.mkdirSync(path.join(core, 'sw'), { recursive: true });
+    fs.writeFileSync(
+      path.join(cdir, 'sw.contract.json'),
+      JSON.stringify({
+        name: 'SJSw',
+        kinds: [],
+        anatomy: [],
+        state: { controllable: ['checked'] },
+      }),
+    );
+    expect(lintReducers(cdir, core)).toEqual([]);
+    fs.writeFileSync(
+      path.join(core, 'sw', 'reducer.ts'),
+      'export const reduce = (s: any) => ({ ...s, checked: !s.checked });',
+    );
+    expect(lintReducers(cdir, core).map((f) => f.rule)).toEqual([
+      'contract/reducer-controlled-field',
+    ]);
   });
 });
