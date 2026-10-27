@@ -82,6 +82,7 @@ WebFetch https://design.ramoslabs.com/registry.json
 - **`llms.txt`** is a concise index of every page with its docs URL.
 - **`llms-full.txt`** is one self-contained document with every page inlined plus the full token table. Fetch this when you want the entire system in context.
 - **`registry.json`** is a structured registry: token totals by category, the pattern list with URLs, and a components array (empty until the Vue library ships).
+- **`/answers/`** holds question-led, citable pages (muted text token, indigo WCAG contrast, install in Vue/React/HTML, comparison with Material and Tailwind) with FAQPage and HowTo JSON-LD.
 - **`AGENTS.md`** is onboarding for an agent that builds UI consuming this design system.
 
 Two higher-leverage ways to consume it as an agent:
@@ -93,6 +94,8 @@ Two higher-leverage ways to consume it as an agent:
 - **Agent skill** (Claude Code) at [`.claude/skills/ramoslabs-ds/SKILL.md`](./.claude/skills/ramoslabs-ds/SKILL.md)
   (also served at `/skill.md`) — makes an agent build/review strictly by this system, never
   inventing tokens or rules. Copy it into a project's `.claude/skills/` or `~/.claude/skills/`.
+
+Distribution assets (MCP registry `server.json`, directory listings, search-console steps) live in [`docs/distribution/`](./docs/distribution/).
 
 See [`AGENTS.md`](./AGENTS.md) for the full agent workflow.
 
