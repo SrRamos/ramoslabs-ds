@@ -1,16 +1,22 @@
 // @ts-check
-// evidence:check (W1-317, partial). Pure functions; cli.js is the gate entry.
+// evidence:check (W1-317). Pure functions; cli.js is the gate entry.
 //
-// Implemented now (inputs exist): ref resolution and staleness for every registry entry a
-// contract uses. Pending until the inputs/owners exist: decision-conflict against
-// focus.strategy / overlay.listboxMount, and the pattern coverage report (see PENDING).
+// Enforced: (1) every registry file validates against at-support.schema.json plus the ADR-015
+// rules of evidence (W1-315, contracts/scripts/at-validate.mjs); (2) every evidence ref resolves,
+// is fresh and matches its contract row; (3) decision-conflict: structured `constraints` (never the
+// prose `decision`) vs the contract's focus.strategy, overlay.listboxMount and nativeFallback;
+// (4) pattern coverage: each pattern a contract uses has a registry file with an entry for every
+// primary pair, and the contract lists every primary pair (ADR-013 4b). Nothing is pending.
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import {
+  PRIMARY_PAIRS,
+  registryFiles,
+  validateAtFile,
+} from '../../contracts/scripts/at-validate.mjs';
 
-export const PENDING = [
-  'decision-conflict: registry entry `constraints` vs contract focus.strategy / overlay.listboxMount (W1-317, pending)',
-  'pattern coverage: every pattern a component uses has a registry entry for every AT in the support matrix (W1-317, pending)',
-];
+/** @type {string[]} Checks listed as not enforced; empty since W1-317 completed. */
+export const PENDING = [];
 
 /**
  * @typedef {{ at: string, platform: string, browser: string, evidence: string[] }} AtSupport
@@ -19,6 +25,47 @@ export const PENDING = [
 
 const REF = /^at-support\/([a-z0-9-]+\.json)#([a-z0-9-]+)$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * @typedef {{ focusStrategy?: string, listboxMount?: { fine?: string, coarse?: string }, nativeOnTouch?: boolean, domAdjacent?: boolean, mustNot?: string[] }} Constraints
+ */
+
+/**
+ * Decision-conflict: structured constraints vs the contract. A constraint key that is present must
+ * agree with the contract; an absent key says nothing. `domAdjacent` and `mustNot` have no
+ * contract field (listboxMount values are DOM-adjacent by definition, ADR-005 step 8), so they are
+ * not compared here.
+ * @param {string} file @param {any} contract @param {string} source @param {Constraints | undefined} c
+ * @param {string[]} errors
+ */
+function conflicts(file, contract, source, c, errors) {
+  if (!c) return;
+  const where = `${file}: decision conflict with registry ${source}`;
+  if (c.focusStrategy !== undefined && c.focusStrategy !== contract?.focus?.strategy)
+    errors.push(
+      `${where}: constraints.focusStrategy "${c.focusStrategy}" but contract focus.strategy is "${contract?.focus?.strategy}"`,
+    );
+  if (c.listboxMount) {
+    const mount = contract?.overlay?.listboxMount;
+    if (!mount) {
+      errors.push(
+        `${where}: constraints.listboxMount is set but the contract has no overlay.listboxMount`,
+      );
+    } else {
+      for (const [cls, want] of Object.entries(c.listboxMount)) {
+        const got = mount.byAnyPointer?.[cls] ?? mount.default;
+        if (got !== want)
+          errors.push(
+            `${where}: constraints.listboxMount.${cls} "${want}" but the contract resolves it to "${got}"`,
+          );
+      }
+    }
+  }
+  if (c.nativeOnTouch === true && !contract?.nativeFallback)
+    errors.push(
+      `${where}: constraints.nativeOnTouch is true but the contract declares no nativeFallback`,
+    );
+}
 
 /** @param {string} dir */
 export function contractFiles(dir) {
@@ -42,12 +89,15 @@ export function checkEvidence({
   const errors = [];
   /** @type {Map<string, Map<string, RegistryEntry> | null>} */
   const registry = new Map();
+  /** @type {Map<string, { constraints?: Constraints } | null>} */
+  const registryRecommended = new Map();
   const load = (/** @type {string} */ file) => {
     if (!registry.has(file)) {
       const path = join(registryDir, file);
       if (!existsSync(path)) registry.set(file, null);
       else {
         const json = JSON.parse(readFileSync(path, 'utf8'));
+        registryRecommended.set(file, json.recommended ?? null);
         registry.set(
           file,
           new Map((json.entries ?? []).map((/** @type {RegistryEntry} */ e) => [e.id, e])),
@@ -57,10 +107,47 @@ export function checkEvidence({
     return registry.get(file) ?? null;
   };
 
+  for (const path of registryFiles(registryDir)) {
+    for (const e of validateAtFile(path))
+      errors.push(`registry ${path.split(/[\\/]/).pop()}: ${e.path}: ${e.message}`);
+  }
+
   const files = contractFiles(contractsDir);
   let checkedRefs = 0;
   for (const file of files) {
     const contract = JSON.parse(readFileSync(join(contractsDir, file), 'utf8'));
+    /** @type {Set<string>} entry ids already conflict-checked for this contract */
+    const conflictChecked = new Set();
+    const patternFile = contract?.pattern?.evidence ?? contract?.pattern?.apg;
+    if (patternFile) {
+      const entries = load(`${patternFile}.json`);
+      if (!entries) {
+        errors.push(
+          `${file}: pattern coverage: no registry file at-support/${patternFile}.json; unmapped pattern, return to the research peer (blocks this component's .a)`,
+        );
+      } else {
+        for (const [key, pair] of Object.entries(PRIMARY_PAIRS)) {
+          const has = [...entries.values()].some(
+            (e) =>
+              String(e.at).toLowerCase() === pair.at &&
+              String(e.platform).toLowerCase() === pair.platform,
+          );
+          if (!has)
+            errors.push(
+              `${file}: pattern coverage: at-support/${patternFile}.json has no entry for ${key} (${pair.at}/${pair.platform})`,
+            );
+          const rows = (contract?.a11y?.atSupport ?? []).filter(
+            (/** @type {AtSupport} */ r) => r.at === pair.at && r.platform === pair.platform,
+          );
+          if (!rows.some((/** @type {AtSupport} */ r) => (r.evidence ?? []).length > 0))
+            errors.push(
+              `${file}: pattern coverage: /a11y/atSupport has no row with evidence for ${key} (${pair.at}/${pair.platform})`,
+            );
+        }
+        const recommended = registryRecommended.get(`${patternFile}.json`);
+        if (recommended) conflicts(file, contract, 'recommended', recommended.constraints, errors);
+      }
+    }
     /** @type {AtSupport[]} */
     const rows = contract?.a11y?.atSupport ?? [];
     rows.forEach((row, i) => {
@@ -81,6 +168,16 @@ export function checkEvidence({
           continue;
         }
         const entry = entries.get(m[2]);
+        if (entry && !conflictChecked.has(`${m[1]}#${m[2]}`)) {
+          conflictChecked.add(`${m[1]}#${m[2]}`);
+          conflicts(
+            file,
+            contract,
+            `${m[1]}#${m[2]}`,
+            /** @type {any} */ (entry).constraints,
+            errors,
+          );
+        }
         if (!entry) {
           errors.push(`${where}: no entry "${m[2]}" in ${m[1]}`);
           continue;

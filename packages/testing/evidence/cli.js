@@ -1,6 +1,6 @@
 // @ts-check
-// `bun run evidence:check`: exit 1 on a dangling or stale evidence ref. The remaining W1-317
-// checks are listed loudly as pending; they are not silently skipped.
+// `bun run evidence:check`: exit 1 on an invalid registry file, a dangling or stale ref, a
+// decision conflict, or a pattern coverage gap (W1-315, W1-317).
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkEvidence, PENDING } from './index.js';
@@ -18,5 +18,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `evidence:check: ${checkedRefs} ref(s) in ${contracts} contract(s) resolve and are fresh; ${PENDING.length} W1-317 check(s) still pending.`,
+  `evidence:check: registry valid; ${checkedRefs} ref(s) in ${contracts} contract(s) resolve, are fresh, agree with focus/listboxMount and cover every primary pair.`,
 );

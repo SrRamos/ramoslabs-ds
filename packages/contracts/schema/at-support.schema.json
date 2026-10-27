@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.ramoslabs.com/schema/at-support.v1.json",
+  "title": "RamosLabs AT evidence registry file (ADR-015)",
+  "description": "One file per APG pattern: { pattern, recommended, entries[] }. Rules JSON Schema cannot express (id uniqueness, supportedBy tier rule, atEvidence resolution, 6-month window) are in scripts/at-validate.mjs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["pattern", "recommended", "entries"],
+  "properties": {
+    "pattern": { "$ref": "#/$defs/slug" },
+    "recommended": { "$ref": "#/$defs/recommended" },
+    "entries": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/entry" } }
+  },
+  "$defs": {
+    "slug": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "nullableVersion": { "type": ["string", "null"], "minLength": 1 },
+    "mount": { "enum": ["top-layer", "inline"] },
+    "constraints": {
+      "description": "ADR-015 field table: the computable form of the decision. focusStrategy takes exactly the ADR-006 values; omit it where no focus strategy applies.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "focusStrategy": { "enum": ["roving", "activedescendant", "native", "native-roving"] },
+        "listboxMount": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "fine": { "$ref": "#/$defs/mount" },
+            "coarse": { "$ref": "#/$defs/mount" }
+          }
+        },
+        "nativeOnTouch": { "type": "boolean" },
+        "domAdjacent": { "type": "boolean" },
+        "mustNot": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/slug" } }
+      }
+    },
+    "recommended": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["variant", "constraints", "supportedBy", "atEvidence"],
+      "properties": {
+        "variant": { "type": "string", "minLength": 1 },
+        "constraints": { "$ref": "#/$defs/constraints" },
+        "supportedBy": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/slug" }
+        },
+        "atEvidence": {
+          "description": "Per primary AT: entry ids, or the explicit value no-measured-evidence (never a test_status).",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["nvda", "jaws", "talkback", "voiceover-macos", "voiceover-ios"],
+          "properties": {
+            "nvda": { "$ref": "#/$defs/atEvidenceValue" },
+            "jaws": { "$ref": "#/$defs/atEvidenceValue" },
+            "talkback": { "$ref": "#/$defs/atEvidenceValue" },
+            "voiceover-macos": { "$ref": "#/$defs/atEvidenceValue" },
+            "voiceover-ios": { "$ref": "#/$defs/atEvidenceValue" }
+          }
+        }
+      }
+    },
+    "atEvidenceValue": {
+      "oneOf": [
+        { "const": "no-measured-evidence" },
+        { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/slug" } }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "pattern",
+        "at",
+        "at_version",
+        "browser",
+        "browser_version",
+        "platform",
+        "platform_version",
+        "behavior",
+        "source_url",
+        "source_date",
+        "retrieved",
+        "source_tier",
+        "decision",
+        "constraints",
+        "test_status",
+        "next_review"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "kind": { "enum": ["contract", "observation"] },
+        "pattern": { "type": "string", "minLength": 1 },
+        "at": { "type": "string", "minLength": 1 },
+        "at_version": { "$ref": "#/$defs/nullableVersion" },
+        "browser": { "type": "string", "minLength": 1 },
+        "browser_version": { "$ref": "#/$defs/nullableVersion" },
+        "platform": { "type": "string", "minLength": 1 },
+        "platform_version": { "$ref": "#/$defs/nullableVersion" },
+        "behavior": { "type": "string", "minLength": 1 },
+        "impact": { "enum": ["blocker", "degraded", "cosmetic", "none"] },
+        "source_url": { "type": "string", "pattern": "^https://" },
+        "source_date": { "type": "string", "minLength": 1 },
+        "retrieved": { "$ref": "#/$defs/date" },
+        "source_tier": { "enum": ["T1", "T2", "T3"] },
+        "decision": { "type": "string", "minLength": 1 },
+        "constraints": { "$ref": "#/$defs/constraints" },
+        "test_status": { "enum": ["tested-real", "evidence-only", "pending-real-test"] },
+        "tested_on": { "$ref": "#/$defs/date" },
+        "log": { "type": "string", "minLength": 1 },
+        "next_review": { "$ref": "#/$defs/date" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "observation" } }, "required": ["kind"] },
+          "then": { "required": ["impact"] },
+          "else": { "not": { "required": ["impact"] } }
+        },
+        {
+          "if": {
+            "properties": { "test_status": { "const": "tested-real" } },
+            "required": ["test_status"]
+          },
+          "then": { "required": ["tested_on", "log"] },
+          "else": { "not": { "anyOf": [{ "required": ["tested_on"] }, { "required": ["log"] }] } }
+        }
+      ]
+    }
+  }
+}
