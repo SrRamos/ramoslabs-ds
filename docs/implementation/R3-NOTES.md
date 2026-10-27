@@ -29,3 +29,6 @@ Branch `feature/m1-r3-vanilla-runtime`. Code: `packages/vanilla/src/runtime/inde
 - css stream: define the `sj-sr-only` visually-hidden class (live nodes use it; no styles hardcoded here).
 - Tests run in node with a recording `EventTarget` double (no jsdom in the repo); real-DOM L2 coverage belongs with the component rows.
 - Retention: 1,000 cycles leave 0 live listeners and 0 pending scheduler work; a WeakRef/gc check confirms state objects are collectable.
+
+## G1 fixes (audit AUDIT-G1)
+- MUST-1: the store `onEffects` callback calls `schedule()`, so an effect-only dispatch drains in the next microtask. MUST-3: live nodes get the shared inline `HIDDEN_STYLE`; `sj-sr-only` remains only as a styling hook (the css follow-up is no longer required for hiding). SHOULD-1: `createHost` throws in development when `runtime.scheduler` has `advance` (a fake); `HostOptions.allowFakeScheduler` is the explicit opt-in for tests and SSR harnesses. SHOULD-5: correctives use `correctiveVersion(version)`. NICE-7: the `dev` helper is inlined.

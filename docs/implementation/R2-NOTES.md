@@ -32,3 +32,6 @@ fixture is not wired, budgets.json is not mine). No ADR-011 row for the adapter 
 ## Proofs (runtime.test.ts)
 Scope disposed on unmount; 1,000 mount/unmount cycles leave 0 live stores and 0 listeners; fast-check sequences leave nothing subscribed; snapshot identity
 stable on no-op/effect-only dispatch; no effect before mount; corrective effect from `reconcile()` runs once; single live registry shared; fallback warns once per app.
+
+## G1 fixes (audit AUDIT-G1)
+- Vue: `createDomLiveHost` uses the shared `HIDDEN_STYLE` (MUST-3, via `setAttribute('style')`); `SJProvider` config and the outside-provider fallback default to `target: 'client'` (SHOULD-1); `commit()` stamps correctives with `correctiveVersion(version)` (SHOULD-5, no longer mutates `version`). MUST-1 needed no change (the `tick` already drains effect-only dispatches). This answers the open question on hiding: inline, not a class.

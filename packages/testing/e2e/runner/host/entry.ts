@@ -133,7 +133,7 @@ async function mountVanilla(props: ProbeProps, defect: DefectName): Promise<Moun
   const container = rootEl().appendChild(document.createElement('div'));
   const el = container.appendChild(document.createElement('button'));
   let n = 0;
-  const host = createHost(createRuntime({ idFactory: () => `e2e-${n++}` }));
+  const host = createHost(createRuntime({ target: 'client', idFactory: () => `e2e-${n++}` }));
   const label = (p: ProbeProps): ProbeProps => ({ ...withReport(p), label: p.label ?? 'Label' });
   const inst =
     defect === 'vanilla-wrong-emit'
