@@ -99,7 +99,7 @@ export function createControlled<S extends object, E, P extends Bag>(
     return dispatched;
   };
 
-  return {
+  const self: Controlled<S> = {
     view() {
       const props = getProps();
       guard(props);
@@ -131,7 +131,7 @@ export function createControlled<S extends object, E, P extends Bag>(
     reconcile() {
       const props = getProps();
       guard(props);
-      const view = this.view();
+      const view = self.view();
       const out: CorrectiveEffect[] = [];
       for (const n of names) {
         const f = fields[n]!;
@@ -148,4 +148,5 @@ export function createControlled<S extends object, E, P extends Bag>(
       return out;
     },
   };
+  return self;
 }

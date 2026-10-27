@@ -82,6 +82,13 @@ describe('controlled pipeline (W1-115, ADR-003)', () => {
     expect(t.c.reconcile()).toEqual([]);
   });
 
+  it('reconcile works destructured (uses the closure, not this)', () => {
+    const t = setup({ open: true });
+    const { native, reconcile } = t.c;
+    native('open', false);
+    expect(reconcile()).toEqual([{ type: 'open', target: 'p', value: true }]);
+  });
+
   it('native close accepted by the owner needs no correction', () => {
     const t = setup({ open: true });
     t.c.native('open', false);

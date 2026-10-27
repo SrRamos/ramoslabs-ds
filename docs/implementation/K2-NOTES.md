@@ -46,3 +46,7 @@ Options: `protect` (extra library-owned keys), `part` (name used in the warning)
 - Open for W1-113: `merge` has no row in `packages/testing/size/budgets.json` (outside my ownership);
   measured 829 B gzip development, 645 B gzip production.
 - The tree-shake check is manual (esbuild is not a `core` devDependency; adding one touches `package.json`).
+
+## G1 fixes
+
+- NICE-5: a consumer handler array (Vue `onClick: [a, b]`) is now run in order (non-functions skipped) and then the library handler, with the same `defaultPrevented` rule as a single handler. Chosen over a warning so no consumer handler is silently lost. Seeded test.

@@ -36,3 +36,7 @@ per runtime/document (no module-scope WeakMap, per brief).
 ## Follow-ups
 - W1-120..122 call `mount()` after first commit and `reconcile()` post-commit.
 - Seeded-defect coverage for these two lives in W1-308b (reducer harness).
+
+## G1 fixes
+
+- NICE-4: `createControlled` builds the object as `self` and `reconcile()` calls `self.view()`, so destructured methods work (seeded test destructures `native` and `reconcile`; it threw before).

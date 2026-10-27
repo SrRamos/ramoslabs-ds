@@ -14,7 +14,11 @@ export interface Store<S, E> {
   getSnapshot(): S;
   /** The initial state, forever (SSR / hydration snapshot). */
   getServerSnapshot(): S;
-  /** Deduped by listener identity; the returned function is idempotent. */
+  /**
+   * Deduped by listener identity (a Set): subscribing the same function twice registers it once,
+   * so the first unsubscribe removes it for both callers. Pass a distinct function per subscriber.
+   * The returned function is idempotent.
+   */
   subscribe(listener: Listener): () => void;
   /** Returns the current snapshot; the same reference when nothing changed. */
   dispatch(event: E): S;
