@@ -22,7 +22,8 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "storybook": "bun run --filter storybook storybook",
-    "build-storybook": "bun run --filter storybook build-storybook"
+    "build-storybook": "bun run --filter storybook build-storybook",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "devDependencies": {
     "@material-symbols/svg-400": "^0.45.5",
