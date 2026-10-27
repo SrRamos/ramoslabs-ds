@@ -85,6 +85,9 @@
   "peerDependencies": {
     "vue": ">=3.5.0"
   },
+  "dependencies": {
+    "@ramoslabs/core": "workspace:*"
+  },
   "devDependencies": {
     "@ramoslabs/tokens": "workspace:*",
     "@types/node": "^22.0.0",
