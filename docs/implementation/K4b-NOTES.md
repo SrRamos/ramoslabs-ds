@@ -33,3 +33,4 @@ overlay row: **2.298 KiB gzip** (5049 B raw), ceiling 4 KiB; placement alone was
 ## G1 fixes
 
 - MUST-2: `OverlayEl` gains `readonly open?: boolean`. Tier 1 `close()` reads it after `requestClose()`; while the element is still open (a consumer prevented `cancel`) it returns false, keeps the stack entry and fires no `onClose`, so the later native `close` event still finds the entry and restores focus. The check is `open === true` (not `!== false`) so structural fakes without `open` keep working; a real dialog always reports a boolean. Seeded test: a fake whose `requestClose` leaves `open: true`.
+- Size after G1 fixes (`node packages/testing/size/cli.js`): overlay 2.319 KiB gzip (ceiling 4 KiB), store 0.275 KiB, collection+focus+typeahead 1.569 KiB, runtime 0.869 KiB (reported).
