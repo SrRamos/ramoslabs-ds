@@ -45,6 +45,16 @@ describe('snapshot store (W1-101, ADR-003)', () => {
     expect(l).toHaveBeenCalledTimes(1);
   });
 
+  it('documented: identity dedupe is also unsubscribe dedupe (one off() drops the shared listener)', () => {
+    const s = make();
+    const l = vi.fn();
+    const off1 = s.subscribe(l);
+    s.subscribe(l);
+    off1();
+    s.dispatch({ t: 'inc', by: 1 });
+    expect(l).not.toHaveBeenCalled();
+  });
+
   it('destroy is idempotent, drops listeners and freezes the store', () => {
     const s = make();
     const l = vi.fn();

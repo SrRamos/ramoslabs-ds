@@ -92,12 +92,21 @@ export function createFocus<E extends FocusEl>(
         else container.removeAttribute('aria-activedescendant');
       }
       if (o.focus === false) return;
-      const target = strategy === 'roving' ? (el ?? container) : container;
+      // roving/native-roving land focus on the active item; activedescendant keeps it on the
+      // container; native never calls focus() (the platform owns it).
+      const target =
+        strategy === 'roving' || strategy === 'native-roving'
+          ? (el ?? container)
+          : strategy === 'activedescendant'
+            ? container
+            : undefined;
       target?.focus({ preventScroll: true });
       el?.scrollIntoView?.({ block: 'nearest' });
     },
     release(container) {
       container?.removeAttribute('aria-activedescendant');
+      // NICE-8: a reused element must not keep a stale `data-active`.
+      for (const { key } of collection.items) collection.el(key)?.removeAttribute('data-active');
       active = undefined;
     },
   };

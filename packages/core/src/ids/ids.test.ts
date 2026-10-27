@@ -27,6 +27,8 @@ describe('ids (W1-102, ADR-003)', () => {
   it('suffixes', () => {
     expect(partId('b', 'label')).toBe('b-label');
     expect(itemId('b', 'apple')).toBe('b-item-apple');
+    // keys compare as strings (documented)
+    expect(itemId('b', 1)).toBe(itemId('b', '1'));
   });
 
   it('same key gives the same id regardless of order, filtering or mount order', () => {

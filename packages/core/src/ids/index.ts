@@ -32,7 +32,11 @@ export function partId(base: string, part: string): string {
   return `${base}-${part}`;
 }
 
-/** Item id derived from the stable consumer key, never from a filtered/sorted position. */
+/**
+ * Item id derived from the stable consumer key, never from a filtered/sorted position.
+ * Keys are compared as strings: `itemId(b, 1)` and `itemId(b, '1')` are the same id, so a
+ * collection must not hold both the number and its string form.
+ */
 export function itemId(base: string, key: string | number): string {
   return `${base}-item-${encodeKey(key)}`;
 }

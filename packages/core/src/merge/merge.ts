@@ -115,7 +115,17 @@ export function mergeProps(consumer: Props, library: Props, options?: MergeOptio
       out[key] = mergeStyle(lib, consumer[key]);
     } else if (isHandlerKey(key) && typeof lib === 'function') {
       const own = consumer[key];
-      out[key] = typeof own === 'function' ? chain(own as Handler, lib as Handler) : lib;
+      // Vue allows `onClick: [a, b]`: run every consumer function in order, then the library one.
+      const fns = (Array.isArray(own) ? own : [own]).filter(
+        (f): f is Handler => typeof f === 'function',
+      );
+      out[key] =
+        fns.length === 0
+          ? lib
+          : chain(
+              fns.length === 1 ? fns[0]! : (e, ...rest) => void fns.forEach((f) => f(e, ...rest)),
+              lib as Handler,
+            );
     } else if (!Object.hasOwn(consumer, key) || consumer[key] === undefined) {
       out[key] = lib;
     }

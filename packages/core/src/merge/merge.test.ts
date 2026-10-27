@@ -109,6 +109,16 @@ describe('handlers: consumer first, then library', () => {
     (out.onClick as (e: object, x: number) => void)({}, 7);
     expect(order).toEqual(['c7', 'true', 'l']);
   });
+  it('a consumer array of handlers (Vue) runs each in order, then the library one', () => {
+    const order: string[] = [];
+    const out = mergeProps(
+      { onClick: [() => order.push('a'), () => order.push('b')] },
+      { onClick: () => order.push('l') },
+      quiet,
+    );
+    (out.onClick as (e: object) => void)({});
+    expect(order).toEqual(['a', 'b', 'l']);
+  });
   it('consumer preventDefault cancels the library handler', () => {
     const lib = vi.fn();
     const out = mergeProps(

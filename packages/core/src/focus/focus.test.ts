@@ -2,7 +2,14 @@ import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { createCollection, type CollectionItem } from '../collection/index';
 import { createEffectQueue } from '../effects/index';
-import { STRATEGY, assertStrategy, createFocus, restoreTarget, type FocusEl } from './index';
+import {
+  STRATEGY,
+  assertStrategy,
+  createFocus,
+  restoreTarget,
+  type FocusEl,
+  type Strategy,
+} from './index';
 
 class El implements FocusEl {
   attrs = new Map<string, string>();
@@ -28,7 +35,7 @@ class El implements FocusEl {
 }
 const items = (keys: string[]): CollectionItem[] => keys.map((key) => ({ key }));
 
-function setup(keys: string[], strategy: 'roving' | 'activedescendant') {
+function setup(keys: string[], strategy: Strategy) {
   const doc: { active: El | 'body' } = { active: 'body' };
   const c = createCollection<El>('b', items(keys));
   const els = new Map<string, El>();
@@ -77,6 +84,33 @@ describe('focus (W1-106b)', () => {
     expect(container.focused).toBe(1);
     expect(els.get('a')!.focused).toBe(0);
     expect(els.get('a')!.attrs.has('data-active')).toBe(true);
+  });
+
+  it.each([
+    ['roving', 'item', 1, 0, '0'],
+    ['native-roving', 'item', 1, 0, undefined],
+    ['activedescendant', 'container', 0, 1, undefined],
+    ['native', 'none', 0, 0, undefined],
+  ] as const)(
+    'apply per strategy: %s focuses %s',
+    (strategy, _who, itemFocus, containerFocus, tab) => {
+      const { f, els, container } = setup(['a', 'b'], strategy);
+      f.move('b');
+      f.apply(container);
+      expect(els.get('b')!.focused).toBe(itemFocus);
+      expect(container.focused).toBe(containerFocus);
+      expect(els.get('b')!.attrs.get('tabindex')).toBe(tab);
+      expect(els.get('a')!.attrs.has('tabindex')).toBe(strategy === 'roving');
+    },
+  );
+
+  it('release clears data-active on the items (NICE-8)', () => {
+    const { f, els, container } = setup(['a'], 'roving');
+    f.move('a');
+    f.apply(container);
+    expect(els.get('a')!.attrs.has('data-active')).toBe(true);
+    f.release(container);
+    expect(els.get('a')!.attrs.has('data-active')).toBe(false);
   });
 
   it('virtual item is not referenced until mounted', () => {

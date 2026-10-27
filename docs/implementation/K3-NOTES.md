@@ -26,3 +26,8 @@ Branch `feature/m1-k3-collection-focus-typeahead`. Sources: PLAN-WAVE-1 rows, AD
 ## Bytes (min + gzip, `node packages/testing/size/cli.js`)
 
 collection row (all three together): 1.544 KiB gzip (3177 B raw min) vs 3 KiB ceiling: pass.
+
+## G1 fixes
+
+- SHOULD-3: `createFocus().apply()` now focuses per ADR-006 strategy: `roving` and `native-roving` focus the active item (container only as fallback); `activedescendant` focuses the container; `native` makes no `focus()` call. `native-roving` still writes no `tabindex`. One table test per strategy (`it.each`).
+- NICE-8: `release()` now also removes `data-active` from every registered item, so a reused element does not keep the attribute (separate seeded test; same commit as the apply fix because it is the same function pair, noted for traceability).
