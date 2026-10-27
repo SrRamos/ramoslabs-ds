@@ -88,6 +88,44 @@ export async function runSize(options = {}) {
     });
   }
 
+  // Measured-only core modules with no ADR-011 row: reported, never gated, no invented ceiling.
+  for (const row of budgets.reported ?? []) {
+    const files = row.entries.map((/** @type {string} */ e) => resolve(root, e));
+    const missing = files.filter((/** @type {string} */ f) => !existsSync(f));
+    if (missing.length) {
+      rows.push({
+        id: row.id,
+        label: row.label,
+        kind: 'shared',
+        gzipBytes: 0,
+        rawBytes: 0,
+        ceilingKiB: null,
+        status: 'fail',
+        detail: `entry missing: ${missing.map((/** @type {string} */ m) => relativeKey(root, m)).join(', ')}`,
+        graph: [],
+      });
+      continue;
+    }
+    const r = await measure({
+      root,
+      resolveDir: root,
+      contents: files
+        .map((/** @type {string} */ f) => `export * from ${JSON.stringify(f)};`)
+        .join('\n'),
+      external: budgets.peers,
+    });
+    rows.push({
+      id: row.id,
+      label: row.label,
+      kind: 'shared',
+      gzipBytes: r.gzipBytes,
+      rawBytes: r.rawBytes,
+      ceilingKiB: null,
+      status: 'reported',
+      graph: r.graph,
+    });
+  }
+
   // Component ceilings come from each contract's `budgets` block (ADR-010).
   // kinds.contract.json is the ADR-007 data table, not a component; its ceiling is the shared `kinds` row.
   const contractsDir = resolve(root, 'packages/contracts/contracts');
@@ -137,7 +175,7 @@ export async function runSize(options = {}) {
 
   // Adapters are reported separately; peer framework code is never counted.
   for (const adapter of budgets.adapters) {
-    const entry = resolve(root, 'packages', adapter, 'src/index.ts');
+    const entry = resolve(root, 'packages', adapter, budgets.adapterEntries ?? 'src/index.ts');
     if (!existsSync(entry)) continue;
     const r = await measure({
       root,
@@ -147,7 +185,7 @@ export async function runSize(options = {}) {
     });
     rows.push({
       id: `adapter:${adapter}`,
-      label: `@ramoslabs/${adapter} barrel (reported, peers excluded)`,
+      label: `@ramoslabs/${adapter} runtime entry (reported, @ramoslabs/core and peers excluded)`,
       kind: 'adapter',
       gzipBytes: r.gzipBytes,
       rawBytes: r.rawBytes,
