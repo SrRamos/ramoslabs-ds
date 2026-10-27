@@ -86,6 +86,7 @@
     "vue": ">=3.5.0"
   },
   "devDependencies": {
+    "@ramoslabs/core": "workspace:*",
     "@ramoslabs/tokens": "workspace:*",
     "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^6.0.0",
