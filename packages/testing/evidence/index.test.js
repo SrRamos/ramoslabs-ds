@@ -71,3 +71,14 @@ describe('evidence:check (W1-317 ref resolution and staleness)', () => {
     );
   });
 });
+
+describe('pattern.evidence consistency', () => {
+  it('fails a ref that points outside the declared registry pattern', () => {
+    const setupWith = setup([entry()], [row()]);
+    writeFileSync(
+      join(setupWith.contractsDir, 'button.contract.json'),
+      JSON.stringify({ pattern: { evidence: 'switch' }, a11y: { atSupport: [row()] } }),
+    );
+    expect(checkEvidence(setupWith).errors.join()).toMatch(/outside the declared pattern.evidence/);
+  });
+});

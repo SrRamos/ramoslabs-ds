@@ -73,6 +73,9 @@ export function checkEvidence({
           continue;
         }
         const entries = load(m[1]);
+        const declared = contract?.pattern?.evidence;
+        if (declared && m[1] !== `${declared}.json`)
+          errors.push(`${where}: ref is outside the declared pattern.evidence "${declared}"`);
         if (!entries) {
           errors.push(`${where}: registry file ${m[1]} does not exist`);
           continue;

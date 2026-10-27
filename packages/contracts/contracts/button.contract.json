@@ -1,0 +1,67 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJButton",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": { "apg": "button", "evidence": "button", "native": "button" },
+  "anatomy": [{ "part": "root", "element": "button", "role": "button", "native": true }],
+  "state": { "machine": ["idle"], "controllable": [] },
+  "actions": [{ "id": "press", "from": "idle", "to": "idle", "emit": "press" }],
+  "keyboard": { "root": { "Enter": "press", "Space": "press" } },
+  "focus": { "strategy": "native", "owner": "root" },
+  "kinds": [],
+  "runtime": ["idPrefix"],
+  "support": [],
+  "a11y": {
+    "wcag": ["2.1.1", "2.4.7", "2.4.11", "2.5.8", "4.1.2"],
+    "liveRegions": [],
+    "atAssertions": ["manual-speech-name-role", "manual-activate-enter-space"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/button.json#vo-macos-safari-ariaat539"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/button.json#vo-ios-safari-a11ysupport-button"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/button.json#nvda-chrome-ariaat541"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/button.json#jaws-chrome-ariaat567"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/button.json#talkback-chrome-a11ysupport-button"]
+      }
+    ]
+  },
+  "events": [{ "name": "press", "payload": "{ originalEvent: Event }" }],
+  "props": [
+    { "name": "disabled", "type": "boolean", "default": false },
+    { "name": "type", "type": "'button' | 'submit' | 'reset'", "default": "button" }
+  ],
+  "slots": [
+    { "name": "default", "description": "Accessible name; must not change while a toggle." }
+  ],
+  "fixtures": ["default", "disabled", "long-label", "icon-only"],
+  "budgets": { "gzipKiB": 1, "shared": [] }
+}

@@ -37,7 +37,11 @@
       "required": ["apg"],
       "properties": {
         "apg": { "$ref": "#/$defs/slug" },
-        "native": { "$ref": "#/$defs/slug" }
+        "native": { "$ref": "#/$defs/slug" },
+        "evidence": {
+          "description": "Basename of the AT registry file for this pattern (at-support/<evidence>.json). Needed because the APG id and the registry file name differ (combobox-select-only vs select-only-combobox). When set, every a11y evidence ref must point into this file.",
+          "$ref": "#/$defs/slug"
+        }
       }
     },
     "anatomy": {
