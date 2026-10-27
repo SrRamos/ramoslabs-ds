@@ -1,0 +1,108 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJSelect",
+  "contractVersion": "1.0.0",
+  "status": "draft",
+  "pattern": { "apg": "combobox-select-only", "native": "select" },
+  "anatomy": [
+    { "part": "root", "element": "div" },
+    { "part": "trigger", "element": "button", "role": "combobox", "native": false },
+    { "part": "content", "element": "div", "role": "listbox", "mount": "overlay" },
+    { "part": "item", "element": "div", "role": "option", "repeats": true }
+  ],
+  "state": { "machine": ["closed", "open"], "controllable": ["open", "value"] },
+  "actions": [
+    {
+      "id": "open",
+      "from": "closed",
+      "to": "open",
+      "emit": "openChange",
+      "focus": "activeItem",
+      "aria": { "trigger": { "aria-expanded": "true" } }
+    }
+  ],
+  "keyboard": {
+    "trigger": { "ArrowDown": "open", "Enter": "open", "Space": "open" },
+    "content": {
+      "ArrowDown": "next",
+      "ArrowUp": "prev",
+      "Home": "first",
+      "End": "last",
+      "Escape": "close",
+      "typeahead": "prefix"
+    }
+  },
+  "focus": { "strategy": "activedescendant", "owner": "trigger" },
+  "kinds": ["choice"],
+  "runtime": ["locale", "dir", "idPrefix", "supports", "scheduler"],
+  "nativeFallback": {
+    "touch": "select",
+    "equivalence": ["name", "value", "formState"],
+    "customRequires": ["filtering", "richOptions"]
+  },
+  "overlay": {
+    "kind": "popover",
+    "placement": {
+      "positionArea": "block-end span-inline-end",
+      "tryFallbacks": ["flip-block"],
+      "tryOrder": "most-height",
+      "visibility": "anchors-visible"
+    },
+    "listboxMount": { "default": "top-layer", "byAnyPointer": { "coarse": "inline" } }
+  },
+  "support": [
+    { "feature": "popover", "nativeFrom": { "chromium": 114, "firefox": 125, "safari": 17 } },
+    {
+      "feature": "anchor-positioning",
+      "nativeFrom": { "chromium": 125, "firefox": 147, "safari": 26 },
+      "fallbackUntil": { "chromium": 124, "firefox": 146, "safari": 25 }
+    }
+  ],
+  "a11y": {
+    "wcag": ["2.1.1", "2.4.3", "2.4.7", "2.4.11", "2.5.8", "4.1.2"],
+    "liveRegions": [{ "id": "result-count", "politeness": "polite" }],
+    "atAssertions": ["manual-speech-trigger-name", "manual-active-option"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": []
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": []
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/select-only-combobox.json#nvda-chrome-apg-select-only"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/select-only-combobox.json#jaws-chrome-a11ysupport-haspopup"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/select-only-combobox.json#talkback-chrome-apg2855"]
+      }
+    ]
+  },
+  "events": [{ "name": "valueChange", "payload": "{ value: string }" }],
+  "props": [],
+  "slots": [],
+  "fixtures": ["empty", "one", "many", "long-label", "disabled-item"],
+  "budgets": { "gzipKiB": 8, "shared": ["overlay", "collection"] }
+}

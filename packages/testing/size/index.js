@@ -89,9 +89,12 @@ export async function runSize(options = {}) {
   }
 
   // Component ceilings come from each contract's `budgets` block (ADR-010).
+  // kinds.contract.json is the ADR-007 data table, not a component; its ceiling is the shared `kinds` row.
   const contractsDir = resolve(root, 'packages/contracts/contracts');
   const contractFiles = existsSync(contractsDir)
-    ? readdirSync(contractsDir).filter((f) => f.endsWith('.contract.json'))
+    ? readdirSync(contractsDir).filter(
+        (f) => f.endsWith('.contract.json') && f !== 'kinds.contract.json',
+      )
     : [];
   for (const file of contractFiles) {
     const contract = JSON.parse(readFileSync(join(contractsDir, file), 'utf8'));
