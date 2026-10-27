@@ -34,6 +34,10 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Install Chromium (css probe fixtures, W1-204)
+        run: bunx playwright install --with-deps chromium
+        working-directory: packages/css
+
       - name: Lint
         run: bun run lint
 
