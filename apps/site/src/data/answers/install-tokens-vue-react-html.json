@@ -1,123 +1,138 @@
 {
   "id": "install-tokens-vue-react-html",
   "title": "How do I install the RamosLabs design tokens in Vue, React, or plain HTML?",
-  "summary": "Install @ramoslabs/tokens with your package manager, import its CSS once at the app entry, then reference tokens as CSS variables. Or link tokens.css with no install.",
-  "short": "Install the package with bun, npm, pnpm, or yarn, then import '@ramoslabs/tokens/css' once in your app entry and reference tokens such as var(--color-primary) in your CSS. With no install, add a link to https://design.ramoslabs.com/tokens.css in plain HTML.",
+  "summary": "Install @ramoslabs/tokens, import its CSS once at the entry, then use var(--token). Or link the served tokens.css.",
+  "short": "Install `@ramoslabs/tokens` from npm{ref:npm-tokens}, import `@ramoslabs/tokens/css` once in your app entry{ref:ds-install}, and reference tokens such as `var(--color-primary)` in CSS{ref:mdn-var}. Without npm, link `https://design.ramoslabs.com/tokens.css` from plain HTML{ref:mdn-link}.",
   "sections": [
     {
       "heading": "Install the package",
       "body": [
-        "@ramoslabs/tokens is published to npm under the public @ramoslabs scope and is licensed under MIT. Use the install command for your package manager."
+        "`@ramoslabs/tokens` is public on npm under the MIT license; 0.1.0 is its only version{ref:npm-tokens}. The DS documents these four commands{ref:ds-install}."
       ],
       "table": {
-        "caption": "Install commands by package manager",
-        "head": ["Package manager", "Install command"],
+        "caption": "Install commands",
+        "head": ["Package manager", "Command"],
         "rows": [
-          ["bun", "bun add @ramoslabs/tokens"],
-          ["npm", "npm install @ramoslabs/tokens"],
-          ["pnpm", "pnpm add @ramoslabs/tokens"],
-          ["yarn", "yarn add @ramoslabs/tokens"]
+          ["bun", "`bun add @ramoslabs/tokens`{ref:ds-install}"],
+          ["npm", "`npm install @ramoslabs/tokens`{ref:ds-install}"],
+          ["pnpm", "`pnpm add @ramoslabs/tokens`{ref:ds-install}"],
+          ["yarn", "`yarn add @ramoslabs/tokens`{ref:ds-install}"]
         ]
       }
     },
     {
-      "heading": "Use the tokens in Vue 3 (Vite)",
+      "heading": "Why the import path works",
       "body": [
-        "Import the CSS once in src/main.ts. The import belongs in the app entry, not in each component. Then reference tokens as CSS variables inside a component style block."
+        "The package defines subpath exports: the root for typed values, `./css` for the CSS variables, and `./json` for the flat map{ref:ds-pkg}. Node resolves only the subpaths a package defines in `exports`{ref:node-exports}.",
+        "Test result, showing a bundler resolving them too: a Vite 8.3.5 project that imported `@ramoslabs/tokens/css` and `colorIndigo600` from the published 0.1.0 built successfully, and the output CSS contained `--color-primary:#4f46e5`{ref:measured-vite}. Vite injects imported `.css` files into the page through a style tag{ref:vite-css}."
+      ]
+    },
+    {
+      "heading": "Vue 3 (Vite)",
+      "body": [
+        "A Vue application is created with `createApp` and attached with `.mount()`{ref:vue-app}. Add the CSS import to that entry file once, not per component{ref:ds-install}."
       ],
       "code": [
         {
           "label": "src/main.ts",
           "lang": "ts",
-          "source": "import { createApp } from 'vue'\nimport App from './App.vue'\nimport '@ramoslabs/tokens/css'\n\ncreateApp(App).mount('#app')\n"
+          "source": "import { createApp } from 'vue'\nimport App from './App.vue'\nimport '@ramoslabs/tokens/css'\n\ncreateApp(App).mount('#app')"
         },
         {
           "label": "src/components/SaveButton.vue",
           "lang": "vue",
-          "source": "<template>\n  <button class=\"cta\" type=\"button\">Save changes</button>\n</template>\n\n<style scoped>\n.cta {\n  background: var(--color-primary);\n  color: var(--color-surface);\n  border: none;\n  border-radius: var(--radius-lg);\n  padding: var(--space-6);\n  box-shadow: var(--shadow-sm);\n  cursor: pointer;\n}\n\n.cta:hover {\n  background: var(--color-primary-dark);\n}\n\n.cta:focus-visible {\n  outline: none;\n  box-shadow: var(--shadow-focus);\n}\n</style>\n"
+          "source": "<template>\n  <button class=\"cta\" type=\"button\">Save changes</button>\n</template>\n\n<style scoped>\n.cta {\n  background: var(--color-primary);\n  color: var(--color-surface);\n  border: none;\n  border-radius: var(--radius-lg);\n  padding: var(--space-6);\n  box-shadow: var(--shadow-sm);\n  cursor: pointer;\n}\n\n.cta:hover {\n  background: var(--color-primary-dark);\n}\n\n.cta:focus-visible {\n  outline: none;\n  box-shadow: var(--shadow-focus);\n}\n</style>"
         }
       ]
     },
     {
-      "heading": "Use the tokens in React (Vite or similar)",
+      "heading": "React",
       "body": [
-        "Import the same CSS file once in the entry file, src/main.tsx. Then give components a class name and define that class with token variables in a stylesheet."
+        "A React app renders into a root created with `createRoot`, usually once at startup{ref:react-root}. Put the same CSS import in that entry file{ref:ds-install}."
       ],
       "code": [
         {
           "label": "src/main.tsx",
           "lang": "tsx",
-          "source": "import { StrictMode } from 'react'\nimport { createRoot } from 'react-dom/client'\nimport '@ramoslabs/tokens/css'\nimport App from './App'\n\ncreateRoot(document.getElementById('root')!).render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n)\n"
-        },
-        {
-          "label": "src/components/Card.tsx",
-          "lang": "tsx",
-          "source": "import './Card.css'\n\nexport default function Card() {\n  return (\n    <section className=\"card\">\n      <h2 className=\"card-title\">Workspace</h2>\n      <p className=\"card-body\">Colors, spacing, and radius come from design tokens.</p>\n    </section>\n  )\n}\n"
+          "source": "import { createRoot } from 'react-dom/client'\nimport '@ramoslabs/tokens/css'\nimport App from './App'\n\ncreateRoot(document.getElementById('root')!).render(<App />)"
         },
         {
           "label": "src/components/Card.css",
           "lang": "css",
-          "source": ".card {\n  background: var(--color-surface);\n  padding: var(--space-6);\n  border-radius: var(--radius-lg);\n  box-shadow: var(--shadow-sm);\n}\n\n.card-title {\n  color: var(--color-text-heading);\n}\n\n.card-body {\n  color: var(--color-text-body);\n}\n"
+          "source": ".card {\n  background: var(--color-surface);\n  padding: var(--space-6);\n  border-radius: var(--radius-lg);\n  box-shadow: var(--shadow-sm);\n}\n\n.card-title {\n  color: var(--color-text-heading);\n}\n\n.card-body {\n  color: var(--color-text-body);\n}"
         }
       ]
     },
     {
-      "heading": "Use plain HTML without installing anything",
+      "heading": "Plain HTML, no install",
       "body": [
-        "The token stylesheet is served at https://design.ramoslabs.com/tokens.css. Link it in the head of the page and reference the same CSS variables in your styles. The flat token map is served at https://design.ramoslabs.com/tokens.json."
+        "A stylesheet is attached with a `link` element whose `rel` is `stylesheet`{ref:mdn-link}. The DS serves its token stylesheet and the flat map at the site root; on 2026-10-27 both answered 200 with the right content types{ref:measured-served}."
       ],
       "code": [
         {
           "label": "index.html",
           "lang": "html",
-          "source": "<!doctype html>\n<html lang='en'>\n<head>\n  <meta charset='utf-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\n  <title>Token demo</title>\n  <link rel='stylesheet' href='https://design.ramoslabs.com/tokens.css'>\n  <style>\n    body {\n      margin: 0;\n      background: var(--color-surface-secondary);\n      color: var(--color-text-body);\n    }\n\n    .card {\n      margin: var(--space-6);\n      background: var(--color-surface);\n      padding: var(--space-6);\n      border-radius: var(--radius-lg);\n      box-shadow: var(--shadow-sm);\n    }\n\n    .card h1 {\n      color: var(--color-text-heading);\n    }\n  </style>\n</head>\n<body>\n  <main class='card'>\n    <h1>Workspace</h1>\n    <p>This page uses the served RamosLabs tokens.</p>\n  </main>\n</body>\n</html>\n"
+          "source": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Token demo</title>\n  <link rel=\"stylesheet\" href=\"https://design.ramoslabs.com/tokens.css\">\n  <style>\n    body {\n      margin: 0;\n      background: var(--color-surface-secondary);\n      color: var(--color-text-body);\n    }\n    .card {\n      margin: var(--space-6);\n      padding: var(--space-6);\n      background: var(--color-surface);\n      border-radius: var(--radius-lg);\n      box-shadow: var(--shadow-sm);\n    }\n  </style>\n</head>\n<body>\n  <main class=\"card\">\n    <h1>Workspace</h1>\n  </main>\n</body>\n</html>"
         }
       ]
     },
     {
-      "heading": "Use typed values in TypeScript",
+      "heading": "Typed values in TypeScript",
       "body": [
-        "Typed values are exported from the package root. Use them when TypeScript logic needs a token value. For styling, keep referencing the CSS variables, for example var(--color-primary)."
+        "The package root exports typed values such as `colorIndigo600`; the Vite test above imported it and built{ref:measured-vite}. For styling, keep using the CSS variables."
       ],
       "code": [
         {
           "label": "src/brand.ts",
           "lang": "ts",
-          "source": "import { colorIndigo600 } from '@ramoslabs/tokens'\n\nexport const brandAccent = colorIndigo600\n"
+          "source": "import { colorIndigo600 } from '@ramoslabs/tokens'\n\nexport const brandAccent = colorIndigo600"
         }
       ]
     },
     {
-      "heading": "Components are not shipped yet",
+      "heading": "Tailwind CSS",
       "body": [
-        "The DS documents tokens and patterns today. Components with the SJ prefix are planned for the @ramoslabs/vue package in a future release and are not shipped yet. Until then, build UI from the tokens and the documented patterns."
+        "Tailwind documents square-bracket arbitrary properties, which can set any CSS property, including to a `var()` value{ref:tw-custom}. That lets a Tailwind project read the RamosLabs variables after the CSS import above."
+      ],
+      "code": [
+        {
+          "label": "markup",
+          "lang": "html",
+          "source": "<div class=\"[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)]\">...</div>"
+        }
+      ]
+    },
+    {
+      "heading": "Components",
+      "body": [
+        "The `SJ` components are not shipped yet; until they land, build from the tokens and the documented patterns{ref:ds-agents}."
       ]
     }
   ],
   "faq": [
     {
       "q": "Do I need to import the token CSS in every component?",
-      "a": "No. Import '@ramoslabs/tokens/css' once at the app entry (for example main.ts or main.tsx) or in the root layout. Components then reference the CSS variables directly."
+      "a": "No. Import it once at the app entry or root layout{ref:ds-install}."
     },
     {
-      "q": "Does it work with Tailwind?",
-      "a": "Yes, the tokens are CSS variables, so Tailwind projects can reference them the same way as any other CSS. Import the token CSS once at the root of the app."
+      "q": "Can I use the tokens with Tailwind?",
+      "a": "Yes: Tailwind documents arbitrary properties that accept `var()` values{ref:tw-custom}, and the tokens are CSS variables{ref:ds-pkg}."
     },
     {
       "q": "Can I use the tokens without npm?",
-      "a": "Yes. Add a link to https://design.ramoslabs.com/tokens.css in your HTML head. The flat token map is also served at https://design.ramoslabs.com/tokens.json."
+      "a": "Yes. Link `https://design.ramoslabs.com/tokens.css`{ref:mdn-link}; it answered 200 as `text/css` on 2026-10-27{ref:measured-served}."
     },
     {
-      "q": "Does the same setup work in React?",
-      "a": "Yes. Import '@ramoslabs/tokens/css' once in the React entry file, then reference the CSS variables from your component stylesheets."
+      "q": "Does it work in a Vite project?",
+      "a": "A Vite 8.3.5 build importing `@ramoslabs/tokens/css` from the published package succeeded and emitted the variables{ref:measured-vite}."
     },
     {
       "q": "Are the SJ components available to install?",
-      "a": "Not yet. SJ components are planned for @ramoslabs/vue in a future release. Until then, build from the tokens and the documented patterns."
+      "a": "Not yet. They are planned for `@ramoslabs/vue`{ref:ds-agents}."
     },
     {
       "q": "Can I hardcode a color or spacing value while I set up?",
-      "a": "No. Never hardcode a color, spacing, typography, radius, shadow, or motion value. A raw hex or px value in CSS is a defect, so reference the token variables instead."
+      "a": "No. The DS hard rule is to never hardcode a color, spacing, typography, radius, shadow, or motion value{ref:ds-agents}."
     }
   ],
   "howto": {
@@ -125,26 +140,134 @@
     "steps": [
       {
         "name": "Install the package",
-        "text": "Run bun add @ramoslabs/tokens, or use npm install, pnpm add, or yarn add with the same package name."
+        "text": "Run `bun add @ramoslabs/tokens`, or the npm, pnpm or yarn equivalent{ref:ds-install}."
       },
       {
         "name": "Import the CSS once",
-        "text": "In your app entry (main.ts for Vue or main.tsx for React), add import '@ramoslabs/tokens/css' one time. Do not import it in each component."
+        "text": "In the app entry, import `@ramoslabs/tokens/css` one time{ref:ds-install}."
       },
       {
         "name": "Use a token",
-        "text": "Reference tokens as CSS variables such as var(--color-primary), var(--space-6), and var(--radius-lg). Do not hardcode raw hex or px values."
+        "text": "Reference variables such as `var(--color-primary)` and `var(--space-6)` instead of raw values{ref:mdn-var}."
       },
       {
-        "name": "Optional: use typed values",
-        "text": "For TypeScript logic, import typed values from the package root, for example import { colorIndigo600 } from '@ramoslabs/tokens'."
+        "name": "Optional: typed values",
+        "text": "For TypeScript logic, import typed values from the package root, for example `colorIndigo600`{ref:measured-vite}."
       }
     ]
   },
-  "sources": [
-    "@ramoslabs/tokens package: install commands and exports (/css, /json, root typed values)",
-    "DS Installation page: /installation/",
-    "Served files: /tokens.css and /tokens.json",
-    "DS hard rule: no hardcoded color, spacing, typography, radius, shadow, or motion value"
+  "references": [
+    {
+      "id": "npm-tokens",
+      "kind": "external",
+      "title": "npm registry record for @ramoslabs/tokens (license MIT; 0.1.0 is the only version)",
+      "publisher": "npm",
+      "url": "https://registry.npmjs.org/@ramoslabs/tokens",
+      "date": "0.1.0 published 2026-07-08",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "ds-pkg",
+      "kind": "ds",
+      "title": "packages/tokens/package.json: the exports map (\".\", \"./css\", \"./json\")",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/packages/tokens/package.json",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-install",
+      "kind": "ds",
+      "title": "Installation: the install and import steps",
+      "publisher": "RamosLabs DS documentation, source at commit 71b8bac",
+      "url": "https://design.ramoslabs.com/installation/",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "node-exports",
+      "kind": "external",
+      "title": "Node.js packages: \"exports\" and subpath exports",
+      "publisher": "Node.js",
+      "url": "https://nodejs.org/api/packages.html#subpath-exports",
+      "date": "Node.js v26.12.1 docs",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "vite-css",
+      "kind": "external",
+      "title": "Vite: Features, CSS (importing .css from JavaScript)",
+      "publisher": "Vite",
+      "url": "https://vite.dev/guide/features.html#css",
+      "date": "docs v8.3.4",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "vue-app",
+      "kind": "external",
+      "title": "Vue: Creating a Vue Application",
+      "publisher": "Vue",
+      "url": "https://vuejs.org/guide/essentials/application.html",
+      "date": "undated docs page",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "react-root",
+      "kind": "external",
+      "title": "React: createRoot",
+      "publisher": "React",
+      "url": "https://react.dev/reference/react-dom/client/createRoot",
+      "date": "undated docs page",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "mdn-link",
+      "kind": "external",
+      "title": "MDN: the link element (rel=\"stylesheet\")",
+      "publisher": "MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link",
+      "date": "last modified 2026-05-20",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "mdn-var",
+      "kind": "external",
+      "title": "MDN: var() CSS function",
+      "publisher": "MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var",
+      "date": "last modified 2026-09-10",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-custom",
+      "kind": "external",
+      "title": "Tailwind CSS: adding custom styles (arbitrary properties and variables)",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/docs/adding-custom-styles",
+      "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "ds-agents",
+      "kind": "ds",
+      "title": "AGENTS.md: accessibility floors, the hard rule, and component status",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "measured-vite",
+      "kind": "measured",
+      "title": "Build test: Vite 8.3.5 bundling an entry that imports \"@ramoslabs/tokens/css\" and { colorIndigo600 } from the published @ramoslabs/tokens@0.1.0",
+      "publisher": "RamosLabs DS",
+      "url": "https://registry.npmjs.org/@ramoslabs/tokens/0.1.0",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "measured-served",
+      "kind": "measured",
+      "title": "HTTP check: GET https://design.ramoslabs.com/tokens.css returned 200 text/css, and /tokens.json returned 200 application/json",
+      "publisher": "RamosLabs DS",
+      "url": "https://design.ramoslabs.com/tokens.css",
+      "date": "2026-10-27"
+    }
   ]
 }

@@ -107,11 +107,11 @@ export const pages: Page[] = [
   {
     id: 'ramoslabs-ds-vs-material-vs-tailwind',
     nav: 'vs Material and Tailwind',
-    title: 'RamosLabs DS vs Material Design vs Tailwind CSS: which should I use?',
+    title: 'RamosLabs DS, Material Design, and Tailwind CSS: what each one ships',
     group: 'answers',
     path: '/answers/ramoslabs-ds-vs-material-vs-tailwind/',
     icon: 'layers',
-    summary: 'An honest comparison: what each one is, what it ships, and when to choose it',
+    summary: 'A sourced side-by-side of what each one ships, with only claims their own docs support',
     contentFile: 'answers/ramoslabs-ds-vs-material-vs-tailwind.md',
   },
 

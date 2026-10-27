@@ -1,149 +1,198 @@
 {
   "id": "ramoslabs-ds-vs-material-vs-tailwind",
-  "title": "RamosLabs DS vs Material Design vs Tailwind CSS: which should I use?",
-  "summary": "RamosLabs DS ships tokens and documentation without components yet, while Material Design and Tailwind CSS differ in what they deliver.",
-  "short": "Choose RamosLabs DS when you want a documented mono-indigo token set and patterns to build your own components on, with no component library required. Choose Material Design when you need a full component ecosystem, or Tailwind CSS when you want utility classes on a visual system you define; RamosLabs tokens can be consumed from Tailwind as CSS variables.",
+  "title": "RamosLabs DS, Material Design, and Tailwind CSS: what each one ships",
+  "summary": "A sourced side-by-side of what RamosLabs DS, Material (Material Web), and Tailwind CSS each provide, with only claims their own docs support.",
+  "short": "RamosLabs DS ships tokens and documented patterns and no components yet{ref:ds-agents}. Material Web is a web-components library on Material 3, in maintenance mode according to its README{ref:md-web}. Tailwind is a utility-first approach whose docs have you build reusable components yourself{ref:tw-utility}. All three expose design tokens as CSS variables{ref:ds-pkg}{ref:md-theming}{ref:tw-theme}.",
   "sections": [
     {
-      "heading": "What each one is",
+      "heading": "What each one ships",
       "body": [
-        "RamosLabs DS is a mono-indigo, taxonomy-first design system. Its tokens (color, spacing, typography, radius, shadow, and motion) are defined once and compiled to CSS variables, TypeScript values, and a flat JSON map. The system also ships documentation covering foundations and patterns such as forms, tables, modals, and accessibility.",
-        "Material Design is Google's design system. It provides guidelines, Material 3 color roles, and a component ecosystem that teams can build on.",
-        "Tailwind CSS is a utility-first CSS framework. It ships with a default theme and lets you configure design tokens, so teams compose styles from utility classes instead of writing component stylesheets."
-      ]
-    },
-    {
-      "heading": "Comparison",
-      "body": [
-        "The table compares the three on the dimensions that usually decide the choice. The RamosLabs DS column comes from its published facts. The Material Design and Tailwind CSS columns are short structural summaries; verify them against the official documentation."
+        "Every cell cites a primary source. External sources were read on 2026-10-27; Tailwind statements are from its v4.3 docs."
       ],
       "table": {
-        "caption": "RamosLabs DS, Material Design, and Tailwind CSS compared. Material and Tailwind cells are summaries to verify against official docs.",
-        "head": ["Dimension", "RamosLabs DS", "Material Design", "Tailwind CSS"],
+        "caption": "Sourced comparison",
+        "head": ["Question", "RamosLabs DS", "Material (Material Web)", "Tailwind CSS"],
         "rows": [
           [
-            "What it is",
-            "Design system made of tokens and documented patterns, distributed as @ramoslabs/tokens and documented at design.ramoslabs.com",
-            "Google's design system: guidelines, Material 3 color roles, and a component ecosystem",
-            "Utility-first CSS framework with a default theme and configurable design tokens"
+            "What is it?",
+            "A mono-indigo design system documented as tokens and patterns{ref:ds-agents}",
+            "Google's open-source design system; its README says Material Web uses Material 3, \"the latest version\"{ref:md-web}",
+            "A utility-first approach: you combine single-purpose presentational classes in your markup{ref:tw-utility}"
           ],
           [
-            "Primary deliverable",
-            "Tokens (CSS variables, TypeScript values, flat JSON) and documentation",
-            "Guidelines and component implementations",
-            "Utility classes generated from a theme"
+            "Ready-made components?",
+            "Not shipped yet; planned as `@ramoslabs/vue` with the `SJ` prefix{ref:ds-agents}",
+            "`@material/web` is a library of web components; its README says \"MWC is in maintenance mode pending new maintainers\"{ref:md-web}",
+            "Its docs describe building reusable components yourself, with a framework component, a template partial, or custom CSS{ref:tw-utility}"
           ],
           [
-            "Ships components today",
-            "No. Components with the SJ prefix in @ramoslabs/vue are planned for a future release, not shipped",
-            "Yes, through its component implementations",
-            "No prebuilt components in the core framework, only utility classes"
+            "Tokens as CSS variables?",
+            "Compiled to CSS variables, typed values and flat JSON; `./css`, `./json` and the root are exported{ref:ds-pkg}",
+            "On the web, design tokens are CSS custom properties{ref:md-theming}",
+            "Theme variables defined with `@theme` are compiled into regular CSS variables{ref:tw-theme}"
           ],
           [
-            "Color model",
-            "Mono-indigo: --color-primary #4f46e5 (Indigo 600) is the single action accent; violet is decorative only",
-            "Material 3 color roles such as primary and surface, typically generated from a source color",
-            "Named color scales in the default theme, extendable through the theme configuration"
-          ],
-          [
-            "Theming approach",
-            "Tokens defined once in DTCG JSON and compiled to CSS variables; the CSS is imported once at the app entry",
-            "Theme roles and component styling defined within the Material theming system",
-            "Theme values in the configuration that utilities read from"
-          ],
-          [
-            "AI and agent tooling",
-            "Read-only MCP server, llms.txt and llms-full.txt, registry.json, an agent skill, and a lint_css tool",
-            "Not assessed here; check the official docs",
-            "Not assessed here; check the official docs"
-          ],
-          [
-            "License",
-            "MIT",
-            "Open source; verify the license of the specific package you use",
-            "Open source; verify the license in the official repository"
-          ],
-          [
-            "Best fit",
-            "Teams that want a mono-indigo token set and documented patterns, and that build their own components",
-            "Teams that want a full component ecosystem that follows Google's guidelines",
-            "Teams that want utility classes on a visual system they define"
+            "How is color organized?",
+            "One action accent, Indigo 600 (#4f46e5); violet is decorative only{ref:ds-agents}",
+            "Color roles assigned to components, as `--md-sys-color-<token>`; each has an `on` token for content color with accessible contrast{ref:md-color}. Schemes can be generated from a single color with `material-color-utilities`{ref:md-utils}",
+            "Importing `tailwindcss` includes a default theme with a color palette, type scale, shadows and fonts; you add colors as theme variables such as `--color-mint-500`{ref:tw-theme}"
           ]
         ]
       }
     },
     {
-      "heading": "Where RamosLabs is not the right choice",
+      "heading": "Using Tailwind with RamosLabs tokens",
       "body": [
-        "RamosLabs DS does not ship a component library yet. The planned SJ components in @ramoslabs/vue are not released, so until then you build components from the tokens and the documented patterns. If you need ready-made components today, a component ecosystem such as Material Design fits that need better.",
-        "The tokens do not generate layouts or components. They supply values such as --space-6 and --radius-lg, and you still write the markup and styles that use them.",
-        "The system is built around one action accent, Indigo 600 (#4f46e5), with violet as a decorative accent only. A brand that needs several interactive colors would need a different palette."
-      ]
-    },
-    {
-      "heading": "When to choose each",
-      "body": [
-        "Choose RamosLabs DS when you want a documented token set with a single action accent, you plan to build your own components, and you want agent tooling such as the MCP server and llms.txt files to read the system.",
-        "Choose Material Design when you want a component ecosystem that follows Google's guidelines and Material 3 color roles, and you accept that layout and component decisions follow that system.",
-        "Choose Tailwind CSS when you want utility classes for fast composition and you will define your own visual system in the theme configuration."
-      ]
-    },
-    {
-      "heading": "Using them together",
-      "body": [
-        "The tools do not exclude each other. RamosLabs tokens are framework-agnostic CSS variables, so they work in a Tailwind project. Import the tokens once at the app entry, then reference the variables. Tailwind's default palette classes do not read RamosLabs tokens unless you map them in the theme, so reference the variables directly, for example with arbitrary properties."
+        "Import the RamosLabs CSS once{ref:ds-install}. Tailwind documents square-bracket arbitrary properties, which accept any CSS including variables{ref:tw-custom}."
       ],
       "code": [
         {
-          "label": "CSS entry point, imported once at the app root",
+          "label": "CSS entry, imported once",
           "lang": "css",
           "source": "@import '@ramoslabs/tokens/css';"
         },
         {
-          "label": "Card markup using RamosLabs tokens through Tailwind arbitrary properties",
+          "label": "markup",
           "lang": "html",
-          "source": "<div class=\"[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)] [box-shadow:var(--shadow-sm)]\">...</div>"
+          "source": "<div class=\"[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)]\">...</div>"
         }
       ]
     },
     {
-      "heading": "Review note",
+      "heading": "What this means if you need components today",
       "body": [
-        "The Material Design and Tailwind CSS descriptions in this page are summaries of their structure, written without version numbers, statistics, or quality claims. Verify them against the official Material Design and Tailwind CSS documentation before relying on them. The RamosLabs DS facts come from its published token values, package details, and documentation."
+        "RamosLabs DS does not ship components yet{ref:ds-agents}. Material Web is a components library, flagged in maintenance mode by its own README{ref:md-web}. Tailwind's docs expect you to build components from utilities{ref:tw-utility}. Check each project's current status before committing; these statements are dated 2026-10-27."
+      ]
+    },
+    {
+      "heading": "What was not compared",
+      "body": [
+        "Licenses of the other two, accessibility quality, bundle size, popularity and AI tooling are not compared: no primary source was gathered for them, so this page makes no claim. The RamosLabs license is MIT{ref:npm-tokens}."
       ]
     }
   ],
   "faq": [
     {
       "q": "Does RamosLabs DS include ready-made components?",
-      "a": "Not yet. The tokens and documentation are shipped, and a Vue component library with the SJ prefix in @ramoslabs/vue is planned but not released. Until then, build components from the tokens and the documented patterns."
+      "a": "Not yet. They are planned as `@ramoslabs/vue` with the `SJ` prefix{ref:ds-agents}."
     },
     {
-      "q": "Can I use RamosLabs tokens with Tailwind CSS?",
-      "a": "Yes. Import the tokens CSS once at the app entry, then reference the CSS variables, for example with Tailwind arbitrary properties such as [background:var(--color-surface)]."
+      "q": "Is Material Web still maintained?",
+      "a": "Its README states \"MWC is in maintenance mode pending new maintainers\"{ref:md-web}. Check the repository for the current state."
     },
     {
-      "q": "Is RamosLabs DS a replacement for Material Design?",
-      "a": "They address different needs. RamosLabs DS provides tokens and documented patterns to build on, while Material Design provides guidelines and a component ecosystem."
+      "q": "Does Tailwind ship components?",
+      "a": "Its docs describe building reusable components yourself from utilities{ref:tw-utility}."
     },
     {
-      "q": "Which tool fits a brand that uses one accent color?",
-      "a": "RamosLabs DS is built around one action accent, Indigo 600 (#4f46e5), with violet as a decorative accent only. If that model fits your brand, its tokens provide it directly."
+      "q": "Can I use RamosLabs tokens with Tailwind?",
+      "a": "Yes: import the CSS once{ref:ds-install} and reference the variables through Tailwind arbitrary properties{ref:tw-custom}."
     },
     {
-      "q": "Does RamosLabs DS offer AI or agent tooling?",
-      "a": "Yes. It has a read-only MCP server at https://design.ramoslabs.com/mcp, llms.txt and llms-full.txt files, a registry.json, and an agent skill at /skill.md."
+      "q": "How does Material expose its tokens on the web?",
+      "a": "As CSS custom properties; color tokens follow `--md-sys-color-<token>`{ref:md-theming}{ref:md-color}."
     },
     {
       "q": "Is RamosLabs DS free to use?",
-      "a": "Yes. The system is MIT licensed. Keep the copyright and license notice when you use it."
+      "a": "Yes, under the MIT license{ref:npm-tokens}."
     }
   ],
-  "sources": [
-    "@ramoslabs/tokens package: install, exports, CSS import",
-    "Served agent files: /llms.txt, /llms-full.txt, /registry.json, /skill.md, and the MCP server at /mcp",
-    "DS color doctrine: /foundations/colors/ (single action accent, violet decorative only)",
-    "Repository license: MIT (LICENSE)",
-    "Material Design and Tailwind CSS: general structural descriptions, to verify against their official docs"
+  "references": [
+    {
+      "id": "ds-agents",
+      "kind": "ds",
+      "title": "AGENTS.md: accessibility floors, the hard rule, and component status",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-pkg",
+      "kind": "ds",
+      "title": "packages/tokens/package.json: the exports map (\".\", \"./css\", \"./json\")",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/packages/tokens/package.json",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-install",
+      "kind": "ds",
+      "title": "Installation: the install and import steps",
+      "publisher": "RamosLabs DS documentation, source at commit 71b8bac",
+      "url": "https://design.ramoslabs.com/installation/",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "npm-tokens",
+      "kind": "external",
+      "title": "npm registry record for @ramoslabs/tokens (license MIT; 0.1.0 is the only version)",
+      "publisher": "npm",
+      "url": "https://registry.npmjs.org/@ramoslabs/tokens",
+      "date": "0.1.0 published 2026-07-08",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-custom",
+      "kind": "external",
+      "title": "Tailwind CSS: adding custom styles (arbitrary properties and variables)",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/docs/adding-custom-styles",
+      "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-web",
+      "kind": "external",
+      "title": "material-web README: what @material/web is and its status",
+      "publisher": "Material Components (GitHub)",
+      "url": "https://github.com/material-components/material-web/blob/main/README.md",
+      "date": "undated README, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-color",
+      "kind": "external",
+      "title": "material-web: color theming (color roles and --md-sys-color tokens)",
+      "publisher": "Material Components (GitHub)",
+      "url": "https://github.com/material-components/material-web/blob/main/docs/theming/color.md",
+      "date": "undated doc, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-theming",
+      "kind": "external",
+      "title": "material-web: theming (system tokens are CSS custom properties on the web)",
+      "publisher": "Material Components (GitHub)",
+      "url": "https://github.com/material-components/material-web/blob/main/docs/theming/README.md",
+      "date": "undated doc, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "md-utils",
+      "kind": "external",
+      "title": "material-color-utilities README",
+      "publisher": "Material Foundation (GitHub)",
+      "url": "https://github.com/material-foundation/material-color-utilities",
+      "date": "undated README, main branch",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-utility",
+      "kind": "external",
+      "title": "Tailwind CSS: styling with utility classes",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/docs/styling-with-utility-classes",
+      "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-theme",
+      "kind": "external",
+      "title": "Tailwind CSS: theme variables",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/docs/theme",
+      "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    }
   ]
 }

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { answersPages } from '../../data/pages'
-import { answerById } from '../../data/answers'
+import { answerById, plain } from '../../data/answers'
 
 const title = 'Answers'
 const description = 'Direct, citable answers about the RamosLabs Design System, with measured data from the tokens.'
@@ -14,7 +14,7 @@ const description = 'Direct, citable answers about the RamosLabs Design System, 
       {answersPages.map((p) => (
         <li>
           <a href={p.path}>{p.title}</a>
-          <p>{answerById(p.id)?.short.replace(/`/g, '')}</p>
+          <p>{plain(answerById(p.id)?.short ?? '')}</p>
         </li>
       ))}
     </ul>

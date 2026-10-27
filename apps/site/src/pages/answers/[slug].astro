@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import Icon from '../../components/Icon.astro'
-import { answers, answerById, answerJsonLd, inlineHtml } from '../../data/answers'
+import { answers, answerById, answerJsonLd, inlineHtml, plain } from '../../data/answers'
 import { pages, SITE } from '../../data/pages'
 
 export function getStaticPaths() {
@@ -19,20 +19,20 @@ const jsonLd = answerJsonLd(answer, url)
   <article class="an">
     <p class="an-eyebrow"><Icon name="menu_book" style="font-size:1rem" /> Answer</p>
     <h1 class="an-title">{answer.title}</h1>
-    <p class="an-short" set:html={inlineHtml(answer.short)} />
+    <p class="an-short" set:html={inlineHtml(answer.short, answer)} />
 
     {answer.sections.map((sec) => (
-      <section class="an-sec">
+      <section class="an-sec" id={sec.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}>
         <h2>{sec.heading}</h2>
-        {sec.body?.map((p) => <p set:html={inlineHtml(p)} />)}
+        {sec.body?.map((p) => <p set:html={inlineHtml(p, answer)} />)}
         {sec.table && (
-          <div class="an-table-wrap" role="region" aria-label={sec.table.caption ?? sec.heading} tabindex="0">
+          <div class="an-table-wrap" role="region" aria-label={plain(sec.table.caption ?? sec.heading)} tabindex="0">
             <table>
-              {sec.table.caption && <caption>{sec.table.caption}</caption>}
+              {sec.table.caption && <caption set:html={inlineHtml(sec.table.caption, answer)} />}
               <thead><tr>{sec.table.head.map((h) => <th scope="col">{h}</th>)}</tr></thead>
               <tbody>
                 {sec.table.rows.map((row) => (
-                  <tr>{row.map((cell, i) => (i === 0 ? <th scope="row" set:html={inlineHtml(cell)} /> : <td set:html={inlineHtml(cell)} />))}</tr>
+                  <tr>{row.map((cell, i) => (i === 0 ? <th scope="row" set:html={inlineHtml(cell, answer)} /> : <td set:html={inlineHtml(cell, answer)} />))}</tr>
                 ))}
               </tbody>
             </table>
@@ -58,7 +58,7 @@ const jsonLd = answerJsonLd(answer, url)
         <h2>{answer.howto.name}</h2>
         <ol class="an-steps">
           {answer.howto.steps.map((s) => (
-            <li><strong>{s.name}.</strong> <span set:html={inlineHtml(s.text)} /></li>
+            <li><strong>{s.name}.</strong> <span set:html={inlineHtml(s.text, answer)} /></li>
           ))}
         </ol>
       </section>
@@ -69,16 +69,24 @@ const jsonLd = answerJsonLd(answer, url)
       <dl class="an-faq">
         {answer.faq.map((f) => (
           <div>
-            <dt set:html={inlineHtml(f.q)} />
-            <dd set:html={inlineHtml(f.a)} />
+            <dt set:html={inlineHtml(f.q, answer)} />
+            <dd set:html={inlineHtml(f.a, answer)} />
           </div>
         ))}
       </dl>
     </section>
 
     <section class="an-sec an-sources">
-      <h2>Sources</h2>
-      <ul>{answer.sources.map((s) => <li>{s}</li>)}</ul>
+      <h2>References</h2>
+      <p>Every factual statement above points to one of these. External sources are listed with their own date or version and the day we read them; DS sources are pinned to a repository commit; measurements say what was run and when.</p>
+      <ol class="an-refs">
+        {answer.references.map((r) => (
+          <li id={`ref-${r.id}`}>
+            <a href={r.url} rel="noopener">{r.title}</a>
+            <span class="an-ref-meta"> {r.publisher}. {r.date}{r.accessed ? `; accessed ${r.accessed}` : ''}.</span>
+          </li>
+        ))}
+      </ol>
       <p>
         Machine-readable: <a href="/llms-full.txt">llms-full.txt</a>, <a href="/tokens.json">tokens.json</a>,
         <a href="/agents/mcp/">MCP server</a>. {SITE.copyright} MIT License.
@@ -128,5 +136,11 @@ const jsonLd = answerJsonLd(answer, url)
   .an-faq dt { font-weight: 700; color: var(--color-text-heading); margin-bottom: var(--space-1); }
   .an-faq dd { margin: 0; line-height: 1.6; }
   .an-sources { font-size: 0.9rem; color: var(--color-text-secondary); }
+  .an-ref { font-size: 0.75em; margin-left: 0.1em; }
+  .an-ref a { color: var(--color-primary-dark); text-decoration: none; }
+  .an-ref a:hover, .an-ref a:focus-visible { text-decoration: underline; }
+  .an-refs { padding-left: var(--space-6); }
+  .an-refs li { margin-bottom: var(--space-2); word-break: break-word; }
+  .an-ref-meta { color: var(--color-text-secondary); }
   .an-sources a { color: var(--color-primary-dark); }
 </style>

@@ -1,55 +1,92 @@
 {
   "id": "indigo-contrast-wcag",
   "title": "Is RamosLabs indigo (#4f46e5) WCAG accessible?",
-  "summary": "RamosLabs indigo #4f46e5 passes WCAG AA on white at 6.29:1 but not AAA, so use --color-primary-dark #4338ca when AAA is required.",
-  "short": "Yes for AA. --color-primary #4f46e5 on white is 6.29:1, which passes the 4.5:1 threshold for normal text and the 3:1 threshold for UI components, but it does not reach AAA (7:1). When AAA is required, use --color-primary-dark #4338ca, which gives 7.90:1 with white text.",
+  "summary": "#4f46e5 on white measures 6.29:1: it meets WCAG AA for text and UI, and falls short of the 7:1 AAA level.",
+  "short": "Yes for AA. `--color-primary` (#4f46e5){ref:ds-tokens} measures 6.29:1 on white{ref:measured}: above the 4.5:1 minimum for normal text{ref:sc143} and the 3:1 minimum for UI components{ref:sc1411}, and below the 7:1 of the Enhanced level{ref:sc146}. White text on `--color-primary-dark` (#4338ca) measures 7.90:1{ref:measured}, which clears 7:1.",
   "sections": [
     {
-      "heading": "Indigo pairings and their contrast ratios",
+      "heading": "What WCAG asks for",
       "body": [
-        "The table lists the indigo pairings in the RamosLabs DS contrast data, including the pairings that fail. Ratios use the WCAG 2.x relative-luminance formula and are rounded to two decimals.",
-        "--color-primary is #4f46e5, which is indigo 600 and the single action accent. --color-primary-dark is #4338ca, which is indigo 700 and is used for hover."
+        "The thresholds below are the ones used on this page. Large-scale text means at least 18 point, or 14 point bold{ref:sc143}."
       ],
       "table": {
-        "caption": "Indigo pairings, contrast ratio, and WCAG level",
-        "head": ["Foreground", "Background", "Ratio", "WCAG level"],
+        "caption": "WCAG 2.2 contrast thresholds",
+        "head": ["Criterion", "Level", "Requirement"],
         "rows": [
-          [
-            "--color-primary #4f46e5",
-            "--color-surface #ffffff",
-            "6.29:1",
-            "Passes AA for normal text and UI components. Fails AAA (7:1)."
-          ],
-          ["White #ffffff (button label)", "--color-primary #4f46e5", "6.29:1", "Passes AA. Fails AAA (7:1)."],
-          ["White #ffffff (button label)", "--color-primary-dark #4338ca", "7.90:1", "Passes AAA for normal text."],
-          [
-            "--color-primary #4f46e5",
-            "--color-primary-surface #eef2ff",
-            "5.62:1",
-            "Passes AA for normal text and UI components."
-          ],
-          ["Indigo 300 #a5b4fc", "--color-surface #ffffff", "1.99:1", "Fails AA for text and UI components."],
-          ["--color-primary #4f46e5", "--color-text-heading #0f172a", "2.84:1", "Fails AA for text and UI components."]
+          ["SC 1.4.3 Contrast (Minimum){ref:sc143}", "AA", "4.5:1 for text; 3:1 for large-scale text"],
+          ["SC 1.4.6 Contrast (Enhanced){ref:sc146}", "AAA", "7:1 for text; 4.5:1 for large-scale text"],
+          ["SC 1.4.11 Non-text Contrast{ref:sc1411}", "AA", "3:1 for UI components and states against adjacent colors"]
         ]
       }
     },
     {
-      "heading": "WCAG thresholds",
+      "heading": "Measured indigo pairings",
       "body": [
-        "WCAG 2.2 AA requires at least 4.5:1 for normal text and at least 3:1 for large text and UI components such as control edges and focus rings. AAA requires at least 7:1 for normal text.",
-        "The RamosLabs DS sets AA as its minimum. The primary indigo meets AA for text on white and on the primary surface. Reach AAA with the darker --color-primary-dark.",
-        "A pair that passes on one background can fail on another, so check each pair as it is used."
-      ]
+        "Values from the source tokens{ref:ds-tokens}; ratios computed with the script in the last section{ref:measured}."
+      ],
+      "table": {
+        "caption": "Indigo pairings and the thresholds they reach",
+        "head": ["Foreground", "Background", "Ratio", "Text 4.5:1", "UI 3:1", "Text 7:1"],
+        "rows": [
+          [
+            "`--color-primary` #4f46e5{ref:ds-tokens}",
+            "`--color-surface` #ffffff",
+            "6.29:1{ref:measured}",
+            "Yes",
+            "Yes",
+            "No"
+          ],
+          [
+            "`--color-surface` #ffffff (button label){ref:ds-tokens}",
+            "`--color-primary` #4f46e5",
+            "6.29:1{ref:measured}",
+            "Yes",
+            "Yes",
+            "No"
+          ],
+          [
+            "`--color-surface` #ffffff (button label){ref:ds-tokens}",
+            "`--color-primary-dark` #4338ca",
+            "7.90:1{ref:measured}",
+            "Yes",
+            "Yes",
+            "Yes"
+          ],
+          [
+            "`--color-primary` #4f46e5{ref:ds-tokens}",
+            "`--color-primary-surface` #eef2ff",
+            "5.62:1{ref:measured}",
+            "Yes",
+            "Yes",
+            "No"
+          ],
+          [
+            "`--color-indigo-300` #a5b4fc{ref:ds-tokens}",
+            "`--color-surface` #ffffff",
+            "1.99:1{ref:measured}",
+            "No",
+            "No",
+            "No"
+          ],
+          [
+            "`--color-primary` #4f46e5{ref:ds-tokens}",
+            "`--color-text-heading` #0f172a",
+            "2.84:1{ref:measured}",
+            "No",
+            "No",
+            "No"
+          ]
+        ]
+      }
     },
     {
-      "heading": "Primary button with a visible focus state",
+      "heading": "A primary button with a visible focus ring",
       "body": [
-        "The snippet uses only RamosLabs token variables. The white label comes from --color-surface, which is #ffffff. The hover state switches to --color-primary-dark, and the focus state replaces the outline with --shadow-focus, which is a 2px white gap followed by a 4px #4f46e5 ring.",
-        "Import the token stylesheet once at the app entry before using these rules."
+        "`--shadow-focus` is a 2px white gap followed by a ring in #4f46e5{ref:ds-tokens}. Against the white gap and the page the ring measures 6.29:1{ref:measured}, above the 3:1 asked of UI components{ref:sc1411}. The DS rule is to never remove the focus outline without an equivalent replacement{ref:ds-agents}."
       ],
       "code": [
         {
-          "label": "app entry (global stylesheet)",
+          "label": "app entry stylesheet",
           "lang": "css",
           "source": "@import '@ramoslabs/tokens/css';"
         },
@@ -61,56 +98,119 @@
       ]
     },
     {
-      "heading": "Recommended and avoid",
+      "heading": "Verify a pair with the MCP check_contrast tool",
       "body": [
-        "✓ Recommended: use white text on --color-primary for the primary button label, which is 6.29:1.",
-        "Rule: pair the button label with a token background that passes at least 4.5:1 for normal text.",
-        "Why: 6.29:1 passes AA, so the label remains readable for users with low vision, and the same pair is used in the snippet above.",
-        "✕ Avoid: indigo 300 #a5b4fc as text on white.",
-        "Rule: text colors must reach at least 4.5:1 on their background, and indigo 300 does not.",
-        "Why: indigo 300 on white is 1.99:1, which fails both the 4.5:1 text threshold and the 3:1 UI threshold."
+        "The DS MCP server exposes `check_contrast` among seven read-only tools, over Streamable HTTP with no authentication, at `https://design.ramoslabs.com/mcp`{ref:ds-mcp}. Call it with a foreground and a background and read the verdicts it returns."
       ]
     },
     {
-      "heading": "Verify a pair with the MCP check_contrast tool",
+      "heading": "Reproduce the numbers",
       "body": [
-        "The RamosLabs DS MCP server exposes a check_contrast tool. The endpoint is https://design.ramoslabs.com/mcp. It uses Streamable HTTP, is read-only, and needs no auth.",
-        "To add the server to Claude Code, run: claude mcp add --transport http ramoslabs-ds https://ramoslabs-ds.edwardramosp.workers.dev/mcp",
-        "Pass the foreground and background pair to check_contrast and read the result it returns. This page does not describe the output format of the tool, so check the response directly."
+        "The ratios on this page come from the script below, which applies the WCAG definitions of relative luminance and contrast ratio{ref:wcag22} to the published token values. Run it in a project that has `@ramoslabs/tokens` installed."
+      ],
+      "code": [
+        {
+          "label": "contrast.mjs (Node 18 or newer)",
+          "lang": "js",
+          "source": "import { readFileSync } from 'node:fs'\n\n// WCAG 2.2 relative luminance and contrast ratio, applied to the published token values.\nconst lin = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)\nconst lum = (hex) => {\n  const n = parseInt(hex.slice(1), 16)\n  return 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255)\n}\nconst ratio = (a, b) => {\n  const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x)\n  return (hi + 0.05) / (lo + 0.05)\n}\n\nconst tokens = JSON.parse(readFileSync('node_modules/@ramoslabs/tokens/dist/tokens.json', 'utf8'))\nconst pair = (fg, bg) => ratio(tokens[fg], tokens[bg]).toFixed(2)\n\nconsole.log(pair('color-text-muted', 'color-surface')) // 4.76\nconsole.log(pair('color-primary', 'color-surface')) // 6.29"
+        }
       ]
     }
   ],
   "faq": [
     {
       "q": "Is #4f46e5 accessible on a white background?",
-      "a": "Yes for WCAG 2.x AA. The contrast ratio is 6.29:1, which clears 4.5:1 for normal text and 3:1 for UI components. It does not reach the AAA threshold of 7:1 for normal text."
+      "a": "For AA, yes: it measures 6.29:1{ref:measured}, above 4.5:1 for text{ref:sc143} and 3:1 for UI components{ref:sc1411}. It is below the 7:1 of AAA for text{ref:sc146}."
     },
     {
       "q": "Can I use indigo 300 for text on white?",
-      "a": "No. Indigo 300 #a5b4fc on white is 1.99:1, which fails both the 4.5:1 text threshold and the 3:1 UI threshold."
+      "a": "No. `--color-indigo-300` (#a5b4fc) measures 1.99:1 on white{ref:measured}, below both 4.5:1{ref:sc143} and 3:1{ref:sc1411}."
     },
     {
       "q": "Which indigo should I use when AAA is required?",
-      "a": "Use --color-primary-dark #4338ca. White text on it is 7.90:1, which passes AAA for normal text. The primary #4f46e5 reaches 6.29:1 on white and does not reach AAA."
+      "a": "Use `--color-primary-dark` (#4338ca){ref:ds-tokens}: white text on it measures 7.90:1{ref:measured}, which reaches 7:1{ref:sc146}."
     },
     {
       "q": "Can I put white text on the primary button?",
-      "a": "Yes. White on --color-primary #4f46e5 is 6.29:1, which passes AA. For AAA, use white on --color-primary-dark #4338ca, which is 7.90:1."
+      "a": "Yes. White on `--color-primary` measures 6.29:1{ref:measured}, which meets AA for text{ref:sc143}."
     },
     {
       "q": "Does the primary indigo have enough contrast for a focus ring?",
-      "a": "Yes. Primary on white is 6.29:1, which clears the 3:1 threshold for UI component edges. The focus state uses --shadow-focus, which is a 2px white gap and a 4px #4f46e5 ring."
+      "a": "Yes by the numbers: 6.29:1 against white{ref:measured}, above the 3:1 asked of UI components{ref:sc1411}. The DS focus ring uses it{ref:ds-tokens}."
     },
     {
       "q": "How can I check a color pair programmatically?",
-      "a": "Use the check_contrast tool on the RamosLabs DS MCP server at https://design.ramoslabs.com/mcp. The server is read-only, uses Streamable HTTP, and needs no auth."
+      "a": "Use the `check_contrast` tool on the DS MCP server{ref:ds-mcp}, or run the script on this page against the token values{ref:wcag22}."
     }
   ],
-  "sources": [
-    "@ramoslabs/tokens: color token values (tokens.json)",
-    "DS color doctrine: /foundations/colors/ (measured contrast pairings)",
-    "Ratios recomputed with the WCAG relative-luminance formula, rounded to two decimals",
-    "WCAG 2.2 SC 1.4.3 and SC 1.4.11 contrast floors",
-    "DS MCP server: /agents/mcp/ (check_contrast tool)"
+  "references": [
+    {
+      "id": "ds-tokens",
+      "kind": "ds",
+      "title": "Source tokens: color.primitive.json and color.semantic.json (@ramoslabs/tokens)",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/tree/71b8bac/packages/tokens/src/tokens",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-agents",
+      "kind": "ds",
+      "title": "AGENTS.md: accessibility floors, the hard rule, and component status",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "ds-mcp",
+      "kind": "ds",
+      "title": "MCP server: tools, endpoints, and transport",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/docs/MCP.md",
+      "date": "2026-09-21"
+    },
+    {
+      "id": "wcag22",
+      "kind": "external",
+      "title": "WCAG 2.2: definitions of relative luminance and contrast ratio",
+      "publisher": "W3C",
+      "url": "https://www.w3.org/TR/WCAG22/#dfn-relative-luminance",
+      "date": "W3C Recommendation, 2024-12-12",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "sc143",
+      "kind": "external",
+      "title": "Understanding SC 1.4.3: Contrast (Minimum)",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "date": "updated 2026-09-06",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "sc146",
+      "kind": "external",
+      "title": "Understanding SC 1.4.6: Contrast (Enhanced)",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html",
+      "date": "updated 2026-09-06",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "sc1411",
+      "kind": "external",
+      "title": "Understanding SC 1.4.11: Non-text Contrast",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html",
+      "date": "updated 2026-09-06",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "measured",
+      "kind": "measured",
+      "title": "Contrast ratios computed from the token hex values with the script on this page (WCAG relative-luminance and contrast-ratio formulas), rounded to two decimals",
+      "publisher": "RamosLabs DS",
+      "url": "https://design.ramoslabs.com/answers/indigo-contrast-wcag/#reproduce-the-numbers",
+      "date": "2026-10-27"
+    }
   ]
 }
