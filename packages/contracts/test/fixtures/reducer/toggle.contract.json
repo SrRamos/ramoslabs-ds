@@ -1,0 +1,38 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJToggle",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": { "apg": "switch" },
+  "anatomy": [{ "part": "root", "element": "button", "role": "switch", "native": true }],
+  "state": { "machine": ["off", "on"], "controllable": ["pressed"] },
+  "actions": [
+    { "id": "toggle", "from": "off", "to": "on", "emit": "pressedChange" },
+    { "id": "toggle", "from": "on", "to": "off", "emit": "pressedChange" },
+    { "id": "reset", "from": "on", "to": "off" }
+  ],
+  "keyboard": { "root": { "Space": "toggle" } },
+  "focus": { "strategy": "native", "owner": "root" },
+  "kinds": [],
+  "runtime": [],
+  "support": [],
+  "a11y": {
+    "wcag": ["4.1.2"],
+    "liveRegions": [],
+    "atAssertions": ["manual-speech-name-role-state"],
+    "atSupport": [
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/switch.json#nvda-chrome-ariaat562"]
+      }
+    ]
+  },
+  "events": [{ "name": "pressedChange", "payload": "{ pressed: boolean }" }],
+  "props": [{ "name": "pressed", "type": "boolean" }],
+  "slots": [{ "name": "default" }],
+  "fixtures": ["off", "on"],
+  "budgets": { "gzipKiB": 1, "shared": [] }
+}
