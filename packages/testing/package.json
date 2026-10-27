@@ -19,6 +19,8 @@
     "visual:verify": "node visual/cli.js verify",
     "test:a11y": "playwright test -c a11y/playwright.config.ts --grep @pr",
     "test:a11y:release": "playwright test -c a11y/playwright.config.ts",
+    "test:e2e:supports": "playwright test -c e2e/supports/playwright.config.ts",
+    "parity": "node parity/cli.js",
     "test:coverage": "vitest run --coverage"
   },
   "exports": {

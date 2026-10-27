@@ -15,6 +15,8 @@ export type Props = Record<string, unknown>;
 export interface RunOptions {
   readonly adapter: 'react' | 'vue' | 'vanilla';
   readonly defect?: string;
+  /** Supports path (W1-309b): `native` (default) or `fallback:<key>`. */
+  readonly path?: string;
   /** Props for each fixture name of the contract (the component author's mapping). */
   readonly fixtures: Record<string, Props>;
   /** `pointer`, or a keyboard key to use wherever a step declares it. */
@@ -92,9 +94,11 @@ const snapshot = (page: Page, part: string) =>
 
 async function mount(page: Page, opts: RunOptions, props: Props): Promise<void> {
   await page.evaluate(
-    ([adapter, p, defect]) =>
-      window.__sj.mount(adapter as 'react', p as never, defect as 'none').then(() => undefined),
-    [opts.adapter, props, opts.defect ?? 'none'] as const,
+    ([adapter, p, defect, path]) =>
+      window.__sj
+        .mount(adapter as 'react', p as never, defect as 'none', path)
+        .then(() => undefined),
+    [opts.adapter, props, opts.defect ?? 'none', opts.path ?? 'native'] as const,
   );
 }
 
