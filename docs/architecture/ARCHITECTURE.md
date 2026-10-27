@@ -95,7 +95,7 @@ In every table cell, versions are ordered Chromium / Firefox / Safari-iOS; "none
 | Invoker Commands (`command`/`commandfor`) | enhancement | Classic handlers carry the floor |
 | `request-close` command | 139 / 144 / 26.2 | Enhancement |
 | `popover="hint"` | full 151 / 153 / none | Enhancement; tooltips use `popover="manual"` |
-| Customizable `<select>` (`base-select`) | 135 / flag only in 149-153 / 27 | Disabled on the floor; classic `<select>` is the preset |
+| Customizable `<select>` (`base-select`) | 135 / 149 behind flags / 27 | Disabled on the floor; classic `<select>` is the preset |
 | `interestfor` | Chromium 142 only | Enhancement, never a contract dependency |
 | View Transitions, same-document | 111 / 144 / 18 | Enhancement outside behavior; skipped below support and for reduced motion |
 | View Transitions, cross-document (`@view-transition`) | 126 / none / 18.2 | Enhancement only |
@@ -1138,4 +1138,4 @@ product-level choices underpin the architecture and are recorded for explicit co
 
 ---
 
-STATUS: REVISION-1-FOR-AUDIT
+STATUS: CERTIFIED (ds-fable, audits/AUDIT-architecture-R2.md, 2026-10-27). Pending owner confirmations: D1, D2.
