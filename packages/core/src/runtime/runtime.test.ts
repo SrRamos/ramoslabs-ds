@@ -1,9 +1,11 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import {
+  ANCHOR_PROPERTIES,
   SUPPORT_KEYS,
   createFakeScheduler,
   createRuntime,
+  detectAnchorPositioning,
   platformScheduler,
   serializeRuntime,
   withSupports,
@@ -112,5 +114,35 @@ describe('createRuntime (W1-103, ADR-003)', () => {
     cancel();
     await new Promise<void>((r) => platformScheduler.soon(r));
     expect(fired).toBe(0);
+  });
+});
+
+describe('anchorPositioning detection (G1 SHOULD-2)', () => {
+  const engine = (missing: string[]) => (p: string) => !missing.includes(p);
+  it('is true only when every emitted anchor property passes', () => {
+    expect(ANCHOR_PROPERTIES.map(([p]) => p)).toEqual([
+      'anchor-name',
+      'position-area',
+      'position-try-fallbacks',
+      'position-try-order',
+      'position-visibility',
+    ]);
+    expect(detectAnchorPositioning(engine([]))).toBe(true);
+  });
+  it('Chromium-125-like (core anchors, no position-area) is false', () => {
+    expect(detectAnchorPositioning(engine(['position-area']))).toBe(false);
+  });
+  it.each(ANCHOR_PROPERTIES.map(([p]) => p))('missing %s is false', (p) => {
+    expect(detectAnchorPositioning(engine([p]))).toBe(false);
+  });
+});
+
+describe('undefined supports entries (G1 NICE-3)', () => {
+  it('createRuntime and withSupports drop undefined, keeping booleans', () => {
+    const r = createRuntime({ supports: { popover: undefined, weekInfo: true } });
+    expect(r.supports.popover).toBe(false);
+    expect(r.supports.weekInfo).toBe(true);
+    expect(withSupports(r, { weekInfo: undefined }).supports.weekInfo).toBe(true);
+    expect(Object.values(r.supports).every((v) => typeof v === 'boolean')).toBe(true);
   });
 });

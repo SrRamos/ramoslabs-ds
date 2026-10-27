@@ -50,3 +50,8 @@ about 2.0 KiB.
   include `packages/core/src` (root `turbo.json`, not mine). Direct `node packages/testing/size/cli.js` shows the real
   numbers (store 0.275 KiB). This is a gate hole to fix in `turbo.json` (add `../core/src/**` to `size` inputs).
 - No budget rows for ids/runtime/effects; adding them is a `budgets.json` change (shared file, not made).
+
+## G1 fixes
+
+- SHOULD-2 (code): no detection of `anchorPositioning` existed anywhere (no adapter reads `CSS.supports` yet), so the definition is encoded in core as a pure function, `detectAnchorPositioning(cssSupports)` plus the closed `ANCHOR_PROPERTIES` list (`anchor-name`, `position-area`, `position-try-fallbacks`, `position-try-order`, `position-visibility`, each with a representative value). Core still reads no global; the adapter passes `CSS.supports` after mount. True only when every property passes, so Chromium 125-128 (no `position-area`) and Firefox 147 take the fallback. Seeded: Chromium-125-like and each single missing property yield false. `closedby`, `popover="hint"` and `interestfor` keys are NOT added (deferred per the audit ruling). The ADR-013 definition text is the orchestrator's edit.
+- NICE-3: `createRuntime` and `withSupports` drop `undefined` entries before merging; every `supports` value stays a boolean.

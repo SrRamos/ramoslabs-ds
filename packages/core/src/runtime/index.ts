@@ -18,6 +18,26 @@ export const SUPPORT_KEYS = [
 export type SupportKey = (typeof SUPPORT_KEYS)[number];
 export type SupportsMap = Readonly<Record<SupportKey, boolean>>;
 
+/** Every anchor property the contracts emit, with a representative valid value for `CSS.supports`. */
+export const ANCHOR_PROPERTIES = [
+  ['anchor-name', '--a'],
+  ['position-area', 'top'],
+  ['position-try-fallbacks', 'flip-block'],
+  ['position-try-order', 'most-width'],
+  ['position-visibility', 'anchors-visible'],
+] as const;
+
+/**
+ * The `anchorPositioning` capability (ADR-013): true only when EVERY anchor property the contracts
+ * emit passes `CSS.supports`, so a partial engine (Chromium 125-128: core anchors, no `position-area`;
+ * Firefox 147) takes the fallback. Pure: the adapter passes `CSS.supports` after mount.
+ */
+export function detectAnchorPositioning(
+  cssSupports: (property: string, value: string) => boolean,
+): boolean {
+  return ANCHOR_PROPERTIES.every(([p, v]) => cssSupports(p, v) === true);
+}
+
 export interface Scheduler {
   /** Run `fn` after `ms`; returns a cancel function. */
   after(fn: () => void, ms: number): () => void;
@@ -117,13 +137,17 @@ export const platformScheduler: Scheduler = {
   soon: (fn) => (globalThis as unknown as Host).queueMicrotask(fn),
 };
 
+/** Drops `undefined` entries so a spread cannot turn a boolean capability into a non-boolean. */
+const definedOnly = (m: Partial<SupportsMap> | undefined): Partial<SupportsMap> =>
+  Object.fromEntries(Object.entries(m ?? {}).filter(([, v]) => v !== undefined));
+
 export function createRuntime(config: RuntimeConfig = {}): SJRuntime {
   const runtime: SJRuntime = {
     locale: config.locale ?? 'en',
     dir: config.dir ?? 'ltr',
     idPrefix: config.idPrefix ?? '',
     density: config.density ?? 'touch',
-    supports: Object.freeze({ ...noSupport, ...config.supports }),
+    supports: Object.freeze({ ...noSupport, ...definedOnly(config.supports) }),
     scheduler:
       config.scheduler ?? (config.target === 'client' ? platformScheduler : createFakeScheduler()),
     ...(config.idFactory && { idFactory: config.idFactory }),
@@ -144,5 +168,8 @@ export function serializeRuntime(r: SJRuntime): SerializedRuntime {
 
 /** Applied after hydration: a new runtime with real detection; the original is untouched. */
 export function withSupports(r: SJRuntime, supports: Partial<SupportsMap>): SJRuntime {
-  return Object.freeze({ ...r, supports: Object.freeze({ ...r.supports, ...supports }) });
+  return Object.freeze({
+    ...r,
+    supports: Object.freeze({ ...r.supports, ...definedOnly(supports) }),
+  });
 }
