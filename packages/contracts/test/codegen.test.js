@@ -137,6 +137,7 @@ describe('real component reducers', () => {
     const { slug } = names(c.name);
     const file = join(repoRoot, 'packages', 'core', 'src', slug, 'reducer.ts');
     if (!existsSync(file)) {
+      // skip-reason: a contract without a reducer module is surfaced as a visible skip until its stream lands
       it.skip(`${c.name}: no reducer yet (packages/core/src/${slug}/reducer.ts)`, () => {});
       continue;
     }
