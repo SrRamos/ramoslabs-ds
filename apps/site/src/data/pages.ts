@@ -87,7 +87,7 @@ export const pages: Page[] = [
   {
     id: 'indigo-contrast-wcag',
     nav: 'Indigo contrast',
-    title: 'Is RamosLabs indigo (#4f46e5) WCAG accessible?',
+    title: 'Does RamosLabs indigo (#4f46e5) meet WCAG contrast requirements?',
     group: 'answers',
     path: '/answers/indigo-contrast-wcag/',
     icon: 'contrast',
@@ -106,8 +106,8 @@ export const pages: Page[] = [
   },
   {
     id: 'ramoslabs-ds-vs-material-vs-tailwind',
-    nav: 'vs Material and Tailwind',
-    title: 'RamosLabs DS, Material Design, and Tailwind CSS: what each one ships',
+    nav: 'vs Material Web and Tailwind',
+    title: 'RamosLabs DS, Material Web, and Tailwind CSS: what each one ships',
     group: 'answers',
     path: '/answers/ramoslabs-ds-vs-material-vs-tailwind/',
     icon: 'layers',

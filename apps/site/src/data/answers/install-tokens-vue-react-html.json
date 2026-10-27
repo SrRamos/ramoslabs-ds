@@ -24,7 +24,7 @@
       "heading": "Why the import path works",
       "body": [
         "The package defines subpath exports: the root for typed values, `./css` for the CSS variables, and `./json` for the flat map{ref:ds-pkg}. Node resolves only the subpaths a package defines in `exports`{ref:node-exports}.",
-        "Test result, showing a bundler resolving them too: a Vite 8.3.5 project that imported `@ramoslabs/tokens/css` and `colorIndigo600` from the published 0.1.0 built successfully, and the output CSS contained `--color-primary:#4f46e5`{ref:measured-vite}. Vite injects imported `.css` files into the page through a style tag{ref:vite-css}."
+        "Test result, showing a bundler resolving them too: a Vite 8.3.5 project that imported `@ramoslabs/tokens/css` and `colorIndigo600` from the published 0.1.0 built successfully, and the output CSS contained `--color-primary:#4f46e5`{ref:measured-vite}. In development, Vite injects imported `.css` files into the page through a style tag{ref:vite-css}. To repeat the test, run the three commands printed in the measurement README{ref:measured-vite}: `bun install`, `bunx vite build`, then `grep -o 'color-primary:[^;]*' dist/assets/*.css`."
       ]
     },
     {
@@ -92,13 +92,13 @@
     {
       "heading": "Tailwind CSS",
       "body": [
-        "Tailwind documents square-bracket arbitrary properties, which can set any CSS property, including to a `var()` value{ref:tw-custom}. That lets a Tailwind project read the RamosLabs variables after the CSS import above."
+        "Tailwind documents square-bracket arbitrary properties as a way to write completely arbitrary CSS{ref:tw-custom}. Once the CSS import above is in place, the RamosLabs variables are regular CSS custom properties that any CSS can read{ref:ds-install}. This page did not measure a Tailwind build that emits them from arbitrary properties."
       ],
       "code": [
         {
-          "label": "markup",
-          "lang": "html",
-          "source": "<div class=\"[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)]\">...</div>"
+          "label": "CSS entry, imported once",
+          "lang": "css",
+          "source": "@import '@ramoslabs/tokens/css';"
         }
       ]
     },
@@ -116,7 +116,7 @@
     },
     {
       "q": "Can I use the tokens with Tailwind?",
-      "a": "Yes: Tailwind documents arbitrary properties that accept `var()` values{ref:tw-custom}, and the tokens are CSS variables{ref:ds-pkg}."
+      "a": "The tokens are regular CSS variables once the CSS is imported{ref:ds-pkg}, and Tailwind documents arbitrary properties that take completely arbitrary CSS{ref:tw-custom}. This page did not measure a Tailwind build that reads them."
     },
     {
       "q": "Can I use the tokens without npm?",
@@ -177,9 +177,9 @@
     {
       "id": "ds-install",
       "kind": "ds",
-      "title": "Installation: the install and import steps",
-      "publisher": "RamosLabs DS documentation, source at commit 71b8bac",
-      "url": "https://design.ramoslabs.com/installation/",
+      "title": "Installation: the install and import steps (source Installation.md)",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/Installation.md",
       "date": "2026-09-21"
     },
     {
@@ -239,7 +239,7 @@
     {
       "id": "tw-custom",
       "kind": "external",
-      "title": "Tailwind CSS: adding custom styles (arbitrary properties and variables)",
+      "title": "Tailwind CSS: adding custom styles (arbitrary properties and values)",
       "publisher": "Tailwind Labs",
       "url": "https://tailwindcss.com/docs/adding-custom-styles",
       "date": "docs v4.3",
@@ -256,9 +256,9 @@
     {
       "id": "measured-vite",
       "kind": "measured",
-      "title": "Build test: Vite 8.3.5 bundling an entry that imports \"@ramoslabs/tokens/css\" and { colorIndigo600 } from the published @ramoslabs/tokens@0.1.0",
+      "title": "Build test: Vite 8.3.5 bundling an entry that imports \"@ramoslabs/tokens/css\" and { colorIndigo600 } from the published @ramoslabs/tokens@0.1.0; reproduction committed at docs/distribution/measurements/vite-tokens/",
       "publisher": "RamosLabs DS",
-      "url": "https://registry.npmjs.org/@ramoslabs/tokens/0.1.0",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/main/docs/distribution/measurements/vite-tokens/README.md",
       "date": "2026-10-27"
     },
     {

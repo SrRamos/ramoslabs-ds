@@ -114,9 +114,9 @@
     {
       "id": "ds-colors",
       "kind": "ds",
-      "title": "Colors: the foundation page (roles and measured contrast pairings)",
-      "publisher": "RamosLabs DS documentation, source at commit 71b8bac",
-      "url": "https://design.ramoslabs.com/foundations/colors/",
+      "title": "Colors: the foundation page (roles and measured contrast pairings; source Colors.md)",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/foundations/Colors.md",
       "date": "2026-09-21"
     },
     {

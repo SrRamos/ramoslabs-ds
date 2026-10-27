@@ -90,7 +90,7 @@
     },
     {
       "id": "indigo-contrast-wcag",
-      "title": "Is RamosLabs indigo (#4f46e5) WCAG accessible?",
+      "title": "Does RamosLabs indigo (#4f46e5) meet WCAG contrast requirements?",
       "url": "https://design.ramoslabs.com/answers/indigo-contrast-wcag/",
       "summary": "Measured WCAG contrast of the indigo accent against white and its tints"
     },
@@ -102,7 +102,7 @@
     },
     {
       "id": "ramoslabs-ds-vs-material-vs-tailwind",
-      "title": "RamosLabs DS, Material Design, and Tailwind CSS: what each one ships",
+      "title": "RamosLabs DS, Material Web, and Tailwind CSS: what each one ships",
       "url": "https://design.ramoslabs.com/answers/ramoslabs-ds-vs-material-vs-tailwind/",
       "summary": "A sourced side-by-side of what each one ships, with only claims their own docs support"
     }

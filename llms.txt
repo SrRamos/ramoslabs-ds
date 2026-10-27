@@ -14,9 +14,9 @@ color, spacing, typography, radius, shadow, and motion values ship as CSS variab
 ## Answers
 
 - [Which token should I use for muted text?](https://design.ramoslabs.com/answers/muted-text-token/): The muted text token, its measured contrast, and where it fails
-- [Is RamosLabs indigo (#4f46e5) WCAG accessible?](https://design.ramoslabs.com/answers/indigo-contrast-wcag/): Measured WCAG contrast of the indigo accent against white and its tints
+- [Does RamosLabs indigo (#4f46e5) meet WCAG contrast requirements?](https://design.ramoslabs.com/answers/indigo-contrast-wcag/): Measured WCAG contrast of the indigo accent against white and its tints
 - [How do I install the RamosLabs design tokens in Vue, React, or plain HTML?](https://design.ramoslabs.com/answers/install-tokens-vue-react-html/): Copyable install and import steps for Vue, React, and plain HTML
-- [RamosLabs DS, Material Design, and Tailwind CSS: what each one ships](https://design.ramoslabs.com/answers/ramoslabs-ds-vs-material-vs-tailwind/): A sourced side-by-side of what each one ships, with only claims their own docs support
+- [RamosLabs DS, Material Web, and Tailwind CSS: what each one ships](https://design.ramoslabs.com/answers/ramoslabs-ds-vs-material-vs-tailwind/): A sourced side-by-side of what each one ships, with only claims their own docs support
 
 ## Foundations
 

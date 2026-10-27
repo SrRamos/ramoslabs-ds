@@ -1,13 +1,13 @@
 {
   "id": "ramoslabs-ds-vs-material-vs-tailwind",
-  "title": "RamosLabs DS, Material Design, and Tailwind CSS: what each one ships",
-  "summary": "A sourced side-by-side of what RamosLabs DS, Material (Material Web), and Tailwind CSS each provide, with only claims their own docs support.",
-  "short": "RamosLabs DS ships tokens and documented patterns and no components yet{ref:ds-agents}. Material Web is a web-components library on Material 3, in maintenance mode according to its README{ref:md-web}. Tailwind is a utility-first approach whose docs have you build reusable components yourself{ref:tw-utility}. All three expose design tokens as CSS variables{ref:ds-pkg}{ref:md-theming}{ref:tw-theme}.",
+  "title": "RamosLabs DS, Material Web, and Tailwind CSS: what each one ships",
+  "summary": "A sourced side-by-side of what RamosLabs DS, Material Web (@material/web), and Tailwind CSS each provide, with only claims their own docs support.",
+  "short": "RamosLabs DS ships tokens and documented patterns and no components yet{ref:ds-agents}. Material Web is a web-components library on Material 3, in maintenance mode according to its README as of 2026-10-27{ref:md-web}. Tailwind is a utility-first approach whose docs have you build reusable components yourself{ref:tw-utility}. All three expose design tokens as CSS variables{ref:ds-pkg}{ref:md-theming}{ref:tw-theme}.",
   "sections": [
     {
       "heading": "What each one ships",
       "body": [
-        "Every cell cites a primary source. External sources were read on 2026-10-27; Tailwind statements are from its v4.3 docs."
+        "Every cell cites a primary source. External sources were read on 2026-10-27; Tailwind statements are from its v4.3 docs. The Material column describes Material Web (`@material/web`) only; the Material 3 specification site was not consulted, so this page makes no claim about Material Design as a whole."
       ],
       "table": {
         "caption": "Sourced comparison",
@@ -16,7 +16,7 @@
           [
             "What is it?",
             "A mono-indigo design system documented as tokens and patterns{ref:ds-agents}",
-            "Google's open-source design system; its README says Material Web uses Material 3, \"the latest version\"{ref:md-web}",
+            "Material Web is a library of Google's Material components; its README says it uses Material 3, \"the latest version\"{ref:md-web}",
             "A utility-first approach: you combine single-purpose presentational classes in your markup{ref:tw-utility}"
           ],
           [
@@ -43,25 +43,20 @@
     {
       "heading": "Using Tailwind with RamosLabs tokens",
       "body": [
-        "Import the RamosLabs CSS once{ref:ds-install}. Tailwind documents square-bracket arbitrary properties, which accept any CSS including variables{ref:tw-custom}."
+        "Import the RamosLabs CSS once{ref:ds-install}. The variables then exist as regular CSS custom properties that any CSS can read{ref:mdn-var}. Tailwind documents square-bracket arbitrary properties as a way to write completely arbitrary CSS, and its own `var()` example is the arbitrary-value shorthand `fill-(--my-brand-color)`{ref:tw-custom}. Whether a given Tailwind build emits the DS variables in arbitrary properties was not measured here."
       ],
       "code": [
         {
           "label": "CSS entry, imported once",
           "lang": "css",
           "source": "@import '@ramoslabs/tokens/css';"
-        },
-        {
-          "label": "markup",
-          "lang": "html",
-          "source": "<div class=\"[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)]\">...</div>"
         }
       ]
     },
     {
       "heading": "What this means if you need components today",
       "body": [
-        "RamosLabs DS does not ship components yet{ref:ds-agents}. Material Web is a components library, flagged in maintenance mode by its own README{ref:md-web}. Tailwind's docs expect you to build components from utilities{ref:tw-utility}. Check each project's current status before committing; these statements are dated 2026-10-27."
+        "RamosLabs DS does not ship components yet{ref:ds-agents}. Material Web is a components library, flagged in maintenance mode by its own README as of 2026-10-27{ref:md-web}. Tailwind's docs expect you to build components from utilities{ref:tw-utility}. Check each project's current status before committing; these statements are dated 2026-10-27."
       ]
     },
     {
@@ -78,7 +73,7 @@
     },
     {
       "q": "Is Material Web still maintained?",
-      "a": "Its README states \"MWC is in maintenance mode pending new maintainers\"{ref:md-web}. Check the repository for the current state."
+      "a": "Its README states \"MWC is in maintenance mode pending new maintainers\"{ref:md-web}. This is the README wording as of 2026-10-27. Check the repository for the current state."
     },
     {
       "q": "Does Tailwind ship components?",
@@ -86,10 +81,10 @@
     },
     {
       "q": "Can I use RamosLabs tokens with Tailwind?",
-      "a": "Yes: import the CSS once{ref:ds-install} and reference the variables through Tailwind arbitrary properties{ref:tw-custom}."
+      "a": "The tokens are regular CSS variables once the CSS is imported{ref:ds-pkg}{ref:ds-install}, and Tailwind documents arbitrary properties that take completely arbitrary CSS{ref:tw-custom}. This page did not measure a Tailwind build that reads them."
     },
     {
-      "q": "How does Material expose its tokens on the web?",
+      "q": "How does Material Web expose its tokens?",
       "a": "As CSS custom properties; color tokens follow `--md-sys-color-<token>`{ref:md-theming}{ref:md-color}."
     },
     {
@@ -117,9 +112,9 @@
     {
       "id": "ds-install",
       "kind": "ds",
-      "title": "Installation: the install and import steps",
-      "publisher": "RamosLabs DS documentation, source at commit 71b8bac",
-      "url": "https://design.ramoslabs.com/installation/",
+      "title": "Installation: the install and import steps (source Installation.md)",
+      "publisher": "RamosLabs DS repository, commit 71b8bac",
+      "url": "https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/Installation.md",
       "date": "2026-09-21"
     },
     {
@@ -134,7 +129,7 @@
     {
       "id": "tw-custom",
       "kind": "external",
-      "title": "Tailwind CSS: adding custom styles (arbitrary properties and variables)",
+      "title": "Tailwind CSS: adding custom styles (arbitrary properties and values)",
       "publisher": "Tailwind Labs",
       "url": "https://tailwindcss.com/docs/adding-custom-styles",
       "date": "docs v4.3",
@@ -161,7 +156,7 @@
     {
       "id": "md-theming",
       "kind": "external",
-      "title": "material-web: theming (system tokens are CSS custom properties on the web)",
+      "title": "material-web: theming (design tokens are CSS custom properties on the web)",
       "publisher": "Material Components (GitHub)",
       "url": "https://github.com/material-components/material-web/blob/main/docs/theming/README.md",
       "date": "undated doc, main branch",
@@ -192,6 +187,15 @@
       "publisher": "Tailwind Labs",
       "url": "https://tailwindcss.com/docs/theme",
       "date": "docs v4.3",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "mdn-var",
+      "kind": "external",
+      "title": "MDN: var() CSS function",
+      "publisher": "MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var",
+      "date": "last modified 2026-09-10",
       "accessed": "2026-10-27"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "id": "indigo-contrast-wcag",
-  "title": "Is RamosLabs indigo (#4f46e5) WCAG accessible?",
-  "summary": "#4f46e5 on white measures 6.29:1: it meets WCAG AA for text and UI, and falls short of the 7:1 AAA level.",
+  "title": "Does RamosLabs indigo (#4f46e5) meet WCAG contrast requirements?",
+  "summary": "#4f46e5 on white measures 6.29:1: it meets the WCAG AA contrast minimums for text and UI components, and falls short of the 7:1 AAA level.",
   "short": "Yes for AA. `--color-primary` (#4f46e5){ref:ds-tokens} measures 6.29:1 on white{ref:measured}: above the 4.5:1 minimum for normal text{ref:sc143} and the 3:1 minimum for UI components{ref:sc1411}, and below the 7:1 of the Enhanced level{ref:sc146}. White text on `--color-primary-dark` (#4338ca) measures 7.90:1{ref:measured}, which clears 7:1.",
   "sections": [
     {

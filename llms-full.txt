@@ -540,13 +540,13 @@ No. Reference `var(--color-text-muted)` after importing `@ramoslabs/tokens/css` 
 ## References
 
 1. Source tokens: color.primitive.json and color.semantic.json (@ramoslabs/tokens). RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/tree/71b8bac/packages/tokens/src/tokens
-2. Colors: the foundation page (roles and measured contrast pairings). RamosLabs DS documentation, source at commit 71b8bac. 2026-09-21. https://design.ramoslabs.com/foundations/colors/
+2. Colors: the foundation page (roles and measured contrast pairings; source Colors.md). RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/foundations/Colors.md
 3. AGENTS.md: accessibility floors, the hard rule, and component status. RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md
 4. WCAG 2.2: definitions of relative luminance and contrast ratio. W3C. W3C Recommendation, 2024-12-12; accessed 2026-10-27. https://www.w3.org/TR/WCAG22/#dfn-relative-luminance
 5. Understanding SC 1.4.3: Contrast (Minimum). W3C WAI. updated 2026-09-06; accessed 2026-10-27. https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
 6. Contrast ratios computed from the token hex values with the script on this page (WCAG relative-luminance and contrast-ratio formulas), rounded to two decimals. RamosLabs DS. 2026-10-27. https://design.ramoslabs.com/answers/muted-text-token/#reproduce-the-numbers
 
-# Is RamosLabs indigo (#4f46e5) WCAG accessible?
+# Does RamosLabs indigo (#4f46e5) meet WCAG contrast requirements?
 
 Source: https://design.ramoslabs.com/answers/indigo-contrast-wcag/
 
@@ -701,7 +701,7 @@ Install commands
 
 The package defines subpath exports: the root for typed values, `./css` for the CSS variables, and `./json` for the flat map [2]. Node resolves only the subpaths a package defines in `exports` [4].
 
-Test result, showing a bundler resolving them too: a Vite 8.3.5 project that imported `@ramoslabs/tokens/css` and `colorIndigo600` from the published 0.1.0 built successfully, and the output CSS contained `--color-primary:#4f46e5` [12]. Vite injects imported `.css` files into the page through a style tag [5].
+Test result, showing a bundler resolving them too: a Vite 8.3.5 project that imported `@ramoslabs/tokens/css` and `colorIndigo600` from the published 0.1.0 built successfully, and the output CSS contained `--color-primary:#4f46e5` [12]. In development, Vite injects imported `.css` files into the page through a style tag [5]. To repeat the test, run the three commands printed in the measurement README [12]: `bun install`, `bunx vite build`, then `grep -o 'color-primary:[^;]*' dist/assets/*.css`.
 
 ## Vue 3 (Vite)
 
@@ -830,12 +830,12 @@ export const brandAccent = colorIndigo600
 
 ## Tailwind CSS
 
-Tailwind documents square-bracket arbitrary properties, which can set any CSS property, including to a `var()` value [10]. That lets a Tailwind project read the RamosLabs variables after the CSS import above.
+Tailwind documents square-bracket arbitrary properties as a way to write completely arbitrary CSS [10]. Once the CSS import above is in place, the RamosLabs variables are regular CSS custom properties that any CSS can read [3]. This page did not measure a Tailwind build that emits them from arbitrary properties.
 
-markup:
+CSS entry, imported once:
 
-```html
-<div class="[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)]">...</div>
+```css
+@import '@ramoslabs/tokens/css';
 ```
 
 ## Components
@@ -857,7 +857,7 @@ No. Import it once at the app entry or root layout [3].
 
 **Can I use the tokens with Tailwind?**
 
-Yes: Tailwind documents arbitrary properties that accept `var()` values [10], and the tokens are CSS variables [2].
+The tokens are regular CSS variables once the CSS is imported [2], and Tailwind documents arbitrary properties that take completely arbitrary CSS [10]. This page did not measure a Tailwind build that reads them.
 
 **Can I use the tokens without npm?**
 
@@ -879,40 +879,40 @@ No. The DS hard rule is to never hardcode a color, spacing, typography, radius, 
 
 1. npm registry record for @ramoslabs/tokens (license MIT; 0.1.0 is the only version). npm. 0.1.0 published 2026-07-08; accessed 2026-10-27. https://registry.npmjs.org/@ramoslabs/tokens
 2. packages/tokens/package.json: the exports map (".", "./css", "./json"). RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/packages/tokens/package.json
-3. Installation: the install and import steps. RamosLabs DS documentation, source at commit 71b8bac. 2026-09-21. https://design.ramoslabs.com/installation/
+3. Installation: the install and import steps (source Installation.md). RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/Installation.md
 4. Node.js packages: "exports" and subpath exports. Node.js. Node.js v26.12.1 docs; accessed 2026-10-27. https://nodejs.org/api/packages.html#subpath-exports
 5. Vite: Features, CSS (importing .css from JavaScript). Vite. docs v8.3.4; accessed 2026-10-27. https://vite.dev/guide/features.html#css
 6. Vue: Creating a Vue Application. Vue. undated docs page; accessed 2026-10-27. https://vuejs.org/guide/essentials/application.html
 7. React: createRoot. React. undated docs page; accessed 2026-10-27. https://react.dev/reference/react-dom/client/createRoot
 8. MDN: the link element (rel="stylesheet"). MDN. last modified 2026-05-20; accessed 2026-10-27. https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link
 9. MDN: var() CSS function. MDN. last modified 2026-09-10; accessed 2026-10-27. https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var
-10. Tailwind CSS: adding custom styles (arbitrary properties and variables). Tailwind Labs. docs v4.3; accessed 2026-10-27. https://tailwindcss.com/docs/adding-custom-styles
+10. Tailwind CSS: adding custom styles (arbitrary properties and values). Tailwind Labs. docs v4.3; accessed 2026-10-27. https://tailwindcss.com/docs/adding-custom-styles
 11. AGENTS.md: accessibility floors, the hard rule, and component status. RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md
-12. Build test: Vite 8.3.5 bundling an entry that imports "@ramoslabs/tokens/css" and { colorIndigo600 } from the published @ramoslabs/tokens@0.1.0. RamosLabs DS. 2026-10-27. https://registry.npmjs.org/@ramoslabs/tokens/0.1.0
+12. Build test: Vite 8.3.5 bundling an entry that imports "@ramoslabs/tokens/css" and { colorIndigo600 } from the published @ramoslabs/tokens@0.1.0; reproduction committed at docs/distribution/measurements/vite-tokens/. RamosLabs DS. 2026-10-27. https://github.com/SrRamos/ramoslabs-ds/blob/main/docs/distribution/measurements/vite-tokens/README.md
 13. HTTP check: GET https://design.ramoslabs.com/tokens.css returned 200 text/css, and /tokens.json returned 200 application/json. RamosLabs DS. 2026-10-27. https://design.ramoslabs.com/tokens.css
 
-# RamosLabs DS, Material Design, and Tailwind CSS: what each one ships
+# RamosLabs DS, Material Web, and Tailwind CSS: what each one ships
 
 Source: https://design.ramoslabs.com/answers/ramoslabs-ds-vs-material-vs-tailwind/
 
-**Short answer:** RamosLabs DS ships tokens and documented patterns and no components yet [1]. Material Web is a web-components library on Material 3, in maintenance mode according to its README [6]. Tailwind is a utility-first approach whose docs have you build reusable components yourself [10]. All three expose design tokens as CSS variables [2] [8] [11].
+**Short answer:** RamosLabs DS ships tokens and documented patterns and no components yet [1]. Material Web is a web-components library on Material 3, in maintenance mode according to its README as of 2026-10-27 [6]. Tailwind is a utility-first approach whose docs have you build reusable components yourself [10]. All three expose design tokens as CSS variables [2] [8] [11].
 
 ## What each one ships
 
-Every cell cites a primary source. External sources were read on 2026-10-27; Tailwind statements are from its v4.3 docs.
+Every cell cites a primary source. External sources were read on 2026-10-27; Tailwind statements are from its v4.3 docs. The Material column describes Material Web (`@material/web`) only; the Material 3 specification site was not consulted, so this page makes no claim about Material Design as a whole.
 
 Sourced comparison
 
 | Question | RamosLabs DS | Material (Material Web) | Tailwind CSS |
 | --- | --- | --- | --- |
-| What is it? | A mono-indigo design system documented as tokens and patterns [1] | Google's open-source design system; its README says Material Web uses Material 3, "the latest version" [6] | A utility-first approach: you combine single-purpose presentational classes in your markup [10] |
+| What is it? | A mono-indigo design system documented as tokens and patterns [1] | Material Web is a library of Google's Material components; its README says it uses Material 3, "the latest version" [6] | A utility-first approach: you combine single-purpose presentational classes in your markup [10] |
 | Ready-made components? | Not shipped yet; planned as `@ramoslabs/vue` with the `SJ` prefix [1] | `@material/web` is a library of web components; its README says "MWC is in maintenance mode pending new maintainers" [6] | Its docs describe building reusable components yourself, with a framework component, a template partial, or custom CSS [10] |
 | Tokens as CSS variables? | Compiled to CSS variables, typed values and flat JSON; `./css`, `./json` and the root are exported [2] | On the web, design tokens are CSS custom properties [8] | Theme variables defined with `@theme` are compiled into regular CSS variables [11] |
 | How is color organized? | One action accent, Indigo 600 (#4f46e5); violet is decorative only [1] | Color roles assigned to components, as `--md-sys-color-<token>`; each has an `on` token for content color with accessible contrast [7]. Schemes can be generated from a single color with `material-color-utilities` [9] | Importing `tailwindcss` includes a default theme with a color palette, type scale, shadows and fonts; you add colors as theme variables such as `--color-mint-500` [11] |
 
 ## Using Tailwind with RamosLabs tokens
 
-Import the RamosLabs CSS once [3]. Tailwind documents square-bracket arbitrary properties, which accept any CSS including variables [5].
+Import the RamosLabs CSS once [3]. The variables then exist as regular CSS custom properties that any CSS can read [12]. Tailwind documents square-bracket arbitrary properties as a way to write completely arbitrary CSS, and its own `var()` example is the arbitrary-value shorthand `fill-(--my-brand-color)` [5]. Whether a given Tailwind build emits the DS variables in arbitrary properties was not measured here.
 
 CSS entry, imported once:
 
@@ -920,15 +920,9 @@ CSS entry, imported once:
 @import '@ramoslabs/tokens/css';
 ```
 
-markup:
-
-```html
-<div class="[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)]">...</div>
-```
-
 ## What this means if you need components today
 
-RamosLabs DS does not ship components yet [1]. Material Web is a components library, flagged in maintenance mode by its own README [6]. Tailwind's docs expect you to build components from utilities [10]. Check each project's current status before committing; these statements are dated 2026-10-27.
+RamosLabs DS does not ship components yet [1]. Material Web is a components library, flagged in maintenance mode by its own README as of 2026-10-27 [6]. Tailwind's docs expect you to build components from utilities [10]. Check each project's current status before committing; these statements are dated 2026-10-27.
 
 ## What was not compared
 
@@ -942,7 +936,7 @@ Not yet. They are planned as `@ramoslabs/vue` with the `SJ` prefix [1].
 
 **Is Material Web still maintained?**
 
-Its README states "MWC is in maintenance mode pending new maintainers" [6]. Check the repository for the current state.
+Its README states "MWC is in maintenance mode pending new maintainers" [6]. This is the README wording as of 2026-10-27. Check the repository for the current state.
 
 **Does Tailwind ship components?**
 
@@ -950,9 +944,9 @@ Its docs describe building reusable components yourself from utilities [10].
 
 **Can I use RamosLabs tokens with Tailwind?**
 
-Yes: import the CSS once [3] and reference the variables through Tailwind arbitrary properties [5].
+The tokens are regular CSS variables once the CSS is imported [2] [3], and Tailwind documents arbitrary properties that take completely arbitrary CSS [5]. This page did not measure a Tailwind build that reads them.
 
-**How does Material expose its tokens on the web?**
+**How does Material Web expose its tokens?**
 
 As CSS custom properties; color tokens follow `--md-sys-color-<token>` [8] [7].
 
@@ -964,15 +958,16 @@ Yes, under the MIT license [4].
 
 1. AGENTS.md: accessibility floors, the hard rule, and component status. RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/AGENTS.md
 2. packages/tokens/package.json: the exports map (".", "./css", "./json"). RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/packages/tokens/package.json
-3. Installation: the install and import steps. RamosLabs DS documentation, source at commit 71b8bac. 2026-09-21. https://design.ramoslabs.com/installation/
+3. Installation: the install and import steps (source Installation.md). RamosLabs DS repository, commit 71b8bac. 2026-09-21. https://github.com/SrRamos/ramoslabs-ds/blob/71b8bac/apps/site/agentic/content/Installation.md
 4. npm registry record for @ramoslabs/tokens (license MIT; 0.1.0 is the only version). npm. 0.1.0 published 2026-07-08; accessed 2026-10-27. https://registry.npmjs.org/@ramoslabs/tokens
-5. Tailwind CSS: adding custom styles (arbitrary properties and variables). Tailwind Labs. docs v4.3; accessed 2026-10-27. https://tailwindcss.com/docs/adding-custom-styles
+5. Tailwind CSS: adding custom styles (arbitrary properties and values). Tailwind Labs. docs v4.3; accessed 2026-10-27. https://tailwindcss.com/docs/adding-custom-styles
 6. material-web README: what @material/web is and its status. Material Components (GitHub). undated README, main branch; accessed 2026-10-27. https://github.com/material-components/material-web/blob/main/README.md
 7. material-web: color theming (color roles and --md-sys-color tokens). Material Components (GitHub). undated doc, main branch; accessed 2026-10-27. https://github.com/material-components/material-web/blob/main/docs/theming/color.md
-8. material-web: theming (system tokens are CSS custom properties on the web). Material Components (GitHub). undated doc, main branch; accessed 2026-10-27. https://github.com/material-components/material-web/blob/main/docs/theming/README.md
+8. material-web: theming (design tokens are CSS custom properties on the web). Material Components (GitHub). undated doc, main branch; accessed 2026-10-27. https://github.com/material-components/material-web/blob/main/docs/theming/README.md
 9. material-color-utilities README. Material Foundation (GitHub). undated README, main branch; accessed 2026-10-27. https://github.com/material-foundation/material-color-utilities
 10. Tailwind CSS: styling with utility classes. Tailwind Labs. docs v4.3; accessed 2026-10-27. https://tailwindcss.com/docs/styling-with-utility-classes
 11. Tailwind CSS: theme variables. Tailwind Labs. docs v4.3; accessed 2026-10-27. https://tailwindcss.com/docs/theme
+12. MDN: var() CSS function. MDN. last modified 2026-09-10; accessed 2026-10-27. https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var
 
 # Colors
 
