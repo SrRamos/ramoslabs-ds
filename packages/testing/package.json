@@ -13,6 +13,7 @@
     "size": "node size/cli.js",
     "test": "vitest run",
     "test:e2e": "playwright test -c e2e/runner/playwright.config.ts",
+    "test:e2e:aria": "playwright test -c e2e/aria/playwright.config.ts",
     "test:coverage": "vitest run --coverage"
   },
   "exports": {
