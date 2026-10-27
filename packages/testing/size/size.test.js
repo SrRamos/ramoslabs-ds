@@ -1,4 +1,4 @@
-import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
 import { randomBytes } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -23,6 +23,8 @@ describe('size harness (ADR-011)', () => {
     const { rows } = await runSize({ root: defaultRoot });
     const fixture = rows.find((r) => r.id === 'fixture');
     expect(fixture?.gzipBytes).toBe(0);
+    // The bundle itself must be non-empty, otherwise 0 would prove nothing.
+    expect(fixture?.bundleRawBytes).toBeGreaterThan(0);
     expect(fixture?.graph.some((p) => p.endsWith('consumer.ts'))).toBe(true);
   });
 
@@ -52,11 +54,15 @@ describe('size harness (ADR-011)', () => {
     expect(rows[0].gzipBytes).toBeGreaterThan(1024);
   });
 
-  it('fails when an unused fixture component leaks into the bundle', async () => {
+  it('fails when the shipped fixture leaks its unused component', async () => {
     const root = mkdtempSync(join(tmpdir(), 'size-leak-'));
-    writeFileSync(join(root, 'b.ts'), `export const b = () => 'leaked' + Date.now();`);
-    writeFileSync(join(root, 'consumer.ts'), `import { b } from './b';\nconsole.log(b());`);
-    const { failed } = await runSize({
+    const rel = 'packages/testing/size/fixtures/unused-component';
+    cpSync(join(defaultRoot, rel), join(root, rel), { recursive: true });
+    writeFileSync(
+      join(root, rel, 'consumer.ts'),
+      `import { componentA, componentB } from './index';\nexport const used = [componentA(), componentB()];\n`,
+    );
+    const { rows, failed } = await runSize({
       root,
       budgets: {
         rows: [
@@ -64,7 +70,7 @@ describe('size harness (ADR-011)', () => {
             id: 'fixture',
             label: 'leak',
             ceilingKiB: 0,
-            fixture: { entry: 'consumer.ts', unused: 'b.ts' },
+            fixture: { entry: `${rel}/consumer.ts`, unused: `${rel}/b.ts` },
           },
         ],
         sharedModules: [],
@@ -73,5 +79,6 @@ describe('size harness (ADR-011)', () => {
       },
     });
     expect(failed).toBe(true);
+    expect(rows[0].gzipBytes).toBeGreaterThan(0);
   });
 });

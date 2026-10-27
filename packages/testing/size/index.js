@@ -7,7 +7,7 @@ import { KIB, externalizeShared, measure } from './measure.js';
 const here = dirname(fileURLToPath(import.meta.url));
 export const defaultRoot = resolve(here, '../../..');
 
-/** @typedef {{ id: string, label: string, kind: 'shared' | 'component' | 'fixture' | 'adapter', gzipBytes: number, rawBytes: number, ceilingKiB: number | null, status: 'pass' | 'fail' | 'reported', detail?: string, graph: string[] }} Row */
+/** @typedef {{ id: string, label: string, kind: 'shared' | 'component' | 'fixture' | 'adapter', gzipBytes: number, rawBytes: number, ceilingKiB: number | null, status: 'pass' | 'fail' | 'reported', detail?: string, bundleRawBytes?: number, graph: string[] }} Row */
 
 /** @param {number} bytes */
 const kib = (bytes) => bytes / KIB;
@@ -34,7 +34,7 @@ export async function runSize(options = {}) {
       const r = await measure({
         root,
         resolveDir: dirname(entry),
-        contents: `import ${JSON.stringify(entry)};`,
+        contents: `export * from ${JSON.stringify(entry)};`,
       });
       const bytes = r.bytesInOutput[unused] ?? 0;
       const ok = kib(bytes) <= row.ceilingKiB;
@@ -47,6 +47,7 @@ export async function runSize(options = {}) {
         ceilingKiB: row.ceilingKiB,
         status: ok ? 'pass' : 'fail',
         detail: `bytes of the unused component in the bundle: ${bytes}`,
+        bundleRawBytes: r.rawBytes,
         graph: r.graph,
       });
       continue;

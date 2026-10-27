@@ -1,3 +1,3 @@
 import { componentA } from './index';
 
-console.log(componentA());
+export const used = componentA();
