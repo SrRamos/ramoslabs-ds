@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>IME fixture</title>
+  </head>
+  <body>
+    <label for="field">Search</label>
+    <input
+      id="field"
+      type="text"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-expanded="true"
+      aria-controls="list"
+      autocomplete="off"
+    />
+    <ul id="list" role="listbox" aria-label="Results"></ul>
+    <script type="module" src="/ime.js"></script>
+  </body>
+</html>
