@@ -2,6 +2,8 @@
 // Pure and fs-free: the integration loads the JSON, this module shapes it. The worker (MCP) and
 // the lint tests import the same types, so `registry.json` has one definition.
 
+import { atWording } from '../../../packages/contracts/scripts/at-wording.mjs';
+
 export type AnatomyPart = {
   part: string;
   element: string;
@@ -19,6 +21,8 @@ export type AtRow = {
   log?: string;
   evidence: string[];
 };
+/** An atSupport row as registry.json prints it: the contract row plus the only permitted wording. */
+export type AtRowOut = AtRow & { statement: string };
 
 export type SupportRow = { feature: string; nativeFrom: unknown; fallbackUntil?: unknown };
 
@@ -59,7 +63,7 @@ export type RegistryComponent = {
   keyboard: ContractJson['keyboard'];
   kinds: string[];
   supportFloor: SupportRow[];
-  atSupport: AtRow[];
+  atSupport: AtRowOut[];
   docs: DocLink[];
 };
 
@@ -111,6 +115,7 @@ export function buildComponents(
           ...(r.tested_on === undefined ? {} : { tested_on: r.tested_on }),
           ...(r.log === undefined ? {} : { log: r.log }),
           evidence: r.evidence,
+          statement: atWording(r),
         })),
         docs: docLinks[slug] ?? [],
       };

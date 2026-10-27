@@ -326,6 +326,26 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--z-tooltip` | `800` |
 | `--z-toast` | `900` |
 
+## Component assistive-technology support (generated from the contracts)
+
+Per AT and platform status, copied from each contract (ADR-010, ADR-015). Wording is fixed by status.
+
+### SJButton
+
+- voiceover / macos / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
+- voiceover / ios / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
+- nvda / windows / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+- jaws / windows / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+- talkback / android / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+
+### SJSwitch
+
+- voiceover / macos / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
+- voiceover / ios / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
+- nvda / windows / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+- jaws / windows / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+- talkback / android / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+
 # Introduction
 
 Source: https://design.ramoslabs.com/

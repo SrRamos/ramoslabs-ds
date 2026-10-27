@@ -162,7 +162,8 @@
           "test_status": "pending-real-test",
           "evidence": [
             "at-support/button.json#vo-macos-safari-ariaat539"
-          ]
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
         },
         {
           "at": "voiceover",
@@ -171,7 +172,8 @@
           "test_status": "pending-real-test",
           "evidence": [
             "at-support/button.json#vo-ios-safari-a11ysupport-button"
-          ]
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
         },
         {
           "at": "nvda",
@@ -180,7 +182,8 @@
           "test_status": "evidence-only",
           "evidence": [
             "at-support/button.json#nvda-chrome-ariaat541"
-          ]
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
         },
         {
           "at": "jaws",
@@ -189,7 +192,8 @@
           "test_status": "evidence-only",
           "evidence": [
             "at-support/button.json#jaws-chrome-ariaat567"
-          ]
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
         },
         {
           "at": "talkback",
@@ -198,7 +202,8 @@
           "test_status": "evidence-only",
           "evidence": [
             "at-support/button.json#talkback-chrome-a11ysupport-button"
-          ]
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
         }
       ],
       "docs": []
@@ -259,7 +264,8 @@
           "test_status": "pending-real-test",
           "evidence": [
             "at-support/switch.json#vo-macos-safari-ariaat561"
-          ]
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
         },
         {
           "at": "voiceover",
@@ -268,7 +274,8 @@
           "test_status": "pending-real-test",
           "evidence": [
             "at-support/switch.json#vo-ios-safari-apg-switch"
-          ]
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
         },
         {
           "at": "nvda",
@@ -277,7 +284,8 @@
           "test_status": "evidence-only",
           "evidence": [
             "at-support/switch.json#nvda-chrome-ariaat562"
-          ]
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
         },
         {
           "at": "jaws",
@@ -286,7 +294,8 @@
           "test_status": "evidence-only",
           "evidence": [
             "at-support/switch.json#jaws-chrome-ariaat563"
-          ]
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
         },
         {
           "at": "talkback",
@@ -295,7 +304,8 @@
           "test_status": "evidence-only",
           "evidence": [
             "at-support/switch.json#talkback-chrome-apg-switch"
-          ]
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
         }
       ],
       "docs": []

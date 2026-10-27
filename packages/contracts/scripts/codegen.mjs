@@ -9,6 +9,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as prettier from 'prettier';
 import { validateContract, validateKinds } from './validate.mjs';
+import { atWording } from './at-wording.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const contractsRoot = resolve(here, '..');
@@ -165,11 +166,18 @@ export const ${n.camel}Aria = {
 } as const;
 `;
 
-  const index = `${header(src)}export * from './machine';\nexport * from './keyboard';\nexport * from './aria';\n`;
+  const atRows = c.a11y.atSupport.map((r) => ({ ...r, statement: atWording(r) }));
+  const atFile = `${header(src)}// ${c.name} assistive-technology support, per AT and platform (ADR-010, ADR-015).
+// \`test_status\` is copied from the contract; \`statement\` is the only wording docs may print for the row.
+export const ${n.camel}AtSupport = ${JSON.stringify(atRows)} as const;
+`;
+
+  const index = `${header(src)}export * from './machine';\nexport * from './keyboard';\nexport * from './aria';\nexport * from './at-support';\n`;
   return {
     [`${n.slug}/machine.ts`]: machine,
     [`${n.slug}/keyboard.ts`]: keyboard,
     [`${n.slug}/aria.ts`]: ariaFile,
+    [`${n.slug}/at-support.ts`]: atFile,
     [`${n.slug}/index.ts`]: index,
   };
 }

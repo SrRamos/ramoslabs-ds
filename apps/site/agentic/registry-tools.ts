@@ -30,6 +30,9 @@ export function listComponents(reg: Registry) {
         platform: r.platform,
         browser: r.browser,
         test_status: r.test_status,
+        ...(r.tested_on === undefined ? {} : { tested_on: r.tested_on }),
+        ...(r.log === undefined ? {} : { log: r.log }),
+        statement: r.statement,
       })),
     })),
   };
