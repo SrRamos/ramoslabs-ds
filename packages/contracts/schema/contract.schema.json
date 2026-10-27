@@ -1,0 +1,359 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "title": "RamosLabs component contract v1",
+  "description": "ADR-010 component contract. One per component; feeds codegen, registry, shared tests, lint and MCP.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "name",
+    "contractVersion",
+    "status",
+    "pattern",
+    "anatomy",
+    "state",
+    "actions",
+    "keyboard",
+    "focus",
+    "kinds",
+    "runtime",
+    "support",
+    "a11y",
+    "events",
+    "props",
+    "slots",
+    "fixtures",
+    "budgets"
+  ],
+  "properties": {
+    "$schema": { "const": "https://design.ramoslabs.com/schema/contract.v1.json" },
+    "name": { "type": "string", "pattern": "^SJ[A-Z][A-Za-z0-9]*$" },
+    "contractVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "status": { "enum": ["draft", "beta", "stable"] },
+    "pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["apg"],
+      "properties": {
+        "apg": { "$ref": "#/$defs/slug" },
+        "native": { "$ref": "#/$defs/slug" }
+      }
+    },
+    "anatomy": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/anatomyPart" }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["machine", "controllable"],
+      "properties": {
+        "machine": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/slug" }
+        },
+        "controllable": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "keyboard": {
+      "type": "object",
+      "description": "Per anatomy part: key name to action id or movement. `typeahead` is a strategy, not a key.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": "string", "minLength": 1 }
+      }
+    },
+    "focus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy"],
+      "properties": {
+        "strategy": { "enum": ["roving", "activedescendant", "native", "native-roving"] },
+        "owner": { "$ref": "#/$defs/slug" }
+      },
+      "if": {
+        "properties": { "strategy": { "enum": ["roving", "activedescendant", "native-roving"] } }
+      },
+      "then": { "required": ["owner"] }
+    },
+    "kinds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" }
+    },
+    "runtime": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "enum": ["locale", "dir", "idPrefix", "supports", "scheduler"] }
+    },
+    "nativeFallback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["touch", "equivalence"],
+      "properties": {
+        "touch": { "$ref": "#/$defs/slug" },
+        "equivalence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["name", "value", "formState"] }
+        },
+        "customRequires": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "overlay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["popover", "dialog"] },
+        "placement": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "positionArea": { "type": "string", "minLength": 1 },
+            "tryFallbacks": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+            "tryOrder": { "type": "string", "minLength": 1 },
+            "visibility": { "type": "string", "minLength": 1 }
+          }
+        },
+        "listboxMount": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["default"],
+          "properties": {
+            "default": { "enum": ["top-layer", "inline"] },
+            "byAnyPointer": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "coarse": { "enum": ["top-layer", "inline"] },
+                "fine": { "enum": ["top-layer", "inline"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "support": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/support" }
+    },
+    "a11y": { "$ref": "#/$defs/a11y" },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "payload"],
+        "properties": {
+          "name": { "$ref": "#/$defs/identifier" },
+          "payload": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "props": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "type"],
+        "properties": {
+          "name": { "$ref": "#/$defs/identifier" },
+          "type": { "type": "string", "minLength": 1 },
+          "default": {},
+          "required": { "type": "boolean" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": { "$ref": "#/$defs/identifier" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gzipKiB", "shared"],
+      "properties": {
+        "gzipKiB": { "type": "number", "exclusiveMinimum": 0 },
+        "shared": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/slug" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "slug": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+    "identifier": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*$" },
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "evidenceRef": {
+      "type": "string",
+      "description": "Registry reference: at-support/<pattern-file>.json#<entry-id>",
+      "pattern": "^at-support/[a-z0-9]+(-[a-z0-9]+)*\\.json#[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "attrMap": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "anatomyPart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["part", "element"],
+      "properties": {
+        "part": { "$ref": "#/$defs/slug" },
+        "element": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "role": { "type": "string", "pattern": "^[a-z]+$" },
+        "native": { "type": "boolean" },
+        "attributes": {
+          "description": "Static attributes the part always carries (for example type=checkbox).",
+          "$ref": "#/$defs/attrMap"
+        },
+        "mount": { "enum": ["inline", "overlay"] },
+        "repeats": { "type": "boolean" }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "from", "to"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "from": { "$ref": "#/$defs/slug" },
+        "to": { "$ref": "#/$defs/slug" },
+        "emit": { "$ref": "#/$defs/identifier" },
+        "focus": { "type": "string", "minLength": 1 },
+        "aria": {
+          "description": "Per part: ARIA attribute values after the action.",
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/attrMap" }
+        },
+        "dom": {
+          "description": "Per part: native DOM properties after the action (for example checked), for parts whose state is native and must not be mirrored in ARIA.",
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/attrMap" }
+        }
+      }
+    },
+    "support": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feature", "nativeFrom"],
+      "properties": {
+        "feature": { "$ref": "#/$defs/slug" },
+        "nativeFrom": { "$ref": "#/$defs/engines" },
+        "fallbackUntil": { "$ref": "#/$defs/engines" }
+      }
+    },
+    "engines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chromium", "firefox", "safari"],
+      "properties": {
+        "chromium": { "type": "integer", "minimum": 1 },
+        "firefox": { "type": "integer", "minimum": 1 },
+        "safari": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "a11y": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wcag", "liveRegions", "atAssertions", "atSupport"],
+      "properties": {
+        "wcag": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^\\d\\.\\d{1,2}\\.\\d{1,2}$" }
+        },
+        "liveRegions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "politeness"],
+            "properties": {
+              "id": { "$ref": "#/$defs/slug" },
+              "politeness": { "enum": ["polite", "assertive"] }
+            }
+          }
+        },
+        "atAssertions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/slug" }
+        },
+        "atSupport": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/atSupport" }
+        }
+      }
+    },
+    "atSupport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["at", "platform", "browser", "test_status", "evidence"],
+      "properties": {
+        "at": { "enum": ["voiceover", "nvda", "jaws", "talkback", "narrator"] },
+        "platform": { "enum": ["macos", "ios", "windows", "android"] },
+        "browser": { "enum": ["safari", "chrome", "firefox", "edge"] },
+        "test_status": { "enum": ["tested-real", "evidence-only", "pending-real-test"] },
+        "evidence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        },
+        "tested_on": { "$ref": "#/$defs/date" },
+        "log": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "test_status": { "const": "tested-real" } } },
+          "then": {
+            "required": ["tested_on", "log"],
+            "properties": { "at": { "const": "voiceover" } }
+          },
+          "else": { "not": { "anyOf": [{ "required": ["tested_on"] }, { "required": ["log"] }] } }
+        },
+        {
+          "if": { "properties": { "test_status": { "const": "pending-real-test" } } },
+          "else": { "properties": { "evidence": { "type": "array", "minItems": 1 } } }
+        }
+      ]
+    }
+  }
+}
