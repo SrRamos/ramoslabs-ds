@@ -1,0 +1,3 @@
+# SHA-256 digests (lowercase hex, one per line) of normalized prior-brand terms (trimmed, lower
+# case). Digests only: the terms must never be written here (BRIEF constraint 1). Terms can also
+# come from RAMOSLABS_DENYLIST_SHA256 or a file named by RAMOSLABS_DENYLIST_FILE. See denylist.js.
