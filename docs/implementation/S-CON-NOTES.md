@@ -81,3 +81,5 @@ None. All 12 registry files validate and the two shipped contracts (button, swit
 
 - Wave-2 contracts for select/tabs etc. will exercise the listboxMount and nativeOnTouch paths for the first time (only the unit tests cover them today).
 - If kimi-ds changes the registry shape (e.g. adds fields), `at-support.schema.json` is `additionalProperties: false` and will fail loudly; that is intended, the schema is then the one to amend.
+
+W1-315 follow-up: the per-AT loop in `at-validate.mjs` now fails a pair declared `no-measured-evidence` when the file holds an observation for that AT/platform (error at `/recommended/atEvidence/<key>`, the fifth E3-SHOULD-3 check, ds-fable R3 file-level check). Seeded by a radio-group-shaped fixture (`voiceover-ios` + `vo-ios-safari-a11ysupport-radio`) in `at-validate.test.js`. The registry is untouched; all real files pass.
