@@ -1,0 +1,17 @@
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: '*.{js,mjs,ts,vue}'
+      run: bunx --no-install eslint {staged_files}
+    prettier:
+      glob: '*.{js,mjs,ts,vue,json,css,md,yml,yaml}'
+      run: bunx --no-install prettier --check {staged_files}
+    stylelint:
+      glob: '*.css'
+      run: bunx --no-install stylelint {staged_files}
+
+commit-msg:
+  commands:
+    conventional:
+      run: node scripts/check-commit-msg.mjs {1}
