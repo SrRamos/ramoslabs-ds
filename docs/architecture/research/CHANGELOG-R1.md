@@ -65,6 +65,7 @@ Research and verification date: 2026-10-27. Finding IDs refer to `audits/AUDIT-r
 | 07 | NICE 9–10 | Added JSON Schema/registry generation in CI and BCD dataset version to the evidence manifest. | Existing machine-readable contract; [BCD, 2026-10-27](https://github.com/mdn/browser-compat-data) |
 
 LISTO-R1
+
 ## Post-R2 required corrections
 
 - 03 "Dated mobile quirk log": WebKit 284804 date corrected to 2024-12-17 (text and citation).
