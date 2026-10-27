@@ -12,8 +12,10 @@ export default tseslint.config(
       '**/.astro/**',
       '**/.turbo/**',
       '**/storybook-static/**',
-      // Docs site and Storybook are linted by their own toolchain (stylelint, Astro).
-      'apps/**',
+      // Storybook is stories only; the site's .astro/.vue files use stylelint. Site TypeScript is linted.
+      'apps/storybook/**',
+      'apps/site/public/**',
+      'apps/site/src/components/icons/icons.generated.ts',
       // Seeded-violation fixtures are inputs to tests, not source.
       '**/fixtures/**',
     ],
@@ -22,6 +24,10 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   {
     languageOptions: { globals: { ...globals.node } },
+  },
+  {
+    files: ['apps/site/src/**/*.ts'],
+    languageOptions: { globals: { ...globals.browser } },
   },
   {
     // Browser-facing sources may use DOM globals; core is held to the boundary rules below.
