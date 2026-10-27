@@ -61,3 +61,15 @@ NICE-1 gates renumbered G0, G1, G2, G3A-E, G4, G5. NICE-2 task counts removed. N
 | P-NICE-2 | W1-505 depends on each component's `.a` contract |
 
 STATUS: REVISION-1-FOR-AUDIT
+
+## G0 audit follow-ups
+
+Source: `/Users/srramos/projects/ramoslabs-ds-m0/AUDIT-G0.md` (2026-10-27). Applied as plan amendments.
+
+| Finding | Amendment | Plan change |
+|---|---|---|
+| SHOULD-1 | W1-009 is executed on the architecture branch (done, no dependencies). It is a precondition of G1, not G0, because W1-113 (M1) writes `docs/architecture/evidence/kernel-sizes.md` and W1-501, W1-504, W1-505 and W1-508 depend on it. G0 now reads "W1-001..008 done"; G1 adds "W1-009 done". | Section 2 W1-009 row; gate table G0 and G1 |
+| NICE-1 | W1-006 wires two lines into `eslint.config.js`, which W1-001 owns. This is the one exception to root-file ownership, intended as a pre-wired import in W1-001 and harmless because the work was serial. | Section 2 W1-001 and W1-006 file cells |
+| NICE-3 | `@ramoslabs/css` lists `tokens` as a peer, not a dependency (ADR-002). W1-509 therefore checks that css lists tokens as a peer. | W1-509 goal cell |
+| NICE-4 | The W1-307 prior-brand deny-list cannot be committed in clear text (BRIEF constraint 1). Its terms are hashed or supplied by the environment, and this is settled before W1-307 starts. | W1-307 goal cell |
+| NICE-6 | W1-203 exposes one shared WCAG luminance implementation. The tokens test, the MCP `check_contrast` tool and the docs all import it, so the 0.03928 and 0.04045 thresholds cannot diverge. | W1-203 goal cell |

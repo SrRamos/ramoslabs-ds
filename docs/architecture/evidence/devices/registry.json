@@ -1,0 +1,76 @@
+{
+  "devices": [
+    {
+      "id": "mac-macos-safari",
+      "platform": "macOS",
+      "osVersion": null,
+      "browser": "Safari",
+      "browserVersion": null,
+      "device": null,
+      "deviceBuild": null,
+      "autoUpdate": null,
+      "status": "not run",
+      "reason": "Not yet recorded. Pin macOS and Safari build before the VoiceOver session (W1-513)."
+    },
+    {
+      "id": "iphone-ios-safari",
+      "platform": "iOS",
+      "osVersion": null,
+      "browser": "Safari",
+      "browserVersion": null,
+      "device": null,
+      "deviceBuild": null,
+      "autoUpdate": null,
+      "status": "not run",
+      "reason": "Not yet recorded. Pin iPhone model and iOS build with auto-update off (W1-512, W1-504). If it runs iOS 17 it covers the iOS 17 floor row."
+    },
+    {
+      "id": "chromium-114-floor",
+      "platform": "desktop",
+      "osVersion": null,
+      "browser": "Chromium",
+      "browserVersion": "114",
+      "device": null,
+      "deviceBuild": null,
+      "autoUpdate": null,
+      "status": "not run",
+      "reason": "Floor lane not yet executed (W1-503). Version is the declared floor (ADR-001), not a measured build."
+    },
+    {
+      "id": "firefox-125-floor",
+      "platform": "desktop",
+      "osVersion": null,
+      "browser": "Firefox",
+      "browserVersion": "125",
+      "device": null,
+      "deviceBuild": null,
+      "autoUpdate": null,
+      "status": "not run",
+      "reason": "Floor lane not yet executed (W1-503). Version is the declared floor (ADR-001), not a measured build."
+    },
+    {
+      "id": "ios-17-floor",
+      "platform": "iOS",
+      "osVersion": "17",
+      "browser": "Safari",
+      "browserVersion": null,
+      "device": null,
+      "deviceBuild": null,
+      "autoUpdate": null,
+      "status": "not run",
+      "reason": "No iOS 17 device under owner decision D2. Verified only by forced-false path parity and evidence (ADR-013). Do not claim hands-on verification."
+    },
+    {
+      "id": "android-floor",
+      "platform": "Android",
+      "osVersion": null,
+      "browser": "Chrome",
+      "browserVersion": null,
+      "device": null,
+      "deviceBuild": null,
+      "autoUpdate": null,
+      "status": "unavailable",
+      "reason": "No Android device under owner decision D2. Verified only by forced-false path parity and evidence (ADR-013)."
+    }
+  ]
+}
