@@ -62,5 +62,33 @@
     "number"
   ],
   "adapters": ["react", "vue", "vanilla"],
-  "peers": ["react", "react-dom", "vue", "@ramoslabs/core", "@ramoslabs/tokens"]
+  "peers": ["react", "react-dom", "vue", "@ramoslabs/core", "@ramoslabs/tokens"],
+  "reported": [
+    {
+      "id": "ids",
+      "label": "Id derivation + CSS escape (reported, no ADR-011 ceiling)",
+      "entries": ["packages/core/src/ids/index.ts"]
+    },
+    {
+      "id": "runtime",
+      "label": "Runtime config + scheduler (reported, no ADR-011 ceiling)",
+      "entries": ["packages/core/src/runtime/index.ts"]
+    },
+    {
+      "id": "effects",
+      "label": "Effect queue (reported, no ADR-011 ceiling)",
+      "entries": ["packages/core/src/effects/index.ts"]
+    },
+    {
+      "id": "merge",
+      "label": "Prop merge (dev build, unbundled) (reported, no ADR-011 ceiling)",
+      "entries": ["packages/core/src/merge/index.ts"]
+    },
+    {
+      "id": "controlled",
+      "label": "Controlled/uncontrolled reconciler (reported, no ADR-011 ceiling)",
+      "entries": ["packages/core/src/controlled/index.ts"]
+    }
+  ],
+  "adapterEntries": "src/runtime/index.ts"
 }
