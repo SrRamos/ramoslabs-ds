@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { AstroIntegration } from 'astro'
-import { pages, SITE, type Page } from '../src/data/pages'
+import { pages, SITE, mdPathFor, type Page } from '../src/data/pages'
 import { answerById, answerMarkdown } from '../src/data/answers'
 
 // RamosLabs DS agentic layer, as an Astro integration.
@@ -167,6 +167,7 @@ ${bullets('patterns')}
 
 - [llms-full.txt](${b}/llms-full.txt): every page inlined, plus the full token table.
 - [registry.json](${b}/registry.json): tokens, patterns, and components as JSON.
+- Markdown pages: every documentation page also exists as Markdown at its URL with \`.md\` instead of the trailing slash (for example ${b}/foundations/colors.md), or request the normal URL with \`Accept: text/markdown\`.
 - [tokens.json](${b}/tokens.json): the flat DTCG token map (name to resolved value).
 - [stats.json](${b}/stats.json): live, cookieless usage — npm downloads for the token package.
 
@@ -240,6 +241,17 @@ function buildRobots(site: string) {
   }
   lines.push(`Sitemap: ${b}/sitemap-index.xml`, '')
   return lines.join('\n')
+}
+
+function buildPageMarkdown(site: string, page: LoadedPage) {
+  return `# ${page.title}
+
+> ${page.summary}
+
+Source: ${pageUrl(site, page)}
+
+${page.body}
+`
 }
 
 function buildRegistry(site: string, resolved: LoadedPage[], tokens: Tokens, version: string) {
@@ -320,6 +332,15 @@ export function agentic(): AstroIntegration {
         // Serve the agent skill so any project can discover and install it.
         if (fs.existsSync(skillPath)) {
           fs.copyFileSync(skillPath, path.join(outDir, 'skill.md'))
+        }
+
+        // 3) a Markdown twin of every doc page (/<route>.md), served as text/markdown by the
+        // Worker and offered via Link rel=alternate + Accept negotiation.
+        for (const page of resolved) {
+          if (!page.present) continue
+          const target = path.join(outDir, mdPathFor(page.path))
+          fs.mkdirSync(path.dirname(target), { recursive: true })
+          fs.writeFileSync(target, buildPageMarkdown(site, page))
         }
 
         const missing = resolved.filter((p) => !p.present).length

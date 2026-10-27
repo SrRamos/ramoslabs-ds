@@ -324,3 +324,9 @@ export function pageByPath(pathname: string): Page | undefined {
   const normalized = pathname.endsWith('/') ? pathname : pathname + '/'
   return pages.find((p) => p.path === normalized)
 }
+
+// Markdown twin of a doc page: '/' -> '/index.md', '/foundations/colors/' -> '/foundations/colors.md'.
+// Shared by the build (writes the files) and the Worker (Link header, Accept negotiation).
+export function mdPathFor(pagePath: string): string {
+  return pagePath === '/' ? '/index.md' : `${pagePath.replace(/\/$/, '')}.md`
+}
