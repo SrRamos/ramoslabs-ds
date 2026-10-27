@@ -27,7 +27,12 @@ LISTO-EVIDENCE-R1
 
 - E2-MUST-1: added `recommended.atEvidence` to all 12 files with the five primary keys in lowercase (`nvda`, `jaws`, `voiceover-macos`, `voiceover-ios`, `talkback`), derived from `observation` entries; contract-only pairs are `no-measured-evidence`.
 - E2-MUST-1: renamed the mixed-case `atEvidence` keys left in the working tree (`NVDA`, `JAWS`, `VoiceOver-macOS`, `VoiceOver-iOS`, `TalkBack`) to the ADR-015 names.
-- E2-MUST-1: set the six `test_status: no-measured-evidence` entries (popover NVDA/JAWS/TalkBack, select-only NVDA, switch TalkBack, tabs TalkBack) to `evidence-only`.
+- E2-MUST-1: resolved nine `test_status: no-measured-evidence` entries: six were reset to `evidence-only` (popover NVDA/JAWS/TalkBack, select-only NVDA, switch TalkBack, tabs TalkBack), and three were replaced by observation entries (button TalkBack, live-region TalkBack, radio TalkBack).
+- E2-MUST-1: replaced `talkback-chrome-apg-button` → `talkback-chrome-a11ysupport-button` using the a11ysupport native-button matrix (haiku agent).
+- E2-MUST-1: replaced `vo-ios-safari-apg-button` → `vo-ios-safari-a11ysupport-button` using the a11ysupport native-button matrix (haiku agent).
+- E2-MUST-1: replaced `talkback-chrome-waiaria-status` → `talkback-chrome-tetralogical-live` using the TetraLogical live-region fixtures (haiku agent).
+- E2-MUST-1: replaced `talkback-chrome-apg-radio` → `talkback-chrome-a11ysupport-radio` using the a11ysupport native-radio results (haiku agent).
+- E2-MUST-1: replaced `talkback-chrome-apg-tooltip` → `talkback-chrome-a11ysupport-describedby` using the a11ysupport aria-describedby matrix (haiku agent).
 - E2-MUST-2: `focusStrategy` `aria-activedescendant` changed to `activedescendant` in select-only-combobox (recommended and entries).
 - E2-MUST-2: `focusStrategy` `modal-trap` changed to `native` in dialog-modal (recommended and entries).
 - E2-MUST-2: `focusStrategy` `trigger` changed to `native` in tooltip (recommended and entries).
@@ -39,9 +44,9 @@ LISTO-EVIDENCE-R1
 - P2-NICE-1: PLAN-WAVE-1 W1-315 states `no-measured-evidence` is a value of `recommended.atEvidence`, never of `test_status`, and adds `focusStrategy` outside the ADR-006 enum to the seeded failures.
 - P2-NICE-2: PLAN-WAVE-1 status line set to `APPROVED (audits/AUDIT-combined-R2.md)`.
 - E2-SHOULD-1: appended the MUST-count derivation sentence to all 27 ARIA-AT observation `behavior` texts and stated it once in INDEX.md.
-- E2-SHOULD-2: verified every entry id is listed in INDEX.md (the five named ids were already present); the validator now enforces it.
+- E2-SHOULD-2: verified every entry id is listed in INDEX.md and added the missing entries to their registries.
 - E2-SHOULD-3: normalised `platform` to `windows | android | macos | ios | cross` in all entries and moved OS versions into a new nullable `platform_version`.
 - E2-NICE-1: added "RESOLVED FIXED 2016-09-19" to the `source_date` of `vo-ios-safari-webkit162041`.
-- E2-NICE-2: `jaws-chrome-jaws662` behavior now states the wontfix closure and the aria-labelledby resolution; its `source_date` was left unchanged (the audit's 08-17 correction is not applied, per the no-date-change rule).
+- E2-NICE-2: `jaws-chrome-jaws662` `source_date` is 2022-08-17 and its behavior states the wontfix closure and aria-labelledby resolution (orchestrator, per audit).
 - E2-NICE-3: added `nvda-chrome-a11ysupport-summary` (observation, degraded, NVDA 2021.1 changed-state gap on Chrome and Edge) to disclosure.json, listed it in INDEX.md, and added it to `atEvidence.nvda`.
-- E2-NICE-2: JAWS 662 source_date 2022-08-17 and wontfix resolution added (orchestrator, per audit).
+- E3-SHOULD-3: registry conformance validation is owned solely by W1-315; no author validator is claimed as the conformance gate.
