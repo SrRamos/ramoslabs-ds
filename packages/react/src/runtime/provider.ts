@@ -16,7 +16,9 @@ import {
 import { createRuntime, type RuntimeConfig, type SJRuntime } from '@ramoslabs/core/runtime';
 import { createLiveRegistry, type LiveHost, type LiveRegistry } from '@ramoslabs/core/live';
 import { createDomLiveHost, type DisposableLiveHost } from './live-host';
-import { isDev } from './dev';
+
+// Dev-only guard (K2 convention): inline, never throws unbundled, strips under a bundler define.
+declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 /** What a provider (or the outside-provider fallback) supplies to every machine below it. */
 export interface RuntimeBag {
@@ -87,7 +89,11 @@ export function useRuntimeBag(): RuntimeBag {
   }, [ctx]);
   const warned = useRef(false);
   useEffect(() => {
-    if (!ctx && !warned.current && isDev()) {
+    if (
+      !ctx &&
+      !warned.current &&
+      (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production')
+    ) {
       warned.current = true;
       console.warn('[sj] SJ component rendered outside <SJProvider>; using default runtime.');
     }

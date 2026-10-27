@@ -125,7 +125,6 @@ export function setText(el: Node, text: string | number): void {
   el.textContent = String(text);
 }
 
-const dev = () => (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production');
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 /** One host per runtime: owns the live-region registry and the set of live instances. */
@@ -201,7 +200,10 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
       props: () => props,
       view: () => controlled.view(),
       dispatch(event) {
-        if (queue.draining && dev())
+        if (
+          queue.draining &&
+          (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production')
+        )
           throw new Error('[sj] no synchronous re-dispatch from an effect (ADR-003)');
         store.dispatch(event);
       },
