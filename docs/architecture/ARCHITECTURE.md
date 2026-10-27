@@ -1,6 +1,6 @@
 # RamosLabs component library: architecture
 
-Status: draft for audit. Inputs: [BRIEF.md](BRIEF.md), research [01](research/01-platform-primitives.md)
+Status: revision 1 for audit (addresses AUDIT-architecture round 1; see CHANGELOG-ARCH-R1.md). Inputs: [BRIEF.md](BRIEF.md), research [01](research/01-platform-primitives.md)
 to [07](research/07-testing-certification.md) (audit round 2: 7/7 PASS) and
 [audits/AUDIT-research-R2.md](audits/AUDIT-research-R2.md). No component code is written until this
 document is certified.
@@ -30,7 +30,7 @@ Source notation: `01 §name` points to a section of `research/01-platform-primit
                            Feeds core, adapters, tests, registry.json, MCP server, lint.
 ```
 
-Each layer depends only on the layers above it in the diagram. Tokens know nothing of components.
+`@ramoslabs/contracts` is a **build-time input** (code generation, schema validation, test and registry generation) to core, adapters and tests, not a runtime dependency; the arrow from contracts is "generates", not "imports". At runtime each layer depends only on the layers above it in the layered diagram. Tokens know nothing of components.
 CSS knows tokens and the DOM contract (parts, `data-*` states), not any framework. The core knows
 neither CSS nor frameworks. Adapters translate the core's immutable snapshots and effect descriptors
 into framework rendering and DOM side effects, and nothing more.
@@ -80,7 +80,7 @@ The floor is a single decision (ADR-001); this section is the reference table ot
 | Firefox | 125 | Popover API |
 | Safari / iOS | 17 | Popover API |
 
-Feature availability relative to the floor (from [01 §Decision summary](research/01-platform-primitives.md#decision-summary),
+In every table cell, versions are ordered Chromium / Firefox / Safari-iOS; "none" means no stable support; a cell never uses a dash. Feature availability relative to the floor (from [01 §Decision summary](research/01-platform-primitives.md#decision-summary),
 [01 §Proposed browser floor](research/01-platform-primitives.md#proposed-browser-floor), BCD retrieved 2026-10-27):
 
 | Feature | Chromium / Firefox / Safari-iOS | Tier on the floor |
@@ -88,19 +88,21 @@ Feature availability relative to the floor (from [01 §Decision summary](researc
 | Popover `auto` / `manual`, `<dialog>`, `inert`, FACE | at or below floor | Native, required |
 | `:user-invalid` | 119 / 88 / 16.5 | Native above Chromium 118; touched-state fallback on Chromium 114-118 |
 | CSS anchor positioning (core) | 125 / 147 / 26 | **Geometry fallback** on Chromium 114-124, Firefox 125-146, Safari 17-25 |
-| `position-area` name | 129 (`inset-area` 125-130) / 147 / 26 | Compile the exact subset; never infer from core Baseline |
-| `position-try-order` | - / 148 / 26 | Same |
-| `position-visibility` | - / - / 26.2 | Same |
+| `position-area` name | 129 (`inset-area` 125-130, removed 131) / 147 / 26 | Compile the exact subset; never infer from core Baseline |
+| `position-try-order` | 125 / 148 / 26 | Same |
+| `position-visibility` | 125 / 147 / 26.2 | Same |
 | `dialog.requestClose()` | 134 / 139 / 18.4 | Safari 17-18.3: cancelable `cancel` event + `close()` tier |
 | Invoker Commands (`command`/`commandfor`) | enhancement | Classic handlers carry the floor |
 | `request-close` command | 139 / 144 / 26.2 | Enhancement |
 | `popover="hint"` | full 151 / 153 / none | Enhancement; tooltips use `popover="manual"` |
-| Customizable `<select>` (`base-select`) | 135 / 149-flag / 27 | Disabled on the floor; classic `<select>` is the preset |
+| Customizable `<select>` (`base-select`) | 135 / flag only in 149-153 / 27 | Disabled on the floor; classic `<select>` is the preset |
 | `interestfor` | Chromium 142 only | Enhancement, never a contract dependency |
-| View Transitions | same-doc 126 / - / 18.2 | Enhancement outside behavior |
+| View Transitions, same-document | 111 / 144 / 18 | Enhancement outside behavior; skipped below support and for reduced motion |
+| View Transitions, cross-document (`@view-transition`) | 126 / none / 18.2 | Enhancement only |
+| `<details name>` (exclusive accordion) | 120 / 130 / 17.2 | Owned exclusive-open fallback on Chromium 114-119, Firefox 125-129, Safari 17.0-17.1 |
 | `Intl.Segmenter` | 87 / 125 / 14.1 | At or below floor |
 | `Intl.Locale.getWeekInfo()` | 130 / 153 / 17 | Missing on Chromium 114-129 and Firefox 125-152: owned fallback |
-| `scheduler.yield()` | 129 / 142 / - | `setTimeout(0)` or `MessageChannel` fallback |
+| `scheduler.yield()` | 129 / 142 / none | `setTimeout(0)` or `MessageChannel` fallback |
 | `focus({ focusVisible })` | 145 / 104 / 18.4 | Below floor in places: independent `data-active` indicator |
 | `interactive-widget` viewport meta | Chrome Android 108 / Firefox Android 133 / iOS none | VisualViewport residual |
 
@@ -182,16 +184,30 @@ shadow-root boundaries (`commandfor`/`popovertarget` resolve only within one tre
 | `@ramoslabs/vanilla` | DOM adapter plus opt-in custom elements | none | explicit `define()`; no import-time registration |
 | `@ramoslabs/testing` | spec runner, fixtures (private, unpublished) | dev only | Playwright, axe, fast-check |
 
-Naming rules: component names carry the `SJ` prefix in Vue and React (`SJSelect`, `SJSelectTrigger`
-or dotted `SJSelect.Trigger`), `sj-` prefix for custom elements and CSS classes, `sj` for
-`data-sj-*` hooks. Core exports are unprefixed (`createSelect`). The existing `packages/vue` scaffold
-stays; the Vue peer range is raised from `^3.4.0` to `>=3.5.0` ([02 §SSR- and hydration-safe IDs](research/02-headless-engine.md#ssr--and-hydration-safe-ids)).
+Naming rules (the contract's `anatomy[].part` is the single name source): **React** exports a
+namespace object (`SJSelect.Root`, `.Trigger`, `.Content`, `.Item`) plus flat named exports
+(`SJSelectRoot`); **Vue** exports flat components (`SJSelectRoot`, `SJSelectTrigger`, since Vue
+templates have no namespace components) and the preset `SJSelect`; **vanilla** custom elements are
+`sj-select`, `sj-select-trigger`, and so on. CSS classes use the `sj-` prefix and hooks use `data-sj-*`. Core exports are unprefixed (`createSelect`). The existing `packages/vue` scaffold
+(0.0.0, unpublished, devDependency already `^3.5.0`) stays; its peer range is raised from `^3.4.0` to `>=3.5.0` (decided; no consumer exists on 3.4) ([02 §SSR- and hydration-safe IDs](research/02-headless-engine.md#ssr--and-hydration-safe-ids)).
 Svelte and Angular adapters later consume the same core and contracts with no core changes; the
 core's only framework-facing surface is the store contract and effect descriptors (ADR-003).
 
-Entry points: one ESM entry per component per package, `sideEffects` metadata that preserves CSS, a
-barrel that CI proves does not pull unrelated engines
+Entry points: one ESM entry per component per package, a barrel that CI proves does not pull
+unrelated engines
 ([02 §Tree-shaking and bundle budget](research/02-headless-engine.md#tree-shaking-and-bundle-budget)).
+
+*CSS delivery.* Adapters **never import CSS**. Consumers import `@ramoslabs/css` (the full file or
+per-component files); `sideEffects` metadata that preserves CSS is set only in `@ramoslabs/css`, and
+the required `@layer` declaration order is documented there. This keeps vanilla and SSR parity and
+leaves layer order under consumer control.
+
+*Vanilla custom elements render in light DOM, with no shadow root.* A shadow root breaks IDREF ARIA
+(`aria-activedescendant`, `aria-controls`, `commandfor`) and `@layer` styling at the boundary, the
+reason Option C was rejected. FACE is used via `attachInternals()` only (ADR-014).
+
+*Text safety.* The vanilla adapter (and every adapter) writes consumer strings as text nodes only,
+never via `innerHTML`; rich content is supplied as elements. Tested in ADR-013 layer 2.
 
 **Consequences.** More publishing surface; version lockstep across adapters (single version number,
 changesets). Dependency direction is enforced by lint (`core` may not import `vue`, `react`, or
@@ -263,8 +279,32 @@ builds it); a key-to-id map is the source of truth; mounted items register their
 before `aria-activedescendant` is written.
 
 *Side effects.* Modules have no import-time behavior. The core imports no Vue, React or DOM globals
-at module scope, exposes only serializable contracts/events, and receives an injected scheduler
-(deterministic fake in SSR and tests).
+at module scope, exposes only serializable contracts/events, and receives all ambient inputs
+through the runtime object below.
+
+*Runtime configuration (single injection surface).* Everything ambient is supplied through one
+**runtime object**, created once per app or per request by `createRuntime(config)` in the core:
+
+```ts
+interface SJRuntime {
+  locale: string            // BCP 47; drives parsers, case folding, Intl.Segmenter, week data
+  dir: 'ltr' | 'rtl'
+  idPrefix: string          // unique per framework root; mirrors identifierPrefix / app.config.idPrefix
+  idFactory?: () => string  // required for vanilla SSR; otherwise adapter useId
+  density: 'touch' | 'compact'
+  supports: SupportsMap     // capability map (ADR-013)
+  scheduler: Scheduler      // platform timers in production; deterministic fake in SSR/tests
+}
+```
+
+React and Vue expose it through `SJProvider` (context / `provide`); vanilla passes it to
+`mount(el, runtime)`. The live-region registry hangs off the runtime's document. **Defaults are
+deterministic across server and client:** `locale` and `dir` are read from `<html lang dir>` of the
+server render input and the same values are serialized to the client (never `navigator.language`);
+`supports` is real detection on the client and all-false on the server, applied after hydration so
+markup matches; `scheduler` uses platform timers. A component used outside a provider falls back to
+these defaults and a development warning; the contract lists `runtime` in `props` provenance so lint
+can flag it. Components never read `document.documentElement` or `navigator` for these values.
 
 **Consequences.** Coarse snapshot notifications can over-render versus fine-grained graphs;
 accepted until profiling shows a bottleneck. Effect handling is more verbose than direct method
@@ -273,7 +313,8 @@ uncommitted DOM, and Svelte/Angular need only a store bridge.
 
 **Conflicts resolved.** None between files. One tension is recorded: 02's 3 KiB per-component ceiling
 (ADR-011) must hold alongside 01's mandatory geometry/close fallbacks. Resolution in ADR-011: shared
-kernel modules carry their own ceilings.
+kernel modules carry their own ceilings. The injection surface is an architectural addition (no
+research file specifies it) justified by 02's SSR-determinism and per-instance-isolation rules.
 
 **Sources.** [02 §Decision](research/02-headless-engine.md#decision),
 [02 §One core, three adapters](research/02-headless-engine.md#one-core-three-adapters),
@@ -317,8 +358,7 @@ D. Attribute spreading of a fixed shape generated from the contract.
   one types file per component documents props, events, slots (generated from the contract where
   possible).
 
-*Studied references (concepts only, never imported).* Licences as recorded in each project's
-repository at the time of writing; the auditor verifies them before certification.
+*Studied references (concepts only, never imported).* Licences verified 2026-10-27 against each project's repository.
 
 | Reference | Licence | Concept studied | What we do differently |
 |---|---|---|---|
@@ -329,11 +369,11 @@ repository at the time of writing; the auditor verifies them before certificatio
 | Melt UI | MIT | Builders/actions, stores | Snapshot store with React-safe identity, not Svelte stores |
 | Floating UI | MIT | Flip/shift/size middleware | Placement policy is the CSS anchor vocabulary itself (ADR-005) |
 
-*Sizes.* The 1 / 3 / 8 KiB ceilings of ADR-011 are **our** engineering limits, not derived from
-these libraries. We have not measured the reference libraries, and we make no size-superiority claim.
-Task before this ADR is final: measure comparable select, dialog and tabs builds of the references
-(minified+gzip, tree-shaken, same bundler) and record the numbers with versions in
-`docs/architecture/evidence/` (open question Q1).
+*Sizes.* The ceilings of ADR-011 are **our** engineering limits, not derived from these libraries,
+and nothing in this architecture depends on the reference numbers. We make no size-superiority
+claim. Reference-library sizes (comparable select, dialog and tabs builds, minified+gzip,
+tree-shaken, same bundler, versions recorded) are measured during wave 1 and recorded in
+`docs/architecture/evidence/`; they may revise ADR-011 ceilings only through an ADR.
 
 **Consequences.** Less "anything goes" flexibility than a bare render prop. Predictable ARIA across
 frameworks. The three rendering integrations stay hand-written; behavior and tests are shared.
@@ -343,7 +383,7 @@ frameworks. The three rendering integrations stay hand-written; behavior and tes
 
 **Sources.** [02 §Prop getters, directives, or attribute spreading?](research/02-headless-engine.md#prop-getters-directives-or-attribute-spreading),
 [02 rec. 4](research/02-headless-engine.md#recommendations-for-architecturemd),
-[AUDIT-R2 02 SHOULD 7](audits/AUDIT-research-R2.md), BRIEF constraints 2 and 6.
+[AUDIT-R2 02 SHOULD 7](audits/AUDIT-research-R2.md), [AUDIT-architecture MUST 1](audits/AUDIT-architecture.md), BRIEF constraints 2 and 6.
 
 ---
 
@@ -389,10 +429,13 @@ Dialogs always render an explicit close control; popovers are never a modal subs
 cancelable `cancel` + `close()` below; both route to the same internal close operation.
 8. **Listbox mounting is a static contract flag, not runtime detection.** AUDIT-R2 notes that
 "inline listbox when top-layer navigation fails" cannot be detected at runtime. Contract field
-`overlay.listboxMount` is keyed on a capability class, not user-agent sniffing:
+`overlay.listboxMount` is keyed on a capability class, not user-agent sniffing. The class is `any-pointer: coarse`
+(touch-capable), not the primary pointer, because an iPad with a trackpad reports a fine primary
+pointer while the cited evidence is VoiceOver on iOS. It is explicitly a proxy for the AT populations
+in the evidence; Q4 is the revision path:
 ```json
 "listboxMount": { "default": "top-layer",
-                  "byPointer": { "fine": "top-layer", "coarse": "inline" },
+                  "byAnyPointer": { "fine": "top-layer", "coarse": "inline" },
                   "evidence": ["WebKit 289338", "APG 2855"] }
 ```
 `inline` renders the listbox adjacent to the trigger within the same container. The mapping flips
@@ -448,8 +491,9 @@ falls to `<body>`.
 | Disclosure, switch, dialog, tooltip | Native focus; no composite strategy |
 
   Every active id must resolve to an owned/controlled element, survive list updates and reset before
-  its element unmounts. Focus and selection have distinct visuals. Active-descendant draws its own
-  indicator via `data-active` (not `:focus-visible`); the engine does one `focus({ preventScroll: true })`
+  its element unmounts. Focus and selection have distinct visuals. The engine sets `data-active` on the active
+  item in **every** composite and draws the indicator from it, not from `:focus-visible` alone (which may not match after
+  programmatic focus following a pointer open); roving composites additionally carry real focus; the engine does one `focus({ preventScroll: true })`
   plus one `scrollIntoView({ block: 'nearest' })` with tokenized `scroll-margin`.
 - **Focus scope and return:** explicit opener reference; restore only when the target is connected,
 visible, enabled and not `inert`, otherwise a declared logical fallback; no restore when a workflow
@@ -505,7 +549,7 @@ C. Runtime inference of kind from labels or content. Rejected ([06 §Input-patte
 data semantics remain true. Autofill fields need a stable `name`/`id`, an owning `<form>` and a
 visible label; address/contact repeats use autofill section tokens.
 
-*Enter key.* `enterkeyhint` is computed by the **form owner**: `next` when another editable field
+*Enter key.* Textarea kinds always use `enterkeyhint="enter"` and are excluded from the position computation. `enterkeyhint` is otherwise computed by the **form owner**: `next` when another editable field
 follows; `done` on the last field of a non-submitting group; `go` when Enter navigates or submits;
 `send` for messaging; `search` for query submission. Kind overrides: URL `go`, Search `search`, OTP
 `done` (auto-submit off) or `go` (on). The "Enter" column below is the default when the owner gives
@@ -522,9 +566,10 @@ no position.
 | `otp` (numeric) | text | numeric | `one-time-code` | done / go | none / off / false | one control, paste-safe; ASCII-digit `pattern` optional; length validated after normalization; no `maxlength` |
 | `otp-alnum` | text | text | `one-time-code` | done / go | characters only if canonical uppercase / off / false | |
 | `amount` (decimal) | text | decimal | `transaction-amount` only in that context | position | - / off / false | `Intl` display, owned parser; no spinbutton |
+| `amount-signed` (`amount` with `signed`) | text | decimal | as `amount` | position | - / off / false | iOS `decimal` may omit minus: render an explicit sign control (toggle or prefix part); parser accepts leading `-` or `−` only when `signed` (credit notes, refunds) |
 | `quantity` | number or text | numeric (text variant) | context or `off` | position | - | `number` only where stepping helps; `min/max/step` |
 | `postal` / `reference` / `account` | text | numeric only when digits-only by contract | `postal-code` or token | position | - | preserve leading zeroes; never `type=number`; no `maxlength` |
-| `tax-id` | text | numeric only when digits-only | `off` (no standard token) | position | - | normalize, then validate check digit |
+| `tax-id` | text | numeric only when digits-only | attribute omitted (no standard token; `off` is not a generic suppressor) | position | - | normalize, then validate check digit |
 | `search` | search | search | usually `off` | search | by domain | |
 | `password` (current) | password | text | `current-password` | position | none / off / false | |
 | `password-new` | password | text | `new-password` | position | none / off / false | distinct section tokens if needed |
@@ -532,12 +577,12 @@ no position.
 | `time` | time | n/a | context or `off` | position | - | `step` when needed |
 | `choice` (native) | `<select>` | n/a | purpose token | position | - | no ARIA listbox recreation |
 | `cc-number` | text | numeric | `cc-number` | position | - | normalize then checksum; never `type=number` |
-| `cc-exp` / `cc-exp-month` / `cc-exp-year` | text | numeric | `cc-exp` / `cc-exp-month` / `cc-exp-year` | position | - | accept contract-supported separators; keep leading zero |
+| `cc-exp` / `cc-exp-month` / `cc-exp-year` | text | numeric | `cc-exp` / `cc-exp-month` / `cc-exp-year` | position | - | `cc-exp` accepts digits-only `MMYY`/`MMYYYY` and **inserts the display separator itself** (the iOS numeric keypad has no `/`); the month/year pair is the alternative; keep leading zero |
 | `cc-csc` | text | numeric | `cc-csc` | done | - / off / false | |
 | `cc-name` | text | text | `cc-name` | position | words / off / false | |
-| `address` | textarea | text | `street-address` | position | - | use `address-line1..3` for split lines; never combine |
+| `address` | textarea | text | `street-address` | `enter` (fixed) | - | Enter inserts a newline: textarea kinds are excluded from the form owner's position computation; use `address-line1..3` for split lines; never combine |
 | `address-line` | text | text | `address-line1/2/3` | position | - | |
-| `country` | text | text | `country` (code) / `country-name` | position | - | never infer from keyboard locale |
+| `country` | `<select>` (default, `choice`) | n/a | `country` (ISO 3166-1 alpha-2 code) | position | - | text variant (`type=text`, `inputmode=text`) uses `country-name`; never infer from keyboard locale |
 | `organization` | text | text | `organization` | position | words (hint) | |
 
 *Rules attached to the table.*
@@ -558,6 +603,9 @@ editing text.
 prohibited (WCAG 1.4.4) ([04 §Prevent focus-triggered zoom](research/04-mobile-input-ux.md#prevent-focus-triggered-zoom-through-type-tokens)).
 - Each kind row is certified on physical iOS Safari and Android Chrome (keyboard, minus/decimal,
 Enter label, autofill, paste, caret, deletion, IME, leading zeroes, rotation).
+
+*Home of the table.* `packages/contracts/kinds.contract.json`, validated by `kinds.schema.json`, is the
+source of `resolveKind`, the generated `kind` union, lint rules and the MCP `get_kind` tool.
 
 **Consequences.** Kind rows need device-level certification and occasional overrides. Library cannot
 guess; an unknown kind is a type error (the `kind` union is generated from the contract). Presets for
@@ -593,7 +641,7 @@ for date, time, short fixed single-choice lists, and boolean controls.
 suggestions, rich non-interactive option descriptions, values beyond native options, range selection
 with cross-month constraints, unavailable-date visualization, week numbers, multi-month comparison.
 Pixel parity across operating systems is not a capability.
-3. On coarse pointers (`(pointer: coarse)`), if the contract can stay equivalent, the **native
+3. On touch-capable devices (`(any-pointer: coarse)`), if the contract can stay equivalent, the **native
 control is rendered** even where desktop uses a customized trigger. Equivalence test: accessible
 name, value and form state are identical across presentations.
 4. A custom control retained on touch must pass the touch protocol: touch exploration order,
@@ -709,6 +757,7 @@ schema violation or registry drift).
   },
   "focus": { "strategy": "activedescendant", "owner": "trigger" },
   "kinds": ["choice"],
+  "runtime": ["locale", "dir", "idPrefix", "supports", "scheduler"],
   "nativeFallback": {
     "touch": "select", "equivalence": ["name", "value", "formState"],
     "customRequires": ["filtering", "richOptions"]
@@ -718,7 +767,7 @@ schema violation or registry drift).
     "placement": { "positionArea": "block-end span-inline-end",
                    "tryFallbacks": ["flip-block"], "tryOrder": "most-height",
                    "visibility": "anchors-visible" },
-    "listboxMount": { "default": "top-layer", "byPointer": { "coarse": "inline" } }
+    "listboxMount": { "default": "top-layer", "byAnyPointer": { "coarse": "inline" } }
   },
   "support": [
     { "feature": "popover", "nativeFrom": { "chromium": 114, "firefox": 125, "safari": 17 } },
@@ -751,7 +800,7 @@ per entry point and which forced-false capability runs exist in tests.
 
 **Consequences.** Schema design is up-front work and contract maintenance is release work. In
 return the support claims, a11y claims and agent guidance become executable. A contract version bump
-is a breaking-change signal.
+is a breaking-change signal. The `$schema` URL must be served by the site deploy (release gate).
 
 **Sources.** [07 rec. 1](research/07-testing-certification.md#recommendations-for-architecturemd),
 [07 §One shared semantic specification](research/07-testing-certification.md#one-shared-semantic-specification),
@@ -782,13 +831,29 @@ minified bytes, import graph and fixture execution):
 | Snapshot/subscription utility | 1 KiB |
 | Simple headless primitive core (excl. framework, styles, shared kernel modules) | 3 KiB per component |
 | Complex combobox / calendar / grid engine | 8 KiB per component, optional submodules split |
-| Shared kernel modules (own ceilings, provisional, to be set by the first measurement) | overlay + geometry fallback, collection/focus, live region, each reported separately |
+| Overlay + geometry fallback (shared) | **4 KiB** |
+| Collection + focus kernel (shared) | **3 KiB** |
+| Live-region registry (shared) | **1 KiB** |
+| Field-kinds resolver + number parser (shared) | **2 KiB** |
 | Unused component in a fixture importing another | 0 KiB JavaScript |
 | Framework adapters | reported separately; peer framework code never counted |
 
+All ceilings above are **provisional gates, revisable only by ADR**. Rationale for the shared
+numbers (no measurement exists yet, so they are engineering limits): the overlay module holds the
+placement parser, candidate evaluation, dismissal and nested stack, which is comparable in scope to
+the 3 KiB "simple primitive" ceiling plus one fallback algorithm; the collection/focus kernel is a
+primitive core plus typeahead and active-id bookkeeping; the live-region registry is a singleton
+queue with dedupe, the smallest of the set; the kinds resolver is a table lookup plus a locale-aware
+parser. **Derived consumer cost:** a one-component fixture caps at 3 + 1 + 4 = **8 KiB** for
+`SJPopover`; 3 + 1 + 4 = 8 KiB for `SJTooltip`; and 8 + 1 + 4 + 3 = **16 KiB** for the custom
+`SJSelect` listbox. `SJInput` caps at 3 + 1 + 2 = 6 KiB. **Revision measurement:** the first
+prototype of each shared module is measured (minified+gzip, tree-shaken, pinned bundler); a ceiling
+is changed only by an ADR that cites that measurement, and no ceiling may rise more than 50% in one
+ADR without a design review of what was added.
+
 *Conflict resolved:* 02's 3 KiB cannot hold a popover-family component with the geometry fallback
 inside it. Decision: shared kernel modules are separate artifacts with their own ceilings, and the
-one-component fixture reports the total including shared modules so consumers see the real cost.
+one-component fixture fails against the derived totals above, so consumers see the real cost.
 
 *Interaction gates* (provisional p95, 30+ iterations after warm-up, named devices Moto G Power 5G
 (2024) and iPhone 15; exact device, OS, browser, power and CPU/network conditions recorded; revisable
@@ -896,7 +961,9 @@ C. Automation-only certification. Rejected: it cannot assert actual speech or ol
 controlled rejection, duplicate registration, stale effect versions) and checks invariants.
 2. **Interaction:** Playwright on Chromium, Firefox, WebKit, per adapter, executing the same
 semantic actions. Assertions are on public behavior and relationships (focus target, IDREF
-validity), not private implementation or byte-identical DOM. Shared `toMatchAriaSnapshot()` YAML per
+validity), not private implementation or byte-identical DOM. A text-safety test passes markup-like
+consumer strings through labels, hints, errors and option text on every adapter and asserts they
+render as text (no element injection). Shared `toMatchAriaSnapshot()` YAML per
 state; CDP `Accessibility.getFullAXTree` additionally on Chromium. IME composition automated through
 CDP `Input.imeSetComposition`/`insertText` on Chromium; physical Gboard and iOS CJK keyboards for
 Firefox/WebKit.
@@ -971,7 +1038,7 @@ and `aria-invalid` derived; `aria-errormessage` only where it is supported and t
 `BaseInput` anatomy (prefix, leading, input, trailing, postfix parts) wrapping concrete inputs. The
 form owner (`SJForm` context) supplies `enterkeyhint` position and tracks entered values for 3.3.7.
 - `:user-invalid` styles error timing natively; Chromium 114-118 uses a small touched-state fallback.
-- FACE/`ElementInternals` **only in the vanilla custom-element adapter** where a custom control needs
+- FACE/`ElementInternals` (via `attachInternals()`, custom elements in light DOM with no shadow root, ADR-002) **only in the vanilla custom-element adapter** where a custom control needs
 native form participation; React and Vue render a real hidden/native input or the native control
 itself; the core never depends on custom elements.
 - Errors are announced through the shared live-region registry when appropriate; validation messages
@@ -1000,7 +1067,7 @@ before harder ones depend on it**, and every kind/native decision is tested on r
 | 3 | `SJSwitch` and `SJCheckbox` | Native-input-based; tests the "native wins" rule with custom visuals | Native-first, form participation |
 | 4 | `SJRadioGroup` | First roving-focus composite; simple APG contract | Roving focus, collection registration, RTL |
 | 5 | `SJTabs` | Roving focus plus automatic/manual activation; keyboard defect in the brief | Collection, deterministic successor, keyboard map generation |
-| 6 | `SJDisclosure` (accordion) | Native `<details>` path plus enhancement; smallest overlay-free state machine | Native-first ladder, reduced motion |
+| 6 | `SJDisclosure` (accordion) | Native `<details>` path plus enhancement; smallest overlay-free state machine. Exclusive groups use `<details name>` (Chromium 120 / Firefox 130 / Safari 17.2) with an owned exclusive-open fallback below those versions | Native-first ladder, reduced motion |
 | 7 | `SJDialog` | Modal `showModal()`, focus return, close tiers; defect named in brief | Dialog path, opener stack, close-request tiers, `inert` |
 | 8 | `SJPopover` | Non-modal top layer, anchor positioning and geometry fallback | Placement contract, geometry parity, Escape/nesting order |
 | 9 | `SJTooltip` | Fixes the hover-only defect; manual popover stack | Focus/hover/Escape rules, touch policy, nested `hint` rules |
@@ -1020,12 +1087,12 @@ dependency on kernel parts and by AT risk; it is revisited after wave-1 AT evide
 
 | # | Question | Owner / resolution path |
 |---|---|---|
-| Q1 | Measured sizes of studied reference libraries for ADR-004 (AUDIT-R2 02 SHOULD 7); licence text verification | Orchestrator measures select/dialog/tabs builds at pinned versions; attach to `evidence/` before certification |
-| Q2 | Shared-kernel ceilings in ADR-011 are unset | Set after the first prototype of overlay + geometry fallback is measured |
+| Q1 | Measured sizes of reference libraries (informational; no decision depends on it) | Wave-1 evidence task, recorded in `evidence/`; may revise ADR-011 only via ADR |
+| Q2 | Are the provisional shared-kernel ceilings of ADR-011 right? | First prototype measurement; ADR-gated revision (no longer blocking) |
 | Q3 | Is `maximum-scale`/zoom handling plus 16 px control text enough to avoid iOS focus zoom on all kinds? | Physical-device matrix (ADR-007) |
 | Q4 | Do iOS/TalkBack AT results justify flipping `listboxMount` for any pointer class? | P1 evidence in wave 1 (SJSelect); ADR amendment |
 | Q5 | Week-start data on Chromium 114-129 and Firefox 125-152 (no `getWeekInfo`): explicit prop only, or a generated CLDR-derived table (data licence, size)? | Decide in wave 3, before the calendar |
-| Q6 | Raise `@ramoslabs/vue` peer from `^3.4.0` to `>=3.5.0` (needs `useId`)? | Confirm no known consumer is on 3.4 |
+| Q6 | (closed) Vue peer `>=3.5.0` is decided in ADR-002; the scaffold is unpublished and its devDependency is already `^3.5.0` | - |
 | Q7 | Do we publish a Svelte/Angular adapter spike to validate the store-bridge claim before certification? | Optional timeboxed spike after wave 1 |
 | Q8 | Customizable `<select>` (`base-select`) as enhancement: when to enable, given Firefox is behind a flag | Post-wave 1; contract flag stays off on the floor |
 
@@ -1044,17 +1111,31 @@ Mitigation: ADR-gated revision, first prototype measures and sets them.
 4. **Floor drift.** Baseline-2026 rises monthly; keeping Safari 17 costs fallback weight. Mitigation:
 per-release floor review with installed-base data.
 5. **Hardware and licence cost** (physical iOS 17, Android floor devices, JAWS) can stall releases.
-Mitigation: budget a device lab / hosted real-device service before wave 1 certification.
+Mitigation: budget a device lab / hosted real-device service before wave 1 certification. Floor devices are pinned to their OS versions with auto-update disabled; iOS 17 hardware cannot be downgraded once updated.
 6. **Contract-first friction.** Schema design delays the first component. Mitigation: build the
 Button and Switch contracts first to shake out the schema before composite contracts.
 7. **Native-on-touch fragments visual identity.** Equivalence tests protect behavior, not looks;
 design acceptance of platform pickers is required.
 8. **Third-party reference licences.** Concepts only, but any inadvertent code similarity is a
 provenance risk. Mitigation: clean-room notes in the evidence folder and a licence/provenance gate
-in release (ADR-013).
-9. **Tokens gaps.** Required new tokens (touch target, focus ring, overlay caps, control text minimum)
+in release (ADR-013), which also requires pinned, lockfile-verified devDependencies.
+9. **Consumer resets beat `sj.*` layers.** Unlayered CSS always wins over any layer, so a Tailwind v3 preflight or other unlayered reset overrides component styles. Consumers must place resets in a layer declared before `sj.*` (Tailwind v4 already layers); the required `@layer` declaration order is documented in `@ramoslabs/css`.
+10. **Injection surface in the vanilla adapter.** Consumer strings are rendered by library code; mitigated by the text-nodes-only rule (ADR-002) and the layer-2 text-safety test (ADR-013).
+11. **Tokens gaps.** Required new tokens (touch target, focus ring, overlay caps, control text minimum)
 must land in `packages/tokens` before styling work; otherwise raw values will tempt contributors.
 
 ---
 
-STATUS: DRAFT-FOR-AUDIT
+## Decisions needed from owner
+
+None of the five audit MUSTs required a product decision; all were resolved technically. Two
+product-level choices underpin the architecture and are recorded for explicit confirmation:
+
+| # | Decision | Options | Recommendation |
+|---|---|---|---|
+| D1 | Browser floor (ADR-001) | A: keep Chromium 114 / Firefox 125 / Safari-iOS 17 and carry the geometry and close fallbacks. B: raise to Safari-iOS 26 / Chromium 125 / Firefox 147, dropping fallbacks, excluding about two iOS generations | A for the initial release; revisit per major release with installed-base data |
+| D2 | Real-device lab budget (ADR-013, risk 5) | A: owned devices (physical iOS 17, Android floor) plus licences (JAWS). B: hosted real-device service. C: defer floor lane (then iOS 17 support cannot be claimed) | A or B before wave 1 certification; C only if D1 moves to option B |
+
+---
+
+STATUS: REVISION-1-FOR-AUDIT
