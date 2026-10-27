@@ -3,10 +3,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { buildIndex, lintContractData } from './source.js';
+import { buildIndex, lintContractData, lintReducerSource } from './source.js';
 import { loadHashes, scanText } from './denylist.js';
 
-export { buildIndex, lintContractData, lintSource } from './source.js';
+export { buildIndex, lintContractData, lintReducerSource, lintSource } from './source.js';
 export { lintCssContract, selectorsOf } from './css-contract.js';
 export { hashTerm, loadHashes, parseHashes, scanText } from './denylist.js';
 
@@ -32,6 +32,24 @@ export function lintContracts(dir = contractsDir) {
   const { kinds, contracts } = loadContracts(dir);
   const index = buildIndex({ contracts: contracts.map((c) => c.json), kinds });
   return contracts.flatMap((c) => lintContractData(c.json, index, c.file));
+}
+
+const coreDir = path.join(repoRoot, 'packages', 'core', 'src');
+
+/**
+ * Reducer findings: for each contract whose `core/src/<slug>/reducer.ts` exists, no controllable
+ * field may be mentioned (see `lintReducerSource` for what this can and cannot detect). A
+ * component without a reducer module yet is skipped.
+ */
+export function lintReducers(dir = contractsDir, core = coreDir) {
+  const { contracts } = loadContracts(dir);
+  return contracts.flatMap((c) => {
+    const slug = c.file.replace(/\.contract\.json$/, '');
+    const file = path.join(core, slug, 'reducer.ts');
+    if (!fs.existsSync(file)) return [];
+    const fields = c.json?.state?.controllable ?? [];
+    return lintReducerSource(fs.readFileSync(file, 'utf8'), fields, path.relative(repoRoot, file));
+  });
 }
 
 const SKIP = /(^|\/)(bun\.lock|node_modules|dist|\.git)(\/|$)/;

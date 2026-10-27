@@ -3,12 +3,12 @@
 // Runs the contract-data lint over packages/contracts/contracts and the hashed deny-list scan.
 // Exits 1 on any finding. The scan reports "not configured" (exit 0) when no digests are
 // supplied; pass --require-denylist (CI, once the digests are provisioned) to make that fail.
-import { lintContracts, scanTree } from './index.js';
+import { lintContracts, lintReducers, scanTree } from './index.js';
 
 const require = process.argv.includes('--require-denylist');
 let failed = false;
 
-const contractFindings = lintContracts();
+const contractFindings = [...lintContracts(), ...lintReducers()];
 for (const f of contractFindings) console.error(`${f.file}: ${f.rule}: ${f.message}`);
 if (contractFindings.length) failed = true;
 else console.log('contract lint: ok');
