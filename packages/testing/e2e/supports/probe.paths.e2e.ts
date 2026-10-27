@@ -70,6 +70,8 @@ for (const path of supportsPaths()) {
         fixtures,
         variant,
         path: path.id,
+        // 800 cold WebKit/Firefox pages share one machine; a wait budget is not a retry.
+        timeoutMs: 5000,
       });
 
       for (const s of probeScenarios()) {

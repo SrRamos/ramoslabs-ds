@@ -202,11 +202,11 @@ export async function runInert(
   const keys = new Set(plan.steps.flatMap((s) => s.triggers.map((t) => t.key)));
   await mount(page, opts, opts.fixtures[fixture]);
   const root = page.locator(ROOT(owner));
-  await root.waitFor({ timeout: 1500 });
+  await root.waitFor({ timeout: opts.timeoutMs ?? 1500 });
   const first = await snapshot(page, owner);
   if (first.attrs['disabled'] === undefined && first.attrs['aria-disabled'] !== 'true')
     fails.push({ where: fixture, message: 'inert fixture is neither disabled nor aria-disabled' });
-  await root.click({ force: true, timeout: 1500 }).catch(() => undefined);
+  await root.click({ force: true, timeout: opts.timeoutMs ?? 1500 }).catch(() => undefined);
   await root.focus().catch(() => undefined);
   for (const k of keys) await page.keyboard.press(k);
   await settle(page);
@@ -230,8 +230,8 @@ export async function runControlled(
   const fail = (message: string) => void fails.push({ where: 'controlled', message });
   await mount(page, opts, { pressed: false });
   const root = page.locator(ROOT(owner));
-  await root.waitFor({ timeout: 1500 });
-  await root.click({ timeout: 1500 });
+  await root.waitFor({ timeout: opts.timeoutMs ?? 1500 });
+  await root.click({ timeout: opts.timeoutMs ?? 1500 });
   await settle(page);
   let s = await snapshot(page, owner);
   if (s.events.length !== 1 || s.events[0] !== true)

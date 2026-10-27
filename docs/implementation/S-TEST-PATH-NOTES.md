@@ -42,7 +42,7 @@ Existing runner suite still 87/87.
 ## Shared-file edits (outside the owned dirs, minimal)
 - `e2e/runner/host/entry.ts`: `mount(adapter, props, defect, path)`, runtime built with injected supports, read-back
   taps, `window.__sj.real/seen`. Defaults reproduce the previous behaviour (path `native`).
-- `e2e/runner/executor.ts`: `RunOptions.path`, forwarded to `mount`.
+- `e2e/runner/executor.ts`: `RunOptions.path`, forwarded to `mount`; inert/controlled waits honour `timeoutMs` (was a hard 1500 ms that flaked under 800-test load, retries stay 0).
 - `packages/testing/package.json`: scripts `test:e2e:supports`, `parity`.
 
 ## Notes and follow-ups
