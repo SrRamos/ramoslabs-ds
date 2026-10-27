@@ -1,0 +1,12 @@
+{
+  "name": "SJToggle",
+  "state": { "machine": ["off", "on"], "controllable": ["open"] },
+  "actions": [
+    { "id": "toggle", "from": "off", "to": "on", "emit": "openChange" },
+    { "id": "toggle", "from": "on", "to": "off", "emit": "openChange" },
+    { "id": "reset", "from": "on", "to": "off" }
+  ],
+  "keyboard": { "root": { "Space": "toggle", "Escape": "reset", "ArrowDown": "next" } },
+  "focus": { "strategy": "roving", "owner": "root" },
+  "fixtures": ["off", "on", "disabled"]
+}
