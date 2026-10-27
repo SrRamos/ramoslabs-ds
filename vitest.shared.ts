@@ -1,7 +1,7 @@
 // Shared Vitest settings for every package (W1-002).
 //
-// Vitest 5 no longer reads a `vitest.workspace.ts` file on its own; projects are declared in
-// `vitest.config.ts` (`test.projects`). This file keeps the plan's name and holds the one shared
+// Vitest 5 no longer reads a workspace file on its own; projects are declared in
+// `vitest.config.ts` (`test.projects`). This file (formerly named vitest.workspace.ts in the plan) holds the one shared
 // definition that the root config and every `packages/*/vitest.config.ts` import.
 //
 // Default environment is `node` (jsdom-free, ADR-002): a core module that touches `document`

@@ -95,5 +95,8 @@
     "vitest": "5.0.5",
     "vue": "^3.5.0",
     "vue-tsc": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
