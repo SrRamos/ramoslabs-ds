@@ -85,15 +85,15 @@ APG listbox typeahead matches the next option whose accessible name starts with 
 
 WAI-ARIA defines `status` with implicit `aria-live="polite"` and `aria-atomic="true"`, while `alert` is assertive and atomic ([WAI-ARIA 1.2 `status`, Recommendation 2023-06-06](https://www.w3.org/TR/wai-aria-1.2/#status); [WAI-ARIA 1.2 `alert`, 2023-06-06](https://www.w3.org/TR/wai-aria-1.2/#alert)). Use polite status for result counts, save completion, loading completion, and nonurgent selection summaries; reserve assertive alerts for urgent interruptions. Never announce every active-descendant movement through a second live region—the focus/active item already carries that information.
 
-Mount persistent live-region containers before updating their text, update only when the user-facing message changes, and debounce noisy result counts without delaying the underlying list. Visible content should be the message source where possible. An NVDA issue filed 2025-08-15 documents a particular polite-region failure, not proof that all live regions are unreliable; it reinforces the need for browser/AT-specific tests rather than universal timer hacks ([NVDA issue 18721, 2025-08-15](https://github.com/nvaccess/nvda/issues/18721)).
+Mount persistent live-region containers before updating their text, update only when the user-facing message changes, and debounce noisy result counts without delaying the underlying list. Visible content should be the message source where possible. NVDA issue 18721 was opened against NVDA 2025.1 on Windows 10; a later commenter supplied an NVDA 2025.3.2/Windows 11 log. Maintainers could not reproduce on Edge 144 and closed it as works-for-me on 2026-01-08. One closed report is not proof of universal reliability or failure; it reinforces browser/AT-specific tests rather than universal timer hacks ([NVDA issue 18721, opened 2025-08-15, closed 2026-01-08](https://github.com/nvaccess/nvda/issues/18721)).
 
 ## Known AT × browser evidence: facts, not folklore
 
 AT behavior changes by exact reader version, browser, OS, control variant, and user mode. The following are reproducibility leads, **not permanent compatibility claims**:
 
-- WebKit bug 231724 documents VoiceOver/Safari failing to announce select-only combobox active-descendant options. Later comments report the original case working in Safari 18.4/macOS 15.4.1, so citing it as a current universal Safari defect would be wrong; current APG variants still require testing ([WebKit 231724, opened 2021-10-12, updated through 2025](https://bugs.webkit.org/show_bug.cgi?id=231724)).
+- WebKit bug 231724 documents VoiceOver/Safari failing to announce select-only combobox active-descendant options. Later comments report the original case working in Safari 18.4/macOS 15.4.1, so citing it as a current universal Safari defect would be wrong; current APG variants still require testing ([WebKit 231724, opened 2021-10-14, updated through 2025](https://bugs.webkit.org/show_bug.cgi?id=231724)).
 - JAWS has Virtual PC Cursor and Forms Modes; automatic forms-mode transitions affect whether arrow keys reach the page or are interpreted as reading commands ([official JAWS ARIA support guide, retrieved 2026-10-27](https://freedomscientific.github.io/standards-support/aria.html)). Test both reading and interaction modes rather than assuming a DOM focus event proves announcement.
-- NVDA issue 18721 records one live-region failure in NVDA 2025.3.2 on Windows 11; it does not justify claiming that NVDA never supports `role="status"` ([NVDA issue 18721, 2025-08-15](https://github.com/nvaccess/nvda/issues/18721)).
+- NVDA issue 18721 was filed against NVDA 2025.1 on Windows 10, not the later commenter's NVDA 2025.3.2/Windows 11 environment; it closed unreproduced on 2026-01-08 ([NVDA issue 18721, 2025-08-15–2026-01-08](https://github.com/nvaccess/nvda/issues/18721)).
 - Mobile screen readers use touch exploration/gestures, not desktop Tab/arrow interaction alone. The 2026 WebAIM survey reports 91.8% of respondents use a mobile screen reader, with VoiceOver and TalkBack both commonly used ([WebAIM Survey #11, July–August 2026, published 2026-09-29](https://webaim.org/projects/screenreadersurvey11/)). Native mobile controls are therefore the safest default, and custom composites need gesture exploration, activation, scrolling, and dismissal tests.
 
 No honest static matrix can guarantee TalkBack/JAWS/VoiceOver behavior from these bug reports. Maintain a dated compatibility log with a minimal reproduction, actual speech output, exact versions, issue link, and retest result. Do not ship user-agent detection or `aria-owns` as a generic workaround for old VoiceOver bugs; relationship hacks can change reading order and create new failures.
@@ -116,15 +116,61 @@ Also test keyboard-only, 200%/400% zoom and reflow, forced colors, reduced motio
 
 Each manual component run records: exact environment; initial announcement; every supported key/gesture; actual versus expected speech; focus location before/after; reading order; state changes; error/status output; and pass/fail evidence. Automation can assert expected DOM and focus, but a human verifies actual AT output.
 
+## Revision 1: mobile evidence and composite decisions
+
+### Select-only combobox and top-layer relationships
+
+Use **DOM focus on the non-input trigger plus `aria-activedescendant`** for a custom select-only combobox. APG's select-only example uses exactly that model: arrows change the active option without committing its value, while Enter/Space/Tab commits and Escape preserves the prior value. Roving focus would be a different interaction, not an improvement by default ([APG select-only example, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/)).
+
+A top-layer listbox need not be a DOM descendant of the trigger: ARIA 1.2 permits active-descendant through a combobox's `aria-controls` to a controlled listbox ([WAI-ARIA 1.2 `aria-activedescendant`, 2023-06-06](https://www.w3.org/TR/wai-aria-1.2/#aria-activedescendant)). That structural allowance is not proof of AT support:
+
+- WebKit 289338 is **NEW** (2025-03-07): on iOS Safari, VoiceOver skips a listbox mounted at the end of `<body>` despite `aria-controls` and active-descendant ([WebKit 289338, 2025-03-07](https://bugs.webkit.org/show_bug.cgi?id=289338)).
+- APG issue 2855 reports the same navigation failure on TalkBack/Chrome 130, last confirmed 2025-06-13 ([APG issue 2855, opened 2023-11-02, updated 2025-06-13](https://github.com/w3c/aria-practices/issues/2855)).
+- The older macOS select-only case in WebKit 231724 was reported working in Safari 18.4, but that does not verify iOS, TalkBack, JAWS, or NVDA ([WebKit 231724, 2021-10-14–2025-07-09](https://bugs.webkit.org/show_bug.cgi?id=231724)).
+
+Therefore native select remains the touch default. A required custom mobile fallback renders the listbox inline/adjacent to the trigger when top-layer navigation fails. P1 certification explicitly covers controlled-active-descendant on NVDA+Chrome/Firefox, JAWS+Chrome/Edge, VoiceOver macOS/iOS, and TalkBack/Android; no pair is marked supported from specification alone.
+
+### Android input events and typeahead
+
+Android IMEs can emit `keyCode=229` and `key="Unidentified"` for printable input, with `isComposing` false. MDN documents 229 as the IME composition value and warns that key values vary by platform ([MDN `keyCode`, updated 2026-08-27](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode); [MDN `isComposing`, 2025-04-03](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/isComposing)). Consequently:
+
+- Editable combobox filtering/typeahead consumes `beforeinput`/`input` with `inputType` and `data`, not printable `keydown`; `InputEvent.inputType` distinguishes insertion, paste, and deletion ([MDN, retrieved 2026-10-27](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType)).
+- Non-editable listbox/menu/select-only typeahead uses `keydown` only for navigation/typeahead delivered by a hardware keyboard or AT. It never waits for text insertion that those widgets cannot receive.
+- The composition guard still applies, but is not treated as sufficient for Android.
+
+A dedicated physical-Android/Gboard test types Latin and CJK characters, uses autofill/paste, changes keyboard apps, and asserts exact typeahead results and Enter behavior. iOS Japanese/Chinese keyboard runs cover the same fixture.
+
+### Dated mobile quirk log and required assertions
+
+| Area | Primary evidence and current status | Assertion that remains in P1 |
+|---|---|---|
+| Active-descendant on mobile | WebKit 289338 **NEW**, 2025-03-07; APG 2855 updated 2025-06-13. Direct TalkBack 13.5/Chrome 116/Android 13 testing also recorded options not conveyed on 2023-08-22 ([a11ysupport result, 2023-08-22](https://a11ysupport.io/tests/apg__aria-1-2-combobox-with-list-autocomplete-example/aria__aria-activedescendant_attribute/convey_value/talkback/and_chr)). | Arrow/key changes spoken active option; swipe reaches popup options; inline and top-layer variants separately. |
+| Live regions on iOS | This is not one open WebKit bug with a fixed version. ARIA leaves initial-content behavior under-specified; current testing recommends priming an empty region then changing it ([TetraLogical, published 2024-05-01, updated 2026-04-07](https://tetralogical.com/blog/2024/05/01/why-are-my-live-regions-not-working/)). | Off-screen-but-accessible region, `visibility:hidden` control, pre-populated region, and insert+update in one frame. Assert one announcement, no hidden-region speech. |
+| `aria-haspopup` / `aria-expanded` | WebKit 284804 (2025-04-07) reports VoiceOver not announcing changed expanded state on macOS 15.1.1/iOS 18.1.1; a later Safari 18.4 run passed, so no permanent fixed-version claim ([WebKit 284804, 2025-04-07](https://bugs.webkit.org/show_bug.cgi?id=284804)). TalkBack testing has supported `true`/`menu` but not `grid`/`listbox`/`tree` values consistently ([Matuzo measured matrix, 2023-08-17](https://www.matuzo.at/blog/2023/aria-haspopup/)). | Initial and changed expanded state on activation; menu-button and select-trigger popup type on both mobile readers. |
+| `display: contents` semantics | Firefox 62 and Chromium fixed the original semantics-stripping bugs in 2018–2019 ([CSSWG issue 3040, opened 2018-08-22](https://github.com/w3c/csswg-drafts/issues/3040)). WebKit later reported the majority resolved and moved edge cases to individual reports; Safari 17 was the remaining-fix milestone ([WebKit 185679, opened 2018-11-06, updated 2024-09-24](https://bugs.webkit.org/show_bug.cgi?id=185679)). | Roles/names of buttons, lists, table/grid semantics, and labels with `display: contents`; no blanket “safe everywhere” claim. |
+| `inert` and top-layer exposure | WebKit 260837 reports inert number/range inputs reachable in Safari 16.6/macOS ([WebKit 260837, opened 2023-08-28](https://bugs.webkit.org/show_bug.cgi?id=260837)); WebKit 278370 exposed an inert iframe and is **RESOLVED FIXED** ([WebKit 278370, opened 2024-10-16](https://bugs.webkit.org/show_bug.cgi?id=278370)). Neither proves the iOS rotor is correct. | Rotor Containers/Form Controls and swipe cannot reach background or unrelated top-layer content; native dialog, popover, and nested overlay variants. |
+
+### Programmatic focus visibility
+
+Selectors 4 uses previous-focus and input-modality heuristics for `:focus-visible`; programmatic focus does not create a universal visible indicator ([Selectors 4 `:focus-visible`, retrieved 2026-10-27](https://www.w3.org/TR/selectors-4/#the-focus-visible-pseudo)). The engine sets a `data-active` visual indicator on the active item independently of `:focus-visible`, including pointer-opened menus. Keyboard focus ring and selection remain distinct. The keyboard contract records this rule rather than relying on Chromium's heuristic or the newer non-portable `focusVisible` option.
+
+### Live-region ownership and touch/error details
+
+A client-only, document-scoped registry owns one polite and one assertive region shared by every adapter/root on that document. It is created after client mount (never during SSR), deduplicates identical messages in a short configurable window, and is destroyed only when the document unloads—not by an arbitrary component. This avoids per-island announcements without introducing cross-request SSR state.
+
+Touch has no reliable hover/focus tooltip trigger. Do not make long-press the only discovery path: use an explicit info/disclosure control or persistent text associated with `aria-describedby` ([APG tooltip, retrieved 2026-10-27](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)).
+
+Field errors use visible text linked with `aria-describedby` plus `aria-invalid`; `aria-errormessage` may be additive, never the sole association, because support varies ([MDN `aria-errormessage`, updated 2025-05-12](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-errormessage)).
+
 ## Recommendations for ARCHITECTURE.md
 
 1. **Create a shared accessibility kernel for ID relationships, collection registration, roving/active-descendant focus, typeahead, composition guards, overlay focus return, and live-region queues.** *Trade-off:* a common abstraction must expose component-specific options; forcing all widgets into one focus policy would violate APG.
 2. **Generate keyboard maps and ARIA contracts from component definitions used by both code and tests.** *Trade-off:* schema maintenance is required, but Vue/React/vanilla cannot drift into different accessibility behavior.
 3. **Default to native controls and implement custom ARIA only for capabilities native controls lack.** *Trade-off:* visual customization may be constrained, especially on touch, while ownership of keyboard/AT defects drops substantially.
-4. **Use roving DOM focus by default; reserve active-descendant for text-entry composites and carefully justified high-scale lists.** *Trade-off:* virtualization and DOM-focus movement become more complex for large lists, but mobile/AT behavior is generally more directly testable than pseudo-focus.
-5. **Treat IME as a first-class state in every text/typeahead engine.** *Trade-off:* event sequences need extra tests and guards, while CJK input is not broken by premature filtering, selection, or submission.
-6. **Use sparse, persistent live regions with component-level announcement policies.** *Trade-off:* message deduplication adds state, but duplicate/interrupting speech is avoided. No live region may compensate for missing focus or semantics.
+4. **Use roving DOM focus by default; use active-descendant for editable and select-only comboboxes, with native select on touch and inline popup fallback where required.** *Trade-off:* two popup layouts need parity testing, but mobile/AT navigation is not assumed from ARIA structure alone.
+5. **Treat IME and Android `beforeinput`/`input` as first-class paths in every text/typeahead engine.** *Trade-off:* event sequences need extra tests and guards, while CJK and virtual-keyboard input is not broken by premature filtering or keyCode assumptions.
+6. **Use sparse, persistent, document-shared client-only live regions with component-level announcement policies.** *Trade-off:* message deduplication adds state, but duplicate/interrupting speech is avoided. No live region may compensate for missing focus or semantics.
 7. **Certify against the P1 real-AT matrix on physical mobile devices and record actual speech, not only screenshots.** *Trade-off:* manual releases are slower and require Windows/AT licenses, but automation cannot certify the product’s core accessibility promise.
 8. **Maintain dated AT issue records and prohibit unmeasured browser-specific ARIA workarounds.** *Trade-off:* some upstream bugs remain visible until fixed, but global semantic hacks and stale folklore do not propagate through the system.
 
-STATUS: DRAFT-COMPLETE
+STATUS: REVISION-1

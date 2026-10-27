@@ -145,13 +145,49 @@ A component ships only when every applicable gate passes. “Not applicable” r
 
 Publish per release: spec version, source revision, test/tool versions, exact environment matrix, case totals (executed/passed/failed/not-applicable), axe scope/results, visual baseline revision, AT result log, known upstream issues, performance traces, and signer/date. This is a reproducible internal certification record, not a claim that an external body has certified the library.
 
+## Revision 1: floor lanes and explicit WCAG 2.2 gates
+
+### Test the capability and the real floor
+
+Engine feature detection is injected through a `supports` map. Every fallback-bearing component runs its shared spec once with actual detection and once with each relevant capability forced false, on every adapter. The parity row becomes `component / scenario / action / browser / adapter / path`, where `path` is `native` or the named fallback. This proves branch behavior and event parity, not actual old-browser behavior.
+
+A **real floor lane** runs the same interaction suite on actual Chromium 114 / Firefox 125 where practical and physical iOS 17 devices (device lab or hosted real devices), plus Android/Chrome at the declared floor. It runs at least per release and on every change to a fallback-bearing component. A current patched WebKit build or an emulated viewport is not an iOS 17 substitute. Record device, OS, browser, path, and any contract-version mismatch in the evidence manifest.
+
+### WCAG 2.2 is a checklist, not an axe tag set
+
+The axe rule list has exactly one WCAG 2.2 rule, `target-size`, and it is disabled by default ([axe-core rule descriptions, retrieved 2026-10-27](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md)). Enable it explicitly, then implement the rest as named checks:
+
+| Criterion | Gate and executable/manual assertion |
+|---|---|
+| 2.4.11 Focus Not Obscured (Minimum), AA | **PR:** after every focus move, intersect the focused rect with sticky/fixed/top-layer siblings and assert non-zero visible area; include keyboard-open and overlay cases ([W3C, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html)). |
+| 2.4.13 Focus Appearance, AAA adopted as internal visible-focus floor | **PR:** tokenized computed-style check for indicator area at least the area of a 2-CSS-pixel perimeter and at least 3:1 contrast between focused and unfocused states. This exceeds AA intentionally ([W3C, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html)). |
+| 2.5.7 Dragging Movements, AA | **PR:** every drag fixture performs the same action through its single-pointer alternative and verifies equivalent state ([W3C, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)). |
+| 2.5.8 Target Size (Minimum), AA | **PR:** enable axe `target-size`; additionally measure target bounds ≥24 CSS px or document/test the exact spacing/inline/equivalent exception. Triage axe “needs review” rather than auto-passing it ([W3C, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)). |
+| 3.3.7 Redundant Entry, A | **Release:** form-preset integration and manual review confirm previously supplied values are retained or selectable, except deliberate security exceptions. Run the affected integration test in PR when changed ([W3C, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html)). |
+| 3.3.8 Accessible Authentication (Minimum), AA | **Release:** OTP/auth preset test completes without a cognitive-function test, and manual review checks copy/paste, password manager, one-time-code, and alternative path behavior. Run the affected flow in PR when changed ([W3C, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html)). |
+| 3.2.6 Consistent Help, A | **Release:** repeated help/contact mechanisms remain in the same relative order across preset views, unless the user deliberately changes it ([W3C, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/consistent-help.html)). |
+
+At build time, assert every `variant × tone × size` text/background pair at 4.5:1 and UI/focus pairs at 3:1 using the existing contrast checker, so token changes fail before rendering. PR also validates every component contract against JSON Schema and generates `registry.json` in that job, preventing schema and registry drift.
+
+### Accessibility-tree and IME automation
+
+Use `getByRole` and `toMatchAriaSnapshot()` for one shared role/name YAML assertion per state across adapters ([Playwright ARIA snapshots, retrieved 2026-10-27](https://playwright.dev/docs/aria-snapshots)). Playwright computes its representation; for Chromium's own accessibility tree, add CDP `Accessibility.getFullAXTree` checks. Firefox/WebKit actual output remains a real-AT concern, not something inferred from YAML ([CDP Accessibility domain, retrieved 2026-10-27](https://chromedevtools.github.io/devtools-protocol/tot/Accessibility/)).
+
+Playwright keyboard events cannot create real IME composition. Automate Chromium composition start/update/commit/cancel and Enter-during-composition through CDP `Input.imeSetComposition` and `Input.insertText` ([CDP Input domain, retrieved 2026-10-27](https://chromedevtools.github.io/devtools-protocol/tot/Input/)). Keep physical Gboard and iOS Japanese/Chinese runs for Firefox/WebKit and actual keyboard-event ordering.
+
+Use fast-check (MIT, test-only) to generate random action sequences from each spec's action set, check invariants after every step, and shrink failures. Generators must include disabled/removed items, controlled rejection, duplicate registration, and stale effect versions ([fast-check documentation and license, retrieved 2026-10-27](https://github.com/dubzzz/fast-check)).
+
+Guidepup (MIT, test-only) may drive NVDA on Windows and VoiceOver on macOS from Playwright and capture spoken phrases on self-hosted runners ([Guidepup documentation and license, retrieved 2026-10-27](https://github.com/guidepup/guidepup)). It is a regression net under the manual protocol, not a replacement for JAWS, iOS, Android, or human judgment.
+
+Visual fixtures load the actual production font files with `font-display: block`, and baselines are separated by `engine × platform × DPR`, not only browser name. The release manifest also records the BCD/Baseline dataset version used for support claims.
+
 ## Recommendations for ARCHITECTURE.md
 
-1. **Make the machine-readable component contract the source for registry data and shared semantic tests.** *Trade-off:* schema/actions require careful design up front, but framework parity and agent/lint consumers use the same truth.
-2. **Use pure reducer/invariant tests plus Playwright interaction tests on all three engines and adapters.** *Trade-off:* the matrix is expensive, while browser/framework-specific defects fail before release rather than becoming adapter folklore.
-3. **Run axe in every interactive state and phrase results as detected-rule scope only.** *Trade-off:* state setup adds test code; a one-state scan cannot certify a component.
-4. **Require dated real-AT evidence on the release candidate and physical mobile devices.** *Trade-off:* releases need manual time, licenses, and hardware, but actual speech/gesture UX—the product’s differentiator—is verified directly.
-5. **Keep visual baselines hermetic and environment-specific, with mandatory human diff review.** *Trade-off:* more baseline artifacts, while broad pixel tolerances and accidental “update all” approvals do not conceal regressions.
-6. **Publish a reproducible certification manifest and block release on failed/flaky gates.** *Trade-off:* no “ship now, certify later” shortcut, but every accessibility/support claim has traceable evidence and known limitations.
+1. **Make the machine-readable component contract the source for registry data, shared semantic tests, JSON Schema validation, and ARIA snapshots.** *Trade-off:* schema/actions require careful design up front, but framework parity and agent/lint consumers use the same truth.
+2. **Use reducer invariants and model-based generators plus Playwright interaction tests on all engines/adapters and native/fallback paths.** *Trade-off:* the matrix is expensive, while browser/framework defects and untested edge sequences fail before release.
+3. **Enable axe `target-size` and implement named WCAG 2.2 checks instead of treating an axe tag as conformance.** *Trade-off:* custom geometry and preset-flow tests require maintenance, but the AA floor is actually exercised.
+4. **Require dated real-AT evidence on the release candidate, physical mobile devices, and a real floor lane; use Guidepup only as a regression net.** *Trade-off:* releases need manual time, licenses, and hardware, but actual speech/gesture UX and fallback behavior are verified directly.
+5. **Keep visual baselines hermetic with production fonts and environment-specific `engine × platform × DPR` matrices, with mandatory human diff review.** *Trade-off:* more baseline artifacts, while broad pixel tolerances and accidental “update all” approvals do not conceal regressions.
+6. **Publish a reproducible certification manifest including BCD version and block release on failed/flaky gates.** *Trade-off:* no “ship now, certify later” shortcut, but every accessibility/support claim has traceable evidence and known limitations.
 
-STATUS: DRAFT-COMPLETE
+STATUS: REVISION-1

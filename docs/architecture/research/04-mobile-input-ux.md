@@ -12,34 +12,46 @@
 
 ## Recommended intent-to-native mapping
 
-“Default” below means library preset; consumers may override attributes when the declared data semantics remain true. `enterkeyhint` should reflect the real next action, not always `next`. For autocomplete address/contact fields, add the appropriate section/group tokens rather than duplicating one value across unrelated people.
+“Default” below means library preset; consumers may override attributes when the declared data semantics remain true. Autofill fields have a stable `name`/`id`, an owning `<form>`, and a visible label. For autocomplete address/contact fields, add appropriate section/group tokens rather than duplicating one value across unrelated people ([MDN `autocomplete`, 2026-08-27](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete)).
 
-| Intent `kind` | `type` | `inputmode` | `autocomplete` | Other native defaults |
-|---|---|---|---|---|
-| Free text | `text` | `text` | Context token or `on` | `autocapitalize="sentences"`, `autocorrect="on"`, `spellcheck="true"` |
-| Person full name | `text` | `text` | `name` | `autocapitalize="words"`, `autocorrect="off"`, `spellcheck="false"` |
-| Given/family name | `text` | `text` | `given-name` / `family-name` | Same as person name |
-| Username | `text` | `text` | `username` | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
-| Email | `email` | `email` | `email` | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
-| URL | `url` | `url` | `url` when autofill is meaningful | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
-| Phone | `tel` | `tel` | `tel`, or a specific `tel-*` part | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
-| Numeric OTP | `text` | `numeric` | `one-time-code` | `maxlength` from contract; `autocapitalize="none"`, correction/spelling off; optional ASCII-digit `pattern` |
-| Alphanumeric OTP | `text` | `text` | `one-time-code` | `autocapitalize="characters"` only if canonical form is uppercase; correction/spelling off |
-| Decimal amount | `text` | `decimal` | `transaction-amount` only in that payment context | `autocorrect="off"`, `spellcheck="false"`; locale-aware parser; no spinbutton |
-| Integer quantity | `number` when stepping helps, otherwise `text` | `numeric` for text variant | Context token or `off` | `min`/`max`/`step` for number variant; never use number semantics for identifiers |
-| Postal/account/reference code | `text` | `numeric` only when digits-only by contract | `postal-code` or appropriate token | Preserve leading zeroes; no `type="number"` |
-| Search | `search` | `search` | Usually `off` for a transient query | `enterkeyhint="search"`; correction/spelling according to domain |
-| Current password | `password` | `text` | `current-password` | `autocapitalize="none"`, correction/spelling off |
-| New/confirmed password | `password` | `text` | `new-password` | Same; use distinct section tokens if needed |
-| Date | `date` | Not applicable | `bday` only for an actual birth date | Native picker; normalized `yyyy-mm-dd` value |
-| Time | `time` | Not applicable | Context token or `off` | Native picker; `step` when needed |
-| Native single choice | `<select>` | Not applicable | Actual purpose token | Native option/picker; no ARIA listbox recreation |
+The **form owner**, not an isolated Field, computes `enterkeyhint`: `next` when another editable field follows; `done` on the last field of a non-submitting group; `go` when Enter performs navigation/submission; `send` for messaging; `search` for query submission. Kind overrides include URL→`go`, Search→`search`, and OTP→`done` when auto-submit is off / `go` when on ([MDN `enterkeyhint`, updated 2026-04-17](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/enterkeyhint)).
+
+| Intent `kind` | `type` | `inputmode` | `autocomplete` | `enterkeyhint` | Other native defaults |
+|---|---|---|---|---|---|
+| Free text | `text` | `text` | Context token or `on` | Form position | `autocapitalize="sentences"`, `autocorrect="on"`, `spellcheck="true"` |
+| Person full name | `text` | `text` | `name` | Usually `next` | `autocapitalize="words"`, `autocorrect="off"`, `spellcheck="false"` |
+| Given/family name | `text` | `text` | `given-name` / `family-name` | Form position | Same as person name |
+| Username | `text` | `text` | `username` | Form position | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
+| Email | `email` | `email` | `email` | Form position | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
+| URL | `url` | `url` | `url` when autofill is meaningful | `go` | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
+| Phone | `tel` | `tel` | `tel`, or a specific `tel-*` part | Form position | `autocapitalize="none"`, `autocorrect="off"`, `spellcheck="false"` |
+| Numeric OTP | `text` | `numeric` | `one-time-code` | `done` / `go` by auto-submit | `autocapitalize="none"`, correction/spelling off; optional ASCII-digit `pattern`; length validated after normalization |
+| Alphanumeric OTP | `text` | `text` | `one-time-code` | `done` / `go` by auto-submit | `autocapitalize="characters"` only if canonical form is uppercase; correction/spelling off |
+| Decimal amount | `text` | `decimal` | `transaction-amount` only in that payment context | Form position | `autocorrect="off"`, `spellcheck="false"`; locale-aware parser; no spinbutton |
+| Integer quantity | `number` when stepping helps, otherwise `text` | `numeric` for text variant | Context token or `off` | Form position | `min`/`max`/`step` for number variant; never use number semantics for identifiers |
+| Postal/account/reference code | `text` | `numeric` only when digits-only by contract | `postal-code` or appropriate token | Form position | Preserve leading zeroes; no `type="number"` or `maxlength` |
+| Search | `search` | `search` | Usually `off` for a transient query | `search` | Correction/spelling according to domain |
+| Current password | `password` | `text` | `current-password` | Form position | `autocapitalize="none"`, correction/spelling off |
+| New/confirmed password | `password` | `text` | `new-password` | Form position | Same; use distinct section tokens if needed |
+| Date | `date` | Not applicable | `bday` only for an actual birth date | Form position | Native picker; normalized `yyyy-mm-dd` value |
+| Time | `time` | Not applicable | Context token or `off` | Form position | Native picker; `step` when needed |
+| Native single choice | `<select>` | Not applicable | Actual purpose token | Form position | Native option/picker; no ARIA listbox recreation |
+| Card number | `text` | `numeric` | `cc-number` | Form position | Never `type="number"`; normalize then validate/checksum |
+| Card expiry | `text` | `numeric` | `cc-exp` | Form position | Accept only contract-supported separators; validate after normalization |
+| Card expiry month/year | `text` | `numeric` | `cc-exp-month` / `cc-exp-year` | Form position | Preserve two-digit month and leading zeroes where applicable |
+| Card security code | `text` | `numeric` | `cc-csc` | Usually `done` | Correction/spelling off; never `type="number"` |
+| Cardholder name | `text` | `text` | `cc-name` | Form position | `autocapitalize="words"`, correction/spelling off |
+| Street address | `textarea` | `text` | `street-address` | Form position | Use `address-line1..3` instead when separate lines are required |
+| Address line 1–3 | `text` | `text` | `address-line1` / `address-line2` / `address-line3` | Form position | Do not combine with `street-address` |
+| Country | `text` | `text` | `country` for code, `country-name` for name | Form position | Do not infer country from keyboard locale |
+| Organization | `text` | `text` | `organization` | Form position | `autocapitalize="words"` as a hint only |
+| Tax/reference ID | `text` | `numeric` only when digits-only by contract | `off` (no standard tax token) | Form position | Preserve leading zeroes; normalize then validate check digit |
 
 The OTP, phone, postal/reference, and amount presets deliberately avoid `type="number"`. MDN recommends number only for incremental numeric values and warns that spinbutton behavior and invalid-character handling are problematic for identifiers ([MDN number input, updated 2026-10-14](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/number)). OTP remains one text control so paste and autofill can fill the complete code; split-character inputs require extra paste, focus, screen-reader, and deletion logic and are not the default.
 
 ## One-time codes
 
-The standardized `autocomplete="one-time-code"` identifies an out-of-channel verification code ([WHATWG autofill tokens, retrieved 2026-10-27](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)). Use it with a named, labelled text input and numeric keyboard for numeric codes. `maxlength` and pattern guide/validate length and alphabet; they do not replace server verification, expiry, rate limiting, or replay protection.
+The standardized `autocomplete="one-time-code"` identifies an out-of-channel verification code ([WHATWG autofill tokens, retrieved 2026-10-27](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)). Use it with a named, labelled text input and numeric keyboard for numeric codes. Pattern guides the alphabet; expected length is validated **after** whole-value normalization. OTP does not use `maxlength`, because browser length limits can truncate a formatted paste before the engine sees it. These checks do not replace server verification, expiry, rate limiting, or replay protection ([MDN `maxlength`, updated 2026-04-20](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/maxlength)).
 
 Accept the complete pasted/autofilled string in one input transaction, normalize only characters explicitly allowed by the contract, and submit from the resulting value rather than a stale pre-input snapshot. Do not disable autocomplete for OTP. WebOTP-specific APIs are optional enhancements, not the baseline, because the portable autofill contract already covers the main UX.
 
@@ -103,14 +115,37 @@ Use this layered policy:
 
 For each field kind, test current iOS Safari and Android Chrome on physical devices, plus desktop keyboard: correct keyboard; minus/decimal availability; Enter label/action; autofill; paste full value; selection/caret; deletion; IME; leading zeroes; empty/incomplete states; rotation; keyboard-open focus visibility; validation/error announcement; and form submission/reset. Record browser/OS versions because keyboard behavior is user-agent controlled.
 
+## Revision 1: declarative viewport and input boundaries
+
+### Native viewport ladder
+
+Use dynamic viewport units before JavaScript geometry: `dvh` tracks changing browser chrome, `svh` reserves the small/stable area for sticky action bars, and `lvh` is the large area. Chromium 108, Firefox 101, and Safari/iOS 15.4 support the family ([MDN `<length>` viewport units, updated 2026-07-08](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length)). Do not use `dvh` for content that must not jump during chrome/keyboard transitions; use `svh` for those stable regions.
+
+The viewport meta `interactive-widget` selects `resizes-visual` (visual only), `resizes-content` (visual and layout), or `overlays-content` (neither). Chrome Android 108 made visual-only the default; Firefox Android 133 supports the key, while iOS has no corresponding opt-in and behaves as visual-only ([Chrome viewport resize guidance, published 2022-10-27](https://developer.chrome.com/blog/viewport-resize-behavior); [MDN viewport meta, retrieved 2026-10-27](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport)). A host choosing `resizes-content` gets declarative Android layout resizing; iOS and visual-only Android still need VisualViewport overlay math. JavaScript is the fallback for focus restoration and cases these declarations cannot express, not the first step.
+
+### Prevent focus-triggered zoom through type tokens
+
+iOS Safari zooms toward focused form controls whose computed font size is below 16 CSS pixels. Every input/select/textarea on touch therefore renders at **at least 16 CSS pixels computed size**, enforced by the size tokens and verified on device. Do not use `maximum-scale=1` or `user-scalable=no`: WCAG 1.4.4 requires 200% text resizing and WebKit itself ignores viewport scale limits to preserve pinch zoom ([reproducible iOS input-zoom issue, opened 2025-05-27](https://github.com/heroui-inc/heroui/issues/5326); [W3C Resize Text, updated 2024-12-12](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html); [WebKit iOS zoom behavior, published 2016-09-20](https://webkit.org/blog/7367/new-interaction-behaviors-in-ios-10/)). The verification matrix records computed font size and viewport scale before/after focus and blur.
+
+### Keyboard locale versus app locale
+
+For amount kinds, accept both `,` and `.` as decimal separators only when the value has exactly one separator and no grouping. If multiple separators occur, a separator followed by exactly three digits and then another separator is interpreted as grouping only when the complete grouping structure is valid; otherwise reject as ambiguous. Never prefill grouping characters into the editable value, and never silently strip punctuation. Test a Colombian app locale with an English keyboard and a Spanish keyboard with an `en` form, in both directions, alongside incomplete trailing separators.
+
+Phone, amount, reference, tax, card, and OTP kinds do not use `maxlength`: enforce length after normalization so formatted paste is not truncated before inspection. The OTP paste/autofill path consumes the whole input first and only then removes allowed separators and validates length.
+
+Material Design recommends 48×48 dp touch targets; the design-system 44-CSS-pixel preset exceeds WCAG's 24 floor but remains a preset, not a claim that 44 Android dp equals 44 CSS px. Validate Android density separately and preserve spacing between targets ([Material Design touch targets, retrieved 2026-10-27](https://m3.material.io/foundations/designing/structure)).
+
+`autocorrect` support is still uneven: BCD records Chromium 153, Firefox 136, and Safari 14.1, so `off` is a best-effort hint rather than a cross-browser behavior guarantee ([BCD `autocorrect`, retrieved 2026-10-27](https://github.com/mdn/browser-compat-data/blob/main/html/global_attributes.json)). Field tests must verify that usernames, emails, codes, URLs, and phone values are not transformed even when the hint is ignored.
+
 ## Recommendations for ARCHITECTURE.md
 
-1. **Make a declarative `kind -> native attributes` table part of every field’s machine-readable contract.** Start with the mapping above and let explicit props refine autocomplete/Enter action. *Trade-off:* the table needs device-level certification and occasional overrides, but wrong keyboards and autocapitalization become systematic defects rather than repeated app mistakes.
+1. **Make a declarative `kind -> native attributes` table part of every field’s machine-readable contract, with `enterkeyhint` supplied by the form owner.** Start with the mapping above and let explicit props refine autocomplete/Enter action. *Trade-off:* the table needs device-level certification and occasional overrides, but wrong keyboards and autocapitalization become systematic defects rather than repeated app mistakes.
 2. **Use single text inputs for OTP and identifiers, `tel` for phone, and number inputs only for true incremental quantities.** *Trade-off:* numeric-looking identifiers lose spinbuttons and native number validation, which is desirable; quantity presets choose between native stepping and exact text parsing explicitly.
-3. **Default phone editing to unmasked input with formatting on blur/preview.** Require caret-mapping and paste tests for any live mask. *Trade-off:* less visual guidance while typing in exchange for robust international entry and autofill.
+3. **Default phone editing to unmasked input with formatting on blur/preview and no `maxlength` before normalization.** Require caret-mapping and paste tests for any live mask. *Trade-off:* less visual guidance while typing in exchange for robust international entry and autofill.
 4. **Separate localized editing text from canonical numeric value; use `Intl` for formatting and an owned deterministic parser for input.** *Trade-off:* parser and locale fixtures add code, but silent corruption from `parseFloat`, punctuation stripping, or binary money arithmetic is avoided.
 5. **Use native date/time/select on touch by default; require a capability statement before custom picker/listbox UI.** *Trade-off:* cross-platform visual consistency yields to platform UX and lower accessibility risk.
-6. **Adopt a tokenized 44-CSS-pixel touch preset, 24-CSS-pixel WCAG floor, and non-drag alternatives.** *Trade-off:* dense desktop layouts need a separate density preset rather than shrinking touch usability.
-7. **Build keyboard-aware overlays on VisualViewport with capped internal scrolling; never make VirtualKeyboard API a prerequisite.** *Trade-off:* geometry handling and physical-device tests remain necessary, but focused inputs/actions stay visible across browser resizing models.
+6. **Adopt a tokenized 44-CSS-pixel touch preset, 24-CSS-pixel WCAG floor, and non-drag alternatives, checking Android's separate 48-dp guidance.** *Trade-off:* dense desktop layouts need a separate density preset rather than shrinking touch usability.
+7. **Use `svh`/`dvh` and `interactive-widget` first, then VisualViewport for residual keyboard-aware overlay behavior; never make VirtualKeyboard API a prerequisite.** *Trade-off:* host and iOS/Android resize models still need tests, but declarative sizing handles the common cases without JavaScript.
+8. **Set touch input type tokens to at least 16 CSS pixels computed size without disabling user zoom.** *Trade-off:* compact desktop and touch typography need different presets, but focus no longer causes an avoidable viewport jump.
 
-STATUS: DRAFT-COMPLETE
+STATUS: REVISION-1

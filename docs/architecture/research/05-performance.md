@@ -68,13 +68,13 @@ Start with plain rendering and `content-visibility` where appropriate. Enable vi
 
 ### Hidden classes and monomorphism
 
-V8 tracks object shapes with hidden classes and uses them for optimized property access/inline caches; same properties added in the same order share a shape, while shape churn can inhibit optimization ([V8 fast properties, published 2017-08-23](https://v8.dev/blog/fast-properties)). This mechanism is real. “Always make every UI object monomorphic” is not a measured architecture rule.
+V8 tracks object shapes with hidden classes and uses them for optimized property access/inline caches; same properties added in the same order share a shape, while shape churn can inhibit optimization ([V8 fast properties, published 2017-08-30](https://v8.dev/blog/fast-properties)). This mechanism is real. “Always make every UI object monomorphic” is not a measured architecture rule.
 
 Reasonable hygiene is to construct snapshot/item records in one consistent shape and avoid adding/deleting arbitrary fields in hot loops. Do not replace immutable transitions, Maps, or readable records with classes/object pools solely on the expectation of a JIT win. SpiderMonkey and JavaScriptCore have different internals, and DOM/rendering often dominates. Accept a monomorphism rewrite only when a cross-browser profile identifies that hot property-access site and the rewrite improves the interaction.
 
 ### Allocation and garbage collection
 
-V8’s generational GC is optimized around many short-lived objects dying young; its own GC guide says short-lived objects are relatively cheap and surviving objects drive copying costs ([V8 “Trash talk”, published 2019-01-09](https://v8.dev/blog/trash-talk)). Therefore “zero allocations in all reducers” is folklore, not a universal requirement. Immutable snapshots allocate by design and are needed for React integration.
+V8’s generational GC is optimized around many short-lived objects dying young; its own GC guide says short-lived objects are relatively cheap and surviving objects drive copying costs ([V8 “Trash talk”, published 2019-01-03](https://v8.dev/blog/trash-talk)). Therefore “zero allocations in all reducers” is folklore, not a universal requirement. Immutable snapshots allocate by design and are needed for React integration.
 
 Hot-path allocation still matters when it creates GC pauses, large retained graphs, or framework reconciliation churn. Reuse stable subscription/handler functions, cache formatter instances and derived indexes, and avoid rebuilding entire item registries per keystroke. Do not pool DOM nodes or mutable snapshots without correctness and heap evidence. Profile allocation rate, GC time, retained heap after mount/destroy cycles, and listener/observer leaks separately.
 
@@ -101,14 +101,50 @@ Minimum scenarios:
 
 Record INP/event timing, LoAF and long tasks, style/layout/paint/composite durations, forced-reflow attribution, dropped frames, DOM/listener counts, JS heap/GC, and adapter render counts. Field INP uses the 75th percentile; lab interactions should additionally report tail latency because one mean can hide keyboard stalls ([web.dev INP, retrieved 2026-10-27](https://web.dev/articles/inp)). No optimization merges without a statistically visible win over the control and no accessibility regression.
 
+## Revision 1: absolute gates and scheduler scope
+
+### Provisional laboratory ceilings
+
+Reference hardware is **Moto G Power 5G (2024)** for mid-tier Android and **iPhone 15 (2023)** for iOS. Record exact device, OS, browser, power mode, and network/CPU conditions; these are named reference classes, not claims about every phone. The first implementation must meet these provisional p95 gates over at least 30 measured iterations after warm-up, revisable only by ADR:
+
+| Scenario | Absolute provisional gate |
+|---|---|
+| One roving-focus step, keydown to painted active item | **≤ 50 ms p95** |
+| Overlay open, including native `showModal()`/`showPopover()` and dependent focus | **≤ 100 ms p95** |
+| Editable combobox filter at 1,000 items, key echo + painted results + result-count announcement | **≤ 50 ms p95** |
+| 1,000 mount/destroy cycles | **0 retained stores, listeners, observers, or registered items** |
+| Fixed-size virtual scroll at 10,000 rows | No long task > 50 ms attributable to engine range calculation/recycling |
+
+Use **fixed-size virtualization from 250 rows** as the provisional default. Variable-size stays opt-in until its measurement path is certified. At 100/250/500/1,000 rows, compare plain versus virtual mount latency, p95 scroll/key latency, DOM nodes, and heap; retain the threshold only if virtualization materially improves interaction without an accessibility regression. This is an initial product rule to measure, not a universal optimum.
+
+### Scheduler is fallback-only and commit-ordered
+
+Native CSS anchor placement never enters the JavaScript frame scheduler. The read→compute→write scheduler exists only for the geometry fallback, variable-height virtualization, and keyboard-viewport reactions. It is drained by the same adapter post-commit effect queue defined in research 02: React layout effect, Vue post-flush watcher, or vanilla post-patch microtask. There is no independent rAF racing React/Vue rendering. Read work that genuinely needs the next frame is queued after the current commit with its snapshot version and dropped when superseded.
+
+### Cross-engine measurement and yielding
+
+LoAF attribution is Chromium-only from Chrome 123; Firefox and Safari have no corresponding API ([MDN `PerformanceLongAnimationFrameTiming`, updated 2026-10-22](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceLongAnimationFrameTiming)). Use Event Timing where implemented for interaction durations, and Firefox Profiler/Safari Timelines for rendering stacks and engine-specific evidence ([MDN `PerformanceEventTiming`, updated 2026-10-22](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEventTiming)). The protocol records different evidence sources rather than treating Chromium LoAF as a three-engine result.
+
+Above a measured filtering-cost threshold, process ranking in chunks: paint the key echo first, yield between chunks with `scheduler.yield()` where available (Chromium 129 / Firefox 142), otherwise `setTimeout(0)` or `MessageChannel`, and coalesce stale query versions ([MDN `Scheduler.yield`, updated 2025-09-25](https://developer.mozilla.org/en-US/docs/Web/API/Scheduler/yield)). Chromium-only `navigator.scheduling.isInputPending()` may influence an extra yield but is never required ([MDN, updated 2024-09-27](https://developer.mozilla.org/en-US/docs/Web/API/Scheduling/isInputPending)). Do not delay input echo, active-option feedback, or result correctness behind an older chunk.
+
+### Containment, pointers, and platform caveats
+
+`contain: layout paint` can bound invalidation on overlay panels and suitable list rows; `content` is another candidate when its full containment semantics fit ([MDN `contain`, updated 2026-09-07](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/contain)). Apply only where paint clipping does not cut off focus rings/popovers. Do not use `contain: size` on auto-height items; use `contain-intrinsic-size` with `content-visibility` instead.
+
+Use `pointerdown`/`pointermove` with a declared `touch-action` for pan/zoom intent rather than building every gesture from touch listeners. Pointer Events provides unified input, while `touch-action` lets the browser decide native scrolling before JavaScript ([W3C Pointer Events, retrieved 2026-10-27](https://w3c.github.io/pointerevents/)). Retain touch listeners only for genuine multi-touch recognizers; non-canceling wheel/touch observation remains passive.
+
+BCD records `content-visibility: auto` as partial in Safari 18–25 (offscreen content not findable) and full in Safari 26; the Baseline-newly-available milestone is 2025-09-15 ([web-features entry, 2025-09-15](https://web-platform-dx.github.io/web-features-explorer/features/content-visibility/)). Run find-in-page and AT checks per engine instead of generalizing the Chromium demo.
+
+For roving focus, use `focus({ preventScroll: true })` followed by one explicit `scrollIntoView({ block: 'nearest' })` with tokenized `scroll-margin`, avoiding browser+script double scrolling ([MDN `focus`, updated 2025-06-23](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus); [MDN `scrollIntoView`, updated 2026-08-12](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)).
+
 ## Recommendations for ARCHITECTURE.md
 
-1. **Build one read→compute→write frame scheduler for overlays, collection measurement, and viewport reactions.** *Trade-off:* geometry operations become asynchronous/coordinated instead of ad hoc synchronous calls, but forced-layout loops have a single enforceable boundary.
-2. **Use passive non-canceling listeners, direct listeners by default, and delegation only after collection benchmarks.** *Trade-off:* potentially more small listeners, but simpler lifecycle and no root-handler overhead without proof.
+1. **Use CSS-only overlay placement on the floor; drain the scheduler only for geometry fallback and measurement-driven features after adapter commit.** *Trade-off:* fallback geometry becomes coordinated rather than ad hoc, without an independent rAF racing framework rendering.
+2. **Use Pointer Events and `touch-action` by default, passive non-canceling listeners, direct listeners, and delegation only after benchmarks.** *Trade-off:* potentially more small listeners, but simpler lifecycle and no root-handler overhead without proof.
 3. **Prefer Intersection/ResizeObserver to polling; disconnect aggressively and never mutate observed geometry in an unguarded callback.** *Trade-off:* asynchronous timing is unsuitable for exact per-frame positioning, which stays in the scheduler/CSS anchor path.
-4. **Keep plain DOM as the default; adopt `content-visibility` for independent offscreen sections and virtualization only for measured large-list bottlenecks.** *Trade-off:* some large pages need two rendering strategies, while find-in-page, AT navigation, and focus remain intact by default.
+4. **Keep plain DOM below 250 fixed-size rows, use fixed-size virtualization above it provisionally, and retain it only after comparative evidence.** Use `content-visibility` for independent sections and variable-height virtualization only after certification. *Trade-off:* two list strategies require testing, while small lists preserve find-in-page and simple AT navigation.
 5. **Animate transform/opacity and use `will-change` only temporarily after profiling.** *Trade-off:* some visual effects require layout/paint or a different design; layer memory is not spent speculatively.
 6. **Maintain stable record shapes and cached derived structures as low-cost hygiene, but prohibit JIT-driven rewrites without traces.** *Trade-off:* theoretically avoidable polymorphism/allocation may remain where readability, immutability, and cross-engine simplicity win.
-7. **Gate performance changes on the shared control/candidate protocol, including tail latency, rendering stages, heap, and physical mobile results.** *Trade-off:* performance work takes longer to certify, but “optimizations” cannot ship based on folklore or a single desktop average.
+7. **Gate initial and changed engines on the absolute p95 budgets plus the control/candidate protocol, including tail latency, rendering stages, heap, and named physical devices.** *Trade-off:* performance work takes longer to certify, but “optimizations” cannot ship based on folklore or a single desktop average.
 
-STATUS: DRAFT-COMPLETE
+STATUS: REVISION-1

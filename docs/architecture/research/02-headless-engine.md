@@ -87,7 +87,9 @@ Consumer-first cancellation gives an escape hatch but can let application code b
 
 Each controllable value has one owner at a time: controlled props are authoritative, while uncontrolled state lives in the store. A request event computes a candidate transition and emits intent; a controlled component does not commit the candidate unless the owner accepts it. Switching ownership after mount should be rejected in development because it changes synchronization semantics.
 
-Native state is authoritative where the platform owns it: native `toggle`, `close`, `cancel`, `input`, `change`, and `invalid` events dispatch facts into the core. This avoids a React/Vue “open” value drifting from an open native dialog/popover.
+The adapter supplies a stable `getProps()` accessor. It is evaluated when deriving the rendered view and at transition time; controlled props are never copied into reducer state or written to the external store during render. The derived view overlays controlled fields on the cached snapshot, so a changed prop cannot leave one render of stale ARIA. Reducers receive current context as input when an event occurs. React’s render purity rules prohibit external writes during render ([React component purity, retrieved 2026-10-27](https://react.dev/reference/rules/components-and-hooks-must-be-pure)).
+
+Native `toggle`, `close`, `cancel`, `input`, `change`, and `invalid` events report **actual native state**, which is tracked separately from desired controlled state. For uncontrolled values, that fact updates the store. For controlled values, the component emits change intent but does not commit it. If the owner leaves `open={true}` after native Escape closed the dialog, the controlled prop wins and a post-commit corrective native effect reopens/reconciles the actual element; the adapter does not redispatch Escape or create a feedback loop. If the owner accepts `false`, the derived view and native element remain closed.
 
 ## SSR- and hydration-safe IDs
 
@@ -118,15 +120,49 @@ Bytes are not performance by themselves, but a budget prevents a “tiny shared 
 
 These are engineering limits, not claims of measured current size. CI must also record minified raw bytes and gzip, module import graphs, and fixture execution. Compression can hide parse/compile cost, so byte checks complement—not replace—the interaction benchmarks in research question 05.
 
+## Revision 1: commit, registration, and lifecycle contracts
+
+### Effect descriptors drain only after the committed DOM
+
+`dispatch()` updates the snapshot and queues effect descriptors; it never executes DOM work. Every descriptor carries `snapshotVersion`, a stable anatomy/key target, and an idempotent operation. The adapter drains the queue only after the framework has committed that version:
+
+- React: native open/close, focus, scroll, and geometry in `useLayoutEffect` keyed by snapshot; passive announcements in `useEffect`. Layout effects run after DOM mutation and before paint ([React `useLayoutEffect`, retrieved 2026-10-27](https://react.dev/reference/react/useLayoutEffect)).
+- Vue: `watch(snapshot, callback, { flush: 'post' })` (or `onUpdated`), so the callback sees updated DOM ([Vue watchers, retrieved 2026-10-27](https://vuejs.org/guide/essentials/watchers.html#callback-flush-timing)).
+- Vanilla: in a microtask immediately after the adapter's own DOM patch, not an independent animation frame that could race rendering.
+
+Drain native `showModal()`/`showPopover()` before dependent focus/scroll effects. Drop a descriptor when its version was superseded or its target no longer exists; a missing target is a development diagnostic, not a reason to focus `<body>`. Effect execution never synchronously dispatches back into the reducer. Any resulting native event is handled as a new adapter input in a later event task, with actual-state deduplication.
+
+### Compound registration is data-first
+
+`.Item` finds `.Root` through React context, Vue `provide`/`inject`, or the vanilla root registry (with DOM ancestor lookup only as the mount convenience). The root receives a complete, ordered **data collection** from the consumer; each record has a stable item key, accessible-name content, disabled state, and deterministic DOM ID derived through a safe key map. This full collection drives typeahead, Home/End, `aria-setsize`, and `aria-posinset`, including unrendered/virtual items.
+
+Mounted `.Item` parts register key→element and unregister on cleanup. For non-virtual collections, `Node.compareDocumentPosition()` may verify/reconcile DOM order after mount because render/callback order is not guaranteed ([MDN, updated 2026-03-20](https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition)). It is never the SSR source of truth: SSR uses declared data order. Virtual collections never infer total order from mounted nodes.
+
+An active item that is valid in data but currently unmounted first queues mount/range work. Only after that commit may the adapter write `aria-activedescendant` and run the focus/scroll effect. This keeps the ID relationship valid at every committed frame.
+
+### Adapter lifecycle and outside listeners
+
+React constructs the store lazily (`useState(() => createStore())` or an equivalent ref), not on every render. Effect setup activates subscriptions; cleanup is reversible and detaches listeners/observers/timers without destroying desired state. `destroy()` is idempotent, `subscribe()` deduplicates the same listener, and a StrictMode development setup+cleanup cycle can activate the same store again. React documents the extra development cycle specifically to expose incomplete cleanup ([React StrictMode, retrieved 2026-10-27](https://react.dev/reference/react/StrictMode)).
+
+Outside-dismiss fallback uses `pointerdown` in the **capture phase on `document`**, ignores any event whose `composedPath()` contains the trigger/content, and is installed only when native Popover/dialog light dismiss is unavailable. Capture establishes behavior before React's root-delegated bubble handlers, and composed paths include shadow DOM targets ([MDN `composedPath`, updated 2026-09-30](https://developer.mozilla.org/en-US/docs/Web/API/Event/composedPath); [W3C Pointer Events, retrieved 2026-10-27](https://w3c.github.io/pointerevents/)).
+
+### IDs used in CSS are a separate representation
+
+Framework `useId` output is safe for HTML IDREF attributes but has no guaranteed CSS `<custom-ident>` format. Preserve the raw value for `aria-*`, `commandfor`, and `popovertarget`; derive `anchor-name` and `view-transition-name` through a deterministic sanitizing map with the required prefix and reserved-word exclusions. Use `CSS.escape()` when an HTML ID is interpolated into `querySelector('#…')` ([MDN `<custom-ident>`, updated 2026-04-20](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/custom-ident); [MDN `CSS.escape`, updated 2026-10-10](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape_static)). Never assume React's current ID punctuation is stable.
+
+Vue snapshots and registries are marked with `markRaw` before entering `shallowRef`, preventing later deep proxy conversion while preserving external-store identity ([Vue reactivity advanced API, retrieved 2026-10-27](https://vuejs.org/api/reactivity-advanced.html#markraw)).
+
+Typeahead reset, tooltip delay, and long-press timers are effect descriptors interpreted through an injected scheduler. SSR/tests use a deterministic fake; production alone uses platform timers, keeping reducers clock-free.
+
 ## Recommendations for ARCHITECTURE.md
 
-1. **Standardize on pure reducers plus explicit finite-state tables for complex interactions.** Return effect descriptors for adapters to execute after commit. *Trade-off:* effect handling is more verbose than direct method calls, but transitions are deterministic, SSR-safe, and testable once across frameworks.
+1. **Standardize on pure reducers plus explicit finite-state tables for complex interactions.** Return versioned effect descriptors for adapters to drain after commit. *Trade-off:* effect handling is more verbose than direct method calls, but transitions are deterministic, SSR-safe, and focus never targets uncommitted DOM.
 2. **Define a tiny per-instance immutable snapshot store; do not adopt signals or a statechart interpreter.** *Trade-off:* coarse snapshot notifications may render more than fine-grained graphs, but portable semantics and React concurrency support are worth it until profiling proves a bottleneck.
-3. **Use `useSyncExternalStore` in React and shallow snapshot refs in Vue; vanilla subscribes directly and owns an abortable listener scope.** *Trade-off:* three rendering integrations remain necessary, while behavior and tests stay shared.
+3. **Use `useSyncExternalStore` in React and shallow, `markRaw` snapshot refs in Vue; vanilla subscribes directly and owns an abortable listener scope.** *Trade-off:* three rendering integrations remain necessary, while behavior and tests stay shared.
 4. **Make prop getters canonical, with a single merge/composition utility.** Consumer callbacks run first and documented cancellation uses `defaultPrevented`; semantic invariants cannot be spread away. *Trade-off:* less “anything goes” flexibility in exchange for predictable accessibility and cross-framework behavior.
-5. **Support controlled and uncontrolled values through one request/commit pipeline, with native events treated as facts.** *Trade-off:* adapters cannot take shortcut state writes, but there is only one transition and notification path to certify.
-6. **Generate IDs in the adapter root using framework SSR APIs; require explicit/injected IDs for vanilla SSR.** *Trade-off:* vanilla SSR integration is less automatic than client-only mounting, but duplicate IDs and hydration mismatches are designed out.
+5. **Support controlled and uncontrolled values through one request/commit pipeline, with native actual-state facts and controlled-prop reconciliation.** *Trade-off:* adapters cannot take shortcut state writes, but there is only one transition and notification path to certify.
+6. **Generate IDs in the adapter root using framework SSR APIs; require explicit/injected IDs for vanilla SSR and a separate safe CSS-identifier map.** *Trade-off:* vanilla SSR integration is less automatic than client-only mounting, but duplicate IDs and hydration/CSS mismatches are designed out.
 7. **Keep modules side-effect free and component-entry based; enforce provisional per-component gzip budgets and zero-byte unused-component fixtures.** *Trade-off:* CI and package exports require maintenance, while consumers do not pay for an ever-present engine registry.
 8. **Keep the core free of Vue/React/DOM imports and expose only serializable contracts/events.** *Trade-off:* some adapter code is duplicated, but future Svelte/Angular support does not require rewriting component behavior.
 
-STATUS: DRAFT-COMPLETE
+STATUS: REVISION-1
