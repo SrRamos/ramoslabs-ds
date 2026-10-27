@@ -55,3 +55,29 @@ Still pending, printed as `evidence:check: PENDING (not enforced)` on every run:
 ## Cross-stream touch
 
 `packages/testing/size/index.js` (W1-007) read every `*.contract.json` as a component and failed on `kinds.contract.json` ("contract has no budgets.gzipKiB"). One-line fix: skip `kinds.contract.json` there (its ceiling is the shared `kinds` row in `budgets.json`). Any future non-component data contract needs the same exclusion, or a naming convention.
+
+## S-CON-2 (W1-315, W1-317 completed)
+
+Branch `feature/m3-evidence-schema-checks`. `bun run evidence:check` now has no PENDING lines (`PENDING` is exported empty); `bun run gate` passes with `TURBO_FORCE=1`.
+
+### W1-315: registry schema and validator
+
+- Schema: `packages/contracts/schema/at-support.schema.json` (`$id` `https://design.ramoslabs.com/schema/at-support.v1.json`), validator `packages/contracts/scripts/at-validate.mjs` (+ `.d.mts` so the testing package typechecks the import; ajv stays a contracts devDependency). CLI: `node packages/contracts/scripts/at-validate.mjs [file...]`. Tests in `packages/contracts/test/at-validate.test.js`, built from in-memory objects (no fixture files; the plan's `testing/fixtures/at-support/**` is not needed, and the shipped registry is itself validated in a test).
+- Schema encodes the ADR-015 field table exactly: all fields required except `impact`, `tested_on`, `log`; versions nullable; `impact` required iff `kind: observation` and forbidden on `contract`; `tested_on` and `log` required iff `tested-real` and forbidden otherwise; `test_status` enum has no `no-measured-evidence`; `constraints.focusStrategy` is the ADR-006 enum; `listboxMount` is `{ fine?, coarse? }` of `top-layer|inline` (the registry form, not the contract's `default/byAnyPointer`); `recommended.atEvidence` requires the five primary keys `nvda, jaws, talkback, voiceover-macos, voiceover-ios`.
+- Rules in code: id unique per file; `pattern` equals file name and each entry's pattern; real calendar dates; `retrieved <= next_review <= retrieved + 6 months` (clamped to month end); `supportedBy` ids resolve and hold one T1 or two independent T2 (independent = different last-two-label host of `source_url`, an approximation of "different organizations"); `atEvidence` ids resolve, are `observation`, and match the AT/platform of their key; a per-AT list that is all T3 fails.
+- Ambiguity resolved: the plan text says "an evidence-only AT claim needs an observation or no-measured-evidence"; applied to all five keys (VoiceOver too), since the shipped registry does so.
+
+### W1-317: now enforced (`packages/testing/evidence/index.js`)
+
+- Registry validation of every file in the registry dir runs inside `evidence:check`.
+- Decision-conflict (structured `constraints` only, prose `decision` never read), checked on the pattern's `recommended.constraints` and on every entry a contract references: `focusStrategy` must equal `focus.strategy`; each `listboxMount.<fine|coarse>` must equal the contract's `byAnyPointer.<class> ?? default`; `listboxMount` present with no `overlay.listboxMount` fails; `nativeOnTouch: true` requires a contract `nativeFallback`. Absent constraint keys say nothing. Not compared (no contract field exists): `domAdjacent` (true by definition of both mount values, ADR-005 step 8) and `mustNot`.
+- Pattern coverage: registry file is `pattern.evidence ?? pattern.apg`; missing file reports "unmapped pattern, return to the research peer"; the file must hold an entry for each of the five primary pairs (ADR-013 4b; secondary pairs optional) and the contract `a11y.atSupport` must have a row with evidence for each pair.
+
+### Registry defects found
+
+None. All 12 registry files validate and the two shipped contracts (button, switch) pass conflict and coverage. Registry files were not touched.
+
+### Follow-ups
+
+- Wave-2 contracts for select/tabs etc. will exercise the listboxMount and nativeOnTouch paths for the first time (only the unit tests cover them today).
+- If kimi-ds changes the registry shape (e.g. adds fields), `at-support.schema.json` is `additionalProperties: false` and will fail loudly; that is intended, the schema is then the one to amend.
