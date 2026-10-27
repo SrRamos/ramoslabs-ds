@@ -1,0 +1,27 @@
+{
+  "name": "@ramoslabs/contracts",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com)",
+  "homepage": "https://ramoslabs.com",
+  "type": "module",
+  "files": [
+    "contracts",
+    "schema"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./schema/*": "./schema/*",
+    "./*.contract.json": "./contracts/*.contract.json"
+  },
+  "scripts": {
+    "build": "node scripts/check-json.mjs",
+    "lint": "eslint .",
+    "format:check": "prettier --check . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "vitest": "5.0.5"
+  }
+}

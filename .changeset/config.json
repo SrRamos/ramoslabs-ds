@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@ramoslabs/core",
+      "@ramoslabs/css",
+      "@ramoslabs/contracts",
+      "@ramoslabs/react",
+      "@ramoslabs/vue",
+      "@ramoslabs/vanilla"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": ["@ramoslabs/testing", "site", "storybook"]
+}

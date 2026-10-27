@@ -1,0 +1,33 @@
+{
+  "name": "@ramoslabs/css",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com)",
+  "homepage": "https://ramoslabs.com",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./*.css": "./dist/*.css",
+    ".": "./dist/index.css"
+  },
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && cp src/*.css dist/",
+    "lint": "stylelint \"src/**/*.css\" --allow-empty-input",
+    "format:check": "prettier --check . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "peerDependencies": {
+    "@ramoslabs/tokens": ">=0.1.0"
+  },
+  "devDependencies": {
+    "@ramoslabs/tokens": "workspace:*",
+    "vitest": "5.0.5"
+  }
+}
