@@ -1,0 +1,141 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJProbe",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": {
+    "apg": "switch",
+    "evidence": "switch",
+    "native": "checkbox"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "button",
+      "role": "switch",
+      "attributes": {
+        "type": "button"
+      }
+    },
+    {
+      "part": "indicator",
+      "element": "span"
+    }
+  ],
+  "state": {
+    "machine": ["off", "on"],
+    "controllable": ["pressed"]
+  },
+  "actions": [
+    {
+      "id": "toggle",
+      "from": "off",
+      "to": "on",
+      "emit": "pressedChange",
+      "aria": {
+        "root": {
+          "aria-checked": "true"
+        }
+      }
+    },
+    {
+      "id": "toggle",
+      "from": "on",
+      "to": "off",
+      "emit": "pressedChange",
+      "aria": {
+        "root": {
+          "aria-checked": "false"
+        }
+      }
+    }
+  ],
+  "keyboard": {
+    "root": {
+      "Space": "toggle",
+      "Enter": "toggle"
+    }
+  },
+  "focus": {
+    "strategy": "native",
+    "owner": "root"
+  },
+  "kinds": [],
+  "runtime": ["idPrefix"],
+  "support": [],
+  "a11y": {
+    "wcag": ["1.4.11", "2.1.1", "2.4.7", "2.4.11", "2.5.8", "4.1.2"],
+    "liveRegions": [],
+    "atAssertions": ["manual-speech-name-role-state", "manual-toggle-space"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/switch.json#vo-macos-safari-ariaat561"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/switch.json#vo-ios-safari-apg-switch"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/switch.json#nvda-chrome-ariaat562"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/switch.json#jaws-chrome-ariaat563"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/switch.json#talkback-chrome-apg-switch"]
+      }
+    ]
+  },
+  "events": [
+    {
+      "name": "pressedChange",
+      "payload": "{ pressed: boolean }"
+    }
+  ],
+  "props": [
+    {
+      "name": "pressed",
+      "type": "boolean"
+    },
+    {
+      "name": "defaultPressed",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "description": "Visible label; must not change with state."
+    }
+  ],
+  "fixtures": ["off", "on", "disabled"],
+  "budgets": {
+    "gzipKiB": 1,
+    "shared": []
+  }
+}
