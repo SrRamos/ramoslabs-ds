@@ -27,8 +27,7 @@ export const SITE = {
   website: 'https://ramoslabs.com',
   repo: 'https://github.com/SrRamos/ramoslabs-ds',
   license: 'MIT',
-  attribution:
-    'RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.',
+  attribution: 'RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.',
 } as const
 
 export const pages: Page[] = [
@@ -38,8 +37,7 @@ export const pages: Page[] = [
     group: 'root',
     path: '/',
     icon: 'menu_book',
-    summary:
-      'What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth',
+    summary: 'What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth',
     contentFile: 'Introduction.md',
   },
   {
@@ -144,8 +142,7 @@ export const pages: Page[] = [
     group: 'foundations',
     path: '/foundations/spacing/',
     icon: 'space_bar',
-    summary:
-      'A 4px base with an 8px rhythm, fourteen fixed steps, touch-target floors, and density rules',
+    summary: 'A 4px base with an 8px rhythm, fourteen fixed steps, touch-target floors, and density rules',
     contentFile: 'foundations/Spacing.md',
   },
   {

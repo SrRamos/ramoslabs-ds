@@ -55,7 +55,7 @@ function gitDate(files: string[]): string | undefined {
     const out = execFileSync(
       'git',
       ['-C', repoRoot, 'log', '-1', '--format=%cI', '--', ...existing.map((f) => path.relative(repoRoot, f))],
-      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
     ).trim()
     date = out || undefined // empty: the files are not committed yet
   } catch {

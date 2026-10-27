@@ -149,7 +149,11 @@ function pageSections(full: string): Array<{ title: string; text: string }> {
 // --- WCAG contrast ----------------------------------------------------------------
 function parseHex(input: string): [number, number, number] | null {
   let h = input.trim().replace(/^#/, '').toLowerCase()
-  if (/^[0-9a-f]{3}$/.test(h)) h = h.split('').map((c) => c + c).join('')
+  if (/^[0-9a-f]{3}$/.test(h))
+    h = h
+      .split('')
+      .map((c) => c + c)
+      .join('')
   if (!/^[0-9a-f]{6}$/.test(h)) return null
   return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]
 }
@@ -179,7 +183,10 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        query: { type: 'string', description: 'Substring to match against token name or value, e.g. "primary", "space", "#4f46e5".' },
+        query: {
+          type: 'string',
+          description: 'Substring to match against token name or value, e.g. "primary", "space", "#4f46e5".',
+        },
         limit: { type: 'number', description: 'Max results (default 50).' },
       },
       required: ['query'],
@@ -187,7 +194,8 @@ const TOOLS = [
   },
   {
     name: 'get_token',
-    description: 'Get one token by exact name (with or without the leading "--"). Returns its resolved value, or an error if it does not exist. Never invent a token; verify it here.',
+    description:
+      'Get one token by exact name (with or without the leading "--"). Returns its resolved value, or an error if it does not exist. Never invent a token; verify it here.',
     inputSchema: {
       type: 'object',
       properties: { name: { type: 'string', description: 'Token name, e.g. "color-primary" or "--space-6".' } },
@@ -196,7 +204,8 @@ const TOOLS = [
   },
   {
     name: 'check_contrast',
-    description: 'Compute the WCAG 2.x contrast ratio between two hex colors and report the AA/AAA verdicts for normal and large text. Uses the exact relative-luminance formula.',
+    description:
+      'Compute the WCAG 2.x contrast ratio between two hex colors and report the AA/AAA verdicts for normal and large text. Uses the exact relative-luminance formula.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -208,15 +217,19 @@ const TOOLS = [
   },
   {
     name: 'list_docs',
-    description: 'List every RamosLabs DS documentation page (foundations and patterns) by title. Use get_doc to read one.',
+    description:
+      'List every RamosLabs DS documentation page (foundations and patterns) by title. Use get_doc to read one.',
     inputSchema: { type: 'object', properties: {} },
   },
   {
     name: 'get_doc',
-    description: 'Get the full distilled doctrine for one documentation page by title (e.g. "Colors", "Modals", "Form Elements"). Read the relevant page before implementing a pattern; do not improvise it.',
+    description:
+      'Get the full distilled doctrine for one documentation page by title (e.g. "Colors", "Modals", "Form Elements"). Read the relevant page before implementing a pattern; do not improvise it.',
     inputSchema: {
       type: 'object',
-      properties: { title: { type: 'string', description: 'Page title, e.g. "Modals". Case-insensitive, partial match allowed.' } },
+      properties: {
+        title: { type: 'string', description: 'Page title, e.g. "Modals". Case-insensitive, partial match allowed.' },
+      },
       required: ['title'],
     },
   },
@@ -232,7 +245,8 @@ const TOOLS = [
   },
   {
     name: 'get_agents_guide',
-    description: 'Return AGENTS.md — the full RamosLabs DS agent guide: what it is, how to install/consume tokens, the hard rules, the accessibility floors, and the naming convention.',
+    description:
+      'Return AGENTS.md — the full RamosLabs DS agent guide: what it is, how to install/consume tokens, the hard rules, the accessibility floors, and the naming convention.',
     inputSchema: { type: 'object', properties: {} },
   },
 ]
@@ -255,14 +269,19 @@ async function callTool(name: string, args: Record<string, unknown>, env: Env, o
     case 'get_token': {
       const key = String(args.name ?? '').replace(/^--/, '')
       const all = await tokens(env, origin)
-      if (!Object.prototype.hasOwnProperty.call(all, key)) return { ...text(`No token named "--${key}". Use search_tokens to find the right one; do not invent a value.`), isError: true }
+      if (!Object.prototype.hasOwnProperty.call(all, key))
+        return {
+          ...text(`No token named "--${key}". Use search_tokens to find the right one; do not invent a value.`),
+          isError: true,
+        }
       return json({ token: `--${key}`, value: String(all[key]), css: `var(--${key})` })
     }
     case 'check_contrast': {
       const fg = String(args.foreground ?? '')
       const bg = String(args.background ?? '')
       const ratio = contrastRatio(fg, bg)
-      if (ratio == null) return { ...text('Both foreground and background must be hex colors like "#4f46e5".'), isError: true }
+      if (ratio == null)
+        return { ...text('Both foreground and background must be hex colors like "#4f46e5".'), isError: true }
       const r = Math.round(ratio * 100) / 100
       return json({
         foreground: fg,
@@ -279,13 +298,16 @@ async function callTool(name: string, args: Record<string, unknown>, env: Env, o
       return json({ count: pages.length, pages })
     }
     case 'get_doc': {
-      const want = String(args.title ?? '').toLowerCase().trim()
+      const want = String(args.title ?? '')
+        .toLowerCase()
+        .trim()
       if (!want) return { ...text('Provide a page title.'), isError: true }
       const sections = pageSections(await llmsFull(env, origin))
       const match =
         sections.find((s) => s.title.toLowerCase() === want) ??
         sections.find((s) => s.title.toLowerCase().includes(want))
-      if (!match) return { ...text(`No page matching "${args.title}". Call list_docs for the exact titles.`), isError: true }
+      if (!match)
+        return { ...text(`No page matching "${args.title}". Call list_docs for the exact titles.`), isError: true }
       return text(match.text)
     }
     case 'lint_css': {
@@ -321,7 +343,10 @@ async function callTool(name: string, args: Record<string, unknown>, env: Env, o
       scan(/\b\d*\.?\d+(?:px|rem)\b/g, (raw) => ({
         value: raw,
         issue: 'raw length; spacing/radius/type must come from a token',
-        suggestion: suggestFor(normalizeValue(raw), 'use the nearest --space-* / --radius-* / --font-size-* token (search_tokens)'),
+        suggestion: suggestFor(
+          normalizeValue(raw),
+          'use the nearest --space-* / --radius-* / --font-size-* token (search_tokens)',
+        ),
       }))
       return json({
         clean: findings.length === 0,
@@ -370,10 +395,18 @@ async function handleRpc(msg: any, env: Env, origin: string): Promise<object | n
       return rpcResult(id, { tools: TOOLS })
     case 'tools/call': {
       try {
-        const out = await callTool(String(params?.name), (params?.arguments ?? {}) as Record<string, unknown>, env, origin)
+        const out = await callTool(
+          String(params?.name),
+          (params?.arguments ?? {}) as Record<string, unknown>,
+          env,
+          origin,
+        )
         return rpcResult(id, out)
       } catch (e) {
-        return rpcResult(id, { content: [{ type: 'text', text: `Tool error: ${(e as Error).message}` }], isError: true })
+        return rpcResult(id, {
+          content: [{ type: 'text', text: `Tool error: ${(e as Error).message}` }],
+          isError: true,
+        })
       }
     }
     default:
@@ -401,7 +434,10 @@ async function handleMcp(request: Request, env: Env, origin: string, meta: ReqMe
   try {
     body = JSON.parse(raw)
   } catch {
-    return new Response(JSON.stringify(rpcError(null, -32700, 'Parse error')), { status: 400, headers: { 'Content-Type': 'application/json', ...CORS } })
+    return new Response(JSON.stringify(rpcError(null, -32700, 'Parse error')), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json', ...CORS },
+    })
   }
   const messages = Array.isArray(body) ? body : [body]
   const responses: object[] = []
@@ -429,10 +465,11 @@ async function handleMcp(request: Request, env: Env, origin: string, meta: ReqMe
 async function queryAE(env: Env, sql: string): Promise<Array<Record<string, unknown>> | null> {
   if (!env.CF_ACCOUNT_ID || !env.CF_ANALYTICS_TOKEN) return null
   try {
-    const res = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/analytics_engine/sql`,
-      { method: 'POST', headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` }, body: sql }
-    )
+    const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/analytics_engine/sql`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` },
+      body: sql,
+    })
     if (!res.ok) return null
     const j = (await res.json()) as { data?: Array<Record<string, unknown>> }
     return j.data ?? null
@@ -456,7 +493,7 @@ async function npmDownloads(): Promise<Record<string, number | null>> {
       } catch {
         return [w, null] as const
       }
-    })
+    }),
   )
   return Object.fromEntries(entries)
 }
@@ -481,9 +518,18 @@ async function usageAggregates(env: Env) {
   const W = `timestamp > NOW() - INTERVAL '30' DAY`
   const [byType, mcpByTool, topPages, agentFiles, botRows, referralRows] = await Promise.all([
     queryAE(env, `SELECT index1 AS type, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE ${W} GROUP BY type`),
-    queryAE(env, `SELECT blob3 AS detail, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'mcp' AND ${W} GROUP BY detail ORDER BY n DESC LIMIT 20`),
-    queryAE(env, `SELECT blob2 AS path, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'page' AND ${W} GROUP BY path ORDER BY n DESC LIMIT 15`),
-    queryAE(env, `SELECT blob3 AS file, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'agent_file' AND ${W} GROUP BY file ORDER BY n DESC LIMIT 15`),
+    queryAE(
+      env,
+      `SELECT blob3 AS detail, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'mcp' AND ${W} GROUP BY detail ORDER BY n DESC LIMIT 20`,
+    ),
+    queryAE(
+      env,
+      `SELECT blob2 AS path, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'page' AND ${W} GROUP BY path ORDER BY n DESC LIMIT 15`,
+    ),
+    queryAE(
+      env,
+      `SELECT blob3 AS file, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'agent_file' AND ${W} GROUP BY file ORDER BY n DESC LIMIT 15`,
+    ),
     queryAE(env, aiBotsSql(AE_DATASET, W)),
     queryAE(env, aiReferralsSql(AE_DATASET, W)),
   ])
@@ -520,7 +566,16 @@ async function handleStats(env: Env, meta: ReqMeta): Promise<Response> {
 async function handleMetrics(env: Env, url: URL): Promise<Response> {
   // 5-minute edge cache: don't re-run the Analytics Engine SQL query (or hit npm) on every
   // visit. Still unlisted + noindex; anyone who discovers the URL sees aggregates only.
-  const cache = (globalThis as unknown as { caches?: { default: { match: (r: Request) => Promise<Response | undefined>; put: (r: Request, res: Response) => Promise<void> } } }).caches?.default
+  const cache = (
+    globalThis as unknown as {
+      caches?: {
+        default: {
+          match: (r: Request) => Promise<Response | undefined>
+          put: (r: Request, res: Response) => Promise<void>
+        }
+      }
+    }
+  ).caches?.default
   const cacheKey = new Request(url.toString(), { method: 'GET' })
   if (cache) {
     const hit = await cache.match(cacheKey)
@@ -531,7 +586,8 @@ async function handleMetrics(env: Env, url: URL): Promise<Response> {
     package: NPM_PKG,
     npm: { url: `https://www.npmjs.com/package/${NPM_PKG}`, downloads, series },
     usage,
-    measurement: 'Cookieless, no PII (aggregates only). Page/agent-file/MCP metrics from Cloudflare Analytics Engine (last 30 days).',
+    measurement:
+      'Cookieless, no PII (aggregates only). Page/agent-file/MCP metrics from Cloudflare Analytics Engine (last 30 days).',
   }
   const res = new Response(JSON.stringify(payload, null, 2), {
     headers: {

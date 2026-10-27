@@ -12,12 +12,7 @@
       ],
       "table": {
         "caption": "Indigo pairings, contrast ratio, and WCAG level",
-        "head": [
-          "Foreground",
-          "Background",
-          "Ratio",
-          "WCAG level"
-        ],
+        "head": ["Foreground", "Background", "Ratio", "WCAG level"],
         "rows": [
           [
             "--color-primary #4f46e5",
@@ -25,36 +20,16 @@
             "6.29:1",
             "Passes AA for normal text and UI components. Fails AAA (7:1)."
           ],
-          [
-            "White #ffffff (button label)",
-            "--color-primary #4f46e5",
-            "6.29:1",
-            "Passes AA. Fails AAA (7:1)."
-          ],
-          [
-            "White #ffffff (button label)",
-            "--color-primary-dark #4338ca",
-            "7.90:1",
-            "Passes AAA for normal text."
-          ],
+          ["White #ffffff (button label)", "--color-primary #4f46e5", "6.29:1", "Passes AA. Fails AAA (7:1)."],
+          ["White #ffffff (button label)", "--color-primary-dark #4338ca", "7.90:1", "Passes AAA for normal text."],
           [
             "--color-primary #4f46e5",
             "--color-primary-surface #eef2ff",
             "5.62:1",
             "Passes AA for normal text and UI components."
           ],
-          [
-            "Indigo 300 #a5b4fc",
-            "--color-surface #ffffff",
-            "1.99:1",
-            "Fails AA for text and UI components."
-          ],
-          [
-            "--color-primary #4f46e5",
-            "--color-text-heading #0f172a",
-            "2.84:1",
-            "Fails AA for text and UI components."
-          ]
+          ["Indigo 300 #a5b4fc", "--color-surface #ffffff", "1.99:1", "Fails AA for text and UI components."],
+          ["--color-primary #4f46e5", "--color-text-heading #0f172a", "2.84:1", "Fails AA for text and UI components."]
         ]
       }
     },

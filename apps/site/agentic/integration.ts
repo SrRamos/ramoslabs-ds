@@ -53,15 +53,15 @@ function parseFrontmatter(raw: string): { data: Record<string, string>; body: st
     if (idx === -1) continue
     const key = line.slice(0, idx).trim()
     let value = line.slice(idx + 1).trim()
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
       value = value.slice(1, -1)
     }
     data[key] = value
   }
-  const body = lines.slice(end + 1).join('\n').trim()
+  const body = lines
+    .slice(end + 1)
+    .join('\n')
+    .trim()
   return { data, body }
 }
 
@@ -203,9 +203,9 @@ function buildLlmsFull(site: string, resolved: LoadedPage[], tokens: Tokens) {
   s.push('RamosLabs Design System. It inlines every documentation page and the full token table.', '')
   s.push(
     `Free to use under the MIT License. Keep the copyright and license notice, and credit RamosLabs. ${SITE.copyright}. ${SITE.website}`,
-    ''
+    '',
   )
-  s.push('Install: `bun add @ramoslabs/tokens` (public npm), then `@import \'@ramoslabs/tokens/css\'`.', '')
+  s.push("Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.", '')
   s.push(`## Token reference (${tokens.total} tokens)`, '')
   s.push(tokenTableMarkdown(tokens))
 
@@ -218,10 +218,27 @@ function buildLlmsFull(site: string, resolved: LoadedPage[], tokens: Tokens) {
 }
 
 const AI_CRAWLERS = [
-  'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
-  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot', 'Applebot-Extended', 'bingbot',
-  'DuckAssistBot', 'MistralAI-User', 'CCBot', 'Bytespider', 'Amazonbot', 'Meta-ExternalAgent',
-  'cohere-ai', 'Diffbot', 'Timpibot',
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'Claude-User',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Google-Extended',
+  'Applebot',
+  'Applebot-Extended',
+  'bingbot',
+  'DuckAssistBot',
+  'MistralAI-User',
+  'CCBot',
+  'Bytespider',
+  'Amazonbot',
+  'Meta-ExternalAgent',
+  'cohere-ai',
+  'Diffbot',
+  'Timpibot',
 ]
 
 function buildRobots(site: string) {
@@ -279,7 +296,7 @@ function buildRegistry(site: string, resolved: LoadedPage[], tokens: Tokens, ver
       components: [],
     },
     null,
-    2
+    2,
   )
 }
 
@@ -345,7 +362,7 @@ export function agentic(): AstroIntegration {
 
         const missing = resolved.filter((p) => !p.present).length
         logger.info(
-          `agentic layer: ${resolved.length} pages (${missing} missing), ${tokens.total} tokens, clean URLs @ ${baseUrl(site)}`
+          `agentic layer: ${resolved.length} pages (${missing} missing), ${tokens.total} tokens, clean URLs @ ${baseUrl(site)}`,
         )
       },
     },

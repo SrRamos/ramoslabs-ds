@@ -19,31 +19,11 @@
       ],
       "table": {
         "caption": "Text role tokens and their contrast on white",
-        "head": [
-          "Token",
-          "Hex",
-          "Contrast on white",
-          "When to use"
-        ],
+        "head": ["Token", "Hex", "Contrast on white", "When to use"],
         "rows": [
-          [
-            "--color-text-heading",
-            "#0f172a",
-            "17.85:1 (AAA)",
-            "Page and section headings"
-          ],
-          [
-            "--color-text-strong",
-            "#1e293b",
-            "14.63:1 (AAA)",
-            "Emphasized text inside body copy"
-          ],
-          [
-            "--color-text-body",
-            "#334155",
-            "10.36:1 (AAA)",
-            "Default paragraph and body text"
-          ],
+          ["--color-text-heading", "#0f172a", "17.85:1 (AAA)", "Page and section headings"],
+          ["--color-text-strong", "#1e293b", "14.63:1 (AAA)", "Emphasized text inside body copy"],
+          ["--color-text-body", "#334155", "10.36:1 (AAA)", "Default paragraph and body text"],
           [
             "--color-text-secondary",
             "#475569",
@@ -56,20 +36,13 @@
             "4.76:1 (AA)",
             "Least prominent readable text, such as captions and metadata on white"
           ],
-          [
-            "--color-text-disabled",
-            "#cbd5e1",
-            "1.48:1",
-            "Disabled control state only, never readable text"
-          ]
+          ["--color-text-disabled", "#cbd5e1", "1.48:1", "Disabled control state only, never readable text"]
         ]
       }
     },
     {
       "heading": "Copyable CSS",
-      "body": [
-        "Import the tokens once at the app entry, then reference the role token. Do not hardcode a hex value."
-      ],
+      "body": ["Import the tokens once at the app entry, then reference the role token. Do not hardcode a hex value."],
       "code": [
         {
           "label": "app entry stylesheet",

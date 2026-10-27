@@ -19,12 +19,7 @@
       ],
       "table": {
         "caption": "RamosLabs DS, Material Design, and Tailwind CSS compared. Material and Tailwind cells are summaries to verify against official docs.",
-        "head": [
-          "Dimension",
-          "RamosLabs DS",
-          "Material Design",
-          "Tailwind CSS"
-        ],
+        "head": ["Dimension", "RamosLabs DS", "Material Design", "Tailwind CSS"],
         "rows": [
           [
             "What it is",

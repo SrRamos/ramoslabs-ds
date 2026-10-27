@@ -11,27 +11,12 @@
       ],
       "table": {
         "caption": "Install commands by package manager",
-        "head": [
-          "Package manager",
-          "Install command"
-        ],
+        "head": ["Package manager", "Install command"],
         "rows": [
-          [
-            "bun",
-            "bun add @ramoslabs/tokens"
-          ],
-          [
-            "npm",
-            "npm install @ramoslabs/tokens"
-          ],
-          [
-            "pnpm",
-            "pnpm add @ramoslabs/tokens"
-          ],
-          [
-            "yarn",
-            "yarn add @ramoslabs/tokens"
-          ]
+          ["bun", "bun add @ramoslabs/tokens"],
+          ["npm", "npm install @ramoslabs/tokens"],
+          ["pnpm", "pnpm add @ramoslabs/tokens"],
+          ["yarn", "yarn add @ramoslabs/tokens"]
         ]
       }
     },

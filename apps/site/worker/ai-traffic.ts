@@ -61,12 +61,14 @@ export function classifyAssistant(referer: string): Assistant | null {
 }
 
 // SQL-literal safe by construction: tokens and domains are fixed constants above.
-const likeAny = (column: string, needles: string[]) =>
-  needles.map((n) => `${column} LIKE '%${n}%'`).join(' OR ')
+const likeAny = (column: string, needles: string[]) => needles.map((n) => `${column} LIKE '%${n}%'`).join(' OR ')
 
 /** Analytics Engine SQL: events whose user agent contains an AI bot token, by UA and event type. */
 export function aiBotsSql(dataset: string, window: string): string {
-  return `SELECT blob4 AS ua, index1 AS type, SUM(_sample_interval) AS n FROM ${dataset} WHERE ${window} AND (${likeAny('blob4', AI_BOTS.map((b) => b.token))}) GROUP BY ua, type ORDER BY n DESC LIMIT 500`
+  return `SELECT blob4 AS ua, index1 AS type, SUM(_sample_interval) AS n FROM ${dataset} WHERE ${window} AND (${likeAny(
+    'blob4',
+    AI_BOTS.map((b) => b.token),
+  )}) GROUP BY ua, type ORDER BY n DESC LIMIT 500`
 }
 
 /** Analytics Engine SQL: page views whose referer is an AI assistant domain. */

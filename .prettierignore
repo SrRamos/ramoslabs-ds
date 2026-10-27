@@ -1,0 +1,16 @@
+# Generated or not covered by the prettier gate.
+node_modules
+dist
+.astro
+bun.lock
+llms.txt
+llms-full.txt
+registry.json
+robots.txt
+# Astro/Vue/CSS/Markdown are covered by stylelint and by hand; no prettier plugin is installed.
+*.astro
+*.vue
+*.css
+*.md
+apps/storybook
+packages
