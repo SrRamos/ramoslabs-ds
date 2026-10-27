@@ -1,3 +1,8 @@
+// Dev flag convention (see K2-NOTES.md): the guard is written inline at each use site. It cannot throw
+// without a `process` global and folds away under a `process.env.NODE_ENV` define. A shared constant or
+// helper does NOT fold in esbuild (the dead block survives), so do not extract it.
+declare const process: { env: { NODE_ENV?: string } } | undefined;
+
 /**
  * Prop merge (ADR-004 "One merge utility"). Pure, framework-agnostic, no module state.
  *
@@ -36,7 +41,6 @@ export const IDREF_KEYS: readonly string[] = [
   'anchor',
 ];
 
-declare const process: { env: { NODE_ENV?: string } };
 declare const console: { warn(message: string): void };
 
 const isHandlerKey = (key: string): boolean => {
@@ -88,7 +92,11 @@ export function mergeProps(consumer: Props, library: Props, options?: MergeOptio
     if (key === '__proto__') continue;
     const value = consumer[key];
     if (isOwned(key, protect) && Object.hasOwn(library, key)) {
-      if (process.env.NODE_ENV !== 'production' && value !== undefined && value !== library[key]) {
+      if (
+        (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production') &&
+        value !== undefined &&
+        value !== library[key]
+      ) {
         dropped.push(key);
       }
       continue;
@@ -115,14 +123,13 @@ export function mergeProps(consumer: Props, library: Props, options?: MergeOptio
 
   for (const key of Object.keys(out)) if (out[key] === undefined) delete out[key];
 
-  if (process.env.NODE_ENV !== 'production' && dropped.length > 0) {
-    warnDropped(dropped, options);
+  if (
+    (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production') &&
+    dropped.length > 0
+  ) {
+    const where = options?.part === undefined ? '' : ` on part "${options.part}"`;
+    const message = `[ramoslabs] Ignored consumer props${where}: ${dropped.join(', ')}. role, id, IDREFs and state-derived aria-* are owned by the library (ADR-004).`;
+    (options?.warn ?? ((m: string) => console.warn(m)))(message);
   }
   return out;
-}
-
-function warnDropped(dropped: string[], options: MergeOptions | undefined): void {
-  const where = options?.part === undefined ? '' : ` on part "${options.part}"`;
-  const message = `[ramoslabs] Ignored consumer props${where}: ${dropped.join(', ')}. role, id, IDREFs and state-derived aria-* are owned by the library (ADR-004).`;
-  (options?.warn ?? ((m: string) => console.warn(m)))(message);
 }

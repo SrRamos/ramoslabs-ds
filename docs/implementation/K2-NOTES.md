@@ -28,16 +28,21 @@ Options: `protect` (extra library-owned keys), `part` (name used in the warning)
 
 - `bunx vitest run src/merge`: table tests per rule (owned attrs, class, style, handlers, warning,
   purity) plus a fast-check property that no spread overrides owned keys.
-- Tree-shake (esbuild 0.28.1, minify, `define NODE_ENV`): production 1207 B raw / 646 B gzip, warning text
-  absent; development 1503 B raw / 823 B gzip. Well under the ADR-011 shared-kernel scale; `merge` has no
+- Tree-shake (esbuild 0.28.1, minify, `define NODE_ENV`): production 1207 B raw / 645 B gzip, warning text
+  absent; development 1529 B raw / 829 B gzip. Well under the ADR-011 shared-kernel scale; `merge` has no
   own row in `budgets.json` (not edited, outside ownership).
 - `bun run gate`: see the final report.
 
 ## Deviations and open items
 
-- `core` is built with `lib: ["ES2022"]` and `types: []`, so `process` and `console` are declared locally
-  in `merge.ts`. Unbundled browser use (no `NODE_ENV` replacement) would throw a ReferenceError on `process`;
-  all adapters ship through bundlers per ADR-002. Open question for the owner: whether the `vanilla` CDN build
-  should `define` `process.env.NODE_ENV`.
-- The dev-warning tree-shake check is manual (esbuild is not a `core` devDependency; adding one touches
-  `package.json`, not mine).
+- **Dev-flag convention (proposal for the plan; no convention exists in ARCHITECTURE.md, M0-NOTES.md or
+  the packages).** Write `typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production'`
+  inline at each guard, with a local `declare const process` (core has `types: []`). Verified with
+  esbuild 0.28.1: `define process.env.NODE_ENV="production"` removes the warning text (1207 B raw /
+  645 B gzip); with no define it also builds production-sized; the unit test deletes `globalThis.process`
+  and merge neither throws nor warns. The `&&` form (`typeof process !== 'undefined' && ...`) and an
+  extracted shared constant or helper do NOT constant-fold in esbuild (the dead block and message stay),
+  so no shared helper file exists; later modules copy the expression.
+- Open for W1-113: `merge` has no row in `packages/testing/size/budgets.json` (outside my ownership);
+  measured 829 B gzip development, 645 B gzip production.
+- The tree-shake check is manual (esbuild is not a `core` devDependency; adding one touches `package.json`).

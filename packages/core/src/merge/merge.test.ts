@@ -191,6 +191,21 @@ describe('dev warning', () => {
   });
 });
 
+describe('without a process global', () => {
+  it('does not throw and skips the warning', () => {
+    const g = globalThis as unknown as Record<string, unknown>;
+    const saved = g.process;
+    delete g.process;
+    try {
+      const warn = vi.fn();
+      expect(mergeProps({ role: 'x' }, { role: 'y' }, { warn }).role).toBe('y');
+      expect(warn).not.toHaveBeenCalled();
+    } finally {
+      g.process = saved;
+    }
+  });
+});
+
 describe('purity', () => {
   it('does not mutate inputs', () => {
     const c = Object.freeze({ class: 'a', role: 'x' });
