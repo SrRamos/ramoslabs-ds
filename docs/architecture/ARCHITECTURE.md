@@ -190,9 +190,9 @@ shadow-root boundaries (`commandfor`/`popovertarget` resolve only within one tre
 | `@ramoslabs/css` | component CSS, `@layer` order, per-part classes | tokens (CSS import) | no JS |
 | `@ramoslabs/core` | reducers, store, a11y kernel, overlay, geometry, field kinds, parsers | none | no framework/DOM-global imports at module scope |
 | `@ramoslabs/contracts` | contract JSON files + JSON Schema | none | consumed by CI, MCP, lint, registry; no JS behavior |
-| `@ramoslabs/vue` | Vue 3 adapter, `SJ*` components | peer `vue >=3.5` | 3.5 for `useId` |
-| `@ramoslabs/react` | React adapter, `SJ*` components | peer `react >=18` | `useId`, `useSyncExternalStore` exist in 18 |
-| `@ramoslabs/vanilla` | DOM adapter plus opt-in custom elements | none | explicit `define()`; no import-time registration |
+| `@ramoslabs/vue` | Vue 3 adapter, `SJ*` components | peer `vue >=3.5`; `@ramoslabs/core` (regular dependency, never bundled: builds mark it external) (G1 ruling, 2026-10-27) | 3.5 for `useId` |
+| `@ramoslabs/react` | React adapter, `SJ*` components | peer `react >=18`; `@ramoslabs/core` (regular dependency, never bundled: builds mark it external) (G1 ruling, 2026-10-27) | `useId`, `useSyncExternalStore` exist in 18 |
+| `@ramoslabs/vanilla` | DOM adapter plus opt-in custom elements | `@ramoslabs/core` (regular dependency, never bundled: builds mark it external) (G1 ruling, 2026-10-27) | explicit `define()`; no import-time registration |
 | `@ramoslabs/testing` | spec runner, fixtures, lint rules, size and contrast tooling (private, unpublished) | dev only | Playwright, axe, fast-check |
 
 Naming rules (the contract's `anatomy[].part` is the single name source): **React** exports a
@@ -224,6 +224,12 @@ never via `innerHTML`; rich content is supplied as elements. Tested in ADR-013 l
 changesets). Dependency direction is enforced by lint (`core` may not import `vue`, `react`, or
 `window`/`document` at module scope). Vanilla users get custom elements (needed for FACE) without
 the other adapters carrying them.
+
+*Dev-only guard convention* (G1 ruling, 2026-10-27). Development-only code (warnings, throws) is guarded inline with
+`typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production'`, with no shared
+helper: the inline form does not throw unbundled and folds away under a bundler `NODE_ENV` define,
+whereas a helper function (`isDev()`) prevents the message strings from being stripped. This is a
+packaging rule, so it applies to every package.
 
 **Sources.** [02 recs. 7-8](research/02-headless-engine.md#recommendations-for-architecturemd),
 [01 rec. 6](research/01-platform-primitives.md#recommendations-for-architecturemd),
@@ -866,7 +872,7 @@ minified bytes, import graph and fixture execution):
 | Live-region registry (shared) | **1 KiB** |
 | Field-kinds resolver + number parser (shared) | **2 KiB** |
 | Unused component in a fixture importing another | 0 KiB JavaScript |
-| Framework adapters | reported separately; peer framework code never counted |
+| Framework adapters | reported separately; peer framework code never counted; adapter rows exclude `@ramoslabs/core` by construction (it is an external, unbundled dependency) (G1 ruling, 2026-10-27) |
 
 All ceilings above are **provisional gates, revisable only by ADR**. Rationale for the shared
 numbers (no measurement exists yet, so they are engineering limits): the overlay module holds the
@@ -1052,6 +1058,16 @@ Flaky tests are failures; retries diagnose but never certify.
 case totals (executed/passed/failed/not-applicable with reasons), axe scope, visual baseline
 revision, AT result log with per-AT `test_status`, the evidence-registry snapshot, known upstream issues, performance traces, BCD dataset version, signer and
 date. It is an internal reproducible record, not an external WCAG certification.
+
+*Closed list of `supports` keys* (G1 ruling, 2026-10-27). The injected `SupportsMap` has exactly these ten keys:
+`popover`, `userInvalid`, `anchorPositioning`, `dialogRequestClose`, `invokerCommands`,
+`detailsName`, `viewTransitions`, `weekInfo`, `schedulerYield`, `focusVisible`. A key is added only
+when a component first branches on it, never ad hoc. Three detections named elsewhere are
+**deferred** and have no key yet: `closedby` (ADR-005 step 7), `popover="hint"` and `interestfor`
+(ADR-005 step 1). `anchorPositioning` is true only when every anchor property the contracts emit
+(`anchor-name`, `position-area`, `position-try-fallbacks`, `position-try-order`,
+`position-visibility`) passes `CSS.supports`, because the per-property floors differ; Chromium
+125-128 and Firefox 147 therefore take the fallback.
 
 **Consequences.** Expensive matrix and manual release time (licences, devices). No "ship now, certify
 later".
