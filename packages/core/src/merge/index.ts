@@ -1,2 +1,2 @@
-// Pre-stub: implemented in a later milestone.
-export {};
+export { mergeProps, IDREF_KEYS } from './merge';
+export type { MergeOptions, Props } from './merge';
