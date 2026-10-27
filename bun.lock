@@ -129,6 +129,9 @@
     "packages/vanilla": {
       "name": "@ramoslabs/vanilla",
       "version": "0.0.0",
+      "dependencies": {
+        "@ramoslabs/core": "workspace:*",
+      },
       "devDependencies": {
         "fast-check": "4.10.2",
         "typescript": "5.9.3",
