@@ -99,3 +99,52 @@ This audit records, for the architecture changelog: the ADR-002 table's Role cel
 Re-audit trigger: MUST-1 applied; a file-level check of the three files plus one seeded run of the fixture row suffices for G0 PASS. SHOULD-2 and SHOULD-3 may land in the same commit; SHOULD-1 lands on the architecture branch.
 
 G0-AUDIT DONE
+
+---
+
+# Round 2: commits `c97f290..e4f82f0` (m0) and `62deea8` (architecture)
+
+Auditor: ds-fable. Date: 2026-10-27. Scope: every round-1 finding, the two implementer decisions named by the coordinator, and the full gate rerun with `TURBO_FORCE=true` (exit 0; lint 9, format:check 9, typecheck/build 7, tests 17 tasks, size 1, both pending checks printing "no inputs"). Seeds rerun and reverted; working tree clean.
+
+## Verdict: PASS
+
+| Finding | Status | Verified how |
+|---|---|---|
+| MUST-1 vacuous 0 KiB fixture | **Resolved** | `consumer.ts` now exports `used`; the harness measures the fixture with `export * from` and reports `bundleRawBytes`; `size.test.js` asserts the bundle is non-empty and runs the leak test on a copy of the shipped fixture including its `sideEffects: false` manifest. My seed (consumer using `componentB` in the real layout): `fixture 0.067 KiB 69 B … fail`, `bun run size` exit 1. Clean tree: 0 bytes, pass |
+| SHOULD-1 W1-009 and plan amendment | **Resolved** on the architecture branch | `docs/architecture/evidence/{clean-room/TEMPLATE.md, issue-log/TEMPLATE.md, manifest/evidence-manifest.schema.json, devices/registry.json + schema}` exist; plan W1-009 row, G0 ("W1-001..008 done") and G1 ("W1-009 done") amended; CHANGELOG-PLAN-R1 "G0 audit follow-ups" records it with NICE-1, NICE-3, NICE-4, NICE-6 |
+| SHOULD-2 `apps/site` TypeScript unlinted | **Resolved** | ESLint ignores only storybook, `public` and the generated icon file, with browser globals for `src`; Prettier ignores only `.astro`, `.mdx`, `.vue`, doctrine content, storybook, public, the generated file and the audit record; site `lint` runs eslint then stylelint and has `format:check`. Seeds: unused variable in `worker/index.ts` → site lint exit 1; misformatted line in `src/data/pages.ts` → site format:check exit 1 |
+| SHOULD-3 silent placeholders | **Resolved** | `pending-check.mjs` takes a directory and suffix; seeded `packages/contracts/contracts/x.contract.json` → `contracts:check` exit 1 with the owning task named; clean → exit 0 "no inputs". The evidence directory does not exist on this branch, so that path reports "no inputs" until merge, which is the correct state |
+| NICE-1 root-file exception | Recorded | M0-NOTES and the plan's W1-001/W1-006 cells |
+| NICE-2 vue `publishConfig` | Applied | `packages/vue/package.json` |
+| NICE-3 css peer wording for W1-509 | Applied | plan W1-509 cell |
+| NICE-4 deny-list not in clear text | Applied | plan W1-307 cell |
+| NICE-5 `vitest.shared.ts` | Applied | renamed; every package config updated; tests pass |
+| NICE-6 one luminance implementation | Applied | plan W1-203 cell |
+| NICE-7 `--no-warn-ignored` | Applied | `lefthook.yml` |
+| Editorial line for ADR-002 `testing` Role cell | **Open** | Neither `CHANGELOG-ARCH-R1.md` nor ADR-002 carries the widened Role wording ("spec runner, fixtures, lint rules, size and contrast tooling"); ADR-002 line 196 still reads "spec runner, fixtures (private, unpublished)". Not a G0 blocker (the audit itself is the record G0 asked for) but it is the one item from round 1 still undone: append the line to the architecture changelog before the architecture branch merges |
+
+## Decision 1: the five `eslint-disable-next-line` comments
+
+All five are single-line, carry a reason, and sit in code that predates M0 and became lint-visible only because SHOULD-2 widened the scope. Ruling per site:
+
+- `apps/site/src/scripts/analytics.ts` lines 77 and 92, `prefer-rest-params`: **accepted as correct.** The GA4 `gtag` function and the Clarity loader push the live `arguments` object; both vendors' processing relies on it being an `Arguments` object, and a rest array changes behaviour. The comments say exactly that.
+- `analytics.ts` line 87, `no-explicit-any` on the Clarity loader's `c` parameter: **accepted.** It is a verbatim vendor snippet that writes an untyped global; typing it would mean rewriting vendor code for no runtime gain, and the reason is stated.
+- `apps/site/worker/index.ts` lines 395 and 464, `no-explicit-any` on `handleRpc(msg: any)` and `let body: any`: **accepted for G0, to be removed at the next worker change.** The reason ("untyped input, validated field by field") is honest, but `any` switches off checking inside the very function that does the validation. The right TypeScript shape for untrusted JSON is `unknown` plus a small guard (`isJsonRpcRequest(x): x is { id?: unknown; method: string; params?: unknown }`) that narrows once; then no disable is needed and the validation becomes type-checked. W1-306 edits this file's MCP block, so assign it there (SHOULD-4 below).
+
+No disable hides a real defect, none is file-wide, and none is in a published package.
+
+## Decision 2: `AUDIT-G0.md` committed with `--no-verify` and ignored by Prettier
+
+- The record was committed byte-for-byte as delivered: 101 lines, same first and last line, `git diff c97f290 HEAD -- AUDIT-G0.md` is empty. That is the right choice for an audit record: Prettier would have reflowed its tables and changed a signed document.
+- The `.prettierignore` entry arrived two commits later (`205b1b6`), so at `c97f290` the pre-commit hook's `prettier --check` on the staged file would have failed, which is why `--no-verify` was used. Today `prettier --check AUDIT-G0.md` passes (ignored), so the bypass is no longer needed and would not recur.
+- Ruling: **accepted as a one-off**, on two conditions. (1) Replace the per-file ignore with a pattern that covers future audit records (`AUDIT-*.md` at the root, or move audits to `docs/audits/` and ignore that folder) so no future audit commit needs a hook bypass. (2) Record the bypass in M0-NOTES (the commit message says "committed as delivered"; the notes do not mention `--no-verify`). A hook bypass that is disclosed and made unnecessary is fine; an undisclosed one would not be.
+
+## Findings (round 2)
+
+- **SHOULD-4.** Worker JSON-RPC: replace the two `any` disables with `unknown` and a type guard; owner W1-306 (next task that touches `apps/site/worker/index.ts`).
+- **SHOULD-5.** Architecture branch: append the ADR-002 `testing` Role editorial line to `CHANGELOG-ARCH-R1.md` (and the ADR-002 table cell) before merge; this closes the only round-1 item still open.
+- **NICE-8.** `.prettierignore`: `AUDIT-*.md` (or a `docs/audits/` folder) instead of `AUDIT-G0.md`; one line in M0-NOTES stating that `c97f290` used `--no-verify` and why.
+
+G0 passes. M1 may start. SHOULD-4 and SHOULD-5 are tracked to W1-306 and the architecture-branch merge; NICE-8 can land with the next m0 commit.
+
+G0-AUDIT-2 DONE

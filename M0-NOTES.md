@@ -93,3 +93,8 @@ architecture branch by the coordinator.
 | NICE-7   | lefthook eslint uses `--no-warn-ignored`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `lefthook.yml`; pre-commit run on this commit shows no ignored-file warnings                                                                                                                                                            |
 
 NICE-1 exception noted: W1-006 edited the W1-001-owned `eslint.config.js` (the boundaries import).
+
+## Hook bypass record
+
+- Commit `c97f290` used `--no-verify` once: the audit record `AUDIT-G0.md` had to be committed byte-for-byte (Prettier would reflow a signed document) and the ignore entry landed two commits later. `.prettierignore` now matches `AUDIT-*.md`, so no future audit commit needs a bypass (G0 round 2, NICE-8).
+- Tracked: SHOULD-4 (worker `any` → `unknown` + type guard) is owned by W1-306.
