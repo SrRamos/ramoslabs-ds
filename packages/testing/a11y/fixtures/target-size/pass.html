@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Target size: pass</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/sj.css">
+<style>
+.tiny{inline-size:16px;block-size:16px;padding:0;border:1px solid #475569;background:#fff;border-radius:4px}
+.row{display:flex;gap:48px;margin-block:32px}
+</style></head>
+<body>
+<main>
+<h1>Targets</h1>
+<button data-part="trigger" id="save">Save</button>
+<button data-part="trigger" id="cancel" style="margin-inline-start:24px">Cancel</button>
+<div data-density="compact" style="margin-block-start:24px"><button data-part="trigger" id="compact">Compact</button></div>
+<div class="row">
+<button class="tiny" id="s1" aria-label="One"></button>
+<button class="tiny" id="s2" aria-label="Two"></button>
+<button class="tiny" id="s3" aria-label="Three"></button>
+</div>
+<p style="margin-block-start:48px">Read the <a href="#terms" id="terms">terms of service</a> before continuing.</p>
+</main>
+</body>
+</html>

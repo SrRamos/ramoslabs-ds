@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redundant entry: offered reuse control</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/sj.css">
+</head>
+<body>
+<main>
+<h1>Checkout</h1>
+<section data-sj-step id="step1">
+<h2>Shipping</h2>
+<label for="ship-street">Street</label>
+<input id="ship-street" autocomplete="shipping street-address" type="text">
+<label for="ship-email">Email</label>
+<input id="ship-email" autocomplete="email" type="email">
+<button type="button" data-sj-next data-part="trigger" id="next1">Next</button>
+</section>
+<section data-sj-step id="step2" hidden>
+<h2>Billing</h2>
+<label for="bill-street">Street</label>
+<input id="bill-street" autocomplete="billing street-address" type="text" >
+<label for="bill-email">Email</label>
+<input id="bill-email" autocomplete="email" type="email">
+<label><input type="checkbox" id="same" data-sj-reuse-of="bill-street bill-email"> Billing street is the same as shipping</label>
+<button type="button" data-sj-next data-part="trigger" id="next2" hidden>Done</button>
+</section>
+<script>
+const s1=document.getElementById('step1'),s2=document.getElementById('step2');
+document.getElementById('next1').addEventListener('click',()=>{
+  s1.hidden=true;s2.hidden=false;
+  if('none'==='prefill'){bs.value=document.getElementById('ship-street').value;be.value=document.getElementById('ship-email').value}
+});
+const bs=document.getElementById('bill-street'),be=document.getElementById('bill-email');
+const same=document.getElementById('same');
+if(same)same.addEventListener('change',()=>{const on=same.checked;bs.value=on?document.getElementById("ship-street").value:"";be.value=on?document.getElementById("ship-email").value:""});
+</script>
+</main>
+</body>
+</html>
