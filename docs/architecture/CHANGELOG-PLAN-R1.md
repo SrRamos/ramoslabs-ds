@@ -50,4 +50,14 @@ NICE-1 gates renumbered G0, G1, G2, G3A-E, G4, G5. NICE-2 task counts removed. N
 | Certification meaning | Section 7 intro, W1-508 manifest fields, G5 condition. |
 | Owner list | Desktop AT and Android devices removed; Mac and iPhone kept; NVDA lane optional. |
 
+## Combined audit R1 follow-through (P-SHOULD / P-NICE)
+
+| Finding | Change |
+|---|---|
+| P-SHOULD-1 | W1-114 is the first S-TEST task, depends on W1-102, W1-103, W1-120..122, and is dropped from the start precondition (Section 1, Section 9 table) |
+| P-SHOULD-2 | W1-315 validates the ADR-015 field table plus the pattern-level `recommended` block (`id`, `kind`, `pending-real-test`, `no-measured-evidence`, nullable versions); W1-317 compares structured `constraints`, not `decision` prose |
+| P-SHOULD-3 | W1-301 notes the ADR-010 sample dependency (VoiceOver rows `pending-real-test`) |
+| P-NICE-1 | D1 marked provisional until owner confirms |
+| P-NICE-2 | W1-505 depends on each component's `.a` contract |
+
 STATUS: REVISION-1-FOR-AUDIT

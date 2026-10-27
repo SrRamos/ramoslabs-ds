@@ -39,3 +39,21 @@ Owner can test VoiceOver (macOS + iPhone) and has a Windows PC; no JAWS licence.
 | Risk 5 rewritten (untested ATs); Q4 and ADR-005 evidence wording aligned | Section 5, ADR-005 |
 | D2 marked resolved by owner | Decisions needed from owner |
 | Last line set to REVISION-2-FOR-AUDIT | end of file |
+
+## Combined audit R1 (audits/AUDIT-combined-R1.md)
+
+| Finding | Change | Section |
+|---|---|---|
+| A-MUST-1 | Registry schema: added `id`, `kind: contract\|observation` (`impact` required only for observations), `test_status: pending-real-test`, structured `constraints` (`focusStrategy`, `listboxMount`, `nativeOnTouch`, `mustNot`); file shape `{ pattern, recommended, entries[] }`; nullable versions (E-NICE-1) | ADR-015 |
+| A-MUST-2 | Evidence-rule unit defined: the pattern's `recommended` variant (`variant`, `constraints`, `supportedBy`, `atEvidence`); contract entries count for the variant; per-AT claims need an observation or `no-measured-evidence` | ADR-015 |
+| A-MUST-3 | ADR-010 sample VoiceOver rows now `pending-real-test` without `tested_on`; refs fixed to `select-only-combobox.json#...-apg`; one list of twelve patterns in ADR-015; honesty gate allows empty evidence only for `pending-real-test` | ADR-010, ADR-015 |
+| A-MUST-4 | Floor lane, kind certification and device gates reworded for `not run` rows with the `not hands-on verified` label; evidence note under the floor table | ADR-001, ADR-007, ADR-011, Section 2 |
+| A-SHOULD-1 | Blocker rule scoped to platforms where the blocker is documented | ADR-015 |
+| A-SHOULD-2 | Evidence gate requires entries for primary pairs; secondary optional | ADR-013 4b |
+| A-SHOULD-3 | T2 written as "such as", measured consultancy tests named as T2 | ADR-015 |
+| A-SHOULD-4 | `listboxMount` defined by DOM placement; portal-to-body forbidden | ADR-005 step 8 |
+| A-SHOULD-5 | "in the real-test lane, `pending-real-test` until a logged run" wording | Section 2 |
+| A-NICE-1 | D1 kept "awaits confirmation"; plan wording made provisional to match | Owner table, PLAN Section 0 |
+| A-NICE-2 | ARIA-AT named as T1 AT support tables | ADR-015 |
+| E-SHOULD-5 (cross-ref) | `focus.strategy: native-roving` for native radios | ADR-006 |
+| Status | Last line REVISION-3-FOR-AUDIT | end |
