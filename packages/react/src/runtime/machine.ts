@@ -11,6 +11,7 @@ import {
 } from 'react';
 import { createStore, type Reducer, type Store } from '@ramoslabs/core/store';
 import {
+  correctiveVersion,
   createEffectQueue,
   type Effect,
   type EffectInput,
@@ -119,7 +120,7 @@ export function useMachine<S extends object, E, X extends EffectInput, P extends
     }
     const corrective = inst.controlled.reconcile();
     if (corrective.length)
-      inst.queue.enqueue(corrective as unknown as readonly X[], inst.version + 0.5);
+      inst.queue.enqueue(corrective as unknown as readonly X[], correctiveVersion(inst.version));
     inst.queue.drain(
       {
         ...(opts.current.exists && { exists: (t: string) => opts.current.exists!(t) }),

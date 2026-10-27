@@ -24,6 +24,13 @@ export interface DrainHost<T extends EffectInput = EffectInput> {
 export const EFFECT_ORDER: readonly string[] = ['open', 'close', 'geometry', 'focus', 'announce'];
 const PASSIVE = new Set(['announce']);
 
+/**
+ * The one version rule for corrective effects (controlled `reconcile()`): strictly newer than the
+ * last dispatch version, so a corrective supersedes a same-type same-target reducer effect from
+ * the same batch (equal versions never supersede). Adapters must not invent their own offset.
+ */
+export const correctiveVersion = (last: number): number => last + 1;
+
 export interface EffectQueue<T extends EffectInput = EffectInput> {
   /** Stamp and append descriptors. During a drain they wait for the next drain. */
   enqueue(effects: readonly T[], version: number): void;

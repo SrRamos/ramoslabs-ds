@@ -17,6 +17,7 @@ import {
 } from 'vue';
 import { createStore, type Reducer, type Store } from '@ramoslabs/core/store';
 import {
+  correctiveVersion,
   createEffectQueue,
   type DrainHost,
   type EffectInput,
@@ -78,7 +79,8 @@ export function useSJStore<S extends object, E, X extends EffectInput, P extends
   const commit = () => {
     if (!mounted) return;
     const corrective = controlled?.reconcile();
-    if (corrective && corrective.length) queue.enqueue(corrective as unknown as X[], ++version);
+    if (corrective && corrective.length)
+      queue.enqueue(corrective as unknown as X[], correctiveVersion(version));
     queue.drain(options.host, 'layout');
     queue.drain(options.host, 'passive');
   };

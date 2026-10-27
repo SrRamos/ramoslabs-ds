@@ -9,6 +9,7 @@ import {
   type CorrectiveEffect,
 } from '@ramoslabs/core/controlled';
 import {
+  correctiveVersion,
   createEffectQueue,
   type Effect,
   type EffectInput,
@@ -215,7 +216,7 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
 
     const flush = () => {
       if (dead) return;
-      queue.enqueue(controlled.reconcile(), version);
+      queue.enqueue(controlled.reconcile(), correctiveVersion(version));
       const host = {
         run: (e: Effect<X | CorrectiveEffect>) => spec.run?.(e, ctx),
         ...(spec.exists && { exists: (t: string) => spec.exists!(t, ctx) }),
