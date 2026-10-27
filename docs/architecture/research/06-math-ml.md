@@ -56,7 +56,7 @@ Learned height prediction is hype for ordinary lists: it adds a model to approxi
 
 ## Predictive prefetch: heuristics first, ML rarely
 
-The Speculation Rules API declaratively requests navigation prefetch/prerender. Prefetch downloads a document response; prerender also loads subresources and runs JavaScript in an invisible tab, consuming more network and memory ([MDN Speculation Rules API, updated 2026-09-10](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)). This API supplies a safe-ish browser mechanism, not a prediction algorithm.
+The Speculation Rules API declaratively requests navigation prefetch/prerender. Prefetch downloads a document response; prerender also loads subresources and runs JavaScript in an invisible tab, consuming more network and memory ([MDN Speculation Rules API, updated 2026-09-10](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)). This API supplies a limited-availability progressive-enhancement mechanism, not a prediction algorithm or a portable baseline.
 
 Start with deterministic intent:
 

@@ -139,7 +139,7 @@ For roving focus, use `focus({ preventScroll: true })` followed by one explicit 
 
 ## Recommendations for ARCHITECTURE.md
 
-1. **Use CSS-only overlay placement on the floor; drain the scheduler only for geometry fallback and measurement-driven features after adapter commit.** *Trade-off:* fallback geometry becomes coordinated rather than ad hoc, without an independent rAF racing framework rendering.
+1. **CSS-only placement above each property's floor; the scheduler-driven geometry fallback on the floor; drain the scheduler only for geometry fallback and measurement-driven features after adapter commit.** *Trade-off:* fallback geometry becomes coordinated rather than ad hoc, without an independent rAF racing framework rendering.
 2. **Use Pointer Events and `touch-action` by default, passive non-canceling listeners, direct listeners, and delegation only after benchmarks.** *Trade-off:* potentially more small listeners, but simpler lifecycle and no root-handler overhead without proof.
 3. **Prefer Intersection/ResizeObserver to polling; disconnect aggressively and never mutate observed geometry in an unguarded callback.** *Trade-off:* asynchronous timing is unsuitable for exact per-frame positioning, which stays in the scheduler/CSS anchor path.
 4. **Keep plain DOM below 250 fixed-size rows, use fixed-size virtualization above it provisionally, and retain it only after comparative evidence.** Use `content-visibility` for independent sections and variable-height virtualization only after certification. *Trade-off:* two list strategies require testing, while small lists preserve find-in-page and simple AT navigation.

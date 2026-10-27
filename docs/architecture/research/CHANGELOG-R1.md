@@ -65,3 +65,12 @@ Research and verification date: 2026-10-27. Finding IDs refer to `audits/AUDIT-r
 | 07 | NICE 9–10 | Added JSON Schema/registry generation in CI and BCD dataset version to the evidence manifest. | Existing machine-readable contract; [BCD, 2026-10-27](https://github.com/mdn/browser-compat-data) |
 
 LISTO-R1
+## Post-R2 required corrections
+
+- 03 "Dated mobile quirk log": WebKit 284804 date corrected to 2024-12-17 (text and citation).
+- 03 "Dated mobile quirk log": WebKit 185679 date corrected to opened 2018-05-16, marked RESOLVED FIXED; unsupported "Safari 17 remaining-fix milestone" sentence removed.
+- 03 "Dated mobile quirk log": WebKit 278370 date corrected to opened 2024-08-19; fix landing (Sept 2024) and backports (Sept–Oct 2024) noted.
+- 03 "Dated mobile quirk log": a11ysupport.io TalkBack result (2023-08-22) sentence dropped.
+- 03 "Select-only combobox": APG 2855 cause reworded as a July 2025 task-force hypothesis ("selection failure, active-descendant suspected"), not a confirmed cause.
+- 03 "Programmatic focus visibility": `focusVisible` described as "below the floor" instead of "non-portable".
+- 05 recommendation 1: "CSS-only overlay placement on the floor" replaced with "CSS-only placement above each property's floor; the scheduler-driven geometry fallback on the floor".
