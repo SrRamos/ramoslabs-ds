@@ -6,7 +6,12 @@
   "homepage": "https://ramoslabs.com",
   "attribution": "RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.",
   "install": "bun add @ramoslabs/tokens",
-  "generatedFrom": "@ramoslabs/tokens dist JSON + distilled page content",
+  "generatedFrom": "@ramoslabs/tokens dist JSON + distilled page content + @ramoslabs/contracts contract JSON",
+  "schemas": {
+    "contract": "https://design.ramoslabs.com/schema/contract.v1.json",
+    "kinds": "https://design.ramoslabs.com/schema/kinds.v1.json",
+    "at-support": "https://design.ramoslabs.com/schema/at-support.v1.json"
+  },
   "tokens": {
     "total": 225,
     "byCategory": {
@@ -113,5 +118,959 @@
       "summary": "A sourced side-by-side of what each one ships, with only claims their own docs support"
     }
   ],
-  "components": []
+  "components": [
+    {
+      "name": "SJButton",
+      "slug": "button",
+      "contractVersion": "0.1.0",
+      "status": "draft",
+      "pattern": {
+        "apg": "button",
+        "evidence": "button",
+        "native": "button"
+      },
+      "anatomy": [
+        {
+          "part": "root",
+          "element": "button",
+          "role": "button",
+          "native": true
+        }
+      ],
+      "roles": [
+        "button"
+      ],
+      "state": {
+        "machine": [
+          "idle"
+        ],
+        "controllable": []
+      },
+      "keyboard": {
+        "root": {
+          "Enter": "press",
+          "Space": "press"
+        }
+      },
+      "kinds": [],
+      "supportFloor": [],
+      "atSupport": [
+        {
+          "at": "voiceover",
+          "platform": "macos",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/button.json#vo-macos-safari-ariaat539"
+          ]
+        },
+        {
+          "at": "voiceover",
+          "platform": "ios",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/button.json#vo-ios-safari-a11ysupport-button"
+          ]
+        },
+        {
+          "at": "nvda",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/button.json#nvda-chrome-ariaat541"
+          ]
+        },
+        {
+          "at": "jaws",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/button.json#jaws-chrome-ariaat567"
+          ]
+        },
+        {
+          "at": "talkback",
+          "platform": "android",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/button.json#talkback-chrome-a11ysupport-button"
+          ]
+        }
+      ],
+      "docs": []
+    },
+    {
+      "name": "SJSwitch",
+      "slug": "switch",
+      "contractVersion": "0.1.0",
+      "status": "draft",
+      "pattern": {
+        "apg": "switch",
+        "evidence": "switch",
+        "native": "checkbox"
+      },
+      "anatomy": [
+        {
+          "part": "root",
+          "element": "label"
+        },
+        {
+          "part": "control",
+          "element": "input",
+          "role": "switch",
+          "native": true,
+          "attributes": {
+            "type": "checkbox"
+          }
+        },
+        {
+          "part": "thumb",
+          "element": "span"
+        }
+      ],
+      "roles": [
+        "switch"
+      ],
+      "state": {
+        "machine": [
+          "off",
+          "on"
+        ],
+        "controllable": [
+          "checked"
+        ]
+      },
+      "keyboard": {
+        "control": {
+          "Space": "toggle"
+        }
+      },
+      "kinds": [],
+      "supportFloor": [],
+      "atSupport": [
+        {
+          "at": "voiceover",
+          "platform": "macos",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/switch.json#vo-macos-safari-ariaat561"
+          ]
+        },
+        {
+          "at": "voiceover",
+          "platform": "ios",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/switch.json#vo-ios-safari-apg-switch"
+          ]
+        },
+        {
+          "at": "nvda",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/switch.json#nvda-chrome-ariaat562"
+          ]
+        },
+        {
+          "at": "jaws",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/switch.json#jaws-chrome-ariaat563"
+          ]
+        },
+        {
+          "at": "talkback",
+          "platform": "android",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/switch.json#talkback-chrome-apg-switch"
+          ]
+        }
+      ],
+      "docs": []
+    }
+  ],
+  "kinds": {
+    "contractVersion": "0.1.0",
+    "items": [
+      {
+        "kind": "text",
+        "type": [
+          "text"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "context",
+          "default": "on"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "sentences"
+        },
+        "autocorrect": "on",
+        "spellcheck": true,
+        "noMaxlength": false
+      },
+      {
+        "kind": "name",
+        "type": [
+          "text"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "name"
+          ],
+          "variants": [
+            "given-name",
+            "family-name"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "words"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": false
+      },
+      {
+        "kind": "username",
+        "type": [
+          "text"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "username"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "none"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": false
+      },
+      {
+        "kind": "email",
+        "type": [
+          "email"
+        ],
+        "inputmode": "email",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "email"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "none"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": false
+      },
+      {
+        "kind": "url",
+        "type": [
+          "url"
+        ],
+        "inputmode": "url",
+        "autocomplete": {
+          "policy": "conditional",
+          "tokens": [
+            "url"
+          ],
+          "when": "meaningful"
+        },
+        "enter": "go",
+        "autocapitalize": {
+          "value": "none"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": false
+      },
+      {
+        "kind": "phone",
+        "type": [
+          "tel"
+        ],
+        "inputmode": "tel",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "tel"
+          ],
+          "variants": [
+            "tel-*"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "none"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": true,
+        "notes": "Unmasked editing, format on blur; no maxlength. Live masks require caret-mapping and paste tests."
+      },
+      {
+        "kind": "otp",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "one-time-code"
+          ]
+        },
+        "enter": "done",
+        "autocapitalize": {
+          "value": "none"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": true,
+        "enterAlternatives": [
+          "go"
+        ],
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Numeric. One control, paste-safe; ASCII-digit pattern optional; length validated after normalization; no maxlength. Enter is done (auto-submit off) or go (auto-submit on). A single text control: split-character inputs are not the default."
+      },
+      {
+        "kind": "otp-alnum",
+        "type": [
+          "text"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "one-time-code"
+          ]
+        },
+        "enter": "done",
+        "autocapitalize": {
+          "value": "characters",
+          "when": "canonical uppercase"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": true,
+        "enterAlternatives": [
+          "go"
+        ],
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Alphanumeric one-time code; autocapitalize characters only if the canonical form is uppercase. Single control; no maxlength."
+      },
+      {
+        "kind": "amount",
+        "type": [
+          "text"
+        ],
+        "inputmode": "decimal",
+        "autocomplete": {
+          "policy": "conditional",
+          "tokens": [
+            "transaction-amount"
+          ],
+          "when": "only in that context"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": true,
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Decimal. Intl display, owned deterministic parser; no spinbutton. Canonical value is separate from editing text; never parseFloat or binary money arithmetic."
+      },
+      {
+        "kind": "amount-signed",
+        "type": [
+          "text"
+        ],
+        "inputmode": "decimal",
+        "autocomplete": {
+          "policy": "conditional",
+          "tokens": [
+            "transaction-amount"
+          ],
+          "when": "only in that context"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": true,
+        "variantOf": "amount",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "requiresSignControl": true,
+        "notes": "amount with signed (credit notes, refunds). iOS decimal may omit the minus: render an explicit sign control (toggle or prefix part). The parser accepts a leading - or the minus sign U+2212 only when signed."
+      },
+      {
+        "kind": "quantity",
+        "type": [
+          "number",
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "context",
+          "default": "off"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false,
+        "inputmodeWhen": "text variant",
+        "notes": "type=number only where stepping helps; min, max, step."
+      },
+      {
+        "kind": "postal",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "postal-code"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "group": "postal-reference-account",
+        "inputmodeWhen": "digits-only by contract",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Preserve leading zeroes; never type=number; no maxlength."
+      },
+      {
+        "kind": "reference",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "context"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "group": "postal-reference-account",
+        "inputmodeWhen": "digits-only by contract",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Autocomplete is postal-code or a token chosen by domain. Preserve leading zeroes; never type=number; no maxlength."
+      },
+      {
+        "kind": "account",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "context"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "group": "postal-reference-account",
+        "inputmodeWhen": "digits-only by contract",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Autocomplete is postal-code or a token chosen by domain. Preserve leading zeroes; never type=number; no maxlength."
+      },
+      {
+        "kind": "tax-id",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "omitted"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "inputmodeWhen": "digits-only",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Attribute omitted: no standard token, and off is not a generic suppressor. Normalize, then validate the check digit."
+      },
+      {
+        "kind": "search",
+        "type": [
+          "search"
+        ],
+        "inputmode": "search",
+        "autocomplete": {
+          "policy": "off",
+          "when": "usually"
+        },
+        "enter": "search",
+        "autocapitalize": {
+          "value": null,
+          "when": "by domain"
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false
+      },
+      {
+        "kind": "password",
+        "type": [
+          "password"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "current-password"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "none"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": false,
+        "notes": "Current password."
+      },
+      {
+        "kind": "password-new",
+        "type": [
+          "password"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "new-password"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "none"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": false,
+        "notes": "Distinct section tokens if needed."
+      },
+      {
+        "kind": "date",
+        "type": [
+          "date"
+        ],
+        "inputmode": null,
+        "autocomplete": {
+          "policy": "conditional",
+          "tokens": [
+            "bday"
+          ],
+          "when": "birth date only"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false,
+        "notes": "Native picker; value yyyy-mm-dd."
+      },
+      {
+        "kind": "time",
+        "type": [
+          "time"
+        ],
+        "inputmode": null,
+        "autocomplete": {
+          "policy": "context",
+          "default": "off"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false,
+        "notes": "step when needed."
+      },
+      {
+        "kind": "choice",
+        "type": [
+          "select"
+        ],
+        "inputmode": null,
+        "autocomplete": {
+          "policy": "context"
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false,
+        "notes": "Native select; autocomplete is the purpose token. No ARIA listbox recreation."
+      },
+      {
+        "kind": "cc-number",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "cc-number"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Normalize, then checksum; never type=number."
+      },
+      {
+        "kind": "cc-exp",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "cc-exp"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "group": "cc-exp",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Accepts digits-only MMYY or MMYYYY and inserts the display separator itself (the iOS numeric keypad has no /); the month/year pair is the alternative; keep the leading zero."
+      },
+      {
+        "kind": "cc-exp-month",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "cc-exp-month"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "group": "cc-exp",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Alternative to cc-exp; keep the leading zero."
+      },
+      {
+        "kind": "cc-exp-year",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "cc-exp-year"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": true,
+        "group": "cc-exp",
+        "forbiddenTypes": [
+          "number"
+        ],
+        "notes": "Alternative to cc-exp."
+      },
+      {
+        "kind": "cc-csc",
+        "type": [
+          "text"
+        ],
+        "inputmode": "numeric",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "cc-csc"
+          ]
+        },
+        "enter": "done",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": true,
+        "forbiddenTypes": [
+          "number"
+        ]
+      },
+      {
+        "kind": "cc-name",
+        "type": [
+          "text"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "cc-name"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "words"
+        },
+        "autocorrect": "off",
+        "spellcheck": false,
+        "noMaxlength": false
+      },
+      {
+        "kind": "address",
+        "type": [
+          "textarea"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "street-address"
+          ]
+        },
+        "enter": "enter",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false,
+        "excludeFromEnterPosition": true,
+        "notes": "Enter inserts a newline: textarea kinds are excluded from the form owner's position computation. Use address-line1..3 for split lines; never combine."
+      },
+      {
+        "kind": "address-line",
+        "type": [
+          "text"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "address-line1",
+            "address-line2",
+            "address-line3"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false
+      },
+      {
+        "kind": "country",
+        "type": [
+          "select",
+          "text"
+        ],
+        "inputmode": null,
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "country"
+          ],
+          "variants": [
+            "country-name"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": null
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false,
+        "notes": "Default is the select (choice) with the ISO 3166-1 alpha-2 code (country). The text variant (type=text, inputmode=text) uses country-name. Never infer from keyboard locale."
+      },
+      {
+        "kind": "organization",
+        "type": [
+          "text"
+        ],
+        "inputmode": "text",
+        "autocomplete": {
+          "policy": "token",
+          "tokens": [
+            "organization"
+          ]
+        },
+        "enter": "position",
+        "autocapitalize": {
+          "value": "words",
+          "hint": true
+        },
+        "autocorrect": null,
+        "spellcheck": null,
+        "noMaxlength": false
+      }
+    ],
+    "rules": [
+      {
+        "id": "otp-single-control",
+        "text": "OTP is a single text control; split-character inputs are not the default (extra paste, focus, screen-reader and deletion logic)."
+      },
+      {
+        "id": "no-type-number",
+        "text": "Numeric-looking identifiers never use type=number (spinbutton and invalid-character problems)."
+      },
+      {
+        "id": "no-maxlength",
+        "text": "No maxlength on phone, amount, reference, tax, card or OTP: maxlength truncates pasted text before any input event, so normalize-first becomes impossible. Length is validated after normalization."
+      },
+      {
+        "id": "locale-numbers",
+        "text": "Intl formats; an owned deterministic parser reads input, accepting both separators with a grouping-structure rule, no prefill, tested in both directions per locale; never parseFloat, punctuation stripping or binary money arithmetic. The canonical value is separate from editing text."
+      },
+      {
+        "id": "phone-unmasked",
+        "text": "Phone is unmasked; live masks require caret-mapping and paste tests."
+      },
+      {
+        "id": "keyboard-locale",
+        "text": "Keyboard locale is not application locale."
+      },
+      {
+        "id": "autocorrect-hint",
+        "text": "autocorrect is supported from Chromium 153 / Firefox 136 / Safari 14.1 and is treated as a hint."
+      },
+      {
+        "id": "touch-text-size",
+        "text": "Touch control text is at least 16 CSS px via size tokens, with maximum-scale and user-scalable prohibited (WCAG 1.4.4)."
+      },
+      {
+        "id": "enterkeyhint",
+        "text": "Textarea kinds always use enterkeyhint=enter and are excluded from the position computation. Otherwise the form owner computes it: next when another editable field follows; done on the last field of a non-submitting group; go when Enter navigates or submits; send for messaging; search for query submission. Kind overrides: url go, search search, otp done (auto-submit off) or go (on)."
+      },
+      {
+        "id": "autofill-requirements",
+        "text": "Autofill fields need a stable name/id, an owning form and a visible label; address/contact repeats use autofill section tokens."
+      },
+      {
+        "id": "consumer-override",
+        "text": "Consumers may override an attribute when the declared data semantics remain true."
+      },
+      {
+        "id": "unknown-kind",
+        "text": "An unknown kind is a type error: the kind union is generated from this contract."
+      }
+    ],
+    "certification": {
+      "ios-safari": "owner-iphone",
+      "android-chrome": "not-run",
+      "scenarios": [
+        "keyboard",
+        "minus-decimal",
+        "enter-label",
+        "autofill",
+        "paste",
+        "caret",
+        "deletion",
+        "ime",
+        "leading-zeroes",
+        "rotation"
+      ]
+    }
+  }
 }

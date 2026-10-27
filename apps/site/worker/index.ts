@@ -10,6 +10,8 @@
 
 import { pages, mdPathFor } from '../src/data/pages';
 import { prefersMarkdown } from './negotiate';
+import { getComponent, getKind, listComponents, type Registry } from '../agentic/registry-tools';
+import { lintCssContract } from '../../../packages/testing/lint/contract/css-contract';
 import { aiBotsSql, aiReferralsSql, summarizeAiBots, summarizeAiReferrals } from './ai-traffic';
 
 // Cloudflare Analytics Engine — cookieless, no-PII, server-side usage telemetry.
@@ -103,6 +105,7 @@ let _tokens: Record<string, string> | null = null;
 let _agents: string | null = null;
 let _llmsFull: string | null = null;
 let _valueIndex: Map<string, string[]> | null = null; // normalized value -> token names
+let _registry: Registry | null = null;
 
 async function readAsset(env: Env, origin: string, path: string): Promise<string> {
   const res = await env.ASSETS.fetch(new Request(new URL(path, origin).href));
@@ -122,6 +125,14 @@ async function tokens(env: Env, origin: string) {
     }
   }
   return _tokens!;
+}
+// registry.json is the single source for components and kinds (generated from the contracts).
+async function registry(env: Env, origin: string): Promise<Registry> {
+  if (!_registry) {
+    const parsed = JSON.parse(await readAsset(env, origin, '/registry.json')) as Partial<Registry>;
+    _registry = { components: parsed.components ?? [], kinds: parsed.kinds ?? null };
+  }
+  return _registry;
 }
 async function agentsGuide(env: Env, origin: string) {
   if (!_agents) _agents = await readAsset(env, origin, '/AGENTS.md');
@@ -258,6 +269,34 @@ const TOOLS = [
     },
   },
   {
+    name: 'list_components',
+    description:
+      'List every component in the RamosLabs registry (generated from the component contracts) with its status, APG pattern, roles, and per-assistive-technology test_status. Read-only. Use get_component for one.',
+    inputSchema: { type: 'object', properties: {} },
+  },
+  {
+    name: 'get_component',
+    description:
+      'Get one component contract from the registry by name (e.g. "SJButton" or "button"): anatomy, roles, state machine, keyboard map, kinds, support floor, per-AT test_status with evidence references, and doc links. An unknown name returns not-found; never invent a component.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', description: 'Component name, e.g. "SJSwitch" or "switch".' },
+      },
+      required: ['name'],
+    },
+  },
+  {
+    name: 'get_kind',
+    description:
+      'Get one input kind from the registry (e.g. "email", "tel", "amount"): type, inputmode, autocomplete policy, Enter key, autocapitalize, autocorrect, spellcheck and the shared kind rules. An unknown kind returns not-found.',
+    inputSchema: {
+      type: 'object',
+      properties: { name: { type: 'string', description: 'Kind name, e.g. "email".' } },
+      required: ['name'],
+    },
+  },
+  {
     name: 'get_agents_guide',
     description:
       'Return AGENTS.md — the full RamosLabs DS agent guide: what it is, how to install/consume tokens, the hard rules, the accessibility floors, and the naming convention.',
@@ -376,14 +415,42 @@ async function callTool(name: string, args: Record<string, unknown>, env: Env, o
           'use the nearest --space-* / --radius-* / --font-size-* token (search_tokens)',
         ),
       }));
+      // Contract block (W1-307): per-part classes and data-part/data-state values must exist in
+      // the registry. Skipped, and said so, if the registry cannot be read.
+      let contractChecked = 0;
+      try {
+        const reg = await registry(env, origin);
+        contractChecked = reg.components.length;
+        for (const f of lintCssContract(code, reg.components)) {
+          if (findings.length >= MAX_FINDINGS) break;
+          findings.push({
+            value: f.value,
+            issue: `${f.rule}: ${f.issue}`,
+            suggestion: f.suggestion,
+          });
+        }
+      } catch {
+        /* registry unavailable: raw-value findings still returned */
+      }
       return json({
         clean: findings.length === 0,
+        contractComponentsChecked: contractChecked,
         count: findings.length,
         truncatedInput: inputTruncated,
         truncatedFindings: findings.length >= MAX_FINDINGS,
         rule: 'Never hardcode a color, spacing, typography, radius, shadow, or motion value. Always read the token.',
         findings,
       });
+    }
+    case 'list_components':
+      return json(listComponents(await registry(env, origin)));
+    case 'get_component': {
+      const r = getComponent(await registry(env, origin), args.name);
+      return r.ok ? json(r.value) : { ...text(r.message), isError: true };
+    }
+    case 'get_kind': {
+      const r = getKind(await registry(env, origin), args.name);
+      return r.ok ? json(r.value) : { ...text(r.message), isError: true };
     }
     case 'get_agents_guide':
       return text(await agentsGuide(env, origin));
@@ -400,10 +467,19 @@ function rpcError(id: unknown, code: number, message: string) {
   return { jsonrpc: '2.0', id, error: { code, message } };
 }
 
-// JSON-RPC payloads are untyped input, validated field by field below.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleRpc(msg: any, env: Env, origin: string): Promise<object | null> {
-  const { id, method, params } = msg ?? {};
+// JSON-RPC payloads are untyped input: narrowed to this shape, then validated field by field.
+type RpcMessage = {
+  id?: unknown;
+  method?: unknown;
+  params?: { protocolVersion?: unknown; name?: unknown; arguments?: unknown };
+};
+
+function asMessage(raw: unknown): RpcMessage {
+  return typeof raw === 'object' && raw !== null ? (raw as RpcMessage) : {};
+}
+
+async function handleRpc(raw: unknown, env: Env, origin: string): Promise<object | null> {
+  const { id, method, params } = asMessage(raw);
   // A JSON-RPC message with no `id` is a notification — never respond to it.
   if (id === undefined) return null;
   switch (method) {
@@ -418,7 +494,7 @@ async function handleRpc(msg: any, env: Env, origin: string): Promise<object | n
         capabilities: { tools: { listChanged: false } },
         serverInfo: SERVER_INFO,
         instructions:
-          'RamosLabs Design System tools. Look up tokens with search_tokens/get_token, verify color contrast with check_contrast, read doctrine with list_docs/get_doc, and lint styles with lint_css. Never invent a token, value, or rule; if it is not returned here, ask.',
+          'RamosLabs Design System tools. Look up tokens with search_tokens/get_token, verify color contrast with check_contrast, read doctrine with list_docs/get_doc, read component contracts and input kinds with list_components/get_component/get_kind, and lint styles with lint_css. Never invent a token, value, or rule; if it is not returned here, ask.',
       });
     }
     case 'ping':
@@ -470,8 +546,7 @@ async function handleMcp(
       headers: { 'Content-Type': 'application/json', ...CORS },
     });
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let body: any;
+  let body: unknown;
   try {
     body = JSON.parse(raw);
   } catch {
@@ -485,10 +560,11 @@ async function handleMcp(
   for (const msg of messages) {
     // Count MCP usage by method, and tools/call by tool name. `initialize` is the closest
     // thing to a "new connection" on this stateless Streamable-HTTP transport.
-    const method = String(msg?.method ?? '');
+    const m = asMessage(msg);
+    const method = String(m.method ?? '');
     if (method) {
       const detail =
-        method === 'tools/call' ? `tools/call:${String(msg?.params?.name ?? '?')}` : method;
+        method === 'tools/call' ? `tools/call:${String(m.params?.name ?? '?')}` : method;
       logEvent(env, 'mcp', '/mcp', detail, meta);
     }
     const r = await handleRpc(msg, env, origin);

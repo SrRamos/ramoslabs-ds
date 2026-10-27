@@ -1,13 +1,25 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 import { pages, SITE, mdPathFor, type Page } from '../src/data/pages';
 import { answerById, answerMarkdown } from '../src/data/answers';
+import {
+  buildComponents,
+  buildKinds,
+  slugOf,
+  SCHEMA_FILES,
+  type ContractJson,
+  type DocLink,
+  type KindsContractJson,
+} from './registry';
 
 // RamosLabs DS agentic layer, as an Astro integration.
 // On `astro:build:done` it emits, into the build output (dist/):
-//   llms.txt, llms-full.txt, registry.json, robots.txt, AGENTS.md, tokens.json, tokens.css
+//   llms.txt, llms-full.txt, registry.json, robots.txt, AGENTS.md, tokens.json, tokens.css,
+//   schema/{contract,kinds,at-support}.v1.json (the `$schema` URLs the contracts declare)
+// registry.json's `components` and `kinds` are generated from @ramoslabs/contracts (ADR-010).
 // It also writes the committed copies at the repo root for versioning.
 // The production URL comes from Astro's `site` config — the single source of truth,
 // so page links in every artifact are clean, crawlable URLs.
@@ -23,6 +35,11 @@ const tokensCssPath = path.join(repoRoot, 'packages', 'tokens', 'dist', 'tokens.
 const tokensPkgPath = path.join(repoRoot, 'packages', 'tokens', 'package.json');
 const agentsMdPath = path.join(repoRoot, 'AGENTS.md');
 const skillPath = path.join(repoRoot, '.claude', 'skills', 'ramoslabs-ds', 'SKILL.md');
+
+// The contracts package is a dev workspace dependency; resolve it the way a consumer would.
+const contractsDir = path.dirname(
+  createRequire(import.meta.url).resolve('@ramoslabs/contracts/package.json'),
+);
 
 // Only non-interactive doc pages carry agent-facing prose; the color picker is an app feature.
 const docPages = pages.filter((p) => !p.interactive);
@@ -119,6 +136,34 @@ function loadTokens(): Tokens {
   return { flat, byCategory, grouped, total: Object.keys(flat).length };
 }
 
+type Contracts = { components: ContractJson[]; kinds: KindsContractJson | null };
+
+function loadContracts(): Contracts {
+  const dir = path.join(contractsDir, 'contracts');
+  const components: ContractJson[] = [];
+  let kinds: KindsContractJson | null = null;
+  for (const file of fs.readdirSync(dir).sort()) {
+    if (!file.endsWith('.contract.json')) continue;
+    const json = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+    if (file === 'kinds.contract.json') kinds = json as KindsContractJson;
+    else components.push(json as ContractJson);
+  }
+  return { components, kinds };
+}
+
+// Site pages that document a component live at /components/<slug>/. None is invented: a
+// component without a page gets no link.
+function docLinksFor(site: string, components: ContractJson[]): Record<string, DocLink[]> {
+  const out: Record<string, DocLink[]> = {};
+  for (const c of components) {
+    const slug = slugOf(c.name);
+    out[slug] = pages
+      .filter((p) => p.path === `/components/${slug}/`)
+      .map((p) => ({ title: p.title, url: pageUrl(site, p) }));
+  }
+  return out;
+}
+
 function tokenTableMarkdown(tokens: Tokens) {
   const parts: string[] = [];
   for (const category of Object.keys(tokens.grouped)) {
@@ -178,7 +223,7 @@ ${bullets('patterns')}
 
 An MCP (Model Context Protocol) server exposes the design system as typed tools —
 \`search_tokens\`, \`get_token\`, \`check_contrast\`, \`list_docs\`, \`get_doc\`, \`lint_css\`,
-\`get_agents_guide\`. Streamable HTTP, read-only, no auth. Connect an MCP-capable agent to
+\`list_components\`, \`get_component\`, \`get_kind\`, \`get_agents_guide\`. Streamable HTTP, read-only, no auth. Connect an MCP-capable agent to
 \`${b}/mcp\`. Prefer these tools over fetching files: they are structured and never invented.
 
 ## Agent skill
@@ -283,7 +328,13 @@ ${page.body}
 `;
 }
 
-function buildRegistry(site: string, resolved: LoadedPage[], tokens: Tokens, version: string) {
+export function buildRegistry(
+  site: string,
+  resolved: LoadedPage[],
+  tokens: Tokens,
+  version: string,
+  contracts: Contracts,
+) {
   return JSON.stringify(
     {
       name: SITE.title,
@@ -293,7 +344,14 @@ function buildRegistry(site: string, resolved: LoadedPage[], tokens: Tokens, ver
       homepage: SITE.website,
       attribution: SITE.attribution,
       install: 'bun add @ramoslabs/tokens',
-      generatedFrom: '@ramoslabs/tokens dist JSON + distilled page content',
+      generatedFrom:
+        '@ramoslabs/tokens dist JSON + distilled page content + @ramoslabs/contracts contract JSON',
+      schemas: Object.fromEntries(
+        Object.keys(SCHEMA_FILES).map((f) => [
+          f.replace(/\.v1\.json$/, ''),
+          `${baseUrl(site)}/schema/${f}`,
+        ]),
+      ),
       tokens: {
         total: tokens.total,
         byCategory: tokens.byCategory,
@@ -305,11 +363,28 @@ function buildRegistry(site: string, resolved: LoadedPage[], tokens: Tokens, ver
       answers: resolved
         .filter((p) => p.group === 'answers')
         .map((p) => ({ id: p.id, title: p.title, url: pageUrl(site, p), summary: p.summary })),
-      components: [],
+      components: buildComponents(contracts.components, docLinksFor(site, contracts.components)),
+      kinds: buildKinds(contracts.kinds),
     },
     null,
     2,
   );
+}
+
+function tokensVersion(): string {
+  try {
+    return JSON.parse(fs.readFileSync(tokensPkgPath, 'utf8')).version ?? '0.0.0';
+  } catch {
+    return '0.0.0';
+  }
+}
+
+/**
+ * A fresh registry.json text, generated from the sources (tokens dist, pages, contracts).
+ * The drift check compares the built `registry.json` with this (ADR-010).
+ */
+export function generateRegistry(site = 'https://design.ramoslabs.com'): string {
+  return buildRegistry(site, loadPages(), loadTokens(), tokensVersion(), loadContracts()) + '\n';
 }
 
 // --- integration ---------------------------------------------------------------
@@ -326,17 +401,13 @@ export function agentic(): AstroIntegration {
         const tokens = loadTokens();
         const resolved = loadPages();
 
-        let version = '0.0.0';
-        try {
-          version = JSON.parse(fs.readFileSync(tokensPkgPath, 'utf8')).version ?? version;
-        } catch {
-          /* keep default */
-        }
+        const version = tokensVersion();
+        const contracts = loadContracts();
 
         const artifacts: Record<string, string> = {
           'llms.txt': buildLlmsTxt(site, resolved),
           'llms-full.txt': buildLlmsFull(site, resolved, tokens),
-          'registry.json': buildRegistry(site, resolved, tokens, version) + '\n',
+          'registry.json': buildRegistry(site, resolved, tokens, version, contracts) + '\n',
           'robots.txt': buildRobots(site),
         };
 
@@ -363,6 +434,15 @@ export function agentic(): AstroIntegration {
           fs.copyFileSync(skillPath, path.join(outDir, 'skill.md'));
         }
 
+        // The JSON Schemas the contracts name in `$schema`, served at their `$id` URLs.
+        fs.mkdirSync(path.join(outDir, 'schema'), { recursive: true });
+        for (const [served, source] of Object.entries(SCHEMA_FILES)) {
+          fs.copyFileSync(
+            path.join(contractsDir, 'schema', source),
+            path.join(outDir, 'schema', served),
+          );
+        }
+
         // 3) a Markdown twin of every doc page (/<route>.md), served as text/markdown by the
         // Worker and offered via Link rel=alternate + Accept negotiation.
         for (const page of resolved) {
@@ -374,7 +454,7 @@ export function agentic(): AstroIntegration {
 
         const missing = resolved.filter((p) => !p.present).length;
         logger.info(
-          `agentic layer: ${resolved.length} pages (${missing} missing), ${tokens.total} tokens, clean URLs @ ${baseUrl(site)}`,
+          `agentic layer: ${resolved.length} pages (${missing} missing), ${tokens.total} tokens, ${contracts.components.length} components, clean URLs @ ${baseUrl(site)}`,
         );
       },
     },
