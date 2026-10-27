@@ -2,7 +2,7 @@
   "id": "ramoslabs-ds-vs-material-vs-tailwind",
   "title": "RamosLabs DS, Material Web, and Tailwind CSS: what each one ships",
   "summary": "A sourced side-by-side of what RamosLabs DS, Material Web (@material/web), and Tailwind CSS each provide, with only claims their own docs support.",
-  "short": "RamosLabs DS ships tokens and documented patterns and no components yet{ref:ds-agents}. Material Web is a web-components library on Material 3, in maintenance mode according to its README as of 2026-10-27{ref:md-web}. Tailwind is a utility-first approach whose docs have you build reusable components yourself{ref:tw-utility}. All three expose design tokens as CSS variables{ref:ds-pkg}{ref:md-theming}{ref:tw-theme}.",
+  "short": "RamosLabs DS ships tokens and documented patterns and no components yet{ref:ds-agents}. Material Web is a web-components library on Material 3, in maintenance mode according to its README as of 2026-10-27{ref:md-web}. Tailwind is a utility-first CSS framework{ref:tw-home} whose docs have you build reusable components yourself{ref:tw-utility}. All three expose design tokens as CSS variables{ref:ds-pkg}{ref:md-theming}{ref:tw-theme}.",
   "sections": [
     {
       "heading": "What each one ships",
@@ -17,7 +17,7 @@
             "What is it?",
             "A mono-indigo design system documented as tokens and patterns{ref:ds-agents}",
             "Material Web is a library of Google's Material components; its README says it uses Material 3, \"the latest version\"{ref:md-web}",
-            "A utility-first approach: you combine single-purpose presentational classes in your markup{ref:tw-utility}"
+            "A utility-first CSS framework{ref:tw-home}: you combine single-purpose presentational classes in your markup{ref:tw-utility}"
           ],
           [
             "Ready-made components?",
@@ -196,6 +196,15 @@
       "publisher": "MDN",
       "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var",
       "date": "last modified 2026-09-10",
+      "accessed": "2026-10-27"
+    },
+    {
+      "id": "tw-home",
+      "kind": "external",
+      "title": "Tailwind CSS homepage: \"A utility-first CSS framework\"",
+      "publisher": "Tailwind Labs",
+      "url": "https://tailwindcss.com/",
+      "date": "live homepage, undated",
       "accessed": "2026-10-27"
     }
   ]
