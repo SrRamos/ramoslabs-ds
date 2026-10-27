@@ -351,6 +351,24 @@ describe('useSJStore bridge', () => {
   });
 });
 
+describe('client scheduler default (G1 SHOULD-1)', () => {
+  it('SJProvider config without target and the outside-provider fallback use platform timers', () => {
+    const seen: object[] = [];
+    const Child = defineComponent({
+      setup() {
+        seen.push(useSJRuntime().scheduler);
+        return () => h('i');
+      },
+    });
+    mount(Child, { config: { locale: 'es' } }).unmount();
+    const bare = createApp({ render: () => h(Child) });
+    bare.mount(mk('root'));
+    bare.unmount();
+    expect(seen).toHaveLength(2);
+    for (const sc of seen) expect('advance' in sc).toBe(false);
+  });
+});
+
 describe('live host (G1 MUST-3)', () => {
   it('default DOM host hides its nodes inline, without a stylesheet', () => {
     const attrs: Record<string, string> = {};

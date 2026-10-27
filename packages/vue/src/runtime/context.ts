@@ -36,13 +36,15 @@ export const SJProvider = defineComponent({
   props: {
     /** A ready runtime (e.g. rebuilt from `serializeRuntime` on the client). */
     runtime: { type: Object as PropType<SJRuntime>, default: undefined },
-    /** Used when `runtime` is omitted. Client entries should pass `target: 'client'`. */
+    /** Used when `runtime` is omitted. Defaults to `target: 'client'` (platform timers). */
     config: { type: Object as PropType<RuntimeConfig>, default: undefined },
     /** Overrides where live regions are created (tests, custom documents). Default: the DOM. */
     liveHost: { type: Object as PropType<LiveHost>, default: undefined },
   },
   setup(props, { slots }) {
-    const ctx = createContext(props.runtime ?? createRuntime(props.config));
+    const ctx = createContext(
+      props.runtime ?? createRuntime({ ...props.config, target: props.config?.target ?? 'client' }),
+    );
     provide(SJ_CONTEXT, ctx);
     let dom: ReturnType<typeof createDomLiveHost> | undefined;
     onMounted(() => {
@@ -67,7 +69,7 @@ export function useSJContext(): SJContext {
   const found = inject(SJ_CONTEXT, undefined);
   if (found) return found;
   const inst = getCurrentInstance();
-  const ctx = createContext(createRuntime());
+  const ctx = createContext(createRuntime({ target: 'client' }));
   if (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production')
     console.warn('[sj] component used outside <SJProvider>; falling back to runtime defaults');
   if (inst) inst.appContext.provides[SJ_CONTEXT as symbol] = ctx;

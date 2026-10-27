@@ -387,6 +387,21 @@ describe('retention: 1,000 mount/unmount cycles (L2 invariant)', () => {
   }, 60_000);
 });
 
+describe('client scheduler default (G1 SHOULD-1)', () => {
+  const isFake = (s: object) => 'advance' in s;
+  it('SJProvider without target and the outside-provider fallback use platform timers', () => {
+    const seen: object[] = [];
+    function Probe() {
+      seen.push(useRuntime().scheduler);
+      return null;
+    }
+    mount(createElement(Probe));
+    mount(createElement(SJProvider, { liveHost: () => new FakeHost() }, createElement(Probe)));
+    expect(seen).toHaveLength(2);
+    for (const s of seen) expect(isFake(s)).toBe(false);
+  });
+});
+
 describe('live host (G1 MUST-3)', () => {
   it('default DOM host hides its nodes inline, without a stylesheet', () => {
     const attrs: Record<string, string> = {};

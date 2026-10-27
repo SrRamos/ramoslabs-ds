@@ -48,7 +48,9 @@ export function SJProvider(props: SJProviderProps): ReactElement {
         ...(density !== undefined && { density }),
         ...(supports !== undefined && { supports }),
         ...(scheduler !== undefined && { scheduler }),
-        ...(target !== undefined && { target }),
+        // Effects and timers only run on the client; the server render never reads the scheduler.
+        // A fake scheduler on the client would never clear the live region (G1 SHOULD-1).
+        target: target ?? 'client',
       }),
     [given, locale, dir, idPrefix, idFactory, density, supports, scheduler, target],
   );
@@ -73,14 +75,14 @@ export function SJProvider(props: SJProviderProps): ReactElement {
 }
 
 /**
- * The bag for the calling component. Outside a provider: a per-component default runtime (server
+ * The bag for the calling component. Outside a provider: a per-component default runtime (platform
  * scheduler, no live host attached, so announcements are no-ops) plus a one-time dev warning.
  */
 export function useRuntimeBag(): RuntimeBag {
   const ctx = useContext(RuntimeContext);
   const fallback = useMemo<RuntimeBag | null>(() => {
     if (ctx) return null;
-    const runtime = createRuntime();
+    const runtime = createRuntime({ target: 'client' });
     return { runtime, live: createLiveRegistry(runtime.scheduler) };
   }, [ctx]);
   const warned = useRef(false);

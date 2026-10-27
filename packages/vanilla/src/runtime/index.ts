@@ -87,6 +87,8 @@ export interface HostOptions {
   idFactory?: () => string;
   /** Overrides how live-region nodes are created; default appends hidden divs to the document body. */
   liveHost?: LiveHost;
+  /** Tests and SSR harnesses that deliberately drive a fake scheduler. */
+  allowFakeScheduler?: boolean;
 }
 
 export interface VanillaHost {
@@ -128,6 +130,16 @@ declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 /** One host per runtime: owns the live-region registry and the set of live instances. */
 export function createHost(runtime: SJRuntime, options: HostOptions = {}): VanillaHost {
+  // A fake scheduler's timers never fire in a browser: effects would never drain and the live
+  // region would never clear. Fail loudly in development (G1 SHOULD-1).
+  if (
+    !options.allowFakeScheduler &&
+    'advance' in runtime.scheduler &&
+    (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production')
+  )
+    throw new Error(
+      "[sj] createHost needs a platform scheduler: createRuntime({ target: 'client' }) (pass allowFakeScheduler for tests)",
+    );
   const live = createLiveRegistry(runtime.scheduler);
   const instances = new Set<{ destroy(): void }>();
   const nodes: Element[] = [];
