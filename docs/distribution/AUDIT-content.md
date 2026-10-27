@@ -77,3 +77,34 @@ No. `README.md` is an unchecked checklist that says "nothing has been submitted 
 Re-audit trigger: MUST-1 applied on the comparison page (a file-level check of that JSON suffices). The other three pages may be deployed before that, with SHOULD-1, 3, 4 and 5 applied in the same change.
 
 CONTENT-AUDIT-1 DONE
+
+---
+
+# Round 2: commit `10ffaa7`
+
+Auditor: ds-fable. Date: 2026-10-27. Scope: the comparison JSON as it now stands and the changes in commit `10ffaa7` (answer JSON files, `pages.ts`, the regenerated ledger, `llms.txt`, `llms-full.txt`, `registry.json`, and the new `docs/distribution/measurements/vite-tokens/`). Checks rerun: marker validation and JSON-LD generation for all four answers; token values untouched (no token file in the commit); the two pinned source paths at `71b8bac`; a search for leftovers of the removed markup and of "Material Design" outside the scope sentence.
+
+## Verdict: PUBLISHABLE
+
+| Finding | Status | Verified where |
+|---|---|---|
+| MUST-1 Material Web scope | **Resolved** | Title and `summary` say "Material Web (`@material/web`)"; `pages.ts` title and nav ("vs Material Web and Tailwind"), so the `/answers/` index follows; first paragraph carries the scope sentence ("the Material 3 specification site was not consulted, so this page makes no claim about Material Design as a whole"); the "What is it?" cell no longer calls Material Web "Google's open-source design system"; the maintenance-mode quote is dated 2026-10-27 in the short answer, the components section and the FAQ; the FAQ question reads "How does Material Web expose its tokens?". "Material Design" now appears once, inside the disclaimer. `llms.txt`, `llms-full.txt` and `registry.json` were regenerated and match |
+| SHOULD-1 Tailwind arbitrary properties | Applied | Both pages quote the source's "completely arbitrary CSS", the comparison cites Tailwind's own `fill-(--my-brand-color)` shorthand, the `[background:var(--color-surface)]` sample is gone from both pages, each page and the FAQ answers state "this page did not measure a Tailwind build"; the new claim "the variables exist as regular CSS custom properties that any CSS can read" is cited to MDN `var()` (new `mdn-var` reference, verified in round 1) on the comparison and to `Installation.md` on the install page, which does say the tokens work "in any stack … Tailwind via CSS variables" |
+| SHOULD-2 "utility-first" citation | **Open** | Not applied (the ledger says so). The short answer and the "What is it?" cell still attribute "utility-first" to `tw-utility`, a page that never uses the term. Not blocking: the term is Tailwind's own tagline. Apply at merge: add `tw-home` (https://tailwindcss.com/, accessed 2026-10-27, "A utility-first CSS framework…") and cite it next to `tw-utility` in those two places |
+| SHOULD-3 indigo title and summary | Applied | "Does RamosLabs indigo (#4f46e5) meet WCAG contrast requirements?"; summary "meets the WCAG AA contrast minimums for text and UI components"; `pages.ts` updated; JSON-LD regenerated |
+| SHOULD-4 pinned DS references | Applied | `ds-install` and `ds-colors` link `blob/71b8bac/apps/site/agentic/content/Installation.md` and `.../foundations/Colors.md`; both paths exist at that commit. Note that the pinned `Colors.md` still reads 10.36 for body text (corrected to 10.35 in `c9e3918`); the muted page cites `ds-colors` only for the role scale and the disabled-is-state-only rule, never for that number, so the citation stays accurate |
+| SHOULD-5 Vite reproduction | Applied | `measurements/vite-tokens/` holds `package.json` (`@ramoslabs/tokens` pinned to 0.1.0), `index.html`, `src/main.ts` (imports `@ramoslabs/tokens/css` and `colorIndigo600`) and a README with the three commands and the recorded output `color-primary:#4f46e5`; the install page prints the same three commands; `measured-vite.url` points at the README on `main`, which the ledger notes will 404 until merge |
+| NICE-1 "in development" | Applied | Install page: "In development, Vite injects imported `.css` files…" (the ledger's "not applied" line is wrong on this point) |
+| NICE-2 `md-theming` title | Applied | "design tokens are CSS custom properties on the web" (same ledger inaccuracy) |
+| NICE-3 JSON-LD `<` escaping | Not applied | `BaseHead.astro` untouched; still `JSON.stringify` without escaping. Harmless today, keep on the list |
+
+**Rechecks.** `validateAnswer` passes for all four answers (every marker resolves, no orphan reference). JSON-LD: four `FAQPage` blocks with six `Question`/`Answer` pairs each and one `HowTo` with four steps, all equal to the visible text; the Tailwind FAQ answers now carry the "did not measure" sentence in the JSON-LD too. No leftover of the removed markup in the answers, `llms*.txt` or `registry.json`.
+
+## New findings (round 2)
+
+- **NICE-4.** Ledger line "Not applied here (not requested): SHOULD-2, NICE-1 to NICE-3" misreports NICE-1 and NICE-2, which the same commit applied. Correct it to "SHOULD-2 and NICE-3 not applied".
+- **NICE-5.** `measurements/vite-tokens/package.json` pins the tokens package but declares `"vite": "^8.3.5"`; a rerun next month resolves a newer Vite than the one recorded. Pin `"vite": "8.3.5"` or commit the lockfile so the measurement is reproducible as dated.
+
+Publication may proceed for all four pages. SHOULD-2 is a one-reference addition best made in the same change; NICE-3, NICE-4 and NICE-5 are housekeeping.
+
+CONTENT-AUDIT-2 DONE
