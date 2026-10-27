@@ -193,7 +193,7 @@ shadow-root boundaries (`commandfor`/`popovertarget` resolve only within one tre
 | `@ramoslabs/vue` | Vue 3 adapter, `SJ*` components | peer `vue >=3.5` | 3.5 for `useId` |
 | `@ramoslabs/react` | React adapter, `SJ*` components | peer `react >=18` | `useId`, `useSyncExternalStore` exist in 18 |
 | `@ramoslabs/vanilla` | DOM adapter plus opt-in custom elements | none | explicit `define()`; no import-time registration |
-| `@ramoslabs/testing` | spec runner, fixtures (private, unpublished) | dev only | Playwright, axe, fast-check |
+| `@ramoslabs/testing` | spec runner, fixtures, lint rules, size and contrast tooling (private, unpublished) | dev only | Playwright, axe, fast-check |
 
 Naming rules (the contract's `anatomy[].part` is the single name source): **React** exports a
 namespace object (`SJSelect.Root`, `.Trigger`, `.Content`, `.Item`) plus flat named exports

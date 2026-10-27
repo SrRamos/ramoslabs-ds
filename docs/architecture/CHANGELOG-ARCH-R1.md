@@ -57,3 +57,7 @@ Owner can test VoiceOver (macOS + iPhone) and has a Windows PC; no JAWS licence.
 | A-NICE-2 | ARIA-AT named as T1 AT support tables | ADR-015 |
 | E-SHOULD-5 (cross-ref) | `focus.strategy: native-roving` for native radios | ADR-006 |
 | Status | Last line REVISION-3-FOR-AUDIT | end |
+
+## G0 audit editorial (SHOULD-5)
+
+- ADR-002 table, `@ramoslabs/testing` Role: "spec runner, fixtures, lint rules, size and contrast tooling (private, unpublished)", matching the package README (AUDIT-G0 round 2, SHOULD-5).
