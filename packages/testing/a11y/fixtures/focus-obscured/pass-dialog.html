@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Focus not obscured: modal dialog opened by keyboard</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/sj.css">
+</head>
+<body>
+<main>
+<h1>Dialog</h1>
+<button data-part="trigger" id="opener" onclick="document.getElementById('dlg').showModal()">Open</button>
+<dialog id="dlg" aria-labelledby="t">
+<h2 id="t">Confirm</h2>
+<button data-part="trigger" id="inside" autofocus>Inside</button>
+<form method="dialog"><button data-part="trigger" id="close">Close</button></form>
+</dialog>
+</main>
+</body>
+</html>

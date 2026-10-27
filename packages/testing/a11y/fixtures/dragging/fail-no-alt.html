@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dragging: no alternative</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/sj.css">
+</head>
+<body>
+<main>
+<h1>Reorder</h1>
+<ul id="list" style="list-style:none;padding:0">
+<li id="row1"><span id="item1" draggable="true"  style="display:inline-block;padding:8px">Alpha</span> </li>
+<li id="row2"><span id="item2" draggable="true"  style="display:inline-block;padding:8px">Beta</span> </li>
+</ul>
+<script>
+const list=document.getElementById('list');
+function down(){list.appendChild(list.firstElementChild)}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t||t.disabled)return;if(true)down();});
+</script>
+</main>
+</body>
+</html>

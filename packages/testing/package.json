@@ -17,6 +17,8 @@
     "test:text-safety": "playwright test -c text-safety/playwright.config.ts",
     "test:visual": "node visual/cli.js check --strict && node visual/cli.js selftest --strict && node visual/cli.js stability",
     "visual:verify": "node visual/cli.js verify",
+    "test:a11y": "playwright test -c a11y/playwright.config.ts --grep @pr",
+    "test:a11y:release": "playwright test -c a11y/playwright.config.ts",
     "test:coverage": "vitest run --coverage"
   },
   "exports": {

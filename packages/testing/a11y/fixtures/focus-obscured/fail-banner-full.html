@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Focus obscured: fixed banner covers the control</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/sj.css">
+<style>
+#banner{position:fixed;inset-inline:0;inset-block-start:0;block-size:140px;background:#1e293b;color:#fff;padding:16px}
+</style></head>
+<body>
+<div id="banner">Cookie banner</div>
+<main>
+<h1>Covered</h1>
+<button data-part="trigger" id="target" style="margin-block-start:20px">Hidden behind banner</button>
+</main>
+</body>
+</html>

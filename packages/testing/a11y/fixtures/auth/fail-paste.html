@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auth: paste blocked and autocomplete off</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/sj.css">
+</head>
+<body>
+<main>
+<h1>Sign in</h1>
+<form onsubmit="return false">
+<label for="u">Email</label>
+<input id="u" type="email" autocomplete="username">
+<label for="p">Password</label>
+<input id="p" type="password" autocomplete="off" onpaste="return false">
+
+<button data-part="trigger" type="submit">Sign in</button>
+</form>
+
+</main>
+</body>
+</html>

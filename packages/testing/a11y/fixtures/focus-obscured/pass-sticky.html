@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Focus not obscured: sticky header with scroll margin</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/sj.css">
+<style>
+header{position:sticky;inset-block-start:0;block-size:40px;background:#fff;border-block-end:1px solid #64748b;z-index:5}
+.spacer{block-size:1600px}
+</style></head>
+<body>
+<header><span>Sticky bar</span></header>
+<main>
+<h1>Long page</h1>
+<button data-part="trigger" id="first">First</button>
+<div class="spacer"></div>
+<button data-part="trigger" id="target">Target</button>
+<div style="block-size:200px"></div>
+</main>
+</body>
+</html>
