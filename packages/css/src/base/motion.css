@@ -1,0 +1,31 @@
+/* Motion (ADR-009). Components read --sj-duration-*; reduced motion collapses them to 0s.
+   The safety net below sits in sj.state, the last layer, so it also beats a component's own
+   `transition` or `animation` shorthand without !important. */
+@layer sj.base {
+  :where(:root) {
+    --sj-duration-fast: var(--duration-fast);
+    --sj-duration-normal: var(--duration-normal);
+    --sj-duration-slow: var(--duration-slow);
+  }
+}
+
+@layer sj.state {
+  @media (prefers-reduced-motion: reduce) {
+    :where(:root) {
+      --sj-duration-fast: 0s;
+      --sj-duration-normal: 0s;
+      --sj-duration-slow: 0s;
+    }
+
+    [data-part],
+    [data-part]::before,
+    [data-part]::after {
+      animation-duration: 0s;
+      animation-delay: 0s;
+      animation-iteration-count: 1;
+      transition-duration: 0s;
+      transition-delay: 0s;
+      scroll-behavior: auto;
+    }
+  }
+}

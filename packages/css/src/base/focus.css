@@ -1,0 +1,28 @@
+/* Focus indicator (WCAG 2.4.7, 2.4.11, 2.4.13). Drawn from :focus-visible and from `data-active`
+   (the engine's independent indicator for active-descendant widgets). It sits in sj.state so a
+   component's own box-shadow cannot remove it.
+
+   Normal modes: --shadow-focus, a 2px white gap inside a 2px edge, so one layer always clears 3:1
+   on light or brand surfaces. Forced colors drops box-shadow, so a transparent outline (turned into
+   a system color by the UA) is the fallback and is also given an explicit system color. */
+@layer sj.state {
+  [data-part]:focus-visible,
+  [data-part][data-active]:not([data-active='false']) {
+    outline: var(--focus-ring-width) solid transparent;
+    outline-offset: var(--focus-ring-offset);
+    box-shadow: var(--shadow-focus);
+  }
+
+  @media (forced-colors: active) {
+    [data-part]:focus-visible,
+    [data-part][data-active]:not([data-active='false']) {
+      outline-color: Highlight;
+      box-shadow: none;
+    }
+
+    /* Borders survive forced colors only when they exist; keep a hairline on bordered controls. */
+    [data-part]:is(input, select, textarea, button) {
+      border: var(--border-width-hairline) solid ButtonBorder;
+    }
+  }
+}

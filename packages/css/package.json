@@ -17,17 +17,21 @@
     ".": "./dist/index.css"
   },
   "scripts": {
-    "build": "rm -rf dist && mkdir -p dist && cp src/*.css dist/",
+    "build": "node scripts/build.mjs",
     "lint": "stylelint \"src/**/*.css\" --allow-empty-input",
     "format:check": "prettier --check . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "new": "node src/_template/generate.mjs"
   },
   "peerDependencies": {
     "@ramoslabs/tokens": ">=0.1.0"
   },
   "devDependencies": {
+    "@ramoslabs/testing": "workspace:*",
     "@ramoslabs/tokens": "workspace:*",
+    "playwright": "1.64.1",
+    "postcss": "8.5.16",
     "vitest": "5.0.5"
   }
 }
