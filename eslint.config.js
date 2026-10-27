@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import { boundariesConfigs } from './packages/testing/lint/index.js';
 
 export default tseslint.config(
   {
@@ -27,4 +28,5 @@ export default tseslint.config(
     files: ['packages/{react,vue,vanilla}/**/*.{ts,vue}'],
     languageOptions: { globals: { ...globals.browser } },
   },
+  ...boundariesConfigs(),
 );
