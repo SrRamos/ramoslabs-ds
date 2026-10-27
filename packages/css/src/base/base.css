@@ -1,0 +1,92 @@
+/* Base layer: target sizes, density, control text, scroll margin, viewport units, containment.
+   Focus ring, forced-colors and reduced-motion live in `focus.css` and `motion.css` (sj.state)
+   because they must beat any component rule that sets box-shadow or a transition. */
+@layer sj.base {
+  /* Touch usability is the default (ADR-008). */
+  :where(:root, [data-density]) {
+    --sj-target: var(--target-min);
+  }
+
+  /* Dense desktop layouts only. Never shrinks a touch target below the 44px token. */
+  :where([data-density='compact']) {
+    --sj-target: var(--target-floor);
+  }
+
+  @media (any-pointer: coarse) {
+    :where([data-density='compact']) {
+      --sj-target: var(--target-min);
+    }
+  }
+
+  /* Keyboard viewport (ADR-005 step 9): svh is the stable size, dvh follows the browser UI.
+     The interactive-widget behavior is a viewport meta setting; CSS cannot set it. */
+  :where(:root) {
+    --sj-viewport-block-size: 100vh;
+    --sj-viewport-block-size-dynamic: 100vh;
+  }
+
+  @supports (height: 100svh) {
+    :where(:root) {
+      --sj-viewport-block-size: 100svh;
+    }
+  }
+
+  @supports (height: 100dvh) {
+    :where(:root) {
+      --sj-viewport-block-size-dynamic: 100dvh;
+    }
+  }
+
+  /* Hit area is the element box. min-size, never an expanded pseudo-element, so neighbours cannot
+     overlap (ADR-008). Inline links are exempt from WCAG 2.5.8 and carry no data-part target. */
+  [data-part]:is(
+    button,
+    summary,
+    select,
+    textarea,
+    a[href],
+    input:not([type='hidden']),
+    [role='button'],
+    [role='checkbox'],
+    [role='combobox'],
+    [role='menuitem'],
+    [role='option'],
+    [role='radio'],
+    [role='switch'],
+    [role='tab']
+  ) {
+    min-block-size: var(--sj-target);
+    min-inline-size: var(--sj-target);
+  }
+
+  /* Text-entry controls: 16px minimum so iOS Safari never zooms on focus. */
+  [data-part]:is(
+    textarea,
+    select,
+    input:not(
+      [type='button'],
+      [type='checkbox'],
+      [type='color'],
+      [type='file'],
+      [type='hidden'],
+      [type='image'],
+      [type='radio'],
+      [type='range'],
+      [type='reset'],
+      [type='submit']
+    )
+  ) {
+    font-size: max(var(--control-text-min), 1em);
+  }
+
+  /* Active and focused items scroll clear of sticky bars (WCAG 2.4.11). */
+  [data-part]:is([role='option'], [role='tab'], [role='menuitem'], [data-active]),
+  [data-part]:focus-visible {
+    scroll-margin-block: var(--scroll-margin);
+  }
+
+  /* Containment never includes `paint`, which would clip a child's focus ring at the edge. */
+  :where([data-part='panel'], [data-part='option'], [data-part='row']) {
+    contain: layout style;
+  }
+}

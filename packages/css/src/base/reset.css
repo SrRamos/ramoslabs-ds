@@ -1,0 +1,29 @@
+/* Reset layer (ADR-009). Scoped to library parts only; never touches consumer elements.
+   An unlayered consumer reset still wins over everything here (documented in the README). */
+@layer sj.reset {
+  :where([data-part]),
+  :where([data-part])::before,
+  :where([data-part])::after {
+    box-sizing: border-box;
+  }
+
+  :where(button, input, select, textarea)[data-part] {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+  }
+
+  :where(button)[data-part] {
+    appearance: none;
+    text-align: center;
+  }
+
+  :where([data-part]) {
+    text-align: start;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :where([hidden])[data-part] {
+    display: none;
+  }
+}
