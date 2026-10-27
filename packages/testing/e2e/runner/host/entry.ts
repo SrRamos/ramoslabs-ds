@@ -4,11 +4,17 @@
 // wrapper reports is recorded in `window.__sj.events` so the executor can assert the emit contract.
 import { createElement, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createApp, h, nextTick, ref, type App } from 'vue';
-import { createRuntime } from '@ramoslabs/core/runtime';
+import { createApp, defineComponent, h, nextTick, ref, type App } from 'vue';
+import { createRuntime, type SJRuntime } from '@ramoslabs/core/runtime';
 import { createHost } from '@ramoslabs/vanilla/runtime';
-import { SJProvider as ReactProvider } from '@ramoslabs/react/runtime';
-import { SJProvider as VueProvider } from '@ramoslabs/vue/runtime';
+import {
+  SJProvider as ReactProvider,
+  useRuntime as useReactRuntime,
+} from '@ramoslabs/react/runtime';
+import { SJProvider as VueProvider, useSJRuntime as useVueRuntime } from '@ramoslabs/vue/runtime';
+// W1-309b: real detection plus the forced-false injector (path recorded by the caller).
+import { detectSupports } from '../../supports/detect';
+import { applyPath, parsePath, type SupportsMap } from '../../supports/paths';
 // The probe barrel pulls node:path for its contract paths; the browser bundle takes the wrappers directly.
 import { SJProbe as ReactProbe } from '../../../probe/react/index';
 import { SJProbe as VueProbe } from '../../../probe/vue/index';
@@ -25,7 +31,17 @@ interface Mounted {
 
 interface SJGlobal {
   events: boolean[];
-  mount(adapter: AdapterName, props: ProbeProps, defect?: DefectName): Promise<Mounted>;
+  /** Real detection in this engine (path `native`). */
+  real: SupportsMap;
+  /** The map the last mounted adapter's runtime actually exposes (read back, not assumed). */
+  seen: SupportsMap | null;
+  /** `path` is a supports path id (`native` or `fallback:<key>`); default `native`. */
+  mount(
+    adapter: AdapterName,
+    props: ProbeProps,
+    defect?: DefectName,
+    path?: string,
+  ): Promise<Mounted>;
   /** Updates the most recently mounted instance (a controlled owner changing its prop). */
   update(props: ProbeProps): Promise<void>;
   ready: true;
@@ -45,6 +61,22 @@ const rootEl = (): HTMLElement => {
 };
 
 const events: boolean[] = [];
+const real = detectSupports(window as never);
+const seen = (r: SJRuntime): void => void (window.__sj.seen = r.supports);
+/** Zero-DOM child that reads the runtime through the adapter's own hook (proves the injection arrives). */
+const ReactTap = (): null => {
+  const r = useReactRuntime();
+  seen(r);
+  return null;
+};
+const VueTap = defineComponent({
+  setup() {
+    seen(useVueRuntime());
+    return () => null;
+  },
+});
+const runtimeFor = (path: string, extra: Parameters<typeof createRuntime>[0]): SJRuntime =>
+  createRuntime({ target: 'client', ...extra, supports: applyPath(real, parsePath(path)) });
 const report = (pressed: boolean): void => void events.push(pressed);
 const withReport = (props: ProbeProps): ProbeProps => ({
   ...props,
@@ -54,16 +86,18 @@ const withReport = (props: ProbeProps): ProbeProps => ({
   },
 });
 
-async function mountReact(props: ProbeProps, defect: DefectName): Promise<Mounted> {
+async function mountReact(props: ProbeProps, defect: DefectName, path: string): Promise<Mounted> {
   const container = rootEl().appendChild(document.createElement('div'));
   const root = createRoot(container);
+  const runtime = runtimeFor(path, { idPrefix: 'e2e-' });
   const tree = (p: ProbeProps) =>
     createElement(
       StrictMode,
       null,
       createElement(
         ReactProvider,
-        { idPrefix: 'e2e-' },
+        { runtime },
+        createElement(ReactTap),
         createElement(ReactProbe, withReport(p), p.label ?? 'Label'),
       ),
     );
@@ -91,12 +125,14 @@ async function mountReact(props: ProbeProps, defect: DefectName): Promise<Mounte
   };
 }
 
-async function mountVue(props: ProbeProps, defect: DefectName): Promise<Mounted> {
+async function mountVue(props: ProbeProps, defect: DefectName, path: string): Promise<Mounted> {
   const container = rootEl().appendChild(document.createElement('div'));
   const current = ref<ProbeProps>(withReport(props));
+  const runtime = runtimeFor(path, { idPrefix: 'e2e-' });
   const app: App = createApp({
     render: () =>
-      h(VueProvider, { idPrefix: 'e2e-' }, () =>
+      h(VueProvider, { runtime }, () => [
+        h(VueTap),
         h(
           VueProbe,
           {
@@ -107,7 +143,7 @@ async function mountVue(props: ProbeProps, defect: DefectName): Promise<Mounted>
           },
           { default: () => current.value.label ?? 'Label' },
         ),
-      ),
+      ]),
   });
   app.mount(container);
   if (defect === 'vue-wrong-aria') {
@@ -129,11 +165,12 @@ async function mountVue(props: ProbeProps, defect: DefectName): Promise<Mounted>
   };
 }
 
-async function mountVanilla(props: ProbeProps, defect: DefectName): Promise<Mounted> {
+async function mountVanilla(props: ProbeProps, defect: DefectName, path: string): Promise<Mounted> {
   const container = rootEl().appendChild(document.createElement('div'));
   const el = container.appendChild(document.createElement('button'));
   let n = 0;
-  const host = createHost(createRuntime({ target: 'client', idFactory: () => `e2e-${n++}` }));
+  const host = createHost(runtimeFor(path, { idFactory: () => `e2e-${n++}` }));
+  seen(host.runtime);
   const label = (p: ProbeProps): ProbeProps => ({ ...withReport(p), label: p.label ?? 'Label' });
   const inst =
     defect === 'vanilla-wrong-emit'
@@ -161,16 +198,18 @@ let last: Mounted | undefined;
 
 window.__sj = {
   events,
+  real,
+  seen: null,
   ready: true,
-  async mount(adapter, props, defect = 'none') {
+  async mount(adapter, props, defect = 'none', path = 'native') {
     events.length = 0;
     last?.destroy();
     last =
       adapter === 'react'
-        ? await mountReact(props, defect)
+        ? await mountReact(props, defect, path)
         : adapter === 'vue'
-          ? await mountVue(props, defect)
-          : await mountVanilla(props, defect);
+          ? await mountVue(props, defect, path)
+          : await mountVanilla(props, defect, path);
     return last;
   },
   async update(props) {
