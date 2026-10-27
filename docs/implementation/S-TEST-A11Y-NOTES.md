@@ -20,8 +20,7 @@ the testing package, no change). `ci.yml` was not edited.
 ## Gates and what each proves
 axe (PR): the probe on all three adapters in states off, on, disabled, on+focused; tags wcag2a/aa, 21a/aa, 22aa,
 best-practice; `target-size` enabled by name and the test fails if the rule is absent from every result bucket
-(disabled controls make it `inapplicable`, which still proves it ran). Zero untriaged violations. `incomplete`
-(needs review) is not a failure. Seeded page proves `image-alt`, `button-name`, `target-size` are reported and that
+(disabled controls make it `inapplicable`, which still proves it ran). Zero untriaged violations. (needs review) FAILS like a violation unless triaged with issue, owner and `reviewed: "pass"` (`result: "incomplete"`); the probe states currently produce none. Seeded page proves `image-alt`, `button-name`, `target-size` are reported and that
 only a triage entry with issue AND owner clears one. Proves: axe's machine-checkable subset. Does not prove: the rest
 of WCAG, or any screen reader behaviour.
 

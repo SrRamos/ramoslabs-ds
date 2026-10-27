@@ -235,3 +235,23 @@ describe('3.2.6', () => {
     expect(consistentHelp([page('/1', ['Help'])]).pass).toBe(false);
   });
 });
+
+describe('incomplete triage', () => {
+  const e = {
+    rule: 'x',
+    fixture: 'f',
+    issue: '#1',
+    owner: '@me',
+    reason: 'r',
+    result: /** @type {const} */ ('incomplete'),
+  };
+  it('needs reviewed: pass and is scoped to the incomplete bucket', () => {
+    expect(validateTriage({ axe: [e] })).not.toEqual([]);
+    expect(validateTriage({ axe: [{ ...e, reviewed: 'pass' }] })).toEqual([]);
+    const ok = { ...e, reviewed: 'pass' };
+    expect(applyAxeTriage([{ id: 'x' }], 'f', { axe: [ok] }, 'incomplete').untriaged).toHaveLength(
+      0,
+    );
+    expect(applyAxeTriage([{ id: 'x' }], 'f', { axe: [ok] }).untriaged).toHaveLength(1);
+  });
+});

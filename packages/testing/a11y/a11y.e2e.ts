@@ -101,6 +101,14 @@ test.describe('axe', () => {
         expect(ran, 'axe target-size did not run').toBe(true);
         const { untriaged } = applyAxeTriage(results.violations, `probe-${state.name}`, triage);
         expect(untriaged.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+        // `incomplete` is an unreviewed finding: it fails unless triaged with reviewed: "pass".
+        const open = applyAxeTriage(
+          results.incomplete,
+          `probe-${state.name}`,
+          triage,
+          'incomplete',
+        );
+        expect(open.untriaged.map((v) => `incomplete ${v.id}: ${v.help}`)).toEqual([]);
       });
     }
   }
@@ -134,6 +142,29 @@ test.describe('axe', () => {
     expect(cleared(noOwner)).toBe(0);
     expect(cleared(noIssue)).toBe(0);
     expect(validateTriage({ axe: [noOwner] })).not.toEqual([]);
+  });
+
+  test('@pr axe | seeded incomplete | fails unless triaged with issue, owner and reviewed: pass', async ({
+    page,
+  }) => {
+    await page.goto(fx('axe/incomplete'));
+    const { incomplete } = await axe(page).analyze();
+    expect(incomplete.map((v) => v.id)).toContain('color-contrast');
+    const e = {
+      rule: 'color-contrast',
+      fixture: 'i',
+      issue: '#9',
+      owner: '@a11y',
+      reason: 'seeded',
+      result: 'incomplete' as const,
+      reviewed: 'pass',
+    };
+    const left = (x: typeof e) =>
+      applyAxeTriage(incomplete, 'i', { axe: [x] }, 'incomplete').untriaged.length;
+    expect(applyAxeTriage(incomplete, 'i', {}, 'incomplete').untriaged.length).toBeGreaterThan(0);
+    expect(left(e)).toBeLessThan(incomplete.length);
+    expect(left({ ...e, reviewed: '' })).toBe(incomplete.length);
+    expect(left({ ...e, owner: '' })).toBe(incomplete.length);
   });
 
   test('@pr axe | target-size pass fixture | zero violations', async ({ page }) => {

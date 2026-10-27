@@ -21,7 +21,7 @@ export const OWNER_RE = /^@?[\w-]+$/;
 export const TARGET_EXCEPTIONS = ['spacing', 'inline', 'equivalent', 'essential', 'user-agent'];
 
 /**
- * @typedef {{ rule: string, fixture: string, issue: string, owner: string, reason: string }} AxeTriage
+ * @typedef {{ rule: string, fixture: string, issue: string, owner: string, reason: string, result?: 'violation' | 'incomplete', reviewed?: string }} AxeTriage
  * @typedef {{ fixture: string, target: string, exception: string, reason: string, owner: string }} TargetException
  * @typedef {{ axe?: AxeTriage[], targetSize?: TargetException[] }} Triage
  */
@@ -35,6 +35,8 @@ export function validateTriage(t) {
     if (!e.rule) errors.push(`${at}: missing rule`);
     if (!e.fixture) errors.push(`${at}: missing fixture`);
     if (!e.reason) errors.push(`${at}: missing reason`);
+    if (e.result === 'incomplete' && e.reviewed !== 'pass')
+      errors.push(`${at}: an incomplete result is triaged only with reviewed: "pass"`);
     if (!e.issue || !ISSUE_RE.test(e.issue)) errors.push(`${at}: missing or malformed issue link`);
     if (!e.owner || !OWNER_RE.test(e.owner)) errors.push(`${at}: missing or malformed owner`);
   });
@@ -54,10 +56,14 @@ export function validateTriage(t) {
  * same rule and fixture; an invalid entry (no issue or owner) never triages anything.
  * @template {{ id: string }} V
  * @param {V[]} violations @param {string} fixture @param {Triage} triage
+ * @param {'violation' | 'incomplete'} [result] which axe bucket these nodes came from
  */
-export function applyAxeTriage(violations, fixture, triage) {
+export function applyAxeTriage(violations, fixture, triage, result = 'violation') {
   const valid = (triage.axe ?? []).filter(
-    (e) => validateTriage({ axe: [e] }).length === 0 && e.fixture === fixture,
+    (e) =>
+      validateTriage({ axe: [e] }).length === 0 &&
+      e.fixture === fixture &&
+      (e.result ?? 'violation') === result,
   );
   const untriaged = violations.filter((v) => !valid.some((e) => e.rule === v.id));
   return { untriaged, triaged: violations.filter((v) => !untriaged.includes(v)) };
