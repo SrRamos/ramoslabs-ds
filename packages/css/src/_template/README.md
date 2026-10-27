@@ -18,6 +18,6 @@ Rules enforced by the build and by stylelint: every rule inside an `sj.*` layer,
 properties, no `outline: none`, no remote URLs. Focus ring, target size, motion and forced-colors come
 from `base/`; do not redo them.
 
-Contract check: when `packages/contracts/contracts/<name>.contract.json` exists the generator requires the
-parts to match `anatomy[].part` exactly. Until W1-301 lands contracts the check is skipped with a
-warning (follow-up).
+Contract check: `packages/contracts/contracts/<name>.contract.json` must exist and the parts must equal
+`anatomy[].part` exactly; a missing contract or a mismatch fails. `checkStylesheets` (in `generate.mjs`)
+runs the same check over every `src/*.css` in the test suite.

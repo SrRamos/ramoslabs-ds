@@ -6,11 +6,10 @@
 // Writes src/<name>.css from component.css.tpl. Names follow ADR-009: class `sj-<name>__<part>`,
 // hook `data-part`, state `data-state|data-active|data-disabled|data-invalid`.
 //
-// Contract name check (ADR-002, ADR-009): when packages/contracts/contracts/<name>.contract.json exists,
-// the parts must equal its anatomy[].part. If the contract does not exist yet (W1-301 pending), the
-// check is SKIPPED with a warning. FOLLOW-UP(W1-301): make a missing contract an error once
-// contracts land, and run `checkAnatomy` in CI over every src/*.css.
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+// Contract name check (ADR-002, ADR-009): packages/contracts/contracts/<name>.contract.json must exist and
+// the parts must equal its anatomy[].part. A missing contract is an error. `checkStylesheets` runs the
+// same check over every src/*.css and is part of the test suite, so drift fails CI.
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -57,6 +56,24 @@ export function cssParts(name, css) {
   return [...new Set([...css.matchAll(re)].map((m) => m[1]))];
 }
 
+/** Checks every component stylesheet in `srcDir` against its contract. Returns problems (empty when clean). */
+export function checkStylesheets(srcDir, contractsDir) {
+  const problems = [];
+  for (const f of readdirSync(srcDir)) {
+    if (!f.endsWith('.css') || f.startsWith('_')) continue;
+    const name = f.slice(0, -4);
+    const contract = contractParts(name, contractsDir);
+    if (!contract) {
+      problems.push(`${f}: no contract ${name}.contract.json`);
+      continue;
+    }
+    for (const p of checkAnatomy(cssParts(name, readFileSync(join(srcDir, f), 'utf8')), contract)) {
+      problems.push(`${f}: ${p}`);
+    }
+  }
+  return problems;
+}
+
 /**
  * @returns {{ file: string, content: string, warnings: string[] }}
  */
@@ -66,23 +83,18 @@ export function generate({ component, parts, srcDir, contractsDir, force = false
     throw new Error(`Invalid component name "${component}" (use kebab-case, e.g. date-picker).`);
   const fromContract = contractParts(name, contractsDir);
   const warnings = [];
-  let list = parts;
-  if (!list?.length) {
-    if (!fromContract)
-      throw new Error(`No --parts given and no contract at ${contractsDir}/${name}.contract.json.`);
-    list = fromContract;
-  } else if (fromContract) {
-    const problems = checkAnatomy(list, fromContract);
-    if (problems.length)
-      throw new Error(`Parts do not match the ${name} contract:\n  - ${problems.join('\n  - ')}`);
-  } else {
-    warnings.push(
-      `No contract for "${name}" yet: anatomy-name check skipped (FOLLOW-UP W1-301). Re-run the check once the contract lands.`,
+  if (!fromContract) {
+    throw new Error(
+      `No contract at ${contractsDir}/${name}.contract.json. Create the contract (anatomy[].part) first.`,
     );
   }
+  const list = parts?.length ? parts : fromContract;
   for (const p of list)
     if (!NAME.test(p)) throw new Error(`Invalid part name "${p}" (use kebab-case).`);
   if (new Set(list).size !== list.length) throw new Error('Duplicate part names.');
+  const problems = checkAnatomy(list, fromContract);
+  if (problems.length)
+    throw new Error(`Parts do not match the ${name} contract:\n  - ${problems.join('\n  - ')}`);
   const file = join(srcDir, `${name}.css`);
   if (existsSync(file) && !force) throw new Error(`${file} exists. Pass --force to overwrite.`);
   const content = render(readFileSync(join(here, 'component.css.tpl'), 'utf8'), {
