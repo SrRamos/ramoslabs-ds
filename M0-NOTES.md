@@ -28,6 +28,11 @@ ADR-002, ADR-009, ADR-011, ADR-013 (architecture branch, read-only).
   so Turbo skips it. The site's `lint` runs its existing stylelint config.
 - **Placeholders are loud.** `contracts:check` (W1-301) and `evidence:check` (W1-317) print
   "not implemented yet (owned by W1-xxx)" and exit 0 through `scripts/pending-check.mjs`.
+  Both fail once a contract (`packages/contracts/contracts/*.contract.json`) exists. `evidence:check`
+  first watched `docs/architecture/evidence/at-support/*.json` (G0 SHOULD-3), but the plan has the
+  research peer land that registry before W1-317, and W1-317 only checks registry entries a
+  contract uses. With the registry on `main` and no contract, that glob turned `main` red with
+  nothing to verify. A contract is the first input W1-317 can check.
 - **Rule semantics chosen for ambiguous boundary rules (W1-006):**
   rule 3 "public primitives" = a sibling preset, `../primitives`, or exactly one segment below it,
   or a bare package specifier that is not a deep `src`/`internal`/`runtime` path;
