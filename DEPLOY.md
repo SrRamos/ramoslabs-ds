@@ -67,7 +67,10 @@ Cloudflare rebuilds and redeploys on every push to the production branch. The Wo
 `ramoslabs-ds` is connected to `SrRamos/ramoslabs-ds` (production branch `main`). Configure its
 build in the dashboard → the `ramoslabs-ds` Worker → **Settings → Build**:
 
-- **Build command:** `bun install && bun run build --filter=site`
+- **Build command:** `git fetch --unshallow || true; bun install && bun run build --filter=site`
+  (the leading `git fetch --unshallow` gives the build the full history: sitemap `lastmod` and
+  JSON-LD `dateModified` are read from `git log`. On a shallow clone they are omitted rather
+  than wrong. `|| true` keeps the build going when the clone is already complete.)
 - **Deploy command:** `npx wrangler deploy`
 - **Root directory:** (repo root, blank)
 - **Version control:** production branch `main`
@@ -140,6 +143,16 @@ curl -sS  $BASE/ -o /dev/null -w '%{http_code}\n'         # 200 (Introduction, r
 curl -sS $BASE/mcp -X POST -H 'content-type: application/json' \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | grep -o '"name"' | wc -l   # 7
 ```
+
+Markdown twins and negotiation (expect `text/markdown`, a `Link` header, and `Vary: Accept`):
+
+```
+curl -sSI $BASE/foundations/colors.md | grep -i 'content-type'            # text/markdown; charset=utf-8
+curl -sSI $BASE/foundations/colors/   | grep -i -E '^(link|vary):'        # rel="alternate"; type="text/markdown"
+curl -sS  $BASE/foundations/colors/ -H 'Accept: text/markdown' | head -3  # "# Colors"
+```
+
+After the deploy is live, notify IndexNow engines (see `docs/INDEXNOW.md`): `bun run indexnow -- --submit`.
 
 Confirm `llms.txt` links point at clean `$BASE/...` URLs and `sitemap-index.xml` resolves.
 
