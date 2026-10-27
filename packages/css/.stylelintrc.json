@@ -1,0 +1,12 @@
+{
+  "extends": ["../../.stylelintrc.json"],
+  "plugins": ["../testing/lint/stylelint/index.js"],
+  "rules": {
+    "sj/no-raw-color": true,
+    "sj/no-raw-px": true,
+    "sj/no-raw-duration": true,
+    "sj/no-outline-none": true,
+    "sj/no-remote-url": true,
+    "sj/logical-properties": true
+  }
+}

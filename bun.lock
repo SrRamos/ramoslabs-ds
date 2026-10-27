@@ -78,7 +78,10 @@
       "name": "@ramoslabs/css",
       "version": "0.0.0",
       "devDependencies": {
+        "@ramoslabs/testing": "workspace:*",
         "@ramoslabs/tokens": "workspace:*",
+        "playwright": "1.64.1",
+        "postcss": "8.5.16",
         "vitest": "5.0.5",
       },
       "peerDependencies": {
