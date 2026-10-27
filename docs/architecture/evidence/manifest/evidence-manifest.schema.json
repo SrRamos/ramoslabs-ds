@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RamosLabs evidence manifest (ADR-013)",
+  "description": "Internal reproducible record per release. Not an external WCAG certification. Every field of ADR-013 is required; unrun checks carry status 'not run' with a reason, never a silent omission.",
+  "type": "object",
+  "required": [
+    "specVersion",
+    "sourceRevision",
+    "toolVersions",
+    "environmentMatrix",
+    "caseTotals",
+    "axeScope",
+    "visualBaselineRevision",
+    "atResults",
+    "evidenceRegistrySnapshot",
+    "knownUpstreamIssues",
+    "performanceTraces",
+    "bcdDatasetVersion",
+    "signer",
+    "date"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "specVersion": { "type": "string", "minLength": 1 },
+    "sourceRevision": { "type": "string", "minLength": 1 },
+    "toolVersions": {
+      "type": "object",
+      "description": "Tool name to exact pinned version.",
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "environmentMatrix": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/environment" }
+    },
+    "caseTotals": {
+      "type": "object",
+      "required": ["executed", "passed", "failed", "notApplicable"],
+      "additionalProperties": false,
+      "properties": {
+        "executed": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "notApplicable": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["case", "reason"],
+            "additionalProperties": false,
+            "properties": {
+              "case": { "type": "string", "minLength": 1 },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "axeScope": { "type": "string", "minLength": 1 },
+    "visualBaselineRevision": { "type": "string", "minLength": 1 },
+    "atResults": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/atResult" }
+    },
+    "evidenceRegistrySnapshot": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/registryRef" }
+    },
+    "knownUpstreamIssues": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "performanceTraces": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "bcdDatasetVersion": { "type": "string", "minLength": 1 },
+    "signer": { "type": "string", "minLength": 1 },
+    "date": { "type": "string", "format": "date" }
+  },
+  "$defs": {
+    "status": {
+      "type": "string",
+      "enum": ["run", "not run", "unavailable"]
+    },
+    "environment": {
+      "type": "object",
+      "required": ["id", "platform", "browser", "browserVersion", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "platform": { "type": "string", "minLength": 1 },
+        "osVersion": { "type": ["string", "null"] },
+        "browser": { "type": "string", "minLength": 1 },
+        "browserVersion": { "type": ["string", "null"] },
+        "device": { "type": ["string", "null"] },
+        "deviceBuild": { "type": ["string", "null"] },
+        "autoUpdate": { "type": ["boolean", "null"] },
+        "status": { "$ref": "#/$defs/status" },
+        "reason": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "run" } } },
+          "then": { "not": { "required": ["reason"] } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "not run" } } },
+          "then": { "required": ["reason"] }
+        },
+        {
+          "if": { "properties": { "status": { "const": "unavailable" } } },
+          "then": { "required": ["reason"] }
+        }
+      ]
+    },
+    "atResult": {
+      "type": "object",
+      "required": ["pattern", "at", "atVersion", "platform", "test_status"],
+      "additionalProperties": false,
+      "properties": {
+        "pattern": { "type": "string", "minLength": 1 },
+        "at": { "type": "string", "enum": ["VoiceOver", "NVDA", "JAWS", "TalkBack", "Narrator"] },
+        "atVersion": { "type": ["string", "null"] },
+        "platform": { "type": "string", "minLength": 1 },
+        "test_status": {
+          "type": "string",
+          "enum": ["tested-real", "evidence-only", "pending-real-test", "not run"]
+        },
+        "tested_on": { "type": ["string", "null"], "format": "date" },
+        "log": { "type": ["string", "null"], "description": "Issue log or session log reference." },
+        "reason": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "test_status": { "const": "tested-real" } } },
+          "then": { "required": ["tested_on", "log"] }
+        },
+        {
+          "if": { "properties": { "test_status": { "const": "not run" } } },
+          "then": { "required": ["reason"] }
+        }
+      ]
+    },
+    "registryRef": {
+      "type": "object",
+      "required": ["ref", "test_status", "next_review"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+\\.json#[a-z0-9-]+$",
+          "description": "Entry reference in the form file#id (ADR-015)."
+        },
+        "test_status": {
+          "type": "string",
+          "enum": ["tested-real", "evidence-only", "pending-real-test"]
+        },
+        "next_review": { "type": "string", "format": "date" }
+      }
+    }
+  }
+}
