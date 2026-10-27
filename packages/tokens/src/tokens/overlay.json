@@ -1,0 +1,21 @@
+{
+  "overlay": {
+    "$type": "dimension",
+    "max-width": {
+      "$value": "24rem",
+      "$description": "384px. Cap on the inline size of a popover, tooltip or listbox panel."
+    },
+    "max-height": {
+      "$value": "20rem",
+      "$description": "320px. Cap on the block size of a listbox or popover panel before it scrolls."
+    },
+    "dialog-max-width": {
+      "$value": "32rem",
+      "$description": "512px. Cap on the inline size of a modal dialog."
+    },
+    "viewport-margin": {
+      "$value": "{space.4}",
+      "$description": "16px. Minimum distance an overlay keeps from the viewport edge."
+    }
+  }
+}

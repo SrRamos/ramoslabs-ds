@@ -10,8 +10,21 @@
       "persistent": true
     },
     "lint": {},
+    "format:check": {},
     "typecheck": {
       "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "test:e2e": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "size": {},
+    "test:coverage": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"]
     }
   }
 }

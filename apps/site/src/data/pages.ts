@@ -6,18 +6,18 @@
 // `contentFile` points at the distilled plain-text body under agentic/content, which
 // the agentic layer inlines for AI agents.
 
-export type PageGroup = 'root' | 'agents' | 'foundations' | 'patterns'
+export type PageGroup = 'root' | 'agents' | 'foundations' | 'patterns';
 
 export type Page = {
-  id: string
-  title: string
-  group: PageGroup
-  path: string
-  summary: string
-  icon: string // Material Symbols ligature, used by the sidebar
-  contentFile: string // relative to apps/site/agentic/content
-  interactive?: boolean // true if the page ships a JS island
-}
+  id: string;
+  title: string;
+  group: PageGroup;
+  path: string;
+  summary: string;
+  icon: string; // Material Symbols ligature, used by the sidebar
+  contentFile: string; // relative to apps/site/agentic/content
+  interactive?: boolean; // true if the page ships a JS island
+};
 
 export const SITE = {
   title: 'RamosLabs Design System',
@@ -28,7 +28,7 @@ export const SITE = {
   license: 'MIT',
   attribution:
     'RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.',
-} as const
+} as const;
 
 export const pages: Page[] = [
   {
@@ -268,15 +268,15 @@ export const pages: Page[] = [
       'The AI-content pattern: label generated output, communicate uncertainty, show generation states, keep a human in the loop, plan for wrong answers, one-tap feedback, and data disclosure, under a disclosed-bounded-checkable-reversible contract',
     contentFile: 'patterns/AIInsights.md',
   },
-]
+];
 
-export const rootPages = pages.filter((p) => p.group === 'root')
-export const agentsPages = pages.filter((p) => p.group === 'agents')
-export const foundationsPages = pages.filter((p) => p.group === 'foundations')
-export const patternsPages = pages.filter((p) => p.group === 'patterns')
-export const rootPage = pages.find((p) => p.group === 'root')!
+export const rootPages = pages.filter((p) => p.group === 'root');
+export const agentsPages = pages.filter((p) => p.group === 'agents');
+export const foundationsPages = pages.filter((p) => p.group === 'foundations');
+export const patternsPages = pages.filter((p) => p.group === 'patterns');
+export const rootPage = pages.find((p) => p.group === 'root')!;
 
 export function pageByPath(pathname: string): Page | undefined {
-  const normalized = pathname.endsWith('/') ? pathname : pathname + '/'
-  return pages.find((p) => p.path === normalized)
+  const normalized = pathname.endsWith('/') ? pathname : pathname + '/';
+  return pages.find((p) => p.path === normalized);
 }

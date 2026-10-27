@@ -1,0 +1,32 @@
+# Generated, vendored or owned by another toolchain.
+node_modules
+dist
+coverage
+.turbo
+.astro
+storybook-static
+bun.lock
+CHANGELOG.md
+llms.txt
+llms-full.txt
+registry.json
+robots.txt
+# Astro and MDX need prettier-plugin-astro / MDX tooling; not covered until adopted.
+**/*.astro
+**/*.mdx
+# Storybook and generated site files.
+apps/storybook
+apps/site/public
+apps/site/src/components/icons/icons.generated.ts
+# docs/ is owned by the architecture branch, which owns its formatting.
+docs
+# Fixtures that must contain seeded violations.
+**/fixtures
+# Token source is generated-adjacent; kept byte-stable.
+packages/tokens/README.md
+packages/tokens/src/tokens
+# Site doctrine content and Vue SFCs are not TypeScript; only site .ts is formatted here.
+apps/site/agentic/content
+apps/site/agentic/CONTRACT.md
+**/*.vue
+AUDIT-*.md

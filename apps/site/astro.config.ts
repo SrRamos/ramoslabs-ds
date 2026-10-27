@@ -1,7 +1,7 @@
-import { defineConfig } from 'astro/config'
-import vue from '@astrojs/vue'
-import sitemap from '@astrojs/sitemap'
-import { agentic } from './agentic/integration'
+import { defineConfig } from 'astro/config';
+import vue from '@astrojs/vue';
+import sitemap from '@astrojs/sitemap';
+import { agentic } from './agentic/integration';
 
 // The public documentation site for the RamosLabs Design System.
 // Static output, one real HTML file per clean URL. Deployed to Cloudflare Pages
@@ -20,4 +20,4 @@ export default defineConfig({
     sitemap({ filter: (page) => !page.includes('/metricas') }),
     agentic(),
   ],
-})
+});

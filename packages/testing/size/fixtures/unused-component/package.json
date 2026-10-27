@@ -1,0 +1,6 @@
+{
+  "name": "size-fixture-unused-component",
+  "private": true,
+  "type": "module",
+  "sideEffects": false
+}

@@ -40,9 +40,14 @@
   "scripts": {
     "build": "style-dictionary build --config style-dictionary.config.mjs",
     "clean": "rm -rf dist",
-    "prepack": "style-dictionary build --config style-dictionary.config.mjs"
+    "prepack": "style-dictionary build --config style-dictionary.config.mjs",
+    "lint": "eslint .",
+    "format:check": "prettier --check . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
-    "style-dictionary": "^5.5.0"
+    "style-dictionary": "^5.5.0",
+    "vitest": "5.0.5"
   }
 }

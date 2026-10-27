@@ -9,7 +9,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint:css": "stylelint \"src/**/*.{astro,vue,css}\""
+    "lint:css": "stylelint \"src/**/*.{astro,vue,css}\"",
+    "lint": "eslint . && bun run lint:css",
+    "format:check": "prettier --check . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore"
   },
   "dependencies": {
     "@ramoslabs/tokens": "workspace:*",
