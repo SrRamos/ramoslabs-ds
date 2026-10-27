@@ -87,9 +87,9 @@ WebFetch https://design.ramoslabs.com/registry.json
 
 Two higher-leverage ways to consume it as an agent:
 
-- **MCP server** at `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` (mirror of
-  `https://design.ramoslabs.com/mcp`; prefer the `workers.dev` host, which is not behind Bot
-  Fight Mode) — the DS as typed tools (`search_tokens`, `get_token`, `check_contrast`,
+- **MCP server** at `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` (the same Worker as
+  `https://design.ramoslabs.com/mcp`; keep the `workers.dev` host as the fallback, see
+  [`docs/MCP.md`](./docs/MCP.md)) — the DS as typed tools (`search_tokens`, `get_token`, `check_contrast`,
   `list_docs`, `get_doc`, `lint_css`, `get_agents_guide`). See [`docs/MCP.md`](./docs/MCP.md).
 - **Agent skill** (Claude Code) at [`.claude/skills/ramoslabs-ds/SKILL.md`](./.claude/skills/ramoslabs-ds/SKILL.md)
   (also served at `/skill.md`) — makes an agent build/review strictly by this system, never

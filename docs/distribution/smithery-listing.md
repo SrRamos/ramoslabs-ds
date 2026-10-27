@@ -7,7 +7,7 @@ about their UI.
 - **Name:** RamosLabs Design System
 - **Qualified name suggestion:** `ramoslabs-ds`
 - **Server URL (Streamable HTTP, no auth):** `https://design.ramoslabs.com/mcp`
-  (mirror without zone bot protection: `https://ramoslabs-ds.edwardramosp.workers.dev/mcp`)
+  (same Worker on a separate hostname: `https://ramoslabs-ds.edwardramosp.workers.dev/mcp`)
 - **Homepage:** https://design.ramoslabs.com/agents/mcp/
 - **Repository:** https://github.com/SrRamos/ramoslabs-ds
 - **License:** MIT

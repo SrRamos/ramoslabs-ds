@@ -10,21 +10,18 @@ Facts used throughout:
 - robots.txt: `https://design.ramoslabs.com/robots.txt` (welcomes search and AI crawlers, declares `Content-Signal`)
 - DNS and the zone `ramoslabs.com` live in Cloudflare.
 
-## 0. First, make sure crawlers can reach the site (Cloudflare)
+## 0. Check that crawlers can reach the site (Cloudflare), and keep checking
 
-`docs/MCP.md` records that the zone's **Bot Fight Mode** blocks server-side fetchers. A
-robots.txt that says "welcome" is useless if the edge answers 403 to the crawler. Do this
-before submitting anything to search engines.
+A robots.txt that says "welcome" does nothing if the edge answers 403 or a challenge to the
+crawler. As of 2026-10-27 a cloud `WebFetch` to `llms.txt` and to a docs page returned content
+with no challenge (see `docs/MCP.md`), so this is a **review to monitor**, not a blocker.
 
-1. Cloudflare dashboard, zone `ramoslabs.com`, **Security**, **Bots**.
-2. Decide on **Bot Fight Mode**. Turning it off lets cloud-hosted AI fetchers and the
-   `/mcp` endpoint through on the branded domain. If you keep it on, expect AI assistants that
-   fetch from cloud IPs to get a 403, and keep recommending the `workers.dev` MCP URL.
-3. If a **Block AI bots** (or similar "AI Scrapers and Crawlers") control exists, set it to
-   **Allow**. The robots.txt welcomes AI ingestion; a block here contradicts it.
-4. If a **managed robots.txt** feature is enabled for the zone, check which robots.txt is
-   actually served (step 5). The managed block can add its own `Disallow` rules.
-5. Verify from your terminal, comparing status codes:
+1. Cloudflare dashboard, zone `ramoslabs.com`, **Security**, **Bots**. Note the current state of
+   **Bot Fight Mode** and of any **Block AI bots** / "AI Scrapers and Crawlers" control. If a
+   control blocks AI bots, set it to **Allow**, because robots.txt welcomes them.
+2. If a **managed robots.txt** feature is enabled for the zone, check which robots.txt is actually
+   served (step 3). A managed block can add its own `Disallow` rules.
+3. Compare status codes from your terminal:
 
    ```
    curl -s -o /dev/null -w "%{http_code}\n" https://design.ramoslabs.com/robots.txt
@@ -33,13 +30,13 @@ before submitting anything to search engines.
    curl -s -o /dev/null -w "%{http_code}\n" -A "Mozilla/5.0 (compatible; bingbot/2.0)" https://design.ramoslabs.com/
    ```
 
-   Expect 200. Note that a spoofed user agent from your own IP is not the real crawler, so a
-   200 here proves the rules, not that the real bot is verified. Use step 6 for real traffic.
-6. **AI Crawl Control** (in the dashboard sidebar, formerly "AI Audit"): open it and review
+   Expect 200. A spoofed user agent from your own IP is not the real crawler, so a 200 proves the
+   rules, not that the real bot is verified. Use step 4 for real traffic.
+4. **AI Crawl Control** (in the dashboard sidebar, formerly "AI Audit"): open it and review
    - which crawlers hit the site and how many requests each made,
    - per-crawler **Allow** or **Block** (every crawler listed in robots.txt should be Allow),
    - any robots.txt violations or blocked requests it reports.
-   Check it again 7 days after the changes land.
+   Check it again 7 days after the changes land, and after any change to the zone's Security settings.
 
 ## 1. Google Search Console
 

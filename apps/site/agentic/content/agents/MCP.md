@@ -27,7 +27,7 @@ Claude Code: `claude mcp add --transport http ramoslabs-ds https://ramoslabs-ds.
 
 Other MCP clients (Cursor, Windsurf, …): add a server entry with the URL `https://ramoslabs-ds.edwardramosp.workers.dev/mcp` and transport `http`. The agent then has `search_tokens`, `check_contrast`, `lint_css`, and the rest as first-class tools — no WebFetch, no HTML interpretation, no invented values.
 
-Both hosts serve the same server. Prefer the `workers.dev` endpoint above: the branded `https://design.ramoslabs.com/mcp` sits behind Bot Fight Mode, which can block cloud-hosted agents, while the `workers.dev` mirror always answers.
+Both hosts serve the same server. Use the branded `https://design.ramoslabs.com/mcp`; if a cloud-hosted client is ever blocked there, the `workers.dev` endpoint above answers on a separate hostname.
 
 ## Quick check
 

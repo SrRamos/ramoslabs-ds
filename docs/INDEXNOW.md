@@ -32,7 +32,7 @@ job that runs after the deploy, or by hand. It needs no secrets.
 
 ## Notes
 
-- If Cloudflare Bot Fight Mode blocks the engines, they cannot fetch the key file and the
-  submission is rejected. See `docs/distribution/SEARCH-CONSOLES.md`, section 0.
+- If a Cloudflare bot setting ever blocks the engines, they cannot fetch the key file and the
+  submission is rejected. `docs/distribution/SEARCH-CONSOLES.md`, section 0, has the checks.
 - Submitting unchanged URLs is allowed but wasteful. The sitemap carries `lastmod`, so a future
   refinement can send only pages whose `lastmod` is newer than the last run.

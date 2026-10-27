@@ -7,8 +7,8 @@ publish needs explicit approval from the owner. Check a box only when it has act
 
 ### Official MCP Registry
 - [ ] Review `server.json` (name `io.github.SrRamos/ramoslabs-ds`, version, description <= 100 chars).
-- [ ] Confirm `https://design.ramoslabs.com/mcp` answers a `tools/list` call from outside the
-      zone (Bot Fight Mode must allow it; otherwise point `remotes[].url` at the workers.dev mirror).
+- [ ] Confirm `https://design.ramoslabs.com/mcp` answers a `tools/list` call from a cloud client
+      (it did on 2026-10-27; see `docs/MCP.md`). If it ever does not, point `remotes[].url` at the workers.dev host.
 - [ ] `brew install mcp-publisher`, then from this folder: `mcp-publisher login github` and
       `mcp-publisher publish` (GitHub login must be the `SrRamos` account for the `io.github.SrRamos/` prefix).
 - [ ] Verify: `curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.SrRamos/ramoslabs-ds"`.
