@@ -44,3 +44,12 @@ No ADR-011 ceiling for this entry.
 - `packages/react/package.json`: dependency `@ramoslabs/core` (workspace), devDependencies `react`, `react-dom`,
   `react-test-renderer` 19.3.1 and their `@types`. `bun.lock` regenerated. OPEN: ARCHITECTURE lists the react package's
   runtime deps as "peer react" only; whether core is a dependency or bundled into the adapter is undecided.
+
+## G1 fixes (audit AUDIT-G1, branch feature/g1-fix-adapters)
+- MUST-1: `useMachine` bumps a `useReducer` tick from the store `onEffects`, so an effect-only dispatch (state reference unchanged) still commits and drains layout and passive effects. Seeded: effect-only `fx` event in `runtime.test.ts`.
+- SHOULD-1: `SJProvider` and the outside-provider fallback create the runtime with `target: 'client'` (an explicit `target` still wins). The server render never reads the scheduler. Seeded: scheduler has no `advance`.
+- SHOULD-5: the layout-effect corrective uses `correctiveVersion(inst.version)` from `@ramoslabs/core/effects` (was `version + 0.5`).
+- MUST-3: `createDomLiveHost` applies `HIDDEN_STYLE` from `@ramoslabs/core/live` (now one string shared by all three hosts; it adds the `clip` fallback to the old React value).
+- NICE-7: `dev.ts` removed; the dev guard is inline in `provider.ts` (K2 convention).
+- Shared-file note: `packages/testing/{probe/adapters.test.js,text-safety/host/entry.ts,e2e/runner/host/entry.ts}` built a vanilla host on a server-default (fake) runtime; each now passes `target: 'client'` (needed by the SHOULD-1 dev throw, and it was the same latent bug).
+- Core: `correctiveVersion(last) = last + 1` (strictly newer, so a corrective supersedes a same-batch reducer effect of the same type+target; seeded once in `effects.test.ts`).

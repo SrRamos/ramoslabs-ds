@@ -3,7 +3,8 @@ import { createRenderer, defineComponent, h, nextTick, type Component } from 'vu
 import fc from 'fast-check';
 import { createStore, type Reducer } from '@ramoslabs/core/store';
 import type { DrainHost, Effect, EffectInput } from '@ramoslabs/core/effects';
-import type { LiveHost } from '@ramoslabs/core/live';
+import { HIDDEN_STYLE, type LiveHost } from '@ramoslabs/core/live';
+import { createDomLiveHost } from './dom';
 import { createRuntime } from '@ramoslabs/core/runtime';
 import { SJProvider, useSJContext, useSJRuntime, useSJStore, type SJStore } from './index';
 
@@ -347,5 +348,35 @@ describe('useSJStore bridge', () => {
         return listeners === 0 && out.api.queue.size === 0;
       }),
     );
+  });
+});
+
+describe('client scheduler default (G1 SHOULD-1)', () => {
+  it('SJProvider config without target and the outside-provider fallback use platform timers', () => {
+    const seen: object[] = [];
+    const Child = defineComponent({
+      setup() {
+        seen.push(useSJRuntime().scheduler);
+        return () => h('i');
+      },
+    });
+    mount(Child, { config: { locale: 'es' } }).unmount();
+    const bare = createApp({ render: () => h(Child) });
+    bare.mount(mk('root'));
+    bare.unmount();
+    expect(seen).toHaveLength(2);
+    for (const sc of seen) expect('advance' in sc).toBe(false);
+  });
+});
+
+describe('live host (G1 MUST-3)', () => {
+  it('default DOM host hides its nodes inline, without a stylesheet', () => {
+    const attrs: Record<string, string> = {};
+    const doc = {
+      body: { appendChild: () => undefined },
+      createElement: () => ({ setAttribute: (k: string, v: string) => (attrs[k] = v) }),
+    } as unknown as Document;
+    createDomLiveHost(doc).create('status');
+    expect(attrs.style).toBe(HIDDEN_STYLE);
   });
 });

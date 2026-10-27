@@ -3,7 +3,8 @@ import { createElement, Fragment, StrictMode, act, type ReactNode } from 'react'
 import { create, type ReactTestRenderer } from 'react-test-renderer';
 import { renderToString } from 'react-dom/server';
 import { createFakeScheduler, createRuntime } from '@ramoslabs/core/runtime';
-import type { LiveHost, LiveNode, LiveRole } from '@ramoslabs/core/live';
+import { HIDDEN_STYLE, type LiveHost, type LiveNode, type LiveRole } from '@ramoslabs/core/live';
+import { createDomLiveHost } from './live-host';
 import { SJProvider, useMachine, useRuntime } from './index';
 import type { AnnounceEffect, Machine } from './index';
 import type { Reducer } from '@ramoslabs/core/store';
@@ -13,11 +14,19 @@ import type { Reducer } from '@ramoslabs/core/store';
 interface S {
   open: boolean;
 }
-type E = { type: 'set'; open: boolean } | { type: 'noop' };
+type E = { type: 'set'; open: boolean } | { type: 'noop' } | { type: 'fx' };
 type X = { type: 'open' | 'focus' | 'geometry'; target?: string };
 
 const reduce: Reducer<S, E, X | AnnounceEffect> = (s, e) => {
   if (e.type === 'noop') return { state: s };
+  if (e.type === 'fx')
+    return {
+      state: s,
+      effects: [
+        { type: 'focus', target: 't' },
+        { type: 'announce', text: 'End of list' },
+      ],
+    };
   return {
     state: s.open === e.open ? s : { open: e.open },
     effects: [
@@ -120,6 +129,21 @@ describe('SJProvider / useMachine (W1-120)', () => {
     expect(p.log).toEqual(['open:1', 'focus:1']);
     sched.flush();
     expect(host.texts).toEqual(['Opened']);
+  });
+
+  it('G1 MUST-1: an effect-only dispatch (state unchanged) drains layout and passive effects', () => {
+    const host = new FakeHost();
+    const sched = createFakeScheduler();
+    const W = wrap(host, sched);
+    const p = newProbe();
+    const C = makeComp(p);
+    mount(createElement(W, null, createElement(C)));
+    const before = p.m.state;
+    act(() => p.m.dispatch({ type: 'fx' }));
+    expect(p.m.state).toBe(before);
+    expect(p.log).toEqual(['focus:1']);
+    sched.flush();
+    expect(host.texts).toEqual(['End of list']);
   });
 
   it('render performs no effects: run is never called while rendering', () => {
@@ -361,4 +385,31 @@ describe('retention: 1,000 mount/unmount cycles (L2 invariant)', () => {
     const alive = refs.filter((r) => r.deref() !== undefined).length;
     expect(alive).toBeLessThanOrEqual(2); // allow the last couple of fibers React may defer
   }, 60_000);
+});
+
+describe('client scheduler default (G1 SHOULD-1)', () => {
+  const isFake = (s: object) => 'advance' in s;
+  it('SJProvider without target and the outside-provider fallback use platform timers', () => {
+    const seen: object[] = [];
+    function Probe() {
+      seen.push(useRuntime().scheduler);
+      return null;
+    }
+    mount(createElement(Probe));
+    mount(createElement(SJProvider, { liveHost: () => new FakeHost() }, createElement(Probe)));
+    expect(seen).toHaveLength(2);
+    for (const s of seen) expect(isFake(s)).toBe(false);
+  });
+});
+
+describe('live host (G1 MUST-3)', () => {
+  it('default DOM host hides its nodes inline, without a stylesheet', () => {
+    const attrs: Record<string, string> = {};
+    const doc = {
+      body: { appendChild: () => undefined },
+      createElement: () => ({ setAttribute: (k: string, v: string) => (attrs[k] = v) }),
+    } as unknown as Document;
+    createDomLiveHost(doc).create('status');
+    expect(attrs.style).toBe(HIDDEN_STYLE);
+  });
 });

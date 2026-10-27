@@ -1,7 +1,13 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { createStore } from '../store';
-import { EFFECT_ORDER, createEffectQueue, type Effect, type EffectInput } from './index';
+import {
+  EFFECT_ORDER,
+  correctiveVersion,
+  createEffectQueue,
+  type Effect,
+  type EffectInput,
+} from './index';
 
 const types = ['open', 'close', 'focus', 'geometry', 'announce', 'other'] as const;
 const targets = ['a', 'b', 'c', undefined] as const;
@@ -18,6 +24,16 @@ function load(batch: EffectInput[]) {
 }
 
 describe('effects (W1-104, ADR-003, ADR-013 L1)', () => {
+  it('G1 SHOULD-5: a corrective supersedes a same-batch reducer effect of the same type+target', () => {
+    const q = createEffectQueue();
+    q.enqueue([{ type: 'focus', target: 't' }], 7);
+    q.enqueue([{ type: 'focus', target: 't' }], correctiveVersion(7));
+    const ran: Effect[] = [];
+    q.drain({ run: (e) => ran.push(e) }, 'layout');
+    expect(ran.map((e) => e.version)).toEqual([8]);
+    expect(correctiveVersion(7)).toBeGreaterThan(7);
+  });
+
   it('property: no stale effect runs; only the newest per type+target survives', () => {
     fc.assert(
       fc.property(arbBatch, (batch) => {

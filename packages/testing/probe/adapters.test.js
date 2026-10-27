@@ -61,7 +61,7 @@ async function mountVanilla(props) {
   const host = document.body.appendChild(document.createElement('div'));
   const el = host.appendChild(document.createElement('button'));
   let n = 0;
-  const h2 = createHost(createRuntime({ idFactory: () => `p${n++}` }));
+  const h2 = createHost(createRuntime({ target: 'client', idFactory: () => `p${n++}` }));
   const inst = mountProbe(h2, el, { ...props, label: 'Label' });
   mounted.push(() => h2.destroy());
   return { host, update: (p) => inst.update({ ...p, label: 'Label' }) };

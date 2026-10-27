@@ -98,7 +98,9 @@ function mountVanilla(container: HTMLElement, label: string, mode: Mode): Mounte
     return { destroy: () => el.remove() };
   }
   let n = 0;
-  const host: VanillaHost = createHost(createRuntime({ idFactory: () => `ts-${n++}` }));
+  const host: VanillaHost = createHost(
+    createRuntime({ target: 'client', idFactory: () => `ts-${n++}` }),
+  );
   mountProbe(host, el, { label });
   return { destroy: () => host.destroy() };
 }

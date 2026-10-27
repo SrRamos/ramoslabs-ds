@@ -1,3 +1,4 @@
+import { HIDDEN_STYLE } from '@ramoslabs/core/live';
 import { createRuntime, createFakeScheduler, type FakeScheduler } from '@ramoslabs/core/runtime';
 import { describe, expect, it, vi } from 'vitest';
 import {
@@ -40,7 +41,7 @@ function setup(over: Partial<ComponentSpec<S, E, Record<string, unknown>, X>> = 
   const sched: FakeScheduler = createFakeScheduler();
   let n = 0;
   const runtime = createRuntime({ scheduler: sched, idFactory: () => `id${n++}` });
-  const host = createHost(runtime, { liveHost: noopLive });
+  const host = createHost(runtime, { liveHost: noopLive, allowFakeScheduler: true });
   const log: string[] = [];
   const spec: ComponentSpec<S, E, Record<string, unknown>, X> = {
     initial: () => ({ open: false, count: 0 }),
@@ -109,7 +110,11 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
   it('uses the injected idFactory, explicit id wins, prefix applies; missing source throws', () => {
     const sched = createFakeScheduler();
     const rt = createRuntime({ scheduler: sched, idPrefix: 'p-' });
-    const h = createHost(rt, { liveHost: noopLive, idFactory: () => 'gen' });
+    const h = createHost(rt, {
+      liveHost: noopLive,
+      idFactory: () => 'gen',
+      allowFakeScheduler: true,
+    });
     const t = setup();
     const a = el();
     h.mount(a, t.spec, {});
@@ -117,7 +122,7 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     const b = el();
     h.mount(b, t.spec, { id: 'mine' });
     expect(b.textContent).toBe('mine|0');
-    const bare = createHost(rt, { liveHost: noopLive });
+    const bare = createHost(rt, { liveHost: noopLive, allowFakeScheduler: true });
     expect(() => bare.mount(el(), t.spec, {})).toThrow(/idFactory/);
   });
 
@@ -193,6 +198,26 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     expect(corrective).toBe(true);
   });
 
+  it('G1 MUST-1: an effect-only dispatch (state unchanged) drains without a later change', () => {
+    const t = setup({
+      reduce: (s) => ({ state: s, effects: [{ type: 'focus', target: 'p' }] }),
+    });
+    const e = el();
+    let ctxRef!: Parameters<NonNullable<typeof t.spec.attach>>[0];
+    t.host.mount(e, { ...t.spec, attach: (c) => (ctxRef = c) }, {});
+    t.sched.flush();
+    t.log.length = 0;
+    ctxRef.dispatch({ type: 'inc' });
+    t.sched.flush();
+    expect(t.log).toEqual(['run:focus']);
+  });
+
+  it('G1 SHOULD-1: createHost throws in development on a fake scheduler, accepts the platform one', () => {
+    const fake = createRuntime({ scheduler: createFakeScheduler() });
+    expect(() => createHost(fake)).toThrow(/platform scheduler/);
+    expect(() => createHost(createRuntime({ target: 'client' }))).not.toThrow();
+  });
+
   it('update re-patches synchronously and surfaces an ownership switch', () => {
     const t = setup();
     const e = el();
@@ -211,7 +236,7 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     };
     const sched = createFakeScheduler();
     const rt = createRuntime({ scheduler: sched, idFactory: () => 'x' });
-    const host = createHost(rt, { liveHost: lh });
+    const host = createHost(rt, { liveHost: lh, allowFakeScheduler: true });
     const t = setup();
     const a = el();
     const b = el();
@@ -240,7 +265,9 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
       },
     };
     const sched = createFakeScheduler();
-    const host = createHost(createRuntime({ scheduler: sched, idFactory: () => 'x' }));
+    const host = createHost(createRuntime({ scheduler: sched, idFactory: () => 'x' }), {
+      allowFakeScheduler: true,
+    });
     const t = setup();
     const e = el();
     (e as unknown as { ownerDocument: unknown }).ownerDocument = doc;
@@ -249,6 +276,7 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     expect((children[0] as { attrs: Record<string, string> }).attrs).toMatchObject({
       role: 'status',
       'aria-live': 'polite',
+      style: HIDDEN_STYLE,
     });
     host.destroy();
     expect((children[0] as { remove: ReturnType<typeof vi.fn> }).remove).toHaveBeenCalled();

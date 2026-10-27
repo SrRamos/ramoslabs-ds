@@ -3,6 +3,14 @@
 // and never a second announcement of an active-descendant move. The host (adapter) owns the DOM.
 import type { Scheduler } from '../runtime';
 
+/**
+ * Visually hidden yet exposed to assistive tech. Inline because adapters never import CSS
+ * (ADR-002) and a live region must not depend on a stylesheet being present. One value for all
+ * three hosts (G1 MUST-3).
+ */
+export const HIDDEN_STYLE =
+  'position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0';
+
 export type LiveRole = 'status' | 'alert';
 export interface LiveNode {
   setText(text: string): void;

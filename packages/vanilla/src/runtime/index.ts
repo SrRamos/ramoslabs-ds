@@ -9,6 +9,7 @@ import {
   type CorrectiveEffect,
 } from '@ramoslabs/core/controlled';
 import {
+  correctiveVersion,
   createEffectQueue,
   type Effect,
   type EffectInput,
@@ -16,6 +17,7 @@ import {
 } from '@ramoslabs/core/effects';
 import { baseId, itemId, partId } from '@ramoslabs/core/ids';
 import {
+  HIDDEN_STYLE,
   createLiveRegistry,
   type LiveHost,
   type LiveNode,
@@ -85,6 +87,8 @@ export interface HostOptions {
   idFactory?: () => string;
   /** Overrides how live-region nodes are created; default appends hidden divs to the document body. */
   liveHost?: LiveHost;
+  /** Tests and SSR harnesses that deliberately drive a fake scheduler. */
+  allowFakeScheduler?: boolean;
 }
 
 export interface VanillaHost {
@@ -99,7 +103,7 @@ export interface VanillaHost {
   destroy(): void;
 }
 
-/** Light-DOM, text-only live node. `sj-sr-only` is the css stream's visually-hidden class. */
+/** Light-DOM, text-only live node. Hidden by the inline `HIDDEN_STYLE`; `sj-sr-only` stays as a hook. */
 function domLiveHost(doc: Document, made: Element[]): LiveHost {
   return {
     create(role: LiveRole): LiveNode {
@@ -107,7 +111,8 @@ function domLiveHost(doc: Document, made: Element[]): LiveHost {
       node.setAttribute('role', role);
       node.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
       node.setAttribute('aria-atomic', 'true');
-      node.className = 'sj-sr-only';
+      node.setAttribute('style', HIDDEN_STYLE);
+      node.className = 'sj-sr-only'; // styling hook only; hiding never depends on a stylesheet
       doc.body.appendChild(node);
       made.push(node);
       return { setText: (text) => void (node.textContent = text) };
@@ -120,11 +125,20 @@ export function setText(el: Node, text: string | number): void {
   el.textContent = String(text);
 }
 
-const dev = () => (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production');
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 /** One host per runtime: owns the live-region registry and the set of live instances. */
 export function createHost(runtime: SJRuntime, options: HostOptions = {}): VanillaHost {
+  // A fake scheduler's timers never fire in a browser: effects would never drain and the live
+  // region would never clear. Fail loudly in development (G1 SHOULD-1).
+  if (
+    !options.allowFakeScheduler &&
+    'advance' in runtime.scheduler &&
+    (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production')
+  )
+    throw new Error(
+      "[sj] createHost needs a platform scheduler: createRuntime({ target: 'client' }) (pass allowFakeScheduler for tests)",
+    );
   const live = createLiveRegistry(runtime.scheduler);
   const instances = new Set<{ destroy(): void }>();
   const nodes: Element[] = [];
@@ -166,6 +180,8 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
     const store: Store<S, E> = createStore<S, E, X>(spec.initial(props), spec.reduce, (fx, v) => {
       version = v;
       queue.enqueue(fx, v);
+      // The store listener fires only on a state change; an effect-only dispatch must still drain.
+      schedule();
     });
     const controlled = createControlled<S, E, P>({
       store,
@@ -184,7 +200,10 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
       props: () => props,
       view: () => controlled.view(),
       dispatch(event) {
-        if (queue.draining && dev())
+        if (
+          queue.draining &&
+          (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production')
+        )
           throw new Error('[sj] no synchronous re-dispatch from an effect (ADR-003)');
         store.dispatch(event);
       },
@@ -215,7 +234,7 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
 
     const flush = () => {
       if (dead) return;
-      queue.enqueue(controlled.reconcile(), version);
+      queue.enqueue(controlled.reconcile(), correctiveVersion(version));
       const host = {
         run: (e: Effect<X | CorrectiveEffect>) => spec.run?.(e, ctx),
         ...(spec.exists && { exists: (t: string) => spec.exists!(t, ctx) }),
