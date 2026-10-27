@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/pages'
+import { lastModifiedForPath } from '../data/lastmod'
 
 // Per-page <head>: SEO, canonical, OpenGraph/Twitter, JSON-LD, and font preloads.
 interface Props {
@@ -24,6 +25,8 @@ const ogImage = new URL('/og.png', site).href
 const isHome = path === '/'
 const fullTitle = isHome ? `${SITE.title} — Documentation` : `${title} · ${SITE.title}`
 
+const dateModified = lastModifiedForPath(path)
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': isHome ? 'WebSite' : 'TechArticle',
@@ -38,6 +41,7 @@ const jsonLd = {
         isPartOf: { '@type': 'WebSite', name: SITE.title, url: site.href },
       }),
   license: 'https://opensource.org/licenses/MIT',
+  ...(dateModified ? { dateModified } : {}),
 }
 ---
 <meta charset="utf-8" />
