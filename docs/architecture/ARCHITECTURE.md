@@ -800,9 +800,9 @@ schema violation or registry drift).
               { "at": "voiceover", "platform": "ios", "browser": "safari",
                 "test_status": "pending-real-test", "evidence": [] },
               { "at": "nvda", "platform": "windows", "browser": "chrome",
-                "test_status": "evidence-only", "evidence": ["at-support/select-only-combobox.json#nvda-chrome-apg"] },
+                "test_status": "evidence-only", "evidence": ["at-support/select-only-combobox.json#nvda-chrome-apg-select-only"] },
               { "at": "jaws", "platform": "windows", "browser": "chrome",
-                "test_status": "evidence-only", "evidence": ["at-support/select-only-combobox.json#jaws-chrome-apg"] },
+                "test_status": "evidence-only", "evidence": ["at-support/select-only-combobox.json#jaws-chrome-a11ysupport-haspopup"] },
               { "at": "talkback", "platform": "android", "browser": "chrome",
                 "test_status": "evidence-only", "evidence": ["at-support/select-only-combobox.json#talkback-chrome-apg2855"] }
             ] },
@@ -1141,7 +1141,7 @@ C. Evidence-based support: design from documented evidence for untested ATs, lab
 | `source_url`, `source_date`, `retrieved` | Primary link, the source's own date, and our retrieval date |
 | `source_tier` | `T1`, `T2` or `T3` (below) |
 | `decision` | Prose rationale for the design rule adopted because of this entry |
-| `constraints` | Computable form of the decision, in contract vocabulary: `{ focusStrategy?, listboxMount?, nativeOnTouch?, mustNot?: string[] }`, for example `{ listboxMount: { coarse: "inline" }, domAdjacent: true }`; the CI conflict check reads this, never `decision` |
+| `constraints` | Computable form of the decision, in contract vocabulary: `{ focusStrategy?, listboxMount?, nativeOnTouch?, domAdjacent?: boolean, mustNot?: string[] }`. `focusStrategy` takes exactly the ADR-006 values `roving | activedescendant | native | native-roving`; omit the key where no focus strategy applies (live regions). For example `{ listboxMount: { coarse: "inline" }, domAdjacent: true }`; the CI conflict check reads this, never `decision` |
 | `test_status` | `tested-real` (with `tested_on` and a log reference), `evidence-only`, or `pending-real-test` (in the real-test lane, not yet logged; treated as evidence-only by the honesty gate) |
 | `next_review` | Date, at most 6 months after `retrieved` |
 
@@ -1297,4 +1297,4 @@ product-level choices underpin the architecture; both are resolved:
 
 ---
 
-STATUS: REVISION-3-FOR-AUDIT
+STATUS: CERTIFIED (ds-fable, audits/AUDIT-combined-R2.md, 2026-10-27)
