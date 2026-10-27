@@ -7,8 +7,9 @@ interface Props {
   description: string
   path: string // clean path with trailing slash, e.g. '/foundations/colors/'
   ogType?: string
+  extraJsonLd?: Record<string, unknown>[] // additional schema.org blocks (FAQPage, HowTo)
 }
-const { title, description, path, ogType = 'website' } = Astro.props
+const { title, description, path, ogType = 'website', extraJsonLd = [] } = Astro.props
 
 // Client analytics config (GA4 + Microsoft Clarity), injected below as
 // window.RLDS_ANALYTICS_CONFIG. IDs are baked at build time from env, with the
@@ -75,3 +76,4 @@ const jsonLd = {
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+{extraJsonLd.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}

@@ -6,7 +6,7 @@
 // `contentFile` points at the distilled plain-text body under agentic/content, which
 // the agentic layer inlines for AI agents.
 
-export type PageGroup = 'root' | 'agents' | 'foundations' | 'patterns'
+export type PageGroup = 'root' | 'agents' | 'answers' | 'foundations' | 'patterns'
 
 export type Page = {
   id: string
@@ -17,6 +17,7 @@ export type Page = {
   icon: string // Material Symbols ligature, used by the sidebar
   contentFile: string // relative to apps/site/agentic/content
   interactive?: boolean // true if the page ships a JS island
+  nav?: string // short sidebar label when the title is long (question-led Answers pages)
 }
 
 export const SITE = {
@@ -72,6 +73,48 @@ export const pages: Page[] = [
     summary:
       'The Model Context Protocol server: seven typed, read-only tools (search_tokens, get_token, check_contrast, list_docs, get_doc, lint_css, get_agents_guide), how to connect each client, and why the tools verify rather than just install',
     contentFile: 'agents/MCP.md',
+  },
+
+  // ---- Answers (citable, question-led pages) ----
+  {
+    id: 'muted-text-token',
+    nav: 'Muted text token',
+    title: 'Which token should I use for muted text?',
+    group: 'answers',
+    path: '/answers/muted-text-token/',
+    icon: 'palette',
+    summary: 'The muted text token, its measured contrast, and where it fails',
+    contentFile: 'answers/muted-text-token.md',
+  },
+  {
+    id: 'indigo-contrast-wcag',
+    nav: 'Indigo contrast',
+    title: 'Is RamosLabs indigo (#4f46e5) WCAG accessible?',
+    group: 'answers',
+    path: '/answers/indigo-contrast-wcag/',
+    icon: 'contrast',
+    summary: 'Measured WCAG contrast of the indigo accent against white and its tints',
+    contentFile: 'answers/indigo-contrast-wcag.md',
+  },
+  {
+    id: 'install-tokens-vue-react-html',
+    nav: 'Install in Vue, React, HTML',
+    title: 'How do I install the RamosLabs design tokens in Vue, React, or plain HTML?',
+    group: 'answers',
+    path: '/answers/install-tokens-vue-react-html/',
+    icon: 'terminal',
+    summary: 'Copyable install and import steps for Vue, React, and plain HTML',
+    contentFile: 'answers/install-tokens-vue-react-html.md',
+  },
+  {
+    id: 'ramoslabs-ds-vs-material-vs-tailwind',
+    nav: 'vs Material and Tailwind',
+    title: 'RamosLabs DS vs Material Design vs Tailwind CSS: which should I use?',
+    group: 'answers',
+    path: '/answers/ramoslabs-ds-vs-material-vs-tailwind/',
+    icon: 'layers',
+    summary: 'An honest comparison: what each one is, what it ships, and when to choose it',
+    contentFile: 'answers/ramoslabs-ds-vs-material-vs-tailwind.md',
   },
 
   // ---- Foundations ----
@@ -272,6 +315,7 @@ export const pages: Page[] = [
 
 export const rootPages = pages.filter((p) => p.group === 'root')
 export const agentsPages = pages.filter((p) => p.group === 'agents')
+export const answersPages = pages.filter((p) => p.group === 'answers')
 export const foundationsPages = pages.filter((p) => p.group === 'foundations')
 export const patternsPages = pages.filter((p) => p.group === 'patterns')
 export const rootPage = pages.find((p) => p.group === 'root')!

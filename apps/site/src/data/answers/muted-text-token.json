@@ -1,0 +1,129 @@
+{
+  "id": "muted-text-token",
+  "title": "Which token should I use for muted text?",
+  "summary": "Use --color-text-muted (#64748b) for muted text on white, and switch to --color-text-secondary on indigo tinted surfaces.",
+  "short": "Use `var(--color-text-muted)` for muted text. It is #64748b (slate 500), which measures 4.76:1 on white and is the lightest color allowed for text on white. On `--color-primary-surface` (#eef2ff) it fails AA at 4.26:1, so use `var(--color-text-secondary)` there. Do not use `--color-text-disabled` or slate 400 for readable text.",
+  "sections": [
+    {
+      "heading": "The answer: --color-text-muted",
+      "body": [
+        "The muted text role is `--color-text-muted`, with the value #64748b (slate 500). On the white surface `--color-surface` (#ffffff) it measures 4.76:1, which passes WCAG 2.2 AA for normal text (4.5:1 minimum).",
+        "Slate 500 is the floor for muted text on white. Never use a color lighter than #64748b for text. Slate 400 (#94a3b8) measures 2.56:1 on white and fails, so it is not allowed for text.",
+        "Muted text has two known limits. On `--color-surface-secondary` (#f8fafc) it measures 4.55:1, which passes but leaves a thin margin. On `--color-primary-surface` (#eef2ff) it measures 4.26:1, which fails AA for normal text. On an indigo tint, use `--color-text-secondary` instead."
+      ]
+    },
+    {
+      "heading": "The six text role tokens",
+      "body": [
+        "All six text roles are neutral slate. Choose by the job the text does, not by how it looks. Ratios are measured on white (#ffffff)."
+      ],
+      "table": {
+        "caption": "Text role tokens and their contrast on white",
+        "head": [
+          "Token",
+          "Hex",
+          "Contrast on white",
+          "When to use"
+        ],
+        "rows": [
+          [
+            "--color-text-heading",
+            "#0f172a",
+            "17.85:1 (AAA)",
+            "Page and section headings"
+          ],
+          [
+            "--color-text-strong",
+            "#1e293b",
+            "14.63:1 (AAA)",
+            "Emphasized text inside body copy"
+          ],
+          [
+            "--color-text-body",
+            "#334155",
+            "10.36:1 (AAA)",
+            "Default paragraph and body text"
+          ],
+          [
+            "--color-text-secondary",
+            "#475569",
+            "7.58:1 (AAA)",
+            "Supporting text, and the replacement for muted text on indigo tints"
+          ],
+          [
+            "--color-text-muted",
+            "#64748b",
+            "4.76:1 (AA)",
+            "Least prominent readable text, such as captions and metadata on white"
+          ],
+          [
+            "--color-text-disabled",
+            "#cbd5e1",
+            "1.48:1",
+            "Disabled control state only, never readable text"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Copyable CSS",
+      "body": [
+        "Import the tokens once at the app entry, then reference the role token. Do not hardcode a hex value."
+      ],
+      "code": [
+        {
+          "label": "app entry stylesheet",
+          "lang": "css",
+          "source": "@import '@ramoslabs/tokens/css';"
+        },
+        {
+          "label": "muted caption on a white card",
+          "lang": "css",
+          "source": ".card-meta {\n  color: var(--color-text-muted);\n  background: var(--color-surface);\n}\n\n.card-meta--on-indigo-tint {\n  color: var(--color-text-secondary);\n  background: var(--color-primary-surface);\n}"
+        }
+      ]
+    },
+    {
+      "heading": "Recommended and avoided usage",
+      "body": [
+        "✓ Recommended: Use `--color-text-muted` for secondary metadata on white surfaces.",
+        "Rule: Muted text uses `--color-text-muted` (#64748b) on white, and nothing lighter than slate 500 is used for text.",
+        "Why: #64748b measures 4.76:1 on white, which passes WCAG 2.2 AA for normal text. Lighter slate values fall below the 4.5:1 minimum.",
+        "✕ Avoid: Using `--color-text-disabled` or slate 400 for muted text.",
+        "Rule: Do not use `--color-text-disabled` (#cbd5e1) or slate 400 (#94a3b8) for readable text.",
+        "Why: `--color-text-disabled` measures 1.48:1 on white and is reserved for disabled states. Slate 400 measures 2.56:1 on white and fails AA. Readers cannot reliably see either one."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which token should I use for muted text on a white background?",
+      "a": "Use var(--color-text-muted), which is #64748b (slate 500). It measures 4.76:1 on white and passes WCAG 2.2 AA for normal text."
+    },
+    {
+      "q": "Can I use a lighter gray for muted text?",
+      "a": "No. #64748b is the floor for muted text on white. Slate 400 (#94a3b8) measures 2.56:1 on white and fails, so it is not allowed for text."
+    },
+    {
+      "q": "What should I use for muted text on an indigo tinted background?",
+      "a": "Use var(--color-text-secondary), which is #475569. Muted text on --color-primary-surface (#eef2ff) measures 4.26:1 and fails AA for normal text, while secondary text measures 7.58:1 on white."
+    },
+    {
+      "q": "Is --color-text-disabled a good choice for less important text?",
+      "a": "No. --color-text-disabled (#cbd5e1) measures 1.48:1 on white and is for disabled control states only. It is never used for readable text."
+    },
+    {
+      "q": "Does muted text pass contrast on the light gray surface?",
+      "a": "It passes, with a thin margin. var(--color-text-muted) measures 4.55:1 on --color-surface-secondary (#f8fafc), which clears the 4.5:1 AA minimum for normal text."
+    },
+    {
+      "q": "Should I hardcode the muted gray value?",
+      "a": "No. Reference var(--color-text-muted) after importing @ramoslabs/tokens/css once at the app entry. A raw hex value in CSS is a defect under the design system rules."
+    }
+  ],
+  "sources": [
+    "@ramoslabs/tokens: text role token values (tokens.json)",
+    "DS color doctrine: /foundations/colors/ (measured contrast pairings)",
+    "WCAG 2.2 SC 1.4.3 Contrast (Minimum): 4.5:1 for normal text"
+  ]
+}

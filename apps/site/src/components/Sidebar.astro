@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro'
-import { rootPages, agentsPages, foundationsPages, patternsPages } from '../data/pages'
+import { rootPages, agentsPages, answersPages, foundationsPages, patternsPages } from '../data/pages'
 
 // Left navigation. Grouped Foundations / Patterns, current-page highlight from the URL.
 const current = Astro.url.pathname
@@ -8,6 +8,7 @@ const isActive = (path: string) => current === path || current === path.replace(
 
 const groups = [
   { label: 'For Agents', tier: 'MCP', pages: agentsPages, agentic: true },
+  { label: 'Answers', tier: 'Q&A', pages: answersPages, agentic: true },
   { label: 'Foundations', tier: 'Tier 1', pages: foundationsPages, agentic: false },
   { label: 'Patterns', tier: 'Tier 2', pages: patternsPages, agentic: false },
 ]
@@ -43,7 +44,7 @@ const groups = [
           <li>
             <a class:list={['rl-nav__link', { 'is-active': isActive(page.path) }]} href={page.path} aria-current={isActive(page.path) ? 'page' : undefined}>
               <Icon name={page.icon} />
-              <span>{page.title}</span>
+              <span>{page.nav ?? page.title}</span>
             </a>
           </li>
         ))}

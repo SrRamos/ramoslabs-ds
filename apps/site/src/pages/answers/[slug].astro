@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Icon from '../../components/Icon.astro'
+import { answers, answerById, answerJsonLd, inlineHtml } from '../../data/answers'
+import { pages, SITE } from '../../data/pages'
+
+export function getStaticPaths() {
+  return answers.map((a) => ({ params: { slug: a.id } }))
+}
+
+const { slug } = Astro.params
+const answer = answerById(slug as string)!
+const page = pages.find((p) => p.id === answer.id)!
+const site = Astro.site ?? new URL('https://design.ramoslabs.com')
+const url = new URL(page.path, site).href
+const jsonLd = answerJsonLd(answer, url)
+---
+<BaseLayout title={answer.title} description={answer.summary} path={page.path} extraJsonLd={jsonLd}>
+  <article class="an">
+    <p class="an-eyebrow"><Icon name="menu_book" style="font-size:1rem" /> Answer</p>
+    <h1 class="an-title">{answer.title}</h1>
+    <p class="an-short" set:html={inlineHtml(answer.short)} />
+
+    {answer.sections.map((sec) => (
+      <section class="an-sec">
+        <h2>{sec.heading}</h2>
+        {sec.body?.map((p) => <p set:html={inlineHtml(p)} />)}
+        {sec.table && (
+          <div class="an-table-wrap" role="region" aria-label={sec.table.caption ?? sec.heading} tabindex="0">
+            <table>
+              {sec.table.caption && <caption>{sec.table.caption}</caption>}
+              <thead><tr>{sec.table.head.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+              <tbody>
+                {sec.table.rows.map((row) => (
+                  <tr>{row.map((cell, i) => (i === 0 ? <th scope="row" set:html={inlineHtml(cell)} /> : <td set:html={inlineHtml(cell)} />))}</tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {sec.code?.map((c) => (
+          <figure class="an-code">
+            <figcaption>
+              <span>{c.label}</span>
+              <span class="an-code-right">
+                <span class="an-lang">{c.lang}</span>
+                <button type="button" class="an-copy" data-copy={c.source}>Copy</button>
+              </span>
+            </figcaption>
+            <pre><code>{c.source}</code></pre>
+          </figure>
+        ))}
+      </section>
+    ))}
+
+    {answer.howto && (
+      <section class="an-sec">
+        <h2>{answer.howto.name}</h2>
+        <ol class="an-steps">
+          {answer.howto.steps.map((s) => (
+            <li><strong>{s.name}.</strong> <span set:html={inlineHtml(s.text)} /></li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    <section class="an-sec">
+      <h2>Frequently asked questions</h2>
+      <dl class="an-faq">
+        {answer.faq.map((f) => (
+          <div>
+            <dt set:html={inlineHtml(f.q)} />
+            <dd set:html={inlineHtml(f.a)} />
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="an-sec an-sources">
+      <h2>Sources</h2>
+      <ul>{answer.sources.map((s) => <li>{s}</li>)}</ul>
+      <p>
+        Machine-readable: <a href="/llms-full.txt">llms-full.txt</a>, <a href="/tokens.json">tokens.json</a>,
+        <a href="/agents/mcp/">MCP server</a>. {SITE.copyright} MIT License.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<script>
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('.an-copy')) {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.getAttribute('data-copy') ?? '')
+        btn.textContent = 'Copied'
+        setTimeout(() => { btn.textContent = 'Copy' }, 1600)
+      } catch { /* clipboard unavailable: the code stays visible to select by hand */ }
+    })
+  }
+</script>
+
+<style is:global>
+  .an { max-width: 52rem; font-family: var(--font-family-sans); color: var(--color-text-body); }
+  .an-eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-primary-dark); }
+  .an-title { font-family: var(--font-family-display); font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; font-weight: 800; letter-spacing: -0.015em; color: var(--color-text-heading); margin: 0 0 var(--space-6); }
+  .an-short { font-size: 1.1rem; line-height: 1.6; background: var(--color-primary-surface); color: var(--color-text-heading); border-left: 4px solid var(--color-primary); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5); margin: 0 0 var(--space-8); }
+  .an-sec { margin: 0 0 var(--space-10); }
+  .an-sec h2 { font-family: var(--font-family-display); font-size: 1.4rem; font-weight: 800; color: var(--color-text-heading); margin: 0 0 var(--space-3); }
+  .an-sec p, .an-sec li { line-height: 1.65; max-width: 46rem; }
+  .an code { font-family: 'SF Mono', Monaco, monospace; font-size: 0.88em; background: var(--color-surface-secondary); color: var(--color-primary-dark); padding: 0.1rem 0.35rem; border-radius: var(--radius-sm); }
+  .an-table-wrap { overflow-x: auto; margin: var(--space-4) 0; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+  .an-table-wrap:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+  .an table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  .an caption { text-align: left; padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text-secondary); }
+  .an th, .an td { text-align: left; vertical-align: top; padding: var(--space-3) var(--space-4); border-top: 1px solid var(--color-border); }
+  .an thead th { background: var(--color-surface-secondary); color: var(--color-text-heading); border-top: 0; white-space: nowrap; }
+  .an tbody th { font-weight: 600; color: var(--color-text-heading); }
+  .an-code { margin: var(--space-4) 0; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+  .an-code figcaption { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); background: var(--color-surface-secondary); border-bottom: 1px solid var(--color-border); font-size: 0.8rem; color: var(--color-text-secondary); }
+  .an-code-right { display: inline-flex; align-items: center; gap: var(--space-3); }
+  .an-lang { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; color: var(--color-text-muted); }
+  .an-copy { font: inherit; font-weight: 600; color: var(--color-primary-dark); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-1) var(--space-3); min-height: 2rem; cursor: pointer; }
+  .an-copy:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+  .an-code pre { margin: 0; padding: var(--space-4); overflow-x: auto; background: var(--color-surface); }
+  .an-code pre code { background: none; color: var(--color-text-body); padding: 0; font-size: 0.85rem; line-height: 1.6; }
+  .an-steps { padding-left: var(--space-6); }
+  .an-faq div { padding: var(--space-4) 0; border-top: 1px solid var(--color-border); }
+  .an-faq dt { font-weight: 700; color: var(--color-text-heading); margin-bottom: var(--space-1); }
+  .an-faq dd { margin: 0; line-height: 1.6; }
+  .an-sources { font-size: 0.9rem; color: var(--color-text-secondary); }
+  .an-sources a { color: var(--color-primary-dark); }
+</style>

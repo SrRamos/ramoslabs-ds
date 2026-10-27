@@ -1,0 +1,165 @@
+{
+  "id": "install-tokens-vue-react-html",
+  "title": "How do I install the RamosLabs design tokens in Vue, React, or plain HTML?",
+  "summary": "Install @ramoslabs/tokens with your package manager, import its CSS once at the app entry, then reference tokens as CSS variables. Or link tokens.css with no install.",
+  "short": "Install the package with bun, npm, pnpm, or yarn, then import '@ramoslabs/tokens/css' once in your app entry and reference tokens such as var(--color-primary) in your CSS. With no install, add a link to https://design.ramoslabs.com/tokens.css in plain HTML.",
+  "sections": [
+    {
+      "heading": "Install the package",
+      "body": [
+        "@ramoslabs/tokens is published to npm under the public @ramoslabs scope and is licensed under MIT. Use the install command for your package manager."
+      ],
+      "table": {
+        "caption": "Install commands by package manager",
+        "head": [
+          "Package manager",
+          "Install command"
+        ],
+        "rows": [
+          [
+            "bun",
+            "bun add @ramoslabs/tokens"
+          ],
+          [
+            "npm",
+            "npm install @ramoslabs/tokens"
+          ],
+          [
+            "pnpm",
+            "pnpm add @ramoslabs/tokens"
+          ],
+          [
+            "yarn",
+            "yarn add @ramoslabs/tokens"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Use the tokens in Vue 3 (Vite)",
+      "body": [
+        "Import the CSS once in src/main.ts. The import belongs in the app entry, not in each component. Then reference tokens as CSS variables inside a component style block."
+      ],
+      "code": [
+        {
+          "label": "src/main.ts",
+          "lang": "ts",
+          "source": "import { createApp } from 'vue'\nimport App from './App.vue'\nimport '@ramoslabs/tokens/css'\n\ncreateApp(App).mount('#app')\n"
+        },
+        {
+          "label": "src/components/SaveButton.vue",
+          "lang": "vue",
+          "source": "<template>\n  <button class=\"cta\" type=\"button\">Save changes</button>\n</template>\n\n<style scoped>\n.cta {\n  background: var(--color-primary);\n  color: var(--color-surface);\n  border: none;\n  border-radius: var(--radius-lg);\n  padding: var(--space-6);\n  box-shadow: var(--shadow-sm);\n  cursor: pointer;\n}\n\n.cta:hover {\n  background: var(--color-primary-dark);\n}\n\n.cta:focus-visible {\n  outline: none;\n  box-shadow: var(--shadow-focus);\n}\n</style>\n"
+        }
+      ]
+    },
+    {
+      "heading": "Use the tokens in React (Vite or similar)",
+      "body": [
+        "Import the same CSS file once in the entry file, src/main.tsx. Then give components a class name and define that class with token variables in a stylesheet."
+      ],
+      "code": [
+        {
+          "label": "src/main.tsx",
+          "lang": "tsx",
+          "source": "import { StrictMode } from 'react'\nimport { createRoot } from 'react-dom/client'\nimport '@ramoslabs/tokens/css'\nimport App from './App'\n\ncreateRoot(document.getElementById('root')!).render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n)\n"
+        },
+        {
+          "label": "src/components/Card.tsx",
+          "lang": "tsx",
+          "source": "import './Card.css'\n\nexport default function Card() {\n  return (\n    <section className=\"card\">\n      <h2 className=\"card-title\">Workspace</h2>\n      <p className=\"card-body\">Colors, spacing, and radius come from design tokens.</p>\n    </section>\n  )\n}\n"
+        },
+        {
+          "label": "src/components/Card.css",
+          "lang": "css",
+          "source": ".card {\n  background: var(--color-surface);\n  padding: var(--space-6);\n  border-radius: var(--radius-lg);\n  box-shadow: var(--shadow-sm);\n}\n\n.card-title {\n  color: var(--color-text-heading);\n}\n\n.card-body {\n  color: var(--color-text-body);\n}\n"
+        }
+      ]
+    },
+    {
+      "heading": "Use plain HTML without installing anything",
+      "body": [
+        "The token stylesheet is served at https://design.ramoslabs.com/tokens.css. Link it in the head of the page and reference the same CSS variables in your styles. The flat token map is served at https://design.ramoslabs.com/tokens.json."
+      ],
+      "code": [
+        {
+          "label": "index.html",
+          "lang": "html",
+          "source": "<!doctype html>\n<html lang='en'>\n<head>\n  <meta charset='utf-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\n  <title>Token demo</title>\n  <link rel='stylesheet' href='https://design.ramoslabs.com/tokens.css'>\n  <style>\n    body {\n      margin: 0;\n      background: var(--color-surface-secondary);\n      color: var(--color-text-body);\n    }\n\n    .card {\n      margin: var(--space-6);\n      background: var(--color-surface);\n      padding: var(--space-6);\n      border-radius: var(--radius-lg);\n      box-shadow: var(--shadow-sm);\n    }\n\n    .card h1 {\n      color: var(--color-text-heading);\n    }\n  </style>\n</head>\n<body>\n  <main class='card'>\n    <h1>Workspace</h1>\n    <p>This page uses the served RamosLabs tokens.</p>\n  </main>\n</body>\n</html>\n"
+        }
+      ]
+    },
+    {
+      "heading": "Use typed values in TypeScript",
+      "body": [
+        "Typed values are exported from the package root. Use them when TypeScript logic needs a token value. For styling, keep referencing the CSS variables, for example var(--color-primary)."
+      ],
+      "code": [
+        {
+          "label": "src/brand.ts",
+          "lang": "ts",
+          "source": "import { colorIndigo600 } from '@ramoslabs/tokens'\n\nexport const brandAccent = colorIndigo600\n"
+        }
+      ]
+    },
+    {
+      "heading": "Components are not shipped yet",
+      "body": [
+        "The DS documents tokens and patterns today. Components with the SJ prefix are planned for the @ramoslabs/vue package in a future release and are not shipped yet. Until then, build UI from the tokens and the documented patterns."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do I need to import the token CSS in every component?",
+      "a": "No. Import '@ramoslabs/tokens/css' once at the app entry (for example main.ts or main.tsx) or in the root layout. Components then reference the CSS variables directly."
+    },
+    {
+      "q": "Does it work with Tailwind?",
+      "a": "Yes, the tokens are CSS variables, so Tailwind projects can reference them the same way as any other CSS. Import the token CSS once at the root of the app."
+    },
+    {
+      "q": "Can I use the tokens without npm?",
+      "a": "Yes. Add a link to https://design.ramoslabs.com/tokens.css in your HTML head. The flat token map is also served at https://design.ramoslabs.com/tokens.json."
+    },
+    {
+      "q": "Does the same setup work in React?",
+      "a": "Yes. Import '@ramoslabs/tokens/css' once in the React entry file, then reference the CSS variables from your component stylesheets."
+    },
+    {
+      "q": "Are the SJ components available to install?",
+      "a": "Not yet. SJ components are planned for @ramoslabs/vue in a future release. Until then, build from the tokens and the documented patterns."
+    },
+    {
+      "q": "Can I hardcode a color or spacing value while I set up?",
+      "a": "No. Never hardcode a color, spacing, typography, radius, shadow, or motion value. A raw hex or px value in CSS is a defect, so reference the token variables instead."
+    }
+  ],
+  "howto": {
+    "name": "Install and use RamosLabs design tokens",
+    "steps": [
+      {
+        "name": "Install the package",
+        "text": "Run bun add @ramoslabs/tokens, or use npm install, pnpm add, or yarn add with the same package name."
+      },
+      {
+        "name": "Import the CSS once",
+        "text": "In your app entry (main.ts for Vue or main.tsx for React), add import '@ramoslabs/tokens/css' one time. Do not import it in each component."
+      },
+      {
+        "name": "Use a token",
+        "text": "Reference tokens as CSS variables such as var(--color-primary), var(--space-6), and var(--radius-lg). Do not hardcode raw hex or px values."
+      },
+      {
+        "name": "Optional: use typed values",
+        "text": "For TypeScript logic, import typed values from the package root, for example import { colorIndigo600 } from '@ramoslabs/tokens'."
+      }
+    ]
+  },
+  "sources": [
+    "@ramoslabs/tokens package: install commands and exports (/css, /json, root typed values)",
+    "DS Installation page: /installation/",
+    "Served files: /tokens.css and /tokens.json",
+    "DS hard rule: no hardcoded color, spacing, typography, radius, shadow, or motion value"
+  ]
+}

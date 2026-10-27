@@ -421,6 +421,534 @@ Both hosts serve the same server. Prefer the `workers.dev` endpoint above: the b
 
 Call `tools/list` against the endpoint to confirm the seven tools, then call `check_contrast` with the primary accent on white to confirm it verifies (indigo 600 on white returns roughly 6.3:1, which passes AA).
 
+# Which token should I use for muted text?
+
+Source: https://design.ramoslabs.com/answers/muted-text-token/
+
+**Short answer:** Use `var(--color-text-muted)` for muted text. It is #64748b (slate 500), which measures 4.76:1 on white and is the lightest color allowed for text on white. On `--color-primary-surface` (#eef2ff) it fails AA at 4.26:1, so use `var(--color-text-secondary)` there. Do not use `--color-text-disabled` or slate 400 for readable text.
+
+## The answer: --color-text-muted
+
+The muted text role is `--color-text-muted`, with the value #64748b (slate 500). On the white surface `--color-surface` (#ffffff) it measures 4.76:1, which passes WCAG 2.2 AA for normal text (4.5:1 minimum).
+
+Slate 500 is the floor for muted text on white. Never use a color lighter than #64748b for text. Slate 400 (#94a3b8) measures 2.56:1 on white and fails, so it is not allowed for text.
+
+Muted text has two known limits. On `--color-surface-secondary` (#f8fafc) it measures 4.55:1, which passes but leaves a thin margin. On `--color-primary-surface` (#eef2ff) it measures 4.26:1, which fails AA for normal text. On an indigo tint, use `--color-text-secondary` instead.
+
+## The six text role tokens
+
+All six text roles are neutral slate. Choose by the job the text does, not by how it looks. Ratios are measured on white (#ffffff).
+
+Text role tokens and their contrast on white
+
+| Token | Hex | Contrast on white | When to use |
+| --- | --- | --- | --- |
+| --color-text-heading | #0f172a | 17.85:1 (AAA) | Page and section headings |
+| --color-text-strong | #1e293b | 14.63:1 (AAA) | Emphasized text inside body copy |
+| --color-text-body | #334155 | 10.36:1 (AAA) | Default paragraph and body text |
+| --color-text-secondary | #475569 | 7.58:1 (AAA) | Supporting text, and the replacement for muted text on indigo tints |
+| --color-text-muted | #64748b | 4.76:1 (AA) | Least prominent readable text, such as captions and metadata on white |
+| --color-text-disabled | #cbd5e1 | 1.48:1 | Disabled control state only, never readable text |
+
+## Copyable CSS
+
+Import the tokens once at the app entry, then reference the role token. Do not hardcode a hex value.
+
+app entry stylesheet:
+
+```css
+@import '@ramoslabs/tokens/css';
+```
+
+muted caption on a white card:
+
+```css
+.card-meta {
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+}
+
+.card-meta--on-indigo-tint {
+  color: var(--color-text-secondary);
+  background: var(--color-primary-surface);
+}
+```
+
+## Recommended and avoided usage
+
+✓ Recommended: Use `--color-text-muted` for secondary metadata on white surfaces.
+
+Rule: Muted text uses `--color-text-muted` (#64748b) on white, and nothing lighter than slate 500 is used for text.
+
+Why: #64748b measures 4.76:1 on white, which passes WCAG 2.2 AA for normal text. Lighter slate values fall below the 4.5:1 minimum.
+
+✕ Avoid: Using `--color-text-disabled` or slate 400 for muted text.
+
+Rule: Do not use `--color-text-disabled` (#cbd5e1) or slate 400 (#94a3b8) for readable text.
+
+Why: `--color-text-disabled` measures 1.48:1 on white and is reserved for disabled states. Slate 400 measures 2.56:1 on white and fails AA. Readers cannot reliably see either one.
+
+## FAQ
+
+**Which token should I use for muted text on a white background?**
+
+Use var(--color-text-muted), which is #64748b (slate 500). It measures 4.76:1 on white and passes WCAG 2.2 AA for normal text.
+
+**Can I use a lighter gray for muted text?**
+
+No. #64748b is the floor for muted text on white. Slate 400 (#94a3b8) measures 2.56:1 on white and fails, so it is not allowed for text.
+
+**What should I use for muted text on an indigo tinted background?**
+
+Use var(--color-text-secondary), which is #475569. Muted text on --color-primary-surface (#eef2ff) measures 4.26:1 and fails AA for normal text, while secondary text measures 7.58:1 on white.
+
+**Is --color-text-disabled a good choice for less important text?**
+
+No. --color-text-disabled (#cbd5e1) measures 1.48:1 on white and is for disabled control states only. It is never used for readable text.
+
+**Does muted text pass contrast on the light gray surface?**
+
+It passes, with a thin margin. var(--color-text-muted) measures 4.55:1 on --color-surface-secondary (#f8fafc), which clears the 4.5:1 AA minimum for normal text.
+
+**Should I hardcode the muted gray value?**
+
+No. Reference var(--color-text-muted) after importing @ramoslabs/tokens/css once at the app entry. A raw hex value in CSS is a defect under the design system rules.
+
+## Sources
+
+@ramoslabs/tokens: text role token values (tokens.json); DS color doctrine: /foundations/colors/ (measured contrast pairings); WCAG 2.2 SC 1.4.3 Contrast (Minimum): 4.5:1 for normal text.
+
+# Is RamosLabs indigo (#4f46e5) WCAG accessible?
+
+Source: https://design.ramoslabs.com/answers/indigo-contrast-wcag/
+
+**Short answer:** Yes for AA. --color-primary #4f46e5 on white is 6.29:1, which passes the 4.5:1 threshold for normal text and the 3:1 threshold for UI components, but it does not reach AAA (7:1). When AAA is required, use --color-primary-dark #4338ca, which gives 7.90:1 with white text.
+
+## Indigo pairings and their contrast ratios
+
+The table lists the indigo pairings in the RamosLabs DS contrast data, including the pairings that fail. Ratios use the WCAG 2.x relative-luminance formula and are rounded to two decimals.
+
+--color-primary is #4f46e5, which is indigo 600 and the single action accent. --color-primary-dark is #4338ca, which is indigo 700 and is used for hover.
+
+Indigo pairings, contrast ratio, and WCAG level
+
+| Foreground | Background | Ratio | WCAG level |
+| --- | --- | --- | --- |
+| --color-primary #4f46e5 | --color-surface #ffffff | 6.29:1 | Passes AA for normal text and UI components. Fails AAA (7:1). |
+| White #ffffff (button label) | --color-primary #4f46e5 | 6.29:1 | Passes AA. Fails AAA (7:1). |
+| White #ffffff (button label) | --color-primary-dark #4338ca | 7.90:1 | Passes AAA for normal text. |
+| --color-primary #4f46e5 | --color-primary-surface #eef2ff | 5.62:1 | Passes AA for normal text and UI components. |
+| Indigo 300 #a5b4fc | --color-surface #ffffff | 1.99:1 | Fails AA for text and UI components. |
+| --color-primary #4f46e5 | --color-text-heading #0f172a | 2.84:1 | Fails AA for text and UI components. |
+
+## WCAG thresholds
+
+WCAG 2.2 AA requires at least 4.5:1 for normal text and at least 3:1 for large text and UI components such as control edges and focus rings. AAA requires at least 7:1 for normal text.
+
+The RamosLabs DS sets AA as its minimum. The primary indigo meets AA for text on white and on the primary surface. Reach AAA with the darker --color-primary-dark.
+
+A pair that passes on one background can fail on another, so check each pair as it is used.
+
+## Primary button with a visible focus state
+
+The snippet uses only RamosLabs token variables. The white label comes from --color-surface, which is #ffffff. The hover state switches to --color-primary-dark, and the focus state replaces the outline with --shadow-focus, which is a 2px white gap followed by a 4px #4f46e5 ring.
+
+Import the token stylesheet once at the app entry before using these rules.
+
+app entry (global stylesheet):
+
+```css
+@import '@ramoslabs/tokens/css';
+```
+
+button.css:
+
+```css
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: 0;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+```
+
+## Recommended and avoid
+
+✓ Recommended: use white text on --color-primary for the primary button label, which is 6.29:1.
+
+Rule: pair the button label with a token background that passes at least 4.5:1 for normal text.
+
+Why: 6.29:1 passes AA, so the label remains readable for users with low vision, and the same pair is used in the snippet above.
+
+✕ Avoid: indigo 300 #a5b4fc as text on white.
+
+Rule: text colors must reach at least 4.5:1 on their background, and indigo 300 does not.
+
+Why: indigo 300 on white is 1.99:1, which fails both the 4.5:1 text threshold and the 3:1 UI threshold.
+
+## Verify a pair with the MCP check_contrast tool
+
+The RamosLabs DS MCP server exposes a check_contrast tool. The endpoint is https://design.ramoslabs.com/mcp. It uses Streamable HTTP, is read-only, and needs no auth.
+
+To add the server to Claude Code, run: claude mcp add --transport http ramoslabs-ds https://ramoslabs-ds.edwardramosp.workers.dev/mcp
+
+Pass the foreground and background pair to check_contrast and read the result it returns. This page does not describe the output format of the tool, so check the response directly.
+
+## FAQ
+
+**Is #4f46e5 accessible on a white background?**
+
+Yes for WCAG 2.x AA. The contrast ratio is 6.29:1, which clears 4.5:1 for normal text and 3:1 for UI components. It does not reach the AAA threshold of 7:1 for normal text.
+
+**Can I use indigo 300 for text on white?**
+
+No. Indigo 300 #a5b4fc on white is 1.99:1, which fails both the 4.5:1 text threshold and the 3:1 UI threshold.
+
+**Which indigo should I use when AAA is required?**
+
+Use --color-primary-dark #4338ca. White text on it is 7.90:1, which passes AAA for normal text. The primary #4f46e5 reaches 6.29:1 on white and does not reach AAA.
+
+**Can I put white text on the primary button?**
+
+Yes. White on --color-primary #4f46e5 is 6.29:1, which passes AA. For AAA, use white on --color-primary-dark #4338ca, which is 7.90:1.
+
+**Does the primary indigo have enough contrast for a focus ring?**
+
+Yes. Primary on white is 6.29:1, which clears the 3:1 threshold for UI component edges. The focus state uses --shadow-focus, which is a 2px white gap and a 4px #4f46e5 ring.
+
+**How can I check a color pair programmatically?**
+
+Use the check_contrast tool on the RamosLabs DS MCP server at https://design.ramoslabs.com/mcp. The server is read-only, uses Streamable HTTP, and needs no auth.
+
+## Sources
+
+@ramoslabs/tokens: color token values (tokens.json); DS color doctrine: /foundations/colors/ (measured contrast pairings); Ratios recomputed with the WCAG relative-luminance formula, rounded to two decimals; WCAG 2.2 SC 1.4.3 and SC 1.4.11 contrast floors; DS MCP server: /agents/mcp/ (check_contrast tool).
+
+# How do I install the RamosLabs design tokens in Vue, React, or plain HTML?
+
+Source: https://design.ramoslabs.com/answers/install-tokens-vue-react-html/
+
+**Short answer:** Install the package with bun, npm, pnpm, or yarn, then import '@ramoslabs/tokens/css' once in your app entry and reference tokens such as var(--color-primary) in your CSS. With no install, add a link to https://design.ramoslabs.com/tokens.css in plain HTML.
+
+## Install the package
+
+@ramoslabs/tokens is published to npm under the public @ramoslabs scope and is licensed under MIT. Use the install command for your package manager.
+
+Install commands by package manager
+
+| Package manager | Install command |
+| --- | --- |
+| bun | bun add @ramoslabs/tokens |
+| npm | npm install @ramoslabs/tokens |
+| pnpm | pnpm add @ramoslabs/tokens |
+| yarn | yarn add @ramoslabs/tokens |
+
+## Use the tokens in Vue 3 (Vite)
+
+Import the CSS once in src/main.ts. The import belongs in the app entry, not in each component. Then reference tokens as CSS variables inside a component style block.
+
+src/main.ts:
+
+```ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import '@ramoslabs/tokens/css'
+
+createApp(App).mount('#app')
+
+```
+
+src/components/SaveButton.vue:
+
+```vue
+<template>
+  <button class="cta" type="button">Save changes</button>
+</template>
+
+<style scoped>
+.cta {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.cta:hover {
+  background: var(--color-primary-dark);
+}
+
+.cta:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+</style>
+
+```
+
+## Use the tokens in React (Vite or similar)
+
+Import the same CSS file once in the entry file, src/main.tsx. Then give components a class name and define that class with token variables in a stylesheet.
+
+src/main.tsx:
+
+```tsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import '@ramoslabs/tokens/css'
+import App from './App'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+)
+
+```
+
+src/components/Card.tsx:
+
+```tsx
+import './Card.css'
+
+export default function Card() {
+  return (
+    <section className="card">
+      <h2 className="card-title">Workspace</h2>
+      <p className="card-body">Colors, spacing, and radius come from design tokens.</p>
+    </section>
+  )
+}
+
+```
+
+src/components/Card.css:
+
+```css
+.card {
+  background: var(--color-surface);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-title {
+  color: var(--color-text-heading);
+}
+
+.card-body {
+  color: var(--color-text-body);
+}
+
+```
+
+## Use plain HTML without installing anything
+
+The token stylesheet is served at https://design.ramoslabs.com/tokens.css. Link it in the head of the page and reference the same CSS variables in your styles. The flat token map is served at https://design.ramoslabs.com/tokens.json.
+
+index.html:
+
+```html
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Token demo</title>
+  <link rel='stylesheet' href='https://design.ramoslabs.com/tokens.css'>
+  <style>
+    body {
+      margin: 0;
+      background: var(--color-surface-secondary);
+      color: var(--color-text-body);
+    }
+
+    .card {
+      margin: var(--space-6);
+      background: var(--color-surface);
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card h1 {
+      color: var(--color-text-heading);
+    }
+  </style>
+</head>
+<body>
+  <main class='card'>
+    <h1>Workspace</h1>
+    <p>This page uses the served RamosLabs tokens.</p>
+  </main>
+</body>
+</html>
+
+```
+
+## Use typed values in TypeScript
+
+Typed values are exported from the package root. Use them when TypeScript logic needs a token value. For styling, keep referencing the CSS variables, for example var(--color-primary).
+
+src/brand.ts:
+
+```ts
+import { colorIndigo600 } from '@ramoslabs/tokens'
+
+export const brandAccent = colorIndigo600
+
+```
+
+## Components are not shipped yet
+
+The DS documents tokens and patterns today. Components with the SJ prefix are planned for the @ramoslabs/vue package in a future release and are not shipped yet. Until then, build UI from the tokens and the documented patterns.
+
+## Install and use RamosLabs design tokens
+
+1. Install the package: Run bun add @ramoslabs/tokens, or use npm install, pnpm add, or yarn add with the same package name.
+2. Import the CSS once: In your app entry (main.ts for Vue or main.tsx for React), add import '@ramoslabs/tokens/css' one time. Do not import it in each component.
+3. Use a token: Reference tokens as CSS variables such as var(--color-primary), var(--space-6), and var(--radius-lg). Do not hardcode raw hex or px values.
+4. Optional: use typed values: For TypeScript logic, import typed values from the package root, for example import { colorIndigo600 } from '@ramoslabs/tokens'.
+
+## FAQ
+
+**Do I need to import the token CSS in every component?**
+
+No. Import '@ramoslabs/tokens/css' once at the app entry (for example main.ts or main.tsx) or in the root layout. Components then reference the CSS variables directly.
+
+**Does it work with Tailwind?**
+
+Yes, the tokens are CSS variables, so Tailwind projects can reference them the same way as any other CSS. Import the token CSS once at the root of the app.
+
+**Can I use the tokens without npm?**
+
+Yes. Add a link to https://design.ramoslabs.com/tokens.css in your HTML head. The flat token map is also served at https://design.ramoslabs.com/tokens.json.
+
+**Does the same setup work in React?**
+
+Yes. Import '@ramoslabs/tokens/css' once in the React entry file, then reference the CSS variables from your component stylesheets.
+
+**Are the SJ components available to install?**
+
+Not yet. SJ components are planned for @ramoslabs/vue in a future release. Until then, build from the tokens and the documented patterns.
+
+**Can I hardcode a color or spacing value while I set up?**
+
+No. Never hardcode a color, spacing, typography, radius, shadow, or motion value. A raw hex or px value in CSS is a defect, so reference the token variables instead.
+
+## Sources
+
+@ramoslabs/tokens package: install commands and exports (/css, /json, root typed values); DS Installation page: /installation/; Served files: /tokens.css and /tokens.json; DS hard rule: no hardcoded color, spacing, typography, radius, shadow, or motion value.
+
+# RamosLabs DS vs Material Design vs Tailwind CSS: which should I use?
+
+Source: https://design.ramoslabs.com/answers/ramoslabs-ds-vs-material-vs-tailwind/
+
+**Short answer:** Choose RamosLabs DS when you want a documented mono-indigo token set and patterns to build your own components on, with no component library required. Choose Material Design when you need a full component ecosystem, or Tailwind CSS when you want utility classes on a visual system you define; RamosLabs tokens can be consumed from Tailwind as CSS variables.
+
+## What each one is
+
+RamosLabs DS is a mono-indigo, taxonomy-first design system. Its tokens (color, spacing, typography, radius, shadow, and motion) are defined once and compiled to CSS variables, TypeScript values, and a flat JSON map. The system also ships documentation covering foundations and patterns such as forms, tables, modals, and accessibility.
+
+Material Design is Google's design system. It provides guidelines, Material 3 color roles, and a component ecosystem that teams can build on.
+
+Tailwind CSS is a utility-first CSS framework. It ships with a default theme and lets you configure design tokens, so teams compose styles from utility classes instead of writing component stylesheets.
+
+## Comparison
+
+The table compares the three on the dimensions that usually decide the choice. The RamosLabs DS column comes from its published facts. The Material Design and Tailwind CSS columns are short structural summaries; verify them against the official documentation.
+
+RamosLabs DS, Material Design, and Tailwind CSS compared. Material and Tailwind cells are summaries to verify against official docs.
+
+| Dimension | RamosLabs DS | Material Design | Tailwind CSS |
+| --- | --- | --- | --- |
+| What it is | Design system made of tokens and documented patterns, distributed as @ramoslabs/tokens and documented at design.ramoslabs.com | Google's design system: guidelines, Material 3 color roles, and a component ecosystem | Utility-first CSS framework with a default theme and configurable design tokens |
+| Primary deliverable | Tokens (CSS variables, TypeScript values, flat JSON) and documentation | Guidelines and component implementations | Utility classes generated from a theme |
+| Ships components today | No. Components with the SJ prefix in @ramoslabs/vue are planned for a future release, not shipped | Yes, through its component implementations | No prebuilt components in the core framework, only utility classes |
+| Color model | Mono-indigo: --color-primary #4f46e5 (Indigo 600) is the single action accent; violet is decorative only | Material 3 color roles such as primary and surface, typically generated from a source color | Named color scales in the default theme, extendable through the theme configuration |
+| Theming approach | Tokens defined once in DTCG JSON and compiled to CSS variables; the CSS is imported once at the app entry | Theme roles and component styling defined within the Material theming system | Theme values in the configuration that utilities read from |
+| AI and agent tooling | Read-only MCP server, llms.txt and llms-full.txt, registry.json, an agent skill, and a lint_css tool | Not assessed here; check the official docs | Not assessed here; check the official docs |
+| License | MIT | Open source; verify the license of the specific package you use | Open source; verify the license in the official repository |
+| Best fit | Teams that want a mono-indigo token set and documented patterns, and that build their own components | Teams that want a full component ecosystem that follows Google's guidelines | Teams that want utility classes on a visual system they define |
+
+## Where RamosLabs is not the right choice
+
+RamosLabs DS does not ship a component library yet. The planned SJ components in @ramoslabs/vue are not released, so until then you build components from the tokens and the documented patterns. If you need ready-made components today, a component ecosystem such as Material Design fits that need better.
+
+The tokens do not generate layouts or components. They supply values such as --space-6 and --radius-lg, and you still write the markup and styles that use them.
+
+The system is built around one action accent, Indigo 600 (#4f46e5), with violet as a decorative accent only. A brand that needs several interactive colors would need a different palette.
+
+## When to choose each
+
+Choose RamosLabs DS when you want a documented token set with a single action accent, you plan to build your own components, and you want agent tooling such as the MCP server and llms.txt files to read the system.
+
+Choose Material Design when you want a component ecosystem that follows Google's guidelines and Material 3 color roles, and you accept that layout and component decisions follow that system.
+
+Choose Tailwind CSS when you want utility classes for fast composition and you will define your own visual system in the theme configuration.
+
+## Using them together
+
+The tools do not exclude each other. RamosLabs tokens are framework-agnostic CSS variables, so they work in a Tailwind project. Import the tokens once at the app entry, then reference the variables. Tailwind's default palette classes do not read RamosLabs tokens unless you map them in the theme, so reference the variables directly, for example with arbitrary properties.
+
+CSS entry point, imported once at the app root:
+
+```css
+@import '@ramoslabs/tokens/css';
+```
+
+Card markup using RamosLabs tokens through Tailwind arbitrary properties:
+
+```html
+<div class="[background:var(--color-surface)] [padding:var(--space-6)] [border-radius:var(--radius-lg)] [box-shadow:var(--shadow-sm)]">...</div>
+```
+
+## Review note
+
+The Material Design and Tailwind CSS descriptions in this page are summaries of their structure, written without version numbers, statistics, or quality claims. Verify them against the official Material Design and Tailwind CSS documentation before relying on them. The RamosLabs DS facts come from its published token values, package details, and documentation.
+
+## FAQ
+
+**Does RamosLabs DS include ready-made components?**
+
+Not yet. The tokens and documentation are shipped, and a Vue component library with the SJ prefix in @ramoslabs/vue is planned but not released. Until then, build components from the tokens and the documented patterns.
+
+**Can I use RamosLabs tokens with Tailwind CSS?**
+
+Yes. Import the tokens CSS once at the app entry, then reference the CSS variables, for example with Tailwind arbitrary properties such as [background:var(--color-surface)].
+
+**Is RamosLabs DS a replacement for Material Design?**
+
+They address different needs. RamosLabs DS provides tokens and documented patterns to build on, while Material Design provides guidelines and a component ecosystem.
+
+**Which tool fits a brand that uses one accent color?**
+
+RamosLabs DS is built around one action accent, Indigo 600 (#4f46e5), with violet as a decorative accent only. If that model fits your brand, its tokens provide it directly.
+
+**Does RamosLabs DS offer AI or agent tooling?**
+
+Yes. It has a read-only MCP server at https://design.ramoslabs.com/mcp, llms.txt and llms-full.txt files, a registry.json, and an agent skill at /skill.md.
+
+**Is RamosLabs DS free to use?**
+
+Yes. The system is MIT licensed. Keep the copyright and license notice when you use it.
+
+## Sources
+
+@ramoslabs/tokens package: install, exports, CSS import; Served agent files: /llms.txt, /llms-full.txt, /registry.json, /skill.md, and the MCP server at /mcp; DS color doctrine: /foundations/colors/ (single action accent, violet decorative only); Repository license: MIT (LICENSE); Material Design and Tailwind CSS: general structural descriptions, to verify against their official docs.
+
 # Colors
 
 Source: https://design.ramoslabs.com/foundations/colors/

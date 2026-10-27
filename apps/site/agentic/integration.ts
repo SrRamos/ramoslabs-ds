@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { AstroIntegration } from 'astro'
 import { pages, SITE, type Page } from '../src/data/pages'
+import { answerById, answerMarkdown } from '../src/data/answers'
 
 // RamosLabs DS agentic layer, as an Astro integration.
 // On `astro:build:done` it emits, into the build output (dist/):
@@ -77,6 +78,15 @@ type LoadedPage = Page & { body: string; present: boolean }
 
 function loadPages(): LoadedPage[] {
   return docPages.map((page) => {
+    // Answers pages are authored as reviewed JSON (src/data/answers); their body is derived.
+    if (page.group === 'answers') {
+      const answer = answerById(page.id)
+      if (!answer) {
+        process.stderr.write(`agentic warn: answer data missing for "${page.id}"\n`)
+        return { ...page, body: '', present: false }
+      }
+      return { ...page, body: answerMarkdown(answer), present: true }
+    }
     const filePath = path.join(contentDir, page.contentFile)
     if (!fs.existsSync(filePath)) {
       process.stderr.write(`agentic warn: content missing for "${page.id}": ${page.contentFile}\n`)
@@ -140,6 +150,10 @@ color, spacing, typography, radius, shadow, and motion values ship as CSS variab
 ## For agents
 
 ${bullets('agents')}
+
+## Answers
+
+${bullets('answers')}
 
 ## Foundations
 
@@ -246,6 +260,9 @@ function buildRegistry(site: string, resolved: LoadedPage[], tokens: Tokens, ver
       },
       patterns: resolved
         .filter((p) => p.group === 'patterns')
+        .map((p) => ({ id: p.id, title: p.title, url: pageUrl(site, p), summary: p.summary })),
+      answers: resolved
+        .filter((p) => p.group === 'answers')
         .map((p) => ({ id: p.id, title: p.title, url: pageUrl(site, p), summary: p.summary })),
       components: [],
     },

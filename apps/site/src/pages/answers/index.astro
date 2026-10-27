@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { answersPages } from '../../data/pages'
+import { answerById } from '../../data/answers'
+
+const title = 'Answers'
+const description = 'Direct, citable answers about the RamosLabs Design System, with measured data from the tokens.'
+---
+<BaseLayout title={title} description={description} path="/answers/">
+  <div class="an-idx">
+    <h1>Answers</h1>
+    <p>Direct answers to common questions, with the exact token names, values, and contrast ratios from <code>@ramoslabs/tokens</code>.</p>
+    <ul>
+      {answersPages.map((p) => (
+        <li>
+          <a href={p.path}>{p.title}</a>
+          <p>{answerById(p.id)?.short.replace(/`/g, '')}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .an-idx { max-width: 46rem; font-family: var(--font-family-sans); color: var(--color-text-body); }
+  .an-idx h1 { font-family: var(--font-family-display); font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: var(--color-text-heading); margin: 0 0 var(--space-4); }
+  .an-idx ul { list-style: none; padding: 0; margin: var(--space-8) 0 0; }
+  .an-idx li { padding: var(--space-5) 0; border-top: 1px solid var(--color-border); }
+  .an-idx li a { font-weight: 700; font-size: 1.1rem; color: var(--color-primary-dark); }
+  .an-idx li p { margin: var(--space-2) 0 0; line-height: 1.6; color: var(--color-text-secondary); }
+</style>
