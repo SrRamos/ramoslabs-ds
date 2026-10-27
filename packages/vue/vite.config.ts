@@ -27,7 +27,7 @@ export default defineConfig({
       fileName: (_format, name) => `${name}.js`,
     },
     rollupOptions: {
-      external: ['vue', '@ramoslabs/tokens', '@ramoslabs/tokens/css'],
+      external: ['vue', '@ramoslabs/tokens', '@ramoslabs/tokens/css', /^@ramoslabs\/core(\/.*)?$/],
     },
   },
 });

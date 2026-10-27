@@ -21,9 +21,8 @@ Branch `feature/m1-r2-vue-runtime`. Code: `packages/vue/src/runtime/{context,sto
 - `makeStore` option is a test seam (counting listeners / destroy calls); default is core `createStore`.
 
 ## Deviations / shared-file changes
-- `packages/vue/package.json`: added `@ramoslabs/core: workspace:*` as a **devDependency** (needed to import core; stays zero runtime deps; core is bundled into
-  the vue entries since the vite `external` list is not mine). Core code is therefore duplicated per entry; the shared-chunk/external decision belongs to the build owner.
-- Visually-hidden live nodes use inline style (adapters never import CSS, ADR-002); the px values are not design tokens.
+- `packages/vue/package.json`: `@ramoslabs/core: workspace:*` in `dependencies` (coordinator decision, same as React/vanilla); `vite.config.ts` marks `^@ramoslabs/core(/.*)?$` external, so core is never bundled.
+- Visually-hidden live nodes use inline style (adapters never import CSS, ADR-002); the px values are not design tokens. G1 question: keep inline or move to a css class.
 - The Vue vitest env is `node`; tests use `createRenderer` from `vue` with a no-DOM renderer.
 
 ## Bytes

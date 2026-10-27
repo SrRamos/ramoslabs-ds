@@ -150,8 +150,10 @@
     "packages/vue": {
       "name": "@ramoslabs/vue",
       "version": "0.0.0",
-      "devDependencies": {
+      "dependencies": {
         "@ramoslabs/core": "workspace:*",
+      },
+      "devDependencies": {
         "@ramoslabs/tokens": "workspace:*",
         "@types/node": "^22.0.0",
         "@vitejs/plugin-vue": "^6.0.0",
