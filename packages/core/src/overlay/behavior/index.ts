@@ -11,6 +11,8 @@ declare const Event: new (type: string, init?: { cancelable?: boolean }) => unkn
 export type OverlayKind = 'modal' | 'auto' | 'hint' | 'manual';
 
 export interface OverlayEl extends FocusEl {
+  /** Platform `open` of a dialog/popover; read after `requestClose()` to see if `cancel` was prevented. */
+  readonly open?: boolean;
   contains?(n: unknown): boolean;
   showModal?(): void;
   showPopover?(): void;
@@ -137,8 +139,11 @@ export function createOverlayStack(opts: OverlayOptions): OverlayStack {
       const entry = find(el);
       if (!entry) return false;
       if (entry.kind === 'modal') {
-        if (supports.dialogRequestClose && el.requestClose) el.requestClose();
-        else {
+        if (supports.dialogRequestClose && el.requestClose) {
+          el.requestClose();
+          // A consumer-prevented `cancel` leaves the dialog open: keep the entry, restore nothing.
+          if (el.open === true) return false;
+        } else {
           const ev = opts.cancelEvent
             ? opts.cancelEvent()
             : new Event('cancel', { cancelable: true });

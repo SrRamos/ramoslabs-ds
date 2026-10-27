@@ -191,6 +191,16 @@ describe('close tiers (step 7)', () => {
     expect(t.stack.entries).toHaveLength(1);
     expect(t.closed).toHaveLength(0);
   });
+  it('tier 1 with a prevented cancel (dialog stays open) keeps the entry and restores nothing', () => {
+    const { stack, closed } = mk({ rc: true });
+    const d = new El('d');
+    Object.defineProperty(d, 'open', { value: true });
+    open(stack, d, 'modal', new El('o'));
+    expect(stack.close(d)).toBe(false);
+    expect(d.calls).toEqual(['requestClose']);
+    expect(stack.entries).toHaveLength(1);
+    expect(closed).toHaveLength(0);
+  });
   it('falls back to requestClose absence when supports flag lies', () => {
     const { stack } = mk({ rc: true });
     const d = new El('d');
