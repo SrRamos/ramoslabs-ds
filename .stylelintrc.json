@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/stylelintrc",
+  "//": "Root stylelint config. Token-only rule set is extended by the css lint task (W1-202).",
+  "rules": {
+    "color-no-hex": true,
+    "declaration-no-important": true,
+    "block-no-empty": true,
+    "no-duplicate-selectors": true,
+    "length-zero-no-unit": true
+  }
+}

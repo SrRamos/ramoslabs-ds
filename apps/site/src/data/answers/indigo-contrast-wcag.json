@@ -13,9 +13,21 @@
         "caption": "WCAG 2.2 contrast thresholds",
         "head": ["Criterion", "Level", "Requirement"],
         "rows": [
-          ["SC 1.4.3 Contrast (Minimum){ref:sc143}", "AA", "4.5:1 for text; 3:1 for large-scale text"],
-          ["SC 1.4.6 Contrast (Enhanced){ref:sc146}", "AAA", "7:1 for text; 4.5:1 for large-scale text"],
-          ["SC 1.4.11 Non-text Contrast{ref:sc1411}", "AA", "3:1 for UI components and states against adjacent colors"]
+          [
+            "SC 1.4.3 Contrast (Minimum){ref:sc143}",
+            "AA",
+            "4.5:1 for text; 3:1 for large-scale text"
+          ],
+          [
+            "SC 1.4.6 Contrast (Enhanced){ref:sc146}",
+            "AAA",
+            "7:1 for text; 4.5:1 for large-scale text"
+          ],
+          [
+            "SC 1.4.11 Non-text Contrast{ref:sc1411}",
+            "AA",
+            "3:1 for UI components and states against adjacent colors"
+          ]
         ]
       }
     },

@@ -1,0 +1,49 @@
+{
+  "target": {
+    "$type": "dimension",
+    "min": {
+      "$value": "2.75rem",
+      "$description": "44px. Minimum touch target for any interactive control (mobile-first floor)."
+    },
+    "floor": {
+      "$value": "1.5rem",
+      "$description": "24px. Absolute WCAG 2.5.8 target-size floor, only for a documented exception."
+    }
+  },
+  "focus": {
+    "ring": {
+      "$type": "dimension",
+      "width": {
+        "$value": "0.125rem",
+        "$description": "2px. Thickness of the focus indicator edge, matching the indigo edge of shadow.focus (WCAG 2.4.13 area)."
+      },
+      "offset": {
+        "$value": "0.125rem",
+        "$description": "2px. Gap between the control and the focus indicator edge, matching the white gap of shadow.focus."
+      }
+    }
+  },
+  "control": {
+    "text-min": {
+      "$type": "dimension",
+      "$value": "1rem",
+      "$description": "16px. Minimum font size of any text-entry control, so iOS Safari does not zoom on focus."
+    }
+  },
+  "scroll": {
+    "margin": {
+      "$type": "dimension",
+      "$value": "{target.min}",
+      "$description": "Scroll margin for scrollIntoView of an active or focused item, so sticky or fixed bars never obscure it (WCAG 2.4.11)."
+    }
+  },
+  "border": {
+    "width": {
+      "$type": "dimension",
+      "hairline": {
+        "$value": "1px",
+        "$description": "The one documented raw 1px hairline. Dividers and input outlines; never for focus or emphasis."
+      }
+    }
+  }
+}

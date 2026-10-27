@@ -32,7 +32,12 @@
         "head": ["Background", "Hex", "Ratio", "Reaches 4.5:1"],
         "rows": [
           ["`--color-surface`", "#ffffff{ref:ds-tokens}", "4.76:1{ref:measured}", "Yes"],
-          ["`--color-surface-secondary`", "#f8fafc{ref:ds-tokens}", "4.55:1{ref:measured}", "Yes, barely"],
+          [
+            "`--color-surface-secondary`",
+            "#f8fafc{ref:ds-tokens}",
+            "4.55:1{ref:measured}",
+            "Yes, barely"
+          ],
           ["`--color-primary-surface`", "#eef2ff{ref:ds-tokens}", "4.26:1{ref:measured}", "No"]
         ]
       }

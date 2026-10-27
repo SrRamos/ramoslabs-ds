@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RamosLabs floor-device registry",
+  "description": "Each device row validates against the environment definition of the evidence manifest (ADR-013; W1-504).",
+  "type": "object",
+  "required": ["devices"],
+  "additionalProperties": false,
+  "properties": {
+    "devices": {
+      "type": "array",
+      "items": { "$ref": "../manifest/evidence-manifest.schema.json#/$defs/environment" }
+    }
+  }
+}

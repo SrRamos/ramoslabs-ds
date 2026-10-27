@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (214 tokens)
+## Token reference (225 tokens)
 
 ### breakpoint (5)
 
@@ -157,6 +157,38 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-border-subtle` | `#f1f5f9` |
 | `--color-focus` | `#4f46e5` |
 
+### target (2)
+
+| Token | Value |
+| --- | --- |
+| `--target-min` | `2.75rem` |
+| `--target-floor` | `1.5rem` |
+
+### focus (2)
+
+| Token | Value |
+| --- | --- |
+| `--focus-ring-width` | `0.125rem` |
+| `--focus-ring-offset` | `0.125rem` |
+
+### control (1)
+
+| Token | Value |
+| --- | --- |
+| `--control-text-min` | `1rem` |
+
+### scroll (1)
+
+| Token | Value |
+| --- | --- |
+| `--scroll-margin` | `2.75rem` |
+
+### border (1)
+
+| Token | Value |
+| --- | --- |
+| `--border-width-hairline` | `1px` |
+
 ### duration (3)
 
 | Token | Value |
@@ -174,6 +206,15 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--easing-out` | `cubic-bezier(0, 0, 0.2, 1)` |
 | `--easing-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` |
 | `--easing-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` |
+
+### overlay (4)
+
+| Token | Value |
+| --- | --- |
+| `--overlay-max-width` | `24rem` |
+| `--overlay-max-height` | `20rem` |
+| `--overlay-dialog-max-width` | `32rem` |
+| `--overlay-viewport-margin` | `1rem` |
 
 ### radius (8)
 

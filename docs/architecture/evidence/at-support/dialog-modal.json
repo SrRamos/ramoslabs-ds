@@ -1,0 +1,236 @@
+{
+  "pattern": "dialog-modal",
+  "recommended": {
+    "variant": "Native dialog.showModal with visible title, real background inertness, deliberate initial focus, contained navigation, Escape, deterministic focus return, and only short optional descriptions.",
+    "constraints": {
+      "focusStrategy": "native",
+      "mustNot": [
+        "aria-modal-without-inert",
+        "large-aria-describedby"
+      ]
+    },
+    "supportedBy": [
+      "crossat-crossbrowser-apg-dialog"
+    ],
+    "atEvidence": {
+      "nvda": [
+        "nvda-chrome-ariaat265",
+        "nvda-chrome-nvda17395"
+      ],
+      "jaws": [
+        "jaws-chrome-ariaat506",
+        "jaws-chrome-jaws662"
+      ],
+      "voiceover-macos": [
+        "vo-macos-safari-ariaat263"
+      ],
+      "voiceover-ios": [
+        "vo-ios-safari-a11ysupport-modal"
+      ],
+      "talkback": [
+        "talkback-chrome-a11ysupport-modal"
+      ]
+    }
+  },
+  "entries": [
+    {
+      "id": "crossat-crossbrowser-apg-dialog",
+      "pattern": "dialog-modal",
+      "kind": "contract",
+      "at": "cross-AT",
+      "at_version": null,
+      "browser": "cross-browser",
+      "browser_version": null,
+      "platform": "cross",
+      "platform_version": null,
+      "behavior": "APG requires actual modality, accessible naming, initial and returned focus, contained Tab navigation, Escape, and omission of large structured aria-describedby content.",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "source_date": "living document; no publication date shown",
+      "retrieved": "2026-10-27",
+      "source_tier": "T1",
+      "decision": "Use native showModal with APG naming/focus and real inertness; never use aria-modal as a substitute for behavior.",
+      "constraints": {
+        "focusStrategy": "native",
+        "mustNot": [
+          "aria-modal-without-inert",
+          "large-aria-describedby"
+        ]
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-01-27"
+    },
+    {
+      "id": "nvda-chrome-ariaat265",
+      "pattern": "dialog-modal",
+      "kind": "observation",
+      "at": "NVDA",
+      "at_version": "2024.1",
+      "browser": "Chrome",
+      "browser_version": "125",
+      "platform": "windows",
+      "platform_version": null,
+      "behavior": "CANDIDATE Modal Dialog report: 83 MUST assertions passed, 0 failed; multiple moderate and severe excessive-verbosity side effects were recorded, including repeated controls and dialog content. MUST counts exclude ARIA-AT's per-command negative-side-effect assertions; side effects are reported separately.",
+      "impact": "degraded",
+      "source_url": "https://aria-at.w3.org/report/147736/targets/265",
+      "source_date": "results completed through 2024-06-24; test plan V24.06.07",
+      "retrieved": "2026-10-27",
+      "source_tier": "T1",
+      "decision": "Keep short descriptions and structured-content initial focus; test actual speech despite all MUST assertions passing.",
+      "constraints": {
+        "focusStrategy": "native",
+        "mustNot": [
+          "large-aria-describedby"
+        ]
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-01-27"
+    },
+    {
+      "id": "jaws-chrome-ariaat506",
+      "pattern": "dialog-modal",
+      "kind": "observation",
+      "at": "JAWS",
+      "at_version": "2025.2508.120",
+      "browser": "Chrome",
+      "browser_version": "143",
+      "platform": "windows",
+      "platform_version": null,
+      "behavior": "CANDIDATE Modal Dialog report: 83 MUST assertions passed, 0 failed, and no negative side effects recorded. MUST counts exclude ARIA-AT's per-command negative-side-effect assertions; side effects are reported separately.",
+      "impact": "none",
+      "source_url": "https://aria-at.w3.org/report/147736/targets/506",
+      "source_date": "results completed through 2025-12-23; test plan V24.06.07",
+      "retrieved": "2026-10-27",
+      "source_tier": "T1",
+      "decision": "Retain native showModal and APG focus/naming.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-01-27"
+    },
+    {
+      "id": "vo-macos-safari-ariaat263",
+      "pattern": "dialog-modal",
+      "kind": "observation",
+      "at": "VoiceOver",
+      "at_version": "14.4.1",
+      "browser": "Safari",
+      "browser_version": "17",
+      "platform": "macos",
+      "platform_version": null,
+      "behavior": "CANDIDATE Modal Dialog report: 50 MUST assertions passed and 14 failed; two severe side effects recorded cursors not moving to the intended position/control. MUST counts exclude ARIA-AT's per-command negative-side-effect assertions; side effects are reported separately.",
+      "impact": "degraded",
+      "source_url": "https://aria-at.w3.org/report/147736/targets/263",
+      "source_date": "results completed through 2024-06-18; test plan V24.06.07",
+      "retrieved": "2026-10-27",
+      "source_tier": "T1",
+      "decision": "Verify initial focus, containment, and return in the current real VoiceOver lane; do not transfer the old JAWS pass.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "pending-real-test",
+      "next_review": "2027-01-27"
+    },
+    {
+      "id": "talkback-chrome-a11ysupport-modal",
+      "pattern": "dialog-modal",
+      "kind": "observation",
+      "at": "TalkBack",
+      "at_version": "13.5",
+      "browser": "Chrome",
+      "browser_version": "108",
+      "platform": "android",
+      "platform_version": null,
+      "behavior": "The historical APG modal matrix reports failure both for conveying aria-modal presence and for limiting reading to dialog children; aria-modal alone therefore leaves background content reachable in this observation.",
+      "impact": "blocker",
+      "source_url": "https://a11ysupport.io/tech/aria/aria-modal_attribute",
+      "source_date": "page updated 2025-08-15; underlying TalkBack result 2023",
+      "retrieved": "2026-10-27",
+      "source_tier": "T2",
+      "decision": "Native showModal and actual inertness/focus containment are mandatory; do not rely on aria-modal alone on Android.",
+      "constraints": {
+        "focusStrategy": "native",
+        "mustNot": [
+          "aria-modal-without-inert"
+        ]
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-01-27"
+    },
+    {
+      "id": "vo-ios-safari-a11ysupport-modal",
+      "pattern": "dialog-modal",
+      "kind": "observation",
+      "at": "VoiceOver",
+      "at_version": "16.2",
+      "browser": "Safari",
+      "browser_version": "16.2",
+      "platform": "ios",
+      "platform_version": null,
+      "behavior": "The historical matrix passes aria-modal presence but reports only partial reading containment for this pair; current background reachability remains pending.",
+      "impact": "degraded",
+      "source_url": "https://a11ysupport.io/tech/aria/aria-modal_attribute",
+      "source_date": "page updated 2025-08-15; underlying VoiceOver result 2023",
+      "retrieved": "2026-10-27",
+      "source_tier": "T2",
+      "decision": "Use actual native inertness and verify swipe/rotor background exclusion on current iOS.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "pending-real-test",
+      "next_review": "2027-01-27"
+    },
+    {
+      "id": "nvda-chrome-nvda17395",
+      "pattern": "dialog-modal",
+      "kind": "observation",
+      "at": "NVDA",
+      "at_version": null,
+      "browser": "Chrome",
+      "browser_version": null,
+      "platform": "windows",
+      "platform_version": null,
+      "behavior": "NVDA 17352 reported reading all dialog content without aria-describedby; it was closed and converted to discussion 17395 on 2024-11-12. This is a historical verbosity lead, not an open current defect.",
+      "impact": "degraded",
+      "source_url": "https://github.com/nvaccess/nvda/discussions/17395",
+      "source_date": "opened 2024-11-04; issue closed/converted 2024-11-12",
+      "retrieved": "2026-10-27",
+      "source_tier": "T1",
+      "decision": "Test short and structured description variants; do not add a large description as a universal workaround.",
+      "constraints": {
+        "focusStrategy": "native",
+        "mustNot": [
+          "large-aria-describedby"
+        ]
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-01-27"
+    },
+    {
+      "id": "jaws-chrome-jaws662",
+      "pattern": "dialog-modal",
+      "kind": "observation",
+      "at": "JAWS",
+      "at_version": null,
+      "browser": "Chrome",
+      "browser_version": null,
+      "platform": "windows",
+      "platform_version": null,
+      "behavior": "JAWS 662 reports announcing the entire dialog the first time a button is focused; duplicate report 700 was closed on 2023-06-01. Issue 662 was closed as wontfix, not a JAWS bug; the maintainer's resolution was to give the dialog an accessible name with aria-labelledby, which the recommended variant already requires. This is a verbosity observation, not evidence against native showModal.",
+      "impact": "degraded",
+      "source_url": "https://github.com/FreedomScientific/standards-support/issues/662",
+      "source_date": "opened 2022-08-17; duplicate 700 closed 2023-06-01",
+      "retrieved": "2026-10-27",
+      "source_tier": "T1",
+      "decision": "Use short optional descriptions and content-dependent initial focus; test actual JAWS output.",
+      "constraints": {
+        "focusStrategy": "native",
+        "mustNot": [
+          "large-aria-describedby"
+        ]
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-01-27"
+    }
+  ]
+}

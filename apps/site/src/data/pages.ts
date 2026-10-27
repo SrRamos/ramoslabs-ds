@@ -6,19 +6,19 @@
 // `contentFile` points at the distilled plain-text body under agentic/content, which
 // the agentic layer inlines for AI agents.
 
-export type PageGroup = 'root' | 'agents' | 'answers' | 'foundations' | 'patterns'
+export type PageGroup = 'root' | 'agents' | 'answers' | 'foundations' | 'patterns';
 
 export type Page = {
-  id: string
-  title: string
-  group: PageGroup
-  path: string
-  summary: string
-  icon: string // Material Symbols ligature, used by the sidebar
-  contentFile: string // relative to apps/site/agentic/content
-  interactive?: boolean // true if the page ships a JS island
-  nav?: string // short sidebar label when the title is long (question-led Answers pages)
-}
+  id: string;
+  title: string;
+  group: PageGroup;
+  path: string;
+  summary: string;
+  icon: string; // Material Symbols ligature, used by the sidebar
+  contentFile: string; // relative to apps/site/agentic/content
+  interactive?: boolean; // true if the page ships a JS island
+  nav?: string; // short sidebar label when the title is long (question-led Answers pages)
+};
 
 export const SITE = {
   title: 'RamosLabs Design System',
@@ -27,8 +27,9 @@ export const SITE = {
   website: 'https://ramoslabs.com',
   repo: 'https://github.com/SrRamos/ramoslabs-ds',
   license: 'MIT',
-  attribution: 'RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.',
-} as const
+  attribution:
+    'RamosLabs Design System by RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com), MIT License.',
+} as const;
 
 export const pages: Page[] = [
   {
@@ -37,7 +38,8 @@ export const pages: Page[] = [
     group: 'root',
     path: '/',
     icon: 'menu_book',
-    summary: 'What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth',
+    summary:
+      'What the RamosLabs DS is, its three-tier taxonomy, naming scheme, and single token source of truth',
     contentFile: 'Introduction.md',
   },
   {
@@ -111,7 +113,8 @@ export const pages: Page[] = [
     group: 'answers',
     path: '/answers/ramoslabs-ds-vs-material-vs-tailwind/',
     icon: 'layers',
-    summary: 'A sourced side-by-side of what each one ships, with only claims their own docs support',
+    summary:
+      'A sourced side-by-side of what each one ships, with only claims their own docs support',
     contentFile: 'answers/ramoslabs-ds-vs-material-vs-tailwind.md',
   },
 
@@ -142,7 +145,8 @@ export const pages: Page[] = [
     group: 'foundations',
     path: '/foundations/spacing/',
     icon: 'space_bar',
-    summary: 'A 4px base with an 8px rhythm, fourteen fixed steps, touch-target floors, and density rules',
+    summary:
+      'A 4px base with an 8px rhythm, fourteen fixed steps, touch-target floors, and density rules',
     contentFile: 'foundations/Spacing.md',
   },
   {
@@ -308,22 +312,22 @@ export const pages: Page[] = [
       'The AI-content pattern: label generated output, communicate uncertainty, show generation states, keep a human in the loop, plan for wrong answers, one-tap feedback, and data disclosure, under a disclosed-bounded-checkable-reversible contract',
     contentFile: 'patterns/AIInsights.md',
   },
-]
+];
 
-export const rootPages = pages.filter((p) => p.group === 'root')
-export const agentsPages = pages.filter((p) => p.group === 'agents')
-export const answersPages = pages.filter((p) => p.group === 'answers')
-export const foundationsPages = pages.filter((p) => p.group === 'foundations')
-export const patternsPages = pages.filter((p) => p.group === 'patterns')
-export const rootPage = pages.find((p) => p.group === 'root')!
+export const rootPages = pages.filter((p) => p.group === 'root');
+export const agentsPages = pages.filter((p) => p.group === 'agents');
+export const answersPages = pages.filter((p) => p.group === 'answers');
+export const foundationsPages = pages.filter((p) => p.group === 'foundations');
+export const patternsPages = pages.filter((p) => p.group === 'patterns');
+export const rootPage = pages.find((p) => p.group === 'root')!;
 
 export function pageByPath(pathname: string): Page | undefined {
-  const normalized = pathname.endsWith('/') ? pathname : pathname + '/'
-  return pages.find((p) => p.path === normalized)
+  const normalized = pathname.endsWith('/') ? pathname : pathname + '/';
+  return pages.find((p) => p.path === normalized);
 }
 
 // Markdown twin of a doc page: '/' -> '/index.md', '/foundations/colors/' -> '/foundations/colors.md'.
 // Shared by the build (writes the files) and the Worker (Link header, Accept negotiation).
 export function mdPathFor(pagePath: string): string {
-  return pagePath === '/' ? '/index.md' : `${pagePath.replace(/\/$/, '')}.md`
+  return pagePath === '/' ? '/index.md' : `${pagePath.replace(/\/$/, '')}.md`;
 }

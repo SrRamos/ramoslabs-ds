@@ -1,0 +1,66 @@
+{
+  "$comment": "Shared-kernel ceilings only (ADR-011, provisional, revisable only by ADR). Component ceilings are read from each contract's `budgets.gzipKiB` block (ADR-010), never duplicated here. Sizes are minified + gzip KiB; entries are core modules measured together as one bundle.",
+  "bundler": "esbuild",
+  "rows": [
+    {
+      "id": "store",
+      "label": "Snapshot/subscription utility",
+      "ceilingKiB": 1,
+      "entries": ["packages/core/src/store/index.ts"]
+    },
+    {
+      "id": "overlay",
+      "label": "Overlay + geometry fallback (shared)",
+      "ceilingKiB": 4,
+      "entries": ["packages/core/src/overlay/index.ts"]
+    },
+    {
+      "id": "collection",
+      "label": "Collection + focus kernel (shared)",
+      "ceilingKiB": 3,
+      "entries": [
+        "packages/core/src/collection/index.ts",
+        "packages/core/src/focus/index.ts",
+        "packages/core/src/typeahead/index.ts"
+      ]
+    },
+    {
+      "id": "live",
+      "label": "Live-region registry (shared)",
+      "ceilingKiB": 1,
+      "entries": ["packages/core/src/live/index.ts"]
+    },
+    {
+      "id": "kinds",
+      "label": "Field-kinds resolver + number parser (shared)",
+      "ceilingKiB": 2,
+      "entries": ["packages/core/src/kinds/index.ts", "packages/core/src/number/index.ts"]
+    },
+    {
+      "id": "fixture",
+      "label": "Unused component in a fixture importing another",
+      "ceilingKiB": 0,
+      "fixture": {
+        "entry": "packages/testing/size/fixtures/unused-component/consumer.ts",
+        "unused": "packages/testing/size/fixtures/unused-component/b.ts"
+      }
+    }
+  ],
+  "sharedModules": [
+    "store",
+    "ids",
+    "runtime",
+    "effects",
+    "merge",
+    "controlled",
+    "collection",
+    "focus",
+    "typeahead",
+    "overlay",
+    "live",
+    "kinds",
+    "number"
+  ],
+  "adapters": ["react", "vue", "vanilla"],
+  "peers": ["react", "react-dom", "vue", "@ramoslabs/core", "@ramoslabs/tokens"]
+}
