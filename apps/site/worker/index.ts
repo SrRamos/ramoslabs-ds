@@ -10,6 +10,7 @@
 
 import { pages, mdPathFor } from '../src/data/pages'
 import { prefersMarkdown } from './negotiate'
+import { aiBotsSql, aiReferralsSql, summarizeAiBots, summarizeAiReferrals } from './ai-traffic'
 
 // Cloudflare Analytics Engine — cookieless, no-PII, server-side usage telemetry.
 // writeDataPoint is synchronous and non-blocking (no added response latency).
@@ -478,14 +479,25 @@ async function npmSeries(): Promise<Array<{ day: string; downloads: number }>> {
 async function usageAggregates(env: Env) {
   if (!env.CF_ACCOUNT_ID || !env.CF_ANALYTICS_TOKEN) return null
   const W = `timestamp > NOW() - INTERVAL '30' DAY`
-  const [byType, mcpByTool, topPages, agentFiles] = await Promise.all([
+  const [byType, mcpByTool, topPages, agentFiles, botRows, referralRows] = await Promise.all([
     queryAE(env, `SELECT index1 AS type, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE ${W} GROUP BY type`),
     queryAE(env, `SELECT blob3 AS detail, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'mcp' AND ${W} GROUP BY detail ORDER BY n DESC LIMIT 20`),
     queryAE(env, `SELECT blob2 AS path, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'page' AND ${W} GROUP BY path ORDER BY n DESC LIMIT 15`),
     queryAE(env, `SELECT blob3 AS file, SUM(_sample_interval) AS n FROM ${AE_DATASET} WHERE index1 = 'agent_file' AND ${W} GROUP BY file ORDER BY n DESC LIMIT 15`),
+    queryAE(env, aiBotsSql(AE_DATASET, W)),
+    queryAE(env, aiReferralsSql(AE_DATASET, W)),
   ])
   if (!byType) return null
-  return { window: 'last-30-days', byType, mcpByTool: mcpByTool ?? [], topPages: topPages ?? [], agentFiles: agentFiles ?? [] }
+  return {
+    window: 'last-30-days',
+    byType,
+    mcpByTool: mcpByTool ?? [],
+    topPages: topPages ?? [],
+    agentFiles: agentFiles ?? [],
+    // Hits by AI bot (matched on User-Agent) and human visits sent by an AI assistant (Referer).
+    aiBots: summarizeAiBots(botRows ?? []),
+    aiReferrals: summarizeAiReferrals(referralRows ?? []),
+  }
 }
 
 // PUBLIC surface (linked from /agents/ and llms.txt): npm downloads only — data that is

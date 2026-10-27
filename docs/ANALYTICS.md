@@ -14,6 +14,7 @@ miss exactly the traffic we most want to see. Measuring in the Worker captures a
 |---|---|---|
 | **Page views** | Cloudflare Analytics Engine | The Worker runs on every request (`run_worker_first`) and records a `page` event for each HTML GET. |
 | **Agent-file fetches** | Cloudflare Analytics Engine | A `agent_file` event for each GET of `llms.txt`, `llms-full.txt`, `tokens.json`, `registry.json`, `skill.md`, `AGENTS.md`, `robots.txt`, `stats.json`. This is the AI-adoption signal. |
+| **Markdown fetches** | Cloudflare Analytics Engine | A `markdown` event for each Markdown twin served: `detail` is `extension` (`/<route>.md`) or `negotiated` (`Accept: text/markdown` on the normal URL). |
 | **MCP usage** | Cloudflare Analytics Engine | An `mcp` event per JSON-RPC message, tagged by method. `initialize` ≈ a new connection (the transport is stateless HTTP); `tools/call:<tool>` counts which tools agents actually use. |
 | **Token downloads** | npm public API | `@ramoslabs/tokens` download counts (day/week/month). Surfaced live at `/stats.json` and as a README badge. |
 | **Repo interest** | GitHub | Clones/views via the GitHub traffic API (not yet wired; read on demand). |
@@ -88,6 +89,25 @@ GROUP BY file ORDER BY hits DESC
 
 (Column mapping: `index1` = type; `blob1` = type, `blob2` = path, `blob3` = detail,
 `blob4` = user-agent, `blob5` = referer, `blob6` = country, `blob7` = colo; `double1` = 1.)
+
+## AI traffic breakdown
+
+`/metricas` and `/metricas.json` split the last 30 days by AI actor, all from fields the events
+already carry (no new data is collected):
+
+- **AI bots (by user agent):** hits per bot (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot,
+  Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, Applebot, bingbot, DuckAssistBot,
+  MistralAI-User, CCBot, Bytespider, Amazonbot, Meta-ExternalAgent, cohere-ai, Diffbot), each with
+  its vendor, kind (training, search, user) and a count per event type. The list lives in
+  `apps/site/worker/ai-traffic.ts`.
+- **Visits from AI assistants (referrer):** page views whose `Referer` host is chatgpt.com
+  (and legacy chat.openai.com), perplexity.ai, claude.ai, gemini.google.com or
+  copilot.microsoft.com.
+
+Limits to keep in mind: a user agent can be spoofed, so these are claimed bots, not verified ones
+(Cloudflare AI Crawl Control verifies them). Many assistants open links with `noreferrer` or
+strip the referrer, so the referral count is a floor. The SQL `LIKE` match is case-sensitive; the
+dashboard classification is not.
 
 ## Privacy
 
