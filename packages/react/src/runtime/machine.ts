@@ -6,6 +6,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useReducer,
   useRef,
   useSyncExternalStore,
 } from 'react';
@@ -73,6 +74,9 @@ export function useMachine<S extends object, E, X extends EffectInput, P extends
 ): Machine<S, E> {
   const { runtime, live } = useRuntimeBag();
   const opts = useRef(options);
+  // An effect-only dispatch leaves the snapshot unchanged, so uSES would not re-render and no
+  // commit would drain it (G1 MUST-1). Bumping from `onEffects` forces the commit that drains.
+  const [, bump] = useReducer((n: number) => n + 1, 0);
 
   const inst = useMemoOnce<Instance<S, E, X>>(() => {
     const queue = createEffectQueue<X | AnnounceEffect>();
@@ -85,6 +89,7 @@ export function useMachine<S extends object, E, X extends EffectInput, P extends
     i.store = createStore<S, E, X | AnnounceEffect>(options.initial(), options.reduce, (fx, v) => {
       i.version = v;
       queue.enqueue(fx, v);
+      bump();
     });
     i.controlled = createControlled<S, E, P>({
       store: i.store,

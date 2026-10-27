@@ -169,6 +169,8 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
     const store: Store<S, E> = createStore<S, E, X>(spec.initial(props), spec.reduce, (fx, v) => {
       version = v;
       queue.enqueue(fx, v);
+      // The store listener fires only on a state change; an effect-only dispatch must still drain.
+      schedule();
     });
     const controlled = createControlled<S, E, P>({
       store,

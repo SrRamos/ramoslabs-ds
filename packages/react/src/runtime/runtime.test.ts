@@ -14,11 +14,19 @@ import type { Reducer } from '@ramoslabs/core/store';
 interface S {
   open: boolean;
 }
-type E = { type: 'set'; open: boolean } | { type: 'noop' };
+type E = { type: 'set'; open: boolean } | { type: 'noop' } | { type: 'fx' };
 type X = { type: 'open' | 'focus' | 'geometry'; target?: string };
 
 const reduce: Reducer<S, E, X | AnnounceEffect> = (s, e) => {
   if (e.type === 'noop') return { state: s };
+  if (e.type === 'fx')
+    return {
+      state: s,
+      effects: [
+        { type: 'focus', target: 't' },
+        { type: 'announce', text: 'End of list' },
+      ],
+    };
   return {
     state: s.open === e.open ? s : { open: e.open },
     effects: [
@@ -121,6 +129,21 @@ describe('SJProvider / useMachine (W1-120)', () => {
     expect(p.log).toEqual(['open:1', 'focus:1']);
     sched.flush();
     expect(host.texts).toEqual(['Opened']);
+  });
+
+  it('G1 MUST-1: an effect-only dispatch (state unchanged) drains layout and passive effects', () => {
+    const host = new FakeHost();
+    const sched = createFakeScheduler();
+    const W = wrap(host, sched);
+    const p = newProbe();
+    const C = makeComp(p);
+    mount(createElement(W, null, createElement(C)));
+    const before = p.m.state;
+    act(() => p.m.dispatch({ type: 'fx' }));
+    expect(p.m.state).toBe(before);
+    expect(p.log).toEqual(['focus:1']);
+    sched.flush();
+    expect(host.texts).toEqual(['End of list']);
   });
 
   it('render performs no effects: run is never called while rendering', () => {
