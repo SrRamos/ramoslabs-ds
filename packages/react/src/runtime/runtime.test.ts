@@ -3,7 +3,8 @@ import { createElement, Fragment, StrictMode, act, type ReactNode } from 'react'
 import { create, type ReactTestRenderer } from 'react-test-renderer';
 import { renderToString } from 'react-dom/server';
 import { createFakeScheduler, createRuntime } from '@ramoslabs/core/runtime';
-import type { LiveHost, LiveNode, LiveRole } from '@ramoslabs/core/live';
+import { HIDDEN_STYLE, type LiveHost, type LiveNode, type LiveRole } from '@ramoslabs/core/live';
+import { createDomLiveHost } from './live-host';
 import { SJProvider, useMachine, useRuntime } from './index';
 import type { AnnounceEffect, Machine } from './index';
 import type { Reducer } from '@ramoslabs/core/store';
@@ -361,4 +362,16 @@ describe('retention: 1,000 mount/unmount cycles (L2 invariant)', () => {
     const alive = refs.filter((r) => r.deref() !== undefined).length;
     expect(alive).toBeLessThanOrEqual(2); // allow the last couple of fibers React may defer
   }, 60_000);
+});
+
+describe('live host (G1 MUST-3)', () => {
+  it('default DOM host hides its nodes inline, without a stylesheet', () => {
+    const attrs: Record<string, string> = {};
+    const doc = {
+      body: { appendChild: () => undefined },
+      createElement: () => ({ setAttribute: (k: string, v: string) => (attrs[k] = v) }),
+    } as unknown as Document;
+    createDomLiveHost(doc).create('status');
+    expect(attrs.style).toBe(HIDDEN_STYLE);
+  });
 });

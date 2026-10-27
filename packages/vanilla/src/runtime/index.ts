@@ -17,6 +17,7 @@ import {
 } from '@ramoslabs/core/effects';
 import { baseId, itemId, partId } from '@ramoslabs/core/ids';
 import {
+  HIDDEN_STYLE,
   createLiveRegistry,
   type LiveHost,
   type LiveNode,
@@ -100,7 +101,7 @@ export interface VanillaHost {
   destroy(): void;
 }
 
-/** Light-DOM, text-only live node. `sj-sr-only` is the css stream's visually-hidden class. */
+/** Light-DOM, text-only live node. Hidden by the inline `HIDDEN_STYLE`; `sj-sr-only` stays as a hook. */
 function domLiveHost(doc: Document, made: Element[]): LiveHost {
   return {
     create(role: LiveRole): LiveNode {
@@ -108,7 +109,8 @@ function domLiveHost(doc: Document, made: Element[]): LiveHost {
       node.setAttribute('role', role);
       node.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
       node.setAttribute('aria-atomic', 'true');
-      node.className = 'sj-sr-only';
+      node.setAttribute('style', HIDDEN_STYLE);
+      node.className = 'sj-sr-only'; // styling hook only; hiding never depends on a stylesheet
       doc.body.appendChild(node);
       made.push(node);
       return { setText: (text) => void (node.textContent = text) };

@@ -1,9 +1,6 @@
 // DOM host for the live-region registry. `document` is read only inside `create`, which the
 // registry calls after `attach` (post-commit, client only), so the server render emits nothing.
-import type { LiveHost, LiveNode, LiveRole } from '@ramoslabs/core/live';
-
-const HIDDEN =
-  'position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0';
+import { HIDDEN_STYLE, type LiveHost, type LiveNode, type LiveRole } from '@ramoslabs/core/live';
 
 export interface DisposableLiveHost extends LiveHost {
   /** Removes every node this host created. Idempotent. */
@@ -20,7 +17,7 @@ export function createDomLiveHost(doc?: Document): DisposableLiveHost {
       el.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
       el.setAttribute('aria-atomic', 'true');
       el.setAttribute('data-sj-live', role);
-      el.setAttribute('style', HIDDEN);
+      el.setAttribute('style', HIDDEN_STYLE);
       d.body.appendChild(el);
       created.push(el);
       return {

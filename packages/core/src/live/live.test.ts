@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createFakeScheduler } from '../runtime';
-import { createLiveRegistry, type LiveHost, type LiveRole } from './index';
+import { HIDDEN_STYLE, createLiveRegistry, type LiveHost, type LiveRole } from './index';
 
 function setup() {
   const s = createFakeScheduler();
@@ -19,6 +19,12 @@ function setup() {
 }
 
 describe('live-region registry (W1-111, ADR-006)', () => {
+  it('G1 MUST-3: HIDDEN_STYLE hides visually without display/visibility (SR-exposed)', () => {
+    for (const p of ['position:absolute', 'width:1px', 'height:1px', 'overflow:hidden'])
+      expect(HIDDEN_STYLE).toContain(p);
+    expect(HIDDEN_STYLE).not.toMatch(/display:|visibility:/);
+  });
+
   it('server: no markup and no announcement before attach', () => {
     const t = setup();
     expect(t.r.announce('3 results')).toBe(false);

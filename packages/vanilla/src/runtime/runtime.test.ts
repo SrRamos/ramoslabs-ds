@@ -1,3 +1,4 @@
+import { HIDDEN_STYLE } from '@ramoslabs/core/live';
 import { createRuntime, createFakeScheduler, type FakeScheduler } from '@ramoslabs/core/runtime';
 import { describe, expect, it, vi } from 'vitest';
 import {
@@ -249,6 +250,7 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     expect((children[0] as { attrs: Record<string, string> }).attrs).toMatchObject({
       role: 'status',
       'aria-live': 'polite',
+      style: HIDDEN_STYLE,
     });
     host.destroy();
     expect((children[0] as { remove: ReturnType<typeof vi.fn> }).remove).toHaveBeenCalled();
