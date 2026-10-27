@@ -39,7 +39,16 @@ describe('registry from contracts', () => {
   it('copies test_status, evidence and dates verbatim, never upgrading them', () => {
     for (const c of contracts) {
       const out = components.find((x) => x.name === c.json.name);
-      expect(out?.atSupport).toEqual(c.json.a11y.atSupport);
+      expect(
+        out?.atSupport.map((r) =>
+          Object.fromEntries(Object.entries(r).filter(([k]) => k !== 'statement')),
+        ),
+      ).toEqual(c.json.a11y.atSupport);
+      for (const r of out?.atSupport ?? []) {
+        expect(typeof r.statement).toBe('string');
+        if (r.test_status === 'evidence-only')
+          expect(r.statement).toBe('implemented to documented evidence, not hands-on tested');
+      }
     }
     // evidence-only stays evidence-only (ADR-015)
     expect(

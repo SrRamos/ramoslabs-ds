@@ -3,6 +3,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
+import { atSupportMarkdown } from '../../../packages/contracts/scripts/at-wording.mjs';
 import { pages, SITE, mdPathFor, type Page } from '../src/data/pages';
 import { answerById, answerMarkdown } from '../src/data/answers';
 import {
@@ -243,7 +244,12 @@ RamosLabs. ${SITE.copyright}. ${SITE.website}
 `;
 }
 
-function buildLlmsFull(site: string, resolved: LoadedPage[], tokens: Tokens) {
+function buildLlmsFull(
+  site: string,
+  resolved: LoadedPage[],
+  tokens: Tokens,
+  components: ContractJson[],
+) {
   const s: string[] = [];
   s.push(`# ${SITE.title}`, '');
   s.push(`> ${SITE.tagline}`, '');
@@ -262,6 +268,17 @@ function buildLlmsFull(site: string, resolved: LoadedPage[], tokens: Tokens) {
   );
   s.push(`## Token reference (${tokens.total} tokens)`, '');
   s.push(tokenTableMarkdown(tokens));
+
+  if (components.length) {
+    s.push('## Component assistive-technology support (generated from the contracts)', '');
+    s.push(
+      'Per AT and platform status, copied from each contract (ADR-010, ADR-015). Wording is fixed by status.',
+      '',
+    );
+    for (const c of components) {
+      s.push(`### ${c.name}`, '', atSupportMarkdown(c.a11y.atSupport), '');
+    }
+  }
 
   for (const page of resolved) {
     s.push(`# ${page.title}`, '');
@@ -406,7 +423,7 @@ export function agentic(): AstroIntegration {
 
         const artifacts: Record<string, string> = {
           'llms.txt': buildLlmsTxt(site, resolved),
-          'llms-full.txt': buildLlmsFull(site, resolved, tokens),
+          'llms-full.txt': buildLlmsFull(site, resolved, tokens, contracts.components),
           'registry.json': buildRegistry(site, resolved, tokens, version, contracts) + '\n',
           'robots.txt': buildRobots(site),
         };

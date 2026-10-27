@@ -74,7 +74,7 @@ describe('output shape', () => {
     const { components } = loadContracts();
     for (const c of components) {
       const { slug } = names(c.name);
-      for (const f of ['machine', 'keyboard', 'aria', 'index'])
+      for (const f of ['machine', 'keyboard', 'aria', 'at-support', 'index'])
         expect(out).toHaveProperty([`packages/core/src/generated/${slug}/${f}.ts`]);
       for (const a of ADAPTERS)
         expect(out).toHaveProperty([`packages/${a}/src/generated/${slug}/types.ts`]);
