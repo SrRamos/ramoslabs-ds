@@ -1,0 +1,326 @@
+[
+  {
+    "key": "chromium-darwin-1x",
+    "scene": "probe-off",
+    "before": null,
+    "after": "964f2ac7fa1c14037679131d512a6d489049ffd992901c71e10d150958e6c557",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-1x",
+    "scene": "probe-on",
+    "before": null,
+    "after": "5a1def02c55655e9b220c393921e84c549e7a3c4427bd88bc648e9df4c65d7aa",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-1x",
+    "scene": "probe-disabled",
+    "before": null,
+    "after": "00ee69f8db9aeb7f475554a9a56141ae6006a31c6b29461633af5026288213df",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-1x",
+    "scene": "probe-focus",
+    "before": null,
+    "after": "b20232fcbb5905bb290249df6e35ad2e584e2f6449c06789836da2b84b6e0516",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-1x",
+    "scene": "type-specimen",
+    "before": null,
+    "after": "9b72422dc58001ada5e413ce6a24b9f46c51d0a6659de2a5d4be9ece126dba77",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-1x",
+    "scene": "color-swatches",
+    "before": null,
+    "after": "be7f03ad74ad5b37cb2bfe94eaa849df4fec3472e11d36c396683923e96c7e7f",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-2x",
+    "scene": "probe-off",
+    "before": null,
+    "after": "7fb23ce9b859f5f6e607d9b95d15e2c93b21132238d051d50c8daecab2885408",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-2x",
+    "scene": "probe-on",
+    "before": null,
+    "after": "8036b4c8322389ae9b19a35d26c0e7dc2459dbc3a25be2131098c159534db296",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-2x",
+    "scene": "probe-disabled",
+    "before": null,
+    "after": "5b0422a3c7022012c1f9ddf5ac8ab0b08f3a2cf9859b191592271e6cfffe4e74",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-2x",
+    "scene": "probe-focus",
+    "before": null,
+    "after": "2d4332ee85c85fd6298207a5a0fbc64dc0098364fea94a1d0076aa81144e473d",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-2x",
+    "scene": "type-specimen",
+    "before": null,
+    "after": "d571911217cc97bbc32a54611a00ca16d0533fe12d3cac98cf7d00355d2f0520",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "chromium-darwin-2x",
+    "scene": "color-swatches",
+    "before": null,
+    "after": "f8cde9d9d83fd3653150e99adf6e1f02af0071d23d5e30e8bb726e808573962d",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-1x",
+    "scene": "probe-off",
+    "before": null,
+    "after": "481e16eb5fc6e21f25777ea993bbc0d663cad52711a96f00f56e0c184c2eaf23",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-1x",
+    "scene": "probe-on",
+    "before": null,
+    "after": "651032bbb7a80f55e7b6f5437c9621dfe5f8c523e9759bd11429dd12b800c945",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-1x",
+    "scene": "probe-disabled",
+    "before": null,
+    "after": "2c6990fb15e940360f821bef4f3a265104c008a173d34cf14d1a8e281db4e1da",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-1x",
+    "scene": "probe-focus",
+    "before": null,
+    "after": "151a9879d0e087038e6177685a153b1103ab8b608208f4d651d33a88956cf4c0",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-1x",
+    "scene": "type-specimen",
+    "before": null,
+    "after": "dd374b9874936a7a2201bcb656366df6818874a7ba411df21c3b8fb7171dc910",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-1x",
+    "scene": "color-swatches",
+    "before": null,
+    "after": "e17a681d14f923743ab81d3013f806080bb0ec6faf2ac6cc3a1d12ade0376cb1",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-2x",
+    "scene": "probe-off",
+    "before": null,
+    "after": "aeb1630f2e4597a45dc72e2bbc212e05ffd67bfa6e2c627d83ebf80e9e9632a3",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-2x",
+    "scene": "probe-on",
+    "before": null,
+    "after": "8b6506b8bd39e3e294bf03d4c715074176d89a9b75b4ec687ae6a66927ce05bb",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-2x",
+    "scene": "probe-disabled",
+    "before": null,
+    "after": "bc14d4ab13957a9541f5ae7525db1de829671832fe22f6c233684ad1df133c84",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-2x",
+    "scene": "probe-focus",
+    "before": null,
+    "after": "0286d7ad9d73001404b9b1969440827f0984b998a11d74103c672b3ff5125648",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-2x",
+    "scene": "type-specimen",
+    "before": null,
+    "after": "d3e460b9ea3077fe5989a5cd3b52fc8570b3cc96b9a9f35c33f11bd5b429264a",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "firefox-darwin-2x",
+    "scene": "color-swatches",
+    "before": null,
+    "after": "dd247278036bd9bffc9703fd92969669239fd2adc0a2cdcbbae363dd4a0ca781",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-1x",
+    "scene": "probe-off",
+    "before": null,
+    "after": "0a52ac1c9651ddd49dfcc14b666f3c6534525ec34c12d40640a24576a0885c2b",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-1x",
+    "scene": "probe-on",
+    "before": null,
+    "after": "5eb11b2d015e52fcd5932debfaeb0bf02691a6feb8f982d842df4eed054e37ff",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-1x",
+    "scene": "probe-disabled",
+    "before": null,
+    "after": "bb108af9f836ee300c7449fa0a92026494e8d1ef89d09438b7e1f95ab39929f6",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-1x",
+    "scene": "probe-focus",
+    "before": null,
+    "after": "0a52ac1c9651ddd49dfcc14b666f3c6534525ec34c12d40640a24576a0885c2b",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-1x",
+    "scene": "type-specimen",
+    "before": null,
+    "after": "67f75a7d7f0bbda7d225aa2bb0674924549b83bb6064fd3e2d070f7f39f1383b",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-1x",
+    "scene": "color-swatches",
+    "before": null,
+    "after": "511b6212684787dc93c7fbb3baf833a02eda822d4732f841313927187643dded",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-2x",
+    "scene": "probe-off",
+    "before": null,
+    "after": "cfbbec1d0922359bf25144f94f72ec4dc3a2c977a48b8af031230d948137e08b",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-2x",
+    "scene": "probe-on",
+    "before": null,
+    "after": "c99ebf15d267f2d3b122de346ede4d37e1f44fa3bbca08f029f61e612553419e",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-2x",
+    "scene": "probe-disabled",
+    "before": null,
+    "after": "f023a9dfaab9f55087d7364c54265de10527556292212280b319c1e6ecfe51c1",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-2x",
+    "scene": "probe-focus",
+    "before": null,
+    "after": "cfbbec1d0922359bf25144f94f72ec4dc3a2c977a48b8af031230d948137e08b",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-2x",
+    "scene": "type-specimen",
+    "before": null,
+    "after": "c4225ddb3983593cb1af955594ae293d3ef6cf367b560d08f5e5329bd091b1d5",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  },
+  {
+    "key": "webkit-darwin-2x",
+    "scene": "color-swatches",
+    "before": null,
+    "after": "fde1d4a9b735b2fc4a0e4e1831199d2cbb1328de546800ae855cd6db8fd9cc1d",
+    "reviewer": "Edward Ramos (via S-TEST-VIS agent)",
+    "reason": "initial baselines, inspected visually",
+    "date": "2026-10-27"
+  }
+]
