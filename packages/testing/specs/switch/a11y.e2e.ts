@@ -12,6 +12,7 @@ import { collectFocusAppearance, collectTargets } from '../../a11y/collectors.js
 import { applyAxeTriage, focusAppearance, targetSize, type Triage } from '../../a11y/verdicts.js';
 import { contrastRatio } from '../../contrast/wcag.js';
 import { ADAPTERS, FIXTURES, type Adapter } from './fixtures';
+import { CONTROL } from './open';
 
 const hex = (rgb: string): string =>
   '#' +
@@ -126,8 +127,10 @@ for (const adapter of ADAPTERS) {
     const targets = await page.evaluate(collectTargets);
     const v = targetSize(targets, triage.targetSize, 'switch');
     expect(v.failures).toEqual([]);
-    const c = targets.find((t) => t.id.includes('sj-switch') || t.h > 0)!;
-    expect(Math.min(c.w, c.h)).toBeGreaterThanOrEqual(44);
+    // The control is selected by its part, never as "the first target with a height" (G3A NICE-5).
+    expect(targets.length).toBe(1);
+    const box = (await page.locator(CONTROL).boundingBox())!;
+    expect(Math.min(box.width, box.height)).toBeGreaterThanOrEqual(44);
   });
 
   test(`@pr forced-colors | switch ${adapter} | track and thumb stay visible and on/off stays distinguishable`, async ({
