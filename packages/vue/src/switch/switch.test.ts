@@ -259,5 +259,6 @@ describe('SJSwitch retains nothing', () => {
     expect(lifecycle.destroyed - before.destroyed).toBe(1000);
     expect(lifecycle.listeners).toBe(before.listeners);
     expect(host.childNodes.length).toBe(0);
-  });
+    // 1,000 jsdom mounts exceed the 5 s default on CI runners; this is a leak check, not a speed check.
+  }, 60_000);
 });
