@@ -42,6 +42,8 @@ jobs:
         run: bun run honesty:check
       - name: Skip without reason or issue
         run: bun run skips:check
+      - name: Duplicate JSON keys (JSON.parse keeps the last one silently)
+        run: bun run json-dupes:check
 
   test:
     name: Unit, SSR, contrast
