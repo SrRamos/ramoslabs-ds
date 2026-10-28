@@ -5,9 +5,9 @@
 
 /**
  * @typedef {{ kind: string }} KindLike
- * @typedef {{ name: string, kinds?: string[], anatomy: Array<{ part: string, element: string, role?: string }> }} ContractLike
+ * @typedef {{ name: string, kinds?: string[], props?: Array<{ name: string }>, anatomy: Array<{ part: string, element: string, role?: string }> }} ContractLike
  * @typedef {{ rule: string, file: string, line: number, message: string }} SourceFinding
- * @typedef {{ components: Map<string, { name: string, needsName: boolean }>, kinds: Set<string> }} ContractIndex
+ * @typedef {{ components: Map<string, { name: string, needsName: boolean, iconOnly: boolean }>, kinds: Set<string> }} ContractIndex
  */
 
 // Roles and native controls that must expose an accessible name (WCAG 4.1.2). A component whose
@@ -39,6 +39,8 @@ export function buildIndex({ contracts, kinds }) {
   for (const c of contracts) {
     components.set(c.name, {
       name: c.name,
+      // A component with an `iconOnly` prop can render with no visible text (ADR-010, W1-C01).
+      iconOnly: (c.props ?? []).some((p) => p.name === 'iconOnly'),
       needsName: c.anatomy.some(
         (p) => (p.role !== undefined && NAMED_ROLES.has(p.role)) || NAMED_ELEMENTS.has(p.element),
       ),
@@ -55,7 +57,8 @@ export function buildIndex({ contracts, kinds }) {
  * @returns {SourceFinding[]}
  */
 export function lintContractData(contract, index, file = contract.name) {
-  return contract.kinds
+  /** @type {SourceFinding[]} */
+  const out = contract.kinds
     .filter((k) => !index.kinds.has(k))
     .map((k) => ({
       rule: 'contract/unknown-kind',
@@ -63,6 +66,16 @@ export function lintContractData(contract, index, file = contract.name) {
       line: 1,
       message: `${contract.name} declares kind "${k}", which is not in kinds.contract.json`,
     }));
+  // An icon-only component must give consumers a way to supply the name (WCAG 4.1.2).
+  const props = new Set((contract.props ?? []).map((p) => p.name));
+  if (props.has('iconOnly') && !props.has('label'))
+    out.push({
+      rule: 'contract/icon-only-name',
+      file,
+      line: 1,
+      message: `${contract.name} has an iconOnly prop but no label prop: an icon-only control needs an accessible name`,
+    });
+  return out;
 }
 
 /**
@@ -171,9 +184,39 @@ export function lintSource(source, index, options = {}) {
       }
     }
 
-    // Rule: missing label. Only components with a contract are judged.
+    // Rule: icon-only without an accessible name. Visible content does not count: an icon-only
+    // control's content is an icon. Only a name attribute does. A dynamic value is not judged.
     const comp = index.components.get(tag.name);
-    if (comp?.needsName) {
+    const iconAttr = attrs.find((a) => /^(?::|v-bind:)?(?:iconOnly|icon-only)$/.test(a.name));
+    const iconOnly =
+      comp?.iconOnly === true &&
+      iconAttr !== undefined &&
+      !['false', '0'].includes((iconAttr.value ?? '').trim());
+    if (iconOnly) {
+      const spread =
+        attrs.some((a) => a.name === 'v-bind' || a.name.startsWith('...')) ||
+        /\{\s*\.\.\./.test(tag.attrs);
+      const named = attrs.some((a) =>
+        [
+          'label',
+          ':label',
+          'aria-label',
+          ':aria-label',
+          'aria-labelledby',
+          ':aria-labelledby',
+        ].includes(a.name),
+      );
+      if (!named && !spread)
+        out.push({
+          rule: 'contract/icon-only-name',
+          file,
+          line,
+          message: `<${tag.name} iconOnly> has no accessible name: add label, aria-label or aria-labelledby (visible content is only an icon)`,
+        });
+    }
+
+    // Rule: missing label. Only components with a contract are judged.
+    if (comp?.needsName && !iconOnly) {
       const spread = attrs.some((a) => a.name === 'v-bind' || a.name.startsWith('...'));
       const spreadJsx = /\{\s*\.\.\./.test(tag.attrs);
       const named = attrs.some((a) =>
