@@ -2,7 +2,7 @@
   "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
   "name": "SJSwitch",
   "contractVersion": "0.1.0",
-  "status": "draft",
+  "status": "beta",
   "pattern": { "apg": "switch", "evidence": "switch", "native": "checkbox" },
   "anatomy": [
     { "part": "root", "element": "label" },
