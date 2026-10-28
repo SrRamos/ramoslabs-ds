@@ -22,6 +22,8 @@
     "test:e2e:supports": "playwright test -c e2e/supports/playwright.config.ts",
     "parity": "node parity/cli.js",
     "test:e2e:button": "playwright test -c specs/button/playwright.config.ts",
+    "visual:button": "node specs/button/visual/cli.js check",
+    "voiceover:button": "node specs/button/render-voiceover.js",
     "parity:button": "node parity/cli.js --results node_modules/.cache/e2e/e2e-button-results.json --expected node_modules/.cache/e2e/e2e-button-expected.json --out node_modules/.cache/e2e/parity-button",
     "test:coverage": "vitest run --coverage"
   },
