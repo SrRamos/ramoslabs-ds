@@ -11,7 +11,7 @@ const sw = (state, { disabled = false, label = LABEL, id = 'sw' } = {}) =>
   `<input id="${id}" class="sj-switch__control" type="checkbox" role="switch" data-part="control" data-state="${state}"` +
   `${state === 'on' ? ' checked' : ''}${disabled ? ' disabled data-disabled="true"' : ''} />` +
   `<span class="sj-switch__thumb" data-part="thumb" data-state="${state}"></span>` +
-  `<span class="sj-switch__label">${label}</span></label>`;
+  `<span class="sj-switch__label" data-part="label" data-state="${state}"${disabled ? ' data-disabled="true"' : ''}>${label}</span></label>`;
 
 export const SCENES = [
   { name: 'switch-off', html: sw('off') },

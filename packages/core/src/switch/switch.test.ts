@@ -127,6 +127,20 @@ describe('getters (frozen API)', () => {
       'data-state': 'on',
     });
   });
+  it('the label is an anatomy part: part, state and class, protected like the others (G3A SHOULD-6)', () => {
+    const { parts, store } = make({ disabled: true });
+    expect(parts.getLabelProps()).toEqual({
+      class: 'sj-switch__label',
+      'data-part': 'label',
+      'data-state': 'off',
+      'data-disabled': 'true',
+    });
+    store.dispatch({ type: 'toggle' });
+    expect(parts.getLabelProps({ class: 'mine' })).toMatchObject({
+      class: 'sj-switch__label mine',
+      'data-state': 'on',
+    });
+  });
   it('consumer cannot override role, type, checked or state attributes; class concatenates', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const { parts } = make();

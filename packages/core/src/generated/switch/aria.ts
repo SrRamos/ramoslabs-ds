@@ -9,6 +9,7 @@ export const switchAria = {
     root: { element: 'label' },
     control: { element: 'input', role: 'switch', native: true, attributes: { type: 'checkbox' } },
     thumb: { element: 'span' },
+    label: { element: 'span' },
   },
   transitions: {
     off: { toggle: { dom: { control: { checked: 'true' } } } },

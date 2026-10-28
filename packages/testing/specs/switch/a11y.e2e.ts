@@ -29,8 +29,7 @@ const hex = (rgb: string): string =>
  */
 async function pseudoContrastOk(page: Page): Promise<boolean> {
   const c = await page.evaluate(() => {
-    const label =
-      document.querySelector('.sj-switch__label') ?? document.querySelector('.sj-switch__root')!;
+    const label = document.querySelector('[data-part="label"]')!;
     return {
       fg: getComputedStyle(label).color,
       bg: getComputedStyle(document.body).backgroundColor,

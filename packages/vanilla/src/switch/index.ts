@@ -63,7 +63,12 @@ function createSpec(
   let thumb: HTMLElement | undefined;
   let text: HTMLElement | undefined;
   let parts: ReturnType<typeof createSwitchParts> | undefined;
-  const seen = { root: new Set<string>(), control: new Set<string>(), thumb: new Set<string>() };
+  const seen = {
+    root: new Set<string>(),
+    control: new Set<string>(),
+    thumb: new Set<string>(),
+    label: new Set<string>(),
+  };
 
   const build = (ctx: Ctx) => {
     const doc = ctx.el.ownerDocument;
@@ -99,6 +104,7 @@ function createSpec(
       applyProps(ctx.el, parts!.getRootProps(), seen.root);
       applyProps(input!, parts!.getControlProps(), seen.control);
       applyProps(thumb!, parts!.getThumbProps(), seen.thumb);
+      applyProps(text!, parts!.getLabelProps(), seen.label);
       setText(text!, ctx.props().label ?? '');
     },
     attach(ctx) {

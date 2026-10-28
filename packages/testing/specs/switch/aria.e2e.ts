@@ -47,6 +47,21 @@ for (const adapter of ADAPTERS) {
     await expect(page.locator('[data-part="root"]')).toMatchAriaSnapshot(yaml('off'));
   });
 
+  test(`SJSwitch | ${adapter} | the visible label is the anatomy part "label" (same markup on every adapter)`, async ({
+    page,
+  }) => {
+    await openHost(page);
+    await mount(page, adapter, 'on');
+    const label = page.locator('[data-part="label"]');
+    await expect(label).toHaveCount(1);
+    expect(await label.evaluate((n) => n.localName)).toBe('span');
+    expect(await label.getAttribute('class')).toBe('sj-switch__label');
+    expect(await label.getAttribute('data-state')).toBe('on');
+    await expect(label).toHaveText(LABEL);
+    // It sits inside the wrapping root <label>, which is what names the input.
+    expect(await label.evaluate((n) => n.parentElement?.getAttribute('data-part'))).toBe('root');
+  });
+
   test(`SJSwitch | ${adapter} | exposes no aria-checked, aria-disabled or aria-labelledby (native state)`, async ({
     page,
   }) => {

@@ -137,7 +137,7 @@ export const SJSwitch = defineComponent({
           }),
           h('span', parts.getThumbProps({ class: classes.thumb })),
           hasLabel
-            ? h('span', { class: cls('sj-switch__label', classes.label) }, labelNode as string)
+            ? h('span', parts.getLabelProps({ class: classes.label }), labelNode as string)
             : null,
         ],
       );

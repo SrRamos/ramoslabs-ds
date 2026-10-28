@@ -119,7 +119,7 @@ describe('SJSwitch VoiceOver hook', () => {
     for (const lane of pack.lanes) {
       expect(lane.environment).toBeTruthy();
       expect(lane.initialAnnouncement).toBe('Notifications, off, switch');
-      expect(lane.readingOrder).toEqual(['root', 'control', 'thumb']);
+      expect(lane.readingOrder).toEqual(['root', 'control', 'thumb', 'label']);
       expect(lane.stateChanges).toEqual(['off -> on (checkedChange)', 'on -> off (checkedChange)']);
       expect(lane.result).toBe('');
       for (const a of lane.assertions)
