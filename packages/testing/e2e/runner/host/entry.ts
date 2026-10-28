@@ -3,6 +3,7 @@
 // with the REAL adapter runtimes into #root and returns update/destroy. Every `pressedChange` the
 // wrapper reports is recorded in `window.__sj.events` so the executor can assert the emit contract.
 import { createElement, StrictMode } from 'react';
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createApp, defineComponent, h, nextTick, ref, type App } from 'vue';
 import { createRuntime, type SJRuntime } from '@ramoslabs/core/runtime';
@@ -101,7 +102,10 @@ async function mountReact(props: ProbeProps, defect: DefectName, path: string): 
         createElement(ReactProbe, withReport(p), p.label ?? 'Label'),
       ),
     );
-  const render = async (p: ProbeProps) => root.render(tree(p));
+  // Synchronous commit: `root.render` alone returns before ReactTap has run, so a caller reading
+  // `window.__sj.seen` right after `mount` could see the previous mount's map (W1-314: failed on
+  // WebKit under CI load, passed locally by timing).
+  const render = async (p: ProbeProps) => flushSync(() => root.render(tree(p)));
   window.IS_REACT_ACT_ENVIRONMENT = false;
   await render(props);
   if (defect === 'react-lose-focus') {
@@ -203,6 +207,7 @@ window.__sj = {
   ready: true,
   async mount(adapter, props, defect = 'none', path = 'native') {
     events.length = 0;
+    window.__sj.seen = null; // never let a previous mount's map be read as this one's
     last?.destroy();
     last =
       adapter === 'react'

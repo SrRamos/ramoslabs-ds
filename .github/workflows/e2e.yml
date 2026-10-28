@@ -138,3 +138,15 @@ jobs:
           { echo "## Visual review: NOT RUN"; echo; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
           node visual/cli.js check | tail -3
           node visual/cli.js stability
+
+  e2e:
+    name: E2E
+    if: always()
+    needs: [changes, browser, visual]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Every browser job succeeded, or was skipped for an unaffected pull request
+        run: |
+          echo '${{ toJSON(needs) }}'
+          if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then exit 1; fi
+          if [ "${{ needs.changes.outputs.browser }}" = "true" ] && [ "${{ contains(needs.*.result, 'skipped') }}" = "true" ]; then exit 1; fi
