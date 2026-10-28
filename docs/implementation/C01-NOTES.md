@@ -103,3 +103,38 @@ Branch `feature/m4-c01-button-css` (stacked on `feature/m4-c01a-button-core`). F
 
 - Hover shades have no `--state-hover` overlay use; if a later design wants overlays, the extractor needs color-mix support.
 - The contrast CI step for other components needs no change: any `sj.variant` rule with `data-variant`/`data-tone` is picked up from `dist/index.css`.
+---
+
+# C01.c notes (SJButton for Vue)
+
+Branch `feature/m4-c01-button-vue`, stacked on `feature/m4-c01a-button-core`. Owned: `packages/vue/src/button/**`. No shared-file touches (the Vue `./button` export and vite entry already existed).
+
+## Layout (golden Vue adapter; copy this)
+
+- `button/SJButton.ts`: the component (a render function in `.ts`, `defineComponent`, `inheritAttrs: false`). `button/index.ts`: public entry (`SJButton`, `SJButtonClasses`, plus the generated `SJButtonProps/Emits/Slots/PressPayload` types). `button/SJButton.test.ts`: the suite.
+- ADR-002 naming: one flat component. SJButton has one interactive part (`root`/`link`) and a decorative icon, so there is no compound set and no separate preset; `SJButton` is the public primitive itself (the preset-from-public-primitives rule has nothing to apply to).
+- Thin (ADR-004): `createButton(() => ({ ...props, onPress: (p) => emit('press', p) }))` once in `setup`; `props` is Vue's live reactive object, so the accessor sees the newest values at render and at click time. Render picks `element()`, passes `attrs` as `consumer` to `getLinkProps`/`getRootProps`, wraps the `icon` slot in `getIconProps()`.
+- `classes` (ADR-004 per-part): `{ root, link, icon }`. `root`/`link` is appended after the consumer `class` via `normalizeClass` and then merged by `mergeProps` (library class first). `icon` is passed as the icon part's consumer class.
+- Prop-or-slot: the default slot is the visible label; with no slot and not `iconOnly`, the `label` prop is rendered as the visible text too (and is the `aria-label`). `iconOnly` renders no text. `icon` slot only via slot (decorative).
+- `press` is declared in `emits`, so a consumer `@press` is never in `attrs`; a consumer `@click` is, and runs first (`preventDefault()` cancels press).
+
+## Decisions
+
+- **No store, no `useSJStore`, no provider.** The core machine is stateless (C01.a): nothing to snapshot, subscribe or destroy, and no effects to drain. `useSJStore` would add a scope, a subscription and a `SJProvider` fallback warning for no behavior; the test proves 1,000 cycles produce no provider warning and every instance scope is inactive after unmount. The runtime is required only by stateful components.
+- **Keyboard is native.** Pointer, Enter and Space on `<button>` and Enter on `<a>` all become `click`; the adapter adds no key handlers (a test pins that the only `on*` key is `onClick`, so Space cannot activate a link). Real key activation in browsers is the `.f` L2 job; the unit suite asserts the handler contract (click -> one `press` with `originalEvent`).
+- **Tests run DOM-free** (custom `createRenderer` that records patched props and handlers, as in `runtime.test.ts`) plus `vue/server-renderer` for SSR; jsdom is not a dependency of `@ramoslabs/vue` and package.json is not mine.
+- `bun run --filter @ramoslabs/core build` is needed once before the Vue tests resolve `@ramoslabs/core/button` (exports point at `dist`).
+- Children are a flat array (no `null` placeholders), so SSR output has no `<!---->` or fragment markers.
+
+## Proofs
+
+Button/link/disabled link/icon-only/classes/attrs/slots, onPress ordering and stale-handler freshness, SSR (button, link, disabled link, icon-only, deterministic, no warnings), 1,000 mount/unmount cycles (scopes inactive, tree empty, no warning), fast-check over the axis vocabulary (unknown -> default).
+
+## Bytes
+
+See the final report (gzip of `dist/button/index.js`, shared kernel `merge` and core external).
+
+## Follow-ups
+
+- `.f`: L2 keyboard and form `type=submit` behavior in a real browser; Vue `./button` should be added to the SSR component wrappers if `.f` wants it.
+- Barrel `packages/vue/src/index.ts` is still empty by design (its test asserts no keys); the entry is `@ramoslabs/vue/button`.
