@@ -94,3 +94,33 @@ Files: `packages/css/src/switch.css`, `packages/css/test/switch.test.js`. Built 
 ### Follow-ups
 - The C03c `SJCheckbox` CSS (.b) needs its own native-input variant (checkbox looks, not a track); reuse the transparent-input-over-drawn-track structure, not the knob.
 - W1-203's `RECIPE` could list the switch pairs once a shared switch recipe is wanted. Not required for `.b`.
+# C03s.d notes: SJSwitch for React
+
+Branch `feature/m4-c03s-switch-react` (stacked on `feature/m4-c03s-switch-core`). Files: `packages/react/src/switch/{index,switch.test}.ts`.
+
+## API
+`SJSwitch = { Root, Control, Thumb }` plus flat `SJSwitchRoot/Control/Thumb` (ADR-002, parts from contract `anatomy`). Root is the `<label>`, owns `useMachine` (shared runtime, no local bridge) and passes the getters and `classes` to parts through context; `Control` is the real `<input type=checkbox role=switch>`, `Thumb` a `<span>`. All three forward refs. Props are the generated `SJSwitchProps` (`onCheckedChange({ checked })`, payload object per the generated type; core's callback takes a bare boolean, Root adapts it).
+- `classes={{ root, control, thumb }}` concatenates after the library class (and after a consumer `className`); `className` maps to the getters' `class` and back.
+- Prop-or-slot: `label` prop with no children renders Control, Thumb and the label; otherwise children are the slot.
+- Parts outside Root throw `SJSwitch.<Part> must be rendered inside SJSwitch.Root`.
+- No FACE, no hidden mirror, no `aria-checked`/`aria-disabled`; `checked` is always emitted so React sees a controlled input.
+
+## Decisions
+- **Forced commit after every native report.** `reconcile()` runs only in the commit's layout effect (R1), and a rejected controlled change leaves the store untouched, so nothing would commit and the corrective effect (`checked`, target `control`) would never run. Root wraps `native` with a `useReducer` tick. Seeded: removing the tick fails the two corrective tests. The effect handler sets `input.checked = value` on the control ref (touched only in effects).
+- `id`: explicit wins, else React `useId()` (prefix `''`, because `identifierPrefix` already applies the prefix; ADR-003 SSR ids).
+- Initial snapshot: `defaultChecked ?? checked ?? false`. `checked`/`disabled`/`name`/`value`/`id` are added to the props bag only when defined, so "absent" means uncontrolled/native default.
+- Tests run under react-test-renderer (no DOM, R1 convention): form-state equality is asserted as the control's `name/value/checked/disabled/type` markup equal to a bare `<input type=checkbox>` (7 cases) rather than a `FormData` (that belongs to .f with a real browser). Real hydration also belongs to .f / L2; here SSR is asserted (markup, no `document`, stable ids across renders, explicit id).
+
+## Proof
+27 tests: naming, structure, classes, protected attributes, refs, uncontrolled, controlled accepting / rejecting (corrective effect applies), prop change, disabled, form equality, SSR, StrictMode (one callback per change, corrective still applies), 1,000 StrictMode mount/toggle/unmount cycles with real gc (no retained nodes, every live host disposed, scheduler empty).
+
+## Bytes (min + gzip 9, esbuild, react external)
+| Entry | gzip | raw |
+|---|---|---|
+| `react/src/switch` alone (core and runtime external) | 1,839 B | 4,088 B |
+| `react/src/switch` with core switch + shared runtime/kernel inlined | 4,667 B | 10,738 B |
+No ADR-011 ceiling applies to an adapter component entry; the core part stays 0.746 KiB of its 1 KiB.
+
+## Follow-ups
+- .f: real-DOM hydration and `FormData` equality for off/on/disabled/long-label; Space toggling in a browser.
+- Barrels (`packages/react/src/index.ts`) and `exports` already list `./switch`; the root barrel is not touched here (orchestrator).
