@@ -166,32 +166,45 @@ describe('sj stylelint rules', () => {
   });
 });
 
-describe('no remote font anywhere in the shipped tree (ADR-009)', () => {
-  // apps/storybook still loads Google Fonts in its preview head and MDX; that is docs tooling owned by
-  // another stream and is tracked in docs/implementation/S-CSS-NOTES.md as an open defect.
-  const scoped = ['packages', 'apps/site'];
-  it('has no remote font or remote @import in packages or the site', () => {
-    const files = execFileSync(
-      'git',
-      ['ls-files', '--cached', '--others', '--exclude-standard', ...scoped],
-      {
-        cwd: root,
-        encoding: 'utf8',
-      },
-    )
-      .split('\n')
-      .filter((f) => /\.(css|astro|vue|html|mdx?|ts|js|mjs)$/.test(f))
-      .filter(
-        (f) =>
-          !f.includes('/fixtures/') && !f.endsWith('.test.js') && !f.includes('/node_modules/'),
-      );
+const REMOTE_FONT =
+  /fonts\.(?:googleapis|gstatic)\.com|@import\s+(?:url\()?['"]?(?:https?:)?\/\/|@font-face[^}]*url\(\s*['"]?(?:https?:)?\/\//i;
+
+/** Tracked and untracked source files in the whole tree (includes apps/storybook), minus fixtures and tests. */
+function treeFiles() {
+  return execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard'], {
+    cwd: root,
+    encoding: 'utf8',
+  })
+    .split('\n')
+    .filter((f) => /\.(css|astro|vue|html|mdx?|ts|js|mjs)$/.test(f))
+    .filter(
+      (f) =>
+        !f.includes('/fixtures/') &&
+        !f.endsWith('.test.js') &&
+        !f.includes('/node_modules/') &&
+        !f.startsWith('docs/') &&
+        !f.startsWith('specs/'),
+    );
+}
+
+describe('no remote font anywhere in the tree (ADR-009)', () => {
+  it('has no remote font or remote @import in any source file, storybook included', () => {
+    const files = treeFiles();
     expect(files.length).toBeGreaterThan(20);
-    const bad = files.filter((f) => {
-      const text = readFileSync(root + f, 'utf8');
-      return /fonts\.(?:googleapis|gstatic)\.com|@import\s+(?:url\()?['"]?(?:https?:)?\/\/|@font-face[^}]*url\(\s*['"]?(?:https?:)?\/\//i.test(
-        text,
-      );
-    });
-    expect(bad).toEqual([]);
+    expect(files.some((f) => f.startsWith('apps/storybook/'))).toBe(true);
+    expect(files.filter((f) => REMOTE_FONT.test(readFileSync(root + f, 'utf8')))).toEqual([]);
+  });
+
+  it('seeded remote font URLs fail the scan (preview head, MDX, CSS)', () => {
+    expect(REMOTE_FONT.test('<link href="https://fonts.googleapis.com/css2?family=Rubik" />')).toBe(
+      true,
+    );
+    expect(
+      REMOTE_FONT.test("<style>\n  @import url('https://fonts.gstatic.com/x.woff2');</style>"),
+    ).toBe(true);
+    expect(REMOTE_FONT.test("@font-face { src: url('https://cdn.example.com/a.woff2'); }")).toBe(
+      true,
+    );
+    expect(REMOTE_FONT.test("@font-face { src: url('./fonts/a.woff2'); }")).toBe(false);
   });
 });

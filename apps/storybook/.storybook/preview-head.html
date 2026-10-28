@@ -1,14 +1,9 @@
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&family=Rubik:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
-  rel="stylesheet"
-/>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-/>
 <style>
+  /* Self-hosted fonts (ADR-009: no remote fonts). Files live in .storybook/static/fonts. */
+  @font-face { font-family: 'Rubik'; font-style: normal; font-display: swap; font-weight: 300 900; src: url('./fonts/rubik-var.woff2') format('woff2'); }
+  @font-face { font-family: 'Red Hat Display'; font-style: normal; font-display: swap; font-weight: 300 900; src: url('./fonts/red-hat-display-var.woff2') format('woff2'); }
+  @font-face { font-family: 'Roboto'; font-style: normal; font-display: swap; font-weight: 100 900; src: url('./fonts/roboto-var.woff2') format('woff2'); }
+  @font-face { font-family: 'Material Symbols Outlined'; font-style: normal; font-weight: 400; font-display: block; src: url('./fonts/material-symbols-outlined-subset.woff2') format('woff2'); }
   .material-symbols-outlined {
     font-family: 'Material Symbols Outlined';
     font-weight: normal;
