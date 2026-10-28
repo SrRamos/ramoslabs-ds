@@ -175,3 +175,81 @@ Branch `feature/m4-c03s-switch-conformance` (merge of .a + .b .c .d .e as they s
 
 - **MUST-3.** `.sj-switch__control` is centred on the block axis (`inset-block-start: 50%; translate: 0 -50%`), like the track and knob, so the focus ring and 44 px hit area stay over the visible control when the label wraps. Geometry test (180 px box, long label, root taller than 88 px): the input rect contains the track and thumb rects. Seeded: restoring `inset-block-start: 0` fails that test (checked); the fix passes.
 - **SHOULD-2.** `extractUiPairs(css)` (`packages/testing/contrast/css.js`) reads `background-color` fills from `@layer sj.state` rules keyed on `[data-state]` for a part or its pseudo-element (disabled rules skipped, 1.4.11 inactive exemption; raw colours throw). `checkContrastMatrix({ css })` checks each at 3:1 on all three surfaces (ids `switch/root::before/<state>/ui-on-<surface>`). The in-test literal track-vs-surface checks in `switch.test.js` are replaced; knob-on-track stays there (not on the page). Seeded weak off-track and on-track fills fail (css.test.js, switch.test.js, contrast.test.js). C03c gets the check for free.
+
+# C03c.a: SJCheckbox contract + core
+
+Branch `feature/m4-c03c-checkbox-core`. Files: `packages/contracts/contracts/checkbox.contract.json`,
+`packages/core/src/checkbox/{index,reducer,checkbox.test}.ts`, regenerated `src/generated/checkbox/**` (core and the three
+adapters' `types.ts`), `"./checkbox"` in `packages/core/package.json` exports (the only shared-file edit, mirrors `./switch`).
+Same shape as the switch golden; this section lists only the differences.
+
+## Getters API (frozen)
+
+```ts
+reducerEvents: readonly ['toggle', 'setIndeterminate', 'clearIndeterminate']
+reduce(state: CheckboxState, e): CheckboxState                       // machine form, 'unchecked' | 'checked'
+reduce(state: CheckboxSnapshot, e): Reduction<CheckboxSnapshot, never>
+initialSnapshot(checked = false, indeterminate = false)              // { state, checked, indeterminate }
+checkboxFields                                                       // both fields, for createControlled
+harness                                                              // controlled operations on `checked`
+checkboxBaseId(explicit, acquire, prefix = '')
+createCheckboxParts({ view, native, getProps, id }): {
+  ids: { control }
+  getRootProps()       // <label>   sj-checkbox__root
+  getControlProps()    // <input>   type=checkbox, checked, indeterminate, name?, value?, disabled?, onChange
+  getIndicatorProps()  // <span>    sj-checkbox__indicator (box and check/dash glyph, CSS .b)
+  getLabelProps()      // <span>    sj-checkbox__label (anatomy part, G3A SHOULD-6)
+}
+CheckboxProps { checked?, defaultChecked?, indeterminate?, defaultIndeterminate?, disabled?, name?, value?, id?,
+                onCheckedChange?(checked), onIndeterminateChange?(indeterminate) }
+```
+
+All parts carry `data-part`, `data-state` (`unchecked | checked | indeterminate`, indeterminate wins) and `data-disabled`, protected
+from consumer override. Adapter obligations:
+- `indeterminate` is a **DOM property with no attribute**. The control getter emits it as a prop; React must apply it through a ref after
+  commit (never render it as an attribute), Vue and vanilla set `el.indeterminate`. `reconcile()` yields effects
+  `{ type: 'checked' | 'indeterminate', target: 'control', value }`; the host sets `el.checked` / `el.indeterminate` after commit.
+- No `role`, no `aria-checked`, no hidden input, no FACE (ADR-014). The browser exposes native `indeterminate` as `mixed`.
+- SSR cannot render `indeterminate` (no attribute): the property is set at mount/hydrate. `data-state="indeterminate"` is server-rendered,
+  so CSS can paint the dash before hydration; AT sees `mixed` only after hydration. .f must assert this explicitly.
+
+## Decisions
+- **`indeterminate` is controlled** (`state.controllable: ["checked", "indeterminate"]`, props `indeterminate` / `defaultIndeterminate`,
+  event `indeterminateChange`). Why: ADR-003's pipeline treats every contract-controllable field alike, a tri-state parent checkbox
+  ("select all") derives it from its children, so the owner must be able to hold or release it; it is also the only way a rejected
+  clear is corrected (`reconcile` effect `indeterminate`).
+- **User activation clears indeterminate like a native input.** The change handler computes `next = !view().checked`, calls
+  `native('checked', next)`, and, only if `view().indeterminate`, `native('indeterminate', false)`. Both are requests: a controlled owner
+  that keeps `indeterminate=true` is corrected post-commit (effect `indeterminate`), exactly as a rejected `checked`.
+- **Machine is the `checked` axis only** (`unchecked`/`checked`); `indeterminate` is orthogonal in the snapshot, because native `checked`
+  and `indeterminate` are independent (native click on `checked && indeterminate` gives `!checked && !indeterminate`). A third machine
+  state would force the reducer to read `checked` to know where to go. Contract actions: `toggle` (clears indeterminate), and the
+  self-transitions `setIndeterminate` / `clearIndeterminate` (used by `toEvent` for the uncontrolled indeterminate field).
+- The reducer reads `state` only and derives `checked` from it; `contract/reducer-controlled-field` passes. Consequence: the two
+  indeterminate events cannot keep the snapshot reference on a no-op (that would need reading `indeterminate`), they return an equal
+  new object. Harmless: the equality is structural and `toggle` always changes state.
+- `support[]` empty (same reasoning as switch: `appearance` and `accent-color` are inside the ADR-001 floor). `liveRegions: []`.
+- `atAssertions` adds `manual-speech-mixed-state` (VoiceOver script must read "mixed"). `atSupport` rows reference the existing
+  `at-support/checkbox.json` entries; the NVDA group-description issue (12718) is a CSS/fieldset concern for a later group component, not
+  referenced here. Added WCAG 1.3.1 (label association).
+- No `required` / `readOnly` / `form` props (not in the plan row; submit equivalence needs only name, value, checked, disabled).
+- **Status stays `draft`.** Getters are frozen by this task, but `beta` needs fixtures and parity green (ADR-010 status meanings), which is
+  .f. Promote with the .f PR (or earlier if the orchestrator reads "getters frozen" as sufficient).
+
+## Proof
+- `checkbox.test.ts`: 26 tests, including fast-check invariants (checked agrees with machine position under random event sequences, store
+  form projects onto machine form, toggle clears indeterminate and is an involution on checked, set/clear idempotent and never touch
+  checked, getters pure over random props).
+- Seeds that fail: reducer reading `state.indeterminate` -> `contract/reducer-controlled-field`; `toggle` not clearing indeterminate -> 2
+  unit tests; `toggle` always going to `checked` -> `codegen.test.js` "SJCheckbox: reducer events equal contract actions"; W1-308b
+  auto-discovers `harness` and passes.
+
+## Bytes (min+gzip, `node packages/testing/size/cli.js`)
+| Module | gzip | raw | Ceiling |
+|---|---|---|---|
+| core/src/checkbox | 0.868 KiB | 2,225 B | 3 KiB (contract `budgets.gzipKiB`, PLAN 6.2), pass |
+
+## Follow-ups
+- .b CSS: indicator part paints box, check and dash (`data-state`), `appearance: none` input in the hit area, forced-colors visible.
+- Adapters: apply `indeterminate` as a property (React ref), run `reconcile()` after commit and execute both effect types.
+- .f: submit equivalence vs a bare `<input type=checkbox name value>` for unchecked/checked/indeterminate/disabled, SSR note above.

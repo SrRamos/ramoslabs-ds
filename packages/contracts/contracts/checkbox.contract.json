@@ -1,0 +1,224 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJCheckbox",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": {
+    "apg": "checkbox",
+    "evidence": "checkbox",
+    "native": "checkbox"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "label"
+    },
+    {
+      "part": "control",
+      "element": "input",
+      "native": true,
+      "attributes": {
+        "type": "checkbox"
+      }
+    },
+    {
+      "part": "indicator",
+      "element": "span"
+    },
+    {
+      "part": "label",
+      "element": "span"
+    }
+  ],
+  "state": {
+    "machine": ["unchecked", "checked"],
+    "controllable": ["checked", "indeterminate"]
+  },
+  "actions": [
+    {
+      "id": "toggle",
+      "from": "unchecked",
+      "to": "checked",
+      "emit": "checkedChange",
+      "dom": {
+        "control": {
+          "checked": "true",
+          "indeterminate": "false"
+        }
+      }
+    },
+    {
+      "id": "toggle",
+      "from": "checked",
+      "to": "unchecked",
+      "emit": "checkedChange",
+      "dom": {
+        "control": {
+          "checked": "false",
+          "indeterminate": "false"
+        }
+      }
+    },
+    {
+      "id": "setIndeterminate",
+      "from": "unchecked",
+      "to": "unchecked",
+      "emit": "indeterminateChange",
+      "dom": {
+        "control": {
+          "indeterminate": "true"
+        }
+      }
+    },
+    {
+      "id": "setIndeterminate",
+      "from": "checked",
+      "to": "checked",
+      "emit": "indeterminateChange",
+      "dom": {
+        "control": {
+          "indeterminate": "true"
+        }
+      }
+    },
+    {
+      "id": "clearIndeterminate",
+      "from": "unchecked",
+      "to": "unchecked",
+      "emit": "indeterminateChange",
+      "dom": {
+        "control": {
+          "indeterminate": "false"
+        }
+      }
+    },
+    {
+      "id": "clearIndeterminate",
+      "from": "checked",
+      "to": "checked",
+      "emit": "indeterminateChange",
+      "dom": {
+        "control": {
+          "indeterminate": "false"
+        }
+      }
+    }
+  ],
+  "keyboard": {
+    "control": {
+      "Space": "toggle"
+    }
+  },
+  "focus": {
+    "strategy": "native",
+    "owner": "control"
+  },
+  "kinds": [],
+  "runtime": ["idPrefix"],
+  "support": [],
+  "a11y": {
+    "wcag": ["1.3.1", "1.4.11", "2.1.1", "2.4.7", "2.4.11", "2.5.8", "4.1.2"],
+    "liveRegions": [],
+    "atAssertions": [
+      "manual-speech-name-role-state",
+      "manual-toggle-space",
+      "manual-speech-mixed-state"
+    ],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/checkbox.json#vo-macos-safari-ariaat560"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/checkbox.json#vo-ios-safari-a11ysupport-native-checkbox"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/checkbox.json#nvda-chrome-ariaat559"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/checkbox.json#jaws-chrome-ariaat558"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/checkbox.json#talkback-chrome-a11ysupport-native-checkbox"]
+      }
+    ]
+  },
+  "events": [
+    {
+      "name": "checkedChange",
+      "payload": "{ checked: boolean }"
+    },
+    {
+      "name": "indeterminateChange",
+      "payload": "{ indeterminate: boolean }"
+    }
+  ],
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean"
+    },
+    {
+      "name": "defaultChecked",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean"
+    },
+    {
+      "name": "defaultIndeterminate",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "default": "on"
+    },
+    {
+      "name": "id",
+      "type": "string"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "description": "Visible label; must not change with state."
+    }
+  ],
+  "fixtures": ["unchecked", "checked", "indeterminate", "disabled", "long-label"],
+  "budgets": {
+    "gzipKiB": 3,
+    "shared": []
+  }
+}
