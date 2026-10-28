@@ -11,6 +11,9 @@ export interface SJSwitchOptions {
   /** @default false */
   disabled?: boolean;
   name?: string;
+  /** @default "on" */
+  value?: string;
+  id?: string;
   onCheckedChange?: (payload: SJSwitchCheckedChangePayload) => void;
   /** Visible label; must not change with state. */
   default?: string | Node;

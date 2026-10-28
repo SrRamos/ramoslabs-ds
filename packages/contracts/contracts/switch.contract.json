@@ -84,7 +84,9 @@
     { "name": "checked", "type": "boolean" },
     { "name": "defaultChecked", "type": "boolean", "default": false },
     { "name": "disabled", "type": "boolean", "default": false },
-    { "name": "name", "type": "string" }
+    { "name": "name", "type": "string" },
+    { "name": "value", "type": "string", "default": "on" },
+    { "name": "id", "type": "string" }
   ],
   "slots": [{ "name": "default", "description": "Visible label; must not change with state." }],
   "fixtures": ["off", "on", "disabled", "long-label"],

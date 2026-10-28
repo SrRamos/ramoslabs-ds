@@ -11,6 +11,9 @@ export interface SJSwitchProps {
   /** @default false */
   disabled?: boolean;
   name?: string;
+  /** @default "on" */
+  value?: string;
+  id?: string;
   onCheckedChange?: (payload: SJSwitchCheckedChangePayload) => void;
   /** Visible label; must not change with state. */
   children?: unknown;
