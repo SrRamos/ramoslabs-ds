@@ -24,6 +24,7 @@ import {
   type EffectInput,
   type EffectQueue,
 } from '@ramoslabs/core/effects';
+import { useSJContext } from './context';
 import { createControlled, type Bag, type ControlledConfig } from '@ramoslabs/core/controlled';
 
 export interface SJStoreOptions<S extends object, E, X extends EffectInput, P extends Bag> {
@@ -34,6 +35,8 @@ export interface SJStoreOptions<S extends object, E, X extends EffectInput, P ex
   /** Stable accessor over the latest props. With `fields`, enables the controlled pipeline. */
   readonly props?: () => P;
   readonly fields?: ControlledConfig<S, E, P>['fields'];
+  /** `'eager'` when the contract declares `a11y.liveRegions`: the region is inserted at mount. */
+  readonly live?: 'eager' | 'lazy';
   /** Store factory seam (tests count live listeners through it). Default: core `createStore`. */
   readonly makeStore?: typeof createStore;
 }
@@ -76,6 +79,7 @@ export function useSJStore<S extends object, E, X extends EffectInput, P extends
       ? createControlled<S, E, P>({ store, getProps: options.props, fields: options.fields })
       : undefined;
 
+  const requireLive = options.live === 'eager' ? useSJContext().requireLive : undefined;
   let mounted = false;
   let commits = 0;
   const commit = () => {
@@ -118,6 +122,7 @@ export function useSJStore<S extends object, E, X extends EffectInput, P extends
   if (getCurrentInstance()) {
     onMounted(() => {
       mounted = true;
+      requireLive?.();
       controlled?.mount();
       commit();
     });

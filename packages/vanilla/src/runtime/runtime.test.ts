@@ -285,6 +285,42 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     expect(() => host.mount(e, t.spec, {})).toThrow(/destroyed host/);
   });
 
+  it('live: eager inserts the region at mount, before any announce; lazy specs add nothing', () => {
+    const mkDoc = () => {
+      const children: unknown[] = [];
+      const doc = {
+        body: { appendChild: (n: unknown) => children.push(n) },
+        createElement: () => ({
+          className: '',
+          textContent: '',
+          setAttribute() {},
+          remove() {},
+        }),
+      };
+      return { children, doc };
+    };
+    const mountWith = (live: 'eager' | 'lazy' | undefined) => {
+      const { children, doc } = mkDoc();
+      const host = createHost(
+        createRuntime({ scheduler: createFakeScheduler(), idFactory: () => 'x' }),
+        {
+          allowFakeScheduler: true,
+        },
+      );
+      const t = setup();
+      const e = el();
+      (e as unknown as { ownerDocument: unknown }).ownerDocument = doc;
+      host.mount(e, { ...t.spec, ...(live && { live }) }, {});
+      return { children, host };
+    };
+    const eager = mountWith('eager');
+    expect(eager.children).toHaveLength(1); // present before any text update
+    eager.host.live.announce('hello');
+    expect(eager.children).toHaveLength(1);
+    expect(mountWith('lazy').children).toHaveLength(0);
+    expect(mountWith(undefined).children).toHaveLength(0);
+  });
+
   it('text only: markup in state is never parsed', () => {
     const e = el();
     setText(e, '<img src=x onerror=alert(1)>');

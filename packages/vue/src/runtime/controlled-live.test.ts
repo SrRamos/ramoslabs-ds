@@ -147,3 +147,62 @@ describe('lazy live region (Vue)', () => {
     expect(body).toHaveLength(0);
   });
 });
+
+describe('eager live region (Vue)', () => {
+  const fakeDoc = () => {
+    const body: unknown[] = [];
+    const doc = {
+      body: { appendChild: (n: unknown) => body.push(n) },
+      createElement: () => ({ setAttribute() {}, textContent: '', remove() {} }),
+    } as unknown as Document;
+    return { body, doc };
+  };
+
+  it('ensure() inserts the status region before any text, and later regions on creation', () => {
+    const { body, doc } = fakeDoc();
+    const host = createDomLiveHost(doc);
+    const live = createLiveRegistry(createFakeScheduler());
+    live.attach(host);
+    expect(body).toHaveLength(0);
+    host.ensure();
+    expect(body).toHaveLength(1); // present, no announce yet
+    host.ensure();
+    expect(body).toHaveLength(1); // idempotent
+    live.announce('Saved');
+    expect(body).toHaveLength(1);
+    live.announce('Oops', { urgent: true }); // alert node is created eagerly too
+    expect(body).toHaveLength(2);
+  });
+
+  const wire = (live: 'eager' | 'lazy') => {
+    const ensure = vi.fn();
+    const Child = defineComponent({
+      setup() {
+        useSJStore({ initial: { checked: false }, reduce, host: { run() {} }, live });
+        return () => h('i');
+      },
+    });
+    const app = createApp({
+      render: () =>
+        h(SJProvider, { liveHost: { create: () => ({ setText() {} }), ensure } as never }, () =>
+          h(Child),
+        ),
+    });
+    app.mount(mk('root'));
+    return { ensure, app };
+  };
+
+  it('a component with live: eager makes the provider host ensure at mount (child mounts first)', async () => {
+    const { ensure, app } = wire('eager');
+    await nextTick();
+    expect(ensure).toHaveBeenCalledTimes(1);
+    app.unmount();
+  });
+
+  it('a component with live: lazy (liveRegions: []) never calls ensure', async () => {
+    const { ensure, app } = wire('lazy');
+    await nextTick();
+    expect(ensure).not.toHaveBeenCalled();
+    app.unmount();
+  });
+});

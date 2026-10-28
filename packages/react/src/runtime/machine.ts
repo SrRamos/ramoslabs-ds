@@ -47,6 +47,8 @@ export interface MachineOptions<S extends object, E, X extends EffectInput, P ex
   run?: (effect: Effect<X>, runtime: SJRuntime) => void;
   /** True when the effect target is in the committed DOM. */
   exists?: (target: string) => boolean;
+  /** `'eager'` when the contract declares `a11y.liveRegions`: the region is inserted at mount. */
+  live?: 'eager' | 'lazy';
 }
 
 export interface Machine<S extends object, E> {
@@ -75,7 +77,7 @@ interface Instance<S extends object, E, X extends EffectInput> {
 export function useMachine<S extends object, E, X extends EffectInput, P extends Bag>(
   options: MachineOptions<S, E, X, P>,
 ): Machine<S, E> {
-  const { runtime, live } = useRuntimeBag();
+  const { runtime, live, requireLive } = useRuntimeBag();
   const opts = useRef(options);
   // An effect-only dispatch leaves the snapshot unchanged, so uSES would not re-render and no
   // commit would drain it (G1 MUST-1). Bumping from `onEffects` forces the commit that drains.
@@ -128,6 +130,7 @@ export function useMachine<S extends object, E, X extends EffectInput, P extends
     if (first.current) {
       first.current = false;
       inst.controlled.mount();
+      if (options.live === 'eager') requireLive?.();
     }
     const corrective = inst.controlled.reconcile();
     if (corrective.length)
