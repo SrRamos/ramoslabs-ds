@@ -3,19 +3,73 @@
   "name": "SJButton",
   "contractVersion": "0.1.0",
   "status": "draft",
-  "pattern": { "apg": "button", "evidence": "button", "native": "button" },
-  "anatomy": [{ "part": "root", "element": "button", "role": "button", "native": true }],
-  "state": { "machine": ["idle"], "controllable": [] },
-  "actions": [{ "id": "press", "from": "idle", "to": "idle", "emit": "press" }],
-  "keyboard": { "root": { "Enter": "press", "Space": "press" } },
-  "focus": { "strategy": "native", "owner": "root" },
+  "pattern": {
+    "apg": "button",
+    "evidence": "button",
+    "native": "button"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "button",
+      "role": "button",
+      "native": true,
+      "attributes": {
+        "type": "button"
+      }
+    },
+    {
+      "part": "link",
+      "element": "a",
+      "role": "link",
+      "native": true
+    },
+    {
+      "part": "icon",
+      "element": "span",
+      "attributes": {
+        "aria-hidden": "true"
+      }
+    }
+  ],
+  "state": {
+    "machine": ["idle"],
+    "controllable": []
+  },
+  "actions": [
+    {
+      "id": "press",
+      "from": "idle",
+      "to": "idle",
+      "emit": "press"
+    }
+  ],
+  "keyboard": {
+    "root": {
+      "Enter": "press",
+      "Space": "press"
+    },
+    "link": {
+      "Enter": "press"
+    }
+  },
+  "focus": {
+    "strategy": "native",
+    "owner": "root"
+  },
   "kinds": [],
   "runtime": ["idPrefix"],
   "support": [],
   "a11y": {
-    "wcag": ["2.1.1", "2.4.7", "2.4.11", "2.5.8", "4.1.2"],
+    "wcag": ["1.4.3", "1.4.11", "2.1.1", "2.4.7", "2.4.11", "2.4.13", "2.5.3", "2.5.8", "4.1.2"],
     "liveRegions": [],
-    "atAssertions": ["manual-speech-name-role", "manual-activate-enter-space"],
+    "atAssertions": [
+      "manual-speech-name-role",
+      "manual-activate-enter-space",
+      "manual-icon-only-name",
+      "manual-link-role-enter",
+      "manual-disabled-announced"
+    ],
     "atSupport": [
       {
         "at": "voiceover",
@@ -54,14 +108,83 @@
       }
     ]
   },
-  "events": [{ "name": "press", "payload": "{ originalEvent: Event }" }],
+  "events": [
+    {
+      "name": "press",
+      "payload": "{ originalEvent: Event }"
+    }
+  ],
   "props": [
-    { "name": "disabled", "type": "boolean", "default": false },
-    { "name": "type", "type": "'button' | 'submit' | 'reset'", "default": "button" }
+    {
+      "name": "variant",
+      "type": "'solid' | 'soft' | 'outline' | 'ghost'",
+      "default": "solid"
+    },
+    {
+      "name": "tone",
+      "type": "'primary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'",
+      "default": "primary"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "md"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "type",
+      "type": "'button' | 'submit' | 'reset'",
+      "default": "button",
+      "description": "Button element only; never an implicit submit."
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "description": "A non-empty href renders the link element (a), not a button."
+    },
+    {
+      "name": "target",
+      "type": "string",
+      "description": "Link element only. target=_blank adds rel=noopener noreferrer unless rel is set."
+    },
+    {
+      "name": "rel",
+      "type": "string",
+      "description": "Link element only."
+    },
+    {
+      "name": "iconOnly",
+      "type": "boolean",
+      "default": false,
+      "description": "No visible text. Requires label (or aria-label / aria-labelledby); lint contract/icon-only-name fails without one."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Accessible name (aria-label). Required with iconOnly; for a text button it must contain the visible text (2.5.3)."
+    },
+    {
+      "name": "id",
+      "type": "string"
+    }
   ],
   "slots": [
-    { "name": "default", "description": "Accessible name; must not change while a toggle." }
+    {
+      "name": "default",
+      "description": "Visible label; it is the accessible name unless label is set. Omit with iconOnly."
+    },
+    {
+      "name": "icon",
+      "description": "Decorative icon (aria-hidden); the only content of an iconOnly button."
+    }
   ],
-  "fixtures": ["default", "disabled", "long-label", "icon-only"],
-  "budgets": { "gzipKiB": 1, "shared": [] }
+  "fixtures": ["default", "disabled", "long-label", "icon-only", "link"],
+  "budgets": {
+    "gzipKiB": 1.5,
+    "shared": ["merge"]
+  }
 }

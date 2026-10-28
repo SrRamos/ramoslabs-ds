@@ -16,6 +16,11 @@ const index = buildIndex({
   contracts: [
     { name: 'SJButton', anatomy: [{ part: 'root', element: 'button', role: 'button' }] },
     { name: 'SJCard', anatomy: [{ part: 'root', element: 'div' }] },
+    {
+      name: 'SJIconButton',
+      props: [{ name: 'iconOnly' }, { name: 'label' }],
+      anatomy: [{ part: 'root', element: 'button', role: 'button' }],
+    },
   ],
   kinds: [{ kind: 'email' }, { kind: 'tel' }],
 });
@@ -81,6 +86,45 @@ describe('missing-label', () => {
   });
   it('does not judge components without a contract', () => {
     expect(rules('<SJUnknown />')).toEqual([]);
+  });
+});
+
+describe('icon-only-name (W1-C01)', () => {
+  it('passes an icon-only control that carries a name', () => {
+    for (const src of [
+      '<SJIconButton iconOnly label="Close"><Icon /></SJIconButton>',
+      '<SJIconButton icon-only aria-label="Close"><Icon /></SJIconButton>',
+      '<SJIconButton :icon-only="true" :label="t"><Icon /></SJIconButton>',
+      '<SJIconButton iconOnly aria-labelledby="x"><Icon /></SJIconButton>',
+      '<SJIconButton iconOnly {...props}><Icon /></SJIconButton>',
+      '<SJIconButton iconOnly={false}>Save</SJIconButton>',
+      '<SJIconButton>Save</SJIconButton>',
+    ])
+      expect(rules(src), src).toEqual([]);
+  });
+  it('seeded: an icon-only control without a name fails, even with icon content', () => {
+    for (const src of [
+      '<SJIconButton iconOnly><Icon /></SJIconButton>',
+      '<SJIconButton icon-only><svg /></SJIconButton>',
+      '<SJIconButton :icon-only="true"><Icon /></SJIconButton>',
+      '<SJIconButton iconOnly={true} />',
+      '<SJIconButton iconOnly="true" />',
+    ])
+      expect(rules(src, 'app/page.tsx'), src).toEqual(['contract/icon-only-name']);
+  });
+  it('does not judge components without an iconOnly prop', () => {
+    expect(rules('<SJButton iconOnly><Icon /></SJButton>')).toEqual([]);
+  });
+  it('contract data: an iconOnly prop without a label prop fails', () => {
+    const bad = { name: 'SJX', kinds: [], props: [{ name: 'iconOnly' }], anatomy: [] };
+    const ok = { ...bad, props: [{ name: 'iconOnly' }, { name: 'label' }] };
+    expect(lintContractData(bad, index).map((f) => f.rule)).toEqual(['contract/icon-only-name']);
+    expect(lintContractData(ok, index)).toEqual([]);
+  });
+  it('the shipped SJButton contract declares both props', () => {
+    const button = loadContracts().contracts.find((c) => c.json.name === 'SJButton');
+    const names = (button?.json.props ?? []).map((/** @type {{ name: string }} */ p) => p.name);
+    expect(names).toEqual(expect.arrayContaining(['iconOnly', 'label']));
   });
 });
 

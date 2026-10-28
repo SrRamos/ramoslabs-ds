@@ -5,6 +5,10 @@
 // values each transition sets, keyed state -> event -> { aria?, dom? } per anatomy part.
 // `dom` is for native state (for example `checked`) that must not be mirrored in ARIA.
 export const buttonAria = {
-  parts: { root: { element: 'button', role: 'button', native: true } },
+  parts: {
+    root: { element: 'button', role: 'button', native: true, attributes: { type: 'button' } },
+    link: { element: 'a', role: 'link', native: true },
+    icon: { element: 'span', attributes: { 'aria-hidden': 'true' } },
+  },
   transitions: {},
 } as const;

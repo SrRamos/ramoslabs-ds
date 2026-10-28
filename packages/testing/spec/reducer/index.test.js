@@ -16,6 +16,7 @@ import {
 } from './index.js';
 import { discoverReducers, loadContract } from './discover.js';
 import * as good from './fixtures/toggle.reducer.js';
+import * as bare from './fixtures/state.reducer.js';
 
 const contract = JSON.parse(
   readFileSync(new URL('./fixtures/toggle.contract.json', import.meta.url), 'utf8'),
@@ -49,6 +50,18 @@ describe('reducer harness on the fixture reducer (W1-308b)', () => {
     const b = runReducerHarness(spec, bad, { seed: 7 });
     expect(a.ok).toBe(false);
     expect(b.counterexample).toEqual(a.counterexample);
+  });
+});
+
+describe('a reducer that returns the bare state name (the codegen convention)', () => {
+  it('runs through the real store and passes', () => {
+    const r = runReducerHarness(spec, bare, { seed: 1, numRuns: 100 });
+    expect(r.problems).toEqual([]);
+    expect(replaySequences(spec, bare)).toEqual([]);
+  });
+  it('a seeded wrong target is still caught', () => {
+    const bad = { ...bare, reduce: (s, e) => (e.type === 'reset' ? 'on' : bare.reduce(s, e)) };
+    expect(runReducerHarness(spec, bad, { seed: 1 }).ok).toBe(false);
   });
 });
 

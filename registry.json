@@ -134,11 +134,28 @@
           "part": "root",
           "element": "button",
           "role": "button",
+          "native": true,
+          "attributes": {
+            "type": "button"
+          }
+        },
+        {
+          "part": "link",
+          "element": "a",
+          "role": "link",
           "native": true
+        },
+        {
+          "part": "icon",
+          "element": "span",
+          "attributes": {
+            "aria-hidden": "true"
+          }
         }
       ],
       "roles": [
-        "button"
+        "button",
+        "link"
       ],
       "state": {
         "machine": [
@@ -150,6 +167,9 @@
         "root": {
           "Enter": "press",
           "Space": "press"
+        },
+        "link": {
+          "Enter": "press"
         }
       },
       "kinds": [],
