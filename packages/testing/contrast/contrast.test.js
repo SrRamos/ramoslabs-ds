@@ -20,7 +20,7 @@ import {
 } from './index.js';
 
 // Dynamic specifier: the css build script is plain JS outside this package's typecheck graph.
-const buildScript = '../../css/scripts/build.mjs';
+const buildScript = new URL('../../css/scripts/build.mjs', import.meta.url).href;
 const { buildCss } = await import(/* @vite-ignore */ buildScript);
 
 describe('wcag', () => {
