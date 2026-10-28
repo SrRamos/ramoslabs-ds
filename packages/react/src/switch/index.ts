@@ -10,6 +10,7 @@ import {
   Fragment,
   useCallback,
   useContext,
+  useEffect,
   useId,
   useReducer,
   useRef,
@@ -143,6 +144,31 @@ export const SJSwitchRoot: ForwardRefExoticComponent<
     },
     [m],
   );
+
+  // A native `form.reset()` restores the input to its default without a `change` event, so the model
+  // would keep the last state (a bare input has no model; this one must follow the DOM). Re-sync after the
+  // reset ran (it runs after dispatch, hence the task). The latest `native` is read through a ref so the
+  // listener subscribes once per form. Refs are touched only in effects.
+  const nativeRef = useRef(native);
+  nativeRef.current = native;
+  const stateRef = useRef(m.state);
+  stateRef.current = m.state;
+  useEffect(() => {
+    const form = control.current?.form;
+    if (!form) return;
+    const abort = new AbortController();
+    form.addEventListener(
+      'reset',
+      () =>
+        setTimeout(() => {
+          const input = control.current;
+          if (!abort.signal.aborted && input && input.checked !== stateRef.current.checked)
+            nativeRef.current('checked', input.checked);
+        }, 0),
+      { signal: abort.signal },
+    );
+    return () => abort.abort();
+  }, []);
 
   const parts = createSwitchParts({
     view: () => m.state,
