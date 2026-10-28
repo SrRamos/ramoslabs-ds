@@ -11,6 +11,9 @@ export const projects = ['packages/*'];
 export const sharedTestConfig = {
   environment: 'node',
   passWithNoTests: false,
+  // Per-package module cache (R2-SHOULD-2): `vitest run` clears the shared root cache on startup,
+  // so parallel packages under Turbo raced on one directory (ENOTEMPTY). Relative = package root.
+  fsModuleCachePath: 'node_modules/.vitest-cache',
   include: ['src/**/*.test.{ts,js}', 'test/**/*.test.{ts,js}', '**/*.test.js'],
   exclude: ['**/node_modules/**', '**/dist/**', '**/fixtures/**'],
   coverage: {
