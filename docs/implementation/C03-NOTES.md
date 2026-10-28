@@ -298,3 +298,23 @@ list, as switch is). Same structure as the switch golden (C03s.b); this section 
 - Adapters (.c/.d/.e): `indeterminate` is a property, not an attribute; `data-state="indeterminate"` is server-rendered so the
   dash paints before hydration.
 - .f: visual baselines for the forced-colors and RTL scenes (human review), VoiceOver `mixed` announcement.
+# C03c.c: SJCheckbox Vue adapter
+
+Files: `packages/vue/src/checkbox/{SJCheckbox,index}.ts`, `checkbox.test.ts`, `ssr.test.ts`; barrel `src/index.ts` and `index.test.ts`.
+Flat component over `createCheckboxParts` and the shared `useSJStore` (no local bridge), same shape as the SJSwitch golden.
+
+- **Models**: `v-model:checked` and `v-model:indeterminate` (props present = controlled, absent = uncontrolled; `defaultChecked`,
+  `defaultIndeterminate`); events `update:*` plus `checkedChange` / `indeterminateChange`. `classes` has `root | control | indicator | label`;
+  label by prop or default slot (slot wins).
+- **`indeterminate` is never a vnode prop.** The adapter strips `checked` and `indeterminate` from the control getter's output and writes
+  both DOM properties in `onVnodeMounted` / `onVnodeUpdated` (`syncProps`), so the property is applied after mount and on every change.
+  Corrective effects `checked` / `indeterminate` (controlled rejection) are executed by the host after commit.
+- **`checked` attribute** carries the initial value only (as switch), so `form.reset()` matches a bare input. A `reset` listener (abort
+  signal, removed on unmount) re-syncs `checked` after the reset. A native reset leaves `indeterminate` untouched, so the handler
+  re-asserts the DOM's flag when the reducer's `toggle` (which leaves the mixed positions) would have cleared it.
+- SSR: `data-state="indeterminate"` is server-rendered, no `indeterminate` attribute (asserted in `ssr.test.ts`); the property appears at mount.
+- Tests: markup, `classes`, attrs, uncontrolled, controlled accept and reject, one commit per accepted change, disabled, form-data
+  equivalence with a bare checkbox (incl. reset on and off defaults), indeterminate (property not attribute, click clears like a bare
+  input, rejected clear corrected, reset), 1,000 mount/destroy cycles with a 60_000 timeout.
+- Bytes (`node packages/testing/size/cli.js`): core checkbox 2433 B gzip (ceiling 3 KiB); the Vue adapter is reported, not gated.
+- Shared-file edits: `src/index.ts` and `index.test.ts` only (`package.json` exports and `vite.config.ts` already listed `./checkbox`).
