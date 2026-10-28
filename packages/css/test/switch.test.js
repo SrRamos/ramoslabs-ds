@@ -132,6 +132,27 @@ describe('target size (ADR-008: 44 px, 24 px floor)', () => {
     expect((await rect(coarse, '#ctl')).height).toBe(px(tokens['target-min']));
   });
 
+  it('on a wrapping label the input stays centred on the track and contains it (G3A MUST-3)', async () => {
+    const long =
+      'Send me a notification whenever someone replies to a thread that I started or follow, including mentions and reactions from the whole team';
+    const page = await open(`<div style="inline-size:180px">${switchHtml({ label: long })}</div>`);
+    const root = await rect(page, '#root');
+    const input = await rect(page, '#ctl');
+    const track = await page.evaluate(() => {
+      const r = document.getElementById('root');
+      const cs = getComputedStyle(r, '::before');
+      const rr = r.getBoundingClientRect();
+      const top = rr.y + rr.height / 2; // track is centred on the root block axis
+      return { y: top - Number.parseFloat(cs.height) / 2, height: Number.parseFloat(cs.height) };
+    });
+    expect(root.height).toBeGreaterThan(px(tokens['target-min']) * 2); // the label really wrapped
+    expect(input.y).toBeLessThanOrEqual(track.y);
+    expect(input.y + input.height).toBeGreaterThanOrEqual(track.y + track.height);
+    const thumb = await rect(page, '#thumb');
+    expect(input.y).toBeLessThanOrEqual(thumb.y);
+    expect(input.y + input.height).toBeGreaterThanOrEqual(thumb.y + thumb.height);
+  });
+
   it('the native input is reachable with Tab and clicking the label toggles it', async () => {
     const page = await open(switchHtml());
     await page.keyboard.press('Tab');
