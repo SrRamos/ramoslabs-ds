@@ -253,3 +253,48 @@ from consumer override. Adapter obligations:
 - .b CSS: indicator part paints box, check and dash (`data-state`), `appearance: none` input in the hit area, forced-colors visible.
 - Adapters: apply `indeterminate` as a property (React ref), run `reconcile()` after commit and execute both effect types.
 - .f: submit equivalence vs a bare `<input type=checkbox name value>` for unchecked/checked/indeterminate/disabled, SSR note above.
+
+# C03c.b: SJCheckbox CSS (`packages/css/src/checkbox.css`)
+
+Branch `feature/m4-c03c-checkbox-css`, from origin/main (7389670). Files: `packages/css/src/checkbox.css`,
+`packages/css/test/checkbox.test.js` (27 tests), `packages/css/test/template.test.js` (checkbox added to the real-contract
+list, as switch is). Same structure as the switch golden (C03s.b); this section lists only the differences.
+
+## Structure (ADR-008, ADR-009, ADR-014)
+- The **native `<input>` is the focus target**: `appearance: none`, transparent, sized to `--sj-target` (44 px, 24 px compact on
+  fine pointers), centred on the 44 px slot with `translate: 0 -50%` (G3A MUST-3 pattern, asserted on a wrapping label).
+- The **box is `.sj-checkbox__indicator`** (20 px, `--space-5`), centred in the 44 px slot at the start edge (12 px in).
+- **Boundary and field.** The box's own fill is the 1 px boundary: `slate-500` when unchecked, `primary` when checked or
+  indeterminate. `::before` is the white field inset by the hairline (sj.component, so it is not a page fill).
+- **Glyphs.** `::after` is drawn with borders, not background: the check is an L (`rotate: 45deg`), the dash is one
+  `border-block-start`. Borders survive forced colors; backgrounds do not.
+- Logical properties throughout; RTL mirrors the box inset without `:dir()`.
+
+## Contrast through the extractor
+- `extractUiPairs` reads `background-color` fills in `sj.state` keyed on `[data-state]`. The box fills are exactly those:
+  nine ids (`checkbox/indicator/{unchecked,checked,indeterminate}/ui-on-<surface>`), each at 3:1 on all three surfaces.
+  Disabled fills are skipped (1.4.11 inactive exemption), as for the switch.
+- **Why the boundary is a fill, not a border.** The extractor reads no `border-color` outside `sj.variant`. A 1 px slate
+  border would be invisible to it. Drawing the boundary as the box fill keeps it on the page through the extractor.
+  The white field inside is in `sj.component` and is not a page fill (its contrast against the surface is not a
+  requirement; the boundary is).
+- **Not checked by the extractor:** the glyph on the primary fill (white on primary, 6.3:1), read from computed styles in
+  `checkbox.test.js` (`checked glyph meets 3:1`). Extending `extractUiPairs` to read `border-color` in `sj.state` would
+  move this into the matrix; not done here (the testing package is not owned by this stream).
+
+## Forced colors
+- `.sj-checkbox__indicator` gets `hairline solid CanvasText`; `::after` gets `border-color: CanvasText`. The state is carried by
+  the glyph (check, dash, empty box), not by colour. Test: unchecked, checked and indeterminate screenshots differ.
+- Seeded: removing the forced-colors box border fails the forced-colors test.
+
+## Checks (all green)
+- `npm run lint` (stylelint W1-202 rules), `prettier --check` on the css package, `vitest run` (css suite 123 tests).
+- Anatomy: `cssParts('checkbox')` equals the contract's `root`, `control`, `indicator`, `label`; `checkStylesheets` clean.
+- Seeds that fail: unchecked boundary to `slate-300` (extractor, 1.4.11); checked fill to `slate-300` (extractor); control pinned
+  to the top edge on a wrapping label (geometry); forced-colors border removed (forced colors).
+
+## Follow-ups
+- `extractUiPairs` reading `border-color` in `sj.state` (then the glyph-on-fill and any future outline box can be extracted).
+- Adapters (.c/.d/.e): `indeterminate` is a property, not an attribute; `data-state="indeterminate"` is server-rendered so the
+  dash paints before hydration.
+- .f: visual baselines for the forced-colors and RTL scenes (human review), VoiceOver `mixed` announcement.
