@@ -104,10 +104,8 @@ function createSpec(
     attach(ctx) {
       const { onChange } = parts!.getControlProps();
       ctx.listen(input!, 'change', (e) => {
+        // A controlled owner that rejects the change is re-synced by the runtime (PR #64).
         (onChange as (e: Event) => void)(e);
-        // A controlled owner that rejects the change leaves the store untouched, so nothing else would
-        // schedule the commit that puts the native input back. Re-patch (which also schedules).
-        kick();
       });
       // `form.reset()` restores the input to its default silently (no `change`), so the model would keep
       // the last state. `reset` bubbles to the document, which also covers a label mounted before it is

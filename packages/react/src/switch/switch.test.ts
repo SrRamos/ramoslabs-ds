@@ -177,11 +177,12 @@ describe('form.reset()', () => {
 });
 
 describe('controlled', () => {
-  it('follows the prop and corrects the native input when the owner rejects', () => {
+  it('follows the prop and corrects the native input when the owner rejects', async () => {
     const spy = vi.fn();
     const r = mount(full({ checked: false, onCheckedChange: spy }));
     nodes[0]!.checked = true; // the native input flipped itself
     toggle(r, true);
+    await act(async () => {}); // useMachine re-syncs a rejection in a microtask, before paint
     expect(spy).toHaveBeenCalledWith({ checked: true });
     expect(input(r).props.checked).toBe(false);
     expect(nodes[0]!.checked).toBe(false); // corrective effect restored it
@@ -290,10 +291,11 @@ describe('StrictMode', () => {
     expect(spy).toHaveBeenCalledTimes(2);
     expect(input(r).props.checked).toBe(false);
   });
-  it('StrictMode controlled rejection still corrects', () => {
+  it('StrictMode controlled rejection still corrects', async () => {
     const r = mount(h(StrictMode, null, full({ checked: true, onCheckedChange() {} })));
     nodes[nodes.length - 1]!.checked = false;
     toggle(r, false);
+    await act(async () => {});
     expect(nodes[nodes.length - 1]!.checked).toBe(true);
   });
 });

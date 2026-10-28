@@ -12,7 +12,6 @@ import {
   useContext,
   useEffect,
   useId,
-  useReducer,
   useRef,
   type ComponentPropsWithoutRef,
   type ForwardRefExoticComponent,
@@ -132,18 +131,8 @@ export const SJSwitchRoot: ForwardRefExoticComponent<
     },
   });
 
-  // A rejected controlled change leaves the store untouched, so React would not commit and
-  // `reconcile()` (which runs in the commit's layout effect) would never correct the native input.
-  // Forcing one commit after every native report guarantees the corrective effect runs.
-  const [, commit] = useReducer((n: number) => n + 1, 0);
-  const native = useCallback<typeof m.native>(
-    (f, a) => {
-      const r = m.native(f, a);
-      commit();
-      return r;
-    },
-    [m],
-  );
+  // A rejected controlled change is re-synced by `useMachine` itself (runtime follow-up, PR #64).
+  const native = m.native;
 
   // A native `form.reset()` restores the input to its default without a `change` event, so the model
   // would keep the last state (a bare input has no model; this one must follow the DOM). Re-sync after the
