@@ -849,7 +849,9 @@ only the enum; promotion is a reviewed edit of `status`.
 
 *Schema freeze (G2 ruling, 2026-10-27).* `contract.schema.json` v1 enforces: `state.controllable` is a
 subset of `props[].name`; every `actions[].emit` names an entry of `events[]`; `pattern.evidence` is
-required. Any further schema change is a broadcast event needing a G-gate ruling.
+required. Any further schema change is a broadcast event needing a G-gate ruling. *G-ICON ruling,
+2026-10-28:* `actions` may be empty (`minItems: 0`) for a stateless display component, and a contract
+with no actions must have `events: []` (semantic rule in `validate.mjs`); nothing else changed.
 
 **Consequences.** Schema design is up-front work and contract maintenance is release work. In
 return the support claims, a11y claims and agent guidance become executable. A contract version bump

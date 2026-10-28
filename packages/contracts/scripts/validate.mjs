@@ -74,6 +74,9 @@ function semanticErrors(c, today) {
     if (a.emit !== undefined && !eventNames.has(a.emit))
       add(`/actions/${i}/emit`, `"${a.emit}" is not an entry of events[]`);
   });
+  // G-ICON ruling, 2026-10-28: a contract may have no actions (a stateless display part), but then nothing can emit.
+  if (c.actions.length === 0 && c.events.length > 0)
+    add('/events', 'a contract with no actions must have events: []');
   for (const part of Object.keys(c.keyboard))
     if (!parts.has(part)) add(`/keyboard/${part}`, `unknown anatomy part "${part}"`);
   if (c.focus.owner && !parts.has(c.focus.owner))

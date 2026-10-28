@@ -67,6 +67,17 @@ describe('contract.schema.json v1 validator', () => {
     expect(paths(c)).toContain('/pattern/evidence');
   });
 
+  it('G-ICON ruling: no actions is valid only with events: [] (seeded)', () => {
+    const c = sample();
+    c.actions = [];
+    c.state.controllable = [];
+    c.events = [{ name: 'ghost', payload: '{}' }];
+    expect(paths(c)).toContain('/events');
+    c.events = [];
+    expect(validateContract(c).errors.map((e) => e.path)).not.toContain('/events');
+    expect(paths(c)).not.toContain('/actions');
+  });
+
   it('rejects an unknown top-level field, a wrong $schema URL and a bad name', () => {
     expect(paths({ ...sample(), extra: 1 })).toContain('/extra');
     expect(paths({ ...sample(), $schema: 'https://example.com/x.json' })).toContain('/$schema');
