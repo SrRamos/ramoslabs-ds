@@ -27,9 +27,7 @@
             class="token-picker__selected-preview"
             :style="{ backgroundColor: selectedColor.value }"
           >
-            <span :style="{ color: contrastWhite >= 4.5 ? '#ffffff' : '#000000' }">
-              Aa
-            </span>
+            <span :style="{ color: contrastWhite >= 4.5 ? '#ffffff' : '#000000' }"> Aa </span>
           </div>
           <div class="token-picker__selected-info">
             <div class="token-picker__selected-name">{{ selectedColor.name }}</div>
@@ -50,10 +48,7 @@
               </div>
               <div class="token-picker__contrast-ratio">
                 <span class="token-picker__contrast-value">{{ contrastWhite.toFixed(2) }}:1</span>
-                <span
-                  class="token-picker__contrast-badge"
-                  :class="getContrastClass(contrastWhite)"
-                >
+                <span class="token-picker__contrast-badge" :class="getContrastClass(contrastWhite)">
                   {{ getContrastLabel(contrastWhite) }}
                 </span>
               </div>
@@ -68,10 +63,7 @@
               </div>
               <div class="token-picker__contrast-ratio">
                 <span class="token-picker__contrast-value">{{ contrastBlack.toFixed(2) }}:1</span>
-                <span
-                  class="token-picker__contrast-badge"
-                  :class="getContrastClass(contrastBlack)"
-                >
+                <span class="token-picker__contrast-badge" :class="getContrastClass(contrastBlack)">
                   {{ getContrastLabel(contrastBlack) }}
                 </span>
               </div>
@@ -81,13 +73,27 @@
 
         <button class="token-picker__copy" @click="copyToken">
           <span v-if="copied" class="token-picker__copy-success">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
             Copied!
           </span>
           <span v-else>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
@@ -99,7 +105,14 @@
 
     <Transition name="toast">
       <div v-if="showToast" class="token-picker__toast">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
         Copied: var({{ lastCopied }})
@@ -110,18 +123,19 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { contrastRatio, relativeLuminance } from '../../../../packages/testing/contrast/wcag.js';
 
 type ColorToken = {
   name: string;
   token: string;
   value: string;
   description?: string;
-}
+};
 
 type Props = {
   title?: string;
   colors: ColorToken[];
-}
+};
 
 const props = withDefaults(defineProps<Props>(), {
   title: 'Color Tokens',
@@ -132,18 +146,10 @@ const copied = ref(false);
 const showToast = ref(false);
 const lastCopied = ref('');
 
-// Calculate relative luminance for WCAG contrast
-const getLuminance = (hex: string): number => {
-  const rgb = hexToRgb(hex);
-  if (!rgb) return 0;
+const withHash = (hex: string): string => (hex.startsWith('#') ? hex : `#${hex}`);
 
-  const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((c) => {
-    c = c / 255;
-    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  });
-
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-};
+const getLuminance = (hex: string): number =>
+  hexToRgb(hex) ? relativeLuminance(withHash(hex)) : 0;
 
 const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -156,13 +162,8 @@ const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
     : null;
 };
 
-const getContrastRatio = (color1: string, color2: string): number => {
-  const l1 = getLuminance(color1);
-  const l2 = getLuminance(color2);
-  const lighter = Math.max(l1, l2);
-  const darker = Math.min(l1, l2);
-  return (lighter + 0.05) / (darker + 0.05);
-};
+const getContrastRatio = (color1: string, color2: string): number =>
+  hexToRgb(color1) && hexToRgb(color2) ? contrastRatio(withHash(color1), withHash(color2)) : 1;
 
 const isLightColor = (hex: string): boolean => {
   return getLuminance(hex) > 0.5;
@@ -259,10 +260,14 @@ const copyToken = async () => {
   justify-content: center;
   gap: 0.25rem;
   padding: 0.75rem;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
   color: var(--color-white);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 .token-picker__swatch--light {
@@ -272,7 +277,9 @@ const copyToken = async () => {
 
 .token-picker__swatch:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 .token-picker__swatch:focus-visible {
@@ -440,7 +447,9 @@ const copyToken = async () => {
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
 .token-picker__copy:hover {
@@ -481,7 +490,9 @@ const copyToken = async () => {
 /* Transitions */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .fade-enter-from,
@@ -492,7 +503,9 @@ const copyToken = async () => {
 
 .toast-enter-active,
 .toast-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .toast-enter-from,
@@ -503,88 +516,88 @@ const copyToken = async () => {
 
 /* Dark mode support */
 .dark .token-picker,
-:global([data-theme="dark"]) .token-picker {
+:global([data-theme='dark']) .token-picker {
   color: var(--color-slate-100);
 }
 
 .dark .token-picker__title,
-:global([data-theme="dark"]) .token-picker__title {
+:global([data-theme='dark']) .token-picker__title {
   color: var(--color-slate-100);
 }
 
 .dark .token-picker__subtitle,
-:global([data-theme="dark"]) .token-picker__subtitle {
+:global([data-theme='dark']) .token-picker__subtitle {
   color: var(--color-slate-500);
 }
 
 .dark .token-picker__details,
-:global([data-theme="dark"]) .token-picker__details {
+:global([data-theme='dark']) .token-picker__details {
   background: var(--color-slate-800);
   border-color: var(--color-slate-700);
 }
 
 .dark .token-picker__selected-name,
-:global([data-theme="dark"]) .token-picker__selected-name {
+:global([data-theme='dark']) .token-picker__selected-name {
   color: var(--color-slate-100);
 }
 
 .dark .token-picker__selected-token,
-:global([data-theme="dark"]) .token-picker__selected-token {
+:global([data-theme='dark']) .token-picker__selected-token {
   background: var(--color-slate-900);
   color: var(--color-indigo-400);
 }
 
 .dark .token-picker__selected-value,
-:global([data-theme="dark"]) .token-picker__selected-value {
+:global([data-theme='dark']) .token-picker__selected-value {
   color: var(--color-slate-500);
 }
 
 .dark .token-picker__contrast-title,
-:global([data-theme="dark"]) .token-picker__contrast-title {
+:global([data-theme='dark']) .token-picker__contrast-title {
   color: var(--color-slate-500);
 }
 
 .dark .token-picker__contrast-value,
-:global([data-theme="dark"]) .token-picker__contrast-value {
+:global([data-theme='dark']) .token-picker__contrast-value {
   color: var(--color-slate-100);
 }
 
 .dark .token-picker__contrast-badge--aaa,
-:global([data-theme="dark"]) .token-picker__contrast-badge--aaa {
+:global([data-theme='dark']) .token-picker__contrast-badge--aaa {
   background: var(--color-green-950);
   color: var(--color-green-400);
 }
 
 .dark .token-picker__contrast-badge--aa,
-:global([data-theme="dark"]) .token-picker__contrast-badge--aa {
+:global([data-theme='dark']) .token-picker__contrast-badge--aa {
   background: var(--color-emerald-900);
   color: var(--color-emerald-400);
 }
 
 .dark .token-picker__contrast-badge--aa-large,
-:global([data-theme="dark"]) .token-picker__contrast-badge--aa-large {
+:global([data-theme='dark']) .token-picker__contrast-badge--aa-large {
   background: var(--color-amber-950);
   color: var(--color-amber-400);
 }
 
 .dark .token-picker__contrast-badge--fail,
-:global([data-theme="dark"]) .token-picker__contrast-badge--fail {
+:global([data-theme='dark']) .token-picker__contrast-badge--fail {
   background: var(--color-red-950);
   color: var(--color-red-400);
 }
 
 .dark .token-picker__copy,
-:global([data-theme="dark"]) .token-picker__copy {
+:global([data-theme='dark']) .token-picker__copy {
   background: var(--color-indigo-500);
 }
 
 .dark .token-picker__copy:hover,
-:global([data-theme="dark"]) .token-picker__copy:hover {
+:global([data-theme='dark']) .token-picker__copy:hover {
   background: var(--color-indigo-600);
 }
 
 .dark .token-picker__toast,
-:global([data-theme="dark"]) .token-picker__toast {
+:global([data-theme='dark']) .token-picker__toast {
   background: var(--color-slate-100);
   color: var(--color-slate-900);
 }
