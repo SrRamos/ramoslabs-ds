@@ -1,0 +1,26 @@
+{
+  "icon": {
+    "size": {
+      "$type": "dimension",
+      "sm": {
+        "$value": "0.875rem",
+        "$description": "14px. Small glyph box, for dense text and compact controls."
+      },
+      "md": {
+        "$value": "1.25rem",
+        "$description": "20px. Default glyph box, matching the 1.25em SJButton icon box."
+      },
+      "lg": {
+        "$value": "1.5rem",
+        "$description": "24px. Large glyph box, the native grid of the icon set."
+      }
+    },
+    "stroke": {
+      "width": {
+        "$type": "number",
+        "$value": 2,
+        "$description": "Stroke weight of every icon, in the 24-unit icon grid (the set's native weight). Themes thin it through the --sj-icon-stroke hook."
+      }
+    }
+  }
+}
