@@ -1,0 +1,6 @@
+{
+  "$comment": "ADR-016 / ADR-011 icon rows. Per-icon ceiling is 0.4 KiB gzip; an icon listed in `exceptions` (name, reviewed reason) may reach 0.75 KiB. None expected: the largest of the 78 is far below 0.4.",
+  "ceilingKiB": 0.4,
+  "exceptionCeilingKiB": 0.75,
+  "exceptions": []
+}

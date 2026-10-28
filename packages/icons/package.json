@@ -1,0 +1,46 @@
+{
+  "name": "@ramoslabs/icons",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "RAMOS SOLUTIONS S.A.S. (https://ramoslabs.com)",
+  "homepage": "https://ramoslabs.com",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "THIRD-PARTY-NOTICES.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/generated/index.d.ts",
+      "import": "./dist/generated/index.js"
+    },
+    "./by-name": {
+      "types": "./dist/by-name.d.ts",
+      "import": "./dist/by-name.js"
+    },
+    "./*": {
+      "types": "./dist/generated/icons/*.d.ts",
+      "import": "./dist/generated/icons/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "format:check": "prettier --check . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "lucide-static": "1.63.0",
+    "typescript": "5.9.3",
+    "vitest": "5.0.5"
+  }
+}

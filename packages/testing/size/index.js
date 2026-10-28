@@ -2,12 +2,13 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { measureIcons } from './icons.js';
 import { KIB, externalizeShared, measure } from './measure.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const defaultRoot = resolve(here, '../../..');
 
-/** @typedef {{ id: string, label: string, kind: 'shared' | 'component' | 'fixture' | 'adapter', gzipBytes: number, rawBytes: number, ceilingKiB: number | null, status: 'pass' | 'fail' | 'reported', detail?: string, bundleRawBytes?: number, graph: string[] }} Row */
+/** @typedef {{ id: string, label: string, kind: 'shared' | 'component' | 'fixture' | 'adapter' | 'icon', gzipBytes: number, rawBytes: number, ceilingKiB: number | null, status: 'pass' | 'fail' | 'reported', detail?: string, bundleRawBytes?: number, graph: string[] }} Row */
 
 /** @param {number} bytes */
 const kib = (bytes) => bytes / KIB;
@@ -195,6 +196,9 @@ export async function runSize(options = {}) {
     });
   }
 
+  // ADR-016 icon rows (per-icon ceilings, unused-icon fixture, by-name reported).
+  rows.push(...(await measureIcons(root)));
+
   return { rows, failed: rows.some((r) => r.status === 'fail') };
 }
 
@@ -215,7 +219,16 @@ export function formatReport(rows) {
   const lines = [
     `${pad('artifact', 22)} ${pad('gzip', 11)} ${pad('raw', 9)} ${pad('ceiling', 9)} ${pad('graph', 6)} status`,
   ];
+  const perIcon = rows.filter((r) => r.id.startsWith('icon:'));
+  if (perIcon.length) {
+    const max = perIcon.reduce((a, b) => (b.gzipBytes > a.gzipBytes ? b : a));
+    const bad = perIcon.filter((r) => r.status === 'fail');
+    lines.push(
+      `${pad(`icon:* (${perIcon.length})`, 22)} ${pad(`${kib(max.gzipBytes).toFixed(3)} KiB`, 11)} ${pad(`${max.rawBytes} B`, 9)} ${pad(`${perIcon[0].ceilingKiB ?? '-'} KiB`, 9)} ${pad('-', 6)} ${bad.length ? 'fail' : 'pass'}  (max is ${max.id}${bad.length ? `; over ceiling: ${bad.map((b) => b.id).join(', ')}` : ''})`,
+    );
+  }
   for (const r of rows) {
+    if (r.id.startsWith('icon:')) continue;
     lines.push(
       `${pad(r.id, 22)} ${pad(`${kib(r.gzipBytes).toFixed(3)} KiB`, 11)} ${pad(`${r.rawBytes} B`, 9)} ${pad(
         r.ceilingKiB === null ? '-' : `${r.ceilingKiB} KiB`,
