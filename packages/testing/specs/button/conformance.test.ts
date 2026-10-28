@@ -5,7 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { buildMatrix, collectResults, parseTitle } from '../../parity/index.js';
-import { findUnjustifiedSkips } from '../../../../scripts/skip-check.mjs';
+import { execFileSync } from 'node:child_process';
 import { runSize } from '../../size/index.js';
 import { verifyBaselines } from '../../visual/baselines.js';
 import { checkEvidence } from '../../evidence/index.js';
@@ -71,7 +71,7 @@ const allTitles = () =>
   );
 
 describe('parity matrix declaration (ADR-013 L6)', () => {
-  const expected = buttonExpected();
+  const expected = buttonExpected() as Parameters<typeof buildMatrix>[0]['expected'];
   it('titles parse as matrix rows', () => {
     expect(parseTitle(matrixTitle('react', buttonScenarios()[0]!, 'native'))).not.toBeNull();
   });
@@ -106,7 +106,7 @@ describe('parity matrix declaration (ADR-013 L6)', () => {
     expect(m.ok).toBe(false);
   });
   it('every non-executed path is exempt with a reason that names why', () => {
-    for (const x of expected.exemptions) expect(x.reason).toMatch(/no support\[\] entry/);
+    for (const x of expected.exemptions ?? []) expect(x.reason).toMatch(/no support\[\] entry/);
   });
 });
 
@@ -180,11 +180,14 @@ describe('evidence and skips', () => {
     });
     expect(errors.filter((e: string) => /button/i.test(e))).toEqual([]);
   });
-  it('no spec file carries a skip without an issue and an owner', () => {
-    const files = readdirSync(here).filter(
+  it('the repo skip rule (issue and owner on every skip) passes with these specs present', () => {
+    // Exits 1 on any skip/fixme/todo without both; specs/button must contain none.
+    execFileSync(process.execPath, [join(repo, 'scripts', 'skip-check.mjs')], { cwd: repo });
+    for (const f of readdirSync(here).filter(
       (f) => /\.(ts|js)$/.test(f) && f !== 'conformance.test.ts',
-    );
-    for (const f of files)
-      expect(findUnjustifiedSkips(readFileSync(join(here, f), 'utf8')), f).toEqual([]);
+    ))
+      expect(readFileSync(join(here, f), 'utf8'), f).not.toMatch(
+        /\b(?:test|it|describe)\.(?:skip|fixme|todo)\s*\(/,
+      );
   });
 });

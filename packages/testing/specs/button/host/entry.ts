@@ -62,8 +62,8 @@ const rootEl = (): HTMLElement => {
 const real = detectSupports(window as never);
 const presses: PressRecord[] = [];
 const submits: SubmitRecord[] = [];
-const onPress = (p: { originalEvent: Event }): void =>
-  void presses.push({ type: p.originalEvent.type });
+const onPress = (p: { originalEvent: unknown }): void =>
+  void presses.push({ type: (p.originalEvent as Event).type });
 const seen = (r: SJRuntime): void => void (window.__btn.seen = r.supports);
 const runtimeFor = (path: string, extra: Parameters<typeof createRuntime>[0] = {}): SJRuntime =>
   createRuntime({ target: 'client', ...extra, supports: applyPath(real, parsePath(path)) });
