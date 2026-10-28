@@ -3,7 +3,6 @@ import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { buildCss } from '../../css/scripts/build.mjs';
 import {
   RECIPE,
   SIZES,
@@ -19,6 +18,10 @@ import {
   parseHex,
   relativeLuminance,
 } from './index.js';
+
+// Dynamic specifier: the css build script is plain JS outside this package's typecheck graph.
+const buildScript = '../../css/scripts/build.mjs';
+const { buildCss } = await import(/* @vite-ignore */ buildScript);
 
 describe('wcag', () => {
   it('matches published reference values', () => {
