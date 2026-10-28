@@ -31,4 +31,4 @@ Risk to note: some screen readers prefer a live region present well before first
 
 ## Bytes (min + gzip, `node packages/testing/size/cli.js`)
 
-See the final reply for the before/after of the runtime chunks.
+Adapter runtime chunks, gzip: react 1.523 to 1.610 KiB (+89 B), vue 1.325 to 1.392 KiB (+69 B), vanilla 1.326 to 1.341 KiB (+15 B). Core `runtime` unchanged (0.869 KiB).
