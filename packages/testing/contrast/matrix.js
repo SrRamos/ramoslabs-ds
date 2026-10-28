@@ -9,7 +9,7 @@
 // Sizes: text color does not depend on size, so each pair is evaluated per size. All sizes are
 // treated as normal text (4.5:1); the large-text 3:1 allowance is deliberately not used.
 import { THRESHOLDS, contrastRatio } from './wcag.js';
-import { extractPairs } from './css.js';
+import { extractPairs, extractUiPairs } from './css.js';
 
 export const VARIANTS = ['solid', 'soft', 'outline', 'ghost'];
 export const TONES = ['primary', 'neutral', 'success', 'warning', 'error', 'info'];
@@ -42,20 +42,20 @@ export const RECIPE = {
     info: { fg: 'color-info-text', bg: 'color-info-surface' },
   },
   outline: {
-    primary: { fg: 'color-primary', bg: 'color-surface', border: 'color-primary' },
-    neutral: { fg: 'color-text-body', bg: 'color-surface', border: 'color-text-muted' },
-    success: { fg: 'color-success-text', bg: 'color-surface', border: 'color-success-text' },
-    warning: { fg: 'color-warning-text', bg: 'color-surface', border: 'color-warning-text' },
-    error: { fg: 'color-error-text', bg: 'color-surface', border: 'color-error-text' },
-    info: { fg: 'color-info-text', bg: 'color-surface', border: 'color-info-text' },
+    primary: { fg: 'color-primary', bg: 'transparent', border: 'color-primary' },
+    neutral: { fg: 'color-text-body', bg: 'transparent', border: 'color-text-muted' },
+    success: { fg: 'color-success-text', bg: 'transparent', border: 'color-success-text' },
+    warning: { fg: 'color-warning-text', bg: 'transparent', border: 'color-warning-text' },
+    error: { fg: 'color-error-text', bg: 'transparent', border: 'color-error-text' },
+    info: { fg: 'color-info-text', bg: 'transparent', border: 'color-info-text' },
   },
   ghost: {
-    primary: { fg: 'color-primary', bg: 'color-surface' },
-    neutral: { fg: 'color-text-body', bg: 'color-surface' },
-    success: { fg: 'color-success-text', bg: 'color-surface' },
-    warning: { fg: 'color-warning-text', bg: 'color-surface' },
-    error: { fg: 'color-error-text', bg: 'color-surface' },
-    info: { fg: 'color-info-text', bg: 'color-surface' },
+    primary: { fg: 'color-primary', bg: 'transparent' },
+    neutral: { fg: 'color-text-body', bg: 'transparent' },
+    success: { fg: 'color-success-text', bg: 'transparent' },
+    warning: { fg: 'color-warning-text', bg: 'transparent' },
+    error: { fg: 'color-error-text', bg: 'transparent' },
+    info: { fg: 'color-info-text', bg: 'transparent' },
   },
 };
 
@@ -137,6 +137,19 @@ export function checkContrastMatrix(tokens, options = {}) {
         });
   }
 
+  // Drawn fills on the page (switch track, G3A SHOULD-2): 3:1 against every surface.
+  if (options.css)
+    for (const u of extractUiPairs(options.css))
+      for (const s of SURFACES)
+        add({
+          id: `${u.component}/${u.part}${u.pseudo}/${u.state}/ui-on-${s}`,
+          kind: 'ui',
+          source: 'css',
+          fg: u.bg,
+          bg: s,
+          min: THRESHOLDS.ui,
+        });
+
   for (const variant of VARIANTS) {
     for (const tone of TONES) {
       if (covered.has(`${variant}/${tone}`)) continue; // the CSS is authoritative
@@ -144,17 +157,20 @@ export function checkContrastMatrix(tokens, options = {}) {
       if (!r) throw new Error(`RECIPE is missing ${variant} x ${tone}`);
       for (const size of SIZES) {
         const id = `${variant}/${tone}/${size}`;
-        add({
-          id: `${id}/text`,
-          kind: 'text',
-          source: 'recipe',
-          variant,
-          tone,
-          size,
-          fg: r.fg,
-          bg: r.bg,
-          min: THRESHOLDS.text,
-        });
+        // A transparent fill sits on the page: evaluated on every surface, same as the CSS pairs.
+        const surfaces = r.bg === 'transparent' ? SURFACES : [r.bg];
+        for (const bg of surfaces)
+          add({
+            id: `${id}/text${surfaces.length > 1 ? `-on-${bg}` : ''}`,
+            kind: 'text',
+            source: 'recipe',
+            variant,
+            tone,
+            size,
+            fg: r.fg,
+            bg,
+            min: THRESHOLDS.text,
+          });
         if (r.border) {
           for (const s of SURFACES) {
             add({

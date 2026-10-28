@@ -1,6 +1,12 @@
 // G2 NICE-1: contrast pairs are read from built CSS; RECIPE is only the fallback.
 import { describe, expect, it } from 'vitest';
-import { checkContrastMatrix, extractPairs, formatFailure, loadTokens } from './index.js';
+import {
+  checkContrastMatrix,
+  extractPairs,
+  extractUiPairs,
+  formatFailure,
+  loadTokens,
+} from './index.js';
 
 const tokens = loadTokens();
 const CSS = `
@@ -67,5 +73,35 @@ describe('checkContrastMatrix with css', () => {
     expect(
       failures.some((f) => f.id.startsWith('x/outline/primary/border-on-') && f.min === 3),
     ).toBe(true);
+  });
+});
+
+describe('extractUiPairs', () => {
+  const UI = `
+@layer sj.component { .sj-x__root::before { background-color: var(--color-red-500); } }
+@layer sj.state {
+  .sj-x__root[data-state='off']::before { background-color: var(--color-slate-500); }
+  .sj-x__thumb[data-state='on'] { inset-inline-start: 0; }
+  .sj-x__root[data-disabled]:not([data-disabled='false'])::before { background-color: var(--color-slate-300); }
+  @media (forced-colors: active) { .sj-x__root[data-state='on']::before { background-color: var(--color-primary); } }
+}`;
+  it('reads state-keyed fills from sj.state only, skipping disabled and other layers', () => {
+    expect(extractUiPairs(UI)).toEqual([
+      { component: 'x', part: 'root', pseudo: '::before', state: 'off', bg: 'color-slate-500' },
+      { component: 'x', part: 'root', pseudo: '::before', state: 'on', bg: 'color-primary' },
+    ]);
+  });
+  it('fails a seeded weak fill on every surface', () => {
+    const { failures } = checkContrastMatrix(tokens, {
+      css: UI.replace('var(--color-slate-500)', 'var(--color-slate-300)'),
+    });
+    expect(failures.filter((f) => f.id.startsWith('x/root::before/off/ui-on-')).length).toBe(3);
+  });
+  it('rejects a raw color', () => {
+    expect(() =>
+      extractUiPairs(
+        `@layer sj.state { .sj-x__root[data-state='on'] { background-color: #fff; } }`,
+      ),
+    ).toThrow(/tokens only/);
   });
 });

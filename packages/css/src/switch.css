@@ -35,8 +35,9 @@
   /* Native checkbox, stripped to a transparent hit layer over the track. It stays the real control. */
   .sj-switch__control {
     position: absolute;
-    inset-block-start: 0;
+    inset-block-start: 50%;
     inset-inline-start: 0;
+    translate: 0 -50%;
     inline-size: var(--sj-target);
     block-size: var(--sj-target);
     margin: 0;
