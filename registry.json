@@ -229,6 +229,112 @@
       "docs": []
     },
     {
+      "name": "SJCheckbox",
+      "slug": "checkbox",
+      "contractVersion": "0.1.0",
+      "status": "draft",
+      "pattern": {
+        "apg": "checkbox",
+        "evidence": "checkbox",
+        "native": "checkbox"
+      },
+      "anatomy": [
+        {
+          "part": "root",
+          "element": "label"
+        },
+        {
+          "part": "control",
+          "element": "input",
+          "native": true,
+          "attributes": {
+            "type": "checkbox"
+          }
+        },
+        {
+          "part": "indicator",
+          "element": "span"
+        },
+        {
+          "part": "label",
+          "element": "span"
+        }
+      ],
+      "roles": [],
+      "state": {
+        "machine": [
+          "unchecked",
+          "checked",
+          "mixed-unchecked",
+          "mixed-checked"
+        ],
+        "controllable": [
+          "checked",
+          "indeterminate"
+        ]
+      },
+      "keyboard": {
+        "control": {
+          "Space": "toggle"
+        }
+      },
+      "kinds": [],
+      "supportFloor": [],
+      "atSupport": [
+        {
+          "at": "voiceover",
+          "platform": "macos",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/checkbox.json#vo-macos-safari-ariaat560"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "voiceover",
+          "platform": "ios",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/checkbox.json#vo-ios-safari-a11ysupport-native-checkbox"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "nvda",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/checkbox.json#nvda-chrome-ariaat559"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "jaws",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/checkbox.json#jaws-chrome-ariaat558"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "talkback",
+          "platform": "android",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/checkbox.json#talkback-chrome-a11ysupport-native-checkbox"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        }
+      ],
+      "docs": []
+    },
+    {
       "name": "SJSwitch",
       "slug": "switch",
       "contractVersion": "0.1.0",

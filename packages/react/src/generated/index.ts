@@ -2,4 +2,5 @@
 // Do not edit: run `bun run codegen` and commit the result (contracts:check fails on drift).
 
 export * from './button/index';
+export * from './checkbox/index';
 export * from './switch/index';
