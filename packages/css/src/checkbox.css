@@ -1,0 +1,143 @@
+/* sj-checkbox: generated from src/_template, then authored. Tokens only (stylelint sj/* rules enforce it).
+   Parts (contract anatomy): root <label>, control <input type="checkbox">, indicator <span>, label <span>.
+   The native input is the real control and the focus target: appearance:none, transparent, 44 px (base/base.css),
+   centred on the indicator. The visible box is the indicator. Its own fill is the 1 px boundary (slate 500 when
+   unchecked, primary when checked or indeterminate); ::before is the white field inside it, so the boundary is a
+   drawn fill the contrast extractor can read. The check and the dash are ::after, drawn with borders so forced
+   colors keeps them. State: data-state (unchecked | checked | indeterminate) on every part, data-disabled when
+   disabled. The state is never carried by colour alone: the glyph differs (check, dash, empty box).
+   Layers: structure in sj.component, colour and state in sj.state. No sj.variant axes (SJCheckbox has none). */
+
+@layer sj.component {
+  .sj-checkbox__root {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    /* Clear the 44 px slot that holds the box and the gap before the label. Logical, so RTL mirrors it. */
+    padding-inline-start: calc(var(--target-min) + var(--space-3));
+    min-block-size: var(--sj-target);
+    cursor: pointer;
+  }
+
+  /* The visible label (contract anatomy part `label`): inherits the root's colour; no other rule yet. */
+  .sj-checkbox__label {
+    color: inherit;
+  }
+
+  /* Box: 20 px, centred in the 44 px slot on both axes. Its fill is the boundary (see the header). */
+  .sj-checkbox__indicator {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc((var(--target-min) - var(--space-5)) / 2);
+    box-sizing: border-box;
+    inline-size: var(--space-5);
+    block-size: var(--space-5);
+    translate: 0 -50%;
+    border-radius: var(--radius-xs);
+    transition-property: background-color;
+    transition-duration: var(--sj-duration-fast);
+    transition-timing-function: var(--easing-out);
+  }
+
+  /* Field: the white inside of the box, inset by the hairline so the fill around it reads as the boundary. */
+  .sj-checkbox__indicator::before {
+    content: '';
+    position: absolute;
+    inset: var(--border-width-hairline);
+    border-radius: var(--radius-xs);
+    background-color: var(--color-white);
+  }
+
+  /* Glyph base: a border-drawn stroke. Hidden unless the state below shows it. */
+  .sj-checkbox__indicator::after {
+    content: '';
+    position: absolute;
+    display: none;
+    box-sizing: border-box;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    border-style: solid;
+    border-color: var(--color-white);
+    border-width: 0;
+  }
+
+  /* Check (checked): an L of two 2 px strokes, rotated. */
+  .sj-checkbox__indicator[data-state='checked']::after {
+    display: block;
+    inline-size: var(--space-2);
+    block-size: var(--space-3);
+    border-inline-end-width: calc(var(--border-width-hairline) * 2);
+    border-block-end-width: calc(var(--border-width-hairline) * 2);
+    translate: -50% -60%;
+    rotate: 45deg;
+  }
+
+  /* Dash (indeterminate, mixed): one 2 px stroke across the box. */
+  .sj-checkbox__indicator[data-state='indeterminate']::after {
+    display: block;
+    inline-size: var(--space-3);
+    block-size: 0;
+    border-block-start-width: calc(var(--border-width-hairline) * 2);
+    translate: -50% -50%;
+  }
+
+  /* Native checkbox, stripped to a transparent hit layer over the box. It stays the real control. The
+     `inset-inline-start` term centres the 44 px control on the 44 px slot, and the 24 px compact floor on it. */
+  .sj-checkbox__control {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc((var(--target-min) - var(--sj-target)) / 2);
+    translate: 0 -50%;
+    inline-size: var(--sj-target);
+    block-size: var(--sj-target);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    appearance: none;
+    background: none;
+    cursor: inherit;
+  }
+}
+
+@layer sj.state {
+  /* Unchecked: the slate 500 boundary around the white field. Checked and indeterminate: a primary box. */
+  .sj-checkbox__indicator[data-state='unchecked'] {
+    background-color: var(--color-slate-500);
+  }
+
+  .sj-checkbox__indicator[data-state='checked'],
+  .sj-checkbox__indicator[data-state='indeterminate'] {
+    background-color: var(--color-primary);
+  }
+
+  .sj-checkbox__indicator[data-state='checked']::before,
+  .sj-checkbox__indicator[data-state='indeterminate']::before {
+    display: none;
+  }
+
+  .sj-checkbox__root[data-disabled]:not([data-disabled='false']) {
+    cursor: not-allowed;
+  }
+
+  .sj-checkbox__control[data-disabled]:not([data-disabled='false']) {
+    cursor: not-allowed;
+  }
+
+  /* Disabled box (any state): the inactive fill. Exempt from 1.4.11 as an inactive component. */
+  .sj-checkbox__indicator[data-state][data-disabled]:not([data-disabled='false']) {
+    background-color: var(--color-slate-300);
+  }
+
+  /* Forced colors drops backgrounds, so the box and the glyphs get a system-colour border. The state is
+     carried by the glyph (check, dash or empty), not by the fill. */
+  @media (forced-colors: active) {
+    .sj-checkbox__indicator {
+      border: var(--border-width-hairline) solid CanvasText;
+    }
+
+    .sj-checkbox__indicator::after {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -97,18 +97,25 @@ describe('generator', () => {
     expect(() => generate({ component: 'select', ...s })).toThrow(/No contract/);
   });
 
-  describe('against the real contracts (button, switch)', () => {
+  describe('against the real contracts (button, switch, checkbox)', () => {
     const partsOf = (n) =>
       JSON.parse(readFileSync(join(realContracts, `${n}.contract.json`), 'utf8')).anatomy.map(
         (a) => a.part,
       );
-    it.each(['button', 'switch'])('%s: generated CSS names equal anatomy[].part', (n) => {
-      const s = setup();
-      const { content } = generate({ component: n, contractsDir: realContracts, srcDir: s.srcDir });
-      expect(cssParts(n, content).sort()).toEqual([...partsOf(n)].sort());
-      expect(checkStylesheets(s.srcDir, realContracts)).toEqual([]);
-    });
-    it.each(['button', 'switch'])('%s: a seeded extra or missing part fails', (n) => {
+    it.each(['button', 'switch', 'checkbox'])(
+      '%s: generated CSS names equal anatomy[].part',
+      (n) => {
+        const s = setup();
+        const { content } = generate({
+          component: n,
+          contractsDir: realContracts,
+          srcDir: s.srcDir,
+        });
+        expect(cssParts(n, content).sort()).toEqual([...partsOf(n)].sort());
+        expect(checkStylesheets(s.srcDir, realContracts)).toEqual([]);
+      },
+    );
+    it.each(['button', 'switch', 'checkbox'])('%s: a seeded extra or missing part fails', (n) => {
       const s = setup();
       expect(() =>
         generate({
