@@ -120,13 +120,22 @@ describe('reducer-controlled-field', () => {
 export function reduce(state, event) { return event.type === 'toggle' ? (state === 'on' ? 'off' : 'on') : state; }`;
     expect(lint(src)).toEqual([]);
   });
-  it('fails a read, a bracket read, a write key and a shorthand', () => {
+  it('passes writes: the pipeline applies toEvent(next) to the field', () => {
+    for (const src of [
+      `reduce(state, e) { return { ...state, open: e.open }; }`,
+      `reduce(state, e) { return { ...state, open: true }; }`,
+      `reduce(state, e) { const open = e.open; return { ...state, open }; }`,
+    ])
+      expect(lint(src), src).toEqual([]);
+  });
+  it('fails a read, a bracket read, a toggle and a destructure of the state', () => {
     for (const src of [
       `reduce(state, e) { return state.open ? 'a' : 'b'; }`,
       `reduce(state, e) { return state?.open; }`,
       `reduce(state, e) { return state['value']; }`,
-      `reduce(state, e) { return { ...state, open: true }; }`,
+      `reduce(s, e) { return { ...s, open: !s.open }; }`,
       `reduce({ open }, e) { return open; }`,
+      `const reduce = (state, e) => (state.open ? a : b);`,
     ])
       expect(
         lint(src).map((f) => f.rule),

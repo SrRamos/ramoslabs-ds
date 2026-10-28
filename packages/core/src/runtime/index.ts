@@ -155,7 +155,11 @@ export function createRuntime(config: RuntimeConfig = {}): SJRuntime {
   return Object.freeze(runtime);
 }
 
-/** Plain JSON-safe values that must match between server render and hydration. */
+/**
+ * Plain JSON-safe values that must match between server render and hydration. The scheduler and
+ * `idFactory` are not serialized: the client rebuilds its runtime from these values plus
+ * `target: 'client'` (R2-NICE-1).
+ */
 export function serializeRuntime(r: SJRuntime): SerializedRuntime {
   return {
     locale: r.locale,
