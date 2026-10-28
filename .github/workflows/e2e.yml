@@ -73,6 +73,13 @@ jobs:
           - name: Text safety
             id: text-safety
             run: bun run test:text-safety
+          # Per-component conformance (W1-<c>.f): L2, form, hydration, ARIA, axe, then its parity matrix.
+          - name: Conformance SJButton
+            id: conformance-button
+            run: bun run test:e2e:button && bun run parity:button
+          - name: Conformance SJSwitch
+            id: conformance-switch
+            run: bun run test:e2e:switch && bun run parity:switch
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
