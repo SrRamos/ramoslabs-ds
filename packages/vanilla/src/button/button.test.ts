@@ -119,7 +119,7 @@ const setup = () => {
   const doc = new FDoc();
   const container = doc.createElement('div');
   const runtime = createRuntime({ target: 'client', idFactory: () => 'id1' });
-  const host = createHost(runtime, { liveHost: { create: () => ({ setText: () => undefined }) } });
+  const host = createHost(runtime);
   return { doc, container, host };
 };
 const ctl = (c: FEl) => c.kids[0] as FEl;

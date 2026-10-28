@@ -6,6 +6,6 @@ export default defineConfig({
     ...sharedTestConfig,
     name: 'testing',
     // ssr/ is TypeScript (it drives the adapters' typed runtimes); the rest of testing is JS.
-    include: [...sharedTestConfig.include, 'ssr/**/*.test.ts'],
+    include: [...sharedTestConfig.include, 'ssr/**/*.test.ts', 'specs/**/*.test.ts'],
   },
 });

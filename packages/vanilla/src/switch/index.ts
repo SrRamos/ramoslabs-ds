@@ -56,7 +56,9 @@ function applyProps(el: Element, props: Record<string, unknown>, prev: Applied):
   for (const a of next) prev.add(a);
 }
 
-function createSpec(): ComponentSpec<SwitchSnapshot, SwitchAction, VanillaSwitchProps, never> {
+function createSpec(
+  kick: () => void,
+): ComponentSpec<SwitchSnapshot, SwitchAction, VanillaSwitchProps, never> {
   let input: HTMLInputElement | undefined;
   let thumb: HTMLElement | undefined;
   let text: HTMLElement | undefined;
@@ -87,8 +89,13 @@ function createSpec(): ComponentSpec<SwitchSnapshot, SwitchAction, VanillaSwitch
     initial: (p) => initialSnapshot(p.checked ?? p.defaultChecked ?? false),
     reduce: storeReducer,
     fields: switchFields,
-    patch(_view, ctx) {
-      if (!parts) build(ctx);
+    patch(view, ctx) {
+      if (!parts) {
+        build(ctx);
+        // The `checked` ATTRIBUTE (`defaultChecked`) is the initial value only, exactly like a bare input
+        // and like the SSR markup: it is what `form.reset()` restores. The live state is the property.
+        input!.defaultChecked = view.checked;
+      }
       applyProps(ctx.el, parts!.getRootProps(), seen.root);
       applyProps(input!, parts!.getControlProps(), seen.control);
       applyProps(thumb!, parts!.getThumbProps(), seen.thumb);
@@ -96,7 +103,21 @@ function createSpec(): ComponentSpec<SwitchSnapshot, SwitchAction, VanillaSwitch
     },
     attach(ctx) {
       const { onChange } = parts!.getControlProps();
-      ctx.listen(input!, 'change', (e) => (onChange as (e: Event) => void)(e));
+      ctx.listen(input!, 'change', (e) => {
+        // A controlled owner that rejects the change is re-synced by the runtime (PR #64).
+        (onChange as (e: Event) => void)(e);
+      });
+      // `form.reset()` restores the input to its default silently (no `change`), so the model would keep
+      // the last state. `reset` bubbles to the document, which also covers a label mounted before it is
+      // placed in a form. The reset itself runs after dispatch, hence the task.
+      ctx.listen(ctx.el.ownerDocument, 'reset', (e) => {
+        if (!input || e.target !== input.form) return;
+        setTimeout(() => {
+          if (ctx.signal.aborted || !input || input.checked === ctx.view().checked) return;
+          ctx.native('checked', input.checked);
+          kick();
+        }, 0);
+      });
     },
     run(effect) {
       // `checked` / target `control`: put the native input back to the committed value.
@@ -116,9 +137,16 @@ export function mountSwitch(
   el: Element,
   props: VanillaSwitchProps = {},
 ): SwitchInstance {
-  const spec = createSpec();
-  const instance = host.mount(el, spec, props);
+  let latest = props;
+  let mounted: Instance<VanillaSwitchProps> | undefined;
+  const spec = createSpec(() => mounted?.update(latest));
+  const instance = (mounted = host.mount(el, spec, props));
   const control = el.querySelector('input') ?? undefined;
+  const update = instance.update.bind(instance);
+  instance.update = (next) => {
+    latest = next;
+    update(next);
+  };
   return Object.assign(instance, {
     get control() {
       return instance.destroyed ? undefined : control;

@@ -154,7 +154,7 @@ Branch `feature/m4-c01-button-react` (stacked on `feature/m4-c01a-button-core`).
 - Retention: 1,000 StrictMode mount/click/unmount cycles with real `gc()`; at most 2 of 1,000 payload closures alive (fibers may defer).
 
 ## Bytes (min + gzip 9, esbuild, react and `@ramoslabs/core/*` external)
-Adapter alone: 637 B gzip (1,166 B raw). Core `button` (size cli, shared merge kernel externalized): 1,842 B against its 1.5 KiB budget. Together 2,479 B gzip, under ADR-011's 3 KiB for a simple primitive.
+Adapter alone: 637 B gzip (1,166 B raw). Core `button` (size cli, shared merge kernel externalized): 0.904 KiB gzip against its 1.5 KiB ceiling (1,842 B is the raw size). Together 2,479 B gzip, under ADR-011's 3 KiB for a simple primitive.
 ## .e Vanilla adapter (W1-C01.e)
 
 Branch `feature/m4-c01-button-vanilla` (stacked on `feature/m4-c01a-button-core`). Owned: `packages/vanilla/src/button/**`. Golden vanilla layout.
@@ -169,4 +169,37 @@ Branch `feature/m4-c01-button-vanilla` (stacked on `feature/m4-c01a-button-core`
 - Element attributes: `variant tone size disabled type href target rel label icon-only icon text`; `disabled="false"` / `icon-only="false"` are false. Events: listen for `press` on the element.
 - Tests (node, no jsdom per ADR-002): a minimal DOM double, including the one native rule needed (a non-cancelled submit-button click fires `submit` on its form owner). Real-browser form submission, focus and keyboard are `.f` conformance (L2). 17 tests: button/link/disabled link/icon-only rendering, update + stale attribute removal + element swap, `onPress` semantics, form submit, destroy aborting every listener (live count 0), 1,000 cycles (0 listeners, 0 children), define idempotent and never at import, element lifecycle, no innerHTML.
 - Shared-file touches: none. (Known runtime wart for the owner of `runtime/**`: `createHost` appends a live-region node to `body` on the first mount even for components that never announce; passing a `liveHost` avoids it.)
-- Bytes: `packages/testing/size/cli.js`: core button 1,842 B gz (ceiling 1.5 KiB budget, passes); `adapter:vanilla` fixture 2,623 B gz (reported, includes runtime + this adapter).
+- Bytes: `packages/testing/size/cli.js`: core button 0.904 KiB gzip measured (ceiling 1.5 KiB; 1,842 B was the raw size); `adapter:vanilla` fixture 2,623 B gz (reported, includes runtime + this adapter).
+
+# C01.f notes (W1-C01.f: SJButton conformance)
+
+Branch `feature/m4-c01-button-conformance`. Owned: `packages/testing/specs/button/**`. Based on `feature/m4-c01a-button-core` with the OLD (pre-rebase) `.b .c .d .e` branches merged; the `.f` commits are separate so they can be replayed onto main.
+
+## Layout
+- `fixtures.js` the one fixture map (contract's five plus conformance-only `submit`). `matrix.ts` scenarios derived with `deriveSpec` (press keys come from the contract) and the parity declaration. `host/entry.ts` + `build.mjs` + `serve.mjs` + `playwright.config.ts` own host (real adapters, `supports` injected per path); reuses `visual/site.mjs` for tokens, built CSS and fonts.
+- `button.e2e.ts` L2 matrix (rows `SJButton | adapter | scenario | action | path=`); `aria.e2e.ts` + `aria/*.yml`; `a11y.e2e.ts` (+ `a11y-triage.json`); `ssr.test.ts`; `conformance.test.ts`; `voiceover.js`; `visual/`.
+- Commands: `bun run --filter @ramoslabs/testing test:e2e:button` then `parity:button`; `voiceover:button`; `visual:button`.
+
+## Results (local, 3 engines)
+- 660 Playwright tests passed, `retries: 0`: 378 matrix rows (21 scenario x action x 3 adapters x chromium/firefox/webkit x `native` and `fallback:all`), the rest ARIA (18 snapshots plus 9 seeded regressions), axe, 2.5.8, 2.4.13, forced-colors, each gate with a seeded failing case.
+- Parity: 5292 cells, 378 executed and passed, 0 missing, 0 invalid; 1890 not-applicable and 3024 not-run, all carrying a reason.
+- Real browser keyboard activation (Enter/Space on button, Enter on link, Space on link does nothing), pointer, and native form submission (submit button name/value in form data, `type=button` never submits) on every adapter. Real `hydrateRoot` (React) and `createSSRApp` hydration (Vue) in jsdom: no mismatch, server node kept, one `press` after hydration. Vanilla's client DOM equals the React and Vue server markup.
+
+## Decisions
+- **Forced-false runs.** SJButton has empty `support[]` and reads no capability. `native` and `fallback:all` run on every cell (the injected map is read back from each adapter's own runtime); the ten single-key paths are declared `not-applicable` with that reason, not run. Re-open if the button ever branches on a key.
+- Disabled link behaviour stays in the core unit tests (see .b notes); `INERT_FIXTURE` rule not widened.
+- axe `incomplete` for `icon-only` (`color-contrast`, `label-content-name-mismatch`) is reviewed in code (`REVIEWED_INCOMPLETE` in `a11y.e2e.ts`): the vanilla adapter renders icons as text, so the fixture's glyph is a non-text character. Moving it to `a11y-triage.json` needs a tracking issue and owner.
+- **Visual:** 10 scenes (`visual/scenes.js`, markup built from the real core getters) exist and render; NO baselines are committed. `visual:button` reports NOT RUN until a human runs `node specs/button/visual/cli.js update --update <scene,...> --reviewer <name> --reason <text>`. The agent captured scenes only to look at them (not approval).
+- **VoiceOver hook:** `voiceover.js` maps each contract `atAssertions` id to protocol text and renders the ADR-013 field list; unknown or missing ids throw. Actual speech and pass/fail stay blank; status text is the contract's own wording (`pending-real-test`).
+- Bundle: asserted in `conformance.test.ts` against the contract ceiling (core button 0.904 KiB gzip vs 1.5 KiB).
+
+## Shared-file touches
+- `packages/testing/vitest.config.ts`: include `specs/**/*.test.ts`. `packages/testing/package.json`: scripts `test:e2e:button`, `parity:button`, `visual:button`, `voiceover:button`. No change to ci.yml, budgets or registries.
+
+## Skips
+None. No `skip`/`fixme` in `specs/button`.
+
+## Follow-ups and open questions
+- The e2e suites are not in `bun run gate` or `ci.yml` (same as the other Playwright suites); wiring a `test:e2e:button` job is the orchestrator's call.
+- File an issue and owner for the icon-only axe review, and for human visual baselines (4 engine x DPR keys).
+- Real VoiceOver pass (W1-505) is still pending; nothing here claims it.

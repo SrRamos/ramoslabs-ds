@@ -10,6 +10,8 @@ import { SJSwitch, SJSwitchControl, SJSwitchRoot, SJSwitchThumb } from './index'
 
 interface FakeInput {
   checked: boolean;
+  /** The owning form; `form.reset()` is a `reset` event followed by the default restore. */
+  form: EventTarget;
 }
 let nodes: FakeInput[] = [];
 let renderers: ReactTestRenderer[] = [];
@@ -30,7 +32,7 @@ function mount(node: ReactNode): ReactTestRenderer {
     r = create(h(SJProvider, { liveHost: () => ({ create: () => ({ setText() {} }) }) }, node), {
       createNodeMock: (el) => {
         if (el.type === 'input') {
-          const n = { checked: false };
+          const n = { checked: false, form: new EventTarget() };
           nodes.push(n);
           return n;
         }
@@ -128,12 +130,59 @@ describe('uncontrolled', () => {
   });
 });
 
+describe('form.reset()', () => {
+  // The browser fires `reset` (no `change`), then restores each input to its default. A bare input has no
+  // model; the switch's model must follow the DOM, or the next toggle goes the wrong way.
+  it.each([false, true])(
+    'the model follows the restored default (defaultChecked %s)',
+    async (initial) => {
+      vi.useFakeTimers();
+      try {
+        const seen: boolean[] = [];
+        const r = mount(
+          full({
+            defaultChecked: initial,
+            onCheckedChange: ({ checked }: { checked: boolean }) => seen.push(checked),
+          }),
+        );
+        const node = nodes[0]!;
+        node.checked = initial;
+        toggle(r, !initial);
+        expect(r.root.findByType('label').props['data-state']).toBe(initial ? 'off' : 'on');
+        node.checked = initial; // the browser's default action
+        node.form.dispatchEvent(new Event('reset'));
+        await act(async () => void (await vi.runAllTimersAsync()));
+        expect(r.root.findByType('label').props['data-state']).toBe(initial ? 'on' : 'off');
+        expect(seen).toEqual([!initial, initial]);
+      } finally {
+        vi.useRealTimers();
+      }
+    },
+  );
+
+  it('removes its reset listener on unmount', async () => {
+    vi.useFakeTimers();
+    try {
+      const r = mount(full());
+      const node = nodes[0]!;
+      act(() => r.unmount());
+      renderers = [];
+      node.checked = true;
+      node.form.dispatchEvent(new Event('reset'));
+      await vi.runAllTimersAsync(); // nothing to assert beyond "does not throw"
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});
+
 describe('controlled', () => {
-  it('follows the prop and corrects the native input when the owner rejects', () => {
+  it('follows the prop and corrects the native input when the owner rejects', async () => {
     const spy = vi.fn();
     const r = mount(full({ checked: false, onCheckedChange: spy }));
     nodes[0]!.checked = true; // the native input flipped itself
     toggle(r, true);
+    await act(async () => {}); // useMachine re-syncs a rejection in a microtask, before paint
     expect(spy).toHaveBeenCalledWith({ checked: true });
     expect(input(r).props.checked).toBe(false);
     expect(nodes[0]!.checked).toBe(false); // corrective effect restored it
@@ -242,10 +291,11 @@ describe('StrictMode', () => {
     expect(spy).toHaveBeenCalledTimes(2);
     expect(input(r).props.checked).toBe(false);
   });
-  it('StrictMode controlled rejection still corrects', () => {
+  it('StrictMode controlled rejection still corrects', async () => {
     const r = mount(h(StrictMode, null, full({ checked: true, onCheckedChange() {} })));
     nodes[nodes.length - 1]!.checked = false;
     toggle(r, false);
+    await act(async () => {});
     expect(nodes[nodes.length - 1]!.checked).toBe(true);
   });
 });
@@ -286,7 +336,7 @@ describe('retention: 1,000 mount/unmount cycles', () => {
           ),
           {
             createNodeMock: () => {
-              const n = { checked: false };
+              const n = { checked: false, form: new EventTarget() };
               refs.push(new WeakRef(n));
               return n;
             },

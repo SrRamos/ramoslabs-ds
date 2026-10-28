@@ -9,6 +9,8 @@ class FakeEl extends EventTarget {
   children: FakeEl[] = [];
   attrs = new Map<string, string>();
   checked = false;
+  defaultChecked = false;
+  form: FakeEl | null = null;
   disabled = false;
   text = '';
   readonly signals: (AbortSignal | undefined)[] = [];
@@ -74,13 +76,27 @@ class FakeEl extends EventTarget {
     return this.all().find((e) => e !== this && e.tagName === sel) ?? null;
   }
 }
-class FakeDoc {
+class FakeDoc extends EventTarget {
+  readonly signals: (AbortSignal | undefined)[] = [];
+  override addEventListener(
+    type: string,
+    cb: EventListenerOrEventListenerObject | null,
+    o?: boolean | AddEventListenerOptions,
+  ): void {
+    this.signals.push(typeof o === 'object' ? o.signal : undefined);
+    // eslint-disable-next-line sj-boundaries/listener-signal -- test double forwards the caller options verbatim
+    super.addEventListener(type, cb, o);
+  }
+  get liveListeners(): number {
+    return this.signals.filter((s) => s && !s.aborted).length;
+  }
   createElement(tag: string): FakeEl {
     return new FakeEl(tag, this);
   }
 }
 
 const mk = (tag = 'label') => new FakeDoc().createElement(tag);
+const docOf = (e: FakeEl) => e.ownerDocument;
 const asEl = (e: FakeEl) => e as unknown as Element;
 const tick = async () => {
   for (let i = 0; i < 4; i++) await Promise.resolve();
@@ -232,6 +248,67 @@ describe('SJSwitch vanilla', () => {
     mountSwitch(host, asEl(root), {});
     const total = root.all().reduce((n, e) => n + e.signals.length, 0);
     expect(total).toBe(1); // the single change listener
+  });
+
+  it('the only other listener is one signalled document-level reset listener, gone after destroy', () => {
+    const { host } = setup();
+    const root = mk();
+    const inst = mountSwitch(host, asEl(root), {});
+    expect(docOf(root).signals).toHaveLength(1);
+    expect(docOf(root).liveListeners).toBe(1);
+    inst.destroy();
+    expect(docOf(root).liveListeners).toBe(0);
+  });
+
+  it('the checked attribute (defaultChecked) is the INITIAL value only, like a bare input', () => {
+    const { host } = setup();
+    for (const [props, want] of [
+      [{}, false],
+      [{ defaultChecked: true }, true],
+      [{ checked: true }, true],
+    ] as const) {
+      const root = mk();
+      const inst = mountSwitch(host, asEl(root), props);
+      expect(root.querySelector('input')!.defaultChecked).toBe(want);
+      inst.destroy();
+    }
+    const root = mk();
+    mountSwitch(host, asEl(root), {});
+    const input = root.querySelector('input')!;
+    userToggle(input);
+    expect(input.defaultChecked).toBe(false); // toggling never rewrites the default
+  });
+
+  it('form.reset() restores the default and the model follows it (not the last state)', async () => {
+    vi.useFakeTimers();
+    try {
+      const { host } = setup();
+      for (const initial of [false, true]) {
+        const root = mk();
+        const form = mk('form');
+        const seen: boolean[] = [];
+        const inst = mountSwitch(host, asEl(root), {
+          defaultChecked: initial,
+          onCheckedChange: (c) => void seen.push(c),
+        });
+        const input = root.querySelector('input')!;
+        input.form = form;
+        userToggle(input);
+        expect(input.getAttribute('data-state')).toBe(initial ? 'off' : 'on');
+        // What the browser does: reset event, then the default action restores the input.
+        const reset = new Event('reset');
+        Object.defineProperty(reset, 'target', { value: form });
+        docOf(root).dispatchEvent(reset);
+        input.checked = input.defaultChecked;
+        await vi.runAllTimersAsync();
+        expect(input.getAttribute('data-state')).toBe(initial ? 'on' : 'off');
+        userToggle(input); // the next toggle goes the right way
+        expect(input.getAttribute('data-state')).toBe(initial ? 'off' : 'on');
+        inst.destroy();
+      }
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('1,000 mount/destroy cycles retain nothing', () => {
