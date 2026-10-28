@@ -25,6 +25,9 @@
     "visual:button": "node specs/button/visual/cli.js check",
     "voiceover:button": "node specs/button/render-voiceover.js",
     "parity:button": "node parity/cli.js --results node_modules/.cache/e2e/e2e-button-results.json --expected node_modules/.cache/e2e/e2e-button-expected.json --out node_modules/.cache/e2e/parity-button",
+    "test:e2e:switch": "playwright test -c specs/switch/playwright.config.ts",
+    "parity:switch": "node parity/cli.js --results node_modules/.cache/e2e/switch-results.json --expected node_modules/.cache/e2e/switch-expected.json --out node_modules/.cache/e2e/parity-switch",
+    "visual:switch": "node specs/switch/visual.mjs",
     "test:coverage": "vitest run --coverage"
   },
   "exports": {
