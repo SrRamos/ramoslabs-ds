@@ -3,7 +3,7 @@
   "name": "SJSelect",
   "contractVersion": "1.0.0",
   "status": "draft",
-  "pattern": { "apg": "combobox-select-only", "native": "select" },
+  "pattern": { "apg": "combobox-select-only", "native": "select", "evidence": "select-only-combobox" },
   "anatomy": [
     { "part": "root", "element": "div" },
     { "part": "trigger", "element": "button", "role": "combobox", "native": false },
@@ -100,8 +100,14 @@
       }
     ]
   },
-  "events": [{ "name": "valueChange", "payload": "{ value: string }" }],
-  "props": [],
+  "events": [
+    { "name": "openChange", "payload": "{ open: boolean }" },
+    { "name": "valueChange", "payload": "{ value: string }" }
+  ],
+  "props": [
+    { "name": "open", "type": "boolean" },
+    { "name": "value", "type": "string" }
+  ],
   "slots": [],
   "fixtures": ["empty", "one", "many", "long-label", "disabled-item"],
   "budgets": { "gzipKiB": 8, "shared": ["overlay", "collection"] }

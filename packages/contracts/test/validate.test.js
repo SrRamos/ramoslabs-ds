@@ -49,6 +49,24 @@ describe('contract.schema.json v1 validator', () => {
     expect(paths(c)).toContain('/a11y/atSupport/2/evidence');
   });
 
+  it('G2 freeze: controllable must be a subset of props[].name (seeded)', () => {
+    const c = sample();
+    c.state.controllable.push('ghost');
+    expect(paths(c)).toContain('/state/controllable/2');
+  });
+
+  it('G2 freeze: every actions[].emit must name an events[] entry (seeded)', () => {
+    const c = sample();
+    c.actions[0].emit = 'ghostChange';
+    expect(paths(c)).toContain('/actions/0/emit');
+  });
+
+  it('G2 freeze: pattern.evidence is required (seeded)', () => {
+    const c = sample();
+    delete c.pattern.evidence;
+    expect(paths(c)).toContain('/pattern/evidence');
+  });
+
   it('rejects an unknown top-level field, a wrong $schema URL and a bad name', () => {
     expect(paths({ ...sample(), extra: 1 })).toContain('/extra');
     expect(paths({ ...sample(), $schema: 'https://example.com/x.json' })).toContain('/$schema');
