@@ -193,6 +193,7 @@ shadow-root boundaries (`commandfor`/`popovertarget` resolve only within one tre
 | `@ramoslabs/vue` | Vue 3 adapter, `SJ*` components | peer `vue >=3.5`; `@ramoslabs/core` (regular dependency, never bundled: builds mark it external) (G1 ruling, 2026-10-27) | 3.5 for `useId` |
 | `@ramoslabs/react` | React adapter, `SJ*` components | peer `react >=18`; `@ramoslabs/core` (regular dependency, never bundled: builds mark it external) (G1 ruling, 2026-10-27) | `useId`, `useSyncExternalStore` exist in 18 |
 | `@ramoslabs/vanilla` | DOM adapter plus opt-in custom elements | `@ramoslabs/core` (regular dependency, never bundled: builds mark it external) (G1 ruling, 2026-10-27) | explicit `define()`; no import-time registration |
+| `@ramoslabs/icons` | icon data (Lucide glyphs, ISC), one module per icon, `by-name` helper (ADR-016) | none | no framework, no DOM; no adapter or core imports it; lockstep version |
 | `@ramoslabs/testing` | spec runner, fixtures, lint rules, size and contrast tooling (private, unpublished) | dev only | Playwright, axe, fast-check |
 
 Naming rules (the contract's `anatomy[].part` is the single name source): **React** exports a
@@ -1247,6 +1248,59 @@ until a licence or device exists.
 [03 §Required AT test matrix](research/03-a11y-engine.md#required-at-test-matrix),
 [07 rec. 4](research/07-testing-certification.md#recommendations-for-architecturemd),
 owner decision D2 (2026-10-27), [AUDIT-combined-R1](audits/AUDIT-combined-R1.md) A-MUST-1 to A-MUST-4.
+
+---
+
+### ADR-016: Icon package and SJIcon
+
+**Context.** Components need glyphs (the SJButton `icon` slot exists and is `beta`) and consumers
+migrating from a prior system expect a `currentColor` icon with three sizes and kebab-case names.
+Rules in force: zero runtime dependencies (ADR-002), core carries no data weight and no DOM
+(ADR-002, ADR-011), token-only styling (ADR-009), SSR determinism with no ids (ADR-003), created
+elements only and never `innerHTML` (ADR-002), contracts frozen at `beta` (ADR-010). The glyph
+source is Lucide (ISC), an owner decision.
+
+**Options considered.**
+A. Icons inside `@ramoslabs/core` or each adapter.
+B. New data package `@ramoslabs/icons` plus `SJIcon` taking icon data as a prop; adapters do not
+depend on the package.
+C. Name-based component with a lazy registry (dynamic `import()` per name).
+D. SVG sprite or icon font.
+
+**Decision.** Option B (owner approved the data-prop API, 2026-10-28).
+- `@ramoslabs/icons`: one ESM module per icon (`{ name, nodes, mirror? }`, `nodes` is Lucide's
+`[tag, attrs]` structure), generated and committed from an exact-pinned `lucide-static`
+devDependency; generated barrel (each icon exported as `Search` and as the twin `SearchIcon`),
+`./*` subpath, and `./by-name`, a pure `getIcon(name)` over the whole set with a legacy-alias table
+validated against upstream. Zero dependencies. `LICENSE` and `THIRD-PARTY-NOTICES.md` (ISC, Feather
+MIT) ship in `files`; each module carries a `/** @license */` banner that survives minification.
+- `@ramoslabs/core/icon`: pure getters for the `root` part and a sanitized node list (tag and
+attribute allowlist; `tabindex`, `on*`, `style`, `id`, `class`, `href` never pass). `SJIcon` in Vue,
+React and vanilla renders `<svg viewBox="0 0 24 24" width="1em" height="1em">` with `currentColor`.
+- Decorative by default (`aria-hidden`); `label` gives `role="img"` and `aria-label`. Never focusable.
+An icon-only control is named on the control (`contract/icon-only-name` is unchanged).
+- Tokens `icon.size.{sm,md,lg}` (14/20/24 px) and `icon.stroke.width` (2). Sizes `sm|md|lg|fit`.
+- RTL: a `mirror` flag in the data, applied from `dir` with `scaleX(-1)` (no `:dir()`: the floor is
+Chromium 114). `dir` is read from the runtime only for mirrored icons, through a non-warning
+accessor.
+- Boundaries: lint `sj-boundaries/no-icons-import` and a manifest test keep `core`, `vue`, `react`
+and `vanilla` free of `@ramoslabs/icons`.
+- Ceilings (ADR-011, provisional): 0.4 KiB gzip per icon (0.75 reviewed exception), 0.75 KiB core
+`icon`, 0 KiB unused icon.
+- The package version moves in lockstep with the others (changesets, ADR-002).
+
+**Amends.** ADR-002 (table row `@ramoslabs/icons`; the boundary rule above), ADR-009 (three
+icon-size tokens, one stroke token), ADR-010 (schema v1 `actions.minItems: 0` and "no actions
+implies `events: []`", G-ICON ruling 2026-10-28), ADR-011 (icon rows), ADR-015 (a thirteenth
+registry file, `img-role`, WAI-ARIA role `img`, the first non-APG file).
+
+**Consequences.** One more published package and one codegen script. Lucide bumps are reviewable
+diffs of path data and may rename icons (the alias table keeps names stable; a renamed canonical
+name is a breaking change handled by an alias plus a changeset note). Consumers write one import per
+icon; dynamic-name use goes through the non-tree-shakeable helper and says so. SJButton is untouched.
+
+**Sources.** ADR-002, 003, 004, 009, 010, 011, 015; C01-NOTES; `AUDIT-ICONS` (G-ICON, 2026-10-28);
+Lucide licence (ISC) at the pinned version.
 
 ---
 
