@@ -182,6 +182,8 @@ function treeFiles() {
         !f.includes('/fixtures/') &&
         !f.endsWith('.test.js') &&
         !f.includes('/node_modules/') &&
+        // Build-time tool that downloads the fonts once; it ships nothing remote.
+        f !== 'apps/storybook/scripts/fetch-fonts.mjs' &&
         !f.startsWith('docs/') &&
         !f.startsWith('specs/'),
     );
