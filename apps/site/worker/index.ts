@@ -12,6 +12,7 @@ import { pages, mdPathFor } from '../src/data/pages';
 import { prefersMarkdown } from './negotiate';
 import { getComponent, getKind, listComponents, type Registry } from '../agentic/registry-tools';
 import { lintCssContract } from '../../../packages/testing/lint/contract/css-contract';
+import { contrastRatio as sharedContrastRatio } from '../../../packages/testing/contrast/wcag.js';
 import { aiBotsSql, aiReferralsSql, summarizeAiBots, summarizeAiReferrals } from './ai-traffic';
 
 // Cloudflare Analytics Engine — cookieless, no-PII, server-side usage telemetry.
@@ -174,21 +175,14 @@ function parseHex(input: string): [number, number, number] | null {
   if (!/^[0-9a-f]{6}$/.test(h)) return null;
   return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
 }
-function relLuminance([r, g, b]: [number, number, number]): number {
-  const lin = [r, g, b].map((c) => {
-    const s = c / 255;
-    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2];
-}
 function contrastRatio(fg: string, bg: string): number | null {
   const a = parseHex(fg);
   const b = parseHex(bg);
   if (!a || !b) return null;
-  const l1 = relLuminance(a);
-  const l2 = relLuminance(b);
-  const [hi, lo] = l1 >= l2 ? [l1, l2] : [l2, l1];
-  return (hi + 0.05) / (lo + 0.05);
+  return sharedContrastRatio(rgbHex(a), rgbHex(b));
+}
+function rgbHex(c: [number, number, number]): string {
+  return `#${c.map((v) => v.toString(16).padStart(2, '0')).join('')}`;
 }
 
 // --- tools ------------------------------------------------------------------------
