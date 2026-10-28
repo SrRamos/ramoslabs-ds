@@ -1,8 +1,13 @@
 // W1-203: seeded token changes fail with pair, ratio and token; the real tokens pass.
+import { mkdtempSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { buildCss } from '../../css/scripts/build.mjs';
 import {
   RECIPE,
   SIZES,
+  SURFACES,
   TONES,
   VARIANTS,
   checkContrastMatrix,
@@ -42,6 +47,10 @@ describe('wcag', () => {
 
 describe('contrast matrix (light theme)', () => {
   const tokens = loadTokens();
+  // NICE-1: the CI step named "Contrast matrix" also reads the real pairs from the built stylesheet.
+  const outDir = mkdtempSync(join(tmpdir(), 'sj-contrast-'));
+  buildCss({ srcDir: new URL('../../css/src', import.meta.url).pathname, outDir });
+  const css = readFileSync(join(outDir, 'index.css'), 'utf8');
 
   it('resolves aliases from the DTCG source', () => {
     expect(tokens['color-indigo-600']).toBe('#4f46e5');
@@ -53,13 +62,36 @@ describe('contrast matrix (light theme)', () => {
     const { pairs } = checkContrastMatrix(tokens);
     for (const v of VARIANTS)
       for (const t of TONES)
-        for (const s of SIZES) expect(pairs.some((p) => p.id === `${v}/${t}/${s}/text`)).toBe(true);
+        for (const s of SIZES)
+          expect(pairs.some((p) => p.id.startsWith(`${v}/${t}/${s}/text`))).toBe(true);
     expect(Object.keys(RECIPE)).toEqual(VARIANTS);
   });
 
   it('passes with the current tokens', () => {
     const { failures } = checkContrastMatrix(tokens);
     expect(failures.map(formatFailure)).toEqual([]);
+  });
+
+  it('passes with the built component css, and a seeded weak fill fails there', () => {
+    const { pairs, failures } = checkContrastMatrix(tokens, { css });
+    expect(pairs.some((p) => p.source === 'css')).toBe(true);
+    expect(failures.map(formatFailure)).toEqual([]);
+    const weak = css.replace(
+      /(\.sj-switch__root\[data-state='on'\]::before\s*\{\s*background-color:\s*)var\(--color-primary\)/,
+      '$1var(--color-indigo-200)',
+    );
+    expect(weak).not.toBe(css);
+    expect(checkContrastMatrix(tokens, { css: weak }).failures.length).toBeGreaterThan(0);
+  });
+
+  it('expands the transparent outline and ghost RECIPE fills across every surface', () => {
+    const { pairs } = checkContrastMatrix(tokens);
+    for (const sf of SURFACES) {
+      expect(pairs.some((p) => p.id === `outline/primary/md/text-on-${sf}`)).toBe(true);
+      expect(pairs.some((p) => p.id === `ghost/error/md/text-on-${sf}`)).toBe(true);
+    }
+    expect(RECIPE.outline.primary.bg).toBe('transparent');
+    expect(RECIPE.ghost.primary.bg).toBe('transparent');
   });
 
   it('applies 4.5:1 to text and 3:1 to ui and focus', () => {

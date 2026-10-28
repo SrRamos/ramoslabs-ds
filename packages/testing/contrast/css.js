@@ -112,6 +112,56 @@ function rulesIn(css) {
   return out.map((r, i) => ({ ...r, order: i }));
 }
 
+/**
+ * @typedef {{ component: string, part: string, pseudo: string, state: string, bg: string }} CssUiPair
+ * A drawn fill that sits on the page: `sj.state` rule keyed on `[data-state]` that sets `background-color`
+ * on a part or its pseudo-element. Disabled rules are skipped (WCAG 1.4.11 exempts inactive components).
+ */
+
+/**
+ * Drawn (non-text) fills from `@layer sj.state`, G3A SHOULD-2. Each is checked at 3:1 against every
+ * surface. A pair between two drawn parts (knob on track) is not on the page and stays in component tests.
+ * @param {string} css built stylesheet
+ * @returns {CssUiPair[]}
+ */
+export function extractUiPairs(css) {
+  const text = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  /** @type {CssUiPair[]} */
+  const out = [];
+  /** @param {string} src @param {boolean} inState */
+  const walk = (src, inState) => {
+    for (const { prelude, body } of blocks(src)) {
+      if (prelude.startsWith('@layer'))
+        walk(body, prelude.replace('@layer', '').trim() === 'sj.state');
+      else if (prelude.startsWith('@media') || prelude.startsWith('@supports')) walk(body, inState);
+      else if (prelude.startsWith('@') || !inState) continue;
+      else {
+        let bg;
+        for (const d of splitTop(body, ';')) {
+          const i = d.indexOf(':');
+          if (i > 0 && d.slice(0, i).trim() === 'background-color') bg = d.slice(i + 1).trim();
+        }
+        if (!bg) continue;
+        for (const sel of splitTop(prelude, ',')) {
+          const m = /\.sj-([a-z0-9-]+)__([a-z0-9-]+)/.exec(sel);
+          const state = /\[data-state=['"]?([\w-]+)/.exec(sel)?.[1];
+          if (!m || !state || /\[data-disabled|:disabled/.test(sel)) continue;
+          if (tokenOf(bg) === 'transparent') continue;
+          out.push({
+            component: m[1],
+            part: m[2],
+            pseudo: /::(before|after)\b/.exec(sel)?.[0] ?? '',
+            state,
+            bg: /** @type {string} */ (tokenOf(bg)),
+          });
+        }
+      }
+    }
+  };
+  walk(text, false);
+  return out;
+}
+
 /** @param {string | undefined} v @returns {string | undefined} token name, or 'transparent' */
 function tokenOf(v) {
   if (!v) return undefined;

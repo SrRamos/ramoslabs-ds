@@ -50,6 +50,8 @@ Protected (consumer cannot override): `disabled href type data-part data-variant
 
 `onClick`: disabled -> `preventDefault()` only; otherwise calls `onPress({ originalEvent })`. Keyboard is native (Enter/Space on `<button>`, Enter on `<a>`), so no key handlers exist; the contract `keyboard` map documents it.
 
+G3A follow-up: RECIPE outline/ghost now use `bg: 'transparent'` and expand across every surface like the CSS pairs (ids `outline/<tone>/<size>/text-on-<surface>`); `contrast.test.js` also builds `index.css` and runs the matrix on it. `extractUiPairs` (switch track) is described in C03-NOTES.
+
 ## Decisions and ambiguities
 
 - **Stateless machine.** One state `idle`, one self-transition `press` that emits `press` (S-CON gap 5 convention). No store: nothing to snapshot, and nothing to retain. The reducer exists for the contract equivalence and the harness; the click handler is the runtime path. `state.controllable` is empty, so the "reducer never reads a controlled field" rule (G1 SHOULD-4) holds trivially; `lintReducers` already scans `reducer.ts`.
@@ -96,6 +98,7 @@ Branch `feature/m4-c01-button-css` (stacked on `feature/m4-c01a-button-core`). F
 
 - Hover/active tokens are explicit shades (e.g. solid primary: `primary-dark`, `indigo-800`; soft: `*-100`, `*-200`; outline/ghost: tone surface, then `*-100`/`slate-200`); all pass 4.5:1 text.
 - Outline fill is `transparent` (RECIPE said `color-surface`): same contrast on all three surfaces, and it works on any page color.
+- **Target size layers (G3A NICE-6).** The component's own `min-*-size` in `button.css` is load-bearing only for the disabled link (38 px without it). Every other button target stays at 44 px without it, because `base.css` sets `min-block-size`/`min-inline-size: var(--sj-target)` on every `[data-part]` control. Removing only the component rule is therefore not caught by the css or L3 target-size gates (by design); forcing `min-*-size: 0` is, and fails both.
 - Disabled uses `color-text-disabled` on `surface-hover` (WCAG 1.4.3 inactive exemption); meaning is carried by native/ARIA disabled and `cursor: not-allowed`, not color alone.
 - Link anatomy gets no underline; it is a button-shaped link. Inline text links use consumer styles (WCAG 2.5.8 inline exemption).
 

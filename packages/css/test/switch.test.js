@@ -6,7 +6,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import stylelint from 'stylelint';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { contrastRatio, loadTokens } from '../../testing/contrast/index.js';
+import { checkContrastMatrix, contrastRatio, loadTokens } from '../../testing/contrast/index.js';
 import { checkStylesheets, cssParts } from '../src/_template/generate.mjs';
 import { buildReal, doc, launch, srcDir } from './helpers.js';
 
@@ -163,16 +163,41 @@ describe('target size (ADR-008: 44 px, 24 px floor)', () => {
 });
 
 describe('drawn colour pairs (WCAG 1.4.11, 3:1)', () => {
+  // G3A SHOULD-2: the track-on-page pairs come from the built CSS through the extractor, on every surface.
+  it('the track meets 3:1 on every surface, read from the built css (not in-test literals)', () => {
+    const { pairs, failures } = checkContrastMatrix(tokens, { css });
+    const track = pairs.filter((p) => p.id.startsWith('switch/root::before/'));
+    expect(track.map((p) => p.id).sort()).toEqual(
+      ['off', 'on']
+        .flatMap((st) =>
+          ['color-background', 'color-surface', 'color-surface-secondary'].map(
+            (sf) => `switch/root::before/${st}/ui-on-${sf}`,
+          ),
+        )
+        .sort(),
+    );
+    expect(track.every((p) => p.min === 3 && p.pass)).toBe(true);
+    expect(failures.filter((f) => f.id.startsWith('switch/'))).toEqual([]);
+  });
+
+  it('a seeded weak off-track fill fails the extractor pairs', () => {
+    const weak = css.replace(
+      /(\.sj-switch__root\[data-state='off'\]::before\s*\{\s*background-color:\s*)var\(--color-slate-500\)/,
+      '$1var(--color-slate-300)',
+    );
+    expect(weak).not.toBe(css);
+    const { failures } = checkContrastMatrix(tokens, { css: weak });
+    expect(failures.some((f) => f.id.startsWith('switch/root::before/off/ui-on-'))).toBe(true);
+  });
+
   it('track, knob and their boundary meet 3:1 and use the token colours', async () => {
     const off = await open(switchHtml({ state: 'off' }));
-    const surface = tokens['color-surface'];
     const trackOff = hexOf(
       (await cs(off, '#root', ['background-color'], '::before'))['background-color'],
     );
     const knobOff = hexOf((await cs(off, '#thumb', ['background-color']))['background-color']);
     expect(trackOff).toBe(tokens['color-slate-500']);
     expect(knobOff).toBe(tokens['color-white']);
-    expect(contrastRatio(trackOff, surface)).toBeGreaterThanOrEqual(3);
     expect(contrastRatio(knobOff, trackOff)).toBeGreaterThanOrEqual(3);
 
     const on = await open(switchHtml({ state: 'on' }));
@@ -180,7 +205,6 @@ describe('drawn colour pairs (WCAG 1.4.11, 3:1)', () => {
       (await cs(on, '#root', ['background-color'], '::before'))['background-color'],
     );
     expect(trackOn).toBe(tokens['color-primary']);
-    expect(contrastRatio(trackOn, surface)).toBeGreaterThanOrEqual(3);
     const knobOn = hexOf((await cs(on, '#thumb', ['background-color']))['background-color']);
     expect(contrastRatio(knobOn, trackOn)).toBeGreaterThanOrEqual(3);
   });
