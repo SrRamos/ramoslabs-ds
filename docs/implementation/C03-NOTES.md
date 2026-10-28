@@ -355,3 +355,15 @@ No ADR-011 ceiling applies to an adapter entry.
 
 ## Follow-ups
 - .f: real-DOM hydration (property set at hydrate), `FormData` equality including after `form.reset()`, VoiceOver "mixed".
+# C03c.e: SJCheckbox vanilla adapter
+
+Branch `feature/m4-c03c-checkbox-vanilla` (from main, `.a` merged). Files: `packages/vanilla/src/checkbox/{index,checkbox.test}.ts`. No shared files touched (`./checkbox` already in `exports`; the vanilla barrel stays empty because every vanilla component exports `define`).
+
+- API: `mountCheckbox(host, labelEl, props) -> Instance` (+ `.control`), `define(host, name = 'sj-checkbox', registry)`. Same shape as the switch golden: root `<label>` > `<input type=checkbox>`, indicator `<span>`, label `<span>` (plain text via `setText`); no FACE, no `role`, no `aria-checked`, no hidden input.
+- **`indeterminate` is a property.** `applyProps` skips `checked` and `indeterminate`; `patch` writes `input.indeterminate = view.indeterminate` on mount and on every patch (so an outside clobber is repaired), and effect `indeterminate` sets it after a rejected controlled clear. Initial: `indeterminate ?? defaultIndeterminate`. It is never an attribute (test asserts `hasAttribute('indeterminate') === false`).
+- **Form state equals a bare checkbox.** `defaultChecked` is written once from the initial value (reset default); the live state is the property. `indeterminate` does not affect FormData (tested vs a bare input).
+- **`form.reset()`.** Same signalled document-level `reset` listener as the switch. Per HTML, reset restores `checked` and leaves `indeterminate` alone; the handler reads both input properties first, then reports differences. Reading first matters: a dispatch re-patches synchronously and would overwrite the other property (first attempt lost the indeterminate value this way; test seeds it).
+- `<sj-checkbox>`: attributes `checked`, `indeterminate` (initial only, read at connect), `disabled`, `name`, `value`, `label`, `id`; accessors `checked` and `indeterminate` read the input. To drive a tri-state parent, use `mountCheckbox` with controlled `indeterminate`.
+- Tests (22): switch suite adapted plus indeterminate on mount/every patch/never attribute, `defaultIndeterminate` and activation clearing it, controlled rejected clear, submit equivalence with indeterminate, reset (checked restored, indeterminate kept, model follows), 1,000-cycle retention (0 listeners, 0 children), element lifecycle. Seed: dropping the per-patch property write fails 4 tests.
+- Bytes: see the reply (adapter alone, min+gzip, core and runtime external). No ADR-011 ceiling for adapter entries.
+- Follow-up .f: real-browser FormData equality incl. reset and indeterminate, `mixed` in the AX tree.
