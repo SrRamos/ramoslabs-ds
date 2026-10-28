@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { FIXTURES } from './fixtures.js';
+import { FIXTURES } from './fixtures';
 import { ADAPTERS, COMPONENT } from './matrix';
 import { control, mountButton, openHost } from './open';
 

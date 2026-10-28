@@ -8,7 +8,7 @@ import { normalize, join, sep } from 'node:path';
 import { buildSite } from './build.mjs';
 import { FIXTURES, FORM_FIXTURES } from './fixtures.ts';
 
-const port = Number(process.env.SWITCH_PORT ?? 4193);
+const port = Number(process.env.SJ_SWITCH_PORT ?? 4193);
 const { out, renderServer } = await buildSite();
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css' };
 const all = { ...FIXTURES, ...FORM_FIXTURES };

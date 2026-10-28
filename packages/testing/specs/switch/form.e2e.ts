@@ -6,6 +6,7 @@
 // Harness-check titles (not matrix rows): they carry no `path=` suffix.
 import { test, expect, type Page } from '@playwright/test';
 import { ADAPTERS, FORM_FIXTURES, LABEL, type Adapter, type SwitchFixtureProps } from './fixtures';
+import { openHost } from './open';
 
 type Op = 'click' | 'space' | 'reset';
 const OPS: { name: string; ops: Op[] }[] = [
@@ -23,17 +24,6 @@ const OPS: { name: string; ops: Op[] }[] = [
 
 type Kind = Adapter | 'vanilla-element';
 const KINDS: Kind[] = [...ADAPTERS, 'vanilla-element'];
-
-async function open(page: Page): Promise<string[]> {
-  const errors: string[] = [];
-  page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
-  page.on('console', (m) => {
-    if (m.type() === 'error') errors.push(`console.error: ${m.text()}`);
-  });
-  await page.goto('/host.html');
-  await page.waitForFunction(() => window.__sj?.ready === true);
-  return errors;
-}
 
 async function mountPair(page: Page, kind: Kind, props: SwitchFixtureProps): Promise<void> {
   if (kind === 'vanilla-element') await page.evaluate((p) => window.__sw.mountElement(p), props);
@@ -87,7 +77,7 @@ for (const kind of KINDS) {
     for (const [fixtureName, props] of Object.entries(FORM_FIXTURES)) {
       for (const seq of OPS) {
         test(`form | ${kind} | ${fixtureName} | ${seq.name}`, async ({ page }) => {
-          const errors = await open(page);
+          const errors = await openHost(page);
           await mountPair(page, kind, props);
           const disabled = props.disabled === true;
           const check = async (where: string) => {
@@ -120,7 +110,7 @@ async function submitted(
   ops: Op[],
   id: 'f' | 'bare',
 ) {
-  await open(page);
+  await openHost(page);
   await mountPair(page, kind, props);
   for (const op of ops) {
     // Operate only the form under test, the other is irrelevant to this load.
@@ -160,7 +150,7 @@ for (const kind of KINDS) {
 // The comparison is only evidence if a divergent switch fails it. Seeded defects:
 test.describe('seeded defects are reported', () => {
   test('a FACE-style hidden mirror input makes the submitted entries differ', async ({ page }) => {
-    await open(page);
+    await openHost(page);
     await mountPair(page, 'react', FORM_FIXTURES['on named']!);
     await page.evaluate(() => {
       const mirror = document.createElement('input');
@@ -176,7 +166,7 @@ test.describe('seeded defects are reported', () => {
   test('mirroring the live state into the checked attribute breaks reset equality', async ({
     page,
   }) => {
-    await open(page);
+    await openHost(page);
     await mountPair(page, 'react', FORM_FIXTURES['off named']!);
     // The Vue bug: the framework writes `checked` as an ATTRIBUTE on every change.
     await page.evaluate(() => {
@@ -190,7 +180,7 @@ test.describe('seeded defects are reported', () => {
   });
 
   test('a switch that does not follow reset leaves data-state out of step', async ({ page }) => {
-    await open(page);
+    await openHost(page);
     await mountPair(page, 'vue', FORM_FIXTURES['off named']!);
     await apply(page, 'click', false);
     await page.evaluate(() => {
@@ -210,7 +200,7 @@ test.describe('seeded defects are reported', () => {
 
 test.describe('label text is not part of form state', () => {
   test('the label never reaches the submitted entries', async ({ page }) => {
-    await open(page);
+    await openHost(page);
     await mountPair(page, 'vanilla', { name: 'alerts', defaultChecked: true, label: LABEL });
     const s = await snapshot(page);
     expect(s.f.entries.flat().join()).not.toContain(LABEL);

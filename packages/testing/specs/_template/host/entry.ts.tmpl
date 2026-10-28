@@ -1,0 +1,4 @@
+// TEMPLATE for specs/<component>/host/entry.ts. Copy the whole _template directory, drop the `.tmpl` suffix, replace __Name__ (e.g. Button),
+// __slug__ (button) and __SLUG__ (BUTTON), and implement:
+//   Browser host: `window.__<x>.mount(adapter, fixture, path, opts)` mounts the REAL component of one adapter with the path's `supports` map injected, recording events and form submits.
+// The golden examples are specs/button and specs/switch; `bun run specs:check` asserts the file set.

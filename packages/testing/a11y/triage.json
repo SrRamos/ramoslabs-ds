@@ -1,1 +1,23 @@
-{ "axe": [], "targetSize": [] }
+{
+  "axe": [
+    {
+      "rule": "color-contrast",
+      "fixture": "button-icon-only",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/67",
+      "owner": "SrRamos",
+      "reason": "The decorative icon is a text glyph (the vanilla adapter renders icons as text nodes), so axe cannot compute text contrast (\"Element content contains only non-text characters\"); the 3:1 non-text boundary is covered by the CSS contrast matrix."
+    },
+    {
+      "rule": "label-content-name-mismatch",
+      "fixture": "button-icon-only",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/67",
+      "owner": "SrRamos",
+      "reason": "axe cannot match the aria-label to a glyph that is aria-hidden and not a visible label; WCAG 2.5.3 applies to text labels."
+    }
+  ],
+  "targetSize": []
+}

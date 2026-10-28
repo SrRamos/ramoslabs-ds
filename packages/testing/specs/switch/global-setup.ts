@@ -15,5 +15,5 @@ export default async function globalSetup(): Promise<void> {
     join(dir, 'switch-expected.json'),
     JSON.stringify(switchExpected(), null, 2) + '\n',
   );
-  await warmEngines(`http://127.0.0.1:${Number(process.env['SWITCH_PORT'] ?? 4193)}/host.html`);
+  await warmEngines(`http://127.0.0.1:${Number(process.env['SJ_SWITCH_PORT'] ?? 4193)}/host.html`);
 }

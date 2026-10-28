@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { measure } from '../../size/measure.js';
 import { defaultRoot, runSize } from '../../size/index.js';
+import { contract } from './matrix';
 
 const root = defaultRoot;
 const PEERS = ['react', 'react-dom', 'react/jsx-runtime', 'vue', '@ramoslabs/core/*'];
@@ -21,7 +22,7 @@ describe('SJSwitch bundle', () => {
     expect(row, 'size harness has a switch row').toBeTruthy();
     expect(row?.status).toBe('pass');
     expect(row?.gzipBytes).toBeGreaterThan(0);
-    expect(row?.gzipBytes).toBeLessThanOrEqual(1 * 1024);
+    expect(row?.gzipBytes).toBeLessThanOrEqual(contract.budgets.gzipKiB * 1024);
   });
 
   it.each(['react', 'vue', 'vanilla'])(

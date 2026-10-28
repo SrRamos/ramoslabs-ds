@@ -5,45 +5,19 @@
 // it mounts on the client), so its client DOM is compared with what the other two server-render.
 // Hydration is proven by: no console error or warning, the server's element node is kept (not replaced),
 // and a click after hydration reaches `press` exactly once.
-import { act, createElement } from 'react';
+import { act } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString as reactToString } from 'react-dom/server';
-import { createSSRApp, h } from 'vue';
+import { createSSRApp } from 'vue';
 import { renderToString as vueToString } from 'vue/server-renderer';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createRuntime } from '@ramoslabs/core/runtime';
-import { SJButton as ReactButton } from '@ramoslabs/react/button';
-import { SJButton as VueButton } from '@ramoslabs/vue/button';
 import { mountButton } from '@ramoslabs/vanilla/button';
 import { createHost } from '@ramoslabs/vanilla/runtime';
-import { FIXTURES, INERT, type FixtureProps } from './fixtures.js';
+import { FIXTURES, INERT } from './fixtures';
+import { reactEl, split, vueRoot } from './host/ssr-tree';
 
 const NAMES = Object.keys(FIXTURES);
-const split = (p: FixtureProps) => {
-  const { text, icon, name, value, ...contract } = p;
-  return { text, icon, native: { ...(name && { name }), ...(value && { value }) }, contract };
-};
-
-const reactEl = (p: FixtureProps, onPress?: () => void) => {
-  const { text, icon, native, contract } = split(p);
-  return createElement(
-    ReactButton,
-    { ...contract, ...native, ...(onPress && { onPress }), icon } as never,
-    p.iconOnly ? undefined : text,
-  );
-};
-const vueRoot = (p: FixtureProps, onPress?: () => void) => {
-  const { text, icon, native, contract } = split(p);
-  return h(
-    VueButton,
-    { ...contract, ...native, ...(onPress && { onPress }) } as never,
-    {
-      default: () => (p.iconOnly ? undefined : text),
-      ...(icon !== undefined && { icon: () => icon }),
-    } as never,
-  );
-};
-
 /** Tag, sorted attributes and children, ignoring attribute order and whitespace: "same DOM" without byte equality. */
 function shape(n: Node): unknown {
   if (n.nodeType === 8) return '';
