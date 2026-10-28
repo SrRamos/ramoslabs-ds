@@ -63,6 +63,17 @@ function semanticErrors(c, today) {
       for (const part of Object.keys(a[map] ?? {}))
         if (!parts.has(part)) add(`/actions/${i}/${map}/${part}`, `unknown anatomy part "${part}"`);
   });
+  // G2 ruling (a), 2026-10-27: controllable state is a prop; every emitted event is declared.
+  const propNames = new Set(c.props.map((p) => p.name));
+  c.state.controllable.forEach((field, i) => {
+    if (!propNames.has(field))
+      add(`/state/controllable/${i}`, `"${field}" is not a name in props[]`);
+  });
+  const eventNames = new Set(c.events.map((e) => e.name));
+  c.actions.forEach((a, i) => {
+    if (a.emit !== undefined && !eventNames.has(a.emit))
+      add(`/actions/${i}/emit`, `"${a.emit}" is not an entry of events[]`);
+  });
   for (const part of Object.keys(c.keyboard))
     if (!parts.has(part)) add(`/keyboard/${part}`, `unknown anatomy part "${part}"`);
   if (c.focus.owner && !parts.has(c.focus.owner))

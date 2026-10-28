@@ -34,7 +34,7 @@
     "pattern": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["apg"],
+      "required": ["apg", "evidence"],
       "properties": {
         "apg": { "$ref": "#/$defs/slug" },
         "native": { "$ref": "#/$defs/slug" },

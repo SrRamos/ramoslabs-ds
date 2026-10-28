@@ -760,7 +760,8 @@ schema violation or registry drift).
   "name": "SJSelect",
   "contractVersion": "1.0.0",
   "status": "draft | beta | stable",
-  "pattern": { "apg": "combobox-select-only", "native": "select" },
+  "pattern": { "apg": "combobox-select-only", "native": "select",
+                "evidence": "select-only-combobox" },  // evidence required (G2 ruling, 2026-10-27)
   "anatomy": [
     { "part": "root",    "element": "div" },
     { "part": "trigger", "element": "button", "role": "combobox", "native": false },
@@ -812,8 +813,10 @@ schema violation or registry drift).
               { "at": "talkback", "platform": "android", "browser": "chrome",
                 "test_status": "evidence-only", "evidence": ["at-support/select-only-combobox.json#talkback-chrome-apg2855"] }
             ] },
-  "events": [{ "name": "valueChange", "payload": "{ value: string }" }],
-  "props": [], "slots": [],
+  "events": [{ "name": "openChange", "payload": "{ open: boolean }" },
+             { "name": "valueChange", "payload": "{ value: string }" }],
+  "props": [{ "name": "open", "type": "boolean" },
+            { "name": "value", "type": "string" }], "slots": [],
   "fixtures": ["empty", "one", "many", "long-label", "disabled-item"],
   "budgets": { "gzipKiB": 8, "shared": ["overlay", "collection"] }
 }
@@ -824,7 +827,8 @@ schema violation or registry drift).
 contract's `actions` (a CI equivalence check); keyboard maps and ARIA attribute tables are generated
 from the contract; the `kind` union type is generated from `kinds`.
 - **Tests:** the shared semantic spec (ADR-013) is derived from `actions`, `keyboard`, `focus` and
-`fixtures`.
+`fixtures`. A fixture named `disabled` is the inert scenario (`INERT_FIXTURE`, a string match in the
+spec derivation, not a schema field): its scenarios are derived with `interactive: false`.
 - **Registry and MCP:** `registry.json`'s `components` array lists name, status, anatomy,
 roles, keyboard map, kinds, support floor, per-AT `test_status` with evidence references, and doc links; the MCP server adds `get_component` and
 `list_components` tools, and `lint_css` rules reference parts and data-attributes from contracts.
@@ -833,6 +837,10 @@ values, missing label).
 - **AT honesty gate:** the schema allows `tested-real` only with a `tested_on` date and an evidence log reference; `pending-real-test` is the only status that may carry `evidence: []` and no date, and is treated as evidence-only by this gate, and CI fails if docs, registry or MCP output label an `evidence-only` AT as tested or certified (ADR-015).
 - **Fallback gating:** `support[].nativeFrom/fallbackUntil` determines which fallback code is bundled
 per entry point and which forced-false capability runs exist in tests.
+
+*Schema freeze (G2 ruling, 2026-10-27).* `contract.schema.json` v1 enforces: `state.controllable` is a
+subset of `props[].name`; every `actions[].emit` names an entry of `events[]`; `pattern.evidence` is
+required. Any further schema change is a broadcast event needing a G-gate ruling.
 
 **Consequences.** Schema design is up-front work and contract maintenance is release work. In
 return the support claims, a11y claims and agent guidance become executable. A contract version bump
