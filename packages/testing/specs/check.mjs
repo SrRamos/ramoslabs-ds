@@ -38,6 +38,12 @@ export const REQUIRED = [
 ];
 /** Present only where the component is (or wraps) a native form control. */
 export const OPTIONAL = ['form.e2e.ts'];
+/**
+ * Optional subdirectories (G-ICON MUST-2): `composition/` holds specs that compose this component with another
+ * (e.g. an icon inside a button); its files must be `*.e2e.ts`, `*.test.ts` or `fixtures.ts`.
+ */
+export const OPTIONAL_DIRS = ['composition'];
+const COMPOSITION_FILE = /^composition\/(?:[\w.-]+\.e2e\.ts|[\w.-]+\.test\.ts|fixtures\.ts)$/;
 /** Directories a component owns: ARIA snapshots (>= 1 `.yml`) and the reviewed visual baselines. */
 export const DIRS = ['aria', 'host', 'visual', 'visual/baselines'];
 /** Package scripts every component has (`<name>:<slug>`). */
@@ -75,6 +81,11 @@ export function checkDir(
   const known = new Set([...REQUIRED, ...OPTIONAL].map((f) => f + suffix));
   for (const f of files) {
     if (known.has(f)) continue;
+    if (f.startsWith('composition/')) {
+      if (suffix ? f === 'composition/.gitkeep' : COMPOSITION_FILE.test(f)) continue;
+      at(`unexpected ${f} (composition/ holds only *.e2e.ts, *.test.ts or fixtures.ts)`);
+      continue;
+    }
     if (
       f.startsWith('aria/') &&
       (suffix ? f.endsWith('.yml.tmpl') || f.endsWith('.gitkeep') : f.endsWith('.yml'))

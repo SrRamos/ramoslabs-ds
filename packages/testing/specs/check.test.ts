@@ -42,6 +42,15 @@ describe('specs:check', () => {
     expect(checkDir(dir, opts('switch')).join('\n')).toContain(`missing ${f}`);
   });
 
+  it('composition/ is optional: spec files pass, anything else is unexpected (G-ICON MUST-2)', () => {
+    const dir = copyOf('switch');
+    mkdirSync(join(dir, 'composition'), { recursive: true });
+    writeFileSync(join(dir, 'composition', 'button.e2e.ts'), 'export {};\n');
+    expect(checkDir(dir, opts('switch'))).toEqual([]);
+    writeFileSync(join(dir, 'composition', 'notes.md'), 'x');
+    expect(checkDir(dir, opts('switch')).join('\n')).toContain('unexpected composition/notes.md');
+  });
+
   it('seeded: a per-component triage file, a stray file, a standalone config and a missing script fail', () => {
     const dir = copyOf('button');
     writeFileSync(join(dir, 'a11y-triage.json'), '{}');
