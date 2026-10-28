@@ -1,0 +1,486 @@
+/* sj-button: SJButton, the golden CSS reference (W1-C01.b). Tokens only (stylelint sj/* enforces it).
+   Parts come from button.contract.json anatomy: root (<button>), link (<a>), icon. The link variant is its
+   own anatomy part, so `root` and `link` are always styled together through :is(). Axes are
+   data-variant (solid|soft|outline|ghost) x data-tone (primary|neutral|success|warning|error|info) x
+   data-size (sm|md|lg). Every variant x tone color pair below is read back from this built file by
+   packages/testing/contrast (extractor), checked at 4.5:1 for text and 3:1 for the outline boundary.
+   Layers: structure in sj.component, axes and pointer states in sj.variant, disabled and forced colors in
+   sj.state. Focus ring (2.4.13), motion collapse and the 44px target come from base/. */
+
+@layer sj.component {
+  :is(.sj-button__root, .sj-button__link) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    /* 44px target, 24px floor in compact density (ADR-008). Also on a disabled <a> (no href), which the
+       base a[href] rule does not match. */
+    min-block-size: var(--sj-target, var(--target-min));
+    min-inline-size: var(--sj-target, var(--target-min));
+    margin: 0;
+    padding-block: var(--space-2);
+    padding-inline: var(--space-4);
+    border-width: var(--border-width-hairline);
+    border-style: solid;
+    border-color: transparent;
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    line-height: var(--leading-snug);
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+    user-select: none;
+    transition-property: color, background-color, border-color;
+    transition-duration: var(--sj-duration-fast, var(--duration-fast));
+    transition-timing-function: var(--easing-out);
+  }
+
+  .sj-button__icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.25em;
+    block-size: 1.25em;
+    font-size: inherit;
+  }
+
+  /* Icon-only: a square target; the accessible name comes from aria-label (contract/icon-only-name). */
+  :is(.sj-button__root, .sj-button__link)[data-icon-only]:not([data-icon-only='false']) {
+    padding-inline: 0;
+    aspect-ratio: 1;
+  }
+}
+
+@layer sj.variant {
+  /* Size */
+  :is(.sj-button__root, .sj-button__link)[data-size='sm'] {
+    padding-inline: var(--space-3);
+    font-size: var(--font-size-sm);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-size='md'] {
+    padding-inline: var(--space-4);
+    font-size: var(--font-size-base);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-size='lg'] {
+    padding-inline: var(--space-6);
+    padding-block: var(--space-3);
+    font-size: var(--font-size-lg);
+    min-block-size: max(var(--sj-target, var(--target-min)), var(--space-12));
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-size='lg'][data-icon-only]:not(
+      [data-icon-only='false']
+    ) {
+    padding-inline: 0;
+  }
+
+  /* Rest */
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='primary'] {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral'] {
+    color: var(--color-white);
+    background-color: var(--color-slate-800);
+    border-color: var(--color-slate-800);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success'] {
+    color: var(--color-white);
+    background-color: var(--color-emerald-700);
+    border-color: var(--color-emerald-700);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning'] {
+    color: var(--color-slate-900);
+    background-color: var(--color-amber-500);
+    border-color: var(--color-amber-500);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error'] {
+    color: var(--color-white);
+    background-color: var(--color-error-strong);
+    border-color: var(--color-error-strong);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info'] {
+    color: var(--color-white);
+    background-color: var(--color-blue-700);
+    border-color: var(--color-blue-700);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary'] {
+    color: var(--color-primary-dark);
+    background-color: var(--color-primary-surface);
+    border-color: var(--color-primary-surface);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral'] {
+    color: var(--color-text-body);
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-surface-hover);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success'] {
+    color: var(--color-success-text);
+    background-color: var(--color-success-surface);
+    border-color: var(--color-success-surface);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning'] {
+    color: var(--color-warning-text);
+    background-color: var(--color-warning-surface);
+    border-color: var(--color-warning-surface);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error'] {
+    color: var(--color-error-text);
+    background-color: var(--color-error-surface);
+    border-color: var(--color-error-surface);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info'] {
+    color: var(--color-info-text);
+    background-color: var(--color-info-surface);
+    border-color: var(--color-info-surface);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary'] {
+    color: var(--color-primary);
+    background-color: transparent;
+    border-color: var(--color-primary);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral'] {
+    color: var(--color-text-body);
+    background-color: transparent;
+    border-color: var(--color-text-muted);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success'] {
+    color: var(--color-success-text);
+    background-color: transparent;
+    border-color: var(--color-success-text);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning'] {
+    color: var(--color-warning-text);
+    background-color: transparent;
+    border-color: var(--color-warning-text);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error'] {
+    color: var(--color-error-text);
+    background-color: transparent;
+    border-color: var(--color-error-text);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info'] {
+    color: var(--color-info-text);
+    background-color: transparent;
+    border-color: var(--color-info-text);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary'] {
+    color: var(--color-primary);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral'] {
+    color: var(--color-text-body);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success'] {
+    color: var(--color-success-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='warning'] {
+    color: var(--color-warning-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='error'] {
+    color: var(--color-error-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info'] {
+    color: var(--color-info-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  /* Hover: pointer devices only, so a tap never leaves a sticky hover */
+  @media (hover: hover) {
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='primary']:hover {
+      background-color: var(--color-primary-dark);
+      border-color: var(--color-primary-dark);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:hover {
+      background-color: var(--color-slate-700);
+      border-color: var(--color-slate-700);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success']:hover {
+      background-color: var(--color-emerald-800);
+      border-color: var(--color-emerald-800);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning']:hover {
+      background-color: var(--color-amber-400);
+      border-color: var(--color-amber-400);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error']:hover {
+      background-color: var(--color-red-700);
+      border-color: var(--color-red-700);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info']:hover {
+      background-color: var(--color-blue-800);
+      border-color: var(--color-blue-800);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary']:hover {
+      background-color: var(--color-indigo-100);
+      border-color: var(--color-indigo-100);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral']:hover {
+      background-color: var(--color-slate-200);
+      border-color: var(--color-slate-200);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success']:hover {
+      background-color: var(--color-green-100);
+      border-color: var(--color-green-100);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning']:hover {
+      background-color: var(--color-amber-100);
+      border-color: var(--color-amber-100);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error']:hover {
+      background-color: var(--color-red-100);
+      border-color: var(--color-red-100);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info']:hover {
+      background-color: var(--color-blue-100);
+      border-color: var(--color-blue-100);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary']:hover {
+      background-color: var(--color-primary-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral']:hover {
+      background-color: var(--color-surface-hover);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success']:hover {
+      background-color: var(--color-success-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning']:hover {
+      background-color: var(--color-warning-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error']:hover {
+      background-color: var(--color-error-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info']:hover {
+      background-color: var(--color-info-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary']:hover {
+      background-color: var(--color-primary-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral']:hover {
+      background-color: var(--color-surface-hover);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success']:hover {
+      background-color: var(--color-success-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='warning']:hover {
+      background-color: var(--color-warning-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='error']:hover {
+      background-color: var(--color-error-surface);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info']:hover {
+      background-color: var(--color-info-surface);
+    }
+  }
+
+  /* Pressed */
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='primary']:active {
+    background-color: var(--color-indigo-800);
+    border-color: var(--color-indigo-800);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:active {
+    background-color: var(--color-slate-900);
+    border-color: var(--color-slate-900);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success']:active {
+    background-color: var(--color-emerald-900);
+    border-color: var(--color-emerald-900);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning']:active {
+    background-color: var(--color-amber-600);
+    border-color: var(--color-amber-600);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error']:active {
+    background-color: var(--color-red-800);
+    border-color: var(--color-red-800);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info']:active {
+    background-color: var(--color-blue-900);
+    border-color: var(--color-blue-900);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary']:active {
+    background-color: var(--color-indigo-200);
+    border-color: var(--color-indigo-200);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral']:active {
+    background-color: var(--color-slate-300);
+    border-color: var(--color-slate-300);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success']:active {
+    background-color: var(--color-green-200);
+    border-color: var(--color-green-200);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning']:active {
+    background-color: var(--color-amber-200);
+    border-color: var(--color-amber-200);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error']:active {
+    background-color: var(--color-red-200);
+    border-color: var(--color-red-200);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info']:active {
+    background-color: var(--color-blue-200);
+    border-color: var(--color-blue-200);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary']:active {
+    background-color: var(--color-indigo-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral']:active {
+    background-color: var(--color-slate-200);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success']:active {
+    background-color: var(--color-green-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning']:active {
+    background-color: var(--color-amber-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error']:active {
+    background-color: var(--color-red-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info']:active {
+    background-color: var(--color-blue-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary']:active {
+    background-color: var(--color-indigo-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral']:active {
+    background-color: var(--color-slate-200);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success']:active {
+    background-color: var(--color-green-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='warning']:active {
+    background-color: var(--color-amber-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='error']:active {
+    background-color: var(--color-red-100);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info']:active {
+    background-color: var(--color-blue-100);
+  }
+}
+
+@layer sj.state {
+  /* Disabled: native on <button>, data-disabled on both (a disabled <a> has no href). Never color alone:
+     the cursor and the native/ARIA disabled semantics carry it. Text-disabled is exempt from 1.4.3. */
+  :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']) {
+    color: var(--color-text-disabled);
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']):is(
+      [data-variant='outline'],
+      [data-variant='ghost']
+    ) {
+    background-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-disabled]:not(
+      [data-disabled='false']
+    )[data-variant='ghost'] {
+    border-color: transparent;
+  }
+
+  /* Forced colors (ADR-009): the UA replaces colors; keep a visible boundary on both elements. */
+  @media (forced-colors: active) {
+    :is(.sj-button__root, .sj-button__link) {
+      border: var(--border-width-hairline) solid ButtonBorder;
+      forced-color-adjust: auto;
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']) {
+      color: GrayText;
+      border-color: GrayText;
+    }
+  }
+}
