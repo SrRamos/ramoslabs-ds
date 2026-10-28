@@ -13,13 +13,14 @@ const allTrue = Object.fromEntries(SUPPORT_KEYS.map((k) => [k, true]));
 const allFalse = Object.fromEntries(SUPPORT_KEYS.map((k) => [k, false]));
 
 describe('paths', () => {
-  it('has the ten core keys and one native plus ten fallback paths', () => {
+  it('has the ten core keys and one native, ten fallback paths and fallback:all', () => {
     expect(SUPPORT_KEYS).toHaveLength(10);
     const ps = supportsPaths();
-    expect(ps).toHaveLength(11);
+    expect(ps).toHaveLength(12);
     expect(ps[0]).toEqual({ id: NATIVE, forced: [] });
-    expect(new Set(ps.map((p) => p.id)).size).toBe(11);
+    expect(new Set(ps.map((p) => p.id)).size).toBe(12);
     expect(ps[1].id).toBe('fallback:anchorPositioning');
+    expect(ps[11]).toEqual({ id: 'fallback:all', forced: [...SUPPORT_KEYS] });
   });
   it('round-trips ids and rejects unknown ones', () => {
     for (const p of supportsPaths()) expect(parsePath(p.id)).toEqual(p);
@@ -27,10 +28,13 @@ describe('paths', () => {
     expect(() => parsePath('floor')).toThrow(/unknown/);
   });
   it('forces exactly one key false and leaves the rest as detected', () => {
-    for (const p of supportsPaths().slice(1)) {
+    for (const p of supportsPaths().slice(1, 11)) {
       const eff = applyPath(allTrue, p);
       expect(SUPPORT_KEYS.filter((k) => !eff[k])).toEqual(p.forced);
     }
+    expect(SUPPORT_KEYS.filter((k) => !applyPath(allTrue, parsePath('fallback:all'))[k])).toEqual([
+      ...SUPPORT_KEYS,
+    ]);
     expect(applyPath(allTrue, parsePath(NATIVE))).toEqual(allTrue);
     expect(Object.isFrozen(applyPath(allTrue, parsePath('fallback:popover')))).toBe(true);
   });
@@ -125,9 +129,9 @@ describe('injectionProblems', () => {
 });
 
 describe('probe declaration and config', () => {
-  it('declares 11 paths x 3 adapters x 3 engines of every scenario, from the contract', () => {
+  it('declares 12 paths x 3 adapters x 3 engines of every scenario, from the contract', () => {
     const e = probeExpected();
-    expect(e.paths).toHaveLength(11);
+    expect(e.paths).toHaveLength(12);
     expect(e.adapters).toEqual(['react', 'vue', 'vanilla']);
     expect(e.browsers.slice(0, 3).map((b) => b.id)).toEqual(['chromium', 'firefox', 'webkit']);
     expect(e.scenarios).toHaveLength(probeScenarios().length);

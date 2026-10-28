@@ -2,9 +2,15 @@
 // `bun run honesty:check`: exit 1 when any scanned file claims hands-on testing of an
 // evidence-only AT, or lists a tested-real entry without date, log, or on a non-VoiceOver AT (W1-319).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { scanFiles } from './index.js';
+
+// `--only <file>` (repeatable, relative to the repo root) scans just those files instead of the
+// default source roots. CI uses it on the built `apps/site/dist` output (llms-full.txt, registry.json).
+const only = process.argv.flatMap((a, i, all) =>
+  a === '--only' && all[i + 1] ? [resolve(all[i + 1])] : [],
+);
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const SKIP = new Set(['node_modules', 'dist', '.astro', '.turbo', '.wrangler', 'coverage', '.git']);
@@ -24,13 +30,16 @@ function walk(dir, acc) {
   return acc;
 }
 
-const roots = [
-  join(repo, 'packages', 'contracts', 'contracts'),
-  join(repo, 'docs'),
-  join(repo, 'apps', 'site', 'src'),
-  join(repo, 'apps', 'site', 'agentic'),
-  join(repo, 'apps', 'site', 'public'),
-];
+const roots =
+  only.length > 0
+    ? []
+    : [
+        join(repo, 'packages', 'contracts', 'contracts'),
+        join(repo, 'docs'),
+        join(repo, 'apps', 'site', 'src'),
+        join(repo, 'apps', 'site', 'agentic'),
+        join(repo, 'apps', 'site', 'public'),
+      ];
 /** @type {string[]} */
 const paths = [];
 for (const r of roots) {
@@ -41,7 +50,8 @@ for (const r of roots) {
   }
 }
 for (const f of ['llms.txt', 'llms-full.txt', 'registry.json', 'README.md', 'AGENTS.md'])
-  paths.push(join(repo, f));
+  if (only.length === 0) paths.push(join(repo, f));
+paths.push(...only);
 
 const files = paths
   .map((p) => ({ file: relative(repo, p), content: readFileSync(p, 'utf8') }))

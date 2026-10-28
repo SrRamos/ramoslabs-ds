@@ -78,6 +78,7 @@ async function scenario(page: Page, cdp: CDPSession): Promise<string[]> {
 
 test.describe('ime composition', () => {
   test.beforeEach(({ browserName }) => {
+    // #49 owner: SrRamos
     test.skip(browserName !== 'chromium', 'CDP Input.imeSetComposition exists on Chromium only');
   });
 

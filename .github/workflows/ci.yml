@@ -76,6 +76,8 @@ jobs:
         run: bun run size
       - name: Registry drift (built and committed registry.json vs contracts)
         run: bun run registry:check
+      - name: Honesty scan of the built site output (AT claims in served files)
+        run: node packages/testing/honesty/cli.js --only apps/site/dist/llms-full.txt --only apps/site/dist/registry.json
       - name: Committed generated files are unchanged by the build
         run: git diff --exit-code -- registry.json llms.txt llms-full.txt
 

@@ -28,6 +28,7 @@ const EXPECTED = {
 for (const adapter of ADAPTERS) {
   for (const state of Object.keys(EXPECTED) as (keyof typeof EXPECTED)[]) {
     test(`SJProbe | ${adapter} | cdp ax tree ${state}`, async ({ page, browserName }) => {
+      // #49 owner: SrRamos
       test.skip(browserName !== 'chromium', 'CDP getFullAXTree exists on Chromium only');
       const errors = await openHost(page);
       await mountProbe(page, adapter, state);
@@ -52,6 +53,7 @@ test('SJProbe | vue | cdp ax tree rejects the seeded aria-checked regression', a
   page,
   browserName,
 }) => {
+  // #49 owner: SrRamos
   test.skip(browserName !== 'chromium', 'CDP getFullAXTree exists on Chromium only');
   await openHost(page);
   await mountProbe(page, 'vue', 'off', 'vue-wrong-aria');

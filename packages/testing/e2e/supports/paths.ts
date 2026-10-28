@@ -9,9 +9,12 @@ export type { SupportKey, SupportsMap };
 
 export const NATIVE = 'native';
 export const FALLBACK_PREFIX = 'fallback:';
+/** The floor path: every capability forced false at once (ADR-013 floor-like combination). */
+export const ALL = 'all';
 
 /** `native` or `fallback:<key>`. */
-export type PathId = typeof NATIVE | `fallback:${SupportKey}`;
+export type PathId =
+  typeof NATIVE | `fallback:${SupportKey}` | `${typeof FALLBACK_PREFIX}${typeof ALL}`;
 
 export interface SupportsPath {
   readonly id: PathId;
@@ -19,17 +22,19 @@ export interface SupportsPath {
   readonly forced: readonly SupportKey[];
 }
 
-/** The path list: real detection first, then one forced-false path per capability key. */
+/** The path list: real detection, one forced-false path per capability key, then `fallback:all`. */
 export function supportsPaths(keys: readonly SupportKey[] = SUPPORT_KEYS): SupportsPath[] {
   return [
     { id: NATIVE, forced: [] },
     ...keys.map((k): SupportsPath => ({ id: `${FALLBACK_PREFIX}${k}`, forced: [k] })),
+    { id: `${FALLBACK_PREFIX}${ALL}`, forced: [...keys] },
   ];
 }
 
 /** Parses a path id back to a path; unknown ids and unknown keys are an error, never a guess. */
 export function parsePath(id: string): SupportsPath {
   if (id === NATIVE) return { id: NATIVE, forced: [] };
+  if (id === `${FALLBACK_PREFIX}${ALL}`) return { id: id as PathId, forced: [...SUPPORT_KEYS] };
   if (id.startsWith(FALLBACK_PREFIX)) {
     const key = id.slice(FALLBACK_PREFIX.length);
     if ((SUPPORT_KEYS as readonly string[]).includes(key))
