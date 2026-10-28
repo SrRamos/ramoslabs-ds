@@ -255,6 +255,10 @@
         {
           "part": "thumb",
           "element": "span"
+        },
+        {
+          "part": "label",
+          "element": "span"
         }
       ],
       "roles": [
