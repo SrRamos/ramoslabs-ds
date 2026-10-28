@@ -11,6 +11,9 @@ export interface SJSwitchProps {
   /** @default false */
   disabled?: boolean;
   name?: string;
+  /** @default "on" */
+  value?: string;
+  id?: string;
 }
 
 export interface SJSwitchEmits {
