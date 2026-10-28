@@ -30,3 +30,6 @@ apps/site/agentic/content
 apps/site/agentic/CONTRACT.md
 **/*.vue
 AUDIT-*.md
+# Committed codegen output of @ramoslabs/icons, byte-checked against lucide-static by icons:check.
+packages/icons/src/generated
+packages/icons/THIRD-PARTY-NOTICES.md

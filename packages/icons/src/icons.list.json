@@ -1,0 +1,340 @@
+{
+  "$source": "Glyphs: lucide-static (ISC), pinned devDependency. Mirror flags (direction means forward/back): Material bidirectionality guidance and Compose Icons.AutoMirrored for arrows, chevrons, send, login/logout and undo/redo; horizontal reading chosen where Material allows a circular one; help, launch, list and message are kept unmirrored.",
+  "icons": [
+    {
+      "name": "chevron-up",
+      "group": "navigation"
+    },
+    {
+      "name": "chevron-down",
+      "group": "navigation"
+    },
+    {
+      "name": "chevron-left",
+      "group": "navigation",
+      "mirror": true
+    },
+    {
+      "name": "chevron-right",
+      "group": "navigation",
+      "mirror": true
+    },
+    {
+      "name": "chevrons-up-down",
+      "group": "navigation"
+    },
+    {
+      "name": "arrow-up",
+      "group": "navigation"
+    },
+    {
+      "name": "arrow-down",
+      "group": "navigation"
+    },
+    {
+      "name": "arrow-left",
+      "group": "navigation",
+      "mirror": true
+    },
+    {
+      "name": "arrow-right",
+      "group": "navigation",
+      "mirror": true
+    },
+    {
+      "name": "arrow-up-right",
+      "group": "navigation"
+    },
+    {
+      "name": "arrow-left-right",
+      "group": "navigation"
+    },
+    {
+      "name": "menu",
+      "group": "navigation"
+    },
+    {
+      "name": "ellipsis",
+      "group": "navigation",
+      "aliases": ["more-horizontal"]
+    },
+    {
+      "name": "ellipsis-vertical",
+      "group": "navigation",
+      "aliases": ["more-vertical"]
+    },
+    {
+      "name": "check",
+      "group": "actions"
+    },
+    {
+      "name": "x",
+      "group": "actions"
+    },
+    {
+      "name": "plus",
+      "group": "actions"
+    },
+    {
+      "name": "minus",
+      "group": "actions"
+    },
+    {
+      "name": "search",
+      "group": "actions"
+    },
+    {
+      "name": "funnel",
+      "group": "actions",
+      "aliases": ["filter"]
+    },
+    {
+      "name": "sliders-horizontal",
+      "group": "actions"
+    },
+    {
+      "name": "pencil",
+      "group": "actions"
+    },
+    {
+      "name": "square-pen",
+      "group": "actions",
+      "aliases": ["edit"]
+    },
+    {
+      "name": "trash",
+      "group": "actions",
+      "aliases": ["trash-2"]
+    },
+    {
+      "name": "copy",
+      "group": "actions"
+    },
+    {
+      "name": "save",
+      "group": "actions"
+    },
+    {
+      "name": "rotate-ccw",
+      "group": "actions"
+    },
+    {
+      "name": "download",
+      "group": "transfer"
+    },
+    {
+      "name": "upload",
+      "group": "transfer"
+    },
+    {
+      "name": "external-link",
+      "group": "transfer"
+    },
+    {
+      "name": "link",
+      "group": "transfer"
+    },
+    {
+      "name": "share-2",
+      "group": "transfer"
+    },
+    {
+      "name": "send",
+      "group": "transfer",
+      "mirror": true
+    },
+    {
+      "name": "refresh-cw",
+      "group": "transfer"
+    },
+    {
+      "name": "paperclip",
+      "group": "transfer"
+    },
+    {
+      "name": "info",
+      "group": "status"
+    },
+    {
+      "name": "circle-check",
+      "group": "status"
+    },
+    {
+      "name": "circle-x",
+      "group": "status",
+      "aliases": ["x-circle"]
+    },
+    {
+      "name": "circle-alert",
+      "group": "status",
+      "aliases": ["alert-circle"]
+    },
+    {
+      "name": "triangle-alert",
+      "group": "status",
+      "aliases": ["alert-triangle"]
+    },
+    {
+      "name": "octagon-alert",
+      "group": "status",
+      "aliases": ["alert-octagon"]
+    },
+    {
+      "name": "circle-question-mark",
+      "group": "status",
+      "aliases": ["help-circle", "circle-help"]
+    },
+    {
+      "name": "shield-check",
+      "group": "status"
+    },
+    {
+      "name": "eye",
+      "group": "visibility"
+    },
+    {
+      "name": "eye-off",
+      "group": "visibility"
+    },
+    {
+      "name": "lock",
+      "group": "visibility"
+    },
+    {
+      "name": "lock-open",
+      "group": "visibility",
+      "aliases": ["unlock"]
+    },
+    {
+      "name": "loader-circle",
+      "group": "visibility",
+      "aliases": ["loader-2"]
+    },
+    {
+      "name": "user",
+      "group": "people"
+    },
+    {
+      "name": "users",
+      "group": "people"
+    },
+    {
+      "name": "circle-user",
+      "group": "people",
+      "aliases": ["user-circle"]
+    },
+    {
+      "name": "mail",
+      "group": "people"
+    },
+    {
+      "name": "phone",
+      "group": "people"
+    },
+    {
+      "name": "message-square",
+      "group": "people"
+    },
+    {
+      "name": "bell",
+      "group": "people"
+    },
+    {
+      "name": "star",
+      "group": "people"
+    },
+    {
+      "name": "calendar",
+      "group": "content"
+    },
+    {
+      "name": "clock",
+      "group": "content"
+    },
+    {
+      "name": "house",
+      "group": "content",
+      "aliases": ["home"]
+    },
+    {
+      "name": "heart",
+      "group": "content"
+    },
+    {
+      "name": "bookmark",
+      "group": "content"
+    },
+    {
+      "name": "image",
+      "group": "content"
+    },
+    {
+      "name": "file-text",
+      "group": "content"
+    },
+    {
+      "name": "folder",
+      "group": "content"
+    },
+    {
+      "name": "list",
+      "group": "content"
+    },
+    {
+      "name": "layout-grid",
+      "group": "content"
+    },
+    {
+      "name": "clipboard-check",
+      "group": "content"
+    },
+    {
+      "name": "map-pin",
+      "group": "content"
+    },
+    {
+      "name": "globe",
+      "group": "content"
+    },
+    {
+      "name": "credit-card",
+      "group": "content"
+    },
+    {
+      "name": "settings",
+      "group": "system"
+    },
+    {
+      "name": "log-in",
+      "group": "system",
+      "mirror": true
+    },
+    {
+      "name": "log-out",
+      "group": "system",
+      "mirror": true
+    },
+    {
+      "name": "undo-2",
+      "group": "system",
+      "mirror": true
+    },
+    {
+      "name": "redo-2",
+      "group": "system",
+      "mirror": true
+    },
+    {
+      "name": "shopping-cart",
+      "group": "system"
+    },
+    {
+      "name": "sun",
+      "group": "system"
+    },
+    {
+      "name": "moon",
+      "group": "system"
+    }
+  ]
+}

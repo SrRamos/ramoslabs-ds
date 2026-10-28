@@ -1,7 +1,11 @@
 // Each rule has a seeded failure (invalid) and a clean pass (valid).
 import { RuleTester } from 'eslint';
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { rules } from './index.js';
+import { iconsManifestViolations } from './no-icons-import.js';
 
 RuleTester.describe = describe;
 RuleTester.it = it;
@@ -138,4 +142,55 @@ tester.run('passive-listeners', rules['passive-listeners'], {
       errors: [{ messageId: 'passive' }],
     },
   ],
+});
+
+tester.run('no-icons-import', rules['no-icons-import'], {
+  valid: [
+    { code: `import { createButton } from '@ramoslabs/core/button';` },
+    { code: `import { x } from './icon';` },
+    { code: `import { x } from '../icon/index';` },
+    { code: `import { x } from '@ramoslabs/iconsx';` },
+  ],
+  invalid: [
+    { code: `import { Search } from '@ramoslabs/icons';`, errors: [{ messageId: 'icons' }] },
+    { code: `import { Search } from '@ramoslabs/icons/search';`, errors: [{ messageId: 'icons' }] },
+    {
+      code: `import { getIcon } from '@ramoslabs/icons/by-name';`,
+      errors: [{ messageId: 'icons' }],
+    },
+    { code: `export * from '@ramoslabs/icons';`, errors: [{ messageId: 'icons' }] },
+    { code: `const m = import('@ramoslabs/icons/star');`, errors: [{ messageId: 'icons' }] },
+    { code: `const m = require('@ramoslabs/icons');`, errors: [{ messageId: 'icons' }] },
+    {
+      code: `import { Star } from '../../../icons/src/generated/index';`,
+      errors: [{ messageId: 'icons' }],
+    },
+    {
+      code: `import { Star } from '../../packages/icons/src/by-name';`,
+      errors: [{ messageId: 'icons' }],
+    },
+  ],
+});
+
+describe('icons manifest boundary (ADR-016)', () => {
+  const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
+  for (const pkg of ['core', 'vue', 'react', 'vanilla']) {
+    it(`${pkg} does not list @ramoslabs/icons`, () => {
+      const manifest = JSON.parse(readFileSync(join(root, pkg, 'package.json'), 'utf8'));
+      expect(iconsManifestViolations(manifest)).toEqual([]);
+    });
+  }
+
+  it('seeded failure: dependencies, peerDependencies and optionalDependencies are caught', () => {
+    for (const field of ['dependencies', 'peerDependencies', 'optionalDependencies']) {
+      const bad = { name: '@ramoslabs/vue', [field]: { '@ramoslabs/icons': '0.0.0' } };
+      expect(iconsManifestViolations(bad)).toEqual([
+        `@ramoslabs/vue lists @ramoslabs/icons under ${field}`,
+      ]);
+    }
+    // devDependencies are tolerated (a story or test may use the icons).
+    expect(
+      iconsManifestViolations({ name: 'x', devDependencies: { '@ramoslabs/icons': '1' } }),
+    ).toEqual([]);
+  });
 });
