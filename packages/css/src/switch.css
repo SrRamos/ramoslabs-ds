@@ -1,0 +1,100 @@
+/* sj-switch: generated from src/_template, then authored. Tokens only (stylelint sj/* rules enforce it).
+   Parts (contract anatomy): root <label>, control <input type="checkbox" role="switch">, thumb <span>.
+   The native input is the real control and the focus target: it is appearance:none and transparent, sized to
+   the 44 px target (base/base.css), and carries the shared focus ring (base/focus.css). The visible track is
+   the root's ::before and the knob is the thumb, so the whole label is one pointer target and no hit area is
+   expanded through a pseudo-element. State: data-state on every part, data-disabled when disabled.
+   Layers: structure in sj.component, colour and state in sj.state. No sj.variant axes (SJSwitch has none). */
+
+@layer sj.component {
+  .sj-switch__root {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    /* Clear the 44 px track and the gap before the visible label. Logical, so RTL mirrors it. */
+    padding-inline-start: calc(var(--target-min) + var(--space-3));
+    min-block-size: var(--sj-target);
+    cursor: pointer;
+  }
+
+  /* Track: 44 px wide, 24 px tall, centred on the target's block axis. */
+  .sj-switch__root::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    inline-size: var(--target-min);
+    block-size: var(--target-floor);
+    translate: 0 -50%;
+    border-radius: var(--radius-pill);
+    transition-property: background-color;
+    transition-duration: var(--sj-duration-fast);
+    transition-timing-function: var(--easing-out);
+  }
+
+  /* Native checkbox, stripped to a transparent hit layer over the track. It stays the real control. */
+  .sj-switch__control {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: var(--sj-target);
+    block-size: var(--sj-target);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    appearance: none;
+    background: none;
+    cursor: inherit;
+  }
+
+  /* Knob. Off: inset from the start edge. On: moved to the end edge by track minus knob minus both insets. */
+  .sj-switch__thumb {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: var(--space-1);
+    inline-size: calc(var(--target-floor) - var(--space-2));
+    block-size: calc(var(--target-floor) - var(--space-2));
+    translate: 0 -50%;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-white);
+    transition-property: inset-inline-start;
+    transition-duration: var(--sj-duration-fast);
+    transition-timing-function: var(--easing-out);
+  }
+}
+
+@layer sj.state {
+  .sj-switch__root[data-state='off']::before {
+    background-color: var(--color-slate-500);
+  }
+
+  .sj-switch__root[data-state='on']::before {
+    background-color: var(--color-primary);
+  }
+
+  .sj-switch__thumb[data-state='on'] {
+    inset-inline-start: calc(var(--target-min) - var(--target-floor) + var(--space-1));
+  }
+
+  .sj-switch__root[data-disabled]:not([data-disabled='false']) {
+    cursor: not-allowed;
+  }
+
+  .sj-switch__root[data-disabled]:not([data-disabled='false'])::before {
+    background-color: var(--color-slate-300);
+  }
+
+  .sj-switch__control[data-disabled]:not([data-disabled='false']) {
+    cursor: not-allowed;
+  }
+
+  /* Forced colors drops backgrounds, so the track and knob need a system-colour border to stay visible.
+     The state is also carried by the knob's position, not by colour alone. */
+  @media (forced-colors: active) {
+    .sj-switch__root::before,
+    .sj-switch__thumb {
+      border: var(--border-width-hairline) solid CanvasText;
+    }
+  }
+}
