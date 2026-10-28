@@ -1,3 +1,2 @@
-// RamosLabs Vue component library barrel. Pre-stubbed and intentionally empty until the
-// component milestone. Adapters never import CSS (ADR-002): consumers import @ramoslabs/css.
-export {};
+// RamosLabs Vue component library barrel (hand-written). Adapters never import CSS (ADR-002): consumers import @ramoslabs/css.
+export * from './switch/index';
