@@ -9,6 +9,7 @@ import {
   onBeforeUnmount,
   onMounted,
   onScopeDispose,
+  nextTick,
   onUpdated,
   shallowRef,
   watch,
@@ -76,8 +77,10 @@ export function useSJStore<S extends object, E, X extends EffectInput, P extends
       : undefined;
 
   let mounted = false;
+  let commits = 0;
   const commit = () => {
     if (!mounted) return;
+    commits++;
     const corrective = controlled?.reconcile();
     if (corrective && corrective.length)
       queue.enqueue(corrective as unknown as X[], correctiveVersion(version));
@@ -102,6 +105,16 @@ export function useSJStore<S extends object, E, X extends EffectInput, P extends
     watch(() => [snapshot.value, tick.value], commit, { flush: 'post' });
   });
 
+  // A controlled owner that rejects a change never re-renders, so nothing would reconcile the native
+  // control. When a request was not dispatched and no commit followed the flush, commit once.
+  const resync = (accepted: boolean) => {
+    if (accepted) return;
+    const seen = commits;
+    void nextTick(() => {
+      if (mounted && commits === seen) commit();
+    });
+  };
+
   if (getCurrentInstance()) {
     onMounted(() => {
       mounted = true;
@@ -119,8 +132,16 @@ export function useSJStore<S extends object, E, X extends EffectInput, P extends
     snapshot,
     view: () => (snapshot.value, controlled ? controlled.view() : store.getSnapshot()),
     dispatch: (event) => void store.dispatch(event),
-    request: (f, n) => (controlled ? controlled.request(f, n) : false),
-    native: (f, a) => (controlled ? controlled.native(f, a) : false),
+    request(f, n) {
+      const r = controlled ? controlled.request(f, n) : false;
+      if (controlled) resync(r);
+      return r;
+    },
+    native(f, a) {
+      const r = controlled ? controlled.native(f, a) : false;
+      if (controlled) resync(r);
+      return r;
+    },
     commit,
     scope,
     queue: queue as unknown as EffectQueue<EffectInput>,

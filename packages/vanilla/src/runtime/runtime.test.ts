@@ -272,6 +272,8 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     const e = el();
     (e as unknown as { ownerDocument: unknown }).ownerDocument = doc;
     host.mount(e, t.spec, {});
+    expect(children).toHaveLength(0); // lazy: nothing until the first announce
+    host.live.announce('hello');
     expect(children).toHaveLength(1);
     expect((children[0] as { attrs: Record<string, string> }).attrs).toMatchObject({
       role: 'status',
@@ -361,5 +363,79 @@ describe('vanilla runtime (W1-122, ADR-003 bridge)', () => {
     t.host.mount(b, t.spec, {});
     t.host.destroy();
     expect(a.live + b.live).toBe(0);
+  });
+});
+
+describe('RT follow-ups (vanilla)', () => {
+  const fakeDoc = () => {
+    const body: { remove(): void }[] = [];
+    const doc = {
+      body: { appendChild: (n: { remove(): void }) => body.push(n) },
+      createElement: () => {
+        const el = {
+          setAttribute() {},
+          className: '',
+          textContent: '',
+          remove: () => void body.splice(body.indexOf(el), 1),
+        };
+        return el;
+      },
+    };
+    return { body, doc };
+  };
+  const mountIn = (doc: unknown) => {
+    const sched = createFakeScheduler();
+    const host = createHost(createRuntime({ scheduler: sched, idFactory: () => 'x' }), {
+      allowFakeScheduler: true,
+    });
+    const t = setup();
+    const e = el();
+    (e as unknown as { ownerDocument: unknown }).ownerDocument = doc;
+    return { host, sched, t, e };
+  };
+
+  it('mount and destroy of a non-announcing component leave the body unchanged', () => {
+    const { body, doc } = fakeDoc();
+    const { host, sched, t, e } = mountIn(doc);
+    const inst = host.mount(e, t.spec, {});
+    sched.advance(2000);
+    expect(body).toHaveLength(0);
+    inst.destroy();
+    host.destroy();
+    expect(body).toHaveLength(0);
+  });
+
+  it('the first announce creates exactly one region; destroy removes it', () => {
+    const { body, doc } = fakeDoc();
+    const { host, sched, t, e } = mountIn(doc);
+    host.mount(e, t.spec, {});
+    host.live.announce('one');
+    host.live.announce('two');
+    sched.advance(2000);
+    expect(body).toHaveLength(1);
+    host.destroy();
+    expect(body).toHaveLength(0);
+  });
+
+  it('a rejected controlled native change is resynced by the host (no component help)', () => {
+    const t = setup();
+    const e = el();
+    const onOpen = vi.fn();
+    const ran: unknown[] = [];
+    const inst = t.host.mount(
+      e,
+      {
+        ...t.spec,
+        attach: (ctx) => ctx.listen(ctx.el, 'click', () => ctx.native('open', true)),
+        run: (fx) => void ran.push(fx),
+      },
+      { open: false, onOpen },
+    );
+    t.sched.flush(); // settle the mount flush first
+    e.dispatchEvent(new Event('click'));
+    t.sched.flush();
+    expect(onOpen).toHaveBeenCalledWith(true);
+    expect(ran).toMatchObject([{ type: 'open', target: 'p', value: false }]);
+    inst.destroy();
   });
 });

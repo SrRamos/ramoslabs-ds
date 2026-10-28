@@ -67,6 +67,9 @@ interface Instance<S extends object, E, X extends EffectInput> {
   version: number;
   scoped: Bag | undefined;
   committed: Bag;
+  /** Commits seen so far (layout effect). Lets a rejected request tell whether the owner re-rendered. */
+  commits: number;
+  alive: boolean;
 }
 
 export function useMachine<S extends object, E, X extends EffectInput, P extends Bag>(
@@ -84,6 +87,8 @@ export function useMachine<S extends object, E, X extends EffectInput, P extends
       queue,
       version: 0,
       scoped: undefined as Bag | undefined,
+      commits: 0,
+      alive: true,
       committed: options.props as Bag,
     } as Instance<S, E, X>;
     i.store = createStore<S, E, X | AnnounceEffect>(options.initial(), options.reduce, (fx, v) => {
@@ -118,6 +123,7 @@ export function useMachine<S extends object, E, X extends EffectInput, P extends
   // Post-commit, children first. Commits props, locks ownership once, reconciles, then drains.
   useLayoutEffect(() => {
     opts.current = options;
+    inst.commits++;
     inst.committed = options.props;
     if (first.current) {
       first.current = false;
@@ -154,21 +160,44 @@ export function useMachine<S extends object, E, X extends EffectInput, P extends
 
   // Pending work is dropped on unmount; the store needs no teardown beyond React's unsubscribe
   // (destroying here would break StrictMode's simulated unmount, which keeps the instance).
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    inst.alive = true;
+    return () => {
+      inst.alive = false;
       inst.queue.clear();
+    };
+  }, [inst]);
+
+  const dispatch = useCallback((event: E) => void inst.store.dispatch(event), [inst]);
+  // A controlled field whose owner rejects the change never re-renders, so the commit-time
+  // `reconcile()` that puts the native control back would not run. When a request was not
+  // dispatched (controlled) and no commit followed it, force exactly one render to resync.
+  // If the owner accepted, its render already committed and nothing extra happens.
+  const resync = useCallback(
+    (accepted: boolean) => {
+      if (accepted) return;
+      const seen = inst.commits;
+      queueMicrotask(() => {
+        if (inst.alive && inst.commits === seen) bump();
+      });
     },
     [inst],
   );
-
-  const dispatch = useCallback((event: E) => void inst.store.dispatch(event), [inst]);
   const request = useCallback<Controlled<S>['request']>(
-    (f, n) => inst.controlled.request(f, n),
-    [inst],
+    (f, n) => {
+      const r = inst.controlled.request(f, n);
+      resync(r);
+      return r;
+    },
+    [inst, resync],
   );
   const native = useCallback<Controlled<S>['native']>(
-    (f, a) => inst.controlled.native(f, a),
-    [inst],
+    (f, a) => {
+      const r = inst.controlled.native(f, a);
+      resync(r);
+      return r;
+    },
+    [inst, resync],
   );
   const announce = useCallback((t: string, o?: AnnounceOptions) => live.announce(t, o), [live]);
 
