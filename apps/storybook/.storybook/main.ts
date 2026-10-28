@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(ts|tsx)'],
+  staticDirs: ['./static'],
   addons: ['@storybook/addon-docs'],
   framework: {
     name: '@storybook/vue3-vite',
