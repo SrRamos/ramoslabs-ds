@@ -89,3 +89,10 @@ export function useSJContext(): SJContext {
 }
 
 export const useSJRuntime = (): SJRuntime => useSJContext().runtime;
+
+/**
+ * The provider's runtime, or null outside one: no fallback, no warning (G-ICON SHOULD-2). For components
+ * that need the runtime only sometimes (an icon reads `dir` for mirrored glyphs only).
+ */
+export const useOptionalSJRuntime = (): SJRuntime | null =>
+  inject(SJ_CONTEXT, undefined)?.runtime ?? null;
