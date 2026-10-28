@@ -35,9 +35,15 @@ jobs:
           REASON: ${{ inputs.reason }}
         run: |
           scenes=$(node -e "import('./visual/index.js').then(m => console.log(m.SCENES.map(s => s.name ?? s).join(',')))")
-          node visual/cli.js update --update "$scenes" \
-            --reviewer "$REVIEWER (PENDING human review of CI artifact, run ${{ github.run_id }})" \
-            --reason "$REASON"
+          who="$REVIEWER (PENDING human review of CI artifact, run ${{ github.run_id }})"
+          node visual/cli.js update --update "$scenes" --reviewer "$who" --reason "$REASON"
+          # Every component's scenes go into its own visual/baselines (G3A SHOULD-5).
+          for dir in specs/*/; do
+            c=$(basename "$dir")
+            case "$c" in _*) continue ;; esac
+            names=$(node -e "import('./specs/$c/visual/scenes.js').then(m => console.log(m.SCENES.map(s => s.name).join(',')))")
+            node "specs/$c/visual/cli.js" update --update "$names" --reviewer "$who" --reason "$REASON"
+          done
       - name: Upload for review
         uses: actions/upload-artifact@v4
         with:
@@ -45,4 +51,6 @@ jobs:
           path: |
             packages/testing/visual/baselines/*-linux-*
             packages/testing/visual/baselines/REVIEW-LOG.json
+            packages/testing/specs/*/visual/baselines/*-linux-*
+            packages/testing/specs/*/visual/baselines/REVIEW-LOG.json
           retention-days: 14
