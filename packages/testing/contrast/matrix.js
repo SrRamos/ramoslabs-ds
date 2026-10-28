@@ -9,6 +9,7 @@
 // Sizes: text color does not depend on size, so each pair is evaluated per size. All sizes are
 // treated as normal text (4.5:1); the large-text 3:1 allowance is deliberately not used.
 import { THRESHOLDS, contrastRatio } from './wcag.js';
+import { extractPairs } from './css.js';
 
 export const VARIANTS = ['solid', 'soft', 'outline', 'ghost'];
 export const TONES = ['primary', 'neutral', 'success', 'warning', 'error', 'info'];
@@ -71,15 +72,19 @@ export const TEXT_ROLES = [
 export const MUTED_FLOOR_TOKEN = 'color-slate-500';
 
 /**
- * @typedef {{ id: string, kind: 'text' | 'ui' | 'focus' | 'floor', variant?: string, tone?: string, size?: string,
+ * @typedef {{ id: string, kind: 'text' | 'ui' | 'focus' | 'floor', source?: 'css' | 'recipe', variant?: string, tone?: string, size?: string,
  *   fg: string, bg: string, fgValue: string, bgValue: string, ratio: number, min: number, pass: boolean }} PairResult
  */
 
 /**
+ * Pairs come from the built CSS when `options.css` is given (G2 NICE-1): every (component, variant, tone)
+ * the CSS defines is checked at rest, hover and active, and replaces RECIPE for that variant x tone.
+ * RECIPE stays the fallback for variant x tone pairs no component CSS defines yet.
  * @param {Record<string, string>} tokens flat token map (see loadTokens)
+ * @param {{ css?: string }} [options] `css`: the built stylesheet (dist/index.css)
  * @returns {{ pairs: PairResult[], failures: PairResult[] }}
  */
-export function checkContrastMatrix(tokens) {
+export function checkContrastMatrix(tokens, options = {}) {
   /** @type {PairResult[]} */
   const pairs = [];
   /** @param {string} name */
@@ -96,8 +101,45 @@ export function checkContrastMatrix(tokens) {
     pairs.push({ ...p, fgValue, bgValue, ratio, pass: Math.floor(ratio * 100) / 100 >= p.min });
   };
 
+  const cssPairs = options.css ? extractPairs(options.css) : [];
+  /** Variant x tone combos some component CSS resolves with a text pair at rest. */
+  const covered = new Set(
+    cssPairs.filter((p) => p.state === 'rest' && p.fg && p.bg).map((p) => `${p.variant}/${p.tone}`),
+  );
+  for (const p of cssPairs) {
+    const state = p.state === 'rest' ? '' : `${p.state}/`;
+    const id = `${p.component}/${p.variant}/${p.tone}/${state}`;
+    const surfaces = p.bg === 'transparent' ? SURFACES : p.bg ? [p.bg] : [];
+    if (p.fg && p.fg !== 'transparent')
+      for (const bg of surfaces)
+        add({
+          id: `${id}text${surfaces.length > 1 ? `-on-${bg}` : ''}`,
+          kind: 'text',
+          source: 'css',
+          variant: p.variant,
+          tone: p.tone,
+          fg: p.fg,
+          bg,
+          min: THRESHOLDS.text,
+        });
+    const boundary = p.bg === 'transparent' || (p.bg && SURFACES.includes(p.bg));
+    if (p.border && p.border !== 'transparent' && boundary)
+      for (const s of SURFACES)
+        add({
+          id: `${id}border-on-${s}`,
+          kind: 'ui',
+          source: 'css',
+          variant: p.variant,
+          tone: p.tone,
+          fg: p.border,
+          bg: s,
+          min: THRESHOLDS.ui,
+        });
+  }
+
   for (const variant of VARIANTS) {
     for (const tone of TONES) {
+      if (covered.has(`${variant}/${tone}`)) continue; // the CSS is authoritative
       const r = RECIPE[variant]?.[tone];
       if (!r) throw new Error(`RECIPE is missing ${variant} x ${tone}`);
       for (const size of SIZES) {
@@ -105,6 +147,7 @@ export function checkContrastMatrix(tokens) {
         add({
           id: `${id}/text`,
           kind: 'text',
+          source: 'recipe',
           variant,
           tone,
           size,
@@ -117,6 +160,7 @@ export function checkContrastMatrix(tokens) {
             add({
               id: `${id}/border-on-${s}`,
               kind: 'ui',
+              source: 'recipe',
               variant,
               tone,
               size,

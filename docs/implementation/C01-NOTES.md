@@ -76,3 +76,30 @@ Protected (consumer cannot override): `disabled href type data-part data-variant
 - `.b` (CSS): style `.sj-button__root, .sj-button__link` (and `__icon`), 44 px target with 24 px floor, `data-icon-only` square target, `[data-disabled]` for both elements; `RECIPE` in the contrast matrix is the pairing.
 - `.c/.d/.e`: adapter must supply `onPress` (Vue emit, React prop, vanilla CustomEvent `press`); vanilla needs `rel`/`aria-*` applied as attributes and removal of attributes that disappear between updates.
 - `.f`: a `link-disabled` fixture is deliberately NOT in the contract: `deriveSpec` treats only the exact name `disabled` as inert (`spec/derive/index.js` INERT_FIXTURE), so L2 would press it and expect `press`. Widen that rule when `.f` needs it (disabled-link behavior is covered by core unit tests). Fixtures `default disabled long-label icon-only link` are named in the contract; atAssertions `manual-icon-only-name`, `manual-link-role-enter`, `manual-disabled-announced` need script text in the W1-505 VoiceOver script.
+
+# C01.b notes (SJButton CSS, the golden CSS reference)
+
+Branch `feature/m4-c01-button-css` (stacked on `feature/m4-c01a-button-core`). Files: `packages/css/src/button.css`, `packages/css/test/button.test.js`, `packages/testing/contrast/{css.js,css.test.js}` (+ `matrix.js`, `index.js`).
+
+## Layout (copy this for every later component)
+
+- `sj.component`: structure (inline-flex, gap, padding, radius, type, hairline transparent border, transition on color props from `--sj-duration-fast`, `--easing-out`), `min-*-size: var(--sj-target)` set here too because base only matches `a[href]` and a disabled link has no href; icon-only is `aspect-ratio: 1` with no inline padding.
+- `sj.variant`: `data-size` (sm/md/lg; lg raises min block size with `max(target, space-12)`, never below the target), then per variant x tone: rest, `:hover` inside `@media (hover: hover)`, `:active`. Explicit rules, no local custom properties, so the extractor reads the real tokens.
+- `sj.state`: `data-disabled` (both elements, wins over hover/active by layer), `forced-colors` (hairline `ButtonBorder` on root AND link, disabled `GrayText`). Focus ring, reduced motion: from `base/`, not redone (tests prove both reach the button).
+- Root and link are always styled together through `:is(.sj-button__root, .sj-button__link)`; a test fails if a bare `.sj-button__root` selector appears.
+
+## Contrast extractor (G2 NICE-1)
+
+`checkContrastMatrix(tokens, { css })` now reads pairs from the built CSS (`extractPairs`, dependency-free brace parser). Reads only `@layer sj.variant`; flattens `@media`; understands `[data-variant]`, `[data-tone]`, `:hover`, `:active`; declarations `color`, `background-color`, `border-color` as `var(--color-*)` or `transparent` (anything else throws: tokens only). Cascade is constraint count then source order. Checked: text at 4.5:1 for rest/hover/active; `transparent` fill is evaluated on every surface; the border is checked at 3:1 only when it is the boundary (fill transparent or a surface token). A variant x tone any component CSS covers replaces its RECIPE entries; RECIPE stays the fallback for the rest (`PairResult.source` is `css` or `recipe`; css ids are `button/solid/primary/hover/text`). Disabled (text exempt) and focus rules are out of scope of the extractor. Button test also compares the real Chromium cascade against the extracted tokens for all 72 states (so the extractor cannot drift from the browser) and seeds weak fill, hover and border failures.
+
+## Decisions
+
+- Hover/active tokens are explicit shades (e.g. solid primary: `primary-dark`, `indigo-800`; soft: `*-100`, `*-200`; outline/ghost: tone surface, then `*-100`/`slate-200`); all pass 4.5:1 text.
+- Outline fill is `transparent` (RECIPE said `color-surface`): same contrast on all three surfaces, and it works on any page color.
+- Disabled uses `color-text-disabled` on `surface-hover` (WCAG 1.4.3 inactive exemption); meaning is carried by native/ARIA disabled and `cursor: not-allowed`, not color alone.
+- Link anatomy gets no underline; it is a button-shaped link. Inline text links use consumer styles (WCAG 2.5.8 inline exemption).
+
+## Follow-ups
+
+- Hover shades have no `--state-hover` overlay use; if a later design wants overlays, the extractor needs color-mix support.
+- The contrast CI step for other components needs no change: any `sj.variant` rule with `data-variant`/`data-tone` is picked up from `dist/index.css`.
