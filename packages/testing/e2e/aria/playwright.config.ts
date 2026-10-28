@@ -15,6 +15,7 @@ export default defineConfig({
   testDir: here,
   testMatch: '**/*.e2e.ts',
   outputDir: join(cache, 'aria-artifacts'),
+  globalSetup: join(here, 'global-setup.ts'),
   fullyParallel: true,
   forbidOnly: !!process.env['CI'],
   retries,

@@ -1,0 +1,152 @@
+# Browser suites (L2 runner, ARIA, supports paths + parity, a11y, text safety, visual).
+# Every suite runs with `retries: 0` (Playwright configs) and a warm-up global setup that pays the
+# cold-start browser cost outside any test timeout (packages/testing/e2e/warmup.ts). Nothing here
+# retries or tolerates failure. Browsers are Playwright's builds: WebKit on Linux is not Safari and
+# the report must keep saying so (ADR-013 floor lane).
+name: E2E
+
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Affected paths
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      browser: ${{ steps.diff.outputs.browser }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Component sources, adapters, contracts, css, tokens, the test harness and the workflows all
+      # feed the browser suites. Docs-only and site-only pull requests do not. Pushes to main and
+      # manual runs always run everything. The suites are not filterable per component yet (the
+      # probe is the only component); when real components land, narrow here by slug.
+      - id: diff
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "browser=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          files=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
+          echo "$files"
+          if echo "$files" | grep -qE '^(packages/|apps/storybook/|\.github/|package\.json|bun\.lock|turbo\.json|tsconfig)'; then
+            echo "browser=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "browser=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No package, workflow or config change: browser suites skipped (job shows as skipped, not passed)."
+          fi
+
+  browser:
+    name: ${{ matrix.suite.name }}
+    needs: changes
+    if: needs.changes.outputs.browser == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        suite:
+          - name: L2 runner
+            id: runner
+            run: bun run test:e2e
+          - name: ARIA snapshots
+            id: aria
+            run: bun run test:e2e:aria
+          - name: Supports paths and parity
+            id: supports
+            run: bun run test:e2e:supports && bun run parity
+          - name: Accessibility (axe, WCAG 2.2)
+            id: a11y
+            # PRs run the @pr lane; main runs the release lane (everything).
+            run: bun run ${{ github.event_name == 'pull_request' && 'test:a11y' || 'test:a11y:release' }}
+          - name: Text safety
+            id: text-safety
+            run: bun run test:text-safety
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/browsers
+        with:
+          browsers: chromium firefox webkit
+      - name: Build tokens (a11y host serves tokens.css)
+        run: bun run --filter @ramoslabs/tokens build
+      - name: Run ${{ matrix.suite.name }}
+        run: ${{ matrix.suite.run }}
+        working-directory: packages/testing
+      - name: Upload results and artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.suite.id }}
+          path: |
+            packages/testing/node_modules/.cache/e2e/*.json
+            packages/testing/node_modules/.cache/e2e/parity
+            packages/testing/node_modules/.cache/a11y/*.json
+            packages/testing/node_modules/.cache/e2e/artifacts
+            packages/testing/node_modules/.cache/e2e/aria-artifacts
+            packages/testing/node_modules/.cache/a11y/artifacts
+            packages/testing/node_modules/.cache/text-safety
+          if-no-files-found: ignore
+          retention-days: 14
+
+  visual:
+    name: Visual review
+    needs: changes
+    if: needs.changes.outputs.browser == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/browsers
+        with:
+          browsers: chromium firefox webkit
+      - name: Baseline integrity (hash manifests and review log; no browser)
+        run: bun run visual:verify
+        working-directory: packages/testing
+      - name: Linux baselines present?
+        id: baselines
+        run: |
+          if ls packages/testing/visual/baselines | grep -q -- '-linux-'; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+      # Strict: a missing cell is a failure. Only possible once reviewed Linux baselines are committed.
+      - name: Visual check, self-test, stability (Linux baselines committed)
+        if: steps.baselines.outputs.present == 'true'
+        run: bun run test:visual
+        working-directory: packages/testing
+      # Until then the comparison cannot run. Say so loudly instead of passing silently.
+      - name: Visual comparison NOT RUN (no Linux baselines)
+        if: steps.baselines.outputs.present != 'true'
+        working-directory: packages/testing
+        run: |
+          msg="Visual comparison NOT RUN: the committed baselines are darwin-only and no linux baselines exist. Dispatch 'Visual baselines (Linux)', review the PNGs, commit them (docs/implementation/CLOSE-M3-NOTES.md)."
+          echo "::warning title=Visual NOT RUN::$msg"
+          { echo "## Visual review: NOT RUN"; echo; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
+          node visual/cli.js check | tail -3
+          node visual/cli.js stability
+
+  e2e:
+    name: E2E
+    if: always()
+    needs: [changes, browser, visual]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Every browser job succeeded, or was skipped for an unaffected pull request
+        run: |
+          echo '${{ toJSON(needs) }}'
+          if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then exit 1; fi
+          if [ "${{ needs.changes.outputs.browser }}" = "true" ] && [ "${{ contains(needs.*.result, 'skipped') }}" = "true" ]; then exit 1; fi

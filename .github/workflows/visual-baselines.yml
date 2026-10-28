@@ -1,0 +1,48 @@
+# Generates Linux visual baselines for HUMAN REVIEW. It never commits or pushes: the baselines are
+# uploaded as an artifact; a person downloads them, looks at every PNG, and commits them in a
+# normal pull request. That keeps "reviewed updates only" (packages/testing/visual/baselines.js).
+# Runner image and Playwright version are pinned because font raster and engine builds change pixels.
+name: Visual baselines (Linux)
+
+on:
+  workflow_dispatch:
+    inputs:
+      reviewer:
+        description: Name of the person who will review the PNGs before committing them
+        required: true
+      reason:
+        description: Why the baselines are being (re)generated
+        required: true
+        default: initial Linux baselines
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/browsers
+        with:
+          browsers: chromium firefox webkit
+      - name: Generate baselines through the reviewed update flow
+        working-directory: packages/testing
+        env:
+          REVIEWER: ${{ inputs.reviewer }}
+          REASON: ${{ inputs.reason }}
+        run: |
+          scenes=$(node -e "import('./visual/index.js').then(m => console.log(m.SCENES.map(s => s.name ?? s).join(',')))")
+          node visual/cli.js update --update "$scenes" \
+            --reviewer "$REVIEWER (PENDING human review of CI artifact, run ${{ github.run_id }})" \
+            --reason "$REASON"
+      - name: Upload for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-visual-baselines
+          path: |
+            packages/testing/visual/baselines/*-linux-*
+            packages/testing/visual/baselines/REVIEW-LOG.json
+          retention-days: 14

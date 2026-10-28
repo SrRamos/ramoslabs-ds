@@ -11,6 +11,7 @@ export default defineConfig({
   testMatch: '**/*.e2e.ts',
   // Keep run output in the git-ignored cache, as the L2 runner does.
   outputDir: join(here, '..', 'node_modules', '.cache', 'text-safety'),
+  globalSetup: join(here, 'global-setup.ts'),
   fullyParallel: true,
   forbidOnly: !!process.env['CI'],
   retries: 0,

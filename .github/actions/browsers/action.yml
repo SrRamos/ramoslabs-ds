@@ -1,0 +1,32 @@
+name: Playwright browsers
+description: >
+  Installs Playwright browsers with system dependencies, cached on the pinned Playwright version.
+  On a cache hit the system libraries are still installed (they live outside the cache).
+inputs:
+  browsers:
+    description: Space-separated engines, e.g. "chromium firefox webkit".
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Resolve Playwright version
+      id: pw
+      shell: bash
+      working-directory: packages/testing
+      run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+    - name: Cache browsers
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ runner.arch }}-${{ steps.pw.outputs.version }}-${{ inputs.browsers }}
+    - name: Install browsers and system dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      working-directory: packages/testing
+      run: bunx playwright install --with-deps ${{ inputs.browsers }}
+    - name: Install system dependencies (browsers restored from cache)
+      if: steps.cache.outputs.cache-hit == 'true'
+      shell: bash
+      working-directory: packages/testing
+      run: bunx playwright install-deps ${{ inputs.browsers }}
