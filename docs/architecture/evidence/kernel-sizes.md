@@ -13,7 +13,7 @@ Every ADR-011 ceiling holds. No ceiling is missed, so **no ADR-011 amendment is 
 | store (snapshot/subscription) | 1 KiB | 282 B (0.275 KiB) | 384 B | 27 % | 742 B | pass |
 | overlay + geometry fallback | 4 KiB | 2,365 B (2.310 KiB) | 5,080 B | 58 % | 1,731 B | pass |
 | collection + focus + typeahead | 3 KiB | 1,581 B (1.544 KiB) | 3,177 B | 51 % | 1,491 B | pass |
-| live-region registry | 1 KiB | 333 B (0.325 KiB) | 539 B | 33 % | 691 B | pass |
+| live-region registry | 1 KiB | 457 B (0.446 KiB) | 710 B | 45 % | 567 B | pass |
 | field-kinds + number parser | 2 KiB | 1,711 B (1.671 KiB) | 4,131 B | 84 % | 337 B | pass |
 | unused component in a fixture | 0 KiB JS | 0 B | 0 B | n/a | n/a | pass |
 
@@ -23,6 +23,8 @@ first. A watch item for G1, not a miss.
 
 Notes on reading the table:
 
+- `live` includes `HIDDEN_STYLE` (the inline visually-hidden style every host applies, G1 MUST-3), which costs 124 B gzip
+  (333 B before, 457 B now; re-measured at `5003089`, R2-NICE-2).
 - `overlay` bundles `ids`, `collection` and `focus` (see graph), so those bytes are inside the overlay row and also inside
   the collection row. The rows are per-artifact ceilings (ADR-011), not additive. Derived consumer caps in ADR-011
   (8 / 8 / 16 / 6 KiB) are caps from ceilings, not sums of these measurements.
