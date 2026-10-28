@@ -97,7 +97,7 @@ for (const f of files) {
 }
 if (problems) {
   console.error(
-    `skip-check: ${problems} skipped test(s) without a reason. Add \`// skip-reason: <why>\`, a reason string, or an issue link.`,
+    `skip-check: ${problems} skipped test(s) without an issue and an owner. Reference a GitHub issue (\`#123\` or its URL) AND name an owner (\`owner: <name>\` or \`@handle\`) on the call or the two lines above it. A reason alone is not enough.`,
   );
   process.exit(1);
 }
