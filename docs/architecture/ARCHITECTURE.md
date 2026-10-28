@@ -1152,9 +1152,9 @@ C. Evidence-based support: design from documented evidence for untested ATs, lab
 **Decision.** Option C.
 
 *Evidence registry.* One file per APG pattern at
-`docs/architecture/evidence/at-support/<pattern>.json`. The **twelve patterns** are: `button`,
+`docs/architecture/evidence/at-support/<pattern>.json`. The **twelve patterns** of the first wave are: `button`,
 `checkbox`, `dialog-modal`, `disclosure`, `live-region`, `popover-nonmodal`, `radio-group`,
-`select-only-combobox`, `switch`, `tabs`, `text-field`, `tooltip` (wave 2 adds files such as
+`select-only-combobox`, `switch`, `tabs`, `text-field`, `tooltip`; ADR-016 adds a thirteenth, `img-role` (WAI-ARIA role `img`, the first non-APG file) (wave 2 adds files such as
 `combobox-editable`, `listbox`, `menu-button` by the same schema). Each file is an object
 `{ pattern, recommended, entries[] }`:
 

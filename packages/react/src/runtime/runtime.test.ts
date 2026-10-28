@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server';
 import { createFakeScheduler, createRuntime } from '@ramoslabs/core/runtime';
 import { HIDDEN_STYLE, type LiveHost, type LiveNode, type LiveRole } from '@ramoslabs/core/live';
 import { createDomLiveHost } from './live-host';
-import { SJProvider, useMachine, useRuntime } from './index';
+import { SJProvider, useMachine, useOptionalRuntime, useRuntime } from './index';
 import type { AnnounceEffect, Machine } from './index';
 import type { Reducer } from '@ramoslabs/core/store';
 
@@ -385,6 +385,23 @@ describe('retention: 1,000 mount/unmount cycles (L2 invariant)', () => {
     const alive = refs.filter((r) => r.deref() !== undefined).length;
     expect(alive).toBeLessThanOrEqual(2); // allow the last couple of fibers React may defer
   }, 60_000);
+});
+
+describe('useOptionalRuntime (G-ICON SHOULD-2)', () => {
+  it('is null outside a provider and never warns; the provider runtime inside one', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const seen: unknown[] = [];
+    function Probe() {
+      seen.push(useOptionalRuntime());
+      return null;
+    }
+    mount(createElement(Probe));
+    mount(createElement(SJProvider, { liveHost: () => new FakeHost() }, createElement(Probe)));
+    expect(seen[0]).toBeNull();
+    expect((seen[1] as { locale: string }).locale).toBe('en');
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });
 
 describe('client scheduler default (G1 SHOULD-1)', () => {

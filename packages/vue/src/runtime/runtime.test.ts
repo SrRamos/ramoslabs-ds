@@ -6,7 +6,14 @@ import type { DrainHost, Effect, EffectInput } from '@ramoslabs/core/effects';
 import { HIDDEN_STYLE, type LiveHost } from '@ramoslabs/core/live';
 import { createDomLiveHost } from './dom';
 import { createRuntime } from '@ramoslabs/core/runtime';
-import { SJProvider, useSJContext, useSJRuntime, useSJStore, type SJStore } from './index';
+import {
+  SJProvider,
+  useOptionalSJRuntime,
+  useSJContext,
+  useSJRuntime,
+  useSJStore,
+  type SJStore,
+} from './index';
 
 // A DOM-free renderer: components mount into plain objects, so the suite runs under `node`.
 interface N {
@@ -171,6 +178,27 @@ describe('SJProvider and context', () => {
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn.mock.calls[0]![0]).toMatch(/outside <SJProvider>/);
     app.unmount();
+    warn.mockRestore();
+  });
+});
+
+describe('useOptionalSJRuntime (G-ICON SHOULD-2)', () => {
+  it('is null outside a provider and never warns; the provider runtime inside one', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const seen: unknown[] = [];
+    const Child = defineComponent({
+      setup() {
+        seen.push(useOptionalSJRuntime());
+        return () => h('i');
+      },
+    });
+    createApp({ render: () => h(Child) }).mount(mk('root'));
+    createApp({
+      render: () => h(SJProvider, { liveHost: fakeLive().host }, () => h(Child)),
+    }).mount(mk('root'));
+    expect(seen[0]).toBeNull();
+    expect((seen[1] as { locale: string }).locale).toBe('en');
+    expect(warn).not.toHaveBeenCalled();
     warn.mockRestore();
   });
 });

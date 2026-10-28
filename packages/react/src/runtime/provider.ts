@@ -119,6 +119,14 @@ export function useRuntimeBag(): RuntimeBag {
   return (ctx ?? fallback)!;
 }
 
+/**
+ * The provider's runtime, or null outside one: `useContext` only, no fallback, no warning (G-ICON SHOULD-2).
+ * For components that need the runtime only sometimes (an icon reads `dir` for mirrored glyphs only).
+ */
+export function useOptionalRuntime(): SJRuntime | null {
+  return useContext(RuntimeContext)?.runtime ?? null;
+}
+
 export function useRuntime(): SJRuntime {
   return useRuntimeBag().runtime;
 }
