@@ -68,3 +68,29 @@ Core has no DOM. The submit-equivalence test (form data of `SJSwitch` equals a b
 ## Follow-ups
 - .b CSS: style `.sj-switch__control` (`appearance: none` input) and `.sj-switch__thumb`; keep the input in the hit area (44 px, 24 px floor) and visible under forced colors (do not rely on background colors only).
 - Adapters (.c/.d/.e): `commit()` must run `reconcile()` and execute `checked` effects as `el.checked = value` on the control; React must not set both `checked` and `defaultChecked`.
+
+## .b CSS (`packages/css/src/switch.css`, branch `feature/m4-c03s-switch-css`)
+
+Files: `packages/css/src/switch.css`, `packages/css/test/switch.test.js`. Built from `src/_template` and then authored.
+
+### Structure (ADR-009, ADR-008, ADR-014)
+- The **native `<input>` is the real control and the focus target**. It is `appearance: none`, transparent, sized to `--sj-target` (44 px) and absolutely placed over the track. It carries the shared focus ring from `base/focus.css`, so the ring is around the 44 px box.
+- The **visible track is `.sj-switch__root::before`** (44 x 24 px, `--radius-pill`), and the **knob is `.sj-switch__thumb`**. The label root is the pointer target. No hit area is expanded through a pseudo-element.
+- Logical properties throughout (`inset-inline-start`, `padding-inline-start`). The knob moves to the end edge when on, so RTL mirrors without `:dir()`. `:dir()` is not in the Chromium 114 floor.
+- Knob travel is `calc(target-min - target-floor + space-1)` (24 px). The knob is `target-floor - space-2` (16 px) at `space-1` from the start edge.
+
+### Decisions
+- **No `sj.variant` block.** SJSwitch has no `variant x tone x size` axes, so the template's variant block is dropped. The W1-203 `RECIPE` does not cover the switch. Its drawn pairs are asserted in `switch.test.js` instead (track off/on and knob vs surface and vs track, all at least 3:1, and the track equals `color-slate-500` / `color-primary`). `packages/testing/contrast/matrix.js` was not edited (not owned by this stream).
+- **Forced colors.** Backgrounds are dropped under `forced-colors: active`, so the track and knob get `border: hairline solid CanvasText`. The base focus rule already gives the input a ButtonBorder. State is carried by knob position as well as the native `checked` (not colour alone).
+- **Disabled.** Track is `color-slate-300` (`text-disabled`, exempt from 1.4.11 as inactive). Cursor `not-allowed` on root and input.
+- **Reduced motion.** Transitions use `--sj-duration-fast`, which `base/motion.css` collapses to `0s`.
+
+### Checks (all green)
+- `bun run lint` (stylelint W1-202 rules), `format:check`, full `TURBO_FORCE=1 bun run gate` (exit 0).
+- Anatomy: `cssParts('switch')` equals `anatomy[].part` (`root`, `control`, `thumb`); `checkStylesheets` clean.
+- Tests: 19 in `switch.test.js`, plus the full css suite (73 passing).
+- Seeded breakage: removing the forced-colors border fails 2 tests (checked, then restored).
+
+### Follow-ups
+- The C03c `SJCheckbox` CSS (.b) needs its own native-input variant (checkbox looks, not a track); reuse the transparent-input-over-drawn-track structure, not the knob.
+- W1-203's `RECIPE` could list the switch pairs once a shared switch recipe is wanted. Not required for `.b`.
