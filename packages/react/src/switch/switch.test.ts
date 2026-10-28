@@ -82,8 +82,13 @@ describe('structure', () => {
   it('prop-or-slot: label prop renders control, thumb and the text', () => {
     const r = mount(h(SJSwitch.Root, { label: 'Dark mode', defaultChecked: true }));
     expect(input(r).props.checked).toBe(true);
-    expect(r.root.findByType('span').props['data-state']).toBe('on');
-    expect(JSON.stringify(r.toJSON())).toContain('Dark mode');
+    expect(r.root.findByProps({ 'data-part': 'thumb' }).props['data-state']).toBe('on');
+    // The label is an anatomy part, like on Vue and vanilla (G3A SHOULD-6).
+    const label = r.root.findByProps({ 'data-part': 'label' });
+    expect(label.type).toBe('span');
+    expect(label.props.className).toBe('sj-switch__label');
+    expect(label.props['data-state']).toBe('on');
+    expect(JSON.stringify(label.children)).toContain('Dark mode');
   });
   it('classes per part concatenate after the library class; consumer className too', () => {
     const r = mount(

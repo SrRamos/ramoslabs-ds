@@ -1,17 +1,34 @@
-// @ts-check
 // SJButton conformance fixtures (W1-C01.f). Data only: the single map from contract fixture names to the
 // props every adapter mounts. `text` is the visible label, `icon` a decorative glyph (rendered aria-hidden).
 // The five names in `button.contract.json#fixtures` are required; `EXTRA_FIXTURES` are conformance-only
 // (named here, not in the contract) because they need a form owner or a form value.
 
-/**
- * @typedef {{ text?: string, icon?: string, variant?: string, tone?: string, size?: string,
- *   disabled?: boolean, type?: string, href?: string, target?: string, rel?: string, iconOnly?: boolean,
- *   label?: string, name?: string, value?: string }} FixtureProps
- */
+// No Node imports: the browser bundle imports this file too.
+export const ADAPTERS = ['react', 'vue', 'vanilla'] as const;
+export type Adapter = (typeof ADAPTERS)[number];
+export const ENGINES = ['chromium', 'firefox', 'webkit'] as const;
 
-/** @type {Record<string, FixtureProps>} */
-export const FIXTURES = {
+/** Paths that execute: real detection and every capability forced false at once (ADR-013 floor combination). */
+export const EXECUTED_PATHS = ['native', 'fallback:all'] as const;
+
+export interface FixtureProps {
+  text?: string;
+  icon?: string;
+  variant?: string;
+  tone?: string;
+  size?: string;
+  disabled?: boolean;
+  type?: string;
+  href?: string;
+  target?: string;
+  rel?: string;
+  iconOnly?: boolean;
+  label?: string;
+  name?: string;
+  value?: string;
+}
+
+export const FIXTURES: Record<string, FixtureProps> = {
   default: { text: 'Save changes' },
   disabled: { text: 'Save changes', disabled: true },
   'long-label': {

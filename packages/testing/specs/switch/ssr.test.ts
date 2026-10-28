@@ -12,7 +12,7 @@ import { renderToString as vueToString } from 'vue/server-renderer';
 import { nextTick } from 'vue';
 import { crossRootIssues, diffGraphs, extractGraph } from '../../ssr/graph';
 import { withoutDom } from '../../ssr/runner';
-import { reactTree, vueApp } from './ssr-tree';
+import { reactTree, vueApp } from './host/ssr-tree';
 import { FIXTURES } from './fixtures';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;

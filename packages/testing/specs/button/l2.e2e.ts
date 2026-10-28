@@ -5,7 +5,7 @@
 import { test, expect } from '@playwright/test';
 import { injectionProblems } from '../../e2e/supports/injection';
 import { isNoop, parsePath, type SupportsMap } from '../../e2e/supports/paths';
-import { FIXTURES, NARROW_PX } from './fixtures.js';
+import { FIXTURES, NARROW_PX } from './fixtures';
 import {
   ADAPTERS,
   EXECUTED_PATHS,

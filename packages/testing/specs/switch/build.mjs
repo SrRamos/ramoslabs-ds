@@ -65,7 +65,7 @@ export async function buildSite(out = OUT) {
   });
   await build({
     ...common,
-    entryPoints: [join(here, 'ssr-render.ts')],
+    entryPoints: [join(here, 'host', 'ssr-render.ts')],
     outfile: join(out, 'ssr-render.mjs'),
     platform: 'node',
     // Frameworks stay external so the node process uses the same copies the repo resolves.

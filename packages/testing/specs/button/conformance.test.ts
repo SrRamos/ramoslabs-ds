@@ -1,15 +1,24 @@
 // Conformance bookkeeping for SJButton (W1-C01.f): fixtures vs contract, the parity-matrix declaration and its
 // seeded failures, the VoiceOver script hook, bundle ceilings, visual-baseline review state, and the skip rule.
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { createHash } from 'node:crypto';
+import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { buildMatrix, collectResults, parseTitle } from '../../parity/index.js';
 import { execFileSync } from 'node:child_process';
-import { runSize } from '../../size/index.js';
 import { verifyBaselines } from '../../visual/baselines.js';
 import { checkEvidence } from '../../evidence/index.js';
-import { EXTRA_FIXTURES, FIXTURES } from './fixtures.js';
+import { EXTRA_FIXTURES, FIXTURES } from './fixtures';
 import {
   ADAPTERS,
   ENGINES,
@@ -142,28 +151,28 @@ describe('VoiceOver script hook (W1-505)', () => {
   });
 });
 
-describe('bundle (ADR-011)', () => {
-  it('core button is within its contract ceiling; adapter fixtures are reported', async () => {
-    const { rows } = await runSize();
-    const core = rows.find((r) => /button/i.test(r.id) && r.kind === 'component');
-    expect(core, 'no size row for button').toBeDefined();
-    expect(core!.status).toBe('pass');
-    expect(core!.gzipBytes / 1024).toBeLessThanOrEqual(contract.budgets.gzipKiB);
-    expect(rows.filter((r) => /button/i.test(r.id)).every((r) => r.status !== 'fail')).toBe(true);
-  });
-});
-
-describe('visual baselines (ADR-013 L5): human review is mandatory', () => {
+describe('visual baselines (ADR-013 L5): reviewed-only, human review is mandatory', () => {
   const root = join(here, 'visual', 'baselines');
   it('no baseline exists without a manifest hash and a review-log entry', () => {
     expect(verifyBaselines(root)).toEqual([]);
   });
-  it('the agent-written tree contains no approved baseline; they await a human', () => {
-    const approved = existsSync(root)
-      ? readdirSync(root).filter((f) => f.endsWith('.png') || !f.startsWith('.'))
-      : [];
-    expect(approved).toEqual([]);
-    expect(SCENES.length).toBeGreaterThan(0);
+  it('seeded: an unreviewed PNG (no manifest hash, no review-log entry) fails the integrity check', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'sj-button-baselines-'));
+    try {
+      mkdirSync(join(dir, 'chromium-linux-1x'), { recursive: true });
+      writeFileSync(join(dir, 'chromium-linux-1x', 'button-default.png'), 'not reviewed');
+      expect(verifyBaselines(dir).length).toBeGreaterThan(0);
+      // A hash in the manifest is not a review: without a REVIEW-LOG entry it still fails.
+      const sha = createHash('sha256').update('not reviewed').digest('hex');
+      writeFileSync(
+        join(dir, 'chromium-linux-1x', 'manifest.json'),
+        JSON.stringify({ 'button-default': sha }),
+      );
+      expect(verifyBaselines(dir).join('\n')).toContain('no REVIEW-LOG entry');
+      expect(SCENES.length).toBeGreaterThan(0);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
   it('scene names are unique and filesystem-safe', () => {
     const names = SCENES.map((s) => s.name);

@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deriveSpec } from '../../spec/derive/index.js';
+import { ADAPTERS, ENGINES, EXECUTED_PATHS } from './fixtures';
 import { SUPPORT_KEYS, supportsPaths } from '../../e2e/supports/paths';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -18,8 +19,7 @@ export const contract = JSON.parse(
 export const spec = deriveSpec(contract);
 export const COMPONENT: string = spec.component ?? 'SJButton';
 
-export const ADAPTERS = ['react', 'vue', 'vanilla'] as const;
-export const ENGINES = ['chromium', 'firefox', 'webkit'] as const;
+export { ADAPTERS, ENGINES, EXECUTED_PATHS };
 export type Action = 'pointer' | 'Enter' | 'Space';
 export const ACTIONS: readonly Action[] = ['pointer', 'Enter', 'Space'];
 
@@ -84,9 +84,6 @@ export function buttonScenarios(): Scenario[] {
   }
   return out;
 }
-
-/** Paths that execute: real detection and every capability forced false at once (ADR-013 floor combination). */
-export const EXECUTED_PATHS = ['native', 'fallback:all'] as const;
 
 export const matrixTitle = (adapter: string, s: Scenario, path: string): string =>
   `${COMPONENT} | ${adapter} | ${s.scenario} | ${s.action} | path=${path}`;

@@ -8,7 +8,7 @@ import base from '../../e2e/runner/playwright.config';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const cache = join(here, '..', '..', 'node_modules', '.cache', 'e2e');
-const port = Number(process.env['SWITCH_PORT'] ?? 4193);
+const port = Number(process.env['SJ_SWITCH_PORT'] ?? 4193);
 const retries = Number(process.env['SJ_E2E_RETRIES'] ?? 0);
 export const RESULTS_FILE = retries === 0 ? 'switch-results.json' : 'switch-diagnose.json';
 export const EXPECTED_FILE = 'switch-expected.json';

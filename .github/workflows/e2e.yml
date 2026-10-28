@@ -25,18 +25,26 @@ jobs:
     timeout-minutes: 5
     outputs:
       browser: ${{ steps.diff.outputs.browser }}
+      components: ${{ steps.diff.outputs.components }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # Component sources, adapters, contracts, css, tokens, the test harness and the workflows all
       # feed the browser suites. Docs-only and site-only pull requests do not. Pushes to main and
-      # manual runs always run everything. The suites are not filterable per component yet (the
-      # probe is the only component); when real components land, narrow here by slug.
+      # manual runs always run everything. The component conformance jobs are narrowed by slug: the
+      # slugs are the directories under packages/testing/specs (not `_template`). A pull request
+      # whose changed files under packages/ are all named for components (packages/**/<slug>/,
+      # <slug>.*, <slug>-*) runs only those components' conformance jobs; any other changed file
+      # under packages/, a workflow or a config file runs every component.
       - id: diff
         run: |
+          slugs=$(find packages/testing/specs -mindepth 1 -maxdepth 1 -type d ! -name '_*' -exec basename {} \; | sort)
+          all=$(echo "$slugs" | jq -R . | jq -sc .)
           if [ "${{ github.event_name }}" != "pull_request" ]; then
-            echo "browser=true" >> "$GITHUB_OUTPUT"; exit 0
+            echo "browser=true" >> "$GITHUB_OUTPUT"
+            echo "components=$all" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
           files=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
           echo "$files"
@@ -44,7 +52,17 @@ jobs:
             echo "browser=true" >> "$GITHUB_OUTPUT"
           else
             echo "browser=false" >> "$GITHUB_OUTPUT"
+            echo "components=[]" >> "$GITHUB_OUTPUT"
             echo "::notice::No package, workflow or config change: browser suites skipped (job shows as skipped, not passed)."
+            exit 0
+          fi
+          alt=$(echo "$slugs" | paste -sd'|' -)
+          named="^packages/.*(^|/)($alt)([./-]|/)"
+          if echo "$files" | grep -vE "$named" | grep -qE '^(packages/|\.github/|package\.json|bun\.lock|turbo\.json|tsconfig)'; then
+            echo "components=$all" >> "$GITHUB_OUTPUT"
+          else
+            picked=$(for s in $slugs; do echo "$files" | grep -qE "^packages/.*(^|/)$s([./-]|/)" && echo "$s"; done | jq -R . | jq -sc .)
+            echo "components=$picked" >> "$GITHUB_OUTPUT"
           fi
 
   browser:
@@ -73,13 +91,6 @@ jobs:
           - name: Text safety
             id: text-safety
             run: bun run test:text-safety
-          # Per-component conformance (W1-<c>.f): L2, form, hydration, ARIA, axe, then its parity matrix.
-          - name: Conformance SJButton
-            id: conformance-button
-            run: bun run test:e2e:button && bun run parity:button
-          - name: Conformance SJSwitch
-            id: conformance-switch
-            run: bun run test:e2e:switch && bun run parity:switch
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -104,6 +115,41 @@ jobs:
             packages/testing/node_modules/.cache/e2e/aria-artifacts
             packages/testing/node_modules/.cache/a11y/artifacts
             packages/testing/node_modules/.cache/text-safety
+          if-no-files-found: ignore
+          retention-days: 14
+
+  # Per-component conformance (W1-<c>.f): L2, form, hydration, ARIA, axe, then its parity matrix. One job
+  # per component directory under packages/testing/specs (G3A ruling (c)), narrowed by slug (see `changes`).
+  conformance:
+    name: Conformance ${{ matrix.component }}
+    needs: changes
+    if: needs.changes.outputs.browser == 'true' && needs.changes.outputs.components != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        component: ${{ fromJSON(needs.changes.outputs.components) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/browsers
+        with:
+          browsers: chromium firefox webkit
+      - name: Build tokens (the host serves tokens.css)
+        run: bun run --filter @ramoslabs/tokens build
+      - name: Run ${{ matrix.component }} conformance and its parity matrix
+        run: bun run test:e2e:${{ matrix.component }} && bun run parity:${{ matrix.component }}
+        working-directory: packages/testing
+      - name: Upload results and artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-conformance-${{ matrix.component }}
+          path: |
+            packages/testing/node_modules/.cache/e2e/*.json
+            packages/testing/node_modules/.cache/e2e/parity-*
+            packages/testing/node_modules/.cache/e2e/${{ matrix.component }}-artifacts
           if-no-files-found: ignore
           retention-days: 14
 
@@ -146,14 +192,42 @@ jobs:
           node visual/cli.js check | tail -3
           node visual/cli.js stability
 
+      # Component scenes (G3A SHOULD-5): the same strict-or-NOT-RUN rule per component directory under
+      # packages/testing/specs. Linux baselines present => strict (a missing cell fails); absent => loud NOT RUN.
+      - name: Component visual check (strict with Linux baselines, NOT RUN without)
+        working-directory: packages/testing
+        run: |
+          status=0
+          for dir in specs/*/; do
+            c=$(basename "$dir")
+            case "$c" in _*) continue ;; esac
+            if ls "specs/$c/visual/baselines" 2>/dev/null | grep -q -- '-linux-'; then
+              echo "== $c: Linux baselines present, strict check"
+              node "specs/$c/visual/cli.js" check --strict || status=1
+            else
+              msg="Visual comparison NOT RUN for $c: no Linux baselines under packages/testing/specs/$c/visual/baselines. Dispatch 'Visual baselines (Linux)', review the PNGs, commit them."
+              echo "::warning title=Visual NOT RUN ($c)::$msg"
+              { echo "## Visual review ($c): NOT RUN"; echo; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
+              node "specs/$c/visual/cli.js" check | tail -3
+            fi
+          done
+          exit $status
+
   e2e:
     name: E2E
     if: always()
-    needs: [changes, browser, visual]
+    needs: [changes, browser, conformance, visual]
     runs-on: ubuntu-24.04
     steps:
       - name: Every browser job succeeded, or was skipped for an unaffected pull request
         run: |
           echo '${{ toJSON(needs) }}'
           if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then exit 1; fi
-          if [ "${{ needs.changes.outputs.browser }}" = "true" ] && [ "${{ contains(needs.*.result, 'skipped') }}" = "true" ]; then exit 1; fi
+          # A skipped conformance job is legitimate only when no component was selected.
+          if [ "${{ needs.changes.outputs.browser }}" = "true" ]; then
+            [ "${{ needs.browser.result }}" = "success" ] || exit 1
+            [ "${{ needs.visual.result }}" = "success" ] || exit 1
+            if [ "${{ needs.changes.outputs.components }}" != "[]" ]; then
+              [ "${{ needs.conformance.result }}" = "success" ] || exit 1
+            fi
+          fi

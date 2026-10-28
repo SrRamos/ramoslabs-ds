@@ -7,23 +7,13 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ADAPTERS, FIXTURES, LABEL, LONG_LABEL, type Adapter } from './fixtures';
+import { openHost } from './open';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const yaml = (state: string) =>
-  readFileSync(join(here, 'snapshots', `${state}.yml`), 'utf8').replace('$LONG_LABEL', LONG_LABEL);
+  readFileSync(join(here, 'aria', `${state}.yml`), 'utf8').replace('$LONG_LABEL', LONG_LABEL);
 /** One file per contract fixture, plus `on-focused` (focus has no ARIA state; the tree must not change). */
 const STATES = ['off', 'on', 'disabled', 'long-label'] as const;
-
-async function open(page: Page): Promise<string[]> {
-  const errors: string[] = [];
-  page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
-  page.on('console', (m) => {
-    if (m.type() === 'error') errors.push(`console.error: ${m.text()}`);
-  });
-  await page.goto('/host.html');
-  await page.waitForFunction(() => window.__sj?.ready === true);
-  return errors;
-}
 
 async function mount(page: Page, adapter: Adapter, fixture: string): Promise<void> {
   await page.evaluate(
@@ -37,7 +27,7 @@ async function mount(page: Page, adapter: Adapter, fixture: string): Promise<voi
 for (const adapter of ADAPTERS) {
   for (const state of STATES) {
     test(`SJSwitch | ${adapter} | aria snapshot ${state}`, async ({ page }) => {
-      const errors = await open(page);
+      const errors = await openHost(page);
       await mount(page, adapter, state);
       await expect(page.locator('[data-part="root"]')).toMatchAriaSnapshot(yaml(state));
       expect(errors).toEqual([]);
@@ -47,7 +37,7 @@ for (const adapter of ADAPTERS) {
   test(`SJSwitch | ${adapter} | aria snapshot after a toggle equals the on snapshot`, async ({
     page,
   }) => {
-    await open(page);
+    await openHost(page);
     await mount(page, adapter, 'off');
     await page.locator('[data-part="control"]').click();
     await page.evaluate(() => new Promise((r) => setTimeout(r, 60)));
@@ -57,10 +47,25 @@ for (const adapter of ADAPTERS) {
     await expect(page.locator('[data-part="root"]')).toMatchAriaSnapshot(yaml('off'));
   });
 
+  test(`SJSwitch | ${adapter} | the visible label is the anatomy part "label" (same markup on every adapter)`, async ({
+    page,
+  }) => {
+    await openHost(page);
+    await mount(page, adapter, 'on');
+    const label = page.locator('[data-part="label"]');
+    await expect(label).toHaveCount(1);
+    expect(await label.evaluate((n) => n.localName)).toBe('span');
+    expect(await label.getAttribute('class')).toBe('sj-switch__label');
+    expect(await label.getAttribute('data-state')).toBe('on');
+    await expect(label).toHaveText(LABEL);
+    // It sits inside the wrapping root <label>, which is what names the input.
+    expect(await label.evaluate((n) => n.parentElement?.getAttribute('data-part'))).toBe('root');
+  });
+
   test(`SJSwitch | ${adapter} | exposes no aria-checked, aria-disabled or aria-labelledby (native state)`, async ({
     page,
   }) => {
-    await open(page);
+    await openHost(page);
     await mount(page, adapter, 'on');
     const attrs = await page.evaluate(() =>
       [...(document.querySelector('[data-part="control"]') as Element).attributes].map(
@@ -76,7 +81,7 @@ for (const adapter of ADAPTERS)
   test(`SJSwitch | ${adapter} | the label text does not change with state (evidence constraint changing-switch-label)`, async ({
     page,
   }) => {
-    await open(page);
+    await openHost(page);
     await mount(page, adapter, 'off');
     const text = () =>
       page.evaluate(() => document.querySelector('[data-part="root"]')!.textContent?.trim());
@@ -118,7 +123,7 @@ for (const s of SEEDED)
   test(`seeded aria regression | react | ${s.why} fails the ${s.state} snapshot`, async ({
     page,
   }) => {
-    await open(page);
+    await openHost(page);
     await mount(page, 'react', s.state);
     await page.evaluate(s.mutate as () => void);
     await expect(page.locator('[data-part="root"]')).not.toMatchAriaSnapshot(yaml(s.state), {
@@ -148,7 +153,7 @@ for (const adapter of ADAPTERS) {
     test(`SJSwitch | ${adapter} | cdp ax tree ${state}`, async ({ page, browserName }) => {
       // #49 owner: SrRamos
       test.skip(browserName !== 'chromium', 'CDP getFullAXTree exists on Chromium only');
-      const errors = await open(page);
+      const errors = await openHost(page);
       await mount(page, adapter, state);
       const cdp = await page.context().newCDPSession(page);
       await cdp.send('Accessibility.enable');

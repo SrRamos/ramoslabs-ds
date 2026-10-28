@@ -13,7 +13,8 @@
       "native": true,
       "attributes": { "type": "checkbox" }
     },
-    { "part": "thumb", "element": "span" }
+    { "part": "thumb", "element": "span" },
+    { "part": "label", "element": "span" }
   ],
   "state": { "machine": ["off", "on"], "controllable": ["checked"] },
   "actions": [

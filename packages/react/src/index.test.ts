@@ -6,6 +6,7 @@ describe('@ramoslabs/react barrel', () => {
     expect(Object.keys(barrel).sort()).toEqual([
       'SJSwitch',
       'SJSwitchControl',
+      'SJSwitchLabel',
       'SJSwitchRoot',
       'SJSwitchThumb',
     ]);

@@ -43,6 +43,7 @@ export interface SJSwitchClasses {
   root?: string;
   control?: string;
   thumb?: string;
+  label?: string;
 }
 
 type RootAttrs = Omit<ComponentPropsWithoutRef<'label'>, 'children' | 'id' | 'onChange'>;
@@ -60,6 +61,7 @@ export type SJSwitchControlProps = Omit<
   'checked' | 'defaultChecked' | 'disabled' | 'type' | 'name' | 'value' | 'id'
 >;
 export type SJSwitchThumbProps = ComponentPropsWithoutRef<'span'>;
+export type SJSwitchLabelProps = ComponentPropsWithoutRef<'span'>;
 
 interface Ctx {
   parts: SwitchParts;
@@ -174,7 +176,7 @@ export const SJSwitchRoot: ForwardRefExoticComponent<
           null,
           createElement(SJSwitchControl),
           createElement(SJSwitchThumb),
-          label,
+          createElement(SJSwitchLabel, null, label),
         )
       : children;
   return createElement(
@@ -216,11 +218,22 @@ export const SJSwitchThumb: ForwardRefExoticComponent<
   });
 });
 
+export const SJSwitchLabel: ForwardRefExoticComponent<
+  SJSwitchLabelProps & RefAttributes<HTMLSpanElement>
+> = forwardRef<HTMLSpanElement, SJSwitchLabelProps>(function SJSwitchLabel(props, ref) {
+  const { parts, classes } = useCtx('Label');
+  return createElement('span', {
+    ...fromGetter(parts.getLabelProps(toGetter(props)), classes?.label),
+    ref,
+  });
+});
+
 /** Namespace form (`SJSwitch.Root`) plus the flat exports above (ADR-002). */
 export const SJSwitch = {
   Root: SJSwitchRoot,
   Control: SJSwitchControl,
   Thumb: SJSwitchThumb,
+  Label: SJSwitchLabel,
 } as const;
 
 export type { ReactElement };

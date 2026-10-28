@@ -3,7 +3,7 @@
 import { renderToString as reactRender } from 'react-dom/server';
 import { renderToString as vueRender } from 'vue/server-renderer';
 import { reactTree, vueApp } from './ssr-tree';
-import type { SwitchFixtureProps } from './fixtures';
+import type { SwitchFixtureProps } from '../fixtures';
 
 export async function renderServer(
   adapter: 'react' | 'vue',

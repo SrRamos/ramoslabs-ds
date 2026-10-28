@@ -4,7 +4,7 @@
 import { build } from 'esbuild';
 import { copyFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildSite } from '../../visual/site.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -20,26 +20,56 @@ const aliasPlugin = {
   },
 };
 
-/** Writes host.html, host.js and the site assets into `outDir`. Returns the directory. */
+const prod = {
+  'process.env.NODE_ENV': '"production"',
+  __VUE_OPTIONS_API__: 'false',
+  __VUE_PROD_DEVTOOLS__: 'false',
+  __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+};
+const dev = {
+  ...prod,
+  'process.env.NODE_ENV': '"development"',
+  __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'true',
+};
+
+/**
+ * Writes host.html, host.js, hydrate.js (development build), the node server render and the site assets into
+ * `outDir`. Returns the directory and the server-render function.
+ */
 export async function buildButtonHost(outDir) {
   buildSite(outDir, []);
-  await build({
-    entryPoints: [join(here, 'host', 'entry.ts')],
-    outfile: join(outDir, 'host.js'),
+  const common = {
     bundle: true,
     format: 'esm',
     target: 'es2022',
-    platform: 'browser',
     minify: false,
     logLevel: 'silent',
     plugins: [aliasPlugin],
-    define: {
-      'process.env.NODE_ENV': '"production"',
-      __VUE_OPTIONS_API__: 'false',
-      __VUE_PROD_DEVTOOLS__: 'false',
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
-    },
+  };
+  await build({
+    ...common,
+    entryPoints: [join(here, 'host', 'entry.ts')],
+    outfile: join(outDir, 'host.js'),
+    platform: 'browser',
+    define: prod,
+  });
+  await build({
+    ...common,
+    entryPoints: [join(here, 'host', 'hydrate.ts')],
+    outfile: join(outDir, 'hydrate.js'),
+    platform: 'browser',
+    define: dev,
+  });
+  await build({
+    ...common,
+    entryPoints: [join(here, 'host', 'ssr-render.ts')],
+    outfile: join(outDir, 'ssr-render.mjs'),
+    platform: 'node',
+    // Frameworks stay external so the node process uses the same copies the repo resolves.
+    external: ['react', 'react-dom', 'react-dom/server', 'vue', 'vue/server-renderer'],
+    define: { 'process.env.NODE_ENV': '"production"' },
   });
   await copyFile(join(here, 'host', 'host.html'), join(outDir, 'host.html'));
-  return outDir;
+  const { renderServer } = await import(pathToFileURL(join(outDir, 'ssr-render.mjs')).href);
+  return { out: outDir, renderServer };
 }

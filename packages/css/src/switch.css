@@ -17,6 +17,11 @@
     cursor: pointer;
   }
 
+  /* The visible label (contract anatomy part `label`): inherits the root's colour; no other rule yet. */
+  .sj-switch__label {
+    color: inherit;
+  }
+
   /* Track: 44 px wide, 24 px tall, centred on the target's block axis. */
   .sj-switch__root::before {
     content: '';

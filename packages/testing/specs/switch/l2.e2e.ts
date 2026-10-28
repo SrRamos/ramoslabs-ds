@@ -9,24 +9,16 @@ import { injectionProblems } from '../../e2e/supports/injection';
 import { SUPPORT_KEYS, isNoop, parsePath, type SupportsMap } from '../../e2e/supports/paths';
 import { ADAPTERS, FIXTURES, matrixTitle, paths, plan, spec, switchScenarios } from './matrix';
 import type { Adapter } from './fixtures';
-
-const CONTROL = '[data-part="control"]';
+import { CONTROL, openHost, settle } from './open';
 
 async function open(page: Page): Promise<{ errors: string[]; real: SupportsMap }> {
-  const errors: string[] = [];
-  page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
-  page.on('console', (m) => {
-    if (m.type() === 'error') errors.push(`console.error: ${m.text()}`);
-  });
-  await page.goto('/host.html');
-  await page.waitForFunction(() => window.__sj?.ready === true);
+  const errors = await openHost(page);
   const real = await page.evaluate(() => ({ ...window.__sj.real }) as SupportsMap);
   return { errors, real };
 }
 
 const report = (fails: Failure[]) => fails.map((f) => `${f.where}: ${f.message}`);
 const seenMap = (page: Page) => page.evaluate(() => window.__sj.seen as SupportsMap | null);
-const settle = (page: Page) => page.evaluate(() => new Promise((r) => setTimeout(r, 40)));
 
 const mount = (page: Page, adapter: Adapter, props: object, path: string) =>
   page.evaluate(

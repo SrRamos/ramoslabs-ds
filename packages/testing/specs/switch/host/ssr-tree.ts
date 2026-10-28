@@ -7,7 +7,7 @@ import { SJProvider as ReactProvider } from '@ramoslabs/react/runtime';
 import { SJProvider as VueProvider } from '@ramoslabs/vue/runtime';
 import { SJSwitch as ReactSwitch } from '@ramoslabs/react/switch';
 import { SJSwitch as VueSwitch } from '@ramoslabs/vue/switch';
-import type { SwitchFixtureProps } from './fixtures';
+import type { SwitchFixtureProps } from '../fixtures';
 
 const liveHost = { create: () => ({ setText: () => undefined }) };
 

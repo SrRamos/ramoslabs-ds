@@ -4,7 +4,7 @@
 // Vue only report hydration mismatches in their development builds.
 import { hydrateRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
-import { reactTree, vueApp } from '../ssr-tree';
+import { reactTree, vueApp } from './ssr-tree';
 import type { SwitchFixtureProps } from '../fixtures';
 
 declare global {

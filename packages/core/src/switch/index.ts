@@ -47,6 +47,7 @@ export interface SwitchParts {
   getRootProps(consumer?: Props): Props;
   getControlProps(consumer?: Props): Props;
   getThumbProps(consumer?: Props): Props;
+  getLabelProps(consumer?: Props): Props;
 }
 
 /** Control id: explicit wins, otherwise `prefix + acquire()` (ADR-003 SSR-safe ids). */
@@ -109,6 +110,14 @@ export function createSwitchParts(ctx: SwitchContext): SwitchParts {
         consumer,
         { class: 'sj-switch__thumb', 'data-part': 'thumb', ...stateAttrs() },
         { part: 'thumb', protect: ['data-part', 'data-state', 'data-disabled'] },
+      ),
+    // The visible label text (G3A SHOULD-6): a span inside the wrapping root <label>, so the root's
+    // implicit label association names the input. Same state attributes as the other parts.
+    getLabelProps: (consumer = {}) =>
+      mergeProps(
+        consumer,
+        { class: 'sj-switch__label', 'data-part': 'label', ...stateAttrs() },
+        { part: 'label', protect: ['data-part', 'data-state', 'data-disabled'] },
       ),
   };
 }

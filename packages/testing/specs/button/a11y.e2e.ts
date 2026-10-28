@@ -15,25 +15,16 @@ import {
   validateTriage,
   type Triage,
 } from '../../a11y/verdicts.js';
-import { FIXTURES } from './fixtures.js';
+import { FIXTURES } from './fixtures';
 import { ADAPTERS } from './matrix';
 import { control, focusByKeyboard, mountButton, openHost } from './open';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const triage: Triage = JSON.parse(readFileSync(join(here, 'a11y-triage.json'), 'utf8'));
+// The shared triage list is the only one (G3A ruling (c)): every entry needs an issue and an owner.
+const triage: Triage = JSON.parse(
+  readFileSync(join(here, '..', '..', 'a11y', 'triage.json'), 'utf8'),
+);
 const FIXTURE_NAMES = Object.keys(FIXTURES);
-
-/**
- * Axe `incomplete` results reviewed by hand as non-findings (reviewed: pass). The icon-only fixture's decorative
- * icon is a text glyph because the vanilla adapter renders icons as text nodes: axe cannot compute text contrast
- * for a symbol ("Element content contains only non-text characters"; the 3:1 non-text boundary is covered by the
- * CSS contrast matrix), and cannot match the aria-label to a glyph that is aria-hidden and not a visible label
- * (2.5.3 applies to text labels). Moving these into a11y-triage.json needs a tracking issue (open question in
- * C01-NOTES.md ".f").
- */
-const REVIEWED_INCOMPLETE: Record<string, string[]> = {
-  'icon-only': ['color-contrast', 'label-content-name-mismatch'],
-};
 
 const axe = (page: Page) =>
   new AxeBuilder({ page })
@@ -70,11 +61,9 @@ for (const adapter of ADAPTERS) {
       expect(
         applyAxeTriage(results.violations, name, triage).untriaged.map((v) => `${v.id}: ${v.help}`),
       ).toEqual([]);
-      // `incomplete` is an unreviewed finding: it fails unless triaged or reviewed below.
+      // `incomplete` is an unreviewed finding: it fails unless triaged with reviewed: "pass", an issue and an owner.
       const open = applyAxeTriage(results.incomplete, name, triage, 'incomplete').untriaged;
-      expect(
-        open.map((v) => v.id).filter((id) => !(REVIEWED_INCOMPLETE[fixture] ?? []).includes(id)),
-      ).toEqual([]);
+      expect(open.map((v) => `incomplete ${v.id}: ${v.help}`)).toEqual([]);
       expect(errors).toEqual([]);
     });
   }
