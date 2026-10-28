@@ -842,6 +842,11 @@ values, missing label).
 - **Fallback gating:** `support[].nativeFrom/fallbackUntil` determines which fallback code is bundled
 per entry point and which forced-false capability runs exist in tests.
 
+*Status meanings (G3A ruling (i), 2026-10-28).* `draft` = the contract may change. `beta` = contract and
+getters are frozen, fixtures and parity are green, visual and assistive-technology lanes are pending.
+`stable` = M5 certification (VoiceOver protocol, reviewed baselines, floor lane). The schema carries
+only the enum; promotion is a reviewed edit of `status`.
+
 *Schema freeze (G2 ruling, 2026-10-27).* `contract.schema.json` v1 enforces: `state.controllable` is a
 subset of `props[].name`; every `actions[].emit` names an entry of `events[]`; `pattern.evidence` is
 required. Any further schema change is a broadcast event needing a G-gate ruling.

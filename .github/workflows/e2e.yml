@@ -34,9 +34,11 @@ jobs:
       # feed the browser suites. Docs-only and site-only pull requests do not. Pushes to main and
       # manual runs always run everything. The component conformance jobs are narrowed by slug: the
       # slugs are the directories under packages/testing/specs (not `_template`). A pull request
-      # whose changed files under packages/ are all named for components (packages/**/<slug>/,
-      # <slug>.*, <slug>-*) runs only those components' conformance jobs; any other changed file
-      # under packages/, a workflow or a config file runs every component.
+      # whose changed files are all in one component's own locations (scripts/e2e-components.mjs:
+      # packages/*/src/<slug>/, packages/*/src/generated/<slug>/, packages/css/src/<slug>.css,
+      # packages/contracts/contracts/<slug>.contract.json, packages/testing/specs/<slug>/) runs only
+      # those components' conformance jobs; any other changed file under packages/, a workflow or a
+      # config file runs every component. Names are never matched anywhere else.
       - id: diff
         run: |
           slugs=$(find packages/testing/specs -mindepth 1 -maxdepth 1 -type d ! -name '_*' -exec basename {} \; | sort)
@@ -48,22 +50,15 @@ jobs:
           fi
           files=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
           echo "$files"
-          if echo "$files" | grep -qE '^(packages/|apps/storybook/|\.github/|package\.json|bun\.lock|turbo\.json|tsconfig)'; then
+          result=$(echo "$files" | node scripts/e2e-components.mjs $slugs)
+          echo "$result"
+          if [ "$(echo "$result" | jq -r .browser)" = "true" ]; then
             echo "browser=true" >> "$GITHUB_OUTPUT"
           else
             echo "browser=false" >> "$GITHUB_OUTPUT"
-            echo "components=[]" >> "$GITHUB_OUTPUT"
             echo "::notice::No package, workflow or config change: browser suites skipped (job shows as skipped, not passed)."
-            exit 0
           fi
-          alt=$(echo "$slugs" | paste -sd'|' -)
-          named="^packages/.*(^|/)($alt)([./-]|/)"
-          if echo "$files" | grep -vE "$named" | grep -qE '^(packages/|\.github/|package\.json|bun\.lock|turbo\.json|tsconfig)'; then
-            echo "components=$all" >> "$GITHUB_OUTPUT"
-          else
-            picked=$(for s in $slugs; do echo "$files" | grep -qE "^packages/.*(^|/)$s([./-]|/)" && echo "$s"; done | jq -R . | jq -sc .)
-            echo "components=$picked" >> "$GITHUB_OUTPUT"
-          fi
+          echo "components=$(echo "$result" | jq -c .components)" >> "$GITHUB_OUTPUT"
 
   browser:
     name: ${{ matrix.suite.name }}

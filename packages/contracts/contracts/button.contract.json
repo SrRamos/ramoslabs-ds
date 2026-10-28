@@ -2,7 +2,7 @@
   "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
   "name": "SJButton",
   "contractVersion": "0.1.0",
-  "status": "draft",
+  "status": "beta",
   "pattern": {
     "apg": "button",
     "evidence": "button",
