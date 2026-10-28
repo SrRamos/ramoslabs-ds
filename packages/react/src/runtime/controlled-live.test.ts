@@ -187,3 +187,53 @@ describe('lazy live region', () => {
     });
   });
 });
+
+describe('eager live region', () => {
+  it('ensure() inserts the status region before any text, and later regions on creation', async () => {
+    const body: unknown[] = [];
+    const doc = {
+      body: { appendChild: (n: unknown) => body.push(n) },
+      createElement: () => ({ setAttribute() {}, textContent: '', remove() {} }),
+    } as unknown as Document;
+    const { createLiveRegistry } = await import('@ramoslabs/core/live');
+    const host = createDomLiveHost(doc);
+    const live = createLiveRegistry(createFakeScheduler());
+    live.attach(host);
+    expect(body).toHaveLength(0);
+    host.ensure();
+    expect(body).toHaveLength(1);
+    host.ensure();
+    expect(body).toHaveLength(1);
+    live.announce('Saved');
+    expect(body).toHaveLength(1);
+    live.announce('Oops', { urgent: true });
+    expect(body).toHaveLength(2);
+  });
+
+  const wire = async (live: 'eager' | 'lazy') => {
+    const ensure = vi.fn();
+    const host = Object.assign(createDomLiveHost({ body: { appendChild() {} } } as never), {
+      ensure,
+    });
+    function Child() {
+      useMachine<S, E, X, Record<string, never>>({
+        initial: () => ({ checked: false }),
+        reduce,
+        props: {},
+        fields,
+        live,
+      });
+      return null;
+    }
+    await mount(createElement(SJProvider, { liveHost: () => host }, createElement(Child)));
+    return ensure;
+  };
+
+  it('a machine with live: eager makes the provider host ensure at mount (child commits first)', async () => {
+    expect(await wire('eager')).toHaveBeenCalledTimes(1);
+  });
+
+  it('a machine with live: lazy (liveRegions: []) never calls ensure', async () => {
+    expect(await wire('lazy')).not.toHaveBeenCalled();
+  });
+});

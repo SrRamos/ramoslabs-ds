@@ -189,11 +189,21 @@ const doc = (lines) => {
   if (ls.length === 0) return '';
   return `  /** ${ls.join(' ')} */\n`;
 };
-const propDocs = (p) =>
-  doc([p.description, p.default !== undefined ? `@default ${JSON.stringify(p.default)}` : '']);
+// ADR-003 "Controlled/uncontrolled": the acceptance rule is the same for every controllable prop.
+const CONTROLLED_RULE =
+  'Controlled: the owner must accept (update this prop) synchronously inside the change callback; an owner that accepts later sees the native control snap back until its render commits.';
+const propDocs = (p, controllable) =>
+  doc([
+    p.description,
+    controllable.includes(p.name) ? CONTROLLED_RULE : '',
+    p.default !== undefined ? `@default ${JSON.stringify(p.default)}` : '',
+  ]);
 const propLines = (c) =>
   c.props
-    .map((p) => `${propDocs(p)}  ${ident(p.name)}${p.required ? '' : '?'}: ${p.type};`)
+    .map(
+      (p) =>
+        `${propDocs(p, c.state.controllable)}  ${ident(p.name)}${p.required ? '' : '?'}: ${p.type};`,
+    )
     .join('\n');
 const payloadTypes = (c) =>
   c.events

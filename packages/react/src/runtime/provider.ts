@@ -4,6 +4,7 @@
 import {
   createContext,
   createElement,
+  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -24,6 +25,8 @@ declare const process: { env: { NODE_ENV?: string } } | undefined;
 export interface RuntimeBag {
   readonly runtime: SJRuntime;
   readonly live: LiveRegistry;
+  /** Called at mount by a component whose contract declares `liveRegions`: the region exists before any text. */
+  readonly requireLive?: () => void;
 }
 
 export const RuntimeContext: Context<RuntimeBag | null> = createContext<RuntimeBag | null>(null);
@@ -57,7 +60,17 @@ export function SJProvider(props: SJProviderProps): ReactElement {
     [given, locale, dir, idPrefix, idFactory, density, supports, scheduler, target],
   );
   const live = useMemo(() => createLiveRegistry(runtime.scheduler), [runtime]);
-  const bag = useMemo<RuntimeBag>(() => ({ runtime, live }), [runtime, live]);
+  const eager = useRef(false);
+  const attachedHost = useRef<(LiveHost & { ensure?: () => void }) | undefined>(undefined);
+  const requireLive = useCallback(() => {
+    // Children mount before this provider's effect attaches the host, so remember the request.
+    eager.current = true;
+    attachedHost.current?.ensure?.();
+  }, []);
+  const bag = useMemo<RuntimeBag>(
+    () => ({ runtime, live, requireLive }),
+    [runtime, live, requireLive],
+  );
 
   const hostFactory = useRef(liveHost);
   hostFactory.current = liveHost;
@@ -65,9 +78,14 @@ export function SJProvider(props: SJProviderProps): ReactElement {
     const custom = hostFactory.current;
     // No DOM (SSR never runs effects; non-DOM renderers): nothing to attach, announcements no-op.
     if (!custom && typeof document === 'undefined') return;
-    const host: LiveHost & { dispose?: () => void } = custom ? custom() : createDomLiveHost();
+    const host: LiveHost & { dispose?: () => void; ensure?: () => void } = custom
+      ? custom()
+      : createDomLiveHost();
     live.attach(host);
+    attachedHost.current = host;
+    if (eager.current) host.ensure?.();
     return () => {
+      attachedHost.current = undefined;
       live.detach();
       host.dispose?.();
     };

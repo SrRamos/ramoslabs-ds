@@ -64,6 +64,12 @@ export interface ComponentSpec<S extends object, E, P extends Bag, X extends Eff
   initial(props: P): S;
   reduce: Reducer<S, E, X>;
   fields?: ControlledConfig<S, E, P>['fields'];
+  /**
+   * `'eager'` for a component whose contract declares `a11y.liveRegions`: the default DOM host
+   * inserts its live region at mount, before any text update. Omitted or `'lazy'`: inserted on
+   * the first announce. A custom `liveHost` opts in by exposing `ensure()`.
+   */
+  live?: 'eager' | 'lazy';
   /** Write the DOM from the view (text nodes only). Runs after mount and after every change. */
   patch(view: S, ctx: InstanceContext<S, E, P>): void;
   /** Add listeners (through `ctx.listen`). Runs once, after the first patch and `mount()`. */
@@ -104,27 +110,39 @@ export interface VanillaHost {
 }
 
 /** Light-DOM, text-only live node. Hidden by the inline `HIDDEN_STYLE`; `sj-sr-only` stays as a hook. */
-function domLiveHost(doc: Document, made: Element[]): LiveHost {
+function domLiveHost(doc: Document, made: Element[]): LiveHost & { ensure(): void } {
+  let eager = false;
+  const pending: (() => unknown)[] = [];
   return {
     create(role: LiveRole): LiveNode {
-      // Lazy: the registry hands out its status node at attach, but the element is only inserted on
-      // the first announce (its first `setText`), so a component that never announces adds nothing.
+      // Lazy by default: the registry hands out its status node at attach, but the element is only
+      // inserted on the first `setText`. A spec with `live: 'eager'` (its contract declares
+      // `liveRegions`) calls `ensure()` at mount, which inserts it before any text update.
       let node: HTMLElement | undefined;
+      const materialize = (): HTMLElement => {
+        if (!node) {
+          node = doc.createElement('div');
+          node.setAttribute('role', role);
+          node.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
+          node.setAttribute('aria-atomic', 'true');
+          node.setAttribute('style', HIDDEN_STYLE);
+          node.className = 'sj-sr-only'; // styling hook only; hiding never depends on a stylesheet
+          doc.body.appendChild(node);
+          made.push(node);
+        }
+        return node;
+      };
+      pending.push(materialize);
+      if (eager) materialize();
       return {
         setText(text) {
-          if (!node) {
-            node = doc.createElement('div');
-            node.setAttribute('role', role);
-            node.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
-            node.setAttribute('aria-atomic', 'true');
-            node.setAttribute('style', HIDDEN_STYLE);
-            node.className = 'sj-sr-only'; // styling hook only; hiding never depends on a stylesheet
-            doc.body.appendChild(node);
-            made.push(node);
-          }
-          node.textContent = text;
+          materialize().textContent = text;
         },
       };
+    },
+    ensure() {
+      eager = true;
+      for (const m of pending) m();
     },
   };
 }
@@ -152,6 +170,7 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
   const instances = new Set<{ destroy(): void }>();
   const nodes: Element[] = [];
   let attached = false;
+  let liveHost: LiveHost | undefined;
   let closed = false;
 
   const mount: VanillaHost['mount'] = <S extends object, E, P extends Bag, X extends EffectInput>(
@@ -162,8 +181,10 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
     if (closed) throw new Error('[sj] mount on a destroyed host');
     if (!attached) {
       attached = true;
-      live.attach(options.liveHost ?? domLiveHost(el.ownerDocument, nodes));
+      liveHost = options.liveHost ?? domLiveHost(el.ownerDocument, nodes);
+      live.attach(liveHost);
     }
+    if (spec.live === 'eager') (liveHost as { ensure?(): void } | undefined)?.ensure?.();
 
     const acquire = options.idFactory ?? runtime.idFactory;
     const id = baseId(

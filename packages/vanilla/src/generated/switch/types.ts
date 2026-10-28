@@ -5,6 +5,7 @@
 export type SJSwitchCheckedChangePayload = { checked: boolean };
 
 export interface SJSwitchOptions {
+  /** Controlled: the owner must accept (update this prop) synchronously inside the change callback; an owner that accepts later sees the native control snap back until its render commits. */
   checked?: boolean;
   /** @default false */
   defaultChecked?: boolean;

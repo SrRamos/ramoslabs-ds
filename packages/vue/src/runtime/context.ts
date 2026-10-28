@@ -22,6 +22,8 @@ export interface SJContext {
   readonly runtime: SJRuntime;
   /** The one live-region registry (W1-111) of this runtime. Nothing is rendered before mount. */
   readonly live: LiveRegistry;
+  /** Called at mount by a component whose contract declares `liveRegions`: the region exists before any text. */
+  requireLive?(): void;
 }
 
 export const SJ_CONTEXT: InjectionKey<SJContext> = Symbol('sj-runtime');
@@ -47,12 +49,22 @@ export const SJProvider = defineComponent({
     );
     provide(SJ_CONTEXT, ctx);
     let dom: ReturnType<typeof createDomLiveHost> | undefined;
+    let eager = false;
+    let attached: (LiveHost & { ensure?(): void }) | undefined;
+    // Children mount before this provider's `onMounted` attaches the host, so remember the request.
+    ctx.requireLive = () => {
+      eager = true;
+      attached?.ensure?.();
+    };
     onMounted(() => {
       // Client only, after mount: the server never emits live-region markup (ADR-006).
-      const host = props.liveHost ?? (dom = createDomLiveHost());
+      const host: LiveHost & { ensure?(): void } = props.liveHost ?? (dom = createDomLiveHost());
       ctx.live.attach(host);
+      attached = host;
+      if (eager) host.ensure?.();
     });
     onBeforeUnmount(() => {
+      attached = undefined;
       ctx.live.detach();
       dom?.dispose();
       dom = undefined;

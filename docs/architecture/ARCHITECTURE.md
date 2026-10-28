@@ -280,7 +280,11 @@ in the derived view and never copied into reducer state. Native events (`toggle`
 `input`, `change`, `invalid`) report *actual native state*, kept separately from desired controlled
 state. If a controlled `open` stays `true` after native Escape, the controlled value wins and a
 corrective post-commit native effect reopens the element without redispatching Escape. Switching
-ownership after mount throws in development.
+ownership after mount throws in development. A controlled owner must accept a change synchronously
+inside the change callback (update the prop in the same task): the runtime allows the owner one
+microtask, then forces the corrective commit, so an owner that accepts later (a transition, I/O)
+sees the native control snap back to the controlled value until its own render commits. An
+accepting owner costs no extra render (G3A NICE-2).
 
 *SSR-safe ids.* One base id is acquired at the adapter root (`useId` in React and Vue 3.5) and
 anatomy suffixes are appended (`-label`, `-hint`, `-error`, `-trigger`, `-panel`). Consumers may pass
