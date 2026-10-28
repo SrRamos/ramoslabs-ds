@@ -120,7 +120,7 @@ for (const s of SEEDED)
   }) => {
     await open(page);
     await mount(page, 'react', s.state);
-    await page.evaluate(s.mutate);
+    await page.evaluate(s.mutate as () => void);
     await expect(page.locator('[data-part="root"]')).not.toMatchAriaSnapshot(yaml(s.state), {
       timeout: 1500,
     });

@@ -22,8 +22,6 @@ import { applyPath, parsePath, type SupportsMap } from '../../../e2e/supports/pa
 import type { Adapter, SwitchFixtureProps } from '../fixtures';
 
 export type HostProps = SwitchFixtureProps;
-/** Unused here (the probe host seeds wrapper defects); kept so the executor's signature fits. */
-type Defect = string;
 
 interface Mounted {
   update(props: HostProps): Promise<void>;
@@ -42,14 +40,6 @@ interface FormEntries {
 
 declare global {
   interface Window {
-    __sj: {
-      events: boolean[];
-      real: SupportsMap;
-      seen: SupportsMap | null;
-      mount(a: Adapter, p: HostProps, defect?: Defect, path?: string): Promise<Mounted>;
-      update(p: HostProps): Promise<void>;
-      ready: true;
-    };
     __sw: {
       /** Mounts the `<sj-switch>` custom element (vanilla, light DOM) inside the form. */
       mountElement(p: HostProps): Promise<void>;
@@ -83,7 +73,7 @@ function formFor(id: string): HTMLFormElement {
 }
 
 const events: boolean[] = [];
-const real = detectSupports(window as never);
+const real: SupportsMap = detectSupports(window as never);
 const seen = (r: SJRuntime): void => void (window.__sj.seen = r.supports);
 const ReactTap = (): null => {
   seen(useReactRuntime());
@@ -182,7 +172,7 @@ window.__sj = {
   real,
   seen: null,
   ready: true,
-  async mount(adapter, props, defect = 'none', path = 'native') {
+  async mount(adapter: Adapter, props: HostProps, defect = 'none', path = 'native') {
     void defect; // the probe host seeds wrapper defects; this host has none
     events.length = 0;
     window.__sj.seen = null;
@@ -195,11 +185,11 @@ window.__sj = {
           : await mountVanilla(props, path);
     return last;
   },
-  async update(props) {
+  async update(props: HostProps) {
     if (!last) throw new Error('nothing mounted');
     await last.update(props);
   },
-};
+} as unknown as Window['__sj'];
 
 const read = (formId: 'f' | 'bare'): FormEntries => {
   const form = document.getElementById(formId) as HTMLFormElement | null;

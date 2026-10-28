@@ -6,7 +6,7 @@ export const ADAPTERS = ['react', 'vue', 'vanilla'] as const;
 export type Adapter = (typeof ADAPTERS)[number];
 export const ENGINES = ['chromium', 'firefox', 'webkit'] as const;
 
-export interface SwitchFixtureProps {
+export type SwitchFixtureProps = {
   checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
@@ -14,7 +14,7 @@ export interface SwitchFixtureProps {
   value?: string;
   id?: string;
   label?: string;
-}
+};
 
 export const LABEL = 'Notifications';
 /** Wraps over several lines at the 480 px viewport; the label must not change with state. */

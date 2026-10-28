@@ -1,4 +1,5 @@
-// @ts-check
+/* eslint-disable @typescript-eslint/ban-ts-comment -- plain-JS test */
+// @ts-nocheck -- test helpers are untyped.
 // The VoiceOver hook (W1-C03s.f): every contract atAssertions id is rendered into both lanes with every
 // field ADR-013 4 requires; an assertion without a template fails; the evidence contract's keys are used.
 import { describe, expect, it } from 'vitest';
