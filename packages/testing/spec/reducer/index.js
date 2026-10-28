@@ -108,7 +108,8 @@ function makeWorld(/** @type {any} */ spec, /** @type {any} */ mod, /** @type {a
   const cfg = mod.harness ?? {};
   const project = cfg.project ?? ((/** @type {any} */ s) => s);
   const initial = structuredClone(cfg.initial ?? spec.initial);
-  const reduce = mod.reduce;
+  // A reducer may return a bare state or a Reduction (header); the store always sees a Reduction.
+  const reduce = (/** @type {any} */ st, /** @type {any} */ ev) => normalize(mod.reduce(st, ev));
 
   // Effects the reducer emitted, as seen by the store (type, target, version, in dispatch order).
   /** @type {any[]} */
@@ -556,7 +557,10 @@ export function replaySequences(spec, mod) {
   /** @type {string[]} */
   const out = [];
   for (const seq of spec.sequences) {
-    const store = createStore(structuredClone(cfg.initial ?? spec.initial), mod.reduce);
+    const store = createStore(
+      structuredClone(cfg.initial ?? spec.initial),
+      (/** @type {any} */ st, /** @type {any} */ ev) => normalize(mod.reduce(st, ev)),
+    );
     for (const id of seq) {
       const step = /** @type {any} */ (byId.get(id));
       const at = project(store.getSnapshot());
