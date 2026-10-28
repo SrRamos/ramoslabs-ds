@@ -5,18 +5,24 @@
 // An event with no row for the current state is a no-op (the reducer returns the state unchanged).
 export const checkboxMachine = {
   initial: 'unchecked',
-  states: ['unchecked', 'checked'],
+  states: ['unchecked', 'checked', 'mixed-unchecked', 'mixed-checked'],
   events: ['toggle', 'setIndeterminate', 'clearIndeterminate'],
   controllable: ['checked', 'indeterminate'],
   transitions: {
     unchecked: {
       toggle: { to: 'checked', emit: 'checkedChange' },
-      setIndeterminate: { to: 'unchecked', emit: 'indeterminateChange' },
-      clearIndeterminate: { to: 'unchecked', emit: 'indeterminateChange' },
+      setIndeterminate: { to: 'mixed-unchecked', emit: 'indeterminateChange' },
     },
     checked: {
       toggle: { to: 'unchecked', emit: 'checkedChange' },
-      setIndeterminate: { to: 'checked', emit: 'indeterminateChange' },
+      setIndeterminate: { to: 'mixed-checked', emit: 'indeterminateChange' },
+    },
+    'mixed-unchecked': {
+      toggle: { to: 'checked', emit: 'checkedChange' },
+      clearIndeterminate: { to: 'unchecked', emit: 'indeterminateChange' },
+    },
+    'mixed-checked': {
+      toggle: { to: 'unchecked', emit: 'checkedChange' },
       clearIndeterminate: { to: 'checked', emit: 'indeterminateChange' },
     },
   },

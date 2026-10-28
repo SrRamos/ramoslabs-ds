@@ -31,7 +31,7 @@
     }
   ],
   "state": {
-    "machine": ["unchecked", "checked"],
+    "machine": ["unchecked", "checked", "mixed-unchecked", "mixed-checked"],
     "controllable": ["checked", "indeterminate"]
   },
   "actions": [
@@ -60,9 +60,33 @@
       }
     },
     {
+      "id": "toggle",
+      "from": "mixed-unchecked",
+      "to": "checked",
+      "emit": "checkedChange",
+      "dom": {
+        "control": {
+          "checked": "true",
+          "indeterminate": "false"
+        }
+      }
+    },
+    {
+      "id": "toggle",
+      "from": "mixed-checked",
+      "to": "unchecked",
+      "emit": "checkedChange",
+      "dom": {
+        "control": {
+          "checked": "false",
+          "indeterminate": "false"
+        }
+      }
+    },
+    {
       "id": "setIndeterminate",
       "from": "unchecked",
-      "to": "unchecked",
+      "to": "mixed-unchecked",
       "emit": "indeterminateChange",
       "dom": {
         "control": {
@@ -73,7 +97,7 @@
     {
       "id": "setIndeterminate",
       "from": "checked",
-      "to": "checked",
+      "to": "mixed-checked",
       "emit": "indeterminateChange",
       "dom": {
         "control": {
@@ -83,7 +107,7 @@
     },
     {
       "id": "clearIndeterminate",
-      "from": "unchecked",
+      "from": "mixed-unchecked",
       "to": "unchecked",
       "emit": "indeterminateChange",
       "dom": {
@@ -94,7 +118,7 @@
     },
     {
       "id": "clearIndeterminate",
-      "from": "checked",
+      "from": "mixed-checked",
       "to": "checked",
       "emit": "indeterminateChange",
       "dom": {

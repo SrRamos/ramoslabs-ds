@@ -187,7 +187,7 @@ Same shape as the switch golden; this section lists only the differences.
 
 ```ts
 reducerEvents: readonly ['toggle', 'setIndeterminate', 'clearIndeterminate']
-reduce(state: CheckboxState, e): CheckboxState                       // machine form, 'unchecked' | 'checked'
+reduce(state: CheckboxState, e): CheckboxState                       // machine form, four positions
 reduce(state: CheckboxSnapshot, e): Reduction<CheckboxSnapshot, never>
 initialSnapshot(checked = false, indeterminate = false)              // { state, checked, indeterminate }
 checkboxFields                                                       // both fields, for createControlled
@@ -221,13 +221,13 @@ from consumer override. Adapter obligations:
 - **User activation clears indeterminate like a native input.** The change handler computes `next = !view().checked`, calls
   `native('checked', next)`, and, only if `view().indeterminate`, `native('indeterminate', false)`. Both are requests: a controlled owner
   that keeps `indeterminate=true` is corrected post-commit (effect `indeterminate`), exactly as a rejected `checked`.
-- **Machine is the `checked` axis only** (`unchecked`/`checked`); `indeterminate` is orthogonal in the snapshot, because native `checked`
-  and `indeterminate` are independent (native click on `checked && indeterminate` gives `!checked && !indeterminate`). A third machine
-  state would force the reducer to read `checked` to know where to go. Contract actions: `toggle` (clears indeterminate), and the
-  self-transitions `setIndeterminate` / `clearIndeterminate` (used by `toEvent` for the uncontrolled indeterminate field).
-- The reducer reads `state` only and derives `checked` from it; `contract/reducer-controlled-field` passes. Consequence: the two
-  indeterminate events cannot keep the snapshot reference on a no-op (that would need reading `indeterminate`), they return an equal
-  new object. Harmless: the equality is structural and `toggle` always changes state.
+- **Four machine positions**: `unchecked`, `checked`, `mixed-unchecked`, `mixed-checked`; `checked` and `indeterminate` are derived from
+  the position. Native `checked` and `indeterminate` are independent (a native click on `checked && indeterminate` gives neither), and the
+  reducer cannot read a controlled field, so the position must carry both bits. First attempt (two states plus an orthogonal flag) failed
+  the W1-308b harness: `setIndeterminate` changed the snapshot while the machine projection did not, which the harness treats as a no-op
+  that must keep the reference. Contract actions: `toggle` from all four positions, `setIndeterminate` / `clearIndeterminate` between
+  the unmixed and mixed positions; every self-transition is a missing row (reference kept).
+- The reducer reads `state` only; `contract/reducer-controlled-field` passes.
 - `support[]` empty (same reasoning as switch: `appearance` and `accent-color` are inside the ADR-001 floor). `liveRegions: []`.
 - `atAssertions` adds `manual-speech-mixed-state` (VoiceOver script must read "mixed"). `atSupport` rows reference the existing
   `at-support/checkbox.json` entries; the NVDA group-description issue (12718) is a CSS/fieldset concern for a later group component, not
@@ -240,14 +240,14 @@ from consumer override. Adapter obligations:
 - `checkbox.test.ts`: 26 tests, including fast-check invariants (checked agrees with machine position under random event sequences, store
   form projects onto machine form, toggle clears indeterminate and is an involution on checked, set/clear idempotent and never touch
   checked, getters pure over random props).
-- Seeds that fail: reducer reading `state.indeterminate` -> `contract/reducer-controlled-field`; `toggle` not clearing indeterminate -> 2
-  unit tests; `toggle` always going to `checked` -> `codegen.test.js` "SJCheckbox: reducer events equal contract actions"; W1-308b
+- Seeds that fail: reducer reading `state.indeterminate` -> `contract/reducer-controlled-field`; `mixed-checked` + `toggle` staying mixed -> 3
+  unit tests; a wrong table row -> `codegen.test.js` "SJCheckbox: reducer events equal contract actions"; a state-less no-op (the first two-state design) -> the W1-308b harness "did not reuse the state reference"; W1-308b
   auto-discovers `harness` and passes.
 
 ## Bytes (min+gzip, `node packages/testing/size/cli.js`)
 | Module | gzip | raw | Ceiling |
 |---|---|---|---|
-| core/src/checkbox | 0.868 KiB | 2,225 B | 3 KiB (contract `budgets.gzipKiB`, PLAN 6.2), pass |
+| core/src/checkbox | 0.908 KiB | 2,433 B | 3 KiB (contract `budgets.gzipKiB`, PLAN 6.2), pass |
 
 ## Follow-ups
 - .b CSS: indicator part paints box, check and dash (`data-state`), `appearance: none` input in the hit area, forced-colors visible.

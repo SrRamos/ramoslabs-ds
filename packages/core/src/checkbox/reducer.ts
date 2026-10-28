@@ -2,10 +2,11 @@
 // Space handling). Same shape as the switch golden: `reducerEvents` plus a two-form `reduce`.
 //
 // Two controllable fields, `checked` and `indeterminate` (ADR-003 controlled pipeline; ADR-010
-// `state.controllable`). The machine position is the `checked` axis only (`unchecked`/`checked`);
-// `indeterminate` is orthogonal, exactly like the native input where `checked` and `indeterminate`
-// are independent properties. A reducer never reads a controlled field (G1 SHOULD-4), so every
-// branch reads `state` only and writes `checked` and `indeterminate` as a function of the event.
+// `state.controllable`). Native `checked` and `indeterminate` are independent properties, so the
+// machine has four positions (`unchecked`, `checked`, `mixed-unchecked`, `mixed-checked`) and both
+// fields are derived from the position. A reducer never reads a controlled field (G1 SHOULD-4):
+// every branch reads `state` only. Every self-transition is a missing row, so the store keeps the
+// reference on a no-op (W1-308b).
 import type { Reduction } from '../store/index';
 import type { CheckboxEvent, CheckboxState } from '../generated/checkbox/index';
 
@@ -25,20 +26,29 @@ export interface CheckboxAction {
   readonly type: CheckboxEvent;
 }
 
-const step = (state: CheckboxState, event: { readonly type: string }): CheckboxState =>
-  event.type === 'toggle' ? (state === 'checked' ? 'unchecked' : 'checked') : state;
+// Total over the four states; a missing row is a no-op that keeps the reference (generated table rule).
+const table: Readonly<Record<CheckboxState, Readonly<Record<string, CheckboxState>>>> = {
+  unchecked: { toggle: 'checked', setIndeterminate: 'mixed-unchecked' },
+  checked: { toggle: 'unchecked', setIndeterminate: 'mixed-checked' },
+  'mixed-unchecked': { toggle: 'checked', clearIndeterminate: 'unchecked' },
+  'mixed-checked': { toggle: 'unchecked', clearIndeterminate: 'checked' },
+};
 
-const snap = (state: CheckboxState, indeterminate: boolean): CheckboxSnapshot => ({
+const step = (state: CheckboxState, event: { readonly type: string }): CheckboxState =>
+  table[state][event.type] ?? state;
+
+const snap = (state: CheckboxState): CheckboxSnapshot => ({
   state,
-  checked: state === 'checked',
-  indeterminate,
+  checked: state === 'checked' || state === 'mixed-checked',
+  indeterminate: state === 'mixed-unchecked' || state === 'mixed-checked',
 });
 
 /**
  * Two forms of one transition function:
  * - machine form `reduce('unchecked', { type: 'toggle' }) === 'checked'` (contract equivalence);
- * - store form `reduce(snapshot, event)` returning a Reduction. `toggle` is user activation and
- *   clears `indeterminate` like a native input; the two indeterminate events set or clear it only.
+ * - store form `reduce(snapshot, event)` returning a Reduction (same reference on a no-op).
+ *   `toggle` is user activation and leaves the `mixed-*` states like a native input; the two
+ *   indeterminate events only set or clear that flag.
  */
 export function reduce(state: CheckboxState, event: { readonly type: string }): CheckboxState;
 export function reduce(
@@ -50,11 +60,8 @@ export function reduce(
   event: { readonly type: string },
 ): CheckboxState | Reduction<CheckboxSnapshot, never> {
   if (typeof state === 'string') return step(state, event);
-  const type = event.type;
-  if (type === 'toggle') return { state: snap(step(state.state, event), false) };
-  if (type === 'setIndeterminate') return { state: snap(state.state, true) };
-  if (type === 'clearIndeterminate') return { state: snap(state.state, false) };
-  return { state };
+  const next = step(state.state, event);
+  return { state: next === state.state ? state : snap(next) };
 }
 
 /** The store reducer (the store form of `reduce`). */
@@ -64,7 +71,15 @@ export const storeReducer = (
 ): Reduction<CheckboxSnapshot, never> => reduce(state, event);
 
 export const initialSnapshot = (checked = false, indeterminate = false): CheckboxSnapshot =>
-  snap(checked ? 'checked' : 'unchecked', indeterminate);
+  snap(
+    indeterminate
+      ? checked
+        ? 'mixed-checked'
+        : 'mixed-unchecked'
+      : checked
+        ? 'checked'
+        : 'unchecked',
+  );
 
 /** Controlled-field description every adapter hands to `createControlled` (via its store bridge). */
 export const checkboxFields = {

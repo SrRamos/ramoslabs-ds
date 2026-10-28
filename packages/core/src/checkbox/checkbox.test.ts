@@ -61,11 +61,12 @@ describe('reducer invariants (property)', () => {
   const run = (start: CheckboxSnapshot, seq: readonly (typeof reducerEvents)[number][]) =>
     seq.reduce((s, type) => reduce(s, { type }).state, start);
 
-  it('checked always agrees with the machine position', () => {
+  it('checked and indeterminate always agree with the machine position', () => {
     fc.assert(
       fc.property(fc.boolean(), fc.boolean(), fc.array(events, { maxLength: 20 }), (c, i, seq) => {
         const s = run(initialSnapshot(c, i), seq);
-        expect(s.checked).toBe(s.state === 'checked');
+        expect(s.checked).toBe(s.state === 'checked' || s.state === 'mixed-checked');
+        expect(s.indeterminate).toBe(s.state.startsWith('mixed'));
       }),
     );
   });
@@ -97,8 +98,9 @@ describe('reducer invariants (property)', () => {
         const clr = reduce(start, { type: 'clearIndeterminate' }).state;
         expect([set.checked, clr.checked]).toEqual([c, c]);
         expect([set.indeterminate, clr.indeterminate]).toEqual([true, false]);
-        expect(reduce(set, { type: 'setIndeterminate' }).state).toEqual(set);
-        expect(reduce(clr, { type: 'clearIndeterminate' }).state).toEqual(clr);
+        // idempotent, and a no-op keeps the reference
+        expect(reduce(set, { type: 'setIndeterminate' }).state).toBe(set);
+        expect(reduce(clr, { type: 'clearIndeterminate' }).state).toBe(clr);
       }),
     );
   });

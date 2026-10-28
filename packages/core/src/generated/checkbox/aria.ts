@@ -15,11 +15,17 @@ export const checkboxAria = {
     unchecked: {
       toggle: { dom: { control: { checked: 'true', indeterminate: 'false' } } },
       setIndeterminate: { dom: { control: { indeterminate: 'true' } } },
-      clearIndeterminate: { dom: { control: { indeterminate: 'false' } } },
     },
     checked: {
       toggle: { dom: { control: { checked: 'false', indeterminate: 'false' } } },
       setIndeterminate: { dom: { control: { indeterminate: 'true' } } },
+    },
+    'mixed-unchecked': {
+      toggle: { dom: { control: { checked: 'true', indeterminate: 'false' } } },
+      clearIndeterminate: { dom: { control: { indeterminate: 'false' } } },
+    },
+    'mixed-checked': {
+      toggle: { dom: { control: { checked: 'false', indeterminate: 'false' } } },
       clearIndeterminate: { dom: { control: { indeterminate: 'false' } } },
     },
   },
