@@ -209,7 +209,7 @@ describe('auto-discovery of packages/core/src/<slug>/reducer.ts', () => {
 describe('real component reducers', () => {
   const found = discoverReducers();
   if (!found.length)
-    // skip-reason: no component reducer exists yet; the skip is the visible placeholder
+    // #48 owner: SrRamos. No component reducer exists yet; the skip is the visible placeholder.
     it.skip('no component reducer yet (packages/core/src/<slug>/reducer.ts)', () => {});
   for (const f of found)
     it(`${f.slug}: reducer satisfies its derived spec`, async () => {
