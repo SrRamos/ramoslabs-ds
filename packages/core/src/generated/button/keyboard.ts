@@ -3,6 +3,9 @@
 
 // SJButton keyboard map: anatomy part -> key -> action id (or movement word).
 // One source for code and tests (ADR-006, ADR-010).
-export const buttonKeyboard = { root: { Enter: 'press', Space: 'press' } } as const;
+export const buttonKeyboard = {
+  root: { Enter: 'press', Space: 'press' },
+  link: { Enter: 'press' },
+} as const;
 
 export type ButtonKeyboardMap = typeof buttonKeyboard;

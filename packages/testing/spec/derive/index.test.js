@@ -41,6 +41,10 @@ describe('deriveSpec probes (W1-308a)', () => {
             "fixture": "icon-only",
             "interactive": true,
           },
+          {
+            "fixture": "link",
+            "interactive": true,
+          },
         ],
         "sequences": [
           [
@@ -63,6 +67,11 @@ describe('deriveSpec probes (W1-308a)', () => {
             "id": "press:idle>idle",
             "to": "idle",
             "triggers": [
+              {
+                "key": "Enter",
+                "kind": "keyboard",
+                "part": "link",
+              },
               {
                 "key": "Enter",
                 "kind": "keyboard",

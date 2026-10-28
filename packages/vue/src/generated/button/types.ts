@@ -5,10 +5,27 @@
 export type SJButtonPressPayload = { originalEvent: Event };
 
 export interface SJButtonProps {
+  /** @default "solid" */
+  variant?: 'solid' | 'soft' | 'outline' | 'ghost';
+  /** @default "primary" */
+  tone?: 'primary' | 'neutral' | 'success' | 'warning' | 'error' | 'info';
+  /** @default "md" */
+  size?: 'sm' | 'md' | 'lg';
   /** @default false */
   disabled?: boolean;
-  /** @default "button" */
+  /** Button element only; never an implicit submit. @default "button" */
   type?: 'button' | 'submit' | 'reset';
+  /** A non-empty href renders the link element (a), not a button. */
+  href?: string;
+  /** Link element only. target=_blank adds rel=noopener noreferrer unless rel is set. */
+  target?: string;
+  /** Link element only. */
+  rel?: string;
+  /** No visible text. Requires label (or aria-label / aria-labelledby); lint contract/icon-only-name fails without one. @default false */
+  iconOnly?: boolean;
+  /** Accessible name (aria-label). Required with iconOnly; for a text button it must contain the visible text (2.5.3). */
+  label?: string;
+  id?: string;
 }
 
 export interface SJButtonEmits {
@@ -16,6 +33,8 @@ export interface SJButtonEmits {
 }
 
 export interface SJButtonSlots {
-  /** Accessible name; must not change while a toggle. */
+  /** Visible label; it is the accessible name unless label is set. Omit with iconOnly. */
   default?: () => unknown;
+  /** Decorative icon (aria-hidden); the only content of an iconOnly button. */
+  icon?: () => unknown;
 }
