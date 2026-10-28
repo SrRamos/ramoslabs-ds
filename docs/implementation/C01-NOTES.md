@@ -138,3 +138,20 @@ See the final report (gzip of `dist/button/index.js`, shared kernel `merge` and 
 
 - `.f`: L2 keyboard and form `type=submit` behavior in a real browser; Vue `./button` should be added to the SSR component wrappers if `.f` wants it.
 - Barrel `packages/vue/src/index.ts` is still empty by design (its test asserts no keys); the entry is `@ramoslabs/vue/button`.
+# C01.d notes (W1-C01.d: SJButton for React)
+
+Branch `feature/m4-c01-button-react` (stacked on `feature/m4-c01a-button-core`). Code: `packages/react/src/button/{index.ts,button.test.ts}`. No shared-file touches. `@ramoslabs/core` must be built (`dist`) for react tests/typecheck, as for the other React tests.
+
+## Layout (copy this)
+- Names (ADR-002): `SJButton` is the prop-driven preset and also the namespace (`SJButton.Root`, `SJButton.Icon`); flat exports `SJButtonRoot`, `SJButtonIcon`. The preset uses only the two public primitives (ADR-004). `link` is not a separate React component: `Root` renders `<a>` or `<button>` from `createButton().element()` and picks `getLinkProps`/`getRootProps`.
+- Props: contract props (generated types) + native attributes; `classes: { root, link, icon }` appended after the library class (`className` also appended); `icon` prop-or-slot (an `iconOnly` button may pass the icon as its child); `ref` via `forwardRef` to the real element (button, anchor or icon span). Remaining attributes (aria-*, data-*, onClick...) go to the getters as the consumer bag, so the ADR-004 merge rules apply (consumer onClick first, `preventDefault` cancels the press, protected keys win with a dev warning).
+- `onPress`: payload `originalEvent` is the native `Event` (`SyntheticEvent.nativeEvent`), as the generated type states.
+
+## Decisions
+- **Stateless, no `useMachine`/store/provider.** The runtime bridge exists to own a store; the button has none (core notes: one constant state). Calling `createButton` per render is a few closures; it captures THIS render's props, and React attached the matching `onClick` in the same commit, so there is no ref, effect, subscription or listener of our own to dispose. Works outside `SJProvider`.
+- No key handlers: Enter/Space on `<button>`, Enter on `<a>` are native clicks. Tests assert no `onKey*`/pointer/mouse handlers, and that a click presses.
+- Hydration: the node test environment has no DOM (R1 limit), so tests prove (a) server markup equals the client props bag attribute for attribute, (b) StrictMode and plain SSR markup are identical, (c) no `document`. Real `hydrateRoot` against a DOM is left to L2 (.f).
+- Retention: 1,000 StrictMode mount/click/unmount cycles with real `gc()`; at most 2 of 1,000 payload closures alive (fibers may defer).
+
+## Bytes (min + gzip 9, esbuild, react and `@ramoslabs/core/*` external)
+Adapter alone: 637 B gzip (1,166 B raw). Core `button` (size cli, shared merge kernel externalized): 1,842 B against its 1.5 KiB budget. Together 2,479 B gzip, under ADR-011's 3 KiB for a simple primitive.
