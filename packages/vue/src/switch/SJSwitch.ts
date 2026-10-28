@@ -5,7 +5,6 @@
 import {
   defineComponent,
   h,
-  nextTick,
   onBeforeUnmount,
   onMounted,
   useId,
@@ -85,15 +84,9 @@ export const SJSwitch = defineComponent({
       props: getProps,
       fields: switchFields,
     });
-    const native = (field: 'checked', actual: boolean) => {
-      const dispatched = sj.native(field, actual);
-      // A controlled owner that rejects the change never re-renders; reconcile after it had its turn.
-      void nextTick(sj.commit);
-      return dispatched;
-    };
     const parts = createSwitchParts({
       view: sj.view,
-      native,
+      native: sj.native,
       getProps,
       id: switchBaseId(props.id, () => useId() ?? '', 'sj-switch-'),
     });
@@ -114,7 +107,7 @@ export const SJSwitch = defineComponent({
         () =>
           setTimeout(() => {
             if (control && control.checked !== sj.view().checked)
-              native('checked', control.checked);
+              sj.native('checked', control.checked);
           }, 0),
         { signal: abort.signal },
       );

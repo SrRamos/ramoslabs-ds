@@ -32,6 +32,30 @@ vi.mock('@ramoslabs/core/store', async (orig) => {
   };
 });
 
+// Count commits through the effect queue: every `commit()` drains the layout lane exactly once.
+const drains = vi.hoisted(() => ({ layout: 0 }));
+vi.mock('@ramoslabs/core/effects', async (orig) => {
+  const mod = await orig<typeof import('@ramoslabs/core/effects')>();
+  return {
+    ...mod,
+    createEffectQueue: ((...args: Parameters<typeof mod.createEffectQueue>) => {
+      const q = mod.createEffectQueue(...args);
+      const drain = q.drain.bind(q);
+      return {
+        ...q,
+        get draining() {
+          return q.draining;
+        },
+        drain: ((host: never, lane?: string) => {
+          if (lane === 'layout') drains.layout++;
+          return drain(host, lane as never);
+        }) as typeof q.drain,
+      };
+    }) as typeof mod.createEffectQueue,
+  };
+});
+
+const ACCEPTED_COMMITS = 1; // the post-flush watcher; the owner's re-render adds none
 const mounts: Array<() => void> = [];
 afterEach(() => {
   while (mounts.length) mounts.pop()!();
@@ -143,6 +167,35 @@ describe('SJSwitch controlled (v-model:checked)', () => {
     expect(seen).toEqual([true]);
     expect(el.checked).toBe(false); // corrective `checked` effect restored it
     expect(el.dataset.state).toBe('off');
+  });
+
+  it('commits once per accepted change; a rejected change still resyncs (G3A SHOULD-3)', async () => {
+    const on = ref(false);
+    const { host } = mount(() =>
+      h(SJSwitch, { checked: on.value, 'onUpdate:checked': (v: boolean) => (on.value = v) }),
+    );
+    const el = input(host);
+    await nextTick();
+    const settle = async () => {
+      for (let i = 0; i < 4; i++) await nextTick();
+    };
+    await settle();
+    const before = drains.layout;
+    el.click();
+    await settle();
+    const accepted = drains.layout - before;
+    expect(el.checked).toBe(true);
+    expect(accepted).toBe(ACCEPTED_COMMITS);
+
+    // Rejection: no owner render happens, so exactly one forced commit restores the input.
+    const rejected = mount(() => h(SJSwitch, { checked: false }));
+    const rel = input(rejected.host);
+    await settle();
+    const rb = drains.layout;
+    rel.click();
+    await settle();
+    expect(rel.checked).toBe(false);
+    expect(drains.layout - rb).toBe(1);
   });
 
   it('keeps correcting repeated rejections', async () => {
