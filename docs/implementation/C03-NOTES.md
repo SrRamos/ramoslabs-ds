@@ -318,3 +318,40 @@ Flat component over `createCheckboxParts` and the shared `useSJStore` (no local 
   input, rejected clear corrected, reset), 1,000 mount/destroy cycles with a 60_000 timeout.
 - Bytes (`node packages/testing/size/cli.js`): core checkbox 2433 B gzip (ceiling 3 KiB); the Vue adapter is reported, not gated.
 - Shared-file edits: `src/index.ts` and `index.test.ts` only (`package.json` exports and `vite.config.ts` already listed `./checkbox`).
+# C03c.d: SJCheckbox for React
+
+Branch `feature/m4-c03c-checkbox-react` (from main after #73). Files: `packages/react/src/checkbox/{index,checkbox.test}.ts`, the barrel
+`packages/react/src/index.ts` and its test (the brief asked for both). Same shape as the switch golden; differences only.
+
+## API
+`SJCheckbox = { Root, Control, Indicator, Label }` plus flat `SJCheckboxRoot/Control/Indicator/Label` (ADR-002). `classes={{ root, control,
+indicator, label }}`, prop-or-slot `label`. Controlled `checked` / `indeterminate` with `onCheckedChange({ checked })` /
+`onIndeterminateChange({ indeterminate })` (generated payload types), uncontrolled `defaultChecked` / `defaultIndeterminate`.
+
+## Decisions
+- **`indeterminate` is a property, never rendered.** `getControlProps` emits it; Control strips it before `createElement('input')`, and Root
+  applies `el.indeterminate = view.indeterminate` in a layout effect with no deps (after mount and every commit, so first paint is already
+  mixed and a native click that cleared it is re-applied when the owner keeps it). The corrective effect `indeterminate` also writes the
+  property; `checked` writes `el.checked`. Both go through `useMachine`'s own post-commit resync (no forced render, #64).
+- `form.reset()`: native reset restores `checked` only (the HTML reset algorithm leaves `indeterminate` alone), so the switch's reset listener
+  re-syncs `checked` and nothing else; a test asserts `indeterminate` survives a reset.
+- SSR cannot render the property: markup has `data-state="indeterminate"` (CSS paints the dash before hydration) and no `indeterminate`
+  attribute, no `role`, no `aria-checked`; a test asserts all three. AT sees `mixed` only after hydration (as noted in C03c.a, .f to assert in a browser).
+- Initial snapshot: `initialSnapshot(defaultChecked ?? checked ?? false, defaultIndeterminate ?? indeterminate ?? false)`.
+
+## Proof
+39 tests with the barrel test: naming, structure (no role / aria-checked / indeterminate attribute), classes, protected attributes, refs,
+uncontrolled (click clears indeterminate and reports both; plain click reports no indeterminate), controlled indeterminate (property follows prop
+across updates, rejection corrected, accepting select-all owner), reset (both defaults, indeterminate untouched, listener removed), controlled
+checked (rejection, accepting, outside change), disabled, form markup equal to a bare checkbox (9 cases), SSR, StrictMode, 1,000-cycle retention.
+
+## Bytes (esbuild --minify, gzip -9, react external; switch measured the same way for comparison)
+| Entry | gzip | raw |
+|---|---|---|
+| `react/src/checkbox` alone (core, runtime external) | 1,284 B | 2,823 B |
+| `react/src/checkbox` with core and shared runtime inlined | 4,855 B | 11,754 B |
+| switch, same method (alone / inlined) | 1,159 B / 4,612 B | 2,330 B / 10,799 B |
+No ADR-011 ceiling applies to an adapter entry.
+
+## Follow-ups
+- .f: real-DOM hydration (property set at hydrate), `FormData` equality including after `form.reset()`, VoiceOver "mixed".
