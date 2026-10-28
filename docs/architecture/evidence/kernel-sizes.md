@@ -4,6 +4,8 @@ Measured on main at 842ed10 plus the harness change in this branch. Tool: `node 
 (esbuild, minified, gzip level 9, `platform: neutral`, `target: es2022`, tree-shaken, peers and `@ramoslabs/*` external
 for adapters). Bytes are exact; KiB = bytes / 1024.
 
+Re-measured after G1 fixes on 2026-10-27 (branch `feature/g1r2-fixes`, base `5003089`); every table in sections 1 to 3 is refreshed.
+
 ## 1. Result against the ADR-011 ceilings
 
 Every ADR-011 ceiling holds. No ceiling is missed, so **no ADR-011 amendment is needed and none is proposed.**
@@ -11,8 +13,8 @@ Every ADR-011 ceiling holds. No ceiling is missed, so **no ADR-011 amendment is 
 | Module (ADR-011 row) | Ceiling | gzip | raw min | Used | Headroom | Status |
 |---|---|---|---|---|---|---|
 | store (snapshot/subscription) | 1 KiB | 282 B (0.275 KiB) | 384 B | 27 % | 742 B | pass |
-| overlay + geometry fallback | 4 KiB | 2,365 B (2.310 KiB) | 5,080 B | 58 % | 1,731 B | pass |
-| collection + focus + typeahead | 3 KiB | 1,581 B (1.544 KiB) | 3,177 B | 51 % | 1,491 B | pass |
+| overlay + geometry fallback | 4 KiB | 2,375 B (2.319 KiB) | 5,105 B | 58 % | 1,721 B | pass |
+| collection + focus + typeahead | 3 KiB | 1,607 B (1.569 KiB) | 3,293 B | 52 % | 1,465 B | pass |
 | live-region registry | 1 KiB | 457 B (0.446 KiB) | 710 B | 45 % | 567 B | pass |
 | field-kinds + number parser | 2 KiB | 1,711 B (1.671 KiB) | 4,131 B | 84 % | 337 B | pass |
 | unused component in a fixture | 0 KiB JS | 0 B | 0 B | n/a | n/a | pass |
@@ -40,12 +42,12 @@ Added to `budgets.json` as `reported` rows. They are measured and printed, never
 | Module | gzip | raw min | Stream-reported gzip / raw | Note |
 |---|---|---|---|---|
 | ids | 489 B (0.478 KiB) | 859 B | 489 / 859 (K1) | matches |
-| runtime | 723 B (0.706 KiB) | 1,332 B | 723 / 1,332 (K1) | matches |
-| effects | 500 B (0.488 KiB) | 780 B | 500 / 780 (K1) | matches |
-| merge | 854 B (0.834 KiB) | 1,603 B | 829 dev / 645 prod gzip, 1,529 dev / 1,207 prod raw (K2) | measured unbundled, so the dev branch is in: this is the dev build. Slightly above K2's 829 B (25 B), K2 used a different define and wrapper |
-| controlled | 693 B (0.677 KiB) | 1,181 B | none reported | first measurement |
+| runtime | 890 B (0.869 KiB) | 1,687 B | 723 / 1,332 (K1) | grew since K1 (config, supports, `serializeRuntime`, G1 corrections) |
+| effects | 521 B (0.509 KiB) | 812 B | 500 / 780 (K1) | grew by 21 B (SHOULD-5 `correctiveVersion`) |
+| merge | 901 B (0.880 KiB) | 1,706 B | 829 dev / 645 prod gzip, 1,529 dev / 1,207 prod raw (K2) | measured unbundled, so the dev branch is in: this is the dev build. Above K2's 829 B (72 B), K2 used a different define and wrapper |
+| controlled | 695 B (0.679 KiB) | 1,183 B | none reported | first measurement |
 
-Shared-kernel total outside ADR-011 rows (ids + runtime + effects + merge + controlled): about 3.26 KiB gzip as separate
+Shared-kernel total outside ADR-011 rows (ids + runtime + effects + merge + controlled): about 3.41 KiB gzip as separate
 bundles, an upper bound since each is measured alone.
 
 ## 3. Adapter runtime entries (reported, core and peers excluded)
@@ -57,9 +59,9 @@ and separately.
 
 | Adapter | gzip | raw min | Files in graph | Stream-reported (bundled core, dist) |
 |---|---|---|---|---|
-| react | 1,590 B (1.553 KiB) | 3,415 B | 5 | R1: 3,210 B gzip / 6,860 B raw including bundled core |
-| vue | 1,391 B (1.358 KiB) | 2,737 B | 4 | R2: 3.64 kB gzip / 9.26 kB raw including bundled core |
-| vanilla | 1,244 B (1.215 KiB) | 2,313 B | 1 | none reported |
+| react | 1,560 B (1.523 KiB) | 3,394 B | 5 | R1: 3,210 B gzip / 6,860 B raw including bundled core |
+| vue | 1,357 B (1.325 KiB) | 2,751 B | 4 | R2: 3.64 kB gzip / 9.26 kB raw including bundled core |
+| vanilla | 1,358 B (1.326 KiB) | 2,623 B | 1 | none reported |
 
 R1 and R2 numbers include core copies in the adapter `dist`, a different quantity from the rows above (adapter only). See
 clarification (a): adapters do not bundle core, so those bundled figures are not what ships.
