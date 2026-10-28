@@ -409,7 +409,7 @@ describe('live host (G1 MUST-3)', () => {
       body: { appendChild: () => undefined },
       createElement: () => ({ setAttribute: (k: string, v: string) => (attrs[k] = v) }),
     } as unknown as Document;
-    createDomLiveHost(doc).create('status');
+    createDomLiveHost(doc).create('status').setText('x');
     expect(attrs.style).toBe(HIDDEN_STYLE);
   });
 });

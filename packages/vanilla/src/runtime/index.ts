@@ -107,15 +107,24 @@ export interface VanillaHost {
 function domLiveHost(doc: Document, made: Element[]): LiveHost {
   return {
     create(role: LiveRole): LiveNode {
-      const node = doc.createElement('div');
-      node.setAttribute('role', role);
-      node.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
-      node.setAttribute('aria-atomic', 'true');
-      node.setAttribute('style', HIDDEN_STYLE);
-      node.className = 'sj-sr-only'; // styling hook only; hiding never depends on a stylesheet
-      doc.body.appendChild(node);
-      made.push(node);
-      return { setText: (text) => void (node.textContent = text) };
+      // Lazy: the registry hands out its status node at attach, but the element is only inserted on
+      // the first announce (its first `setText`), so a component that never announces adds nothing.
+      let node: HTMLElement | undefined;
+      return {
+        setText(text) {
+          if (!node) {
+            node = doc.createElement('div');
+            node.setAttribute('role', role);
+            node.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
+            node.setAttribute('aria-atomic', 'true');
+            node.setAttribute('style', HIDDEN_STYLE);
+            node.className = 'sj-sr-only'; // styling hook only; hiding never depends on a stylesheet
+            doc.body.appendChild(node);
+            made.push(node);
+          }
+          node.textContent = text;
+        },
+      };
     },
   };
 }
@@ -207,8 +216,17 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
           throw new Error('[sj] no synchronous re-dispatch from an effect (ADR-003)');
         store.dispatch(event);
       },
-      request: (field, next) => controlled.request(field, next),
-      native: (field, actual) => controlled.native(field, actual),
+      // A rejected controlled change changes nothing, so schedule the flush that resyncs the control.
+      request(field, next) {
+        const r = controlled.request(field, next);
+        if (!r) schedule();
+        return r;
+      },
+      native(field, actual) {
+        const r = controlled.native(field, actual);
+        if (!r) schedule();
+        return r;
+      },
       listen(target, type, handler, opts) {
         target.addEventListener(type, handler, { ...opts, signal });
       },
