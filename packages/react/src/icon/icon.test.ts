@@ -177,6 +177,25 @@ describe('RTL mirror and runtime (G-ICON SHOULD-2)', () => {
   });
 });
 
+describe('orphan warning cases', () => {
+  it('explicit dir (ltr or rtl) never warns, even outside a provider', () => {
+    const warn = spyWarn();
+    mount(h(SJIcon, { icon: arrow, dir: 'ltr' }));
+    mount(h(SJIcon, { icon: arrow, dir: 'rtl' }));
+    expect(warn).not.toHaveBeenCalled();
+  });
+  it('a mirrored icon without dir outside a provider warns once in dev, never in production', () => {
+    const warn = spyWarn();
+    const r = mount(h(SJIcon, { icon: arrow }));
+    act(() => r.update(h(SJIcon, { icon: arrow, size: 'lg' }) as never));
+    expect(warn).toHaveBeenCalledTimes(1);
+    vi.stubEnv('NODE_ENV', 'production');
+    mount(h(SJIcon, { icon: arrow }));
+    vi.unstubAllEnvs();
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('SSR and StrictMode', () => {
   it('server markup is deterministic, id-free and stable across roots and providers', () => {
     const el = (prefix?: string) =>
