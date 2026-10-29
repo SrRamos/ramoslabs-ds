@@ -157,11 +157,20 @@ describe('SJIcon direction', () => {
     expect(mount({ icon: arrow, dir: 'rtl' }).el().props['data-mirror']).toBe('true');
   });
 
-  it('outside a provider renders ltr with no warning, mirrored or not', () => {
+  it('a mirrored icon outside a provider without dir renders ltr and warns once', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    for (const icon of [arrow, star]) {
-      expect(mount({ icon }).el().props).not.toHaveProperty('data-mirror');
-    }
+    const m = mount({ icon: arrow });
+    expect(m.el().props).not.toHaveProperty('data-mirror');
+    expect(warn).toHaveBeenCalledTimes(1);
+    warn.mockRestore();
+  });
+
+  it('never warns for a non-mirrored icon, or for any icon with a dir prop', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount({ icon: star });
+    mount({ icon: arrow, dir: 'ltr' });
+    mount({ icon: arrow, dir: 'rtl' });
+    mount({ icon: arrow }, () => 1);
     expect(warn).not.toHaveBeenCalled();
     warn.mockRestore();
   });
@@ -196,7 +205,7 @@ describe('SJIcon source', () => {
 });
 
 describe('SJIcon lifecycle', () => {
-  it('1,000 mount/unmount cycles retain nothing and never warn outside a provider', () => {
+  it('1,000 mount/unmount cycles retain nothing and never warn outside a provider (non-mirrored)', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const root = mk('root');
     for (let i = 0; i < 1000; i++) {
