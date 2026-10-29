@@ -1,10 +1,15 @@
-import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { createRenderer, createSSRApp, h, type App } from 'vue';
 import { renderToString } from 'vue/server-renderer';
 import { createRuntime } from '@ramoslabs/core/runtime';
 import { SJProvider } from '../runtime/index';
 import { SJIcon } from './index';
+import source from './SJIcon.ts?raw';
+
+declare module '*?raw' {
+  const text: string;
+  export default text;
+}
 
 // DOM-free renderer (as in SJButton.test.ts): the suite runs under `node`.
 interface N {
@@ -186,9 +191,9 @@ describe('SJIcon SSR', () => {
 
 describe('SJIcon source', () => {
   it('creates elements only: no innerHTML or v-html, no @ramoslabs/icons import', () => {
-    const src = readFileSync(new URL('./SJIcon.ts', import.meta.url), 'utf8')
+    const src = source
       .split('\n')
-      .filter((l) => !l.trim().startsWith('//'))
+      .filter((l: string) => !l.trim().startsWith('//'))
       .join('\n');
     expect(src).not.toMatch(/innerHTML|v-html|domProps/);
     expect(src).not.toContain('@ramoslabs/icons');
