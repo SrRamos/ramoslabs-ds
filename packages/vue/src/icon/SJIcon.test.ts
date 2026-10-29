@@ -210,7 +210,7 @@ describe('SJIcon lifecycle', () => {
     const root = mk('root');
     for (let i = 0; i < 1000; i++) {
       const app: App<N> = createApp({
-        render: () => h(SJIcon, { icon: i % 2 ? arrow : star }),
+        render: () => h(SJIcon, { icon: i % 2 ? { ...star, name: 'star2' } : star }),
       });
       app.mount(root);
       const scope = (app as unknown as { _instance: { scope: { active: boolean } } })._instance
