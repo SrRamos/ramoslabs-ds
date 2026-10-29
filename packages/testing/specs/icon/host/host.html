@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SJIcon conformance host</title>
+    <link rel="stylesheet" href="/fonts.css" />
+    <link rel="stylesheet" href="/tokens.css" />
+    <link rel="stylesheet" href="/components.css" />
+    <style>
+      /* Not the harness page.css: it zeroes every animation, which the spin checks need. */
+      body {
+        margin: 0;
+        padding: var(--space-4);
+        font-family: var(--font-family-sans);
+        color: var(--color-slate-900);
+        background: var(--color-white);
+      }
+    </style>
+  </head>
+  <body>
+    <main id="root"></main>
+    <script type="module" src="/host.js"></script>
+  </body>
+</html>

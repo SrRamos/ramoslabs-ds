@@ -1,0 +1,40 @@
+// Real-browser hydration entry (W1-C12.f). The server (serve.mjs) puts prerendered markup in #root; the test
+// records the pre-hydration nodes, calls `hydrate`, and checks that the SAME nodes survive, no mismatch is
+// logged, and a click then reaches `press` exactly once. Built in development mode on purpose: React and Vue
+// only report hydration mismatches in their development builds.
+import { hydrateRoot } from 'react-dom/client';
+import { flushSync } from 'react-dom';
+import { createSSRApp } from 'vue';
+import { reactEl, vueRoot } from './ssr-tree';
+import type { FixtureProps } from '../fixtures';
+
+declare global {
+  interface Window {
+    __btnHy: {
+      ready: true;
+      recoverable: string[];
+      presses: number;
+      hydrate(adapter: 'react' | 'vue', props: FixtureProps): void;
+    };
+  }
+}
+
+const recoverable: string[] = [];
+window.__btnHy = {
+  ready: true,
+  recoverable,
+  presses: 0,
+  hydrate(adapter, props) {
+    const root = document.getElementById('root')!;
+    const onPress = (): void => void (window.__btnHy.presses += 1);
+    if (adapter === 'react') {
+      flushSync(() => {
+        hydrateRoot(root, reactEl(props, onPress), {
+          onRecoverableError: (e) => void recoverable.push(String(e).split('\n')[0]!),
+        });
+      });
+    } else {
+      createSSRApp({ render: () => vueRoot(props, onPress) }).mount(root);
+    }
+  },
+};
