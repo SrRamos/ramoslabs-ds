@@ -30,6 +30,10 @@
     "parity:switch": "node parity/cli.js --results node_modules/.cache/e2e/switch-results.json --expected node_modules/.cache/e2e/switch-expected.json --out node_modules/.cache/e2e/parity-switch",
     "visual:switch": "node specs/switch/visual/cli.js check",
     "voiceover:switch": "node specs/switch/render-voiceover.js",
+    "test:e2e:checkbox": "playwright test -c specs/checkbox/playwright.config.ts",
+    "parity:checkbox": "node parity/cli.js --results node_modules/.cache/e2e/checkbox-results.json --expected node_modules/.cache/e2e/checkbox-expected.json --out node_modules/.cache/e2e/parity-checkbox",
+    "visual:checkbox": "node specs/checkbox/visual/cli.js check",
+    "voiceover:checkbox": "node specs/checkbox/render-voiceover.js",
     "specs:check": "node specs/check.mjs"
   },
   "exports": {
