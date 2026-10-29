@@ -140,3 +140,19 @@ Branch `feature/c12-icon-vanilla`. Owned: `packages/vanilla/src/icon/**`.
 
 ### Size
 `adapter:vanilla` row (barrel, `node packages/testing/size/cli.js`) is unchanged at 1.405 KiB: no ADR-011 row covers the icon adapter and the barrel stays empty. Unminified `dist/icon/index.js` (comments included): 5228 B raw, 1945 B gzip. Core `icon` stays 0.750 KiB (untouched).
+## W1-C12.d: React adapter
+
+Branch `feature/c12-icon-react`. Owned: `packages/react/src/icon/**`. Shared-file edits (minimal): `packages/react/package.json` gains the `./icon` export (like every other adapter entry), `packages/react/src/index.ts` re-exports the module, and the barrel test lists `SJIcon` and `SJIconRoot`. `packages/core/src/icon` is untouched.
+
+### Decisions
+
+- **Stateless like SJButton**: a fresh `createIcon` per render, no `useMachine`, no store, no listener, works outside `SJProvider`. `SJIcon.Root` (= flat `SJIconRoot`) is the primitive; `SJIcon` is the preset built only from it. Both `forwardRef` to the `<svg>`.
+- **Created elements only**: the root and each node are `createElement` calls, keyed by index; no ids, no `innerHTML`; a source test forbids `innerHTML`, `outerHTML`, `insertAdjacentHTML` and any `@ramoslabs/icons` import (boundary rule `no-icons-import` also covers it). Consumers pass `IconData` via `icon`.
+- **Prop names**: getter keys are converted for React (`class` -> `className`, `stroke-linecap` -> `strokeLinecap`, any `kebab-case` -> camelCase); `aria-*`, `data-*` and `viewBox` keep their spelling. Node attributes pass through the same conversion (`stroke-width` -> `strokeWidth`).
+- **`dir`**: `useOptionalRuntime()` (no fallback, no warning) is called unconditionally but its value is used only for a mirrored icon without a `dir` prop. A non-mirrored icon outside a provider never warns (1,000 renders tested). A mirrored icon outside a provider renders `ltr` and, per the row ("warns once"), warns once per instance in dev from an effect guarded by a `useRef` (no module-scope state; StrictMode's double effect still warns once). Passing `dir` or being inside `SJProvider` silences it.
+- **Classes/merge**: `classes.root` and `className` merge after the library class; other attributes go through the core merge (protected keys win, `tabIndex` is deleted with the core warning, `on*` warns pointing to SJButton).
+- **SSR**: no ids and no runtime-dependent output beyond `dir`, so `renderToString` is identical across calls and across providers with different `idPrefix`; server attributes equal the client props (tested).
+
+### Size
+
+Adapter bytes are measured by the W1-308b harness, not gated here; see the gate output. Core `icon` stays 0.75 KiB.
