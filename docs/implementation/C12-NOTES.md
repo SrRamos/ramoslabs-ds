@@ -156,3 +156,14 @@ Branch `feature/c12-icon-react`. Owned: `packages/react/src/icon/**`. Shared-fil
 ### Size
 
 Adapter bytes are measured by the W1-308b harness, not gated here; see the gate output. Core `icon` stays 0.75 KiB.
+## .c: SJIcon Vue adapter
+
+Branch `feature/c12-icon-vue`. Plan row W1-C12.c, ADR-016, G-ICON SHOULD-2. Files: `packages/vue/src/icon/**` (`SJIcon.ts`, `index.ts`, `SJIcon.test.ts`), barrel line in `src/index.ts` and its test, the `./icon` entry in `packages/vue/package.json` `exports` (it was not pre-stubbed on main; shared-file edit, minimal). `packages/core/src/icon` is untouched.
+
+- Stateless flat render-function component (SJButton layout): `h('svg', getRootProps(consumer), getNodes().map(([t, a]) => h(t, a)))`. Created elements only (source scan test), no ids, no store, no listeners. `inheritAttrs: false`; `class` and unknown attributes are consumer props into the ADR-004 merge; `classes.root` adds a class.
+- `dir`: `props.dir ?? (icon.mirror ? useOptionalSJRuntime()?.dir : undefined)`. The runtime is injected once in `setup`, and read only for a mirrored icon without a `dir` prop.
+- Outside a provider: a mirrored icon without a `dir` prop cannot know its direction, so it renders `ltr` and warns once per instance in dev (inline dev guard). Non-mirrored icons and any icon with `dir` never warn (G-ICON SHOULD-2; orchestrator ruling). Tests cover all three.
+- The adapter does not import `@ramoslabs/icons` (boundary rule `no-icons-import`); consumers pass `IconData` via `icon`. `icon` is declared optional at runtime (core warns in dev and renders an empty svg), required in the generated `SJIconProps` type.
+- Tests: decorative vs labelled, whitespace label, sizes plus fallback, merge and protected keys, allowlist, RTL mirror (provider, `dir` prop override, outside provider), SSR twice equal with no ids, no-innerHTML source scan, 1,000 mount/unmount cycles (scope inactive, DOM empty, zero warnings).
+- Bytes (ADR-011 method): core `icon` module 0.750 KiB (unchanged, at ceiling); `adapter:vue` reported row 1.514 KiB (3168 B raw min). SJIcon alone, esbuild minified + gzip, `vue` external, core icon + merge + runtime context bundled: 2861 B (about 2.8 KiB; the runtime context import is the largest share and is shared with every other adapter component in a real bundle). No `.c` row ceiling is gated in `budgets.json`; the one-icon fixture row belongs to `.f`.
+- Follow-up: `.f` composition spec (SJButton `icon` slot).
