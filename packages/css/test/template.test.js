@@ -97,12 +97,12 @@ describe('generator', () => {
     expect(() => generate({ component: 'select', ...s })).toThrow(/No contract/);
   });
 
-  describe('against the real contracts (button, switch, checkbox)', () => {
+  describe('against the real contracts (button, switch, checkbox, icon)', () => {
     const partsOf = (n) =>
       JSON.parse(readFileSync(join(realContracts, `${n}.contract.json`), 'utf8')).anatomy.map(
         (a) => a.part,
       );
-    it.each(['button', 'switch', 'checkbox'])(
+    it.each(['button', 'switch', 'checkbox', 'icon'])(
       '%s: generated CSS names equal anatomy[].part',
       (n) => {
         const s = setup();
@@ -115,25 +115,28 @@ describe('generator', () => {
         expect(checkStylesheets(s.srcDir, realContracts)).toEqual([]);
       },
     );
-    it.each(['button', 'switch', 'checkbox'])('%s: a seeded extra or missing part fails', (n) => {
-      const s = setup();
-      expect(() =>
-        generate({
-          component: n,
-          parts: [...partsOf(n), 'bogus'],
-          contractsDir: realContracts,
-          srcDir: s.srcDir,
-        }),
-      ).toThrow(/bogus/);
-      expect(() =>
-        generate({
-          component: n,
-          parts: ['renamed'],
-          contractsDir: realContracts,
-          srcDir: s.srcDir,
-        }),
-      ).toThrow(/has no CSS rule/);
-    });
+    it.each(['button', 'switch', 'checkbox', 'icon'])(
+      '%s: a seeded extra or missing part fails',
+      (n) => {
+        const s = setup();
+        expect(() =>
+          generate({
+            component: n,
+            parts: [...partsOf(n), 'bogus'],
+            contractsDir: realContracts,
+            srcDir: s.srcDir,
+          }),
+        ).toThrow(/bogus/);
+        expect(() =>
+          generate({
+            component: n,
+            parts: ['renamed'],
+            contractsDir: realContracts,
+            srcDir: s.srcDir,
+          }),
+        ).toThrow(/has no CSS rule/);
+      },
+    );
     it('checkStylesheets flags a drifted stylesheet and a stylesheet with no contract', () => {
       const s = setup();
       writeFileSync(
