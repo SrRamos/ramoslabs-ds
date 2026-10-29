@@ -35,6 +35,10 @@
       "types": "./dist/checkbox/index.d.ts",
       "import": "./dist/checkbox/index.js"
     },
+    "./icon": {
+      "types": "./dist/icon/index.d.ts",
+      "import": "./dist/icon/index.js"
+    },
     "./radio-group": {
       "types": "./dist/radio-group/index.d.ts",
       "import": "./dist/radio-group/index.js"
