@@ -1,0 +1,70 @@
+/* sj-icon: SJIcon (W1-C12.b). Tokens only (stylelint sj/* enforces it).
+   Part (contract anatomy): root <svg>. Core emits the root class `sj-icon` (no `__root`), so the selector names
+   both; data-part=root is what the motion safety net in base/ keys on.
+   The markup carries width/height="1em" so a CSS-less render is visible and font-sized (PLAN-ICONS decision 4);
+   the size tokens below override that box. Colour is never set here: the stroke is `currentColor` from the
+   markup, so the glyph follows the parent's text colour, dark mode and forced colors (CanvasText/ButtonText)
+   with no extra rule, and there is deliberately no forced-color-adjust, fill, stroke colour or filter.
+   Hooks: data-size (sm|md|lg|fit), data-mirror (set by core only in RTL for a mirrorable icon), data-spin
+   (consumer hook for loader-circle). Spin uses the `rotate` property so it composes with the mirror transform. */
+
+@layer sj.component {
+  :is(.sj-icon, .sj-icon__root) {
+    display: inline-block;
+    flex: none;
+    /* md by default (an unknown size is already md in core). */
+    inline-size: var(--icon-size-md);
+    block-size: var(--icon-size-md);
+    /* Sit on the text baseline without raising the line box. */
+    vertical-align: -0.125em;
+    stroke-width: var(--sj-icon-stroke, var(--icon-stroke-width));
+    overflow: visible;
+  }
+
+  :is(.sj-icon, .sj-icon__root)[data-size='sm'] {
+    inline-size: var(--icon-size-sm);
+    block-size: var(--icon-size-sm);
+  }
+
+  :is(.sj-icon, .sj-icon__root)[data-size='md'] {
+    inline-size: var(--icon-size-md);
+    block-size: var(--icon-size-md);
+  }
+
+  :is(.sj-icon, .sj-icon__root)[data-size='lg'] {
+    inline-size: var(--icon-size-lg);
+    block-size: var(--icon-size-lg);
+  }
+
+  /* fit fills the parent box (SJButton icon part, a sized wrapper). */
+  :is(.sj-icon, .sj-icon__root)[data-size='fit'] {
+    inline-size: 100%;
+    block-size: 100%;
+    vertical-align: top;
+  }
+}
+
+@layer sj.state {
+  /* Core sets data-mirror=true only for a mirrorable icon in RTL; CSS never reads dir itself (ADR-009). */
+  :is(.sj-icon, .sj-icon__root)[data-mirror]:not([data-mirror='false']) {
+    transform: scaleX(-1);
+  }
+
+  :is(.sj-icon, .sj-icon__root)[data-spin]:not([data-spin='false']) {
+    animation: sj-icon-spin calc(var(--sj-duration-slow) * 3) var(--easing-linear) infinite;
+  }
+
+  /* A spinner that stops reads as finished, so the loader relies on its own label or surrounding text
+     instead (ADR-009 reduced motion). The base net already zeroes durations; this removes the animation. */
+  @media (prefers-reduced-motion: reduce) {
+    :is(.sj-icon, .sj-icon__root)[data-spin]:not([data-spin='false']) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes sj-icon-spin {
+  to {
+    rotate: 360deg;
+  }
+}

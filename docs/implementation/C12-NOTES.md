@@ -95,3 +95,33 @@ Core `icon`: 0.750 KiB gzip, 1182 B raw, ceiling 0.75 KiB (shared `merge` exclud
 
 - `packages/contracts/scripts/codegen.mjs`: an adapter type with no members (`SJIconEmits`, `SJIconSlots`, vanilla `EventDetail`) is now emitted as `Record<never, never>` instead of an empty `interface`, which `@typescript-eslint/no-empty-object-type` rejects. No output of an existing component changes.
 - The `icon` prop type is `import('@ramoslabs/core/icon').IconData` so the generated adapter types resolve it without a new import line in codegen.
+
+## W1-C12.b: `icon.css`
+
+Branch `feature/c12-icon-css` (from main after `.a` merged). Owned: `packages/css/src/icon.css`, `packages/css/test/icon.test.js`, the `icon` rows in `packages/css/test/template.test.js`, this section.
+
+### What landed
+
+- `icon.css`: `sj.component` carries structure (`display: inline-block`, `flex: none`, `vertical-align: -0.125em`, `stroke-width: var(--sj-icon-stroke, var(--icon-stroke-width))`, box from `--icon-size-sm|md|lg`, `fit` = 100% both axes). The default (no `data-size`) is md. `sj.state` carries `data-mirror` (`transform: scaleX(-1)`) and `data-spin`.
+- The 1em markup box (`width/height="1em"`) is overridden by the size tokens because CSS `inline-size`/`block-size` beat the presentation attributes. A CSS-less render keeps the `1em` box (tested without the stylesheet: 32 px text gives a 32 px glyph).
+- Colour: none. The stroke stays `currentColor`, so forced colors maps it to the system text colour with no rule; no `forced-color-adjust`, `fill`, `stroke` colour or `filter` exists (tested on source, and computed `forced-color-adjust` is not `none`).
+- Spin uses the `rotate` property (not `transform`) so it composes with the mirror flip. Duration is `calc(var(--sj-duration-slow) * 3)` (0.9 s; no 1 s token) with `--easing-linear`. Under `prefers-reduced-motion` the animation is `none` (static). Decided as the row says: static, not an opacity pulse. A stopped loader can read as finished, so a spinning icon should sit next to a text status or carry `label`; revisit at the human visual review if a pulse is wanted.
+- Mirror is driven only by `data-mirror`; the stylesheet never reads `dir` (core sets it, `dir=rtl` alone does not mirror: tested).
+
+### Ambiguities resolved
+
+- Core emits the root class `sj-icon`, not `sj-icon__root`. The selector is `:is(.sj-icon, .sj-icon__root)` so the anatomy check (`.sj-<c>__<part>`) sees `root` and a future class rename needs no CSS change. Not a bug in `.a`; do not rename the class (adapters, fixtures depend on it).
+- 1.4.11: the extractor reads `sj.variant` fills of component parts, and the icon has none, so it adds no pair (tested: no `icon/` pair, none failing). The documented recipes (stroke `slate-900/700/500` and `primary` on background, surface, surface-secondary) are checked at 3:1 directly with `contrastRatio`, with a seeded `slate-300` that fails. The L3 composition check for SJButton stays in `.f`.
+- Baseline: sm in 16px / 1.5 text leaves the line box at 24 px. md (20 px) can grow a 24 px line by 1 px because it is taller than the strut; the glyph bottom sits exactly 0.125em under the baseline, so the text baseline never moves.
+
+### Registration
+
+`icon` added to the real-contract rows of `template.test.js` (generated names equal anatomy, seeded extra/missing part fails). `build.test.js`, `base.css` and the contract source lint list name no component, and the stylesheet is picked up by the `src` listing (generated full file) with no shared-file edit.
+
+### Seeded breakages that fail
+
+Raw `20px` size and raw `900ms` duration (stylelint), `forced-color-adjust: none` (computed value check), a `dir`-driven mirror, a fill on the icon part, `slate-300` recipe (3:1), a part added or renamed in the contract (template tests), removal of the `rotate` or reduced-motion rule (spin and static-pixel tests).
+
+### Follow-ups
+
+- `.f`: no-stylesheet fixture across engines, composition with SJButton `icon` slot, visual baselines, optional pulse decision.
