@@ -21,6 +21,10 @@
       "types": "./dist/button/index.d.ts",
       "import": "./dist/button/index.js"
     },
+    "./icon": {
+      "types": "./dist/icon/index.d.ts",
+      "import": "./dist/icon/index.js"
+    },
     "./field": {
       "types": "./dist/field/index.d.ts",
       "import": "./dist/field/index.js"
