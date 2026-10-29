@@ -6,11 +6,6 @@ import { SJProvider } from '../runtime/index';
 import { SJIcon } from './index';
 import source from './SJIcon.ts?raw';
 
-declare module '*?raw' {
-  const text: string;
-  export default text;
-}
-
 // DOM-free renderer (as in SJButton.test.ts): the suite runs under `node`.
 interface N {
   type: string;

@@ -6,3 +6,8 @@ declare module '*.vue' {
   const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, unknown>;
   export default component;
 }
+
+declare module '*?raw' {
+  const text: string;
+  export default text;
+}
