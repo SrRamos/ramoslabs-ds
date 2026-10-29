@@ -3,5 +3,6 @@
 
 export * from './button/index';
 export * from './checkbox/index';
+export * from './icon/index';
 export * from './kinds/index';
 export * from './switch/index';

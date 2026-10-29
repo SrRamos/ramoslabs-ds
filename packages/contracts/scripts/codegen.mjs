@@ -209,6 +209,11 @@ const payloadTypes = (c) =>
   c.events
     .map((e) => `export type ${c.name}${upperFirst(e.name)}Payload = ${e.payload ?? 'void'};`)
     .join('\n');
+// An empty interface trips @typescript-eslint/no-empty-object-type; an empty shape is a type alias.
+const shape = (name, body, doc = '') =>
+  body.trim() === ''
+    ? `${doc}export type ${name} = Record<never, never>;\n`
+    : `${doc}export interface ${name} {\n${body}\n}\n`;
 const slotKey = (s) => (s.name === 'default' ? 'children' : s.name);
 
 function genAdapterTypes(adapter, c) {
@@ -231,8 +236,8 @@ function genAdapterTypes(adapter, c) {
       .map((s) => `${doc([s.description])}  ${ident(s.name)}?: () => unknown;`)
       .join('\n');
     out += `export interface ${c.name}Props {\n${propLines(c)}\n}\n\n`;
-    out += `export interface ${c.name}Emits {\n${emits}\n}\n\n`;
-    out += `export interface ${c.name}Slots {\n${slots}\n}\n`;
+    out += `${shape(`${c.name}Emits`, emits)}\n`;
+    out += shape(`${c.name}Slots`, slots);
   } else {
     const handlers = c.events
       .map((e) => `  on${upperFirst(e.name)}?: (payload: ${P(e)}) => void;`)
@@ -242,7 +247,7 @@ function genAdapterTypes(adapter, c) {
       .map((s) => `${doc([s.description])}  ${ident(s.name)}?: string | Node;`)
       .join('\n');
     out += `export interface ${c.name}Options {\n${propLines(c)}\n${handlers}\n${slots}\n}\n\n`;
-    out += `/** CustomEvent \`detail\` per event name. */\nexport interface ${c.name}EventDetail {\n${detail}\n}\n`;
+    out += shape(`${c.name}EventDetail`, detail, '/** CustomEvent `detail` per event name. */\n');
   }
   return {
     [`${n.slug}/types.ts`]: out,

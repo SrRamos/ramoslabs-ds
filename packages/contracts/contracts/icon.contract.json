@@ -1,0 +1,101 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJIcon",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": {
+    "apg": "img-role",
+    "evidence": "img-role"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "svg"
+    }
+  ],
+  "state": {
+    "machine": ["idle"],
+    "controllable": []
+  },
+  "actions": [],
+  "keyboard": {},
+  "focus": {
+    "strategy": "native"
+  },
+  "kinds": [],
+  "runtime": ["dir"],
+  "support": [],
+  "a11y": {
+    "wcag": ["1.1.1", "1.4.11", "4.1.2"],
+    "liveRegions": [],
+    "atAssertions": ["manual-icon-decorative-skipped", "manual-icon-label-announced"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/img-role.json#vo-macos-safari-weboverhauls-svg"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/img-role.json#vo-ios-safari-weboverhauls-svg"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/img-role.json#nvda-chrome-weboverhauls-svg"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/img-role.json#jaws-chrome-weboverhauls-svg"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/img-role.json#talkback-chrome-weboverhauls-svg"]
+      }
+    ]
+  },
+  "events": [],
+  "props": [
+    {
+      "name": "icon",
+      "type": "import('@ramoslabs/core/icon').IconData",
+      "required": true,
+      "description": "Icon data { name, nodes, mirror? } from @ramoslabs/icons or the consumer; core never imports the package. support is empty because the SVG presentation attributes and the 1em box work in every supported engine and need no feature fallback (ADR-001 floor), and a missing icon renders an empty svg with a dev warning."
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg' | 'fit'",
+      "default": "md",
+      "description": "Glyph box from the icon.size tokens (14, 20, 24 px); fit fills the parent box. An unknown value falls back to md."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Makes the icon meaningful: role=img and aria-label. Without it (or when empty or whitespace) the icon is decorative: aria-hidden=true, never focusable."
+    },
+    {
+      "name": "dir",
+      "type": "'ltr' | 'rtl'",
+      "description": "Optional override of the runtime direction; a mirrored icon (mirror flag in its data) is flipped only when the direction is rtl."
+    }
+  ],
+  "slots": [],
+  "fixtures": ["default", "sizes", "labelled", "rtl-mirror", "unknown-node"],
+  "budgets": {
+    "gzipKiB": 0.75,
+    "shared": ["merge"]
+  }
+}

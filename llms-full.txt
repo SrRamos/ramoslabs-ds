@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (225 tokens)
+## Token reference (229 tokens)
 
 ### breakpoint (5)
 
@@ -189,6 +189,15 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | --- | --- |
 | `--border-width-hairline` | `1px` |
 
+### icon (4)
+
+| Token | Value |
+| --- | --- |
+| `--icon-size-sm` | `0.875rem` |
+| `--icon-size-md` | `1.25rem` |
+| `--icon-size-lg` | `1.5rem` |
+| `--icon-stroke-width` | `2` |
+
 ### duration (3)
 
 | Token | Value |
@@ -339,6 +348,14 @@ Per AT and platform status, copied from each contract (ADR-010, ADR-015). Wordin
 - talkback / android / chrome: evidence-only; implemented to documented evidence, not hands-on tested
 
 ### SJCheckbox
+
+- voiceover / macos / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
+- voiceover / ios / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
+- nvda / windows / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+- jaws / windows / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+- talkback / android / chrome: evidence-only; implemented to documented evidence, not hands-on tested
+
+### SJIcon
 
 - voiceover / macos / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
 - voiceover / ios / safari: pending-real-test; implemented to documented evidence, hands-on test pending and not yet logged
