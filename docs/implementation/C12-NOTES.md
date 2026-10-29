@@ -125,3 +125,18 @@ Raw `20px` size and raw `900ms` duration (stylelint), `forced-color-adjust: none
 ### Follow-ups
 
 - `.f`: no-stylesheet fixture across engines, composition with SJButton `icon` slot, visual baselines, optional pulse decision.
+## W1-C12.e: vanilla adapter
+Branch `feature/c12-icon-vanilla`. Owned: `packages/vanilla/src/icon/**`.
+
+### Surface
+- `mountIcon(host, container, props) -> { update, destroy, element }` (golden `mountButton` layout). One `<svg>` built with `createElementNS` and `setAttribute`; root attributes come from core `getRootProps(attrs)` with stale ones removed on update; children from `getNodes()`, so the tag and attribute allowlist is the core one.
+- Children are rebuilt only when `props.icon` changes by reference (the `<svg>` itself is stable); `destroy` removes the `<svg>` and is idempotent; later `update` is a no-op.
+- `defineSJIcon({ icons, name?, registry?, host? })` returns `false` when the name is taken; no import-time registration. `icons` is a record (aliases as extra keys) or a list of `IconData` with `name`; the map is built inside the call (no module-scope state). The adapter never imports `@ramoslabs/icons` (`no-icons-import`): the consumer passes `{ search, ... }` or `by-name` data. `<sj-icon icon="search" label size dir>` in light DOM; the `.icon` property takes `IconData` and wins until the `icon` attribute changes. Unknown name: empty svg plus the core dev warning.
+
+### Decisions
+- RTL (PLAN-ICONS decision 11): `dir` prop, else `host.runtime.dir`, read only when `icon.mirror` is true. A vanilla host always owns a runtime, so there is no "outside a provider" case and no warning.
+- A mount consumes one id from the host `idFactory` (host contract) but renders none; the svg has no `id`.
+- Shared-file edit (listed per the ownership rule): `packages/vanilla/package.json` gains the `./icon` export (not pre-stubbed on main).
+
+### Size
+`adapter:vanilla` row (barrel, `node packages/testing/size/cli.js`) is unchanged at 1.405 KiB: no ADR-011 row covers the icon adapter and the barrel stays empty. Unminified `dist/icon/index.js` (comments included): 5228 B raw, 1945 B gzip. Core `icon` stays 0.750 KiB (untouched).
