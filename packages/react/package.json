@@ -33,6 +33,10 @@
       "types": "./dist/switch/index.d.ts",
       "import": "./dist/switch/index.js"
     },
+    "./icon": {
+      "types": "./dist/icon/index.d.ts",
+      "import": "./dist/icon/index.js"
+    },
     "./checkbox": {
       "types": "./dist/checkbox/index.d.ts",
       "import": "./dist/checkbox/index.js"
