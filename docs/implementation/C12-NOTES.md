@@ -170,7 +170,7 @@ Branch `feature/c12-icon-vue`. Plan row W1-C12.c, ADR-016, G-ICON SHOULD-2. File
 
 ## .f: conformance (`packages/testing/specs/icon/**`)
 
-Branch `feature/c12-icon-conformance`. Plan row W1-C12.f, ADR-013, ADR-016, G3A ruling (c). Scripts: `test:e2e:icon`, `parity:icon`, `visual:icon`, `voiceover:icon`. The button contract, getters, `button.css`, `specs/button` and the `core/src/icon` module were not edited. Shared or neighbouring edits, listed per the ownership rule: the vue build entry (defect 1 below), `testTimeout: 30_000` in the shared `vitest.shared.ts` (the size icon rows, contracts `--check` and icons generate tests exceeded the 5 s default on a loaded machine and made the full gate flaky), and one assertion in `core/src/icon/icon.test.ts` (`status` `draft` -> `beta`, which the contract flip requires; the module and its 0.75 KiB are untouched).
+Branch `feature/c12-icon-conformance`. Plan row W1-C12.f, ADR-013, ADR-016, G3A ruling (c). Scripts: `test:e2e:icon`, `parity:icon`, `visual:icon`, `voiceover:icon`. The button contract, getters, `button.css`, `specs/button` and the `core/src/icon` module were not edited. Shared or neighbouring edits, listed per the ownership rule: the vue build entry (defect 1 below), `testTimeout: 30_000` per package in `packages/testing` and `packages/contracts` vitest configs (the size icon rows, contracts `--check` and icons generate tests exceeded the 5 s default on a loaded machine and made the full gate flaky), and one assertion in `core/src/icon/icon.test.ts` (`status` `draft` -> `beta`, which the contract flip requires; the module and its 0.75 KiB are untouched).
 
 ### What landed
 
@@ -201,8 +201,8 @@ Each adapter entry is also asserted to import nothing but the icon and the share
 ### Defects and findings
 
 1. **Fixed here:** `@ramoslabs/vue/icon` pointed at `dist/icon/index.js`, which was never built: `packages/vue/vite.config.ts` had no `icon/index` entry (.c added the `exports` line and source but not the build entry; the L2 host, which imports the real package path through an alias, would not have caught it, the jsdom hydration test did). One line added (shared-file edit, listed here). A consumer installing 0.x would have hit a missing module.
-2. **Limit of the frozen vanilla button:** `mountButton` takes `icon` as a string rendered as a text node, so an SJIcon cannot be passed in. The composition spec asks for the icon part with a placeholder and mounts `mountIcon` into that span. Works and is tested, but is a recipe, not an API. A DOM-node or `mountIcon`-friendly slot needs a button change (ADR-010 process): follow-up.
-3. **Line box:** with the token line height (1.5, 24 px) an md icon grows a line by at most 1 px (asserted). With `line-height: normal` on this font (Rubik) the growth is 3 px. Decide at the visual review whether `icon.css` should cap it (e.g. `block-size` of the line via `vertical-align`) or the docs should recommend a line height.
+2. **Limit of the frozen vanilla button:** `mountButton` takes `icon` as a string rendered as a text node, so an SJIcon cannot be passed in. The composition spec asks for the icon part with a placeholder and mounts `mountIcon` into that span. Works and is tested, but is a recipe, not an API, and it is fragile: any later vanilla button `update()` wipes the mounted SJIcon (`host/entry.ts` composeVanilla). A separate stream is fixing the vanilla button to accept a Node. A DOM-node or `mountIcon`-friendly slot needs a button change (ADR-010 process): follow-up.
+3. **Line box:** with the token line height (1.5, 24 px) an md icon grows a line by at most 1 px (asserted). With `line-height: normal` on this font (Rubik) the growth is 3 px. Both figures are asserted (1 px and 3 px ceilings). Docs rule: md in running text assumes `--leading-normal`; use sm or a flex row otherwise.
 4. **WebKit does not implement `forced-color-adjust`:** the seeded forced-colors case is therefore asserted by contrast only (common to the three engines); the real forced-colors checks pass on all three.
 5. Evidence `img-role` recommends `focusable=false` for SVG; core omits it by the .a decision (not needed above the ADR-001 floor). No test requires it; `tabindex` is protected and asserted absent.
 6. **C01 axe-`incomplete` item (triage.json, issue #67, owner SrRamos):** closed for the icon-only *composition* (the glyph is an svg, `composition-icon-only` has zero violations and zero incomplete, asserted). The triage entries remain, correctly, for `specs/button` fixture `icon-only`, which still uses a `✕` text glyph and is out of scope (frozen); they close when that fixture adopts SJIcon. Same issue and owner.
@@ -210,6 +210,14 @@ Each adapter entry is also asserted to import nothing but the icon and the share
 ### Diff check
 
 `git diff origin/main -- packages/testing/specs/button packages/core/src/button packages/css/src/button.css packages/contracts/contracts/button.contract.json packages/core/src/icon` is empty at this commit. CI is a depth-1 checkout, so the permanent guard is the content-hash pin in `composition/frozen.test.ts`; `specs/button/**` is deliberately not pinned (the button's own fixture lane must stay free to move).
+
+### Provisional ceilings (for ADR-011 review)
+
+The spec-local ceilings are provisional and not ADR-011 values: one-icon fixture 1.1 KiB; adapter `icon` entries 960 / 1240 / 2600 B (react / vue / vanilla).
+
+### Usage rule: spinner
+
+A spinning SJIcon (`data-spin`) is never the sole loading indicator: pair it with text and `aria-busy`; SJState `loading` owns the loading semantics. The spinner is static under reduced motion.
 
 ### Open questions
 

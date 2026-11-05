@@ -253,18 +253,25 @@ for (const adapter of ADAPTERS) {
     expect(errors).toEqual([]);
   });
 
-  test(`${COMPONENT} | ${adapter} | line box grows by at most 1 px next to text (C12 .b review point)`, async ({
+  test(`${COMPONENT} | ${adapter} | line box growth next to text: 1 px at leading-normal, 3 px at line-height normal (C12 .b review point)`, async ({
     page,
   }) => {
     await openHost(page);
     await mountIcon(page, adapter, 'default');
     // The 1 px figure was measured with the token line height (24 px at the base size); the page default differs.
-    await page.locator('#box').evaluate((n) => (n.style.lineHeight = 'var(--leading-normal)'));
     const line = () => page.locator('#box').evaluate((n) => n.getBoundingClientRect().height);
-    const withIcon = await line();
-    await glyph(page).evaluate((n) => (n.style.display = 'none'));
-    const without = await line();
-    expect(withIcon - without).toBeLessThanOrEqual(1);
-    expect(withIcon - without).toBeGreaterThanOrEqual(0);
+    // Token line height (24 px at the base size): at most 1 px. Page default `normal`: at most 3 px.
+    for (const [lineHeight, ceiling] of [
+      ['var(--leading-normal)', 1],
+      ['normal', 3],
+    ] as const) {
+      await glyph(page).evaluate((n) => (n.style.display = ''));
+      await page.locator('#box').evaluate((n, lh) => (n.style.lineHeight = lh), lineHeight);
+      const withIcon = await line();
+      await glyph(page).evaluate((n) => (n.style.display = 'none'));
+      const without = await line();
+      expect(withIcon - without, lineHeight).toBeLessThanOrEqual(ceiling + 0.5);
+      expect(withIcon - without, lineHeight).toBeGreaterThanOrEqual(0);
+    }
   });
 }
