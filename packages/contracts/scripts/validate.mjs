@@ -62,6 +62,11 @@ function semanticErrors(c, today) {
     if (propSet.has(s.name === 'default' ? 'children' : s.name))
       add(`/slots/${i}/name`, `slot "${s.name}" collides with a prop of the same name`);
   });
+  // A prop named `kind` is typed "kind" (codegen expands it to the union of `kinds`), never a literal union.
+  c.props.forEach((p, i) => {
+    if (p.name === 'kind' && p.type !== 'kind')
+      add(`/props/${i}/type`, 'a prop named "kind" must have type "kind" (expanded from kinds[])');
+  });
   c.actions.forEach((a, i) => {
     for (const k of ['from', 'to'])
       if (!states.has(a[k])) add(`/actions/${i}/${k}`, `"${a[k]}" is not in state.machine`);

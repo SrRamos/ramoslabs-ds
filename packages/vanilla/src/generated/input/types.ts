@@ -4,7 +4,7 @@
 // SJInput types for @ramoslabs/vanilla: props, events, slots (ADR-004 "one types file").
 
 export interface SJInputOptions {
-  /** ADR-007 intent. Resolves the rendered element and its type, inputmode, autocomplete, enterkeyhint, autocapitalize, autocorrect and spellcheck. Never emits maxlength. Unknown kinds are a type error. @default "text" */
+  /** ADR-007 intent. Resolves the rendered element (input, or textarea for address) and its type, inputmode, autocomplete, enterkeyhint, autocapitalize, autocorrect and spellcheck. Never emits maxlength. Unknown kinds are a type error. choice and the select form of country belong to SJSelect. @default "text" */
   kind?:
     | 'text'
     | 'name'
@@ -26,7 +26,6 @@ export interface SJInputOptions {
     | 'password-new'
     | 'date'
     | 'time'
-    | 'choice'
     | 'cc-number'
     | 'cc-exp'
     | 'cc-exp-month'
@@ -37,7 +36,7 @@ export interface SJInputOptions {
     | 'address-line'
     | 'country'
     | 'organization';
-  /** Text variant of quantity (type=text) and country (type=text, country-name). */
+  /** Text variant of quantity (type=text). country is always the text variant here. */
   variant?: 'text';
   /** Consumer autofill token or variant (for example given-name); used only when the kind allows it. */
   autocomplete?: string;

@@ -2,13 +2,14 @@
 // `resolveKind` into the native attributes of the control (type, inputmode, autocomplete,
 // enterkeyhint, autocapitalize, autocorrect, spellcheck). `maxlength` is never emitted and a numeric
 // identifier is never `type=number`. The element is an `<input>`, except the textarea kind
-// (`address`) and the native select kinds (`choice`, `country`), which `tag()` reports.
+// (`address`), which `tag()` reports. `choice` and the select form of `country` belong to SJSelect;
+// here `country` is always the text variant (`country-name`).
 // Inside an SJField the field supplies the ids, `aria-describedby`/`aria-invalid` (IDREFs come from
 // the field context, never typed by hand) and `enterkeyhint` position; the input reports its kind
 // with `connect()` (-> `field.setKind`) and hands entered values to `field.retain` (WCAG 3.3.7).
 // `:user-invalid` is native from Chromium 119; below that (`ctx.userInvalid` false, the default so the
-// server render and the forced-false run take it) a touched state (blur or an `invalid` event)
-// sets `data-touched` for the CSS fallback. Getters are pure functions of props and the store.
+// server render and the forced-false run take it) a touched state (a user value change or an
+// `invalid` event on a submission attempt, never blur alone; the form `reset` clears it) sets `data-touched` for the CSS fallback. Getters are pure functions of props and the store.
 import { mergeProps, type Props } from '../merge/index';
 import { createStore, type Store } from '../store/index';
 import { resolveKind, type Kind, type KindContext, type ResolvedKind } from '../kinds/index';
@@ -53,11 +54,13 @@ export interface InputContext {
 export interface InputParts {
   readonly store: Store<InputSnapshot, InputAction>;
   /** The element the control renders as. */
-  tag(): 'input' | 'textarea' | 'select';
+  tag(): 'input' | 'textarea';
   /** The ADR-007 row resolved for the current props and the field's Enter position. */
   resolved(): ResolvedKind;
   getRootProps(consumer?: Props): Props;
   getControlProps(consumer?: Props): Props;
+  /** Form `reset` event: clears the touched state. The adapter listens on the owning form. */
+  reset(): void;
   /** Client only, after mount and whenever `kind` changes: reports the kind to the field. Returns the cleanup. */
   connect(): () => void;
 }
@@ -80,11 +83,10 @@ export function createInput(getProps: () => InputProps, ctx: InputContext = {}):
       autoSubmit: p.autoSubmit,
       enter: field?.enterHint(),
     };
-    return resolveKind(kind(), k);
+    return resolveKind(kind(), kind() === 'country' ? { ...k, variant: 'text' } : k);
   };
   const tag = () => {
-    const t = resolved().type;
-    return t === 'textarea' || t === 'select' ? t : 'input';
+    return resolved().type === 'textarea' ? 'textarea' : 'input';
   };
   const fallback = () => ctx.userInvalid !== true;
   const touch = () => void (fallback() && store.dispatch({ type: 'touch' }));
@@ -114,7 +116,7 @@ export function createInput(getProps: () => InputProps, ctx: InputContext = {}):
         autocapitalize: r.autocapitalize,
         autocorrect: r.autocorrect,
         spellcheck: r.spellcheck === undefined ? undefined : String(r.spellcheck),
-        onBlur: (e: Evt) => {
+        onChange: (e: Evt) => {
           touch();
           const v = e.target?.value;
           if (typeof v === 'string') field?.retain(v);
@@ -137,6 +139,7 @@ export function createInput(getProps: () => InputProps, ctx: InputContext = {}):
         { part: 'control', protect: ['name', 'required', 'disabled'] },
       );
     },
+    reset: () => void store.dispatch({ type: 'reset' }),
     connect() {
       field?.setKind(kind());
       return () => field?.setKind(undefined);

@@ -6,9 +6,9 @@
 export const inputMachine = {
   initial: 'pristine',
   states: ['pristine', 'touched'],
-  events: ['touch'],
+  events: ['touch', 'reset'],
   controllable: [],
-  transitions: { pristine: { touch: { to: 'touched' } }, touched: {} },
+  transitions: { pristine: { touch: { to: 'touched' } }, touched: { reset: { to: 'pristine' } } },
 } as const;
 
 export type InputState = (typeof inputMachine.states)[number];

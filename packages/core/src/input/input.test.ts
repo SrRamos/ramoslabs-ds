@@ -8,7 +8,9 @@ import { createField } from '../field/index';
 import { createForm } from '../form/index';
 import { createInput, reduce, reducerEvents, initialSnapshot, type InputProps } from './index';
 
-const kinds = Object.keys(KINDS) as Kind[];
+const allKinds = Object.keys(KINDS) as Kind[];
+// SJSelect owns `choice` (and the select form of `country`).
+const kinds = allKinds.filter((k) => k !== 'choice');
 const attr = (p: Record<string, unknown>) => (k: string) => p[k];
 const mk = (p: InputProps = {}, ctx: Parameters<typeof createInput>[1] = {}) =>
   createInput(() => p, ctx);
@@ -19,13 +21,16 @@ describe('contract and reducer', () => {
     expect(reduce('pristine', { type: 'touch' })).toBe('touched');
     expect(reduce('touched', { type: 'touch' })).toBe('touched');
     expect(reduce('pristine', { type: 'x' })).toBe('pristine');
+    expect(reduce('touched', { type: 'reset' })).toBe('pristine');
+    expect(reduce('pristine', { type: 'reset' })).toBe('pristine');
     const s = initialSnapshot;
     expect(reduce(s, { type: 'x' }).state).toBe(s);
     expect(reduce(s, { type: 'touch' }).state).toEqual({ state: 'touched' });
     expect([...contract.kinds].sort()).toEqual([...kinds].sort());
-    expect(kindsContract.kinds.map((k) => k.kind).sort()).toEqual([...kinds].sort());
+    expect(kindsContract.kinds.map((k) => k.kind).sort()).toEqual([...allKinds].sort());
   });
   it('declares the user-invalid support row with a Chromium 114-118 fallback', () => {
+    expect(contract.actions.map((a) => a.id)).toEqual(['touch', 'reset']);
     expect(contract.support).toEqual([
       {
         feature: 'user-invalid',
@@ -62,7 +67,7 @@ describe('every ADR-007 kind row in the control bag', () => {
   it('resolves exactly what resolveKind says, for every kind', () => {
     for (const kind of kinds) {
       const input = mk({ kind });
-      const r = resolveKind(kind);
+      const r = resolveKind(kind, kind === 'country' ? { variant: 'text' } : {});
       const bag = input.getControlProps();
       const a = attr(bag);
       expect(a('inputmode')).toBe(r.inputmode);
@@ -72,6 +77,7 @@ describe('every ADR-007 kind row in the control bag', () => {
       expect(a('autocorrect')).toBe(r.autocorrect);
       expect(a('spellcheck')).toBe(r.spellcheck === undefined ? undefined : String(r.spellcheck));
       expect(a('type')).toBe(input.tag() === 'input' ? r.type : undefined);
+      expect(r.type).not.toBe('select');
     }
   });
   it('never emits maxlength or type=number for identifiers', () => {
@@ -124,17 +130,16 @@ describe('every ADR-007 kind row in the control bag', () => {
       'section-ship given-name',
     );
   });
-  it('textarea and select kinds render their own element and carry no type', () => {
+  it('address renders a textarea with no type; country is always the text variant', () => {
     const address = mk({ kind: 'address' });
     expect(address.tag()).toBe('textarea');
     expect(address.getControlProps()).not.toHaveProperty('type');
     expect(address.getControlProps().enterkeyhint).toBe('enter');
-    expect(mk({ kind: 'choice' }).tag()).toBe('select');
-    expect(mk({ kind: 'country' }).tag()).toBe('select');
-    expect(mk({ kind: 'country', variant: 'text' }).tag()).toBe('input');
-    expect(mk({ kind: 'country', variant: 'text' }).getControlProps().autocomplete).toBe(
-      'country-name',
-    );
+    for (const p of [{}, { variant: 'text' as const }]) {
+      const c = mk({ kind: 'country', ...p });
+      expect(c.tag()).toBe('input');
+      expect(c.getControlProps()).toMatchObject({ type: 'text', autocomplete: 'country-name' });
+    }
     expect(mk({}).tag()).toBe('input');
   });
   it('property: a consumer attribute overrides, unknown kind defaults to text', () => {
@@ -199,39 +204,59 @@ describe('inside an SJField and SJForm', () => {
     offs.forEach((o) => o());
     expect(form.store.getSnapshot().fields).toEqual([]);
   });
-  it('blur retains the entered value (3.3.7), never for secret kinds', () => {
+  it('a value change retains the entered value (3.3.7), never for secret kinds', () => {
     const { form, parts } = setup([
       { id: 'a', kind: 'name', name: 'n' },
       { id: 'b', kind: 'password', name: 'pw' },
     ]);
-    const blur = (i: number, value: string) =>
-      (parts[i]!.input.getControlProps().onBlur as (e: unknown) => void)({ target: { value } });
-    blur(0, 'Ada');
-    blur(1, 'hunter2');
+    const change = (i: number, value: string) =>
+      (parts[i]!.input.getControlProps().onChange as (e: unknown) => void)({ target: { value } });
+    change(0, 'Ada');
+    change(1, 'hunter2');
     expect(form.store.getSnapshot().values).toEqual({ n: 'Ada' });
     expect(parts[1]!.field.offers()).toEqual(['Ada']);
   });
 });
 
 describe(':user-invalid fallback', () => {
-  const fire = (bag: Record<string, unknown>, h: 'onBlur' | 'onInvalid') =>
-    (bag[h] as (e: unknown) => void)({ target: { value: '' } });
-  it('touched state is set by blur or invalid when native support is absent (default)', () => {
-    const input = mk({ kind: 'email' });
-    expect(input.getControlProps()['data-touched']).toBeUndefined();
-    fire(input.getControlProps(), 'onBlur');
+  const fire = (bag: Record<string, unknown>, h: 'onChange' | 'onInvalid', value = 'x') =>
+    (bag[h] as (e: unknown) => void)({ target: { value } });
+  it('a user change or an invalid event touches; blur alone (tab-through) does not', () => {
+    const input = mk({ kind: 'email', required: true });
+    const bag = input.getControlProps();
+    expect(bag).not.toHaveProperty('onBlur');
+    expect(bag['data-touched']).toBeUndefined();
+    fire(bag, 'onChange');
     expect(input.getControlProps()['data-touched']).toBe('true');
     const second = mk();
     fire(second.getControlProps(), 'onInvalid');
     expect(second.getControlProps()['data-touched']).toBe('true');
     expect(input.store.getSnapshot().state).toBe('touched');
   });
+  it('the form reset clears the touched state', () => {
+    const input = mk();
+    fire(input.getControlProps(), 'onInvalid');
+    input.reset();
+    expect(input.getControlProps()['data-touched']).toBeUndefined();
+    expect(input.store.getSnapshot().state).toBe('pristine');
+  });
   it('is inert with native :user-invalid (forced-true) and a consumer cannot fake it', () => {
     const input = mk({}, { userInvalid: true });
-    fire(input.getControlProps(), 'onBlur');
+    fire(input.getControlProps(), 'onChange');
+    fire(input.getControlProps(), 'onInvalid');
     expect(input.store.getSnapshot().state).toBe('pristine');
     expect(input.getControlProps({ 'data-touched': 'true' })['data-touched']).toBeUndefined();
     expect(mk().getControlProps({ 'data-touched': 'true' })['data-touched']).toBeUndefined();
+  });
+  it('tabbing through (no change) keeps a value retained earlier under the same key', () => {
+    const form = createForm(() => ({}));
+    const field = createField(() => ({ name: 'n' }), { id: 'a', form });
+    const input = createInput(() => ({ kind: 'name' }), { field });
+    field.connect();
+    fire(input.getControlProps(), 'onChange', 'Ada');
+    expect(form.store.getSnapshot().values).toEqual({ n: 'Ada' });
+    expect(input.getControlProps()).not.toHaveProperty('onBlur');
+    expect(form.store.getSnapshot().values).toEqual({ n: 'Ada' });
   });
 });
 

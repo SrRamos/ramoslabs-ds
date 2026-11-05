@@ -1,5 +1,5 @@
-// SJInput reducer (W1-C02.a2, ADR-014). One transition: `touch` moves `pristine` to `touched`, the
-// state the `:user-invalid` fallback keys on (Chromium 114-118). Pure; a repeated touch is a missing
+// SJInput reducer (W1-C02.a2, ADR-014). `touch` moves `pristine` to `touched`, the state the
+// `:user-invalid` fallback keys on (Chromium 114-118); the form `reset` event moves it back. Pure; a repeated touch is a missing
 // row, so the store keeps the reference. Nothing is controllable, so no field is read here.
 import type { Reduction } from '../store/index';
 import type { InputEvent, InputState } from '../generated/input/machine';
@@ -7,7 +7,7 @@ import type { InputEvent, InputState } from '../generated/input/machine';
 export type { InputEvent, InputState };
 
 /** Written independently of the generated table so the equivalence check compares two sources. */
-export const reducerEvents = ['touch'] as const;
+export const reducerEvents = ['touch', 'reset'] as const;
 
 export interface InputSnapshot {
   readonly state: InputState;
@@ -18,7 +18,7 @@ export interface InputAction {
 
 const table: Readonly<Record<InputState, Readonly<Record<string, InputState>>>> = {
   pristine: { touch: 'touched' },
-  touched: {},
+  touched: { reset: 'pristine' },
 };
 const step = (state: InputState, event: { readonly type: string }): InputState =>
   table[state][event.type] ?? state;
