@@ -30,7 +30,7 @@
     border-radius: var(--radius-md);
     background-color: var(--color-surface);
     color: var(--color-text-body);
-    line-height: 1.5;
+    line-height: var(--leading-normal);
   }
 
   .sj-input__control::placeholder {

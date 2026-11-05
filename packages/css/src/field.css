@@ -1,11 +1,11 @@
 /* sj-field: SJField stylesheet (W1-C02.b). Authored from the contract anatomy. Tokens only (stylelint sj/* rules enforce it).
-   Parts (contract anatomy): root <div>, label <label>, control <input> (native, styled by sj-input.css), hint <div>, error <div>.
+   Parts (contract anatomy): root <div>, label <label>, control <input> (native, styled by sj-input.css), hint <div>, error <div>, icon <span> (aria-hidden, inside error).
    Core emits the root class `sj-field__root` and one class per part (`sj-field__<part>`), data-part on every part, and on the
    root data-invalid="true" while an error shows and data-disabled="true" while disabled. The control gets its class from
    SJInput (`sj-input__control`); the contract part `control` has no rule here because the field owns no control paint, only
    the `.sj-field__control` hook for consumers that render a bare native control inside a field.
-   Error is never carried by colour alone (WCAG 1.4.1, 3.3.1): the error part is visible text, and a drawn "!" marker
-   (decorative, no announcement) precedes it. The text colour only reinforces both.
+   Error is never carried by colour alone (WCAG 1.4.1, 3.3.1): the error part is visible text, and an aria-hidden icon part
+   (no generated content, so nothing extra is announced) precedes it. The text colour only reinforces both.
    Layers: structure in sj.component, disabled and forced colors in sj.state. */
 
 @layer sj.component {
@@ -34,7 +34,7 @@
     overflow-wrap: anywhere;
   }
 
-  /* Error: marker plus text. The marker is a bordered circle with "!" (alt text empty, so it is not read). */
+  /* Error: icon plus text, in a row. */
   .sj-field__error {
     display: flex;
     align-items: baseline;
@@ -45,21 +45,15 @@
     overflow-wrap: anywhere;
   }
 
-  .sj-field__error::before {
-    content: '!';
-    content: '!' / '';
+  /* Error icon: a static aria-hidden slot (an SJIcon alert-circle, size sm, rendered by the adapters). No generated
+     content: CSS text would enter the accessible description on engines without the alt-text syntax. */
+  .sj-field__icon {
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
     inline-size: var(--space-4);
     block-size: var(--space-4);
-    border: calc(var(--border-width-hairline) * 2) solid currentColor;
-    border-radius: var(--radius-pill);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    line-height: 1;
   }
 }
 
@@ -72,10 +66,6 @@
 
   /* Forced colors (ADR-009): the UA picks the colours; the marker keeps its shape and the label goes grey. */
   @media (forced-colors: active) {
-    .sj-field__error::before {
-      border-color: CanvasText;
-    }
-
     .sj-field__root[data-disabled]:not([data-disabled='false']) .sj-field__label {
       color: GrayText;
     }

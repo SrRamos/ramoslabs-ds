@@ -40,7 +40,7 @@ function fieldHtml({ error = '', disabled = false, hint = true } = {}) {
     <label id="f-label" for="f" class="sj-field__label" data-part="label">Email address</label>
     ${hint ? '<div id="f-hint" class="sj-field__hint" data-part="hint">We never share it.</div>' : ''}
     <span class="sj-input__root" data-part="root"><input id="f" class="sj-input__control" data-part="control"${error ? ' aria-invalid="true" aria-describedby="f-hint f-error"' : ''}${disabled ? ' disabled' : ''}></span>
-    ${error ? `<div id="f-error" class="sj-field__error" data-part="error">${error}</div>` : ''}
+    ${error ? `<div id="f-error" class="sj-field__error" data-part="error"><span class="sj-field__icon" data-part="icon" aria-hidden="true"></span>${error}</div>` : ''}
   </div>`;
 }
 
@@ -143,23 +143,21 @@ describe('label, hint and error parts', () => {
     expect(c.y).toBeLessThan(e.y);
   });
 
-  it('the error is visible text with a drawn marker, so colour is not the only cue (1.4.1, 3.3.1)', async () => {
+  it('the error is visible text beside a sized aria-hidden icon slot, so colour is not the only cue (1.4.1, 3.3.1)', async () => {
     const page = await open(fieldHtml({ error: 'Enter a valid email.' }));
     const text = await page.evaluate(() => document.getElementById('f-error').textContent.trim());
     expect(text).toBe('Enter a valid email.');
-    const marker = await cs(
-      page,
-      '#f-error',
-      ['content', 'inline-size', 'border-top-style'],
-      '::before',
-    );
-    expect(marker.content).toMatch(/!/);
-    expect(parseFloat(marker['inline-size'])).toBeGreaterThan(0);
-    expect(marker['border-top-style']).toBe('solid');
+    const icon = await rect(page, '.sj-field__icon');
+    expect(icon.width).toBeGreaterThan(0);
+    expect(icon.height).toBeGreaterThan(0);
   });
 
-  it('the marker has an empty accessible text so it is not announced as "exclamation mark"', () => {
-    expect(fieldCss).toMatch(/content:\s*'!'\s*\/\s*''/);
+  it('the error part generates no content: CSS text would enter the accessible description', async () => {
+    expect(fieldCss.replace(/\/\*[\s\S]*?\*\//g, '')).not.toMatch(/(^|[\s;{])content\s*:/);
+    const page = await open(fieldHtml({ error: 'Enter a valid email.' }));
+    for (const pseudo of ['::before', '::after']) {
+      expect((await cs(page, '#f-error', ['content'], pseudo)).content).toMatch(/^(none|normal)$/);
+    }
   });
 
   it('error text colour is the error-text token', async () => {
@@ -191,42 +189,28 @@ describe('label, hint and error parts', () => {
 });
 
 describe('forced colours', () => {
-  it('under forced-colors: active the error marker keeps its shape and the text stays visible', async () => {
+  it('under forced-colors: active the icon slot keeps its size and the text stays visible', async () => {
     const page = await open(fieldHtml({ error: 'Enter a valid email.' }), {
       media: { forcedColors: 'active' },
     });
     expect(await page.evaluate(() => matchMedia('(forced-colors: active)').matches)).toBe(true);
-    const m = await cs(
-      page,
-      '#f-error',
-      ['inline-size', 'border-top-style', 'border-top-width'],
-      '::before',
-    );
-    expect(parseFloat(m['inline-size'])).toBeGreaterThan(0);
-    expect(m['border-top-style']).toBe('solid');
-    expect(parseFloat(m['border-top-width'])).toBeGreaterThan(0);
+    expect((await rect(page, '.sj-field__icon')).width).toBeGreaterThan(0);
     expect((await rect(page, '#f-error')).height).toBeGreaterThan(0);
   });
 });
 
 describe('RTL geometry (logical properties)', () => {
-  it('the error marker sits at the inline start: the text is pushed away from that edge in both directions', async () => {
+  it('the icon sits at the inline start of the error in both directions', async () => {
     for (const [attrs, dir] of [
       ['', 'ltr'],
       ['dir="rtl"', 'rtl'],
     ]) {
       const page = await open(fieldHtml({ error: 'Enter a valid email.' }), {}, attrs);
-      const g = await page.evaluate(() => {
-        const e = document.getElementById('f-error');
-        const r = e.getBoundingClientRect();
-        const range = document.createRange();
-        range.selectNodeContents(e);
-        const t = range.getBoundingClientRect();
-        return {
-          startGap: document.documentElement.dir === 'rtl' ? r.right - t.right : t.left - r.left,
-        };
-      });
-      expect(g.startGap, dir).toBeGreaterThanOrEqual(16);
+      const e = await rect(page, '#f-error');
+      const i = await rect(page, '.sj-field__icon');
+      const startGap = dir === 'rtl' ? e.right - i.right : i.x - e.x;
+      const endGap = dir === 'rtl' ? i.x - e.x : e.right - i.right;
+      expect(startGap, dir).toBeLessThan(endGap);
     }
   });
 });

@@ -106,3 +106,9 @@ Branch `feature/m4-c02-css`. Owned: `packages/css/src/{field,input}.css`, `packa
 - **Forced colors**: `ButtonBorder` boundary, `Highlight` border when invalid (plus the thickness), `GrayText` when disabled, marker border `CanvasText`.
 - **Textarea** (address): `min-block-size` two targets, `resize: block`.
 - **Follow-ups**: hover/readonly styling is not specified by any contract and is not added; the `[data-touched]:invalid` run on a real Chromium 114-118 is the forced-false proof of `.f`.
+
+### C02.b audit fix (SHOULD-1, NICE)
+
+- The error "!" is no longer CSS text: `content: '!' / ''` is hidden only on Chromium 77+, Firefox 128+ and Safari 17.4+, so on the ADR-001 floor (Firefox 125-127, Safari 17.0-17.3) it would enter the accessible description through `aria-describedby`. The field contract gains a static `icon` part (`span`, mirrors SJState), core gains `getIconProps` (`sj-field__icon`, `aria-hidden="true"`), and `field.css` styles only its size and the gap. The adapters (.c/.d/.e) render an `aria-hidden` SJIcon `alert-circle`, size sm, in that part inside the error. A test asserts no `content:` on the error part.
+- `input.css` uses `--leading-normal`.
+- The local contrast checks stay; a separate testing stream extends the shared matrix and deletes them.
