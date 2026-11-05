@@ -8,8 +8,6 @@ export interface SJFieldProps {
   id?: string;
   /** Control name; also the key under which the form owner tracks the field and retains its value. */
   name?: string;
-  /** Kind of the wrapped control, used to register with the SJForm owner for the Enter position. Optional; a field without it counts as text. */
-  kind?: import('@ramoslabs/core/kinds').Kind;
   /** @default false */
   required?: boolean;
   /** @default false */

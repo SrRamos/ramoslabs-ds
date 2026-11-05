@@ -1,5 +1,7 @@
 import fc from 'fast-check';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+declare const console: { warn(m: string): void };
 import contract from '../../../contracts/contracts/field.contract.json';
 import { fieldMachine } from '../generated/field/index';
 import { createForm } from '../form/index';
@@ -30,7 +32,7 @@ describe('contract', () => {
   });
   it('props name exactly what FieldProps reads; anatomy names every getter part', () => {
     expect(contract.props.map((p) => p.name).sort()).toEqual(
-      ['disabled', 'error', 'errorMessage', 'hasHint', 'id', 'kind', 'name', 'required'].sort(),
+      ['disabled', 'error', 'errorMessage', 'hasHint', 'id', 'name', 'required'].sort(),
     );
     expect(contract.anatomy.map((a) => a.part).sort()).toEqual(
       ['control', 'error', 'hint', 'label', 'root'].sort(),
@@ -86,6 +88,12 @@ describe('derived ARIA (ADR-014)', () => {
     expect(mk({ error: '   ' }).field.getControlProps()).not.toHaveProperty('aria-invalid');
     expect(mk({}).field.getControlProps()).not.toHaveProperty('aria-invalid');
     expect(mk({ error: 'Required' }).field.getControlProps()['aria-invalid']).toBe('true');
+  });
+  it('a consumer describedby merges without a discarded-value warning', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mk({ error: 'Bad' }).field.getControlProps({ 'aria-describedby': 'count' });
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
   it('consumer describedby ids are appended after the library ones, never replace them', () => {
     const { field } = mk({ hasHint: true, error: 'Bad' });
@@ -204,31 +212,58 @@ describe('error announcement (ADR-006)', () => {
   });
   it('never uses the alert role', () => {
     const l = live();
-    const { field } = mk({ error: 'Bad' }, { live: l.registry });
+    const { field, set } = mk({}, { live: l.registry });
+    set({ error: 'Bad' });
     field.announce();
     l.settle();
     expect(l.created).not.toContain('alert');
   });
-  it('connect cleanup lets a remounted field announce its standing error again', () => {
+  it('a standing error at creation stays silent; only transitions announce', () => {
     const l = live();
-    const { field } = mk({ error: 'Bad' }, { live: l.registry });
-    const off = field.connect();
-    field.announce();
+    const { field, set } = mk({ error: 'Bad' }, { live: l.registry });
+    expect(field.announce()).toBe(false);
     l.settle();
-    off();
-    field.announce();
+    expect(l.writes).toEqual([]);
+    set({ error: 'Worse' });
+    expect(field.announce()).toBe(true);
+  });
+  it('a mount-time announce before the host attaches is not lost', () => {
+    const s = createFakeScheduler();
+    const writes: string[] = [];
+    const registry = createLiveRegistry(s);
+    const { field, set } = mk({}, { live: registry });
+    set({ error: 'Bad' });
+    expect(field.announce()).toBe(false);
+    expect(field.announce()).toBe(false);
+    registry.attach({ create: () => ({ setText: (t) => void (t && writes.push(t)) }) });
+    expect(field.announce()).toBe(true);
+    s.flush();
+    expect(writes).toEqual(['Bad']);
+    expect(field.announce()).toBe(false);
+  });
+  it('known limit: two fields announcing in one commit speak only the last text', () => {
+    const l = live();
+    const a = mk({}, { live: l.registry });
+    const b = mk({}, { live: l.registry });
+    a.set({ error: 'A bad' });
+    b.set({ error: 'B bad' });
+    a.field.announce();
+    b.field.announce();
     l.settle();
-    expect(l.writes).toEqual(['status:Bad', 'status:Bad']);
+    expect(l.writes).toEqual(['status:B bad']);
   });
 });
 
 describe('form owner context', () => {
   it('registers by name (or id), reports the Enter hint, textarea excluded, and cleans up', () => {
     const form = createForm();
-    const a = mk({ name: 'email', kind: 'email' }, { id: 'a', form });
-    const b = mk({ kind: 'text' }, { id: 'b', form });
-    const c = mk({ name: 'notes', kind: 'address' }, { id: 'c', form });
+    const a = mk({ name: 'email' }, { id: 'a', form });
+    const b = mk({}, { id: 'b', form });
+    const c = mk({ name: 'notes' }, { id: 'c', form });
     const offs = [a, b, c].map((x) => x.field.connect());
+    a.field.setKind('email');
+    b.field.setKind('text');
+    c.field.setKind('address');
     expect(a.field.enterHint()).toBe('next');
     expect(b.field.enterHint()).toBe('go');
     expect(c.field.enterHint()).toBe('enter');
@@ -238,7 +273,7 @@ describe('form owner context', () => {
     expect(b.field.enterHint()).toBeUndefined();
   });
   it('outside a form there is no hint and nothing to retain', () => {
-    const { field } = mk({ kind: 'text' });
+    const { field } = mk({});
     expect(field.enterHint()).toBeUndefined();
     field.retain('x');
     expect(field.prior()).toBeUndefined();
@@ -247,10 +282,12 @@ describe('form owner context', () => {
   });
   it('3.3.7: a value entered in one field is retained and offered to another', () => {
     const form = createForm();
-    const a = mk({ name: 'billing', kind: 'address-line' }, { id: 'a', form });
-    const b = mk({ name: 'shipping', kind: 'address-line' }, { id: 'b', form });
+    const a = mk({ name: 'billing' }, { id: 'a', form });
+    const b = mk({ name: 'shipping' }, { id: 'b', form });
     a.field.connect();
     b.field.connect();
+    a.field.setKind('address-line');
+    b.field.setKind('address-line');
     a.field.retain('12 Main St');
     expect(a.field.prior()).toBe('12 Main St');
     expect(b.field.prior()).toBeUndefined();
@@ -258,8 +295,9 @@ describe('form owner context', () => {
   });
   it('a password field retains nothing', () => {
     const form = createForm();
-    const a = mk({ name: 'pw', kind: 'password' }, { id: 'a', form });
+    const a = mk({ name: 'pw' }, { id: 'a', form });
     a.field.connect();
+    a.field.setKind('password');
     a.field.retain('secret');
     expect(a.field.prior()).toBeUndefined();
   });

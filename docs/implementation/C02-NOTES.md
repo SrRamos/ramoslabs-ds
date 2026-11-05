@@ -13,8 +13,8 @@ FormProps = { fields?: {key, kind?}[]; action?: 'go'|'send'|'search'; submits?: 
 FormOwner = { store; getRootProps; register(field): off; hint(key); retain(key, v); prior(key); offers(key) }
 // @ramoslabs/core/field
 createField(getProps: () => FieldProps, ctx: { id; form?; live? }): FieldParts
-FieldProps = { id?, name?, kind?, required?, disabled?, hasHint?, error?, errorMessage? }
-FieldParts = { ids, getRoot/Label/Control/Hint/ErrorProps, connect(), announce(), enterHint(), retain(v), prior(), offers() }
+FieldProps = { id?, name?, required?, disabled?, hasHint?, error?, errorMessage? }
+FieldParts = { ids, getRoot/Label/Control/Hint/ErrorProps, connect(), setKind(kind), announce(), enterHint(), retain(v), prior(), offers() }
 ```
 
 - **Ids** (ADR-003, ADR-014): control `<id>`, `<id>-label`, `<id>-hint`, `<id>-error`. The label emits `for` (HTML name, like `class`; the React adapter maps it to `htmlFor`).
@@ -32,7 +32,7 @@ FieldParts = { ids, getRoot/Label/Control/Hint/ErrorProps, connect(), announce()
 - `hasHint` (not `hint`) names the presence prop so it cannot be confused with the `hint` slot.
 - `invalid` is not a prop: invalid is derived from the error text, so a state without a visible message (3.3.1) is not expressible.
 - Form pattern evidence is `text-field` (no form file exists in the registry); AT rows point at the same `text-field` entries as SJField. NVDA row uses the registry's `edge` entry.
-- A server-rendered standing error is announced once on mount (post-submit round trip). Acceptable for 3.3.1; revisit with the SJInput scenarios if it is noisy.
+- A standing error at creation is silent (ruling 3); only transitions announce.
 - `connect()` registers with the key at call time; an adapter must reconnect if `name` changes.
 
 ### Size (ADR-011, `node packages/testing/size/cli.js`)
@@ -47,4 +47,14 @@ Core `field`: 0.68 KiB gzip (ceiling 3 KiB); core `form`: 0.69 KiB (ceiling 1.5 
 
 - Live-region `live: 'eager'` derivation from `liveRegions` is C11.a's. The `field` contract declares `liveRegions: [{ id: 'error', politeness: 'polite' }]`; rebase and `bun run codegen` once C11.a is on main.
 - Post-submit focus path (text-field evidence variant) is not part of the two SJForm duties; left to the consumer/adapters.
-- Open: `kind` lives on SJField (registration) and will also be on SJInput (.a2). Decide whether SJInput reads it from field context.
+
+### Audit fixes (Fable, dd011cd)
+
+- MUST-1: `LiveRegistry.attached()` added (shared `live` module, one line); `announce()` records nothing until a host is attached, so a mount-time transition is announced on the first call after attach.
+- MUST-2: `retain()` checks the secret kinds against the data-first `fields` list as well as the store.
+- SHOULD-1: the consumer `aria-describedby` is removed from the bag before the merge (no discarded-value warning), then appended.
+- SHOULD-2 known limit: two fields announcing in one commit speak only the last text (the registry holds one pending text per role). A summary or focus path is for SJInput (.a2) or the consumer.
+- SHOULD-3: SJForm AT rows cite `text-field.json#crossat-crossbrowser-html-label` (no form evidence file exists; the errormessage rows were unrelated to enterkeyhint and 3.3.7).
+- NICE-1: form budget 1.5 KiB is an engineering limit chosen as about twice the measured 0.69 KiB; plan 6.2 puts the form context inside SJField's 3 KiB, and field + form measure 1.4 KiB combined, so the 3 KiB reading holds with margin.
+- Ruling 1: `kind` dropped from SJField; SJInput owns it and calls `field.setKind(kind)` (re-registers; `connect()` registers with kind undefined) and reads `field.enterHint()`.
+- Ruling 3: `last` starts as the creation-time error, so a standing error is silent and only transitions announce.

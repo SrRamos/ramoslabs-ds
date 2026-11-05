@@ -175,6 +175,17 @@ describe('WCAG 3.3.7 retained values', () => {
       expect(f.offers('o')).toEqual([]);
     }
   });
+  it('data-first secrets are guarded without any registration', () => {
+    const f = createForm(() => ({
+      fields: [
+        { key: 'pw', kind: 'password' },
+        { key: 'n', kind: 'text' },
+      ],
+    }));
+    f.retain('pw', 'x');
+    expect(f.prior('pw')).toBeUndefined();
+    expect(f.offers('n')).toEqual([]);
+  });
   it('every non-secret kind is retained', () => {
     for (const k of kinds.filter((x) => !secrets.includes(x))) {
       const f = createForm();

@@ -36,35 +36,35 @@
         "platform": "macos",
         "browser": "safari",
         "test_status": "pending-real-test",
-        "evidence": ["at-support/text-field.json#vo-macos-safari-a11ysupport-errormessage"]
+        "evidence": ["at-support/text-field.json#crossat-crossbrowser-html-label"]
       },
       {
         "at": "voiceover",
         "platform": "ios",
         "browser": "safari",
         "test_status": "pending-real-test",
-        "evidence": ["at-support/text-field.json#vo-ios-safari-a11ysupport-errormessage"]
+        "evidence": ["at-support/text-field.json#crossat-crossbrowser-html-label"]
       },
       {
         "at": "nvda",
         "platform": "windows",
         "browser": "edge",
         "test_status": "evidence-only",
-        "evidence": ["at-support/text-field.json#nvda-edge-a11ysupport-errormessage"]
+        "evidence": ["at-support/text-field.json#crossat-crossbrowser-html-label"]
       },
       {
         "at": "jaws",
         "platform": "windows",
         "browser": "chrome",
         "test_status": "evidence-only",
-        "evidence": ["at-support/text-field.json#jaws-chrome-a11ysupport-errormessage"]
+        "evidence": ["at-support/text-field.json#crossat-crossbrowser-html-label"]
       },
       {
         "at": "talkback",
         "platform": "android",
         "browser": "chrome",
         "test_status": "evidence-only",
-        "evidence": ["at-support/text-field.json#talkback-chrome-a11ysupport-errormessage"]
+        "evidence": ["at-support/text-field.json#crossat-crossbrowser-html-label"]
       }
     ]
   },
