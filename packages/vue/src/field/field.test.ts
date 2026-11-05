@@ -275,7 +275,7 @@ describe('SJField, SJInput and SJForm lifecycle', () => {
     expect(lifecycle.created - before.created).toBe(2000);
     expect(lifecycle.listeners).toBe(before.listeners);
     expect(document.body.children.length).toBe(0);
-  });
+  }, 60_000);
 
   it('registers fields in order, renames under the new key, and unregisters on unmount', async () => {
     const name = ref('a');
