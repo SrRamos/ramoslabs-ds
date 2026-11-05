@@ -9,7 +9,7 @@ export const formAtSupport = [
     platform: 'macos',
     browser: 'safari',
     test_status: 'pending-real-test',
-    evidence: ['at-support/text-field.json#vo-macos-safari-a11ysupport-errormessage'],
+    evidence: ['at-support/form.json#vo-macos-safari-form'],
     statement: 'implemented to documented evidence, hands-on test pending and not yet logged',
   },
   {
@@ -17,7 +17,7 @@ export const formAtSupport = [
     platform: 'ios',
     browser: 'safari',
     test_status: 'pending-real-test',
-    evidence: ['at-support/text-field.json#vo-ios-safari-a11ysupport-errormessage'],
+    evidence: ['at-support/form.json#vo-ios-safari-form'],
     statement: 'implemented to documented evidence, hands-on test pending and not yet logged',
   },
   {
@@ -25,7 +25,7 @@ export const formAtSupport = [
     platform: 'windows',
     browser: 'edge',
     test_status: 'evidence-only',
-    evidence: ['at-support/text-field.json#nvda-edge-a11ysupport-errormessage'],
+    evidence: ['at-support/form.json#nvda-edge-form'],
     statement: 'implemented to documented evidence, not hands-on tested',
   },
   {
@@ -33,7 +33,7 @@ export const formAtSupport = [
     platform: 'windows',
     browser: 'chrome',
     test_status: 'evidence-only',
-    evidence: ['at-support/text-field.json#jaws-chrome-a11ysupport-errormessage'],
+    evidence: ['at-support/form.json#jaws-chrome-form'],
     statement: 'implemented to documented evidence, not hands-on tested',
   },
   {
@@ -41,7 +41,7 @@ export const formAtSupport = [
     platform: 'android',
     browser: 'chrome',
     test_status: 'evidence-only',
-    evidence: ['at-support/text-field.json#talkback-chrome-a11ysupport-errormessage'],
+    evidence: ['at-support/form.json#talkback-chrome-form'],
     statement: 'implemented to documented evidence, not hands-on tested',
   },
 ] as const;

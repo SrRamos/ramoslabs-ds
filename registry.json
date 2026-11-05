@@ -438,7 +438,7 @@
       "status": "draft",
       "pattern": {
         "apg": "text-field",
-        "evidence": "text-field",
+        "evidence": "form",
         "native": "form"
       },
       "anatomy": [
@@ -464,7 +464,7 @@
           "browser": "safari",
           "test_status": "pending-real-test",
           "evidence": [
-            "at-support/text-field.json#vo-macos-safari-a11ysupport-errormessage"
+            "at-support/form.json#vo-macos-safari-form"
           ],
           "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
         },
@@ -474,7 +474,7 @@
           "browser": "safari",
           "test_status": "pending-real-test",
           "evidence": [
-            "at-support/text-field.json#vo-ios-safari-a11ysupport-errormessage"
+            "at-support/form.json#vo-ios-safari-form"
           ],
           "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
         },
@@ -484,7 +484,7 @@
           "browser": "edge",
           "test_status": "evidence-only",
           "evidence": [
-            "at-support/text-field.json#nvda-edge-a11ysupport-errormessage"
+            "at-support/form.json#nvda-edge-form"
           ],
           "statement": "implemented to documented evidence, not hands-on tested"
         },
@@ -494,7 +494,7 @@
           "browser": "chrome",
           "test_status": "evidence-only",
           "evidence": [
-            "at-support/text-field.json#jaws-chrome-a11ysupport-errormessage"
+            "at-support/form.json#jaws-chrome-form"
           ],
           "statement": "implemented to documented evidence, not hands-on tested"
         },
@@ -504,7 +504,7 @@
           "browser": "chrome",
           "test_status": "evidence-only",
           "evidence": [
-            "at-support/text-field.json#talkback-chrome-a11ysupport-errormessage"
+            "at-support/form.json#talkback-chrome-form"
           ],
           "statement": "implemented to documented evidence, not hands-on tested"
         }

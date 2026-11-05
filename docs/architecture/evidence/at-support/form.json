@@ -1,0 +1,176 @@
+{
+  "pattern": "form",
+  "recommended": {
+    "variant": "Native form with owner-computed enterkeyhint as a visual keyboard cue only (explicit submit control retained) and prior values retained or offered across the process (WCAG 2.2 SC 3.3.7).",
+    "constraints": {
+      "focusStrategy": "native"
+    },
+    "supportedBy": [
+      "crossat-crossbrowser-html-enterkeyhint",
+      "crossat-crossbrowser-wcag-redundant-entry"
+    ],
+    "atEvidence": {
+      "nvda": "no-measured-evidence",
+      "jaws": "no-measured-evidence",
+      "voiceover-macos": "no-measured-evidence",
+      "voiceover-ios": "no-measured-evidence",
+      "talkback": "no-measured-evidence"
+    }
+  },
+  "entries": [
+    {
+      "id": "crossat-crossbrowser-html-enterkeyhint",
+      "pattern": "form",
+      "kind": "contract",
+      "at": "cross-AT",
+      "at_version": null,
+      "browser": "cross-browser",
+      "browser_version": null,
+      "platform": "cross",
+      "platform_version": null,
+      "behavior": "HTML defines enterkeyhint as an enumerated attribute (enter, done, go, next, previous, search, send) specifying the action label or icon for the enter key on virtual keyboards; the user agent should present a cue for the operation, and when it is unspecified or unsupported the UA determines a default (guided by inputmode, type, pattern). The spec says nothing about how assistive technology exposes or announces the label.",
+      "source_url": "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute",
+      "source_date": "HTML Living Standard updated 2026-11-05",
+      "retrieved": "2026-11-05",
+      "source_tier": "T1",
+      "decision": "Owner-computed enterkeyhint (next/done/go/send/search from field order) is a visual and tactile cue on the virtual keyboard only; never rely on it to convey the action to AT users, and keep an explicit submit control.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-02-05"
+    },
+    {
+      "id": "crossat-crossbrowser-wcag-redundant-entry",
+      "pattern": "form",
+      "kind": "contract",
+      "at": "cross-AT",
+      "at_version": null,
+      "browser": "cross-browser",
+      "browser_version": null,
+      "platform": "cross",
+      "platform_version": null,
+      "behavior": "WCAG 2.2 SC 3.3.7 Redundant Entry (Level A): information previously entered by or provided to the user that is required to be entered again in the same process is auto-populated or available for the user to select, except where re-entry is essential, needed for content security, or the information is no longer valid. Technique G221 provides data from a previous step in a process.",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html",
+      "source_date": "WCAG 2.2 Understanding page updated 2025-09-17",
+      "retrieved": "2026-11-05",
+      "source_tier": "T1",
+      "decision": "Retain prior values within the form process and offer or auto-populate them; this is a content and state requirement that does not depend on AT, so it is verified in the manual lane.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-02-05"
+    },
+    {
+      "id": "nvda-edge-form",
+      "pattern": "form",
+      "kind": "contract",
+      "at": "NVDA",
+      "at_version": null,
+      "browser": "Edge",
+      "browser_version": null,
+      "platform": "windows",
+      "platform_version": null,
+      "behavior": "No measured evidence located for this AT/browser pair on how the enterkeyhint virtual-keyboard label is exposed or announced, or on how it handles retained or offered prior values under SC 3.3.7; implemented to the HTML and WCAG contracts only. Untested.",
+      "source_url": "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute",
+      "source_date": "HTML Living Standard updated 2026-11-05",
+      "retrieved": "2026-11-05",
+      "source_tier": "T1",
+      "decision": "Make no AT support claim for enterkeyhint or prior-value offers beyond the HTML and WCAG contracts; verify in the real lane.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-02-05"
+    },
+    {
+      "id": "jaws-chrome-form",
+      "pattern": "form",
+      "kind": "contract",
+      "at": "JAWS",
+      "at_version": null,
+      "browser": "Chrome",
+      "browser_version": null,
+      "platform": "windows",
+      "platform_version": null,
+      "behavior": "No measured evidence located for this AT/browser pair on how the enterkeyhint virtual-keyboard label is exposed or announced, or on how it handles retained or offered prior values under SC 3.3.7; implemented to the HTML and WCAG contracts only. Untested.",
+      "source_url": "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute",
+      "source_date": "HTML Living Standard updated 2026-11-05",
+      "retrieved": "2026-11-05",
+      "source_tier": "T1",
+      "decision": "Make no AT support claim for enterkeyhint or prior-value offers beyond the HTML and WCAG contracts; verify in the real lane.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-02-05"
+    },
+    {
+      "id": "vo-macos-safari-form",
+      "pattern": "form",
+      "kind": "contract",
+      "at": "VoiceOver",
+      "at_version": null,
+      "browser": "Safari",
+      "browser_version": null,
+      "platform": "macos",
+      "platform_version": null,
+      "behavior": "No measured evidence located for this AT/browser pair on how the enterkeyhint virtual-keyboard label is exposed or announced, or on how it handles retained or offered prior values under SC 3.3.7; implemented to the HTML and WCAG contracts only. Untested.",
+      "source_url": "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute",
+      "source_date": "HTML Living Standard updated 2026-11-05",
+      "retrieved": "2026-11-05",
+      "source_tier": "T1",
+      "decision": "Make no AT support claim for enterkeyhint or prior-value offers beyond the HTML and WCAG contracts; verify in the real lane.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "pending-real-test",
+      "next_review": "2027-02-05"
+    },
+    {
+      "id": "vo-ios-safari-form",
+      "pattern": "form",
+      "kind": "contract",
+      "at": "VoiceOver",
+      "at_version": null,
+      "browser": "Safari",
+      "browser_version": null,
+      "platform": "ios",
+      "platform_version": null,
+      "behavior": "No measured evidence located for this AT/browser pair on how the enterkeyhint virtual-keyboard label is exposed or announced, or on how it handles retained or offered prior values under SC 3.3.7; implemented to the HTML and WCAG contracts only. Untested.",
+      "source_url": "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute",
+      "source_date": "HTML Living Standard updated 2026-11-05",
+      "retrieved": "2026-11-05",
+      "source_tier": "T1",
+      "decision": "Make no AT support claim for enterkeyhint or prior-value offers beyond the HTML and WCAG contracts; verify in the real lane.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "pending-real-test",
+      "next_review": "2027-02-05"
+    },
+    {
+      "id": "talkback-chrome-form",
+      "pattern": "form",
+      "kind": "contract",
+      "at": "TalkBack",
+      "at_version": null,
+      "browser": "Chrome",
+      "browser_version": null,
+      "platform": "android",
+      "platform_version": null,
+      "behavior": "No measured evidence located for this AT/browser pair on how the enterkeyhint virtual-keyboard label is exposed or announced, or on how it handles retained or offered prior values under SC 3.3.7; implemented to the HTML and WCAG contracts only. Untested.",
+      "source_url": "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute",
+      "source_date": "HTML Living Standard updated 2026-11-05",
+      "retrieved": "2026-11-05",
+      "source_tier": "T1",
+      "decision": "Make no AT support claim for enterkeyhint or prior-value offers beyond the HTML and WCAG contracts; verify in the real lane.",
+      "constraints": {
+        "focusStrategy": "native"
+      },
+      "test_status": "evidence-only",
+      "next_review": "2027-02-05"
+    }
+  ]
+}
