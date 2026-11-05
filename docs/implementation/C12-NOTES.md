@@ -167,3 +167,51 @@ Branch `feature/c12-icon-vue`. Plan row W1-C12.c, ADR-016, G-ICON SHOULD-2. File
 - Tests: decorative vs labelled, whitespace label, sizes plus fallback, merge and protected keys, allowlist, RTL mirror (provider, `dir` prop override, outside provider), SSR twice equal with no ids, no-innerHTML source scan, 1,000 mount/unmount cycles (scope inactive, DOM empty, zero warnings).
 - Bytes (ADR-011 method): core `icon` module 0.750 KiB (unchanged, at ceiling); `adapter:vue` reported row 1.514 KiB (3168 B raw min). SJIcon alone, esbuild minified + gzip, `vue` external, core icon + merge + runtime context bundled: 2861 B (about 2.8 KiB; the runtime context import is the largest share and is shared with every other adapter component in a real bundle). No `.c` row ceiling is gated in `budgets.json`; the one-icon fixture row belongs to `.f`.
 - Follow-up: `.f` composition spec (SJButton `icon` slot).
+
+## .f: conformance (`packages/testing/specs/icon/**`)
+
+Branch `feature/c12-icon-conformance`. Plan row W1-C12.f, ADR-013, ADR-016, G3A ruling (c). Scripts: `test:e2e:icon`, `parity:icon`, `visual:icon`, `voiceover:icon`. The button contract, getters, `button.css`, `specs/button` and the `core/src/icon` module were not edited. Shared or neighbouring edits, listed per the ownership rule: the vue build entry (defect 1 below), `testTimeout: 30_000` in the shared `vitest.shared.ts` (the size icon rows, contracts `--check` and icons generate tests exceeded the 5 s default on a loaded machine and made the full gate flaky), and one assertion in `core/src/icon/icon.test.ts` (`status` `draft` -> `beta`, which the contract flip requires; the module and its 0.75 KiB are untouched).
+
+### What landed
+
+- Template layout (`specs:check` green) plus `composition/`. Fixtures: the five contract names (`default`, `sizes`, `labelled`, `rtl-mirror`, `unknown-node`) and one conformance-only `rtl-runtime` (direction from the runtime, no `dir` prop). Real icon data comes from `packages/icons/src/generated/**` by relative path (the testing package does not depend on the data package; adapters still never import it).
+- **NICE-5**: with zero actions, `matrix.ts` declares one `render` action (outcome `none`) per fixture, so L2 has tests and the parity matrix has no empty cell. 6 scenarios x 3 adapters x 2 executed paths (`native`, `fallback:all`) x 3 engines = **108 executed cells, 0 missing, 0 invalid** (`parity:icon`). The ten single-key forced-false paths are `not-applicable` with a reason (SJIcon declares `support: []`).
+- Playwright: **660 tests on 3 engines (220 each), 0 skips**. They cover markup and namespace, class `sj-icon`, no ids anywhere, never focusable (Tab leaves focus on `body`), sizes from tokens (14/20/24 px, `fit` fills its box, unknown size falls back to md), no-stylesheet `1em` box equals the font size (10/16/32/48 px), hostile `unknown-node` data (only two `path` nodes with `d`, no script, handler, style, id), RTL (prop, runtime, `dir=rtl` alone never flips, non-mirrorable never flips), spin and reduced motion, consumer attributes and protected keys, the line-box review point.
+- ARIA snapshots (6 yml, shared by every adapter and engine) plus an `img` count, with seeded regressions that must fail. axe: zero untriaged violations and zero untriaged `incomplete` for every fixture on every adapter, seeded `svg-img-alt` and `aria-hidden-focus`. 1.4.11: the documented recipes (stroke slate-900/700/500/primary on background, surface, surface-secondary) measured in the browser at >= 3:1, seeded slate-300 fails. Forced colors: stroke equals the system text colour and is >= 3:1 on the canvas; seeded opt-out reported. WCAG 2.5.8 and 2.4.13 do not apply to a non-interactive graphic: asserted that the icon is not a target.
+- SSR (`ssr.test.ts`, jsdom): React, Vue and vanilla agree; output byte-equal rendered twice and under providers with different `idPrefix`; no `id` at all; real `hydrateRoot` and `createSSRApp` hydration. `hydrate.e2e.ts`: the same in a real browser, development build, server nodes kept, no mismatch. Seeded failures for markup difference, `idPrefix` leak and hydration mismatch.
+- Composition (`composition/button.e2e.ts`, 4 compositions x 3 adapters x 3 engines): SJIcon (size `fit`) in the SJButton `icon` part fills the 1.25em box; name is the button text or the button `label`; an SJIcon `label` inside the icon part is rendered but ignored (aria-hidden part wins, no image role exposed); `link` variant; axe clean; glyph 3:1 on the button fill; forced colors; focus on the control. `composition/frozen.test.ts` pins sha256 of the frozen button contract, core getters and `button.css`.
+- VoiceOver hook (`voiceover.js`): script text for `manual-icon-decorative-skipped` and `manual-icon-label-announced`, rendered by `voiceover:icon`; actual speech stays blank.
+- Visual: 12 scenes (sizes, whole-set samples at sm/md/lg, colours, inline text, fit, RTL mirror, static spinner, in button, icon-only, link). `visual:icon candidates` writes PNGs; **no baseline is committed**: a human reviews and runs `update`. Review points: stroke at 14 px (looked acceptable in the candidates), static spinner under reduced motion, line-box growth.
+- `icon.contract.json` `status: beta` (regenerated; root `registry.json` follows). `evidence:check`, `honesty:check`, `contract:lint`, `skips:check`, `specs:check`, `registry:check` green. No skip, fixme or todo anywhere in the specs.
+
+### Size rows (ADR-011 method, `bundle.test.ts`; gzip bytes)
+
+| Row | Bytes | Gate |
+|---|---|---|
+| core `icon` | 0.750 KiB | contract ceiling 0.75 (unchanged, no headroom) |
+| largest icon (`star`) | 363 B (0.354 KiB) | <= 0.4 KiB, all 78 pass |
+| one icon via barrel | 228 B | <= 0.4 KiB |
+| unused icon next to a used one | 0 | 0 |
+| one-icon fixture: SJIcon core + `search`, `merge` excluded | 932 B (0.91 KiB) | <= 1.1 KiB (spec-local, plan says "about 1 KiB") |
+| `by-name` (whole set, one module) | 4573 B (4.47 KiB) | reported |
+| adapter `icon` entry, react / vue / vanilla (runtime in, core and peers out) | 816 / 1062 / 2252 B | spec-local regression ceilings 960 / 1240 / 2600 B (ADR-011 gives adapters no ceiling; these only catch growth) |
+
+Each adapter entry is also asserted to import nothing but the icon and the shared runtime (no other component, no CSS, no `@ramoslabs/icons`).
+
+### Defects and findings
+
+1. **Fixed here:** `@ramoslabs/vue/icon` pointed at `dist/icon/index.js`, which was never built: `packages/vue/vite.config.ts` had no `icon/index` entry (.c added the `exports` line and source but not the build entry; the L2 host, which imports the real package path through an alias, would not have caught it, the jsdom hydration test did). One line added (shared-file edit, listed here). A consumer installing 0.x would have hit a missing module.
+2. **Limit of the frozen vanilla button:** `mountButton` takes `icon` as a string rendered as a text node, so an SJIcon cannot be passed in. The composition spec asks for the icon part with a placeholder and mounts `mountIcon` into that span. Works and is tested, but is a recipe, not an API. A DOM-node or `mountIcon`-friendly slot needs a button change (ADR-010 process): follow-up.
+3. **Line box:** with the token line height (1.5, 24 px) an md icon grows a line by at most 1 px (asserted). With `line-height: normal` on this font (Rubik) the growth is 3 px. Decide at the visual review whether `icon.css` should cap it (e.g. `block-size` of the line via `vertical-align`) or the docs should recommend a line height.
+4. **WebKit does not implement `forced-color-adjust`:** the seeded forced-colors case is therefore asserted by contrast only (common to the three engines); the real forced-colors checks pass on all three.
+5. Evidence `img-role` recommends `focusable=false` for SVG; core omits it by the .a decision (not needed above the ADR-001 floor). No test requires it; `tabindex` is protected and asserted absent.
+6. **C01 axe-`incomplete` item (triage.json, issue #67, owner SrRamos):** closed for the icon-only *composition* (the glyph is an svg, `composition-icon-only` has zero violations and zero incomplete, asserted). The triage entries remain, correctly, for `specs/button` fixture `icon-only`, which still uses a `✕` text glyph and is out of scope (frozen); they close when that fixture adopts SJIcon. Same issue and owner.
+
+### Diff check
+
+`git diff origin/main -- packages/testing/specs/button packages/core/src/button packages/css/src/button.css packages/contracts/contracts/button.contract.json packages/core/src/icon` is empty at this commit. CI is a depth-1 checkout, so the permanent guard is the content-hash pin in `composition/frozen.test.ts`; `specs/button/**` is deliberately not pinned (the button's own fixture lane must stay free to move).
+
+### Open questions
+
+- Who reviews and records the visual baselines (`visual:icon update --reviewer ...`) and runs the VoiceOver protocol on a device (statuses stay `pending-real-test`).
+- Optional row item not done: source lint rule `contract/icon-label-in-button` (plan marks it optional); the runtime tree already proves the label is ignored.
