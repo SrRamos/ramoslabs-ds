@@ -4,7 +4,7 @@
 // SJForm types for @ramoslabs/vanilla: props, events, slots (ADR-004 "one types file").
 
 export interface SJFormOptions {
-  /** Optional ordered field list (data first, SSR safe). Without it the order is the order in which fields register after mount. Textarea kinds are excluded from the position computation (ADR-007). */
+  /** Optional ordered field list (data first, SSR safe). Without it the order is the DOM index each field reports with connect(index), then registration order for fields that gave none. Textarea kinds are excluded from the position computation (ADR-007). */
   fields?: readonly { key: string; kind?: import('@ramoslabs/core/kinds').Kind }[];
   /** Enter label of the last editable field when Enter acts on the form: go, send (messaging) or search (query). Wins over submits. */
   enter?: 'go' | 'send' | 'search';

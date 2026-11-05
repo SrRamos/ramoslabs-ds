@@ -73,7 +73,7 @@
     {
       "name": "fields",
       "type": "readonly { key: string; kind?: import('@ramoslabs/core/kinds').Kind }[]",
-      "description": "Optional ordered field list (data first, SSR safe). Without it the order is the order in which fields register after mount. Textarea kinds are excluded from the position computation (ADR-007)."
+      "description": "Optional ordered field list (data first, SSR safe). Without it the order is the DOM index each field reports with connect(index), then registration order for fields that gave none. Textarea kinds are excluded from the position computation (ADR-007)."
     },
     {
       "name": "enter",

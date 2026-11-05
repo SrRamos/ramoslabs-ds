@@ -214,3 +214,51 @@ describe('WCAG 3.3.7 retained values', () => {
     expect(f.prior('s')).not.toBe(naive.get('s'));
   });
 });
+
+describe('DOM index ordering', () => {
+  const keys = (f: ReturnType<typeof createForm>) => f.store.getSnapshot().fields.map((x) => x.key);
+  it('a late-mounted field lands at its DOM index, not last', () => {
+    const f = createForm();
+    f.register({ key: 'a', kind: 'text', index: 0 });
+    f.register({ key: 'c', kind: 'text', index: 2 });
+    expect(['a', 'c'].map(f.hint)).toEqual(['next', 'go']);
+    f.register({ key: 'b', kind: 'text', index: 1 });
+    expect(keys(f)).toEqual(['a', 'b', 'c']);
+    expect(['a', 'b', 'c'].map(f.hint)).toEqual(['next', 'next', 'go']);
+  });
+  it('a reorder (re-register with a new index) and a rename follow the DOM', () => {
+    const f = createForm();
+    f.register({ key: 'a', kind: 'text', index: 0 });
+    f.register({ key: 'b', kind: 'email', index: 1 });
+    f.register({ key: 'a', kind: 'text', index: 2 });
+    expect(keys(f)).toEqual(['b', 'a']);
+    expect(['b', 'a'].map(f.hint)).toEqual(['next', 'go']);
+    f.register({ key: 'a', kind: 'text', index: 2 });
+    expect(keys(f)).toEqual(['b', 'a']);
+    const off = f.register({ key: 'z', kind: 'text', index: 5 });
+    off();
+    f.register({ key: 'z2', kind: 'text', index: 1 });
+    expect(keys(f)).toEqual(['b', 'z2', 'a']);
+  });
+  it('unindexed fields keep registration order after the indexed ones; fields still wins', () => {
+    const f = createForm();
+    f.register({ key: 'x', kind: 'text' });
+    f.register({ key: 'y', kind: 'text', index: 0 });
+    f.register({ key: 'w', kind: 'text' });
+    expect(keys(f)).toEqual(['y', 'x', 'w']);
+    const g = createForm(() => ({ fields: keyed(['text', 'text']) }));
+    g.register({ key: 'f1', kind: 'text', index: 0 });
+    expect(['f0', 'f1'].map(g.hint)).toEqual(['next', 'go']);
+  });
+  it('property: any registration order with DOM indexes yields DOM order', () => {
+    fc.assert(
+      fc.property(fc.shuffledSubarray([0, 1, 2, 3, 4, 5], { minLength: 1 }), (idx) => {
+        const f = createForm();
+        idx.forEach((i) => f.register({ key: `k${i}`, kind: 'text', index: i }));
+        const want = [...idx].sort((a, b) => a - b).map((i) => `k${i}`);
+        expect(keys(f)).toEqual(want);
+        expect(want.map(f.hint).at(-1)).toBe('go');
+      }),
+    );
+  });
+});

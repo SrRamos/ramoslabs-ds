@@ -15,6 +15,8 @@ export interface FormField {
   readonly key: string;
   /** Absent counts as text for the Enter position. */
   readonly kind?: Kind;
+  /** The control's index in `form.elements` (DOM order). Present: it orders the field; absent: registration order, after every indexed field. */
+  readonly index?: number;
 }
 
 export type FormProps = {
@@ -38,7 +40,7 @@ export type FormAction =
 export interface FormOwner {
   readonly store: Store<FormSnapshot, FormAction>;
   getRootProps(consumer?: Props): Props;
-  /** Registers a mounted field; returns an idempotent unregister. Order is registration order. */
+  /** Registers a mounted field; returns an idempotent unregister. Order is the DOM `index` when given, else registration order after the indexed fields. */
   register(field: FormField): () => void;
   /** `enterkeyhint` for the field, or undefined when the field is unknown to the owner. */
   hint(key: string): EnterHint | undefined;
@@ -52,12 +54,22 @@ export interface FormOwner {
 
 const secret = /^(password|otp|cc-csc)/;
 
+/** Indexed fields by DOM index (stable), then unindexed ones in registration order. */
+function order(fields: readonly FormField[]): readonly FormField[] {
+  const at = (f: FormField) => f.index ?? Infinity;
+  return fields
+    .map((f, i) => [f, i] as const)
+    .sort((a, b) => at(a[0]) - at(b[0]) || a[1] - b[1])
+    .map(([f]) => f);
+}
+
 function reduce(s: FormSnapshot, e: FormAction): { readonly state: FormSnapshot } {
   if (e.type === 'add') {
     const at = s.fields.findIndex((f) => f.key === e.field.key);
-    if (at < 0) return { state: { ...s, fields: [...s.fields, e.field] } };
-    if (s.fields[at]!.kind === e.field.kind) return { state: s };
-    return { state: { ...s, fields: s.fields.map((f, i) => (i === at ? e.field : f)) } };
+    if (at < 0) return { state: { ...s, fields: order([...s.fields, e.field]) } };
+    const old = s.fields[at]!;
+    if (old.kind === e.field.kind && old.index === e.field.index) return { state: s };
+    return { state: { ...s, fields: order(s.fields.map((f, i) => (i === at ? e.field : f))) } };
   }
   if (e.type === 'remove') {
     const fields = s.fields.filter((f) => f.key !== e.key);
