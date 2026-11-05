@@ -261,7 +261,12 @@ function genAdapterTypes(adapter, c) {
   }
   return {
     [`${n.slug}/types.ts`]: out,
-    [`${n.slug}/index.ts`]: `${header(src)}export * from './types';\n`,
+    [`${n.slug}/index.ts`]: `${header(src)}export * from './types';
+
+// Live-region creation timing, derived from \`a11y.liveRegions\` (AUDIT-G3A-R2): adapters pass or
+// branch on this constant and never write a literal (lint rule contract/live-from-contract).
+export const ${n.camel}Live = ${JSON.stringify(deriveLive(c))} as const;
+`,
   };
 }
 

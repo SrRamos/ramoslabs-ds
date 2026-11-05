@@ -2,3 +2,7 @@
 // Do not edit: run `bun run codegen` and commit the result (contracts:check fails on drift).
 
 export * from './types';
+
+// Live-region creation timing, derived from `a11y.liveRegions` (AUDIT-G3A-R2): adapters pass or
+// branch on this constant and never write a literal (lint rule contract/live-from-contract).
+export const inputLive = 'lazy' as const;

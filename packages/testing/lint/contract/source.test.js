@@ -235,10 +235,10 @@ describe('live-from-contract (AUDIT-G3A-R2)', () => {
         `import { stateLive } from '../generated/state/aria';\nuseMachine(m, { live: stateLive });`,
       ),
     ).toEqual([]);
-    expect(live(`export const x = 1;`)).toEqual([]);
+    expect(live(`export const x = 1;`, silent)).toEqual([]);
     expect(live(`useMachine(m, { live: buttonLive });`, silent)).toEqual([]);
     expect(live(`// live: 'eager' in a comment\nuseMachine(m, {});`, silent)).toEqual([]);
-    expect(live(`type O = { live?: 'eager' | 'lazy' };`)).toEqual([]);
+    expect(live(`type O = { live?: 'eager' | 'lazy' };`, silent)).toEqual([]);
   });
   it('seeded: a hand-written literal fails for an announcing contract', () => {
     expect(live(`import { stateLive } from 'x';\nuseMachine(m, { live: 'eager' });`)).toEqual([
@@ -248,6 +248,16 @@ describe('live-from-contract (AUDIT-G3A-R2)', () => {
       'contract/live-from-contract',
       'contract/live-from-contract',
     ]);
+  });
+  it('seeded: a module with no live key that forgets the constant fails (Vue requireLive pattern)', () => {
+    expect(live(`export const SJState = () => { requireLive(); };`)).toEqual([
+      'contract/live-from-contract',
+    ]);
+    expect(live(`if (stateLive === 'eager') requireLive();`)).toEqual([]);
+    expect(live(`export const SJState = () => 1;`, silent)).toEqual([]);
+  });
+  it('a pure re-export barrel is exempt', () => {
+    expect(live(`export * from './SJState';\nexport { x } from "./y";`)).toEqual([]);
   });
   it('seeded: passing live without referencing the generated constant fails', () => {
     expect(live(`useMachine(m, { live: flag });`)).toEqual(['contract/live-from-contract']);
