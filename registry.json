@@ -233,7 +233,7 @@
       "name": "SJCheckbox",
       "slug": "checkbox",
       "contractVersion": "0.1.0",
-      "status": "draft",
+      "status": "beta",
       "pattern": {
         "apg": "checkbox",
         "evidence": "checkbox",

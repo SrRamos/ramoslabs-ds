@@ -367,3 +367,28 @@ Branch `feature/m4-c03c-checkbox-vanilla` (from main, `.a` merged). Files: `pack
 - Tests (22): switch suite adapted plus indeterminate on mount/every patch/never attribute, `defaultIndeterminate` and activation clearing it, controlled rejected clear, submit equivalence with indeterminate, reset (checked restored, indeterminate kept, model follows), 1,000-cycle retention (0 listeners, 0 children), element lifecycle. Seed: dropping the per-patch property write fails 4 tests.
 - Bytes: see the reply (adapter alone, min+gzip, core and runtime external). No ADR-011 ceiling for adapter entries.
 - Follow-up .f: real-browser FormData equality incl. reset and indeterminate, `mixed` in the AX tree.
+
+# C03c.f: SJCheckbox conformance
+
+Branch `feature/m4-c03c-checkbox-conformance`. Files: `packages/testing/specs/checkbox/**` (the single conformance layout of G3A ruling (c), same file set as `specs/switch/**`; `specs:check` green), the four package scripts (`test:e2e:checkbox`, `parity:checkbox`, `visual:checkbox`, `voiceover:checkbox`), `status: "beta"` in `checkbox.contract.json` and `registry.json` (ADR-010, as for button and switch), and one CSS fix in `packages/css/src/checkbox.css`. The e2e workflow picks the job up from the specs dir (`scripts/e2e-components.mjs`).
+
+## What differs from the switch golden
+- **Fixtures.** Contract fixtures `unchecked`, `checked`, `indeterminate`, `disabled`, `long-label`; `POSITIONS` carries the four machine positions (`unchecked`, `checked`, `mixed-unchecked`, `mixed-checked`); `FORM_FIXTURES` adds three mixed cases.
+- **L2 runner.** The stock sequence executor assumes `on`/`off` and a boolean event log, so `l2.e2e.ts` has its own small runner over the same derived plan: each `toggle` step by pointer and by Space, `setIndeterminate`/`clearIndeterminate` as a controlled prop (nothing emitted), controlled `checked`, controlled `indeterminate` (select-all owner), label click, the inert fixture. `conformance.test.ts` asserts every one of the 8 contract steps is a scenario, so a contract row nobody drives fails the matrix. The matrix has no empty cell across vue/react/vanilla x chromium/firefox/webkit x both supports paths.
+- **Form equality.** Real browser, every fixture and sequence against a bare `<input type=checkbox>` (also `<sj-checkbox>`), including after `form.reset()` and the real navigation submit. Absolute checks too: reset restores `checked` and leaves `indeterminate` alone, as native. Seeded: a reset handler that clears `indeterminate` differs from the bare twin.
+- **Hydration.** Real `hydrateRoot` / `createSSRApp`. SSR markup has `data-state="indeterminate"` and no attribute; before hydration the browser exposes a plain unchecked checkbox, after it `input.indeterminate` is true, still no attribute, and the ARIA snapshot and (Chromium) the CDP AX tree report `mixed`.
+- **VoiceOver hook.** Added assertion `manual-speech-mixed-state` (announces "mixed", then activation leaves it), derived from `atAssertions` and `actions`.
+- **Visual scenes.** Indeterminate scenes are static markup, so they show the pre-hydration paint (the dash comes from `data-state`). Candidates only; baselines need human review (`visual/baselines/` is empty).
+
+## Proof (local, chromium + firefox + webkit, `retries: 0`)
+- Playwright: 2,711 passed, 34 skipped (all the #49 CDP tests), 0 failed. `parity:checkbox`: PASS, 672 cells, 288 executed (288 passed), 0 missing, 0 invalid, 0 undeclared (the rest are the per-release floor lanes, declared not-run).
+- Vitest (ssr, bundle, conformance): 35 tests. `evidence:check`, `specs:check`, `skips:check` green. `visual:checkbox`: 84 NOT RUN (no reviewed baselines yet, by design). `voiceover:checkbox` renders the pack.
+
+## Bug found and fixed
+- **`.sj-checkbox__indicator` intercepted pointer events** over the native input (decorative box stacked above the transparent 44 px control). Playwright refused the click ("indicator intercepts pointer events"); a user click still worked only through the label. Fix: `pointer-events: none` on the indicator, so the real input is the hit target (as in the switch, whose thumb never sits at the control centre).
+
+## Skips (each with issue and owner)
+- CDP `Accessibility.getFullAXTree` tests on Firefox and WebKit: #49, owner SrRamos (same limitation as the switch). The ARIA snapshot tests assert `[checked=mixed]` on all three engines.
+
+## Follow-ups
+- Visual baselines and the VoiceOver run need a human.

@@ -34,6 +34,8 @@
     block-size: var(--space-5);
     translate: 0 -50%;
     border-radius: var(--radius-xs);
+    /* Decorative and stacked above the control: pointer events pass through to the native input beneath. */
+    pointer-events: none;
     transition-property: background-color;
     transition-duration: var(--sj-duration-fast);
     transition-timing-function: var(--easing-out);
