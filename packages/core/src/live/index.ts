@@ -28,6 +28,8 @@ export interface AnnounceOptions {
 export interface LiveRegistry {
   /** Client only. Before this (server) every announce is a no-op and no markup exists. */
   attach(host: LiveHost): void;
+  /** True once a host is attached (client, after mount); announcements before that are dropped. */
+  attached(): boolean;
   /** Returns true when the text was handed to a region. */
   announce(text: string, options?: AnnounceOptions): boolean;
   /** Records the text SRs get from an active-descendant move; an identical announce is dropped. */
@@ -48,6 +50,7 @@ export function createLiveRegistry(scheduler: Scheduler): LiveRegistry {
       host = h;
       nodes.status ??= h.create('status');
     },
+    attached: () => !!host,
     noteActive: (text) => void (active = text.trim()),
     announce(text, o = {}) {
       const t = text.trim();

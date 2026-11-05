@@ -94,7 +94,11 @@ export function createForm(getProps: () => FormProps = () => ({})): FormOwner {
         { action: p.action, submits: p.submits !== false, autoSubmit: p.autoSubmit },
       )[l.findIndex((f) => f.key === key)];
     },
-    retain: (key, value) => void store.dispatch({ type: 'retain', key, value }),
+    retain(key, value) {
+      // The data-first list is authoritative before any field registers (SSR order, early input).
+      const kind = list().find((f) => f.key === key)?.kind;
+      if (!(kind && secret.test(kind))) store.dispatch({ type: 'retain', key, value });
+    },
     prior: (key) => store.getSnapshot().values[key],
     offers(key) {
       const all = store.getSnapshot().values;

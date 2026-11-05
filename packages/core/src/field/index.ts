@@ -16,8 +16,6 @@ export type FieldProps = {
   readonly id?: string;
   /** Control name; also the key the form owner tracks and retains the value under. */
   readonly name?: string;
-  /** Kind of the wrapped control, for the form owner's Enter position. */
-  readonly kind?: Kind;
   readonly required?: boolean;
   readonly disabled?: boolean;
   /** A hint is rendered, so the control references it. */
@@ -49,8 +47,10 @@ export interface FieldParts {
   getControlProps(consumer?: Props): Props;
   getHintProps(consumer?: Props): Props;
   getErrorProps(consumer?: Props): Props;
-  /** Client only, after mount: registers with the form owner. Returns the cleanup. */
+  /** Client only, after mount: registers with the form owner (kind unknown). Returns the cleanup. */
   connect(): () => void;
+  /** SJInput reports the kind of its control; re-registers the field so the Enter order is right. */
+  setKind(kind: Kind | undefined): void;
   /** Client only, after each commit: announces a new error text once. True when it was handed over. */
   announce(): boolean;
   /** Owner-computed `enterkeyhint` (resolveKind `enter`), undefined outside a form. */
@@ -70,7 +70,11 @@ export function createField(getProps: () => FieldProps, ctx: FieldContext): Fiel
   };
   const error = () => (getProps().error ?? '').trim();
   const key = () => getProps().name ?? ctx.id;
-  let last = '';
+  // Announce transitions only: a standing error at creation stays silent.
+  let last = error();
+  let kind: Kind | undefined;
+  let on = false;
+  const add = () => ctx.form?.register({ key: key(), kind });
   const part = (name: keyof typeof ids | 'root', own: Props, consumer: Props) =>
     mergeProps(
       consumer,
@@ -95,7 +99,7 @@ export function createField(getProps: () => FieldProps, ctx: FieldContext): Fiel
     getControlProps(consumer = {}) {
       const p = getProps();
       const e = error();
-      const extra = consumer['aria-describedby'];
+      const { 'aria-describedby': extra, ...rest } = consumer;
       const described = [p.hasHint && ids.hint, e && ids.error, typeof extra === 'string' && extra]
         .filter(Boolean)
         .join(' ');
@@ -108,21 +112,28 @@ export function createField(getProps: () => FieldProps, ctx: FieldContext): Fiel
         ...(p.required && { required: true }),
         ...(p.disabled && { disabled: true }),
       };
-      return mergeProps(consumer, own, {
+      return mergeProps(rest, own, {
         part: 'control',
         protect: ['name', 'required', 'disabled'],
       });
     },
     connect() {
-      const off = ctx.form?.register({ key: key(), kind: getProps().kind });
+      on = true;
+      const off = add();
       return () => {
+        on = false;
         off?.();
-        last = '';
       };
+    },
+    setKind(k) {
+      kind = k;
+      if (on) add();
     },
     announce() {
       const e = error();
-      if (!ctx.live || e === last) return false;
+      // Before a host is attached (adapters attach after children mount) nothing is recorded, so the
+      // transition is announced on the first call after attach.
+      if (!ctx.live?.attached() || e === last) return false;
       last = e;
       return !!e && ctx.live.announce(e);
     },

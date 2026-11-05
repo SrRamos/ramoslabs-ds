@@ -103,11 +103,6 @@
       "description": "Control name; also the key under which the form owner tracks the field and retains its value."
     },
     {
-      "name": "kind",
-      "type": "import('@ramoslabs/core/kinds').Kind",
-      "description": "Kind of the wrapped control, used to register with the SJForm owner for the Enter position. Optional; a field without it counts as text."
-    },
-    {
       "name": "required",
       "type": "boolean",
       "default": false
