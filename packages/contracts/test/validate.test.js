@@ -219,3 +219,15 @@ describe('slot and prop namespace', () => {
     expect(r.errors.map((e) => e.path)).toContain(`/slots/${c.slots.length - 1}/name`);
   });
 });
+
+describe('kind prop typing', () => {
+  it('rejects a literal union on a prop named kind (seeded) and accepts "kind"', () => {
+    const c = sample();
+    c.props.push({ name: 'kind', type: "'text' | 'email'" });
+    const r = validateContract(c);
+    expect(r.valid).toBe(false);
+    expect(r.errors.map((e) => e.path)).toContain(`/props/${c.props.length - 1}/type`);
+    c.props[c.props.length - 1].type = 'kind';
+    expect(validateContract(c).valid).toBe(true);
+  });
+});

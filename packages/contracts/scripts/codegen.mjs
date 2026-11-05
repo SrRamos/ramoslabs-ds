@@ -206,11 +206,13 @@ const propDocs = (p, controllable) =>
     controllable.includes(p.name) ? CONTROLLED_RULE : '',
     p.default !== undefined ? `@default ${JSON.stringify(p.default)}` : '',
   ]);
+const propType = (c, p) =>
+  p.name === 'kind' && p.type === 'kind' ? c.kinds.map((k) => `'${k}'`).join(' | ') : p.type;
 const propLines = (c) =>
   c.props
     .map(
       (p) =>
-        `${propDocs(p, c.state.controllable)}  ${ident(p.name)}${p.required ? '' : '?'}: ${p.type};`,
+        `${propDocs(p, c.state.controllable)}  ${ident(p.name)}${p.required ? '' : '?'}: ${propType(c, p)};`,
     )
     .join('\n');
 const payloadTypes = (c) =>
