@@ -56,6 +56,12 @@ function semanticErrors(c, today) {
   dupes(c.events, 'name', '/events', 'event name');
   dupes(c.props, 'name', '/props', 'prop name');
   dupes(c.slots, 'name', '/slots', 'slot name');
+  // Props and slots share one namespace in the generated vanilla Options (and React props).
+  const propSet = new Set(c.props.map((p) => p.name));
+  c.slots.forEach((s, i) => {
+    if (propSet.has(s.name === 'default' ? 'children' : s.name))
+      add(`/slots/${i}/name`, `slot "${s.name}" collides with a prop of the same name`);
+  });
   c.actions.forEach((a, i) => {
     for (const k of ['from', 'to'])
       if (!states.has(a[k])) add(`/actions/${i}/${k}`, `"${a[k]}" is not in state.machine`);

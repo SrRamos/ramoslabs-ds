@@ -38,8 +38,6 @@ export interface State {
   readonly getAnnouncement: () => StateAnnouncement | undefined;
 }
 
-export { reducerEvents, reduce } from './reducer';
-
 // Unknown variants fall back to first-use (onboarding), never to a "done" or "no results" message
 // for a resource that may never have had data.
 const variantOf = (v: unknown): StateVariant =>

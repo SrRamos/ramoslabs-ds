@@ -27,9 +27,12 @@ variant = 'first-use' | 'no-results' | 'cleared' | 'loading' | 'error'
 - **Politeness** (ADR-006): loading, no-results and error announce `heading` (or `announce`) through polite `status`; first-use and cleared are static and silent unless `announce` is set. `urgent` (role `alert`) only for `variant: 'error'` with `interrupt: true`.
 - **No color-only meaning** (AGENTS.md): text is always rendered; the icon part is `aria-hidden` and cannot be overridden by a spread. `aria-busy` on the root only while loading.
 - **Prop `heading`, not `title`**: `title` is a global HTML attribute (tooltip) and the generated vanilla options type shares one namespace between props and slots (a `title` prop plus `title` slot was a duplicate identifier). Slots: `icon`, `title`, `default` (description), `actions`.
-- **One state, no actions** (zero-actions amendment as SJIcon): `reducer.ts` exists for discovery only; `index.ts` re-exports `reduce` and `reducerEvents` (a few bytes).
+- **One state, no actions** (zero-actions amendment as SJIcon): `reducer.ts` exists for discovery only; `index.ts` does not re-export it (same as field/form).
 - `pattern` uses the `live-region` evidence file for both `apg` and `evidence`; AT rows cite its recommended entries.
 - Budget set to 1 KiB (a simple primitive; ADR-011 gives no State-specific figure).
+
+- **Vanilla `.e` must not read `title` from attributes**: `title` is a global tooltip attribute; the copy comes from the `heading` option or the title slot only.
+- **Validator** (`validate.mjs`): a slot named like a prop (`default` maps to `children`) is now a validation error, with a seeded test.
 
 ### Measured
 
@@ -37,9 +40,10 @@ variant = 'first-use' | 'no-results' | 'cleared' | 'loading' | 'error'
 
 ### Gate
 
-All gate steps pass. `@ramoslabs/icons` test `seeded failure: a stray or missing generated file...` timed out at the 5 s default on two of three full forced runs (it spawns generation four times under turbo parallel load); it passed on the third. Unrelated to this change; flake owned by the icons stream (suggest a larger per-test timeout).
+All gate steps pass. `@ramoslabs/icons` test `seeded failure: a stray or missing generated file...` timed out at the 5 s default on two of three full forced runs (it spawns generation four times under turbo parallel load); it passed on the third. Unrelated to this change; flake owned by the icons stream (PR #86 raises the icons test timeout).
 
 ### Follow-ups
 
-- Adapters and `contract/live-from-contract` lint (above).
+- `contract/live-from-contract` lint lands in its own PR (owner: orchestrator, separate stream) before any C02/C11 `.c/.d/.e` opens.
+- Adapters pass `<camel>Live` (above).
 - `.b` CSS (variants, icon, no color-only), `.c/.d/.e` adapters, `.f` conformance incl. SSR no-live-markup and one-announcement specs.

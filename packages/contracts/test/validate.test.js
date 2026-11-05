@@ -208,3 +208,14 @@ describe('contract.schema.json v1 validator', () => {
     });
   });
 });
+
+describe('slot and prop namespace', () => {
+  it('rejects a slot named like a prop (seeded title prop and title slot)', () => {
+    const c = sample();
+    c.props.push({ name: 'title', type: 'string' });
+    c.slots.push({ name: 'title', description: 'x' });
+    const r = validateContract(c);
+    expect(r.valid).toBe(false);
+    expect(r.errors.map((e) => e.path)).toContain(`/slots/${c.slots.length - 1}/name`);
+  });
+});
