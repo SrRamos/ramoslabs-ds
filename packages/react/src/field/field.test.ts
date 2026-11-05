@@ -161,12 +161,12 @@ describe('derived ARIA (ADR-014)', () => {
 });
 
 describe('prop-or-slot', () => {
-  it('slot form: Label and Hint parts, hasHint wires the reference', () => {
+  it('slot form: Label and Hint parts, the control references the hint', () => {
     const r = mount(
       harness(),
       h(
         SJField.Root,
-        { id: 'f', hasHint: true },
+        { id: 'f' },
         h(SJField.Label, null, 'Slot label'),
         h(SJField.Hint, null, 'Slot hint'),
         h(SJInput),
@@ -176,15 +176,20 @@ describe('prop-or-slot', () => {
     expect(r.root.findByProps({ id: 'f-hint' }).props['data-part']).toBe('hint');
     expect(control(r).props['aria-describedby']).toBe('f-hint');
   });
-  it('the Hint part without hasHint warns in development and is not referenced', () => {
-    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const r = mount(
-      harness(),
-      h(SJField.Root, { id: 'f' }, h(SJField.Hint, null, 'x'), h(SJInput)),
-    );
+  it('the Hint part references itself and unregisters on unmount', () => {
+    const tree = (on: boolean) =>
+      provide(
+        harness(),
+        h(SJField.Root, { id: 'f' }, on ? h(SJField.Hint, null, 'x') : null, h(SJInput)),
+      );
+    let r!: ReactTestRenderer;
+    act(() => {
+      r = create(tree(true), { createNodeMock: () => ({ form: new EventTarget() }) });
+    });
+    renderers.push(r);
+    expect(control(r).props['aria-describedby']).toBe('f-hint');
+    act(() => r.update(tree(false)));
     expect(control(r).props['aria-describedby']).toBeUndefined();
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining('hasHint'));
-    warn.mockRestore();
   });
   it('classes per part concatenate after the library class', () => {
     const r = mount(

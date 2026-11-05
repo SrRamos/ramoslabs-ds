@@ -6,7 +6,7 @@
 // passive effect after the commit (client only; the server render emits no live markup), and a standing
 // error at mount is silent. The live region is eager (`fieldLive`, derived from the contract).
 // Prop-or-slot: `label` / `hint` props, or the `SJField.Label` / `SJField.Hint` parts (give one, not both;
-// the hint part needs `hasHint`). `error` is prop-only: it is visible text and the single announcement source.
+// the hint part registers itself, no `hasHint` needed). `error` is prop-only: it is visible text and the single announcement source.
 import {
   createContext,
   createElement,
@@ -18,6 +18,7 @@ import {
   useLayoutEffect,
   useMemo,
   useRef,
+  useState,
   useSyncExternalStore,
   type ComponentPropsWithoutRef,
   type Context,
@@ -34,9 +35,6 @@ import { SJFormContext } from '../form/index';
 import { SJIcon } from '../icon/index';
 import { useRuntimeBag } from '../runtime/index';
 import { fieldLive, type SJFieldProps as GeneratedProps } from '../generated/field/index';
-
-declare const console: { warn(message: string): void };
-declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 export type { SJFieldProps as SJFieldContractProps } from '../generated/field/index';
 
@@ -69,7 +67,8 @@ export type SJFieldHintProps = ComponentPropsWithoutRef<'div'>;
 export interface FieldContextValue {
   readonly parts: FieldParts;
   readonly classes: SJFieldClasses | undefined;
-  readonly hasHint: boolean;
+  /** The Hint part calls this in a layout effect; returns its cleanup. */
+  readonly registerHint: () => () => void;
 }
 export const SJFieldContext: Context<FieldContextValue | null> =
   createContext<FieldContextValue | null>(null);
@@ -138,7 +137,13 @@ export const SJFieldRoot: ForwardRefExoticComponent<
   const { live, requireLive } = useRuntimeBag();
   const form = useContext(SJFormContext)?.owner;
   const baseValue = baseId(id, () => reactId);
-  const hasHintNow = hasHint === true || (hint !== undefined && hint !== null && hint !== false);
+  const [slotHint, setSlotHint] = useState(false);
+  const registerHint = useCallback(() => {
+    setSlotHint(true);
+    return () => setSlotHint(false);
+  }, []);
+  const hasHintNow =
+    slotHint || hasHint === true || (hint !== undefined && hint !== null && hint !== false);
 
   const latest = useRef<FieldProps>({});
   latest.current = {
@@ -174,7 +179,7 @@ export const SJFieldRoot: ForwardRefExoticComponent<
   });
 
   const errorText = (error ?? '').trim();
-  const ctx: FieldContextValue = { parts, classes, hasHint: hasHintNow };
+  const ctx: FieldContextValue = { parts, classes, registerHint };
   return createElement(
     SJFieldContext.Provider,
     { value: ctx },
@@ -221,20 +226,9 @@ export const SJFieldLabel: ForwardRefExoticComponent<
 export const SJFieldHint: ForwardRefExoticComponent<
   SJFieldHintProps & RefAttributes<HTMLDivElement>
 > = forwardRef<HTMLDivElement, SJFieldHintProps>(function SJFieldHint(props, ref) {
-  const { parts, classes, hasHint } = useCtx('Hint');
-  const warned = useRef(false);
-  useEffect(() => {
-    if (
-      !hasHint &&
-      !warned.current &&
-      (typeof process === 'undefined' ? false : process.env.NODE_ENV !== 'production')
-    ) {
-      warned.current = true;
-      console.warn(
-        '[ramoslabs] SJField.Hint rendered without `hasHint`: the control will not reference it.',
-      );
-    }
-  }, [hasHint]);
+  const { parts, classes, registerHint } = useCtx('Hint');
+  // The part tells the field it exists (layout effect, one re-render before paint), so the control references it.
+  useLayoutEffect(registerHint, [registerHint]);
   return createElement('div', {
     ...fromGetter(parts.getHintProps(toGetter(props)), classes?.hint),
     ref,
