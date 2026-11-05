@@ -336,6 +336,118 @@
       "docs": []
     },
     {
+      "name": "SJDisclosure",
+      "slug": "disclosure",
+      "contractVersion": "0.1.0",
+      "status": "draft",
+      "pattern": {
+        "apg": "disclosure",
+        "evidence": "disclosure",
+        "native": "details"
+      },
+      "anatomy": [
+        {
+          "part": "root",
+          "element": "details",
+          "native": true
+        },
+        {
+          "part": "trigger",
+          "element": "summary",
+          "native": true
+        },
+        {
+          "part": "content",
+          "element": "div"
+        }
+      ],
+      "roles": [],
+      "state": {
+        "machine": [
+          "closed",
+          "open"
+        ],
+        "controllable": [
+          "open"
+        ]
+      },
+      "keyboard": {
+        "trigger": {
+          "Enter": "toggle",
+          "Space": "toggle"
+        }
+      },
+      "kinds": [],
+      "supportFloor": [
+        {
+          "feature": "details-name",
+          "nativeFrom": {
+            "chromium": 120,
+            "firefox": 130,
+            "safari": 18
+          },
+          "fallbackUntil": {
+            "chromium": 119,
+            "firefox": 129,
+            "safari": 17
+          }
+        }
+      ],
+      "atSupport": [
+        {
+          "at": "voiceover",
+          "platform": "macos",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/disclosure.json#vo-macos-safari-ariaat549"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "voiceover",
+          "platform": "ios",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/disclosure.json#vo-ios-safari-a11ysupport-summary"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "nvda",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/disclosure.json#nvda-chrome-ariaat550"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "jaws",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/disclosure.json#jaws-chrome-ariaat551"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "talkback",
+          "platform": "android",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/disclosure.json#talkback-chrome-a11ysupport-summary"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        }
+      ],
+      "docs": []
+    },
+    {
       "name": "SJField",
       "slug": "field",
       "contractVersion": "0.1.0",
