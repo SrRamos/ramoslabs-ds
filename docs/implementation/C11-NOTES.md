@@ -109,3 +109,23 @@ Branch `feature/m4-c11-state-vanilla`. Owned: `packages/vanilla/src/state/**` (a
 ### Measured
 
 `node packages/testing/size/cli.js`: `state` core 0.659 KiB gzip (1229 B) vs 1 KiB (pass, includes the new re-export line); `adapter:vanilla` 1.405 KiB gzip is the harness's shared fixture row (reported, no ceiling), not a State-specific figure; the harness has no per-component adapter row for State.
+## W1-C11.d: SJState React adapter
+
+Branch `feature/m4-c11-state-react`. Owned: `packages/react/src/state/**` (adapter and `state.test.ts`), this section. Shared files touched: `packages/react/src/index.ts` (barrel line, as icon/checkbox added theirs) and `packages/core/src/state/index.ts` (one line: `export { stateLive } from '../generated/state/aria'`). The core re-export is needed because `@ramoslabs/core` exposes no `generated/*` subpath and an adapter must pass the generated `stateLive` (lint `contract/live-from-contract`); `.c`/`.e` can use the same export. The `exports` map already had `./state`.
+
+### Decisions and ambiguities
+
+- **Surface.** `SJState` (preset) and `SJState.Root` / flat `SJStateRoot` (ADR-002), `forwardRef` to the root `div`. No separate part components: the contract's default slot is the description, so `children` is the description and the other slots are props (`icon`, `actions`, `title`).
+- **Prop-or-slot.** `heading` or `title` (node) for the heading, `description` or `children`, `icon`, `actions`. A slot wins over its prop (as checkbox `label`). `title` is omitted from the native div attributes and typed as the slot, so it never becomes a tooltip (Fable's note). A node heading is not announced; give `announce`.
+- **Classes.** `classes` per part (`root`, `icon`, `title`, `description`, `actions`) and `className`, in the order library, `classes.root`, `className`.
+- **Live.** `useMachine` (trivial store) supplies the shared registry and passes `live: stateLive`, so the eager region exists before the first message. The announcement from core `getAnnouncement()` is sent from a passive effect, deferred one `runtime.scheduler.after(.., 0)` tick and cancelled by the cleanup. Reason: StrictMode's simulated remount detaches and re-attaches the registry (clearing its dedup memory) and re-runs the effect; announcing synchronously produced two spoken messages (or none with a ref guard, because the first deferred callback is dropped by `detach`). The cancelled timer yields exactly one. `urgent` (role alert) only for `variant: 'error'` with `interrupt`; everything else is polite `status`.
+- **SSR.** The root never has `role`, `aria-live` or `aria-atomic` (core deletes them, with the merge dev warning, even when a consumer passes them). Asserted for all five variants with `renderToString` and `renderToStaticMarkup`, under a provider, including `interrupt`.
+- **No color-only meaning.** Text is always rendered; the icon part is `aria-hidden`.
+
+### Measured
+
+Adapter bundled with core, runtime, store, merge (esbuild, minified, react external): 9205 B raw, 4134 B gzip (4.04 KiB); SJCheckbox measured the same way: 4858 B gzip, SJIcon 1748 B. The `adapter:react` size row (fixture) is unchanged at 1.760 KiB; no ceiling is defined for an adapter bundle. Core `state` row 0.659 KiB vs 1 KiB.
+
+### Tests
+
+23 tests: naming, parts and classes, five distinct variants, fallback, prop-or-slot, ref, SSR no live markup, announcements (eager region, polite, alert only if interrupting, silent first-use and cleared, changed count re-announced, one announcement under StrictMode), source rule (`live: stateLive`, no literal), 1,000 StrictMode mount/unmount retaining nothing.
