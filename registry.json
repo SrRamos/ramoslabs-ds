@@ -336,6 +336,182 @@
       "docs": []
     },
     {
+      "name": "SJField",
+      "slug": "field",
+      "contractVersion": "0.1.0",
+      "status": "draft",
+      "pattern": {
+        "apg": "text-field",
+        "evidence": "text-field"
+      },
+      "anatomy": [
+        {
+          "part": "root",
+          "element": "div"
+        },
+        {
+          "part": "label",
+          "element": "label"
+        },
+        {
+          "part": "control",
+          "element": "input",
+          "native": true
+        },
+        {
+          "part": "hint",
+          "element": "div"
+        },
+        {
+          "part": "error",
+          "element": "div"
+        }
+      ],
+      "roles": [],
+      "state": {
+        "machine": [
+          "idle"
+        ],
+        "controllable": []
+      },
+      "keyboard": {},
+      "kinds": [],
+      "supportFloor": [],
+      "atSupport": [
+        {
+          "at": "voiceover",
+          "platform": "macos",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/text-field.json#vo-macos-safari-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "voiceover",
+          "platform": "ios",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/text-field.json#vo-ios-safari-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "nvda",
+          "platform": "windows",
+          "browser": "edge",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/text-field.json#nvda-edge-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "jaws",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/text-field.json#jaws-chrome-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "talkback",
+          "platform": "android",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/text-field.json#talkback-chrome-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        }
+      ],
+      "docs": []
+    },
+    {
+      "name": "SJForm",
+      "slug": "form",
+      "contractVersion": "0.1.0",
+      "status": "draft",
+      "pattern": {
+        "apg": "text-field",
+        "evidence": "text-field",
+        "native": "form"
+      },
+      "anatomy": [
+        {
+          "part": "root",
+          "element": "form"
+        }
+      ],
+      "roles": [],
+      "state": {
+        "machine": [
+          "idle"
+        ],
+        "controllable": []
+      },
+      "keyboard": {},
+      "kinds": [],
+      "supportFloor": [],
+      "atSupport": [
+        {
+          "at": "voiceover",
+          "platform": "macos",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/text-field.json#vo-macos-safari-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "voiceover",
+          "platform": "ios",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/text-field.json#vo-ios-safari-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "nvda",
+          "platform": "windows",
+          "browser": "edge",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/text-field.json#nvda-edge-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "jaws",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/text-field.json#jaws-chrome-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "talkback",
+          "platform": "android",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/text-field.json#talkback-chrome-a11ysupport-errormessage"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        }
+      ],
+      "docs": []
+    },
+    {
       "name": "SJIcon",
       "slug": "icon",
       "contractVersion": "0.1.0",
