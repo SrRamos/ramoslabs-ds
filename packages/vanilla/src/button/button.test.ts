@@ -10,6 +10,9 @@ import { defineSJButton, mountButton, type ButtonMountProps } from './index';
 class FText {
   constructor(public data: string) {}
   parent: FEl | null = null;
+  get parentNode() {
+    return this.parent;
+  }
   get textContent() {
     return this.data;
   }
@@ -21,6 +24,9 @@ class FEl extends EventTarget {
   attrs = new Map<string, string>();
   kids: (FEl | FText)[] = [];
   parent: FEl | null = null;
+  get parentNode() {
+    return this.parent;
+  }
   added: { signal?: AbortSignal; type: string }[] = [];
   form: FEl | null = null;
   constructor(
@@ -198,6 +204,69 @@ describe('SJButton vanilla: rendering', () => {
     expect(container.kids).toHaveLength(1);
     m.update({ text: 'B' });
     expect(ctl(container).localName).toBe('button');
+  });
+});
+
+describe('SJButton vanilla: Node content (icon and default)', () => {
+  const node = (doc: FDoc, name = 'svg') => doc.createElement(name) as unknown as Node;
+
+  it('appends a Node icon inside the aria-hidden icon part', () => {
+    const { doc, container, host } = setup();
+    const svg = node(doc);
+    mountButton(host, container as never, { icon: svg, text: 'Go' });
+    const icon = ctl(container).kids[0] as FEl;
+    expect(icon.getAttribute('data-part')).toBe('icon');
+    expect(icon.getAttribute('aria-hidden')).toBe('true');
+    expect(icon.kids[0]).toBe(svg);
+  });
+
+  it('update() with the same Node keeps it; a new Node replaces it', () => {
+    const { doc, container, host } = setup();
+    const a = node(doc, 'a-icon');
+    const b = node(doc, 'b-icon');
+    const m = mountButton(host, container as never, { icon: a, text: 'Go' });
+    const icon = ctl(container).kids[0] as FEl;
+    m.update({ icon: a, text: 'Go2' });
+    expect(icon.kids).toEqual([a]);
+    m.update({ icon: b, text: 'Go2' });
+    expect(icon.kids).toEqual([b]);
+    expect((a as unknown as FEl).parent).toBeNull();
+    m.update({ text: 'Go2' });
+    expect(ctl(container).kids.some((k) => k === icon)).toBe(false);
+  });
+
+  it('appends a Node as content (default or text) and keeps it across update()', () => {
+    const { doc, container, host } = setup();
+    const label = node(doc, 'em');
+    const m = mountButton(host, container as never, { default: label });
+    expect(ctl(container).kids).toEqual([label]);
+    m.update({ default: label, tone: 'error' });
+    expect(ctl(container).kids).toEqual([label]);
+    m.update({ text: 'plain' });
+    expect(ctl(container).kids).toHaveLength(1);
+    expect(ctl(container).kids[0]).toBeInstanceOf(FText);
+    expect(ctl(container).textContent).toBe('plain');
+  });
+
+  it('a string icon still renders as text', () => {
+    const { container, host } = setup();
+    const m = mountButton(host, container as never, { icon: '<b>x</b>', text: 'T' });
+    const icon = ctl(container).kids[0] as FEl;
+    expect(icon.kids[0]).toBeInstanceOf(FText);
+    expect(icon.textContent).toBe('<b>x</b>');
+    m.update({ icon: 'y', text: 'T' });
+    expect(icon.textContent).toBe('y');
+  });
+
+  it('1,000 mount/destroy cycles retain nothing', () => {
+    const { doc, container, host } = setup();
+    const svg = node(doc);
+    for (let i = 0; i < 1000; i++) {
+      const m = mountButton(host, container as never, { icon: svg, default: node(doc, 'i') });
+      m.destroy();
+      expect(container.kids).toHaveLength(0);
+    }
+    expect(container.live).toBe(0);
   });
 });
 
