@@ -197,6 +197,39 @@ describe('decision-conflict (structured constraints only)', () => {
   });
 });
 
+describe('nativeOnTouch via anatomy', () => {
+  const touch = (/** @type {any} */ { registry }) =>
+    (registry.recommended.constraints.nativeOnTouch = true);
+  it('passes when every interactive part is native', () => {
+    const r = run((p) => {
+      touch(p);
+      p.contract.anatomy = [
+        { part: 'root', element: 'details', native: true },
+        { part: 'trigger', element: 'summary', native: true },
+        { part: 'content', element: 'div' },
+      ];
+    });
+    expect(text(r)).not.toMatch(/nativeOnTouch/);
+  });
+  it('fails when an interactive part is not native', () => {
+    const r = run((p) => {
+      touch(p);
+      p.contract.anatomy = [
+        { part: 'root', element: 'details', native: true },
+        { part: 'trigger', element: 'button' },
+      ];
+    });
+    expect(text(r)).toMatch(/nativeOnTouch is true/);
+  });
+  it('a nativeFallback still satisfies it', () => {
+    const r = run((p) => {
+      touch(p);
+      p.contract.nativeFallback = { touch: 'select', equivalence: ['name'] };
+    });
+    expect(text(r)).not.toMatch(/nativeOnTouch/);
+  });
+});
+
 describe('pattern coverage', () => {
   it('fails a pattern with no registry file (returned to the research peer)', () => {
     expect(text(run(({ contract }) => (contract.pattern = { apg: 'ghost' })))).toMatch(

@@ -3,6 +3,7 @@
 
 export * from './button/index';
 export * from './checkbox/index';
+export * from './disclosure/index';
 export * from './field/index';
 export * from './form/index';
 export * from './icon/index';

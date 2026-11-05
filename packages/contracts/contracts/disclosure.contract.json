@@ -1,0 +1,195 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJDisclosure",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": {
+    "apg": "disclosure",
+    "evidence": "disclosure",
+    "native": "details"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "details",
+      "native": true
+    },
+    {
+      "part": "trigger",
+      "element": "summary",
+      "native": true
+    },
+    {
+      "part": "content",
+      "element": "div"
+    }
+  ],
+  "state": {
+    "machine": ["closed", "open"],
+    "controllable": ["open"]
+  },
+  "actions": [
+    {
+      "id": "open",
+      "from": "closed",
+      "to": "open",
+      "emit": "openChange",
+      "dom": {
+        "root": {
+          "open": "true"
+        }
+      }
+    },
+    {
+      "id": "close",
+      "from": "open",
+      "to": "closed",
+      "emit": "openChange",
+      "dom": {
+        "root": {
+          "open": "false"
+        }
+      }
+    },
+    {
+      "id": "toggle",
+      "from": "closed",
+      "to": "open",
+      "emit": "openChange",
+      "dom": {
+        "root": {
+          "open": "true"
+        }
+      }
+    },
+    {
+      "id": "toggle",
+      "from": "open",
+      "to": "closed",
+      "emit": "openChange",
+      "dom": {
+        "root": {
+          "open": "false"
+        }
+      }
+    }
+  ],
+  "keyboard": {
+    "trigger": {
+      "Enter": "toggle",
+      "Space": "toggle"
+    }
+  },
+  "focus": {
+    "strategy": "native",
+    "owner": "trigger"
+  },
+  "kinds": [],
+  "runtime": ["idPrefix", "supports"],
+  "support": [
+    {
+      "feature": "details-name",
+      "nativeFrom": {
+        "chromium": 120,
+        "firefox": 130,
+        "safari": 18
+      },
+      "fallbackUntil": {
+        "chromium": 119,
+        "firefox": 129,
+        "safari": 17
+      }
+    }
+  ],
+  "a11y": {
+    "wcag": ["1.3.1", "1.4.11", "2.1.1", "2.4.7", "2.4.11", "2.5.8", "4.1.2"],
+    "liveRegions": [],
+    "atAssertions": [
+      "manual-speech-name-role-state",
+      "manual-toggle-enter-space",
+      "manual-speech-expanded-state-change"
+    ],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/disclosure.json#vo-macos-safari-ariaat549"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/disclosure.json#vo-ios-safari-a11ysupport-summary"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/disclosure.json#nvda-chrome-ariaat550"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/disclosure.json#jaws-chrome-ariaat551"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/disclosure.json#talkback-chrome-a11ysupport-summary"]
+      }
+    ]
+  },
+  "events": [
+    {
+      "name": "openChange",
+      "payload": "{ open: boolean }"
+    }
+  ],
+  "props": [
+    {
+      "name": "open",
+      "type": "boolean"
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "id",
+      "type": "string"
+    }
+  ],
+  "slots": [
+    {
+      "name": "summary",
+      "description": "Visible title of the trigger; must not change with state."
+    },
+    {
+      "name": "default",
+      "description": "Panel content, hidden natively while closed."
+    }
+  ],
+  "fixtures": ["closed", "open", "disabled", "exclusive-group", "long-title"],
+  "budgets": {
+    "gzipKiB": 3,
+    "shared": ["merge", "ids"]
+  }
+}

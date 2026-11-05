@@ -26,6 +26,17 @@ export const PENDING = [];
 const REF = /^at-support\/([a-z0-9-]+\.json)#([a-z0-9-]+)$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
+const INTERACTIVE = new Set(['a', 'button', 'details', 'input', 'select', 'summary', 'textarea']);
+
+/** @param {any} contract True when the anatomy has interactive parts and all of them are native. */
+function allInteractiveNative(contract) {
+  /** @type {any[]} */
+  const parts = (contract?.anatomy ?? []).filter((/** @type {any} */ a) =>
+    INTERACTIVE.has(a.element),
+  );
+  return parts.length > 0 && parts.every((a) => a.native === true);
+}
+
 /**
  * @typedef {{ focusStrategy?: string, listboxMount?: { fine?: string, coarse?: string }, nativeOnTouch?: boolean, domAdjacent?: boolean, mustNot?: string[] }} Constraints
  */
@@ -61,9 +72,11 @@ function conflicts(file, contract, source, c, errors) {
       }
     }
   }
-  if (c.nativeOnTouch === true && !contract?.nativeFallback)
+  // Native on touch holds when a nativeFallback names the native rendering, or when every
+  // interactive part of the anatomy already is the native element (nothing to swap).
+  if (c.nativeOnTouch === true && !contract?.nativeFallback && !allInteractiveNative(contract))
     errors.push(
-      `${where}: constraints.nativeOnTouch is true but the contract declares no nativeFallback`,
+      `${where}: constraints.nativeOnTouch is true but the contract declares no nativeFallback and has non-native interactive parts`,
     );
 }
 
