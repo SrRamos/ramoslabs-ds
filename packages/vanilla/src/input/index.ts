@@ -38,26 +38,22 @@ export function mountInput(
   const { field } = options;
   let parts: InputParts | undefined;
   let control: Control | undefined;
-  let ctl: AbortController | undefined;
   let reported: { kind: InputOptions['kind'] } | undefined;
   const seen = { root: new Set<string>() as Applied, control: new Set<string>() as Applied };
 
   type Ctx = InstanceContext<{ state: 'idle' }, never, Bag>;
 
-  const bind = (c: Control) => {
-    ctl = new AbortController();
-    const { signal } = ctl;
+  // Every listener carries the instance signal (ctx.listen). A replaced control is detached and its
+  // handlers are inert (`c !== control`), so nothing outlives the swap.
+  const bind = (c: Control, ctx: Ctx) => {
     // Activation and typing are native; these only report a committed change / failed submission.
-    c.addEventListener(
-      'change',
-      (e) => (parts!.getControlProps().onChange as (e: Event) => void)(e),
-      { signal },
-    );
-    c.addEventListener(
-      'invalid',
-      (e) => (parts!.getControlProps().onInvalid as (e: Event) => void)(e),
-      { signal },
-    );
+    for (const [type, key] of [
+      ['change', 'onChange'],
+      ['invalid', 'onInvalid'],
+    ] as const)
+      ctx.listen(c, type, (e) => {
+        if (c === control) (parts!.getControlProps()[key] as (e: Event) => void)(e);
+      });
   };
 
   function render(ctx: Ctx): void {
@@ -67,9 +63,8 @@ export function mountInput(
         userInvalid: host.runtime.supports.userInvalid,
       });
       ctx.onCleanup(() => {
-        ctl?.abort();
         control?.remove();
-        control = ctl = parts = undefined;
+        control = parts = undefined;
       });
     }
     const tag = parts.tag();
@@ -77,13 +72,12 @@ export function mountInput(
       const next = doc.createElement(tag) as Control;
       if (control) {
         next.value = control.value;
-        ctl?.abort();
         control.remove();
         seen.control.clear();
       }
       control = next;
       el.append(next);
-      bind(next);
+      bind(next, ctx);
     }
     applyProps(el, parts.getRootProps(), seen.root);
     applyProps(control, parts.getControlProps(), seen.control);

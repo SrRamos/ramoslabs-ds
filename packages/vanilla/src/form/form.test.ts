@@ -435,8 +435,11 @@ describe('SJInput vanilla', () => {
     expect(next.tagName).toBe('textarea');
     expect(next.value).toBe('typed');
     expect(next.hasAttribute('type')).toBe(false);
-    expect(first.liveListeners).toBe(0);
     expect(next.liveListeners).toBe(2);
+    expect(first.unsignalled).toBe(0); // every listener carries the instance signal
+    first.value = 'stale';
+    first.dispatchEvent(new Event('change')); // the detached control is inert
+    expect(inst.control).toBe(next);
     expect(root.children).toEqual([next]);
   });
 
