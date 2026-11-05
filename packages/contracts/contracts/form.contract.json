@@ -1,0 +1,107 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJForm",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": {
+    "apg": "text-field",
+    "evidence": "text-field",
+    "native": "form"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "form"
+    }
+  ],
+  "state": {
+    "machine": ["idle"],
+    "controllable": []
+  },
+  "actions": [],
+  "keyboard": {},
+  "focus": {
+    "strategy": "native"
+  },
+  "kinds": [],
+  "runtime": [],
+  "support": [],
+  "a11y": {
+    "wcag": ["2.5.8", "3.3.2", "3.3.7"],
+    "liveRegions": [],
+    "atAssertions": ["manual-form-enter-key-label", "manual-form-prior-values-offered"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/text-field.json#vo-macos-safari-a11ysupport-errormessage"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/text-field.json#vo-ios-safari-a11ysupport-errormessage"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "edge",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/text-field.json#nvda-edge-a11ysupport-errormessage"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/text-field.json#jaws-chrome-a11ysupport-errormessage"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/text-field.json#talkback-chrome-a11ysupport-errormessage"]
+      }
+    ]
+  },
+  "events": [],
+  "props": [
+    {
+      "name": "fields",
+      "type": "readonly { key: string; kind?: import('@ramoslabs/core/kinds').Kind }[]",
+      "description": "Optional ordered field list (data first, SSR safe). Without it the order is the order in which fields register after mount. Textarea kinds are excluded from the position computation (ADR-007)."
+    },
+    {
+      "name": "action",
+      "type": "'go' | 'send' | 'search'",
+      "description": "Enter label of the last editable field when Enter acts on the form: go, send (messaging) or search (query). Wins over submits."
+    },
+    {
+      "name": "submits",
+      "type": "boolean",
+      "default": true,
+      "description": "Whether Enter on the last editable field submits. False gives it the done label (a non-submitting group)."
+    },
+    {
+      "name": "autoSubmit",
+      "type": "boolean",
+      "default": false,
+      "description": "One-time-code fields submit on Enter (go) instead of done."
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "description": "The fields and the submit control. SJForm adds no validation or submission handling beyond the native form element (ADR-014)."
+    }
+  ],
+  "fixtures": ["default", "field-order", "textarea-last", "prior-values"],
+  "budgets": {
+    "gzipKiB": 1.5,
+    "shared": ["store", "kinds", "merge"]
+  }
+}
