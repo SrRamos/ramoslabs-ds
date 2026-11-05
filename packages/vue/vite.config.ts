@@ -11,6 +11,7 @@ export default defineConfig({
         'runtime/index': resolve(__dirname, 'src/runtime/index.ts'),
         'button/index': resolve(__dirname, 'src/button/index.ts'),
         'field/index': resolve(__dirname, 'src/field/index.ts'),
+        'form/index': resolve(__dirname, 'src/form/index.ts'),
         'input/index': resolve(__dirname, 'src/input/index.ts'),
         'switch/index': resolve(__dirname, 'src/switch/index.ts'),
         'checkbox/index': resolve(__dirname, 'src/checkbox/index.ts'),
