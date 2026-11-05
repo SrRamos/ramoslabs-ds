@@ -109,6 +109,9 @@ ${body}
 /** Unique action ids in first-appearance order: the reducer's event names (S-CON gap 3). */
 export const actionIds = (c) => [...new Set(c.actions.map((a) => a.id))];
 
+/** `live` flag for a contract: 'eager' when it declares any live region, otherwise 'lazy'. */
+export const deriveLive = (c) => (c.a11y.liveRegions.length > 0 ? 'eager' : 'lazy');
+
 function genCore(c) {
   const n = names(c.name);
   const src = `packages/contracts/contracts/${n.slug}.contract.json`;
@@ -164,6 +167,11 @@ export const ${n.camel}Aria = {
   parts: ${JSON.stringify(parts)},
   transitions: ${JSON.stringify(aria)},
 } as const;
+
+// Live-region creation timing, derived from \`a11y.liveRegions\` (AUDIT-G3A-R2, R2-SHOULD-2): a
+// component that declares any live region mounts it eagerly (the region must exist, empty, before
+// its first message); one that declares none stays lazy. Adapters pass this constant, never a literal.
+export const ${n.camel}Live = ${JSON.stringify(deriveLive(c))} as const;
 `;
 
   const atRows = c.a11y.atSupport.map((r) => ({ ...r, statement: atWording(r) }));
