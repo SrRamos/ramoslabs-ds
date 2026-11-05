@@ -54,7 +54,7 @@ Core `field`: 0.68 KiB gzip (ceiling 3 KiB); core `form`: 0.69 KiB (ceiling 1.5 
 - MUST-2: `retain()` checks the secret kinds against the data-first `fields` list as well as the store.
 - SHOULD-1: the consumer `aria-describedby` is removed from the bag before the merge (no discarded-value warning), then appended.
 - SHOULD-2 known limit: two fields announcing in one commit speak only the last text (the registry holds one pending text per role). A summary or focus path is for SJInput (.a2) or the consumer.
-- SHOULD-3: SJForm AT rows cite `text-field.json#crossat-crossbrowser-html-label` (no form evidence file exists; the errormessage rows were unrelated to enterkeyhint and 3.3.7).
+- SHOULD-3 (not fixed, needs a decision): the registry's only cross entry (`crossat-crossbrowser-html-label`) cannot back per-AT rows (evidence:check requires at/platform/browser to match). SJForm rows therefore still cite the SJField `text-field` errormessage entries, which do not evidence enterkeyhint or 3.3.7. Fix needs a new `form.json` evidence file with dated sources, which I did not invent.
 - NICE-1: form budget 1.5 KiB is an engineering limit chosen as about twice the measured 0.69 KiB; plan 6.2 puts the form context inside SJField's 3 KiB, and field + form measure 1.4 KiB combined, so the 3 KiB reading holds with margin.
 - Ruling 1: `kind` dropped from SJField; SJInput owns it and calls `field.setKind(kind)` (re-registers; `connect()` registers with kind undefined) and reads `field.enterHint()`.
 - Ruling 3: `last` starts as the creation-time error, so a standing error is silent and only transitions announce.
