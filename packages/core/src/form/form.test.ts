@@ -19,7 +19,7 @@ function oracle(list: Kind[], o: FormProps = {}) {
     if (!editable[i]) return 'enter';
     const fixed = resolveKind(k, { autoSubmit: o.autoSubmit }).enterkeyhint;
     if (fixed) return fixed;
-    return i < last ? 'next' : (o.action ?? (o.submits !== false ? 'go' : 'done'));
+    return i < last ? 'next' : (o.enter ?? (o.submits !== false ? 'go' : 'done'));
   });
 }
 const keyed = (list: Kind[]) => list.map((kind, i) => ({ key: `f${i}`, kind }));
@@ -36,7 +36,7 @@ describe('contract', () => {
   });
   it('props are exactly the ones the owner reads', () => {
     expect(contract.props.map((p) => p.name).sort()).toEqual(
-      ['action', 'autoSubmit', 'fields', 'submits'].sort(),
+      ['autoSubmit', 'enter', 'fields', 'submits'].sort(),
     );
   });
 });
@@ -62,8 +62,8 @@ describe('Enter position (ADR-007)', () => {
         fc.constantFrom(undefined, 'go', 'send', 'search'),
         fc.boolean(),
         fc.boolean(),
-        (list, action, submits, autoSubmit) => {
-          const p: FormProps = { fields: keyed(list), action, submits, autoSubmit };
+        (list, enter, submits, autoSubmit) => {
+          const p: FormProps = { fields: keyed(list), enter, submits, autoSubmit };
           const f = createForm(() => p);
           expect(keyed(list).map((x) => f.hint(x.key))).toEqual(oracle(list, p));
         },
@@ -76,12 +76,22 @@ describe('Enter position (ADR-007)', () => {
     const g = createForm(() => ({ fields: keyed(['address']) }));
     expect(g.hint('f0')).toBe('enter');
   });
-  it('a non-submitting group ends with done; action wins; unknown key is undefined', () => {
+  it('a non-submitting group ends with done; enter wins; unknown key is undefined', () => {
     const p: FormProps = { fields: keyed(['text', 'text']), submits: false };
     expect(createForm(() => p).hint('f1')).toBe('done');
-    expect(createForm(() => ({ ...p, action: 'send' })).hint('f1')).toBe('send');
+    expect(createForm(() => ({ ...p, enter: 'send' })).hint('f1')).toBe('send');
     expect(createForm(() => p).hint('nope')).toBeUndefined();
     expect(createForm().hint('f0')).toBeUndefined();
+  });
+  it('the native form `action` is never read by core (the prop is `enter`)', () => {
+    const p = { fields: keyed(['text', 'text']), action: 'send' } as unknown as FormProps;
+    const f = createForm(() => p);
+    expect(['f0', 'f1'].map(f.hint)).toEqual(['next', 'go']);
+    for (const a of ['go', 'send', 'search', '/submit', 'https://x.test/post']) {
+      const q = { fields: keyed(['text']), action: a } as unknown as FormProps;
+      expect(createForm(() => q).hint('f0')).toBe('go');
+    }
+    expect(createForm(() => ({ ...p, enter: 'send' })).hint('f1')).toBe('send');
   });
   it('kind overrides win over position (url go, search search)', () => {
     const f = createForm(() => ({ fields: keyed(['url', 'search', 'text']) }));

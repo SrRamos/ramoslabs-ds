@@ -19,7 +19,7 @@ export interface FormField {
 
 export type FormProps = {
   readonly fields?: readonly FormField[];
-  readonly action?: 'go' | 'send' | 'search';
+  readonly enter?: 'go' | 'send' | 'search';
   /** Default true: Enter on the last editable field submits (`go`); false gives it `done`. */
   readonly submits?: boolean;
   readonly autoSubmit?: boolean;
@@ -91,7 +91,7 @@ export function createForm(getProps: () => FormProps = () => ({})): FormOwner {
       const p = getProps();
       return enterKeyHints(
         l.map((f) => f.kind ?? 'text'),
-        { action: p.action, submits: p.submits !== false, autoSubmit: p.autoSubmit },
+        { enter: p.enter, submits: p.submits !== false, autoSubmit: p.autoSubmit },
       )[l.findIndex((f) => f.key === key)];
     },
     retain(key, value) {

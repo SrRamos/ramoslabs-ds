@@ -76,7 +76,7 @@
       "description": "Optional ordered field list (data first, SSR safe). Without it the order is the order in which fields register after mount. Textarea kinds are excluded from the position computation (ADR-007)."
     },
     {
-      "name": "action",
+      "name": "enter",
       "type": "'go' | 'send' | 'search'",
       "description": "Enter label of the last editable field when Enter acts on the form: go, send (messaging) or search (query). Wins over submits."
     },
