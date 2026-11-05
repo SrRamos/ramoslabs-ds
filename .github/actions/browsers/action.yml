@@ -1,7 +1,8 @@
 name: Playwright browsers
 description: >
-  Installs Playwright browsers with system dependencies, cached on the pinned Playwright version.
-  On a cache hit the system libraries are still installed (they live outside the cache).
+  Verifies that the Playwright browsers are preinstalled. Every browser job runs in the pinned
+  mcr.microsoft.com/playwright container (browsers and system libraries baked in), so no apt step
+  ever runs (#99). Fails loudly if a job forgot the container instead of falling back to apt.
 inputs:
   browsers:
     description: Space-separated engines, e.g. "chromium firefox webkit".
@@ -9,24 +10,20 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Resolve Playwright version
-      id: pw
+    - name: Verify preinstalled browsers (no install, no apt)
       shell: bash
       working-directory: packages/testing
-      run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
-    - name: Cache browsers
-      id: cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-${{ runner.arch }}-${{ steps.pw.outputs.version }}-${{ inputs.browsers }}
-    - name: Install browsers and system dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      shell: bash
-      working-directory: packages/testing
-      run: bunx playwright install --with-deps ${{ inputs.browsers }}
-    - name: Install system dependencies (browsers restored from cache)
-      if: steps.cache.outputs.cache-hit == 'true'
-      shell: bash
-      working-directory: packages/testing
-      run: bunx playwright install-deps ${{ inputs.browsers }}
+      env:
+        BROWSERS: ${{ inputs.browsers }}
+      run: |
+        set -eu
+        path="${PLAYWRIGHT_BROWSERS_PATH:-}"
+        if [ -z "$path" ] || [ ! -d "$path" ]; then
+          echo "::error::PLAYWRIGHT_BROWSERS_PATH is unset or missing. Run this job in the mcr.microsoft.com/playwright container (#99)."
+          exit 1
+        fi
+        ls "$path"
+        for b in $BROWSERS; do
+          ls "$path" | grep -q "^$b" || { echo "::error::$b is not preinstalled in $path"; exit 1; }
+        done
+        echo "version=$(node -p "require('@playwright/test/package.json').version")"
