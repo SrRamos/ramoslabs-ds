@@ -206,3 +206,7 @@ None. No `skip`/`fixme` in `specs/button`.
 - The e2e suites are not in `bun run gate` or `ci.yml` (same as the other Playwright suites); wiring a `test:e2e:button` job is the orchestrator's call.
 - File an issue and owner for the icon-only axe review, and for human visual baselines (4 engine x DPR keys).
 - Real VoiceOver pass (W1-505) is still pending; nothing here claims it.
+
+## Vanilla Node content (C12.f SHOULD-1 follow-up)
+- The vanilla adapter now honours the generated `icon?: string | Node` and `default?: string | Node` (`text` is the adapter's name for the label; `text` wins over `default`). A string is still a text node only (ADR-002, no markup parsing); a Node is appended as given. Content is rebuilt only when the source changes (string value or Node identity), so `update()` with the same Node does not wipe it, and a new Node replaces the old one. Destroy clears the retained sources. Button contract, core getters and `button.css` untouched.
+- Tests: Node icon appended, same-Node update keeps it, new Node replaces it, string icon stays text, 1,000 mount/destroy cycles leave no children or live listeners.

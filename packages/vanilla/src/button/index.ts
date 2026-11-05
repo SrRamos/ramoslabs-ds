@@ -19,10 +19,12 @@ export type { ButtonPressPayload, ButtonProps, VanillaHost };
 
 /** Core props plus the content the adapter renders as text nodes. */
 export interface ButtonMountProps extends ButtonProps {
-  /** Visible label, rendered as a text node. */
-  readonly text?: string;
-  /** Decorative icon content (a glyph or short text) inside the `icon` part; `aria-hidden`. */
-  readonly icon?: string;
+  /** Visible label: a string is rendered as a text node; a Node is appended as given. */
+  readonly text?: string | Node;
+  /** Contract name for `text`; `text` wins when both are set. */
+  readonly default?: string | Node;
+  /** Decorative icon inside the `icon` part (`aria-hidden`): a string is text, a Node is appended as given. */
+  readonly icon?: string | Node;
   /** Extra attributes for the control (`name`, `value`, `form`, `data-*`, `aria-*`, `class`, `onClick`). */
   readonly attrs?: Props;
 }
@@ -58,7 +60,9 @@ export function mountButton(
   let control: Element | null = null;
   let applied = new Set<string>();
   let iconEl: Element | null = null;
-  let textNode: Text | null = null;
+  let textNode: Node | null = null;
+  let iconSrc: string | Node | undefined;
+  let textSrc: string | Node | undefined;
   let onClick: ((e: ButtonEventLike) => void) | undefined;
   let iconApplied = new Set<string>();
 
@@ -92,6 +96,7 @@ export function mountButton(
         ctx.onCleanup(() => {
           control?.remove();
           control = iconEl = textNode = onClick = null as never;
+          iconSrc = textSrc = undefined;
         });
       },
     },
@@ -107,32 +112,47 @@ export function mountButton(
       applied = new Set();
       iconEl = null;
       textNode = null;
+      iconSrc = textSrc = undefined;
     }
     const bag =
       kind === 'a' ? button.getLinkProps(current.attrs) : button.getRootProps(current.attrs);
     applied = setAttrs(control, bag, applied);
     onClick = bag.onClick as typeof onClick;
 
-    if (current.icon !== undefined && current.icon !== '') {
+    // A string is text; a Node is appended as given. Content is rebuilt only when the source
+    // (string value or Node identity) changes, so an `update()` with the same Node keeps it.
+    const icon = current.icon === '' ? undefined : current.icon;
+    if (icon !== undefined) {
       if (!iconEl) {
         iconEl = doc.createElement('span');
         control.insertBefore(iconEl, control.firstChild);
         iconApplied = new Set();
+        iconSrc = undefined;
       }
       iconApplied = setAttrs(iconEl, button.getIconProps(), iconApplied);
-      iconEl.textContent = current.icon;
+      if (iconSrc !== icon) {
+        if (typeof icon === 'string') iconEl.textContent = icon;
+        else iconEl.replaceChildren(icon);
+        iconSrc = icon;
+      }
     } else if (iconEl) {
       iconEl.remove();
       iconEl = null;
+      iconSrc = undefined;
     }
-    if (current.text !== undefined && current.text !== '') {
-      if (!textNode) {
-        textNode = doc.createTextNode(current.text);
+    const text =
+      (current.text ?? current.default) === '' ? undefined : (current.text ?? current.default);
+    if (text !== undefined) {
+      if (textSrc !== text) {
+        textNode?.parentNode?.removeChild(textNode);
+        textNode = typeof text === 'string' ? doc.createTextNode(text) : text;
         control.appendChild(textNode);
-      } else if (textNode.data !== current.text) textNode.data = current.text;
+        textSrc = text;
+      }
     } else if (textNode) {
-      textNode.remove();
+      textNode.parentNode?.removeChild(textNode);
       textNode = null;
+      textSrc = undefined;
     }
   };
   render();
