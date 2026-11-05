@@ -47,3 +47,29 @@ All gate steps pass. `@ramoslabs/icons` test `seeded failure: a stray or missing
 - `contract/live-from-contract` lint lands in its own PR (owner: orchestrator, separate stream) before any C02/C11 `.c/.d/.e` opens.
 - Adapters pass `<camel>Live` (above).
 - `.b` CSS (variants, icon, no color-only), `.c/.d/.e` adapters, `.f` conformance incl. SSR no-live-markup and one-announcement specs.
+
+## W1-C11.b: SJState CSS
+
+Branch `feature/m4-c11-state-css`. Owned: `packages/css/src/state.css`, `packages/css/test/state.test.js`, this section. No shared file touched: component CSS is registered by the `src/**` glob in `scripts/build.mjs`, as checkbox.css and switch.css are.
+
+### Decisions and ambiguities
+
+- **Root selector names both classes.** Core emits `sj-state` on the root with no `__root` (`state/index.ts`). The root rule is `:is(.sj-state, .sj-state__root)`, as `icon.css` does, so the anatomy check sees `root`. Issue #88 tracks the convention; the class is not changed here.
+- **Variant hooks.** Every part carries `data-variant` (core, C11.a). Each of the five variants (`first-use`, `no-results`, `cleared`, `loading`, `error`) has its own rule set in `sj.variant`, keyed on the icon and title parts. The three empty kinds stay distinct (contract `variant` description, ADR-006 onboarding vs. no-results vs. cleared).
+- **No meaning by colour alone** (AGENTS.md, WCAG 1.4.1). Every variant renders its title text. The icon slot holds an SJIcon whose glyph differs by kind, and the colour only reinforces it. Under forced colours the text stays visible and the glyph shape carries the kind (test).
+- **Colour choices use only tokens already checked on every surface.** The `sj.variant` rules carry no `data-tone`, so the shared matrix (`packages/testing/contrast/css.js`) does not read them. The test checks each colour token used here on `color-surface`, `color-surface-secondary` and `color-background` directly: text tokens at 4.5:1, icon tokens (`__icon` selectors) at 3:1. The matrix itself is unchanged and reports no `state` failure.
+- **Reduced motion.** The loading spinner is an SJIcon with `data-spin`, animated by `icon.css`. `state.css` removes that animation under `prefers-reduced-motion` in `sj.state` itself, so the file does not depend on `icon.css` being loaded. The base motion net does not reach a spinner without `data-part`, which is why this rule is needed here.
+- **Layout is symmetric and logical.** Flex column, centred text, logical padding and margin. Test: title and glyph stay centred in LTR and RTL.
+
+### Measured
+
+Built `dist/state.css`: 4259 B raw, 1591 B gzip (1.55 KiB). ADR-011 gives no CSS-specific ceiling, and `packages/testing/size/budgets.json` has no CSS entry, so there is no pass/fail figure. The `state` row of `node packages/testing/size/cli.js` (0.642 KiB gzip vs 1 KiB) is the core JS module, not this stylesheet.
+
+### Tests
+
+`packages/css/test/state.test.js` (16 tests): anatomy against the contract, stylelint, no raw values in source, contrast on every surface (with a seeded weak icon colour), per-variant colour and rendered text, forced colours (text and glyph visible, glyph shape differs), RTL centring, reduced motion (spinner static; seeded removal of the rule fails). The full css package suite passes (174 tests, 8 files), and lint and `format:check` are green.
+
+### Follow-ups
+
+- `.c/.d/.e` adapters must emit `data-variant` on every part and set the glyph via SJIcon with `data-spin` for loading. `.f` conformance should add the VoiceOver and NVDA evidence rows.
+- Issue #88: root class convention. This file follows the current emit.

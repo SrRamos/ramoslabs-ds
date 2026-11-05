@@ -1,0 +1,113 @@
+/* sj-state: SJState stylesheet (W1-C11.b). Generated from src/_template, then authored. Tokens only (stylelint sj/* rules enforce it).
+   Parts (contract anatomy): root <div>, icon <span>, title <p>, description <p>, actions <div>.
+   Core emits the root class `sj-state` (no `__root`), so the root selector names both, as sj-icon does; issue #88
+   tracks the class convention and this file does not change it.
+   Hooks from core: data-part on every part, data-variant (first-use | no-results | cleared | loading | error) on every
+   part, aria-busy on the root while loading. Core never renders live markup, so nothing here depends on role or aria-live.
+   Meaning is never carried by colour alone (WCAG 1.4.1): every variant renders its title text, and its icon slot
+   holds an SJIcon whose glyph differs per kind. The colour below only reinforces the glyph and the text.
+   The three empty kinds are distinct variants (ADR-006 / contract), so each one has its own rule set.
+   Layers: structure in sj.component, one rule set per variant in sj.variant, reduced-motion safety in sj.state. */
+
+@layer sj.component {
+  :is(.sj-state, .sj-state__root) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-6);
+    padding-inline: var(--space-4);
+    text-align: center;
+    color: var(--color-text-body);
+  }
+
+  /* Icon slot: centres the SJIcon glyph; the glyph takes its colour from this part (currentColor). */
+  .sj-state__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+
+  /* Heading copy. Weight and size come from tokens; no margin (reset.css scopes resets to data-part). */
+  .sj-state__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Supporting copy. Secondary text on every surface (see the contrast test). */
+  .sj-state__description {
+    margin: 0;
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+  }
+
+  /* Next-step controls (SJButton). Wrap on narrow screens; the gap is a token. */
+  .sj-state__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-block-start: var(--space-2);
+  }
+}
+
+@layer sj.variant {
+  /* first-use: onboarding, the resource has never had data. Primary glyph and heading. */
+  .sj-state__icon[data-variant='first-use'] {
+    color: var(--color-primary);
+  }
+
+  .sj-state__title[data-variant='first-use'] {
+    color: var(--color-text-heading);
+  }
+
+  /* no-results: a search or filter matched nothing. Secondary glyph, heading. */
+  .sj-state__icon[data-variant='no-results'] {
+    color: var(--color-text-secondary);
+  }
+
+  .sj-state__title[data-variant='no-results'] {
+    color: var(--color-text-heading);
+  }
+
+  /* cleared: the user emptied the resource. Muted glyph (the AA floor, slate 500), heading. */
+  .sj-state__icon[data-variant='cleared'] {
+    color: var(--color-text-muted);
+  }
+
+  .sj-state__title[data-variant='cleared'] {
+    color: var(--color-text-heading);
+  }
+
+  /* loading: a status message. Primary spinner glyph, body heading. */
+  .sj-state__icon[data-variant='loading'] {
+    color: var(--color-primary);
+  }
+
+  .sj-state__title[data-variant='loading'] {
+    color: var(--color-text-heading);
+  }
+
+  /* error: a failure. Error text colour for the glyph and the heading (the glyph shape also differs). */
+  .sj-state__icon[data-variant='error'] {
+    color: var(--color-error-text);
+  }
+
+  .sj-state__title[data-variant='error'] {
+    color: var(--color-error-text);
+  }
+}
+
+@layer sj.state {
+  /* A spinner that stops reads as finished, so the loading state relies on its heading text instead.
+     Under prefers-reduced-motion the loader spins no more: the SJIcon spin (data-spin) is removed here too,
+     so this file does not depend on icon.css being loaded (ADR-009 reduced motion). */
+  @media (prefers-reduced-motion: reduce) {
+    .sj-state__icon[data-variant='loading'],
+    .sj-state__icon[data-variant='loading'] [data-spin] {
+      animation: none;
+    }
+  }
+}
