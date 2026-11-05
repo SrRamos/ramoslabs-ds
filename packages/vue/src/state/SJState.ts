@@ -8,9 +8,14 @@ import {
   defineComponent,
   h,
   nextTick,
+  Comment,
+  Fragment,
+  isVNode,
   normalizeClass,
   onBeforeUnmount,
   onMounted,
+  onUpdated,
+  Text,
   watch,
   type PropType,
   type VNodeChild,
@@ -26,6 +31,18 @@ export interface SJStateClasses {
   description?: string;
   actions?: string;
 }
+
+/** True when a slot result has something to show: comments, empty text and empty fragments do not count. */
+const filled = (v: unknown): boolean => {
+  if (Array.isArray(v)) return v.some(filled);
+  if (isVNode(v)) {
+    if (v.type === Comment) return false;
+    if (v.type === Text) return v.children !== '';
+    if (v.type === Fragment) return filled(v.children);
+    return true;
+  }
+  return v !== undefined && v !== null && v !== '' && v !== false;
+};
 
 export const SJState = defineComponent({
   name: 'SJState',
@@ -44,9 +61,13 @@ export const SJState = defineComponent({
   },
   setup(props, { attrs, slots }) {
     const ctx = useSJContext();
+    // A `title` slot has no prop value: its rendered text is read back after render so the
+    // announcement matches the other adapters (a string slot announces like `heading`).
+    let slotHeading: string | undefined;
+    let titleEl: HTMLElement | null = null;
     const state = createState(() => ({
       variant: props.variant,
-      heading: props.heading,
+      heading: props.heading ?? slotHeading,
       description: props.description,
       announce: props.announce,
       interrupt: props.interrupt,
@@ -70,6 +91,15 @@ export const SJState = defineComponent({
         { flush: 'post' },
       );
     });
+    const readSlot = () => {
+      const next = props.heading === undefined && titleEl ? titleEl.textContent?.trim() : undefined;
+      if (next !== slotHeading) {
+        slotHeading = next || undefined;
+        say();
+      }
+    };
+    onMounted(() => void nextTick(readSlot));
+    onUpdated(readSlot);
     onBeforeUnmount(() => void (alive = false));
 
     return () => {
@@ -80,10 +110,19 @@ export const SJState = defineComponent({
       const title = (slots.title?.() ?? props.heading) as VNodeChild;
       const body = (slots.default?.() ?? props.description) as VNodeChild;
       const actions = slots.actions?.() as VNodeChild;
-      const has = (v: unknown) => v !== undefined && v !== null && v !== '';
+      const has = filled;
       return h('div', state.getRootProps({ ...rest, class: cls(attrClass, c.root) }), [
         has(icon) ? h('span', state.getIconProps({ class: c.icon }), icon as string) : null,
-        has(title) ? h('p', state.getTitleProps({ class: c.title }), title as string) : null,
+        has(title)
+          ? h(
+              'p',
+              {
+                ...state.getTitleProps({ class: c.title }),
+                ref: (e: unknown) => void (titleEl = e as HTMLElement | null),
+              },
+              title as string,
+            )
+          : null,
         has(body)
           ? h('p', state.getDescriptionProps({ class: c.description }), body as string)
           : null,

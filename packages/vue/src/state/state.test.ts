@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from 'vitest';
-import { createApp, createSSRApp, h, nextTick, ref } from 'vue';
+import { Comment, Fragment, createApp, createSSRApp, h, nextTick, ref } from 'vue';
 import { renderToString } from 'vue/server-renderer';
 import { createRuntime } from '@ramoslabs/core/runtime';
 import type { LiveHost, LiveRole } from '@ramoslabs/core/live';
@@ -157,6 +157,45 @@ describe('SJState announcements', () => {
     m.app.unmount();
     await flush();
     expect(m.log.texts).toEqual([]);
+  });
+});
+
+describe('SJState title slot', () => {
+  it('a string title slot announces like heading, and updates', async () => {
+    const text = ref('Loading orders');
+    const rec = recorder();
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    createApp({
+      render: () =>
+        h(
+          SJProvider,
+          { liveHost: rec.host },
+          {
+            default: () => h(SJState, { variant: 'loading' }, { title: () => text.value }),
+          },
+        ),
+    }).mount(el);
+    await flush();
+    text.value = 'Loading invoices';
+    await flush();
+    expect(rec.log.texts).toEqual([
+      ['status', 'Loading orders'],
+      ['status', 'Loading invoices'],
+    ]);
+  });
+
+  it('empty slots render no part', () => {
+    const m = mount(
+      { variant: 'first-use' },
+      {
+        icon: () => [],
+        title: () => [h(Comment)],
+        default: () => '',
+        actions: () => [h(Fragment, [])],
+      },
+    );
+    expect(m.root().querySelectorAll('[data-part]').length).toBe(0);
   });
 });
 
