@@ -9,6 +9,8 @@ import {
   lintReducers,
   lintSource,
   lintContracts,
+  lintLive,
+  lintLiveSource,
   loadContracts,
 } from './index.js';
 
@@ -219,5 +221,71 @@ export function reduce(state, event) { return event.type === 'toggle' ? (state =
     expect(lintReducers(cdir, core).map((f) => f.rule)).toEqual([
       'contract/reducer-controlled-field',
     ]);
+  });
+});
+
+describe('live-from-contract (AUDIT-G3A-R2)', () => {
+  const announcing = { camel: 'state', hasLiveRegions: true };
+  const silent = { camel: 'button', hasLiveRegions: false };
+  const live = (/** @type {string} */ src, c = announcing) =>
+    lintLiveSource(src, c).map((f) => f.rule);
+  it('passes the generated constant and files that pass no live option', () => {
+    expect(
+      live(
+        `import { stateLive } from '../generated/state/aria';\nuseMachine(m, { live: stateLive });`,
+      ),
+    ).toEqual([]);
+    expect(live(`export const x = 1;`)).toEqual([]);
+    expect(live(`useMachine(m, { live: buttonLive });`, silent)).toEqual([]);
+    expect(live(`// live: 'eager' in a comment\nuseMachine(m, {});`, silent)).toEqual([]);
+    expect(live(`type O = { live?: 'eager' | 'lazy' };`)).toEqual([]);
+  });
+  it('seeded: a hand-written literal fails for an announcing contract', () => {
+    expect(live(`import { stateLive } from 'x';\nuseMachine(m, { live: 'eager' });`)).toEqual([
+      'contract/live-from-contract',
+    ]);
+    expect(live(`spec = { live: "lazy", other: 1 }`)).toEqual([
+      'contract/live-from-contract',
+      'contract/live-from-contract',
+    ]);
+  });
+  it('seeded: passing live without referencing the generated constant fails', () => {
+    expect(live(`useMachine(m, { live: flag });`)).toEqual(['contract/live-from-contract']);
+  });
+  it('seeded: live eager on a contract without liveRegions fails', () => {
+    expect(live(`useMachine(m, { live: 'eager' });`, silent)).toEqual([
+      'contract/live-from-contract',
+    ]);
+  });
+  it('lintLive reads adapter dirs per contract and flags seeded ones', () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'rl-'));
+    const cdir = path.join(tmp, 'contracts');
+    fs.mkdirSync(cdir);
+    fs.writeFileSync(
+      path.join(cdir, 'state.contract.json'),
+      JSON.stringify({ name: 'SJState', a11y: { liveRegions: [{ id: 's' }] } }),
+    );
+    fs.writeFileSync(
+      path.join(cdir, 'button.contract.json'),
+      JSON.stringify({ name: 'SJButton', a11y: { liveRegions: [] } }),
+    );
+    const dir = (/** @type {string} */ pkg, /** @type {string} */ slug) => {
+      const d = path.join(tmp, 'pk', pkg, 'src', slug);
+      fs.mkdirSync(d, { recursive: true });
+      return d;
+    };
+    fs.writeFileSync(path.join(dir('vue', 'state'), 'a.ts'), `x({ live: stateLive })`);
+    expect(lintLive(cdir, path.join(tmp, 'pk'))).toEqual([]);
+    fs.writeFileSync(path.join(dir('react', 'state'), 'a.tsx'), `x({ live: 'eager' })`);
+    fs.writeFileSync(path.join(dir('vanilla', 'button'), 'a.ts'), `x({ live: 'eager' })`);
+    fs.writeFileSync(path.join(dir('vanilla', 'button'), 'a.test.ts'), `x({ live: 'eager' })`);
+    expect(lintLive(cdir, path.join(tmp, 'pk')).map((f) => f.rule)).toEqual([
+      'contract/live-from-contract',
+      'contract/live-from-contract',
+      'contract/live-from-contract',
+    ]);
+  });
+  it('the shipped adapters pass', () => {
+    expect(lintLive()).toEqual([]);
   });
 });

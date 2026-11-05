@@ -339,3 +339,57 @@ export function lintReducerSource(source, controllable, file = '<reducer>') {
   }
   return out.sort((a, b) => a.line - b.line);
 }
+
+/**
+ * Live rule (AUDIT-G3A-R2, R2-SHOULD-2): the `live` option an adapter hands to `ComponentSpec`,
+ * `useMachine` or `useSJStore` is derived from the contract, never typed by hand. For a contract
+ * with non-empty `a11y.liveRegions`, a file that passes `live` must reference the generated
+ * `<camel>Live` constant and must not write a `live: '...'` literal. For a contract without live
+ * regions, `live: 'eager'` is wrong (the constant, `'lazy'`, is what codegen emits).
+ *
+ * Honest scope: textual, comments removed. It sees a `live:` property (object literal or call
+ * option) whose value is a string literal, and whether the generated name appears in the file. It
+ * cannot see a `live` forwarded under another name or a shorthand `{ live }` whose variable holds a
+ * literal elsewhere.
+ * @param {string} source adapter module text
+ * @param {{ camel: string, hasLiveRegions: boolean }} component
+ * @param {string} [file]
+ * @returns {SourceFinding[]}
+ */
+export function lintLiveSource(source, component, file = '<adapter>') {
+  const code = source.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (m) => m.replace(/[^\n]/g, ' '));
+  const name = `${component.camel}Live`;
+  /** @type {SourceFinding[]} */
+  const out = [];
+  let passes = false;
+  for (const m of code.matchAll(/\blive\s*:([^,\n}]*)/g)) {
+    passes = true;
+    const value = m[1] ?? '';
+    const literal = /(['"`])(eager|lazy)\1/.exec(value);
+    const line = lineAt(code, m.index ?? 0);
+    if (literal && component.hasLiveRegions) {
+      out.push({
+        rule: 'contract/live-from-contract',
+        file,
+        line,
+        message: `live: ${literal[0]} is hand-written: pass the generated ${name} (derived from a11y.liveRegions)`,
+      });
+    } else if (literal?.[2] === 'eager' && !component.hasLiveRegions) {
+      out.push({
+        rule: 'contract/live-from-contract',
+        file,
+        line,
+        message: `live: 'eager' but the contract declares no a11y.liveRegions: pass ${name} (lazy)`,
+      });
+    }
+  }
+  if (passes && component.hasLiveRegions && !new RegExp(`\\b${name}\\b`).test(code)) {
+    out.push({
+      rule: 'contract/live-from-contract',
+      file,
+      line: 1,
+      message: `passes a live option but never references ${name}: the contract declares a11y.liveRegions`,
+    });
+  }
+  return out;
+}

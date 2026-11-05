@@ -3,10 +3,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { buildIndex, lintContractData, lintReducerSource } from './source.js';
+import { buildIndex, lintContractData, lintLiveSource, lintReducerSource } from './source.js';
 import { loadHashes, scanText } from './denylist.js';
 
-export { buildIndex, lintContractData, lintReducerSource, lintSource } from './source.js';
+export {
+  buildIndex,
+  lintContractData,
+  lintLiveSource,
+  lintReducerSource,
+  lintSource,
+} from './source.js';
 export { lintCssContract, selectorsOf } from './css-contract.js';
 export { hashTerm, loadHashes, parseHashes, scanText } from './denylist.js';
 
@@ -49,6 +55,42 @@ export function lintReducers(dir = contractsDir, core = coreDir) {
     if (!fs.existsSync(file)) return [];
     const fields = c.json?.state?.controllable ?? [];
     return lintReducerSource(fs.readFileSync(file, 'utf8'), fields, path.relative(repoRoot, file));
+  });
+}
+
+const adapterPackages = ['vue', 'react', 'vanilla'];
+const packagesDir = path.join(repoRoot, 'packages');
+
+/** @param {string} dir @returns {string[]} */
+function sourceFiles(dir) {
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) return sourceFiles(p);
+    return /\.(ts|tsx|vue|js)$/.test(e.name) && !/\.(test|spec|stories)\./.test(e.name) ? [p] : [];
+  });
+}
+
+/**
+ * Live findings (AUDIT-G3A-R2): every adapter file under `packages/{vue,react,vanilla}/src/<slug>/`
+ * derives `live` from the generated `<camel>Live` constant (see `lintLiveSource`).
+ */
+export function lintLive(dir = contractsDir, packages = packagesDir) {
+  const { contracts } = loadContracts(dir);
+  return contracts.flatMap((c) => {
+    const slug = c.file.replace(/\.contract\.json$/, '');
+    const pascal = String(c.json?.name ?? '').replace(/^SJ/, '');
+    const camel = pascal.charAt(0).toLowerCase() + pascal.slice(1);
+    const hasLiveRegions = (c.json?.a11y?.liveRegions ?? []).length > 0;
+    return adapterPackages.flatMap((pkg) =>
+      sourceFiles(path.join(packages, pkg, 'src', slug)).flatMap((file) =>
+        lintLiveSource(
+          fs.readFileSync(file, 'utf8'),
+          { camel, hasLiveRegions },
+          path.relative(repoRoot, file),
+        ),
+      ),
+    );
   });
 }
 
