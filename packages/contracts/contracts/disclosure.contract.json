@@ -86,10 +86,6 @@
   },
   "kinds": [],
   "runtime": ["idPrefix", "supports"],
-  "nativeFallback": {
-    "touch": "details",
-    "equivalence": ["name"]
-  },
   "support": [
     {
       "feature": "details-name",
@@ -194,6 +190,6 @@
   "fixtures": ["closed", "open", "disabled", "exclusive-group", "long-title"],
   "budgets": {
     "gzipKiB": 3,
-    "shared": []
+    "shared": ["merge", "ids"]
   }
 }

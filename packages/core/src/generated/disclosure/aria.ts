@@ -21,3 +21,8 @@ export const disclosureAria = {
     },
   },
 } as const;
+
+// Live-region creation timing, derived from `a11y.liveRegions` (AUDIT-G3A-R2, R2-SHOULD-2): a
+// component that declares any live region mounts it eagerly (the region must exist, empty, before
+// its first message); one that declares none stays lazy. Adapters pass this constant, never a literal.
+export const disclosureLive = 'lazy' as const;

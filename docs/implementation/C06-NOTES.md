@@ -19,7 +19,7 @@ createDisclosureParts({ view, native, getProps, id }): {
   getContentProps // <div>: id, class, data-*
 }
 peersToClose(selfId, members: { id, name?, open }[]): string[]   // owned exclusive fallback, pure
-DisclosureEffect = { type: 'closePeers', target: 'root' }
+createDisclosureParts ctx.closePeers?: (rootId) => void   // adapter-supplied owned fallback
 ```
 - **Native-first.** No `aria-expanded`, no `aria-controls`, no `role`, no keydown handler: `<summary>` exposes the expanded state and activates on Enter/Space natively. This follows the ADR-015 registry decision (`disclosure.json`, `mustNot: manual-aria-expanded-on-summary`).
 - `open` is emitted from `view()` on the root (property/attribute the adapter applies); the `toggle` event reports actual state through `native('open', el.open)`. `toggle` also fires for programmatic changes, including the corrective effect, so the handler ignores a report equal to `view().open` (no double `onOpenChange`, no feedback loop). The next value is the element's own `open`, never read from the reducer (G1 SHOULD-4).
@@ -28,8 +28,8 @@ DisclosureEffect = { type: 'closePeers', target: 'root' }
 - Protected (library-owned): root `id/open/name`, trigger `id/aria-disabled`, content `id`, and all `data-part/state/disabled`.
 
 ## Exclusive groups and the owned fallback (ADR-001, Section 2)
-- Contract `support[]`: feature `details-name`, `nativeFrom {chromium 120, firefox 130, safari 18}`, `fallbackUntil {chromium 119, firefox 129, safari 17}`. The schema (frozen, G2) takes integer majors only, so Safari 17.2 cannot be written: `nativeFrom.safari = 18` is the conservative first full major and `fallbackUntil.safari = 17` covers 17.0-17.1 (it also names 17.2+, where the fallback is simply not selected). The fallback is chosen by capability (`runtime.supports.detailsName`), not by version, so the integer granularity affects only generated docs and the floor lane's version labels.
-- Mechanism: the reducer cannot know the group name or capability, so every transition into `open` emits `closePeers` (target `root`). The adapter runs it only when the element has a non-empty `name` and `supports.detailsName` is false: collect the `details[name]` members, call `peersToClose(selfId, members)`, set `open = false` on each result (their own `toggle` then reports through their getters, so `onOpenChange` fires on each peer, matching what native `name` does). On a native engine the adapter ignores the effect.
+- Contract `support[]`: feature `details-name`, `nativeFrom {chromium 120, firefox 130, safari 18}`, `fallbackUntil {chromium 119, firefox 129, safari 17}`. The schema (frozen, G2) takes integer majors only, so Safari 17.2 cannot be written: `nativeFrom.safari = 18` is the conservative first full major and `fallbackUntil.safari = 17` covers 17.0-17.1 (it also names 17.2+, where the fallback is simply not selected). The fallback is chosen by capability (`runtime.supports.detailsName`), not by version, so the integer granularity affects only generated docs and the floor lane's version labels. A schema amendment for Safari minor versions is planned at G3C; then set 17.2 / 17.1.
+- Mechanism (audit MUST-1): the root's `onToggle` getter calls `ctx.closePeers(rootId)` whenever `el.open` is true and `props.name` is set, BEFORE the comparison with the view. So controlled, programmatic and rejected opens all close peers; the reducer emits no effects. The adapter-supplied hook returns early when `supports.detailsName` is true, otherwise collects the `details[name]` members, runs `peersToClose(rootId, members)` and sets `open = false` on each (their own `toggle` then reports, so `onOpenChange` fires on each peer, as native does).
 - `peersToClose` is pure and covered by a property test (at most one open member remains).
 - The `.f` forced-false run (`detailsName: false`) proves the fallback end to end; `.c/.d/.e` own the effect handler.
 
@@ -37,7 +37,7 @@ DisclosureEffect = { type: 'closePeers', target: 'root' }
 - **Snapshot is `{ state, open }`**; reducer reads only `state` (lint `contract/reducer-controlled-field` clean).
 - **Actions `open`, `close`, `toggle`.** `toggle` is the keyboard action (`keyboard.trigger.Enter/Space`); `open`/`close` are the idempotent absolute events used for native reports (`toEvent(next)`), so a repeated or out-of-order report cannot flip state.
 - **No `aria-*` mirroring in `dom`**: actions record `dom.root.open`, as the checkbox does for `checked`.
-- `runtime: ["idPrefix", "supports"]`. `nativeFallback {touch: details, equivalence: [name]}` is required by `evidence:check` (registry constraint `nativeOnTouch: true`; the native element is itself the touch rendering). Props `open/defaultOpen/disabled/name/id`; slots `summary`, `default` (no name shared with a prop). Status `draft` (G3C promotes).
+- `runtime: ["idPrefix", "supports"]`. `evidence:check` (SHOULD-3) accepts `nativeOnTouch: true` when every interactive anatomy part is `native: true`, so no `nativeFallback` block is declared. `budgets.shared: [merge, ids]`. Props `open/defaultOpen/disabled/name/id`; slots `summary`, `default` (no name shared with a prop). Status `draft` (G3C promotes).
 - WCAG list mirrors checkbox (no 2.3.3: AAA). Evidence refs are the five registry entries with matching `test_status`; `atAssertions` include a changed-expanded-state speech check because the registry notes NVDA/Chrome history (`nvda-chrome-a11ysupport-summary`).
 
 ## Bytes (min+gzip, shared kernel excluded, `node packages/testing/size/cli.js`)
@@ -51,5 +51,6 @@ DisclosureEffect = { type: 'closePeers', target: 'root' }
 
 ## Deferred and open
 - **Reduced motion (.b).** Native `<details>` content toggles with no animation unless CSS adds one; any height/opacity transition must use `--sj-duration-*` (collapsed to `0s` under `prefers-reduced-motion` by `base/motion.css`), and none is required. Core has no part. ADR-009.
-- **Controlled groups on the fallback.** The `closePeers` effect comes from the reducer, which a controlled member never reaches, so in controlled mode on a non-native engine the owner must close peers from `onOpenChange` (native `name` would do it for them). Closing this gap needs a getter-side hook or an extra shared effect source; flag for G3C / .c-.e whether to require it.
-- `.c/.d/.e`: apply `open` as a property; React must not set both `open` and a default; run `closePeers` and the `open` effect in the layout drain; a forced commit after a rejected controlled report (as the Switch React adapter does) is required for the corrective effect.
+- `.f`: the forced-false (`detailsName: false`) fixture must include a controlled group.
+- `.c/.d/.e`: apply `open` as a property; React must not set both `open` and a default; run the `open` effect in the layout drain; a forced commit after a rejected controlled report (as the Switch React adapter does) is required for the corrective effect.
+- `.c/.d/.e` (SHOULD-1): `<details>` works before hydration, so at mount report `native('open', el.open)` when it differs from the view; the .f hydrate spec toggles before hydrating. Implement `ctx.closePeers` from the DOM and `runtime.supports.detailsName`.

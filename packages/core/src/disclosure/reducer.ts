@@ -7,9 +7,9 @@
 // snapshot's `open` is derived from the machine position.
 //
 // Exclusive groups (`<details name>`): the native engine closes siblings from Chromium 120, Firefox
-// 130 and Safari 17.2. Below that the owned fallback runs as an effect descriptor: a transition into
-// `open` emits `closePeers`, and the adapter executes it only when it has a group name and
-// `supports.detailsName` is false (the reducer cannot know either). Never executed here.
+// 130 and Safari 17.2. Below that the owned fallback is adapter-supplied (`DisclosureContext.closePeers`,
+// called from the root's `toggle` getter), so it works for controlled, programmatic and rejected
+// opens too. The reducer emits no effects.
 import type { Reduction } from '../store/index';
 import type { DisclosureEvent, DisclosureState } from '../generated/disclosure/index';
 
@@ -28,12 +28,6 @@ export interface DisclosureAction {
   readonly type: DisclosureEvent;
 }
 
-/** Owned exclusive-group fallback: close every other open member of the same `name` group. */
-export interface DisclosureEffect {
-  readonly type: 'closePeers';
-  readonly target: 'root';
-}
-
 // Total over the two states; a missing row is a no-op that keeps the reference (generated table rule).
 const table: Readonly<Record<DisclosureState, Readonly<Record<string, DisclosureState>>>> = {
   closed: { open: 'open', toggle: 'open' },
@@ -47,34 +41,33 @@ const snap = (state: DisclosureState): DisclosureSnapshot => ({ state, open: sta
 
 const closed = snap('closed');
 const opened = snap('open');
-const closePeers: readonly DisclosureEffect[] = [{ type: 'closePeers', target: 'root' }];
 
 /**
  * Two forms of one transition function:
  * - machine form `reduce('closed', { type: 'open' }) === 'open'` (contract equivalence);
  * - store form `reduce(snapshot, event)` returning a Reduction (same reference on a no-op;
- *   `closePeers` on every transition into `open`).
+).
  */
 export function reduce(state: DisclosureState, event: { readonly type: string }): DisclosureState;
 export function reduce(
   state: DisclosureSnapshot,
   event: { readonly type: string },
-): Reduction<DisclosureSnapshot, DisclosureEffect>;
+): Reduction<DisclosureSnapshot, never>;
 export function reduce(
   state: DisclosureState | DisclosureSnapshot,
   event: { readonly type: string },
-): DisclosureState | Reduction<DisclosureSnapshot, DisclosureEffect> {
+): DisclosureState | Reduction<DisclosureSnapshot, never> {
   if (typeof state === 'string') return step(state, event);
   const next = step(state.state, event);
   if (next === state.state) return { state };
-  return next === 'open' ? { state: opened, effects: closePeers } : { state: closed };
+  return { state: next === 'open' ? opened : closed };
 }
 
 /** The store reducer (the store form of `reduce`). */
 export const storeReducer = (
   state: DisclosureSnapshot,
   event: { readonly type: string },
-): Reduction<DisclosureSnapshot, DisclosureEffect> => reduce(state, event);
+): Reduction<DisclosureSnapshot, never> => reduce(state, event);
 
 export const initialSnapshot = (open = false): DisclosureSnapshot => (open ? opened : closed);
 

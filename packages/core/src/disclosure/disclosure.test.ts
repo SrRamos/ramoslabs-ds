@@ -2,7 +2,6 @@ import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
 import { createStore } from '../store/index';
 import { createControlled } from '../controlled/index';
-import { createEffectQueue, type Effect } from '../effects/index';
 import { disclosureMachine } from '../generated/disclosure/index';
 import {
   createDisclosureParts,
@@ -13,7 +12,6 @@ import {
   reduce,
   reducerEvents,
   storeReducer,
-  type DisclosureEffect,
   type DisclosureMember,
   type DisclosureProps,
   type DisclosureSnapshot,
@@ -24,14 +22,8 @@ declare const console: { warn(m: string): void };
 /** What an adapter does: store + controlled + getters, props read at call time. */
 function make(initialProps: DisclosureProps = {}) {
   let props: DisclosureProps = initialProps;
-  const effects: Effect<DisclosureEffect>[] = [];
-  const store = createStore(
-    initialSnapshot(props.defaultOpen ?? false),
-    storeReducer,
-    (fx: readonly DisclosureEffect[], version: number) => {
-      for (const e of fx) effects.push({ ...e, version });
-    },
-  );
+  const closed: string[] = [];
+  const store = createStore(initialSnapshot(props.defaultOpen ?? false), storeReducer);
   const controlled = createControlled({ store, getProps: () => props, fields: disclosureFields });
   controlled.mount();
   const parts = createDisclosureParts({
@@ -39,8 +31,9 @@ function make(initialProps: DisclosureProps = {}) {
     native: controlled.native,
     getProps: () => props,
     id: disclosureBaseId(props.id, () => ':r1:', 'p-'),
+    closePeers: (id) => void closed.push(id),
   });
-  return { store, controlled, parts, effects, setProps: (p: DisclosureProps) => void (props = p) };
+  return { store, controlled, parts, closed, setProps: (p: DisclosureProps) => void (props = p) };
 }
 
 /** The `toggle` event the browser fires after it flipped `details.open`. */
@@ -103,14 +96,10 @@ describe('reducer invariants (property)', () => {
       }),
     );
   });
-  it('effects: closePeers exactly on a transition into open, never on a no-op or a close', () => {
+  it('the reducer emits no effects', () => {
     fc.assert(
       fc.property(fc.boolean(), events, (o, type) => {
-        const start = initialSnapshot(o);
-        const r = reduce(start, { type });
-        const opened = !start.open && r.state.open;
-        expect(r.effects ?? []).toEqual(opened ? [{ type: 'closePeers', target: 'root' }] : []);
-        if (r.state.open === start.open) expect(r.state).toBe(start);
+        expect(reduce(initialSnapshot(o), { type }).effects).toBeUndefined();
       }),
     );
   });
@@ -229,13 +218,6 @@ describe('native toggle reporting', () => {
     (m.parts.getRootProps().onToggle as (e: unknown) => void)(undefined);
     expect(onOpenChange).not.toHaveBeenCalled();
   });
-  it('opening emits one closePeers effect on the root; closing emits none', () => {
-    const m = make();
-    fireToggle(m.parts.getRootProps(), true);
-    expect(m.effects).toEqual([{ type: 'closePeers', target: 'root', version: 1 }]);
-    fireToggle(m.parts.getRootProps(), false);
-    expect(m.effects).toHaveLength(1);
-  });
   it('controlled accepting: owner updates the prop, no corrective effect', () => {
     let open = false;
     const m = make({ open, onOpenChange: (n) => void (open = n) });
@@ -267,16 +249,37 @@ describe('native toggle reporting', () => {
     m.setProps({});
     expect(() => m.controlled.view()).toThrow(/controlled and uncontrolled/);
   });
-  it('effects drain in the shared queue order, superseding stale closePeers', () => {
+  it('opening closes peers (named group) even when controlled, matching the view, or rejected', () => {
+    const open = make({ name: 'g' });
+    fireToggle(open.parts.getRootProps(), true);
+    expect(open.closed).toEqual(['p-:r1:']);
+    fireToggle(open.parts.getRootProps(), false);
+    expect(open.closed).toHaveLength(1);
+    // controlled, accepting
+    const acc = make({ name: 'g', open: false, onOpenChange: () => {} });
+    fireToggle(acc.parts.getRootProps(), true);
+    expect(acc.closed).toHaveLength(1);
+    // controlled rejecting: view stays closed, peers still close
+    const rej = make({ name: 'g', open: false, onOpenChange: vi.fn() });
+    fireToggle(rej.parts.getRootProps(), true);
+    expect(rej.controlled.view().open).toBe(false);
+    expect(rej.closed).toHaveLength(1);
+    // programmatic: toggle matches the view, still closes peers
+    const prog = make({ name: 'g', defaultOpen: true });
+    fireToggle(prog.parts.getRootProps(), true);
+    expect(prog.closed).toHaveLength(1);
+  });
+  it('no group name, or no adapter hook: no call, no throw', () => {
     const m = make();
-    const q = createEffectQueue<DisclosureEffect>();
     fireToggle(m.parts.getRootProps(), true);
-    fireToggle(m.parts.getRootProps(), false);
-    fireToggle(m.parts.getRootProps(), true);
-    for (const e of m.effects) q.enqueue([{ type: e.type, target: e.target }], e.version);
-    const ran: string[] = [];
-    q.drain({ run: (e) => void ran.push(e.type) });
-    expect(ran).toEqual(['closePeers']);
+    expect(m.closed).toEqual([]);
+    const bare = createDisclosureParts({
+      view: () => initialSnapshot(false),
+      native: () => true,
+      getProps: () => ({ name: 'g' }),
+      id: 'x',
+    });
+    expect(() => fireToggle(bare.getRootProps(), true)).not.toThrow();
   });
 });
 

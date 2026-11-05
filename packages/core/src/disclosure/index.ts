@@ -7,7 +7,7 @@
 // `toggle` event reports actual state back through `native('open', ...)`.
 // Getters are pure functions of `view()` and `getProps()` (ADR-004); adapters own the store.
 import { mergeProps, type Props } from '../merge/index';
-import { baseId } from '../ids/index';
+import { baseId, partId } from '../ids/index';
 import type { DisclosureSnapshot } from './reducer';
 
 export {
@@ -20,7 +20,6 @@ export {
 } from './reducer';
 export type {
   DisclosureAction,
-  DisclosureEffect,
   DisclosureEvent,
   DisclosureSnapshot,
   DisclosureState,
@@ -46,6 +45,12 @@ export interface DisclosureContext {
   /** `controlled.native`: records the native `<details>` state, notifies, dispatches when uncontrolled. */
   readonly native: (field: 'open', actual: boolean) => boolean;
   readonly getProps: () => DisclosureProps;
+  /**
+   * Owned exclusive-group fallback, supplied by the adapter after mount: collects the `details[name]`
+   * members, returns early when `supports.detailsName` is true, otherwise sets `open = false` on the
+   * `peersToClose(rootId, members)` elements. Optional: absent means native `name` only.
+   */
+  readonly closePeers?: (rootId: string) => void;
   /** Base id from `disclosureBaseId` (computed once per instance). */
   readonly id: string;
 }
@@ -80,8 +85,8 @@ export interface DisclosureMember {
 /**
  * Owned exclusive-group fallback (Chromium 114-119, Firefox 125-129, Safari 17.0-17.1): ids of the
  * other open members that share the opened member's non-empty `name`, in input (DOM) order. Pure;
- * the adapter collects `members` from the DOM when it runs a `closePeers` effect with
- * `supports.detailsName` false, then sets `open = false` on each returned element.
+ * the adapter collects `members` from the DOM inside `DisclosureContext.closePeers` when
+ * `supports.detailsName` is false, then sets `open = false` on each returned element.
  */
 export function peersToClose(selfId: string, members: readonly DisclosureMember[]): string[] {
   const self = members.find((m) => m.id === selfId);
@@ -91,7 +96,11 @@ export function peersToClose(selfId: string, members: readonly DisclosureMember[
 }
 
 export function createDisclosureParts(ctx: DisclosureContext): DisclosureParts {
-  const ids = { root: ctx.id, trigger: `${ctx.id}-trigger`, content: `${ctx.id}-panel` };
+  const ids = {
+    root: ctx.id,
+    trigger: partId(ctx.id, 'trigger'),
+    content: partId(ctx.id, 'panel'),
+  };
   const disabledOf = () => ctx.getProps().disabled === true;
   const stateAttrs = () => ({
     'data-state': ctx.view().open ? 'open' : 'closed',
@@ -122,6 +131,9 @@ export function createDisclosureParts(ctx: DisclosureContext): DisclosureParts {
           onToggle: (event?: ToggleLike) => {
             const el = event?.currentTarget ?? event?.target;
             if (!el || typeof el.open !== 'boolean') return;
+            // Before the view comparison: a controlled, programmatic or rejected open still opened
+            // the element, so its group peers must close on engines without native `name`.
+            if (el.open && ctx.getProps().name) ctx.closePeers?.(ids.root);
             if (el.open !== ctx.view().open) ctx.native('open', el.open);
           },
         },
