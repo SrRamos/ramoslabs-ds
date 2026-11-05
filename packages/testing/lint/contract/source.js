@@ -343,7 +343,7 @@ export function lintReducerSource(source, controllable, file = '<reducer>') {
 /**
  * Live rule (AUDIT-G3A-R2, R2-SHOULD-2): the `live` option an adapter hands to `ComponentSpec`,
  * `useMachine` or `useSJStore` is derived from the contract, never typed by hand. For a contract
- * with non-empty `a11y.liveRegions`, a file that passes `live` must reference the generated
+ * with non-empty `a11y.liveRegions`, every non-barrel adapter module must reference the generated
  * `<camel>Live` constant and must not write a `live: '...'` literal. For a contract without live
  * regions, `live: 'eager'` is wrong (the constant, `'lazy'`, is what codegen emits).
  *
@@ -361,9 +361,7 @@ export function lintLiveSource(source, component, file = '<adapter>') {
   const name = `${component.camel}Live`;
   /** @type {SourceFinding[]} */
   const out = [];
-  let passes = false;
   for (const m of code.matchAll(/\blive\s*:([^,\n}]*)/g)) {
-    passes = true;
     const value = m[1] ?? '';
     const literal = /(['"`])(eager|lazy)\1/.exec(value);
     const line = lineAt(code, m.index ?? 0);
@@ -383,12 +381,20 @@ export function lintLiveSource(source, component, file = '<adapter>') {
       });
     }
   }
-  if (passes && component.hasLiveRegions && !new RegExp(`\\b${name}\\b`).test(code)) {
+  // A module of an announcing component must reference the constant even when it has no `live:`
+  // key (the Vue pattern guards `requireLive` on it), or the eager region is silently forgotten.
+  // A pure re-export barrel has no logic to guard and is exempt.
+  const barrel =
+    code
+      .replace(/\b(?:export|import)\b[^;]*?\bfrom\s*(['"])[^'"]+\1\s*;?/g, '')
+      .replace(/\bexport\s*\{\s*\}\s*;?/g, '')
+      .trim() === '';
+  if (component.hasLiveRegions && !barrel && !new RegExp(`\\b${name}\\b`).test(code)) {
     out.push({
       rule: 'contract/live-from-contract',
       file,
       line: 1,
-      message: `passes a live option but never references ${name}: the contract declares a11y.liveRegions`,
+      message: `never references ${name}: the contract declares a11y.liveRegions, so every adapter module derives live from the generated constant`,
     });
   }
   return out;
