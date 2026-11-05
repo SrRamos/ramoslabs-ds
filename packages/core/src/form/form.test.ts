@@ -32,7 +32,7 @@ describe('contract', () => {
     expect([...reducerEvents]).toEqual([]);
     expect((reduce as (s: 'idle', e: object) => 'idle')('idle', { type: 'x' })).toBe('idle');
     expect(contract.anatomy).toEqual([{ part: 'root', element: 'form' }]);
-    expect(contract.pattern.evidence).toBe('text-field');
+    expect(contract.pattern.evidence).toBe('form');
   });
   it('props are exactly the ones the owner reads', () => {
     expect(contract.props.map((p) => p.name).sort()).toEqual(
