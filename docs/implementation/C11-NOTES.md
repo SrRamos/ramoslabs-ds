@@ -94,10 +94,11 @@ Branch `feature/m4-c11-state-vue`. Owned: `packages/vue/src/state/**` (`SJState.
 `state.test.ts` (13 tests): parts and data-variant on every part, three empty kinds distinct, unknown variant falls back to first-use, slots win, class merging, eager status region, polite loading and count (de-duplicated), silent first-use/cleared, alert only for interrupting error, no announce after unmount, SSR for five variants, source check (no literal, no innerHTML), 1,000 mount/destroy leaves no DOM and no host callbacks. Bytes: see the PR body (size harness row for adapters).
 ## W1-C11.e: SJState vanilla adapter
 
-Branch `feature/m4-c11-state-vanilla`. Owned: `packages/vanilla/src/state/**` (adapter and test). Entry wiring (`exports["./state"]`) already existed from the pre-stub. **Shared file touched:** `packages/core/src/state/index.ts` gained one line, `export { stateLive } from '../generated/state/aria'`, because the generated `aria.ts` is not reachable from an adapter through the `@ramoslabs/core` exports map (there is no `./generated` subpath). C11.c/d need the same line; identical text rebases cleanly.
+Branch `feature/m4-c11-state-vanilla`. Owned: `packages/vanilla/src/state/**` (adapter and test). Entry wiring (`exports["./state"]`) already existed from the pre-stub. No shared file touched: `stateLive` comes from `packages/vanilla/src/generated/state/index.ts` (#103).
 
 ### Decisions
 
+- **Live constant**: imported from `../generated/state/index` (#103); no core re-export.
 - **Surface**: `mountState(host, el, props)` returns `{ update, destroy, destroyed, parts() }`; `define(host, name?, registry?)` registers `sj-state` explicitly (never at import, idempotent, light DOM, no FACE: nothing form-associated).
 - **Live**: the spec passes the generated `stateLive` (`'eager'`), so the host inserts its region at mount (lint `contract/live-from-contract`). After each patch the adapter hands `getAnnouncement()` to `ctx.live` once per change (deduped on urgency plus text); polite `status` for loading, no-results and counts, `alert` only for `error` with `interrupt`. The root and parts never carry `role`, `aria-live` or `aria-atomic`; a test asserts it for all five variants with `announce` and `interrupt` set.
 - **Prop-or-slot**: `icon`, `title`, `default`, `actions` accept `string | Node`; `title` and `default` win over `heading` and `description`. A string `title` slot is also the announcement text. A Node is moved in and detached (not cloned or retained) on destroy.

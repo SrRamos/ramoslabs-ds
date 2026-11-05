@@ -1,5 +1,5 @@
 import { createRuntime } from '@ramoslabs/core/runtime';
-import { stateLive } from '@ramoslabs/core/state';
+import { stateLive } from '../generated/state/index';
 import { describe, expect, it, vi } from 'vitest';
 import { createHost } from '../runtime/index';
 import { define, mountState } from './index';

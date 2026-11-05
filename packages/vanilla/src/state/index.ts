@@ -6,8 +6,9 @@
 // never carries live markup: the announcement goes to the host live registry after mount (client only),
 // so a server render has none. `title` is a global tooltip attribute: it is never read from attributes,
 // the copy comes from `heading` or the title slot (C11-NOTES). No listeners and no pointer handling.
-import { createState, stateLive, type State } from '@ramoslabs/core/state';
+import { createState, type State } from '@ramoslabs/core/state';
 import type { Props } from '@ramoslabs/core/merge';
+import { stateLive } from '../generated/state/index';
 import type { SJStateOptions } from '../generated/state/types';
 import {
   setText,
