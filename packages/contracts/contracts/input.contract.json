@@ -1,0 +1,203 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJInput",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": {
+    "apg": "text-field",
+    "evidence": "text-field"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "span"
+    },
+    {
+      "part": "control",
+      "element": "input",
+      "native": true
+    }
+  ],
+  "state": {
+    "machine": ["pristine", "touched"],
+    "controllable": []
+  },
+  "actions": [
+    {
+      "id": "touch",
+      "from": "pristine",
+      "to": "touched"
+    }
+  ],
+  "keyboard": {},
+  "focus": {
+    "strategy": "native",
+    "owner": "control"
+  },
+  "kinds": [
+    "text",
+    "name",
+    "username",
+    "email",
+    "url",
+    "phone",
+    "otp",
+    "otp-alnum",
+    "amount",
+    "amount-signed",
+    "quantity",
+    "postal",
+    "reference",
+    "account",
+    "tax-id",
+    "search",
+    "password",
+    "password-new",
+    "date",
+    "time",
+    "choice",
+    "cc-number",
+    "cc-exp",
+    "cc-exp-month",
+    "cc-exp-year",
+    "cc-csc",
+    "cc-name",
+    "address",
+    "address-line",
+    "country",
+    "organization"
+  ],
+  "runtime": ["idPrefix", "supports"],
+  "support": [
+    {
+      "feature": "user-invalid",
+      "nativeFrom": {
+        "chromium": 119,
+        "firefox": 88,
+        "safari": 17
+      },
+      "fallbackUntil": {
+        "chromium": 118,
+        "firefox": 87,
+        "safari": 16
+      }
+    }
+  ],
+  "a11y": {
+    "wcag": ["1.3.1", "1.3.5", "1.4.1", "3.3.1", "3.3.2", "4.1.2"],
+    "liveRegions": [],
+    "atAssertions": ["manual-input-kind-keyboard", "manual-input-autofill-token"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/text-field.json#vo-macos-safari-a11ysupport-errormessage"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/text-field.json#vo-ios-safari-a11ysupport-errormessage"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "edge",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/text-field.json#nvda-edge-a11ysupport-errormessage"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/text-field.json#jaws-chrome-a11ysupport-errormessage"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/text-field.json#talkback-chrome-a11ysupport-errormessage"]
+      }
+    ]
+  },
+  "events": [],
+  "props": [
+    {
+      "name": "kind",
+      "type": "'text' | 'name' | 'username' | 'email' | 'url' | 'phone' | 'otp' | 'otp-alnum' | 'amount' | 'amount-signed' | 'quantity' | 'postal' | 'reference' | 'account' | 'tax-id' | 'search' | 'password' | 'password-new' | 'date' | 'time' | 'choice' | 'cc-number' | 'cc-exp' | 'cc-exp-month' | 'cc-exp-year' | 'cc-csc' | 'cc-name' | 'address' | 'address-line' | 'country' | 'organization'",
+      "default": "text",
+      "description": "ADR-007 intent. Resolves the rendered element and its type, inputmode, autocomplete, enterkeyhint, autocapitalize, autocorrect and spellcheck. Never emits maxlength. Unknown kinds are a type error."
+    },
+    {
+      "name": "variant",
+      "type": "'text'",
+      "description": "Text variant of quantity (type=text) and country (type=text, country-name)."
+    },
+    {
+      "name": "autocomplete",
+      "type": "string",
+      "description": "Consumer autofill token or variant (for example given-name); used only when the kind allows it."
+    },
+    {
+      "name": "section",
+      "type": "string",
+      "description": "Autofill section name, emitted as section-<name>."
+    },
+    {
+      "name": "meaningful",
+      "type": "boolean",
+      "default": false,
+      "description": "Emits the conditional autofill tokens (url, bday, transaction-amount)."
+    },
+    {
+      "name": "digits",
+      "type": "boolean",
+      "description": "Postal, reference and account default true, tax-id false: the numeric keypad only when the value is digits-only."
+    },
+    {
+      "name": "uppercase",
+      "type": "boolean",
+      "default": false,
+      "description": "Canonical form is uppercase (otp-alnum): autocapitalize=characters."
+    },
+    {
+      "name": "autoSubmit",
+      "type": "boolean",
+      "default": false,
+      "description": "OTP submits on Enter (enterkeyhint go) instead of done."
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "description": "Control id when the input has no SJField; inside an SJField the field id wins."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Control name when the input has no SJField; inside an SJField the field name wins."
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "default": false,
+      "description": "Native required when the input has no SJField."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "description": "Native disabled when the input has no SJField."
+    }
+  ],
+  "slots": [],
+  "fixtures": ["default", "email", "phone", "otp", "amount", "address", "password", "disabled"],
+  "budgets": {
+    "gzipKiB": 3,
+    "shared": ["ids", "merge", "kinds"]
+  }
+}

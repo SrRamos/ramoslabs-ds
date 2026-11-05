@@ -58,3 +58,31 @@ Core `field`: 0.68 KiB gzip (ceiling 3 KiB); core `form`: 0.69 KiB (ceiling 1.5 
 - NICE-1: form budget 1.5 KiB is an engineering limit chosen as about twice the measured 0.69 KiB; plan 6.2 puts the form context inside SJField's 3 KiB, and field + form measure 1.4 KiB combined, so the 3 KiB reading holds with margin.
 - Ruling 1: `kind` dropped from SJField; SJInput owns it and calls `field.setKind(kind)` (re-registers; `connect()` registers with kind undefined) and reads `field.enterHint()`.
 - Ruling 3: `last` starts as the creation-time error, so a standing error is silent and only transitions announce.
+
+## W1-C02.a2: SJInput contract and core
+
+Branch `feature/m4-c02-input-core` (stacked on `feature/m4-c02-field-core`, PR #94; rebase onto main when it lands). Owned: `packages/contracts/contracts/input.contract.json`, `packages/core/src/input/**`, regenerated `*/src/generated/**` (plus `registry.json` and `llms-full.txt`, which the gate regenerates), this section.
+
+### Surface (draft)
+
+```ts
+// @ramoslabs/core/input
+createInput(getProps: () => InputProps, ctx?: { field?: FieldParts; userInvalid?: boolean }): InputParts
+InputParts = { store, tag(), resolved(), getRootProps, getControlProps, connect() }
+```
+
+- **Kind** (ADR-007): SJInput owns `kind` (Fable ruling). `getControlProps` spreads `resolveKind(kind, ctx)` into `type`, `inputmode`, `autocomplete`, `enterkeyhint`, `autocapitalize`, `autocorrect`, `spellcheck` (as `"true"`/`"false"`). Never `maxlength`; `type=number` only for `quantity`. Test iterates every kind row. `tag()` is `textarea` for `address` and `select` for `choice` and `country` (default variant); those carry no `type`. Textarea gets `enterkeyhint="enter"` (ADR-007 "always enter"); the exclusion from the position computation is the form owner's (`enterKeyHints`).
+- **Field wiring**: inside an SJField the bag is passed through `field.getControlProps`, so ids, `aria-describedby`, `aria-invalid`, `name`, `required` and `disabled` come from the field context. `connect()` calls `field.setKind(kind)` (adapter: children mount first, so the kind is recorded before `field.connect()`; call again when `kind` changes) and returns a cleanup that resets it. `enterkeyhint` position comes from `field.enterHint()`. Standalone, the input takes `id/name/required/disabled` props itself; inside a field these props are ignored (documented in the contract).
+- **3.3.7**: `onBlur` hands the control value to `field.retain` (secrets are filtered by the form owner). Auto-population (`prior()`, `offers()`) stays on the field; the input does not set a value.
+- **`:user-invalid`** (ADR-014, ADR-001): `support[]` has `user-invalid` `nativeFrom {119, 88, 17}`, `fallbackUntil {118, 87, 16}`. The Safari native version is 16.5 in ADR-001 but the schema takes integers, so the floor major 17 (and 16 for the fallback bound) is recorded. The fallback is a two-state machine (`pristine` -> `touched`, action `touch`): `onBlur` and `onInvalid` (submit) touch it and the control gets `data-touched="true"` for CSS (`[data-touched]:invalid`). With `ctx.userInvalid === true` (runtime `supports.userInvalid`) the handlers are inert and the attribute never appears. Default is the fallback (server render, forced-false run); the forced-false run itself is `.f`. `data-touched` is protected, so a consumer cannot fake it.
+- **Contract**: anatomy `root` (span) and `control` (input, native); no slots (the control is a leaf), so no slot shares a prop name. The `kind` prop type is the inline union because generated adapter types carry the type string verbatim (no import). `atSupport` reuses the five `text-field` registry rows used by SJField (same control, same pair evidence); no new evidence was invented, and assertions `manual-input-kind-keyboard` and `manual-input-autofill-token` are manual.
+
+### Size (ADR-011)
+
+Core `input`: 0.876 KiB gzip (ceiling 3 KiB). SJField 0.724 + SJForm 0.699 + SJInput 0.876 = 2.30 KiB, inside the 3 KiB field-set reading of plan 6.2 (shared modules counted once elsewhere).
+
+### Not done / follow-ups
+
+- ADR-014 names BaseInput prefix/leading/trailing/postfix parts; not part of the .a2 criteria, not added.
+- Native-support wiring (`runtime.supports.userInvalid` -> `ctx.userInvalid`) is the adapters' (.c/.d/.e); forced-false proof is .f.
+- Two fields announcing in one commit remains a known limit (consumer-side summary/focus path).

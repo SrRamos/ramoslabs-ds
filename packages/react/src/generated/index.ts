@@ -6,5 +6,6 @@ export * from './checkbox/index';
 export * from './field/index';
 export * from './form/index';
 export * from './icon/index';
+export * from './input/index';
 export * from './state/index';
 export * from './switch/index';
