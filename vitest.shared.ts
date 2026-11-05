@@ -11,6 +11,9 @@ export const projects = ['packages/*'];
 export const sharedTestConfig = {
   environment: 'node',
   passWithNoTests: false,
+  // Tests that build bundles or spawn the codegen CLI (size icon rows, contracts --check, icons generate) take
+  // 5-10 s on a loaded machine; the 5 s default made `TURBO_FORCE=1 bun run gate` flaky under load (C12.f).
+  testTimeout: 30_000,
   // Per-package module cache (R2-SHOULD-2): `vitest run` clears the shared root cache on startup,
   // so parallel packages under Turbo raced on one directory (ENOTEMPTY). Relative = package root.
   fsModuleCachePath: 'node_modules/.vitest-cache',
