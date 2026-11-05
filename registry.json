@@ -515,7 +515,7 @@
       "name": "SJIcon",
       "slug": "icon",
       "contractVersion": "0.1.0",
-      "status": "draft",
+      "status": "beta",
       "pattern": {
         "apg": "img-role",
         "evidence": "img-role"
