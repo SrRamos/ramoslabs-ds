@@ -14,6 +14,13 @@ runs:
       shell: bash
       working-directory: packages/testing
       run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+    # An unreachable apt mirror (seen with azure.archive.ubuntu.com) otherwise hangs
+    # `install --with-deps` / `install-deps` until the job timeout cancels it; fail fast and retry.
+    - name: Bound apt network waits
+      shell: bash
+      run: |
+        printf 'Acquire::http::Timeout "30";\nAcquire::https::Timeout "30";\nAcquire::Retries "3";\n' \
+          | sudo tee /etc/apt/apt.conf.d/99-ci-timeouts > /dev/null
     - name: Cache browsers
       id: cache
       uses: actions/cache@v4
@@ -24,9 +31,13 @@ runs:
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
       working-directory: packages/testing
-      run: bunx playwright install --with-deps ${{ inputs.browsers }}
+      run: |
+        for i in 1 2 3; do timeout 300 bunx playwright install --with-deps ${{ inputs.browsers }} && exit 0; echo "attempt $i failed"; sleep 10; done
+        exit 1
     - name: Install system dependencies (browsers restored from cache)
       if: steps.cache.outputs.cache-hit == 'true'
       shell: bash
       working-directory: packages/testing
-      run: bunx playwright install-deps ${{ inputs.browsers }}
+      run: |
+        for i in 1 2 3; do timeout 300 bunx playwright install-deps ${{ inputs.browsers }} && exit 0; echo "attempt $i failed"; sleep 10; done
+        exit 1
