@@ -212,23 +212,22 @@ async function composeVue(box: HTMLElement, c: CompositionProps, path: string) {
 }
 
 /**
- * Vanilla: the button's `icon` is a string rendered as a text node (C01 .e), so there is no slot to fill. The
- * recipe is to ask for the icon part with a placeholder and mount the SJIcon into that span. This is the
- * documented limit of the frozen vanilla button, recorded in C12-NOTES.md ".f".
+ * Vanilla: the button's `icon` accepts a Node (C01 .e, #90), so the SJIcon is mounted into a detached element and
+ * its `<svg>` is handed to the button as the `icon` Node; the button appends it into the icon part.
  */
 async function composeVanilla(box: HTMLElement, c: CompositionProps, path: string) {
   let n = 0;
   const host = createHost(runtimeFor(path, { idFactory: () => `e2e-${n++}` }));
   seen(host.runtime);
+  const holder = box.ownerDocument.createElement('span');
+  const icon = mountIcon(host, holder, iconOf(c));
+  const svg = icon.element();
+  if (!svg) throw new Error('icon rendered no svg');
   mountButton(host, box, {
     ...buttonProps(c),
     ...(c.text !== undefined && !c.iconOnly && { text: c.text }),
-    icon: ' ',
+    icon: svg,
   } as never);
-  const slot = box.querySelector('[data-part="icon"]');
-  if (!slot) throw new Error('button rendered no icon part');
-  slot.replaceChildren();
-  mountIcon(host, slot, iconOf(c));
   return () => host.destroy();
 }
 
