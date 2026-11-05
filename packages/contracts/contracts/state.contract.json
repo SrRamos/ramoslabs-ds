@@ -1,0 +1,121 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJState",
+  "contractVersion": "0.1.0",
+  "status": "draft",
+  "pattern": {
+    "apg": "live-region",
+    "evidence": "live-region"
+  },
+  "anatomy": [
+    { "part": "root", "element": "div" },
+    { "part": "icon", "element": "span" },
+    { "part": "title", "element": "p" },
+    { "part": "description", "element": "p" },
+    { "part": "actions", "element": "div" }
+  ],
+  "state": {
+    "machine": ["idle"],
+    "controllable": []
+  },
+  "actions": [],
+  "keyboard": {},
+  "focus": {
+    "strategy": "native"
+  },
+  "kinds": [],
+  "runtime": [],
+  "support": [],
+  "a11y": {
+    "wcag": ["1.3.1", "1.4.1", "4.1.3"],
+    "liveRegions": [
+      { "id": "status", "politeness": "polite" },
+      { "id": "alert", "politeness": "assertive" }
+    ],
+    "atAssertions": ["manual-state-loading-polite-once", "manual-state-interruption-alert-once"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/live-region.json#vo-macos-safari-ariaat545"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/live-region.json#vo-ios-safari-tetralogical-live"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/live-region.json#nvda-chrome-ariaat544"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/live-region.json#jaws-chrome-ariaat565"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/live-region.json#talkback-chrome-tetralogical-live"]
+      }
+    ]
+  },
+  "events": [],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'first-use' | 'no-results' | 'cleared' | 'loading' | 'error'",
+      "default": "first-use",
+      "description": "The three empty kinds are distinct variants: first-use (the resource has never had data: onboarding, with the first action), no-results (a search or filter matched nothing: offer to change or clear it), cleared (the user emptied it: confirm, never onboard). loading and error are the other two states. An unknown value falls back to first-use, the neutral onboarding kind, never to a done or no-results message."
+    },
+    {
+      "name": "heading",
+      "type": "string",
+      "description": "Visible heading copy. Meaning is never carried by the icon or color alone (WCAG 1.4.1), so every variant renders text. Named heading, not title, because title is a global HTML attribute (a tooltip) and the vanilla options type shares one namespace with the slots; the adapters also accept it as the title slot."
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "Optional supporting copy; the adapters also accept it as a slot."
+    },
+    {
+      "name": "announce",
+      "type": "string",
+      "description": "Text handed to the live-region registry after mount. Defaults to heading for loading, no-results and error; first-use and cleared are static content and announce nothing unless this is set. No live markup is rendered on the server."
+    },
+    {
+      "name": "interrupt",
+      "type": "boolean",
+      "default": false,
+      "description": "Only an error that interrupts the user's current task may announce through role=alert (assertive). Everything else, including every loading message and count, uses the polite status region (ADR-006)."
+    }
+  ],
+  "slots": [
+    {
+      "name": "icon",
+      "description": "Decorative glyph; always aria-hidden, never the only carrier of the kind."
+    },
+    { "name": "title", "description": "Heading copy; alternative to the heading prop." },
+    { "name": "default", "description": "Description copy; alternative to the description prop." },
+    {
+      "name": "actions",
+      "description": "Next-step controls (SJButton): the first action for first-use, change or clear filters for no-results."
+    }
+  ],
+  "fixtures": ["first-use", "no-results", "cleared", "loading", "error", "error-interrupt"],
+  "budgets": {
+    "gzipKiB": 1,
+    "shared": ["merge"]
+  }
+}

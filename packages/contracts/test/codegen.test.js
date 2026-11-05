@@ -147,3 +147,34 @@ describe('real component reducers', () => {
     });
   }
 });
+
+describe('live derivation (AUDIT-G3A-R2 R2-SHOULD-2)', () => {
+  const live = (path) => readFileSync(join(repoRoot, path), 'utf8');
+  it('emits eager for a contract with liveRegions and lazy for one without', () => {
+    expect(live('packages/core/src/generated/state/aria.ts')).toContain(
+      "export const stateLive = 'eager' as const;",
+    );
+    expect(live('packages/core/src/generated/switch/aria.ts')).toContain(
+      "export const switchLive = 'lazy' as const;",
+    );
+  });
+  it('a seeded liveRegions entry flips the generated constant', async () => {
+    const { mkdtempSync, copyFileSync, readdirSync, writeFileSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const dir = mkdtempSync(join(tmpdir(), 'codegen-'));
+    const src = join(contractsRoot, 'contracts');
+    for (const f of readdirSync(src)) copyFileSync(join(src, f), join(dir, f));
+    const p = join(dir, 'switch.contract.json');
+    const c = JSON.parse(readFileSync(p, 'utf8'));
+    c.a11y.liveRegions = [{ id: 'status', politeness: 'polite' }];
+    writeFileSync(p, JSON.stringify(c));
+    const out = await generate({ contractsDir: dir });
+    expect(out['packages/core/src/generated/switch/aria.ts']).toContain(
+      "export const switchLive = 'eager' as const;",
+    );
+    c.a11y.liveRegions = [];
+    writeFileSync(p, JSON.stringify(c));
+    const lazy = await generate({ contractsDir: dir });
+    expect(lazy['packages/core/src/generated/switch/aria.ts']).toContain("'lazy' as const");
+  });
+});
