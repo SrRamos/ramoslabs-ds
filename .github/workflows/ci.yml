@@ -48,6 +48,12 @@ jobs:
   test:
     name: Unit, SSR, contrast
     runs-on: ubuntu-24.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --init --ipc=host --security-opt seccomp=unconfined
+    # The runner overrides the container HOME with /github/home; Firefox needs a HOME it owns.
+    env:
+      HOME: /root
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
