@@ -78,7 +78,7 @@ Built `dist/state.css`: 4259 B raw, 1591 B gzip (1.55 KiB). ADR-011 gives no CSS
 
 Branch `feature/m4-c11-state-vue`. Owned: `packages/vue/src/state/**` (`SJState.ts`, `index.ts`, `state.test.ts`), `packages/vue/src/index.ts` and `index.test.ts` (barrel line, as icon/checkbox did), this section. `vite.config.ts` and `package.json` already list the `state` entry.
 
-**Shared file touched:** `packages/core/src/state/index.ts` gains one line, `export { stateLive } from '../generated/state/aria'`. The generated constant is not reachable from any public core subpath, and adapters must pass it (`contract/live-from-contract`). Identical for `.d`/`.e`; keep one copy on rebase.
+**Shared file touched:** none (`stateLive` comes from the per-package `generated/state/index`, #103).
 
 ### Decisions
 

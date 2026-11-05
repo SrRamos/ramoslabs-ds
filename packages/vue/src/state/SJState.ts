@@ -20,7 +20,8 @@ import {
   type PropType,
   type VNodeChild,
 } from 'vue';
-import { createState, stateLive, type StateVariant } from '@ramoslabs/core/state';
+import { createState, type StateVariant } from '@ramoslabs/core/state';
+import { stateLive } from '../generated/state/index';
 import { useSJContext } from '../runtime/index';
 
 /** Per-part class overrides, appended after the library class (ADR-004). */
