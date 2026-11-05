@@ -8,6 +8,9 @@
 import { mergeProps } from '../merge/index';
 import type { Props } from '../merge/index';
 
+// The contract-derived live timing (AUDIT-G3A-R2): adapters pass this, never a literal.
+export { stateLive } from '../generated/state/aria';
+
 declare const console: { warn(message: string): void };
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 
