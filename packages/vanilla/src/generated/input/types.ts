@@ -48,7 +48,7 @@ export interface SJInputOptions {
   digits?: boolean;
   /** Canonical form is uppercase (otp-alnum): autocapitalize=characters. @default false */
   uppercase?: boolean;
-  /** OTP submits on Enter (enterkeyhint go) instead of done. @default false */
+  /** OTP submits on Enter (enterkeyhint go) instead of done. Standalone only: inside an SJForm the form's autoSubmit decides (the owner computes the hint). @default false */
   autoSubmit?: boolean;
   /** Control id when the input has no SJField; inside an SJField the field id wins. */
   id?: string;
