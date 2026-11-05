@@ -31,7 +31,7 @@ describe('contract', () => {
     ).map((s) => s.slice(1, -1));
     expect(union).toEqual([...iconSizes]);
     expect(contract.pattern).toEqual({ apg: 'img-role', evidence: 'img-role' });
-    expect(contract.status).toBe('draft');
+    expect(contract.status).toBe('beta');
   });
 });
 

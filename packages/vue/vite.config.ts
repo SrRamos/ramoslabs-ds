@@ -22,6 +22,7 @@ export default defineConfig({
         'tooltip/index': resolve(__dirname, 'src/tooltip/index.ts'),
         'select/index': resolve(__dirname, 'src/select/index.ts'),
         'state/index': resolve(__dirname, 'src/state/index.ts'),
+        'icon/index': resolve(__dirname, 'src/icon/index.ts'),
       },
       formats: ['es'],
       fileName: (_format, name) => `${name}.js`,
