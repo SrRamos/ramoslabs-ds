@@ -150,8 +150,17 @@ async function runInert(
   await control.waitFor({ timeout: 5000 });
   const before = await view(page);
   if (!(await control.isDisabled())) out.push('inert fixture is not disabled');
-  await control.click({ force: true, timeout: 2000 }).catch(() => undefined);
-  await control.focus().catch(() => undefined);
+  // A disabled control rejects the click (not actionable) and cannot take focus; assert why, not just that.
+  const clickErr = await control.click({ timeout: 1000 }).then(
+    () => null,
+    (e: Error) => e.message,
+  );
+  if (clickErr === null || !/not enabled/.test(clickErr))
+    out.push(`click on the inert control was not rejected as "not enabled": ${clickErr}`);
+  await control.click({ force: true, timeout: 1000 });
+  await control.focus();
+  if (await page.evaluate(() => document.activeElement === document.querySelector('input')))
+    out.push('the disabled input took focus');
   await page.keyboard.press('Space');
   await settle(page);
   const after = await view(page);

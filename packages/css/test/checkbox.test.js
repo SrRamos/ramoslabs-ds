@@ -120,6 +120,19 @@ describe('anatomy and build', () => {
   });
 });
 
+describe('indicator hit-testing (C03c.f)', () => {
+  const declaresNone = (css) => {
+    const rule = /\.sj-checkbox__indicator\s*\{([^}]*)\}/.exec(css);
+    return rule !== null && /pointer-events:\s*none/.test(rule[1]);
+  };
+  it('the decorative indicator declares pointer-events: none so the native input is the hit target', () => {
+    expect(declaresNone(checkboxCss)).toBe(true);
+  });
+  it('seeded: removing the declaration fails the check', () => {
+    expect(declaresNone(checkboxCss.replace(/\s*pointer-events:\s*none;/, ''))).toBe(false);
+  });
+});
+
 describe('target size (ADR-008: 44 px, 24 px floor)', () => {
   it('the input hit area and the label root are at least the 44 px token on fine pointers', async () => {
     const page = await open(checkboxHtml());

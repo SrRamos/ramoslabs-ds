@@ -46,7 +46,14 @@ async function mountPair(page: Page, kind: Kind, props: CheckboxFixtureProps): P
   await settle(page);
 }
 
-const settle = (page: Page) => page.evaluate(() => new Promise((r) => setTimeout(r, 40)));
+/** Wait for the input state, not the clock: the checkbox's data-state has caught up with its native input. */
+const settle = (page: Page) =>
+  page.waitForFunction(() => {
+    const i = document.querySelector('#f input[type=checkbox]') as HTMLInputElement | null;
+    if (!i) return false;
+    const want = i.indeterminate ? 'indeterminate' : i.checked ? 'checked' : 'unchecked';
+    return i.getAttribute('data-state') === want;
+  });
 
 async function apply(page: Page, op: Op, disabled: boolean): Promise<void> {
   for (const id of ['f', 'bare'] as const) {
@@ -212,7 +219,12 @@ test.describe('seeded defects are reported', () => {
       const i = document.querySelector('#f input') as HTMLInputElement;
       i.form!.addEventListener('reset', () => setTimeout(() => (i.indeterminate = false), 0));
     });
-    await apply(page, 'reset', false);
+    // Not `apply`: its settle waits for data-state to agree with the input, which this defect breaks.
+    await page.evaluate(() => window.__cb.reset('f'));
+    // The deferred clear has landed once the property is false (the defect under test).
+    await page.waitForFunction(
+      () => !(document.querySelector('#f input') as HTMLInputElement).indeterminate,
+    );
     const s = await snapshot(page);
     expect(s.f).not.toEqual(s.b);
   });
@@ -256,7 +268,10 @@ test.describe('seeded defects are reported', () => {
       c.setAttribute('data-state', 'checked'); // what a model that ignored reset would still say
       window.__cb.reset('f');
     });
-    await settle(page);
+    // The reset has run when the native input is back to unchecked (data-state is deliberately stale here).
+    await page.waitForFunction(
+      () => !(document.querySelector('#f input') as HTMLInputElement).checked,
+    );
     // Only a corrected model repairs the attribute; force the stale value back to prove the check sees it.
     await page.evaluate(() =>
       (document.querySelector('#f input') as HTMLInputElement).setAttribute(
