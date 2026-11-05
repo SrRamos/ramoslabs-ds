@@ -8,9 +8,6 @@
 import { mergeProps } from '../merge/index';
 import type { Props } from '../merge/index';
 
-// Adapters pass this to the runtime (eager live region) instead of a literal (contract/live-from-contract).
-export { stateLive } from '../generated/state/aria';
-
 declare const console: { warn(message: string): void };
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 

@@ -111,7 +111,7 @@ Branch `feature/m4-c11-state-vanilla`. Owned: `packages/vanilla/src/state/**` (a
 `node packages/testing/size/cli.js`: `state` core 0.659 KiB gzip (1229 B) vs 1 KiB (pass, includes the new re-export line); `adapter:vanilla` 1.405 KiB gzip is the harness's shared fixture row (reported, no ceiling), not a State-specific figure; the harness has no per-component adapter row for State.
 ## W1-C11.d: SJState React adapter
 
-Branch `feature/m4-c11-state-react`. Owned: `packages/react/src/state/**` (adapter and `state.test.ts`), this section. Shared files touched: `packages/react/src/index.ts` (barrel line, as icon/checkbox added theirs) and `packages/core/src/state/index.ts` (one line: `export { stateLive } from '../generated/state/aria'`). The core re-export is needed because `@ramoslabs/core` exposes no `generated/*` subpath and an adapter must pass the generated `stateLive` (lint `contract/live-from-contract`); `.c`/`.e` can use the same export. The `exports` map already had `./state`.
+Branch `feature/m4-c11-state-react`. Owned: `packages/react/src/state/**` (adapter and `state.test.ts`), this section. Shared file touched: `packages/react/src/index.ts` (barrel line) and `packages/react/src/index.test.ts` (export list). `stateLive` is imported from `../generated/state/index` (codegen, #103); no core change.
 
 ### Decisions and ambiguities
 

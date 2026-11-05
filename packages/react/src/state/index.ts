@@ -14,8 +14,9 @@ import {
   type ReactNode,
   type RefAttributes,
 } from 'react';
-import { createState, stateLive } from '@ramoslabs/core/state';
+import { createState } from '@ramoslabs/core/state';
 import type { Props } from '@ramoslabs/core/merge';
+import { stateLive } from '../generated/state/index';
 import type { SJStateProps as GeneratedProps } from '../generated/state/index';
 import { useRuntimeBag } from '../runtime/index';
 
