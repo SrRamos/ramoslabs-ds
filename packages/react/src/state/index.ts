@@ -7,6 +7,7 @@ import {
   createElement,
   forwardRef,
   useEffect,
+  useLayoutEffect,
   type ComponentPropsWithoutRef,
   type ForwardRefExoticComponent,
   type ReactElement,
@@ -16,7 +17,7 @@ import {
 import { createState, stateLive } from '@ramoslabs/core/state';
 import type { Props } from '@ramoslabs/core/merge';
 import type { SJStateProps as GeneratedProps } from '../generated/state/index';
-import { useMachine } from '../runtime/index';
+import { useRuntimeBag } from '../runtime/index';
 
 export type { SJStateProps as SJStateContractProps } from '../generated/state/index';
 
@@ -61,9 +62,6 @@ const own = (rest: Record<string, unknown>, root?: string): Record<string, unkno
 };
 const has = (n: ReactNode): boolean => n !== undefined && n !== null && n !== false && n !== '';
 
-type Empty = Record<string, never>;
-const reduce = (s: Empty) => ({ state: s });
-
 export const SJStateRoot: ForwardRefExoticComponent<
   SJStateRootProps & RefAttributes<HTMLDivElement>
 > = forwardRef<HTMLDivElement, SJStateRootProps>(function SJStateRoot(props, ref) {
@@ -90,25 +88,22 @@ export const SJStateRoot: ForwardRefExoticComponent<
     ...(interrupt !== undefined && { interrupt }),
   }));
 
-  // The machine only supplies the shared live registry and the eager region (`stateLive`, from the contract).
-  const m = useMachine<Empty, never, never, Empty>({
-    initial: () => ({}),
-    reduce,
-    props: {},
-    fields: {},
-    live: stateLive,
-  });
+  // Stateless: the shared runtime supplies the live registry; the contract's `stateLive` decides whether
+  // the region is created eagerly (before its first message).
+  const { runtime, live, requireLive } = useRuntimeBag();
+  useLayoutEffect(() => {
+    if (stateLive === 'eager') requireLive?.();
+  }, [requireLive]);
 
   const note = model.getAnnouncement();
   const text = note?.text;
   const urgent = note?.urgent === true;
   // After commit, client only. The call is deferred one scheduler tick and cancelled by the cleanup, so
   // StrictMode's simulated remount (which re-attaches the registry) yields exactly one announcement.
-  const say = m.announce; // stable for the instance, unlike `m`
-  const { scheduler } = m.runtime;
+  const { scheduler } = runtime;
   useEffect(
-    () => (text ? scheduler.after(() => void say(text, { urgent }), 0) : undefined),
-    [say, scheduler, text, urgent],
+    () => (text ? scheduler.after(() => void live.announce(text, { urgent }), 0) : undefined),
+    [live, scheduler, text, urgent],
   );
 
   const body = has(children) ? children : description;

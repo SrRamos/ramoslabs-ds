@@ -282,7 +282,7 @@ describe('source rules', () => {
     const fs = (await mod('node:fs')) as { readFileSync(u: URL, e: string): string };
     const src = fs.readFileSync(new URL('./index.ts', import.meta.url), 'utf8');
     const code = src.replace(/^\s*\/\/.*$/gm, '');
-    expect(code).toMatch(/live:\s*stateLive/);
+    expect(code).toMatch(/\bstateLive\b/);
     expect(code).not.toMatch(/live:\s*['"]/);
     expect(code).not.toMatch(/innerHTML|\bdocument\b|\bnavigator\b/);
   });
