@@ -29,11 +29,13 @@
     flex: none;
   }
 
-  /* Heading copy. Weight and size come from tokens; no margin (reset.css scopes resets to data-part). */
+  /* Heading copy. Weight, size and the default colour come from tokens; no margin (reset.css scopes resets to
+     data-part). Only the error variant overrides the colour below. */
   .sj-state__title {
     margin: 0;
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
+    color: var(--color-text-heading);
   }
 
   /* Supporting copy. Secondary text on every surface (see the contrast test). */
@@ -54,40 +56,24 @@
 }
 
 @layer sj.variant {
-  /* first-use: onboarding, the resource has never had data. Primary glyph and heading. */
+  /* first-use: onboarding, the resource has never had data. Primary glyph. */
   .sj-state__icon[data-variant='first-use'] {
     color: var(--color-primary);
   }
 
-  .sj-state__title[data-variant='first-use'] {
-    color: var(--color-text-heading);
-  }
-
-  /* no-results: a search or filter matched nothing. Secondary glyph, heading. */
+  /* no-results: a search or filter matched nothing. Secondary glyph. */
   .sj-state__icon[data-variant='no-results'] {
     color: var(--color-text-secondary);
   }
 
-  .sj-state__title[data-variant='no-results'] {
-    color: var(--color-text-heading);
-  }
-
-  /* cleared: the user emptied the resource. Muted glyph (the AA floor, slate 500), heading. */
+  /* cleared: the user emptied the resource. Muted glyph (the AA floor, slate 500). */
   .sj-state__icon[data-variant='cleared'] {
     color: var(--color-text-muted);
   }
 
-  .sj-state__title[data-variant='cleared'] {
-    color: var(--color-text-heading);
-  }
-
-  /* loading: a status message. Primary spinner glyph, body heading. */
+  /* loading: a status message. Primary spinner glyph. */
   .sj-state__icon[data-variant='loading'] {
     color: var(--color-primary);
-  }
-
-  .sj-state__title[data-variant='loading'] {
-    color: var(--color-text-heading);
   }
 
   /* error: a failure. Error text colour for the glyph and the heading (the glyph shape also differs). */
