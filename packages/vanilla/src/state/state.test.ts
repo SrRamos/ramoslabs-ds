@@ -108,6 +108,18 @@ describe('SJState vanilla: rendering', () => {
     expect(root.children.some((c) => c.children.length)).toBe(false);
   });
 
+  it('renders each part as the element the contract anatomy names', () => {
+    const { host } = setup();
+    const root = mk();
+    mountState(host, asEl(root), { heading: 'h', description: 'd', icon: 'i', actions: 'a' });
+    expect(root.children.map((c) => [c.getAttribute('data-part'), c.tagName])).toEqual([
+      ['icon', 'span'],
+      ['title', 'p'],
+      ['description', 'p'],
+      ['actions', 'div'],
+    ]);
+  });
+
   it('accepts icon, title, default and actions as slots (string or Node); slots win over props', () => {
     const { host } = setup();
     const root = mk();

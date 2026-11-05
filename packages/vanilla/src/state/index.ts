@@ -28,6 +28,8 @@ export type VanillaStateProps = SJStateOptions & {
 type Ctx = InstanceContext<{ state: 'idle' }, never, VanillaStateProps & Bag>;
 type Child = Exclude<StatePart, 'root'>;
 const CHILDREN: readonly Child[] = ['icon', 'title', 'description', 'actions'];
+// Elements per the contract anatomy (state.contract.json).
+const TAG: Record<Child, string> = { icon: 'span', title: 'p', description: 'p', actions: 'div' };
 
 /** Write a getter's Props onto an element; attributes dropped since the last write are removed. */
 function applyProps(el: Element, props: Props, prev: Set<string>): void {
@@ -110,7 +112,7 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaStateProps
           continue;
         }
         nextOrder += part + ',';
-        const el = (els[part] ??= doc.createElement('div'));
+        const el = (els[part] ??= doc.createElement(TAG[part]));
         applyProps(el, getters[part](own(part)), seen[part]);
         if (drawn[part] !== content) {
           drawn[part] = content;
