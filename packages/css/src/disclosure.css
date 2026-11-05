@@ -42,7 +42,7 @@
     color: var(--color-text-secondary);
     rotate: 45deg;
     translate: 0 -25%;
-    transition-property: rotate;
+    transition-property: rotate, translate;
     transition-duration: var(--sj-duration-fast);
     transition-timing-function: var(--easing-out);
   }
@@ -50,6 +50,7 @@
   /* Panel: padding only. The UA hides a closed <details>' content, so no display is set here. */
   .sj-disclosure__content {
     padding-inline: var(--space-4);
+    padding-block-start: var(--space-2);
     padding-block-end: var(--space-4);
     color: var(--color-text-body);
   }
@@ -77,6 +78,16 @@
   @media (forced-colors: active) {
     .sj-disclosure__trigger::after {
       border-color: CanvasText;
+    }
+
+    /* Disabled under forced colours: the system inactive colour, so the state is still legible without the tint. */
+    .sj-disclosure__trigger[data-disabled]:not([data-disabled='false']),
+    .sj-disclosure__trigger[data-disabled]:not([data-disabled='false'])::after {
+      color: GrayText;
+    }
+
+    .sj-disclosure__trigger[data-disabled]:not([data-disabled='false'])::after {
+      border-color: GrayText;
     }
   }
 }

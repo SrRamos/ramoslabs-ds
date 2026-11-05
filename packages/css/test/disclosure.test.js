@@ -303,4 +303,67 @@ describe('reduced motion (ADR-009)', () => {
       (await cs(page, '#trig', ['transition-duration'], '::after'))['transition-duration'],
     ).toBe('0s');
   });
+
+  it('the chevron transitions both rotate and translate, so the glyph does not hop mid-turn', async () => {
+    const page = await open(disclosureHtml({ open: true }));
+    const props = (await cs(page, '#trig', ['transition-property'], '::after'))[
+      'transition-property'
+    ];
+    expect(props.split(',').map((s) => s.trim())).toEqual(['rotate', 'translate']);
+  });
+
+  it('reduced motion also stops the translate part of the chevron (duration 0s covers both properties)', async () => {
+    const page = await open(disclosureHtml({ open: true }), { media: { reducedMotion: 'reduce' } });
+    const t = await cs(page, '#trig', ['transition-duration', 'transition-property'], '::after');
+    expect(t['transition-duration']).toBe('0s');
+    expect(t['transition-property']).toContain('translate');
+  });
+});
+
+describe('content part and forced-colour disabled state (review NICE items)', () => {
+  it('the content part has a token block-start padding', async () => {
+    const page = await open(disclosureHtml({ open: true }));
+    const pad = (await cs(page, '#panel', ['padding-block-start']))['padding-block-start'];
+    expect(pad).toBe(`${px(tokens['space-2'])}px`);
+  });
+
+  it('under forced colours a disabled trigger uses the system GrayText colour', async () => {
+    const page = await open(disclosureHtml({ disabled: true }), {
+      media: { forcedColors: 'active' },
+    });
+    const got = (await cs(page, '#trig', ['color']))['color'];
+    const gray = await page.evaluate(() => {
+      const probe = document.createElement('span');
+      probe.style.color = 'GrayText';
+      document.body.appendChild(probe);
+      return getComputedStyle(probe).color;
+    });
+    expect(got).toBe(gray);
+  });
+
+  it('a seeded removal of the forced-colours disabled rule is caught', async () => {
+    const seeded = disclosureCss.replace(
+      /\.sj-disclosure__trigger\[data-disabled\]:not\(\[data-disabled='false'\]\)::after \{\s*border-color: GrayText;\s*\}/,
+      '',
+    );
+    expect(seeded).not.toBe(disclosureCss);
+    const page = await open(
+      disclosureHtml({ disabled: true }),
+      { media: { forcedColors: 'active' } },
+      '',
+      seeded,
+    );
+    const got = (await cs(page, '#trig', ['color']))['color'];
+    const gray = await page.evaluate(() => {
+      const probe = document.createElement('span');
+      probe.style.color = 'GrayText';
+      document.body.appendChild(probe);
+      return getComputedStyle(probe).color;
+    });
+    // The seed removes only the ::after GrayText border rule. The trigger text keeps GrayText from the shared rule,
+    // so the chevron border is what must differ from GrayText.
+    const border = await cs(page, '#trig', ['border-inline-end-color'], '::after');
+    expect(border['border-inline-end-color']).not.toBe(gray);
+    expect(got).toBe(gray);
+  });
 });
