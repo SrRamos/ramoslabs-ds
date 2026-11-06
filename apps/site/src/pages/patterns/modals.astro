@@ -7,7 +7,7 @@ const page = pages.find((p) => p.id === 'modals')!
 <BaseLayout title={page.title} description={page.summary} path={page.path}>
 <div class="md-hero">
   <p class="md-hero-eyebrow">Patterns / Modals</p>
-  <h1>A modal steals the whole room.</h1>
+  <h1>A modal steals the whole room</h1>
   <p>
     It stops the task, blanks the background, and traps the keyboard until the user answers. That power is worth spending only on the rare moment that deserves it, and when you spend it the accessibility has to be flawless. So the rule is short. Reach for the native <span class="md-hero-code">&lt;dialog&gt;</span> with <span class="md-hero-code">showModal()</span> first, use it rarely, and never open one where a page, an inline message, or a popover would have done the job without taking the room.
   </p>
@@ -314,7 +314,7 @@ const page = pages.find((p) => p.id === 'modals')!
         The APG is blunt about the reason: "The alertdialog role enables assistive technologies and browsers to distinguish alert dialogs from other dialogs so they have the option of giving alert dialogs special treatment, such as playing a system alert sound."
       </p>
       <p class="md-demo-note">
-        NN/g draws the same line from the UX side: interrupt the user precisely when "there is a chance that users' work be lost or that an action may have destructive, irreversible consequences." That is the alertdialog's whole job. A purely informational message that needs no decision should probably not be a modal at all (Section 4).
+        NN/g draws the same line from the UX side: interrupt the user precisely when "there is a chance that users' work be lost or that an action may have destructive, irreversible consequences." That is the alertdialog’s whole job. A purely informational message that needs no decision should probably not be a modal at all (Section 4).
       </p>
     </div>
   </div>
@@ -382,7 +382,7 @@ const page = pages.find((p) => p.id === 'modals')!
   <div class="md-ladder">
     <div class="md-rung">
       <span class="md-rung-step">1</span>
-      <p class="md-rung-body"><b>A separate page.</b> For anything complex or multi-step. This is GOV.UK's default: their "one thing per page" philosophy sends the user to another page instead of a modal, and their public design system ships no modal component at all. Simplicity over speed.</p>
+      <p class="md-rung-body"><b>A separate page.</b> For anything complex or multi-step. This is GOV.UK’s default: their "one thing per page" philosophy sends the user to another page instead of a modal, and their public design system ships no modal component at all. Simplicity over speed.</p>
     </div>
     <div class="md-rung">
       <span class="md-rung-step">2</span>
@@ -568,7 +568,7 @@ const page = pages.find((p) => p.id === 'modals')!
   <div class="md-callout">
     <Icon name="verified" class="md-material" />
     <p class="md-callout-text">
-      <strong>The trap is legal, on one condition.</strong> A modal's focus trap looks like it violates WCAG 2.1.2 No Keyboard Trap, and it does not, as long as there is a way out. W3C: restricting focus to a subsection "does not fail the requirements of this criterion, as long as the user knows how to 'untrap' the focus and leave that component." Trap the focus on purpose, but Escape or a Cancel button must always release it. A modal with no keyboard exit does fail 2.1.2.
+      <strong>The trap is legal, on one condition.</strong> A modal’s focus trap looks like it violates WCAG 2.1.2 No Keyboard Trap, and it does not, as long as there is a way out. W3C: restricting focus to a subsection "does not fail the requirements of this criterion, as long as the user knows how to 'untrap' the focus and leave that component." Trap the focus on purpose, but Escape or a Cancel button must always release it. A modal with no keyboard exit does fail 2.1.2.
     </p>
   </div>
 </div>
@@ -584,7 +584,7 @@ const page = pages.find((p) => p.id === 'modals')!
   </div>
 
   <p class="md-text">
-    A centered modal is a desktop shape. On a phone it usually becomes a bottom sheet, a panel that rises from the bottom edge into the thumb's reach. What changes is only the presentation, position, anchor, and entry animation. The semantics do not move. A bottom sheet is still a modal <code>dialog</code> or <code>alertdialog</code>, and it owes every one of the six requirements from Section 1: an accessible name, focus in, a trapped Tab cycle, Escape to close, focus back to the trigger, and an inert background. The same native <code>&lt;dialog&gt;</code> can present as a sheet through CSS while keeping <code>showModal()</code> and its guarantees.
+    A centered modal is a desktop shape. On a phone it usually becomes a bottom sheet, a panel that rises from the bottom edge into the thumb’s reach. What changes is only the presentation, position, anchor, and entry animation. The semantics do not move. A bottom sheet is still a modal <code>dialog</code> or <code>alertdialog</code>, and it owes every one of the six requirements from Section 1: an accessible name, focus in, a trapped Tab cycle, Escape to close, focus back to the trigger, and an inert background. The same native <code>&lt;dialog&gt;</code> can present as a sheet through CSS while keeping <code>showModal()</code> and its guarantees.
   </p>
 
   <div class="md-callout">
