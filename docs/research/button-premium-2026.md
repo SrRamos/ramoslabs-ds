@@ -238,9 +238,61 @@ Recommendation:
    inside a sentence (the 2.5.8 inline exception). It works on both `<a>` and `<button>`. The prototype
    shows it in a sentence and in the variant matrix, light and dark.
 
+## 6b. Radius: the 2–4 px range (owner review of PR #124)
+
+Owner feedback: the proposal has too much radius, and that costs elegance. The stories now have a
+**Radius** control, defaulting to **Tight**. It overrides every direction, including the icon-only
+squares, and the focus ring follows it because it is an `outline`, which follows `border-radius`:
+
+| Option | xs | sm | md | lg |
+|---|---|---|---|---|
+| Proposal (current) | the direction's own values (A 4/6/6/8, B 6/6/8/10, C 8/8/10/12) | | | |
+| **Tight** (default) | 2 | 3 | 4 | 4 |
+| Sharp | 2 | 2 | 2 | 2 |
+| None | 0 | 0 | 0 | 0 |
+
+Where premium systems actually sit (primary sources, checked 2026-11-06):
+
+| System | Button radius | In 0–4 px? |
+|---|---|---|
+| IBM Carbon | **0** (`$border-radius-00`); a `--cds-button-radius` hook is coming behind a v12 flag | yes (None) |
+| Stripe (stripe.com `hds-button`) | **4** (`radius-sm`) | yes |
+| Linear, `shape-square` | **4**; its marketing default is a pill | yes (square shape) |
+| Atlassian `@atlaskit/button` | **4** compact, 6 default | compact only |
+| Radix Themes, `radius="small"` | **2.25 / 3 / 4.5 / 6** for sizes 1–4 (factor 0.75 × 3/4/6/8); `radius="none"` gives 0 | xs–md, so it is almost exactly Tight |
+| Vercel Geist (also vercel.com) | **6 / 6 / 8** | **no**: 6–8 |
+| shadcn/ui | 8 (`--radius` − 2 by default; themeable) | no |
+
+So the 2–4 px band is Stripe, Carbon (at 0), square Linear, compact Atlassian and Radix "small". Geist
+and Vercel, often assumed to be sharp, actually sit at 6–8 px, the same as the current proposal. The
+owner's preference matches the more editorial and financial end of the market (Stripe, IBM), and it
+stays harmonious: Tight still scales slightly with height (2→4) so the small sizes do not look blunt.
+
+Sources:
+- Radix radius factors: <https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/radius.css>
+- Carbon: <https://github.com/carbon-design-system/carbon/tree/main/packages/styles/scss/components/button> (`_radius.scss`)
+- Stripe: <https://stripe.com> (live `hds-button` CSS)
+- Linear: <https://linear.app> (live button CSS, `shape-square`)
+- Atlassian: `@atlaskit/button` 25.7.0 (`button-base.compiled.css`)
+- Geist: <https://vercel.com/geist/button>
+- shadcn: <https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/new-york-v4/ui/button.tsx>
+
+**Token mapping.**
+
+| Value | Existing token | Status |
+|---|---|---|
+| 0 | `radius.none` (`0`) | exists |
+| 2 px | none | **NEW**, e.g. `radius.2xs` = 0.125rem |
+| 3 px | none | **NEW**, e.g. `radius.control-sm` = 0.1875rem (or round sm up to 4 and drop it) |
+| 4 px | `radius.xs` (0.25rem) | exists |
+
+Tight therefore needs two new values (2 and 3). Sharp needs one (2). None needs nothing new. Either way,
+the token description of `radius.sm` (6 px, "Signature control radius. Buttons…") would change: the
+signature control radius becomes 4 px (`radius.xs`), or a new `control.radius.*` scale is added.
+
 ## 7. Recommendation
 
-**Direction B (Luminous Indigo) with Inter v4**, plus decision 2(a) and the rationed solid fills.
+**Direction B (Luminous Indigo) with Inter v4**, at **Tight** radius (2/3/4/4), plus decision 2(a) and the rationed solid fills.
 
 - The owner's stated target is high-visual-impact apps. B is the only direction that reads as crafted on
   dark and light surfaces without extra art, while the brand stays Indigo 600.
@@ -253,7 +305,7 @@ Recommendation:
 
 ## 8. Decisions for the owner
 
-1. **Direction**: A, B or C, or a blend. A common blend is C's proportions with B's solid treatment.
+1. **Direction**: A, B or C, or a blend, and a **radius** option: Tight, Sharp or None. A common blend is C's proportions with B's solid treatment.
 2. **Touch target**: the current rule is a 44px visual minimum on every size. Options:
    - **(a) Recommended.** 24px minimum hit area everywhere (WCAG AA), extended to 44px by an invisible
      `::before` under `@media (pointer: coarse)`, as Primer and Material Web do. Cost: on touch, adjacent

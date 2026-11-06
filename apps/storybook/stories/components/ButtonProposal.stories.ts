@@ -296,6 +296,29 @@ ${FONTS}
 
 ${DIRECTIONS.map(directionVars).join('\n\n')}
 
+/* ===== Radius options (owner review, the "Radius" control). They override each direction's own radius on
+   every size, icon-only squares included (they read the same --_r). The focus outline follows border-radius. ===== */
+.pradius-tight {
+  --proposal-radius-xs: 0.125rem; /* 2px NEW radius.2xs */
+  --proposal-radius-sm: 0.1875rem; /* 3px NEW radius.3xs-ish (no token between 2 and 4) */
+  --proposal-radius-md: var(--radius-xs); /* 4px */
+  --proposal-radius-lg: var(--radius-xs); /* 4px */
+}
+.pradius-sharp {
+  --proposal-radius-xs: 0.125rem; /* 2px NEW */
+  --proposal-radius-sm: 0.125rem;
+  --proposal-radius-md: 0.125rem;
+  --proposal-radius-lg: 0.125rem;
+}
+.pradius-none {
+  --proposal-radius-xs: var(--radius-none);
+  --proposal-radius-sm: var(--radius-none);
+  --proposal-radius-md: var(--radius-none);
+  --proposal-radius-lg: var(--radius-none);
+}
+${SIZES.map((sz) => `:is(.pradius-tight, .pradius-sharp, .pradius-none) .pdir .pbtn[data-size='${sz}'] { --_r: var(--proposal-radius-${sz}); }`).join('\n')}
+:is(.pradius-tight, .pradius-sharp, .pradius-none) .pdir .pbtn .pkbd { border-radius: min(var(--_r), var(--radius-xs)); }
+
 /* ===== Prototype button (shared structure; directions only change the variables above + a few effects) ===== */
 .pbtn {
   position: relative;
@@ -519,9 +542,16 @@ const PIcon = defineComponent({
 
 // ---------- specimen ----------
 const fmt = (v: Val) => (v[1] ? `${v[1]}` : v[0]);
-const sizeLine = (d: Direction, s: SizeKey) => {
+// Radius shown in captions follows the Radius control (Proposal = the direction's own value).
+const RADIUS_PX: Record<string, Record<SizeKey, number>> = {
+  tight: { xs: 2, sm: 3, md: 4, lg: 4 },
+  sharp: { xs: 2, sm: 2, md: 2, lg: 2 },
+  none: { xs: 0, sm: 0, md: 0, lg: 0 },
+};
+const sizeLine = (d: Direction, s: SizeKey, radius = 'proposal') => {
   const z = d.sizes[s];
-  return `${s} · h ${fmt(z.h)} · px ${fmt(z.px)} · r ${fmt(z.r)} · ${fmt(z.fs)}/${d.font.weight[1]} · icon ${fmt(z.icon)} · gap ${fmt(z.gap)}`;
+  const r = RADIUS_PX[radius]?.[s] ?? fmt(z.r);
+  return `${s} · h ${fmt(z.h)} · px ${fmt(z.px)} · r ${r} · ${fmt(z.fs)}/${d.font.weight[1]} · icon ${fmt(z.icon)} · gap ${fmt(z.gap)}`;
 };
 
 const Specimen = defineComponent({
@@ -531,6 +561,7 @@ const Specimen = defineComponent({
     dir: { type: Object as PropType<Direction>, required: true },
     dark: Boolean,
     compact: Boolean,
+    radius: { type: String, default: 'proposal' },
   },
   setup: (p) => {
     ensureCss();
@@ -538,7 +569,7 @@ const Specimen = defineComponent({
       SIZES,
       VARIANTS,
       TONES,
-      sizeLine: (s: SizeKey) => sizeLine(p.dir, s),
+      sizeLine: (s: SizeKey) => sizeLine(p.dir, s, p.radius),
       label: (t: string) => ({ primary: 'Save changes', neutral: 'Export', destructive: 'Delete' })[t],
     };
   },
@@ -646,45 +677,72 @@ Trade-offs:
 ${d.tradeoffs.map((t) => `- ${t}`).join('\n')}
 
 Hover and press work on the real buttons; the States row also shows them frozen (\`.is-hover\`, \`.is-active\`, \`.is-focus\`) for review.
+
+The Radius column is the direction's own value ("Proposal (current)"). ${RADIUS_NOTE}
 `;
 
-const meta: Meta = {
+type RadiusKey = 'proposal' | 'tight' | 'sharp' | 'none';
+const RADIUS_LABELS: Record<RadiusKey, string> = {
+  proposal: 'Proposal (current)',
+  tight: 'Tight (2/3/4/4)',
+  sharp: 'Sharp (2 everywhere)',
+  none: 'None (0)',
+};
+type RadiusArgs = { radius?: RadiusKey };
+const radiusClass = (args: RadiusArgs) => 'pradius-' + (args.radius ?? 'tight');
+const RADIUS_NOTE = `**Radius control** (Controls panel): Proposal (each direction's own radius), Tight 2/3/4/4 px (default), Sharp 2 px, None 0. It applies to every size and to the icon-only squares, and the focus ring (an \`outline\`) follows the same radius.`;
+
+const meta: Meta<RadiusArgs> = {
   title: 'Components/Button/Proposal',
   tags: ['autodocs'],
+  argTypes: {
+    radius: {
+      name: 'Radius',
+      description:
+        'Corner radius applied to every size and to icon-only squares. The focus ring follows it.',
+      control: { type: 'select', labels: RADIUS_LABELS },
+      options: Object.keys(RADIUS_LABELS),
+    },
+  },
+  args: { radius: 'tight' },
   parameters: {
     layout: 'fullscreen',
     ...about(`
 **Proposal only, nothing here ships.** Three directions for the SJButton redesign, built as scoped prototype CSS so they can be compared before any token or component change. Research, sources and the token changes each direction needs: \`docs/research/button-premium-2026.md\`.
 
 All three keep Indigo 600 as the action colour, AA contrast (4.5:1 text, 3:1 boundaries), a visible focus ring, a 24 px minimum target everywhere and a 44 px hit area on coarse pointers (see **Touch Targets**). Values marked NEW would need a new token.
+
+${RADIUS_NOTE}
     `),
   },
 };
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<RadiusArgs>;
 
 export const SideBySide: Story = {
   name: 'Side by side',
-  render: () => ({
+  render: (args) => ({
     components: { Specimen, SJButton },
-    setup: () => ({ DIRECTIONS }),
-    template: `<div style="padding: var(--space-4)">
+    setup: () => ({ DIRECTIONS, args, radiusClass }),
+    template: `<div :class="radiusClass(args)" style="padding: var(--space-4)">
       <div class="pref"><span>Current SJButton (for reference): every size is 44 px tall, so sm and md differ only in font size.</span>
         <div class="prow"><SJButton size="sm">Create</SJButton><SJButton size="md">Create</SJButton><SJButton size="lg">Create</SJButton><SJButton variant="outline" tone="neutral">Export</SJButton><SJButton variant="soft">Invite</SJButton></div></div>
-      <div class="pcols"><Specimen v-for="d in DIRECTIONS" :key="d.id" :dir="d" compact /></div>
-      <div class="pcols" style="margin-block-start: var(--space-4)"><Specimen v-for="d in DIRECTIONS" :key="d.id" :dir="d" compact dark /></div>
+      <div class="pcols"><Specimen v-for="d in DIRECTIONS" :key="d.id" :dir="d" compact :radius="args.radius" /></div>
+      <div class="pcols" style="margin-block-start: var(--space-4)"><Specimen v-for="d in DIRECTIONS" :key="d.id" :dir="d" compact dark :radius="args.radius" /></div>
     </div>`,
   }),
   parameters: tryIt(`
 The three directions in the same order of rows, light then dark, with the current SJButton above for reference. Compare heights, padding (length), radius and type first, then colour. Each direction has its own story with states, icons and RTL.
+
+${RADIUS_NOTE}
   `),
 };
 
 const directionStory = (id: Direction['id']): Story => ({
-  render: () => ({
+  render: (args) => ({
     components: { Specimen },
-    setup: () => ({ d: byId(id) }),
-    template: `<div class="pstack" style="padding: var(--space-4); max-inline-size: 60rem"><Specimen :dir="d" /><Specimen :dir="d" dark /></div>`,
+    setup: () => ({ d: byId(id), args, radiusClass }),
+    template: `<div :class="['pstack', radiusClass(args)]" style="padding: var(--space-4); max-inline-size: 60rem"><Specimen :dir="d" :radius="args.radius" /><Specimen :dir="d" dark :radius="args.radius" /></div>`,
   }),
   parameters: tryIt(describe(byId(id))),
 });
@@ -695,13 +753,13 @@ export const DirectionC: Story = { ...directionStory('c'), name: 'C. Soft Precis
 
 export const TouchTargets: Story = {
   name: 'Touch targets',
-  render: () => ({
+  render: (args) => ({
     components: { PIcon },
     setup: () => {
       ensureCss();
-      return { DIRECTIONS, SIZES, coarse: ref(true), show: ref(true) };
+      return { DIRECTIONS, SIZES, coarse: ref(true), show: ref(true), args, radiusClass };
     },
-    template: `<div style="padding: var(--space-4)">
+    template: `<div :class="radiusClass(args)" style="padding: var(--space-4)">
       <div class="pbar">
         <label><input type="checkbox" v-model="coarse" /> Simulate coarse pointer (44 px hit area)</label>
         <label><input type="checkbox" v-model="show" /> Show hit areas</label>
@@ -722,5 +780,7 @@ export const TouchTargets: Story = {
 The dashed violet box (an annotation, not part of the design) is the real click/tap area. It is an invisible, centred \`::before\` on the button: at least 24 px on every device (WCAG 2.2 SC 2.5.8 AA) and 44 px under \`@media (pointer: coarse)\` (here simulated by the checkbox). The visual button stays compact.
 
 Click just outside an xs button, inside the dashed box: it still activates. Note the spacing cost: on touch, two 28 px buttons need about 16 px between them so their 44 px areas do not overlap. That is the decision the owner must make (see the research doc).
+
+${RADIUS_NOTE}
   `),
 };
