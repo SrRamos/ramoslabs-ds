@@ -196,6 +196,31 @@ describe('inside an SJField and SJForm', () => {
     expect(hint(1)).toBe('enter');
     expect(hint(2)).toBe('go');
   });
+  it('an owner autoSubmit reaches an OTP input; the input own prop is ignored inside a form', () => {
+    const run = (formAuto: boolean | undefined, ownAuto: boolean | undefined) => {
+      const form = createForm(() => ({ autoSubmit: formAuto }));
+      const mkp = (id: string, kind: Kind, auto?: boolean) => {
+        const field = createField(() => ({ name: id }), { id, form });
+        const input = createInput(() => ({ kind, autoSubmit: auto }), { field });
+        input.connect();
+        field.connect();
+        return input;
+      };
+      mkp('a', 'email');
+      return mkp('code', 'otp', ownAuto).getControlProps().enterkeyhint;
+    };
+    expect(run(true, undefined)).toBe('go');
+    expect(run(true, false)).toBe('go');
+    expect(run(false, true)).toBe('done');
+    expect(run(undefined, undefined)).toBe('done');
+  });
+  it('a standalone OTP uses its own autoSubmit', () => {
+    expect(mk({ kind: 'otp' }).getControlProps().enterkeyhint).toBe('done');
+    expect(mk({ kind: 'otp', autoSubmit: true }).getControlProps().enterkeyhint).toBe('go');
+    const field = createField(() => ({}), { id: 'solo' });
+    const o = createInput(() => ({ kind: 'otp', autoSubmit: true }), { field });
+    expect(o.getControlProps().enterkeyhint).toBe('go');
+  });
   it('connect reports the kind (children first) and the cleanup unregisters it', () => {
     const { form, parts, offs } = setup([{ id: 'a', kind: 'password', name: 'pw' }]);
     expect(form.store.getSnapshot().fields).toEqual([{ key: 'pw', kind: 'password' }]);

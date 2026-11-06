@@ -268,10 +268,12 @@ test.describe('seeded defects are reported', () => {
       c.setAttribute('data-state', 'checked'); // what a model that ignored reset would still say
       window.__cb.reset('f');
     });
-    // The reset has run when the native input is back to unchecked (data-state is deliberately stale here).
-    await page.waitForFunction(
-      () => !(document.querySelector('#f input') as HTMLInputElement).checked,
-    );
+    // Wait until the reset has run and the adapter has re-synced the attribute (it does so a tick
+    // after the native reset), so the forced stale value below cannot be overwritten mid-snapshot.
+    await page.waitForFunction(() => {
+      const c = document.querySelector('#f input') as HTMLInputElement;
+      return !c.checked && c.getAttribute('data-state') === 'unchecked';
+    });
     // Only a corrected model repairs the attribute; force the stale value back to prove the check sees it.
     await page.evaluate(() =>
       (document.querySelector('#f input') as HTMLInputElement).setAttribute(

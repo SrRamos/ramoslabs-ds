@@ -223,3 +223,11 @@ A spinning SJIcon (`data-spin`) is never the sole loading indicator: pair it wit
 
 - Who reviews and records the visual baselines (`visual:icon update --reviewer ...`) and runs the VoiceOver protocol on a device (statuses stay `pending-real-test`).
 - Optional row item not done: source lint rule `contract/icon-label-in-button` (plan marks it optional); the runtime tree already proves the label is ignored.
+
+## System icons (ADR-016 ruling: adapter-owned glyphs without a runtime icons import)
+
+- `packages/contracts/system-icons.json` is the reviewed name list (today `circle-alert`, for the SJField error marker, WCAG 1.4.1).
+- `packages/icons/scripts/generate.mjs` also emits `packages/{vue,react,vanilla}/src/generated/icons/<name>.ts` from the pinned `lucide-static`. Same banner and `name`/`nodes` lines as the `@ramoslabs/icons` module; the export is camelCase (`circleAlert`) and the type comes from `@ramoslabs/core/icon`. No import of `@ramoslabs/icons`, so `sj-boundaries/no-icons-import` holds.
+- `icons:check` fails on drift, a hand edit, a name missing upstream, a stray file and a tampered notice. The contracts codegen leaves `generated/icons/**` alone (neither removes nor flags it).
+- Each adapter ships a generated `THIRD-PARTY-NOTICES.md` (the same ISC text the icons package ships) listed in `files`.
+- Adapter component code is untouched; consumers import `../generated/icons/circle-alert` and use `circleAlert`.

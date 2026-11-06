@@ -310,3 +310,34 @@ describe('SSR', () => {
     expect(mk(p).field.getRootProps()).toEqual(mk(p).field.getRootProps());
   });
 });
+
+describe('connect(index)', () => {
+  it('a late-mounted field takes its DOM position and a reorder re-connects', () => {
+    const form = createForm();
+    const f = (id: string) => createField(() => ({ name: id }), { id, form });
+    const [a, b, c] = [f('a'), f('b'), f('c')];
+    a.connect(0);
+    c.connect(2);
+    expect(c.enterHint()).toBe('go');
+    b.connect(1);
+    expect([a, b, c].map((x) => x.enterHint())).toEqual(['next', 'next', 'go']);
+    a.connect(2);
+    c.connect(0);
+    expect([a, b, c].map((x) => x.enterHint())).toEqual(['go', 'next', 'next']);
+    a.setKind('email');
+    expect(form.store.getSnapshot().fields.map((x) => x.key)).toEqual(['c', 'b', 'a']);
+  });
+  it('a rename releases the old key and re-registers at the same index', () => {
+    const form = createForm();
+    let name = 'old';
+    const x = createField(() => ({ name }), { id: 'x', form });
+    const y = createField(() => ({ name: 'y' }), { id: 'y', form });
+    const off = x.connect(0);
+    y.connect(1);
+    off();
+    name = 'new';
+    x.connect(0);
+    expect(form.store.getSnapshot().fields.map((q) => q.key)).toEqual(['new', 'y']);
+    expect(y.enterHint()).toBe('go');
+  });
+});
