@@ -142,11 +142,7 @@ export const SJField = defineComponent({
             ? h('div', field.getErrorProps({ class: c.error }), [
                 h(
                   'span',
-                  {
-                    class: cls('sj-field__icon', c.icon),
-                    'data-part': 'icon',
-                    'aria-hidden': 'true',
-                  },
+                  field.getIconProps({ class: c.icon }),
                   h(SJIcon, { icon: circleAlert, size: 'sm' }),
                 ),
                 error,

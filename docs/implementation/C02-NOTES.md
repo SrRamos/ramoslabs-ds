@@ -160,7 +160,7 @@ Branch `feature/m4-c02-vue`. Owned: `packages/vue/src/{form,field,input}/**` and
 ### Decisions and open questions
 
 - **Audit round (#110)**: form prop `action` is now `enter` (a native `action` reaches the `<form>`); the OTP autoSubmit workaround is removed (inside a field `enterHint()` is final, core #115); SJField registers with `connect(index)`, the control's index in `form.elements`, and reconnects (old cleanup first) on rename or reorder; the error icon data is the generated `circleAlert`. The old "dynamic order" limit is gone.
-- Pending: swap the hand-built icon part for `getIconProps()` once #105 lands.
+- The icon part now comes from core `getIconProps()` (#105).
 - 3.3.7 auto-population (`prior()`, `offers()`) is not wired to a value or list; core does not set a value (a2), the owner is reachable through the injected context.
 
 ### Size (ADR-011, `node packages/testing/size/cli.js`; adapter chunks gzip from `vite build`)
