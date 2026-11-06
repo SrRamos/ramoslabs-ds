@@ -1,10 +1,14 @@
 # SJButton status tones: research and proposal (2026-11)
 
-Status: **research and proposal only.** `packages/tokens` and `packages/css/src/button.css` do not change
-until the owner picks a palette. The proposal is in Storybook under **Components / Button / Tone Proposal**
-(`apps/storybook/stories/components/ButtonToneProposal.stories.ts`). The colour maths, contrast checks and
-palette data are in `apps/storybook/stories/components/tone-proposal/`. Every number below is produced by
-that code, so the swatches, the rendered buttons and this document share one set of values.
+Status: **implemented.** The owner chose palette A, Harmonic. It now lives in the token source:
+the `ink`, `jade`, `honey`, `crimson` and `cerulean` ramps in `packages/tokens/src/tokens/color.primitive.json`,
+and the status, neutral and dark roles in `color.semantic.json`. `packages/css/src/button.css` and the field,
+input and state stylesheets consume those roles, and `packages/testing/contrast` checks every pair (text 4.5:1,
+UI 3:1, including the 12% sheen, hover, press and dark surfaces). The three-palette Storybook proposal that
+this document describes was removed once the decision was made, because it duplicated the real button
+stories with its own colour maths. It is preserved in git at commit `3a8e660`
+(`apps/storybook/stories/components/ButtonToneProposal.stories.ts` and `tone-proposal/`). The hex values in
+this document are the proposal's; where the shipped ramps differ, the token source is authoritative.
 
 Scope: the success, warning, error, info and neutral tones of the Direction B button (#126), and the same
 hues in alerts, badges and field messages. Indigo 600 (`#4f46e5`) stays the primary action colour. Violet

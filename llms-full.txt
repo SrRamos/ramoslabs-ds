@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (262 tokens)
+## Token reference (418 tokens)
 
 ### breakpoint (5)
 
@@ -21,7 +21,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--breakpoint-xl` | `1200px` |
 | `--breakpoint-2xl` | `1366px` |
 
-### color (131)
+### color (285)
 
 | Token | Value |
 | --- | --- |
@@ -49,6 +49,17 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-slate-800` | `#1e293b` |
 | `--color-slate-900` | `#0f172a` |
 | `--color-slate-950` | `#020617` |
+| `--color-ink-50` | `#f6f6fb` |
+| `--color-ink-100` | `#ecedf5` |
+| `--color-ink-200` | `#e1e3ed` |
+| `--color-ink-300` | `#d1d3e0` |
+| `--color-ink-400` | `#8e91a2` |
+| `--color-ink-500` | `#6d7083` |
+| `--color-ink-600` | `#56596e` |
+| `--color-ink-700` | `#42465b` |
+| `--color-ink-800` | `#303448` |
+| `--color-ink-900` | `#222538` |
+| `--color-ink-950` | `#151829` |
 | `--color-emerald-50` | `#ecfdf5` |
 | `--color-emerald-100` | `#d1fae5` |
 | `--color-emerald-200` | `#a7f3d0` |
@@ -115,33 +126,166 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-violet-800` | `#5b21b6` |
 | `--color-violet-900` | `#4c1d95` |
 | `--color-violet-950` | `#2e1065` |
+| `--color-jade-50` | `#effaf3` |
+| `--color-jade-100` | `#e1f3e8` |
+| `--color-jade-200` | `#cce8d7` |
+| `--color-jade-300` | `#7ed3a7` |
+| `--color-jade-400` | `#3f9a6f` |
+| `--color-jade-500` | `#03734a` |
+| `--color-jade-600` | `#006641` |
+| `--color-jade-700` | `#005636` |
+| `--color-jade-800` | `#1c422f` |
+| `--color-jade-900` | `#153424` |
+| `--color-jade-950` | `#0e271b` |
+| `--color-honey-50` | `#fcf6e9` |
+| `--color-honey-100` | `#f8edd5` |
+| `--color-honey-200` | `#f3ddb3` |
+| `--color-honey-300` | `#f8be52` |
+| `--color-honey-400` | `#efb146` |
+| `--color-honey-500` | `#e4a038` |
+| `--color-honey-600` | `#b66c18` |
+| `--color-honey-700` | `#8d4908` |
+| `--color-honey-800` | `#723606` |
+| `--color-honey-900` | `#442911` |
+| `--color-honey-950` | `#331d0b` |
+| `--color-crimson-50` | `#fff4f3` |
+| `--color-crimson-100` | `#ffe7e6` |
+| `--color-crimson-200` | `#ffd4d1` |
+| `--color-crimson-300` | `#ffa09c` |
+| `--color-crimson-400` | `#db5054` |
+| `--color-crimson-500` | `#ae212f` |
+| `--color-crimson-600` | `#9e1326` |
+| `--color-crimson-700` | `#89061d` |
+| `--color-crimson-800` | `#5f2324` |
+| `--color-crimson-900` | `#4b1b1b` |
+| `--color-crimson-950` | `#3b1313` |
+| `--color-cerulean-50` | `#f0f8ff` |
+| `--color-cerulean-100` | `#e0f0ff` |
+| `--color-cerulean-200` | `#c9e3fb` |
+| `--color-cerulean-300` | `#80c5ff` |
+| `--color-cerulean-400` | `#348dcf` |
+| `--color-cerulean-500` | `#0065a1` |
+| `--color-cerulean-600` | `#00598f` |
+| `--color-cerulean-700` | `#004b7a` |
+| `--color-cerulean-800` | `#183c59` |
+| `--color-cerulean-900` | `#122f46` |
+| `--color-cerulean-950` | `#0c2436` |
 | `--color-primary` | `#4f46e5` |
 | `--color-primary-light` | `#6366f1` |
 | `--color-primary-dark` | `#4338ca` |
 | `--color-primary-surface` | `#eef2ff` |
+| `--color-primary-text-dark` | `#818cf8` |
+| `--color-primary-text-strong-dark` | `#a5b4fc` |
+| `--color-primary-outline-dark` | `#818cf8` |
+| `--color-primary-surface-dark` | `#1e1b4b` |
+| `--color-primary-surface-hover-dark` | `#312e81` |
+| `--color-primary-surface-press-dark` | `#3730a3` |
 | `--color-secondary` | `#8b5cf6` |
 | `--color-secondary-light` | `#a78bfa` |
 | `--color-secondary-dark` | `#7c3aed` |
 | `--color-secondary-surface` | `#f5f3ff` |
-| `--color-success` | `#10b981` |
-| `--color-success-strong` | `#059669` |
-| `--color-success-surface` | `#f0fdf4` |
-| `--color-success-border` | `#bbf7d0` |
-| `--color-success-text` | `#166534` |
-| `--color-warning` | `#f59e0b` |
-| `--color-warning-strong` | `#d97706` |
-| `--color-warning-surface` | `#fffbeb` |
-| `--color-warning-border` | `#fde68a` |
-| `--color-warning-text` | `#78350f` |
-| `--color-error` | `#ef4444` |
-| `--color-error-strong` | `#dc2626` |
-| `--color-error-surface` | `#fef2f2` |
-| `--color-error-border` | `#fecaca` |
-| `--color-error-text` | `#991b1b` |
-| `--color-info` | `#3b82f6` |
-| `--color-info-surface` | `#eff6ff` |
-| `--color-info-border` | `#bfdbfe` |
-| `--color-info-text` | `#1e40af` |
+| `--color-success` | `#03734a` |
+| `--color-success-strong` | `#006641` |
+| `--color-success-solid` | `#03734a` |
+| `--color-success-solid-hover` | `#006641` |
+| `--color-success-solid-press` | `#005636` |
+| `--color-success-on-solid` | `#ffffff` |
+| `--color-success-surface` | `#effaf3` |
+| `--color-success-surface-hover` | `#e1f3e8` |
+| `--color-success-surface-press` | `#cce8d7` |
+| `--color-success-border` | `#cce8d7` |
+| `--color-success-text` | `#006641` |
+| `--color-success-text-strong` | `#005636` |
+| `--color-success-outline` | `#3f9a6f` |
+| `--color-success-text-dark` | `#7ed3a7` |
+| `--color-success-text-strong-dark` | `#cce8d7` |
+| `--color-success-outline-dark` | `#3f9a6f` |
+| `--color-success-surface-dark` | `#0e271b` |
+| `--color-success-surface-hover-dark` | `#153424` |
+| `--color-success-surface-press-dark` | `#1c422f` |
+| `--color-success-border-dark` | `#1c422f` |
+| `--color-warning` | `#f8be52` |
+| `--color-warning-strong` | `#b66c18` |
+| `--color-warning-solid` | `#f8be52` |
+| `--color-warning-solid-hover` | `#efb146` |
+| `--color-warning-solid-press` | `#e4a038` |
+| `--color-warning-on-solid` | `#331d0b` |
+| `--color-warning-surface` | `#fcf6e9` |
+| `--color-warning-surface-hover` | `#f8edd5` |
+| `--color-warning-surface-press` | `#f3ddb3` |
+| `--color-warning-border` | `#f3ddb3` |
+| `--color-warning-text` | `#8d4908` |
+| `--color-warning-text-strong` | `#723606` |
+| `--color-warning-outline` | `#b66c18` |
+| `--color-warning-text-dark` | `#f8be52` |
+| `--color-warning-text-strong-dark` | `#f3ddb3` |
+| `--color-warning-outline-dark` | `#b66c18` |
+| `--color-warning-surface-dark` | `#331d0b` |
+| `--color-warning-surface-hover-dark` | `#442911` |
+| `--color-warning-surface-press-dark` | `#442911` |
+| `--color-warning-border-dark` | `#442911` |
+| `--color-error` | `#ae212f` |
+| `--color-error-strong` | `#9e1326` |
+| `--color-error-solid` | `#ae212f` |
+| `--color-error-solid-hover` | `#9e1326` |
+| `--color-error-solid-press` | `#89061d` |
+| `--color-error-on-solid` | `#ffffff` |
+| `--color-error-surface` | `#fff4f3` |
+| `--color-error-surface-hover` | `#ffe7e6` |
+| `--color-error-surface-press` | `#ffd4d1` |
+| `--color-error-border` | `#ffd4d1` |
+| `--color-error-text` | `#9e1326` |
+| `--color-error-text-strong` | `#89061d` |
+| `--color-error-outline` | `#db5054` |
+| `--color-error-text-dark` | `#ffa09c` |
+| `--color-error-text-strong-dark` | `#ffd4d1` |
+| `--color-error-outline-dark` | `#db5054` |
+| `--color-error-surface-dark` | `#3b1313` |
+| `--color-error-surface-hover-dark` | `#4b1b1b` |
+| `--color-error-surface-press-dark` | `#5f2324` |
+| `--color-error-border-dark` | `#5f2324` |
+| `--color-info` | `#0065a1` |
+| `--color-info-strong` | `#00598f` |
+| `--color-info-solid` | `#0065a1` |
+| `--color-info-solid-hover` | `#00598f` |
+| `--color-info-solid-press` | `#004b7a` |
+| `--color-info-on-solid` | `#ffffff` |
+| `--color-info-surface` | `#f0f8ff` |
+| `--color-info-surface-hover` | `#e0f0ff` |
+| `--color-info-surface-press` | `#c9e3fb` |
+| `--color-info-border` | `#c9e3fb` |
+| `--color-info-text` | `#00598f` |
+| `--color-info-text-strong` | `#004b7a` |
+| `--color-info-outline` | `#348dcf` |
+| `--color-info-text-dark` | `#80c5ff` |
+| `--color-info-text-strong-dark` | `#c9e3fb` |
+| `--color-info-outline-dark` | `#348dcf` |
+| `--color-info-surface-dark` | `#0c2436` |
+| `--color-info-surface-hover-dark` | `#122f46` |
+| `--color-info-surface-press-dark` | `#183c59` |
+| `--color-info-border-dark` | `#183c59` |
+| `--color-neutral-solid` | `#222538` |
+| `--color-neutral-solid-hover` | `#303448` |
+| `--color-neutral-solid-press` | `#151829` |
+| `--color-neutral-on-solid` | `#ffffff` |
+| `--color-neutral-surface` | `#f6f6fb` |
+| `--color-neutral-surface-hover` | `#ecedf5` |
+| `--color-neutral-surface-press` | `#e1e3ed` |
+| `--color-neutral-border` | `#d1d3e0` |
+| `--color-neutral-text` | `#42465b` |
+| `--color-neutral-text-strong` | `#303448` |
+| `--color-neutral-outline` | `#6d7083` |
+| `--color-neutral-solid-dark` | `#f6f6fb` |
+| `--color-neutral-solid-hover-dark` | `#ecedf5` |
+| `--color-neutral-solid-press-dark` | `#e1e3ed` |
+| `--color-neutral-on-solid-dark` | `#222538` |
+| `--color-neutral-text-dark` | `#d1d3e0` |
+| `--color-neutral-text-strong-dark` | `#e1e3ed` |
+| `--color-neutral-outline-dark` | `#8e91a2` |
+| `--color-neutral-surface-dark` | `#222538` |
+| `--color-neutral-surface-hover-dark` | `#303448` |
+| `--color-neutral-surface-press-dark` | `#42465b` |
+| `--color-neutral-border-dark` | `#303448` |
 | `--color-text-heading` | `#0f172a` |
 | `--color-text-strong` | `#1e293b` |
 | `--color-text-secondary` | `#475569` |
@@ -156,6 +300,16 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-border-light` | `#e2e8f0` |
 | `--color-border-subtle` | `#f1f5f9` |
 | `--color-focus` | `#4f46e5` |
+| `--color-focus-dark` | `#818cf8` |
+| `--color-surface-dark` | `#0f172a` |
+| `--color-background-dark` | `#020617` |
+| `--color-surface-hover-dark` | `#1e293b` |
+| `--color-border-dark` | `#334155` |
+| `--color-text-heading-dark` | `#f8fafc` |
+| `--color-text-body-dark` | `#cbd5e1` |
+| `--color-text-secondary-dark` | `#cbd5e1` |
+| `--color-text-muted-dark` | `#94a3b8` |
+| `--color-text-disabled-dark` | `#475569` |
 
 ### target (2)
 
@@ -212,18 +366,25 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | --- | --- |
 | `--border-width-hairline` | `1px` |
 
-### opacity (2)
+### opacity (3)
 
 | Token | Value |
 | --- | --- |
 | `--opacity-sheen` | `12%` |
 | `--opacity-soft-ring` | `10%` |
+| `--opacity-glow` | `18%` |
 
 ### gradient (1)
 
 | Token | Value |
 | --- | --- |
 | `--gradient-sheen-stop` | `55%` |
+
+### glow (1)
+
+| Token | Value |
+| --- | --- |
+| `--glow-width` | `3px` |
 
 ### icon (4)
 
@@ -1158,14 +1319,17 @@ Indigo `--color-indigo-*`: 50 `#eef2ff`, 100 `#e0e7ff`, 200 `#c7d2fe`, 300 `#a5b
 
 Slate `--color-slate-*` (text, surfaces, borders, the 90% of the interface): 50 `#f8fafc`, 100 `#f1f5f9`, 200 `#e2e8f0`, 300 `#cbd5e1`, 400 `#94a3b8`, 500 `#64748b`, 600 `#475569`, 700 `#334155`, 800 `#1e293b`, 900 `#0f172a`, 950 `#020617`.
 
-Reserved for state, never decoration:
+Ink `--color-ink-*` (the indigo-tinted neutral behind the neutral tone): 50 `#f6f6fb`, 100 `#ecedf5`, 200 `#e1e3ed`, 300 `#d1d3e0`, 400 `#8e91a2`, 500 `#6d7083`, 600 `#56596e`, 700 `#42465b`, 800 `#303448`, 900 `#222538`, 950 `#151829`.
 
-- Emerald `--color-emerald-*`: success solid.
-- Green `--color-green-*`: success surface and text.
-- Amber `--color-amber-*`: warning.
-- Red `--color-red-*`: error.
-- Blue `--color-blue-*`: info.
+Reserved for state, never decoration. The status families are authored in OKLCH so the jade, crimson and cerulean solids share one lightness (L 49), one step under Indigo 600, and honey keeps a dark ink label. This is the Harmonic palette (docs/research/status-tones-2026.md).
+
+- Jade `--color-jade-*` (success): 50 `#effaf3`, 100 `#e1f3e8`, 200 `#cce8d7`, 300 `#7ed3a7`, 400 `#3f9a6f`, 500 `#03734a`, 600 `#006641`, 700 `#005636`, 800 `#1c422f`, 900 `#153424`, 950 `#0e271b`.
+- Honey `--color-honey-*` (warning, dark label): 50 `#fcf6e9`, 100 `#f8edd5`, 200 `#f3ddb3`, 300 `#f8be52`, 400 `#efb146`, 500 `#e4a038`, 600 `#b66c18`, 700 `#8d4908`, 800 `#723606`, 900 `#442911`, 950 `#331d0b`.
+- Crimson `--color-crimson-*` (error): 50 `#fff4f3`, 100 `#ffe7e6`, 200 `#ffd4d1`, 300 `#ffa09c`, 400 `#db5054`, 500 `#ae212f`, 600 `#9e1326`, 700 `#89061d`, 800 `#5f2324`, 900 `#4b1b1b`, 950 `#3b1313`.
+- Cerulean `--color-cerulean-*` (info, 32° clear of indigo): 50 `#f0f8ff`, 100 `#e0f0ff`, 200 `#c9e3fb`, 300 `#80c5ff`, 400 `#348dcf`, 500 `#0065a1`, 600 `#00598f`, 700 `#004b7a`, 800 `#183c59`, 900 `#122f46`, 950 `#0c2436`.
 - Violet `--color-secondary`: decorative support only.
+
+Deprecated: `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*` and `--color-blue-*` are still published so nothing breaks, but no role or component uses them. They will be removed in a future major.
 
 ## Always reach for a role, not a raw color
 
@@ -1175,27 +1339,36 @@ The ramps are primitives: raw hues, named by number, never by meaning. Product c
 
 - Primary action: rest `--color-primary`, hover `--color-primary-dark`, focus ring at `--color-focus`. The one accent for submit, confirm, active nav.
 - Selected / accent zone: ✓ Recommended: `--color-primary-surface` tint with primary-colored text. ✕ Avoid: white text on the tint, it fails contrast on the pale surface.
-- Text scale, one neutral hue: `--color-text-heading` 17.85:1, `--color-text-strong` 14.63:1, `--color-text-body` 10.35:1, `--color-text-secondary` 7.58:1, `--color-text-muted` 4.76:1, `--color-text-disabled` state only.
-- Feedback, each a full triad (strong solid + surface + text):
-  - Success: `--color-success-strong` + `-surface` + `-text`. Strong solid for the icon so the white check clears 3:1.
-  - Warning: `--color-warning-strong` + `-surface` + `-text`. Amber is bright: reach for `--color-warning-strong` when a white glyph sits on a solid fill (it clears the 3:1 non-text floor), keep dark text on the surface, never white text.
-  - Error: `--color-error` + `-surface` + `-text`. For a red button with white text, use `--color-error-strong`.
-  - Info: `--color-info` + `-surface` + `-text`. Kept distinct from indigo so context never reads as an action.
+- Text scale, one neutral hue: `--color-text-heading` 17.85:1, `--color-text-strong` 14.62:1, `--color-text-body` 10.35:1, `--color-text-secondary` 7.57:1, `--color-text-muted` 4.75:1, `--color-text-disabled` state only.
+- Status roles. Each tone T in success, warning, error and info has the same set:
+  - Solid control: `--color-T-solid` fill, `-solid-hover`, `-solid-press`, label `--color-T-on-solid` (white, or dark ink for warning). The label holds 4.5:1 on the 12% sheen, hover and press.
+  - Soft: `--color-T-surface`, `-surface-hover`, `-surface-press`, with `--color-T-text` (4.5:1 on all three) and `-text-strong` for titles.
+  - Edges: `--color-T-border` for alert and badge hairlines, `--color-T-outline` for the outline variant (3:1).
+  - `--color-T-strong`: an AA-safe fill for a white glyph (3:1 non-text).
+- Neutral tone: `--color-neutral-*` (ink) with the same solid, soft, text and outline roles.
+- Feedback, each a full triad (solid + surface + text):
+  - Success: `--color-success-solid` + `-surface` + `-text`.
+  - Warning: `--color-warning-solid` with `--color-warning-on-solid` (dark ink), never white text. Honey is light, so the label is dark.
+  - Error: `--color-error-solid` + `-surface` + `-text`. The destructive button fill is `--color-error-solid`.
+  - Info: `--color-info-solid` + `-surface` + `-text`. Cerulean sits 32° from indigo so context never reads as an action.
+- Dark surfaces: every role has a `-dark` counterpart (`--color-T-text-dark`, `-surface-dark`, `-border-dark`, `-outline-dark`, `--color-text-*-dark`, `--color-surface-dark`, `--color-background-dark`), checked on slate 900 and 950. Components switch under any `[data-theme='dark']` ancestor. Primary keeps Indigo 600 as the fill; its outline, ghost and link text move to `--color-primary-text-dark` (Indigo 400), because Indigo 600 is 2.83:1 on slate 900.
 
 ## Contrast you can see
 
 Contrast is a floor. WCAG 2.2 asks 4.5:1 for normal text, 3:1 for large text and UI edges (AA); 7:1 is AAA. Measured pairings:
 
-- Primary on white: 6.29, AA
+- Primary on white: 6.28, AA
 - White on primary-dark: 7.90, AAA
 - Heading on white: 17.85, AAA
 - Body on white: 10.35, AAA
-- Muted on white: 4.76, AA
-- White on error-strong: 4.83, AA
-- White on error (red 500): 3.76, large only
-- Dark text on warning: 8.31, AAA
-- White on warning (amber 500): 2.15, fail — use warning-strong instead
-- White on warning-strong (amber 600): 3.18, UI / large only
+- Muted on white: 4.75, AA
+- White on success-solid, lightest sheen pixel: 4.63, AA
+- White on error-solid, lightest sheen pixel: 5.55, AA
+- White on info-solid, lightest sheen pixel: 4.89, AA
+- Ink on warning-solid: 9.44, AAA
+- White on warning-solid: 1.68, fail, use the ink label
+- Primary text on dark (indigo 400 on slate 900): 5.98, AA
+- Indigo 600 on slate 900: 2.83, fail, use primary-text-dark
 - Disabled on white: 1.48, by design
 
 Rule: pair every status color with an icon and a label, give every invalid field real text, and make focus a visible ring. Why: color is never the only channel (WCAG 2.2 SC 1.4.1), so meaning survives for color-blind and low-vision users. Color reinforces, it never carries meaning by itself.
@@ -1775,15 +1948,15 @@ The exhaustive table of every token name and value is auto-generated from `token
 
 Every token is authored as data, not CSS, in the W3C Design Tokens Community Group (DTCG) format: a JSON object with a reserved `$value` and a `$type` like `color` or `dimension`. One authored decision publishes to CSS, TypeScript, and native from the same source. The JSON is the contract. It runs in two tiers.
 
-- Tier 1, Primitive: the raw palette. Eight color ramps of eleven shades each, plus pure white and black. These carry a value and nothing else, no role, no meaning. Product code rarely touches this tier directly. Naming is descriptive: `--color-indigo-600`.
+- Tier 1, Primitive: the raw palette. Thirteen color ramps of eleven shades each (five of them deprecated), plus pure white and black. These carry a value and nothing else, no role, no meaning. Product code rarely touches this tier directly. Naming is descriptive: `--color-indigo-600`.
 - Tier 2, Semantic: the layer you build with. Each token names a role, not a hue, and aliases a primitive: `--color-primary`, `--color-text-body`, `--color-border`. This indirection makes the system themeable. Change one alias, and every consumer moves with it. Naming is intentional: role first, variant second.
 
 Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file per category) to Style Dictionary (resolves aliases, applies transforms, formats each target) to generated `dist/tokens.css` (`:root` custom properties) and `dist/tokens.js` with `dist/tokens.d.ts` typings (typed constants). Both carry a do-not-edit banner: they are build output, not source.
 
 ## Categories
 
-- Primitive palette: eight ramps, `--color-indigo-*`, `--color-slate-*`, `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*`, `--color-blue-*`, `--color-violet-*`, each 50 through 950, plus `--color-white` and `--color-black`. These ramps are Tailwind CSS's open-source (MIT) default palette, adopted hex-for-hex as the primitive layer; what this system owns sits on top, the mono-indigo constraint and the semantic mapping. Indigo is the brand ramp and single action accent; slate carries text, surfaces, and borders; the four status ramps feed the feedback tokens; violet backs the decorative secondary role, never for action.
-- Semantic color: brand (`--color-primary*`, `--color-secondary*`), text (`--color-text-heading`, `-strong`, `-secondary`, `-body`, `-muted`, `-disabled`), surface and border (`--color-surface*`, `--color-background`, `--color-border*`, `--color-focus`), and feedback (`--color-success*`, `--color-warning*`, `--color-error*`, `--color-info*`, each with the strong/surface/border/text variants).
+- Primitive palette: `--color-indigo-*`, `--color-slate-*`, `--color-ink-*`, `--color-jade-*`, `--color-honey-*`, `--color-crimson-*`, `--color-cerulean-*` and `--color-violet-*`, each 50 through 950, plus `--color-white` and `--color-black`. Indigo, slate and violet are Tailwind CSS's open-source (MIT) default ramps, adopted hex-for-hex; ink, jade, honey, crimson and cerulean are this system's own, authored in OKLCH (the Harmonic status palette). Indigo is the brand ramp and single action accent; slate carries text, surfaces, and borders; ink backs the neutral tone; jade, honey, crimson and cerulean feed success, warning, error and info; violet backs the decorative secondary role, never for action. Deprecated, still published for compatibility and used by no role: `--color-emerald-*`, `--color-green-*`, `--color-amber-*`, `--color-red-*`, `--color-blue-*`.
+- Semantic color: brand (`--color-primary*`, `--color-secondary*`), text (`--color-text-heading`, `-strong`, `-secondary`, `-body`, `-muted`, `-disabled`), surface and border (`--color-surface*`, `--color-background`, `--color-border*`, `--color-focus`), feedback (`--color-success*`, `--color-warning*`, `--color-error*`, `--color-info*`, each with solid, solid-hover, solid-press, on-solid, strong, surface, surface-hover, surface-press, border, text, text-strong and outline), the neutral tone (`--color-neutral-*`), and a `-dark` counterpart for every role used on dark surfaces.
 - Spacing: `--space-*`, one scale for margin, padding, and gap.
 - Border radius: `--radius-*`, eight steps. `sm` at 6px is the signature control radius; `pill` is the fully rounded accent.
 - Shadow: three elevation levels plus `--shadow-focus`. Each level is two soft, indigo-tinted layers. Shadow means height, never state.
@@ -2707,7 +2880,7 @@ On a phone a centered modal usually becomes a bottom sheet, a panel that rises f
 **Why:** the trap is legal under WCAG 2.1.2 only while the user can untrap with Escape or Cancel, and animating a dialog drops the automatic focus return.
 
 **Rule:** Reserve the `--color-error` family for the destructive path and keep everything else mono-indigo; radius 6px on buttons, 12px on the dialog.
-**Why:** red carries a single meaning, danger, so it stays out of chrome. The destructive fill uses red 600 (`#dc2626`) because red 500 clears only 3.76:1 under white text.
+**Why:** red carries a single meaning, danger, so it stays out of chrome. The destructive fill is `--color-error-solid` (crimson 500, `#ae212f`), 6.86:1 under white text.
 
 ## Sources
 

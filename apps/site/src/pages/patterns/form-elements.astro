@@ -1409,7 +1409,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
     margin-bottom: 0.25rem;
   }
 
-  .fe-label .fe-req { color: var(--color-red-600); margin-left: 0.15rem; }
+  .fe-label .fe-req { color: var(--color-error-text); margin-left: 0.15rem; }
   .fe-label .fe-opt {
     color: var(--color-slate-500);
     font-weight: 400;
@@ -1460,14 +1460,14 @@ const page = pages.find((p) => p.id === 'form-elements')!
   }
 
   .fe-input.error {
-    border-color: var(--color-red-500);
+    border-color: var(--color-error-outline);
   }
 
   .fe-input.error:focus-visible {
-    box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-red-600);
+    box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-error-strong);
   }
 
-  .fe-input.success { border-color: var(--color-emerald-600); }
+  .fe-input.success { border-color: var(--color-success-outline); }
 
   select.fe-input { appearance: auto; cursor: pointer; }
 
@@ -1477,12 +1477,12 @@ const page = pages.find((p) => p.id === 'form-elements')!
     gap: 0.35rem;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: var(--color-red-800);
+    color: var(--color-error-text);
     margin-top: 0.35rem;
     line-height: 1.45;
   }
 
-  .fe-error .fe-material { font-size: 1rem; color: var(--color-red-600); flex-shrink: 0; margin-top: 0.05rem; }
+  .fe-error .fe-material { font-size: 1rem; color: var(--color-error-text); flex-shrink: 0; margin-top: 0.05rem; }
 
   .fe-success-text {
     display: flex;
@@ -1490,11 +1490,11 @@ const page = pages.find((p) => p.id === 'form-elements')!
     gap: 0.35rem;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: var(--color-green-800);
+    color: var(--color-success-text);
     margin-top: 0.35rem;
   }
 
-  .fe-success-text .fe-material { font-size: 1rem; color: var(--color-emerald-600); }
+  .fe-success-text .fe-material { font-size: 1rem; color: var(--color-success-text); }
 
   /* ===== ANATOMY ===== */
   .fe-anatomy {
@@ -1584,8 +1584,8 @@ const page = pages.find((p) => p.id === 'form-elements')!
     white-space: nowrap;
   }
 
-  .fe-yes { color: var(--color-green-800); font-weight: 700; }
-  .fe-no { color: var(--color-red-800); font-weight: 700; }
+  .fe-yes { color: var(--color-success-text); font-weight: 700; }
+  .fe-no { color: var(--color-error-text); font-weight: 700; }
   .fe-yes .fe-material, .fe-no .fe-material { font-size: 0.95rem; vertical-align: -0.15rem; }
 
   /* ===== TIMELINE (validation) ===== */
@@ -1713,8 +1713,8 @@ const page = pages.find((p) => p.id === 'form-elements')!
     background: var(--color-slate-50);
   }
 
-  .fe-demo-label.rec { color: var(--color-green-800); }
-  .fe-demo-label.avoid { color: var(--color-red-800); }
+  .fe-demo-label.rec { color: var(--color-success-text); }
+  .fe-demo-label.avoid { color: var(--color-error-text); }
 
   /* ===== RULES (Rule / Why) ===== */
   .fe-rules {
@@ -1898,7 +1898,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
     white-space: nowrap;
   }
 
-  .fe-verdict.native { color: var(--color-green-800); background: var(--color-green-50); border: 1px solid var(--color-green-200); }
+  .fe-verdict.native { color: var(--color-success-text); background: var(--color-success-surface); border: 1px solid var(--color-success-border); }
   .fe-verdict.custom { color: var(--color-indigo-700); background: var(--color-indigo-50); border: 1px solid var(--color-indigo-200); }
   .fe-verdict.hybrid { color: var(--color-slate-600); background: var(--color-slate-100); border: 1px solid var(--color-slate-200); }
 

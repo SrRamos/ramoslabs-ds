@@ -275,8 +275,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: #fbfcfd;
   }
 
-  .dt-demo-label.rec { color: #166534; }
-  .dt-demo-label.avoid { color: #991b1b; }
+  .dt-demo-label.rec { color: var(--color-success-text); }
+  .dt-demo-label.avoid { color: var(--color-error-text); }
 
   /* ===== THE DATA TABLE ITSELF ===== */
   .dt-scroll {
@@ -361,8 +361,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding: 0.15rem 0.5rem;
     white-space: nowrap;
   }
-  .dt-badge.paid { color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; }
-  .dt-badge.pending { color: #92400e; background: #fffbeb; border: 1px solid #fde68a; }
+  .dt-badge.paid { color: var(--color-success-text); background: var(--color-success-surface); border: 1px solid var(--color-success-border); }
+  .dt-badge.pending { color: var(--color-warning-text); background: var(--color-warning-surface); border: 1px solid var(--color-warning-border); }
   .dt-badge.failed { color: var(--color-error-text); background: var(--color-error-surface); border: 1px solid var(--color-error-border); }
 
   /* ===== SORT BUTTON ===== */
@@ -656,7 +656,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-bottom: 1px solid #e6e8eb;
     vertical-align: top;
   }
-  .dt-fork th.a { background: #f0fdf4; }
+  .dt-fork th.a { background: var(--color-success-surface); }
   .dt-fork th.b { background: #eef2ff; }
   .dt-fork td {
     padding: 0.7rem 1rem;
@@ -841,9 +841,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding: 0.15rem 0.55rem;
     white-space: nowrap;
   }
-  .dt-verdict.def { color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .dt-verdict.def { color: var(--color-success-text); background: var(--color-success-surface); border: 1px solid var(--color-success-border); }
   .dt-verdict.alt { color: #4338ca; background: #eef2ff; border: 1px solid #c7d2fe; }
-  .dt-verdict.care { color: #92400e; background: #fffbeb; border: 1px solid #fde68a; }
+  .dt-verdict.care { color: var(--color-warning-text); background: var(--color-warning-surface); border: 1px solid var(--color-warning-border); }
   .dt-pattern-body {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
@@ -858,8 +858,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-top: 1px dashed #e2e8f0;
     padding-top: 0.5rem;
   }
-  .dt-pattern-tradeoff b { color: #166534; }
-  .dt-pattern-tradeoff i { color: #991b1b; font-style: normal; font-weight: 600; }
+  .dt-pattern-tradeoff b { color: var(--color-success-text); }
+  .dt-pattern-tradeoff i { color: var(--color-error-text); font-style: normal; font-weight: 600; }
 
   /* Sticky first column inside the responsive demo */
   table.dt-data.sticky-first th.stick,
@@ -1031,9 +1031,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6rem;
     font-weight: 700;
-    color: #92400e;
-    background: #fffbeb;
-    border: 1px solid #fde68a;
+    color: var(--color-warning-text);
+    background: var(--color-warning-surface);
+    border: 1px solid var(--color-warning-border);
     border-radius: 4px;
     padding: 0.05rem 0.35rem;
     text-transform: uppercase;

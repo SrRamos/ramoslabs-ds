@@ -28,7 +28,7 @@ color, spacing, typography, radius, shadow, and motion values ship as CSS variab
 - [Motion](https://design.ramoslabs.com/foundations/motion/): Three durations, five easings, the transform-and-opacity performance contract, and reduced-motion as the floor
 - [Responsive](https://design.ramoslabs.com/foundations/responsive/): Mobile-first discipline, five min-width breakpoints, media vs container queries, intrinsic layout, and safe areas
 - [Helpers](https://design.ramoslabs.com/foundations/helpers/): Single-purpose utility classes sourced from tokens, the token-utility-component decision, and the sr-only and focus-ring infrastructure
-- [Token Reference](https://design.ramoslabs.com/foundations/token-reference/): How the 213 tokens are named, the two-tier primitive and semantic model, categories, and how to consume and author them
+- [Token Reference](https://design.ramoslabs.com/foundations/token-reference/): How every token is named, the two-tier primitive and semantic model, categories, and how to consume and author them
 
 ## Patterns
 

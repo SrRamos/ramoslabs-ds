@@ -148,13 +148,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
   /* Warning-toned callout still stays inside the indigo family for chrome,
      using the error token only where the meaning is truly destructive. */
-  .md-callout.warn { background: #fef2f2; border-color: #fecaca; }
-  .md-callout.warn .md-material { color: #b91c1c; }
-  .md-callout.warn .md-callout-text { color: #991b1b; }
-  .md-callout.warn .md-callout-text strong { color: #7f1d1d; }
+  .md-callout.warn { background: var(--color-error-surface); border-color: var(--color-error-border); }
+  .md-callout.warn .md-material { color: var(--color-error-text); }
+  .md-callout.warn .md-callout-text { color: var(--color-error-text); }
+  .md-callout.warn .md-callout-text strong { color: var(--color-error-text-strong); }
   .md-callout.warn .md-callout-text code {
     background: rgba(153,27,27,0.08);
-    color: #991b1b;
+    color: var(--color-error-text);
   }
 
   /* ===== DEMO LAB ===== */
@@ -242,25 +242,25 @@ import { Meta } from '@storybook/addon-docs/blocks';
   .md-btn-ghost:active { background: #f1f5f9; }
 
   /* Destructive uses the error token with an AA-safe red under white text.
-     Red 500 is only 3.76:1 on white, so the fill is red 600 (#dc2626). */
+     The fill is the error solid (crimson 500), 6.87:1 under white. */
   .md-btn-danger {
-    background: var(--color-error-strong, #dc2626);
+    background: var(--color-error-solid);
     color: #ffffff;
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-danger:hover { background: #b91c1c; }
+    .md-btn-danger:hover { background: var(--color-error-solid-hover); }
   }
-  .md-btn-danger:active { background: #991b1b; }
+  .md-btn-danger:active { background: var(--color-error-solid-press); }
 
   .md-btn-danger-outline {
     background: #ffffff;
-    color: #991b1b;
-    border: 1px solid #fecaca;
+    color: var(--color-error-text);
+    border: 1px solid var(--color-error-border);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-danger-outline:hover { background: #fef2f2; }
+    .md-btn-danger-outline:hover { background: var(--color-error-surface); }
   }
-  .md-btn-danger-outline:active { background: #fee2e2; }
+  .md-btn-danger-outline:active { background: var(--color-error-surface-hover); }
 
   /* ===== NATIVE DIALOG ===== */
   .md-dialog {
@@ -361,8 +361,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 8px;
-    background: #fef2f2;
-    color: #b91c1c;
+    background: var(--color-error-surface);
+    color: var(--color-error-text);
     flex-shrink: 0;
   }
   .md-alert-mark .md-material { font-size: 1.35rem; }
@@ -795,9 +795,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-bottom: 1px solid #475569;
   }
   .md-code-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .md-code-dot.red { background: #ef4444; }
-  .md-code-dot.yellow { background: #f59e0b; }
-  .md-code-dot.green { background: #22c55e; }
+  .md-code-dot.red { background: var(--color-crimson-400); }
+  .md-code-dot.yellow { background: var(--color-honey-300); }
+  .md-code-dot.green { background: var(--color-jade-400); }
   .md-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
@@ -816,7 +816,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
   .md-code .comment { color: #94a3b8; font-style: italic; }
-  .md-code .tag { color: #fbbf24; }
+  .md-code .tag { color: var(--color-honey-300); }
   .md-code .attr { color: #7dd3fc; }
   .md-code .value { color: #a5f3fc; }
   .md-code .function { color: #c4b5fd; }
@@ -1097,9 +1097,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <div className="md-ra-head"><span className="md-material" aria-hidden="true">description</span>role dialog</div>
       <p className="md-ra-body">Forms, pickers, multi-step content. Nothing is destroyed by opening it. Focus the first field or the primary control.</p>
     </div>
-    <div className="md-ra-card avoid" style={{ border: '1px solid #fecaca', background: '#fef2f2' }}>
-      <div className="md-ra-head" style={{ color: '#991b1b' }}><span className="md-material" aria-hidden="true" style={{ color: '#b91c1c' }}>warning</span>role alertdialog</div>
-      <p className="md-ra-body" style={{ color: '#7f1d1d' }}>Delete, cancel, wipe, anything irreversible. Requires <code>aria-describedby</code> on the message, and focus starts on Cancel.</p>
+    <div className="md-ra-card avoid" style={{ border: '1px solid var(--color-error-border)', background: 'var(--color-error-surface)' }}>
+      <div className="md-ra-head" style={{ color: 'var(--color-error-text)' }}><span className="md-material" aria-hidden="true" style={{ color: 'var(--color-error-text)' }}>warning</span>role alertdialog</div>
+      <p className="md-ra-body" style={{ color: 'var(--color-error-text-strong)' }}>Delete, cancel, wipe, anything irreversible. Requires <code>aria-describedby</code> on the message, and focus starts on Cancel.</p>
     </div>
   </div>
 
@@ -1497,7 +1497,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
     <div className="md-rule">
       <p className="md-rule-line"><span className="md-rule-tag rule">Rule</span>Reserve the <code>--color-error</code> family for the destructive path and keep everything else mono-indigo; radius 6px on buttons, 12px on the dialog.</p>
-      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>Red carries a single meaning, danger, so it stays out of chrome and buttons that do not destroy. The destructive fill uses red 600 because red 500 clears only 3.76:1 under white text.</p>
+      <p className="md-rule-line"><span className="md-rule-tag why">Why</span>Red carries a single meaning, danger, so it stays out of chrome and buttons that do not destroy. The destructive fill is the error solid, crimson 500, at 6.87:1 under white text.</p>
     </div>
 
   </div>

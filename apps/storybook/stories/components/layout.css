@@ -17,6 +17,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: var(--space-4);
+  font-family: var(--font-family-sans);
 }
 .sbx-card {
   padding: var(--space-4);
@@ -56,4 +57,23 @@
   font-size: var(--font-size-base);
   line-height: var(--leading-relaxed);
   color: var(--color-slate-700);
+}
+
+/* Dark theme toolbar: the story chrome follows the components onto the dark surfaces. */
+:where([data-theme='dark']) .sbx-stack {
+  color: var(--color-text-heading-dark);
+}
+:where([data-theme='dark']) .sbx-card {
+  background: var(--color-surface-dark);
+  border-color: var(--color-border-dark);
+}
+:where([data-theme='dark']) .sbx-note {
+  color: var(--color-text-secondary-dark);
+}
+:where([data-theme='dark']) .sbx-readout {
+  color: var(--color-text-body-dark);
+  background: var(--color-surface-hover-dark);
+}
+:where([data-theme='dark']) .sbx-prose {
+  color: var(--color-text-body-dark);
 }

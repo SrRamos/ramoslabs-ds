@@ -406,23 +406,23 @@ const copyToken = async () => {
 }
 
 .token-picker__contrast-badge--aaa {
-  background: #dcfce7;
-  color: #166534;
+  background: var(--color-success-surface-hover);
+  color: var(--color-success-text);
 }
 
 .token-picker__contrast-badge--aa {
-  background: #d1fae5;
-  color: #047857;
+  background: var(--color-success-surface);
+  color: var(--color-success-text);
 }
 
 .token-picker__contrast-badge--aa-large {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--color-warning-surface-hover);
+  color: var(--color-warning-text);
 }
 
 .token-picker__contrast-badge--fail {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-error-surface-hover);
+  color: var(--color-error-text);
 }
 
 .token-picker__copy {
@@ -455,7 +455,7 @@ const copyToken = async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #22c55e;
+  color: var(--color-success-text);
 }
 
 .token-picker__toast {
@@ -475,7 +475,7 @@ const copyToken = async () => {
 }
 
 .token-picker__toast svg {
-  color: #22c55e;
+  color: var(--color-success-text-dark);
 }
 
 /* Transitions */
@@ -551,26 +551,26 @@ const copyToken = async () => {
 
 .dark .token-picker__contrast-badge--aaa,
 :global([data-theme="dark"]) .token-picker__contrast-badge--aaa {
-  background: #052e16;
-  color: #4ade80;
+  background: var(--color-success-surface-dark);
+  color: var(--color-success-text-dark);
 }
 
 .dark .token-picker__contrast-badge--aa,
 :global([data-theme="dark"]) .token-picker__contrast-badge--aa {
-  background: #064e3b;
-  color: #34d399;
+  background: var(--color-success-surface-hover-dark);
+  color: var(--color-success-text-strong-dark);
 }
 
 .dark .token-picker__contrast-badge--aa-large,
 :global([data-theme="dark"]) .token-picker__contrast-badge--aa-large {
   background: #422006;
-  color: #fbbf24;
+  color: var(--color-honey-300);
 }
 
 .dark .token-picker__contrast-badge--fail,
 :global([data-theme="dark"]) .token-picker__contrast-badge--fail {
-  background: #450a0a;
-  color: #f87171;
+  background: var(--color-error-surface-dark);
+  color: var(--color-error-text-dark);
 }
 
 .dark .token-picker__copy,
