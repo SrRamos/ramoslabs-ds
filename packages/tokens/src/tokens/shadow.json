@@ -100,7 +100,8 @@
           "color": "rgba(99, 102, 241, 0.18)"
         }
       ],
-      "$description": "Hover glow. shadow.lift plus a 3px soft indigo halo around a solid control on hover (SJButton). Not a focus ring."
+      "$description": "Hover glow. shadow.lift plus a 3px soft indigo halo. Deprecated: split into glow.width and opacity.glow so the halo takes each tone's colour; SJButton no longer uses this composite. Kept for consumers; removal is planned for a future major.",
+      "$deprecated": "Deprecated: split into glow.width and opacity.glow so the halo takes each tone's colour; SJButton no longer uses this composite. Kept for consumers; removal is planned for a future major."
     },
     "press": {
       "$value": [
