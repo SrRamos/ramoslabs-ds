@@ -297,24 +297,33 @@ describe('SJButton lifecycle', () => {
     warn.mockRestore();
   });
 
+  it('renders the link variant and the xs size as button and as anchor', () => {
+    for (const href of [undefined, '/x']) {
+      const { el } = mount({ variant: 'link', size: 'xs', href });
+      expect(el().type).toBe(href ? 'a' : 'button');
+      expect(el().props['data-variant']).toBe('link');
+      expect(el().props['data-size']).toBe('xs');
+    }
+  });
+
   it('property: any axis combination renders matching, defaulted data attributes', () => {
     fc.assert(
       fc.property(
-        fc.constantFrom('solid', 'soft', 'outline', 'ghost', 'bad'),
+        fc.constantFrom('solid', 'soft', 'outline', 'ghost', 'link', 'bad'),
         fc.constantFrom('primary', 'neutral', 'success', 'warning', 'error', 'info', 'bad'),
-        fc.constantFrom('sm', 'md', 'lg', 'bad'),
+        fc.constantFrom('xs', 'sm', 'md', 'lg', 'bad'),
         fc.boolean(),
         (variant, tone, size, link) => {
           const { el } = mount({ variant, tone, size, href: link ? '/x' : undefined });
           const ok = (v: string, set: string[], d: string) => (set.includes(v) ? v : d);
           expect(el().type).toBe(link ? 'a' : 'button');
           expect(el().props['data-variant']).toBe(
-            ok(variant, ['solid', 'soft', 'outline', 'ghost'], 'solid'),
+            ok(variant, ['solid', 'soft', 'outline', 'ghost', 'link'], 'solid'),
           );
           expect(el().props['data-tone']).toBe(
             ok(tone, ['primary', 'neutral', 'success', 'warning', 'error', 'info'], 'primary'),
           );
-          expect(el().props['data-size']).toBe(ok(size, ['sm', 'md', 'lg'], 'md'));
+          expect(el().props['data-size']).toBe(ok(size, ['xs', 'sm', 'md', 'lg'], 'md'));
         },
       ),
       { numRuns: 60 },

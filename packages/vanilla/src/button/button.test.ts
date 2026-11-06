@@ -130,6 +130,24 @@ const setup = () => {
 };
 const ctl = (c: FEl) => c.kids[0] as FEl;
 
+describe('SJButton vanilla: link variant and xs size', () => {
+  it('renders data-variant=link and data-size=xs on a button and on an anchor', () => {
+    const { container, host } = setup();
+    const inst = mountButton(host, container as never, {
+      text: 'More',
+      variant: 'link',
+      size: 'xs',
+    });
+    expect(ctl(container).localName).toBe('button');
+    expect(ctl(container).getAttribute('data-variant')).toBe('link');
+    expect(ctl(container).getAttribute('data-size')).toBe('xs');
+    inst.update({ text: 'More', variant: 'link', size: 'xs', href: '/x' });
+    expect(ctl(container).localName).toBe('a');
+    expect(ctl(container).getAttribute('data-variant')).toBe('link');
+    expect(ctl(container).getAttribute('data-size')).toBe('xs');
+  });
+});
+
 describe('SJButton vanilla: rendering', () => {
   it('renders a <button> with part, axes and a text node', () => {
     const { container, host } = setup();

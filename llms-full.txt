@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (229 tokens)
+## Token reference (262 tokens)
 
 ### breakpoint (5)
 
@@ -171,11 +171,34 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--focus-ring-width` | `0.125rem` |
 | `--focus-ring-offset` | `0.125rem` |
 
-### control (1)
+### control (24)
 
 | Token | Value |
 | --- | --- |
 | `--control-text-min` | `1rem` |
+| `--control-height-xs` | `1.5rem` |
+| `--control-height-sm` | `2rem` |
+| `--control-height-md` | `2.25rem` |
+| `--control-height-lg` | `2.75rem` |
+| `--control-padding-inline-xs` | `0.5rem` |
+| `--control-padding-inline-sm` | `0.75rem` |
+| `--control-padding-inline-md` | `0.875rem` |
+| `--control-padding-inline-lg` | `1.25rem` |
+| `--control-font-size-xs` | `0.75rem` |
+| `--control-font-size-sm` | `0.8125rem` |
+| `--control-font-size-md` | `0.875rem` |
+| `--control-font-size-lg` | `0.9375rem` |
+| `--control-gap-xs` | `0.25rem` |
+| `--control-gap-sm` | `0.375rem` |
+| `--control-gap-md` | `0.375rem` |
+| `--control-gap-lg` | `0.5rem` |
+| `--control-icon-size-xs` | `0.875rem` |
+| `--control-icon-size-sm` | `1rem` |
+| `--control-icon-size-md` | `1rem` |
+| `--control-icon-size-lg` | `1.125rem` |
+| `--control-link-underline-thickness` | `1px` |
+| `--control-link-underline-thickness-hover` | `0.125rem` |
+| `--control-link-underline-offset` | `0.2em` |
 
 ### scroll (1)
 
@@ -188,6 +211,19 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | Token | Value |
 | --- | --- |
 | `--border-width-hairline` | `1px` |
+
+### opacity (2)
+
+| Token | Value |
+| --- | --- |
+| `--opacity-sheen` | `12%` |
+| `--opacity-soft-ring` | `10%` |
+
+### gradient (1)
+
+| Token | Value |
+| --- | --- |
+| `--gradient-sheen-stop` | `55%` |
 
 ### icon (4)
 
@@ -216,6 +252,12 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--easing-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` |
 | `--easing-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` |
 
+### motion (1)
+
+| Token | Value |
+| --- | --- |
+| `--motion-press-scale` | `0.97` |
+
 ### overlay (4)
 
 | Token | Value |
@@ -225,7 +267,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--overlay-dialog-max-width` | `32rem` |
 | `--overlay-viewport-margin` | `1rem` |
 
-### radius (8)
+### radius (9)
 
 | Token | Value |
 | --- | --- |
@@ -233,18 +275,23 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--radius-xs` | `0.25rem` |
 | `--radius-sm` | `0.375rem` |
 | `--radius-md` | `0.5rem` |
+| `--radius-control-lg` | `0.625rem` |
 | `--radius-lg` | `0.75rem` |
 | `--radius-xl` | `1rem` |
 | `--radius-2xl` | `1.25rem` |
 | `--radius-pill` | `9999px` |
 
-### shadow (4)
+### shadow (8)
 
 | Token | Value |
 | --- | --- |
 | `--shadow-sm` | `0 1px 2px 0 rgba(79, 70, 229, 0.06), 0 1px 3px 0 rgba(15, 23, 42, 0.04)` |
 | `--shadow-md` | `0 2px 4px -1px rgba(79, 70, 229, 0.06), 0 8px 16px -4px rgba(79, 70, 229, 0.10)` |
 | `--shadow-lg` | `0 4px 8px -2px rgba(79, 70, 229, 0.06), 0 16px 32px -8px rgba(79, 70, 229, 0.12)` |
+| `--shadow-highlight` | `inset 0 1px 0 0 rgba(255, 255, 255, 0.22)` |
+| `--shadow-lift` | `0 1px 2px 0 rgba(30, 27, 75, 0.28)` |
+| `--shadow-glow` | `0 1px 2px 0 rgba(30, 27, 75, 0.28), 0 0 0 3px rgba(99, 102, 241, 0.18)` |
+| `--shadow-press` | `inset 0 1px 2px 0 rgba(0, 0, 0, 0.24)` |
 | `--shadow-focus` | `0 0 0 2px #ffffff, 0 0 0 4px #4f46e5` |
 
 ### space (14)
@@ -279,8 +326,8 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 
 | Token | Value |
 | --- | --- |
-| `--font-family-sans` | `Rubik, system-ui, sans-serif` |
-| `--font-family-display` | `'Red Hat Display', system-ui, sans-serif` |
+| `--font-family-sans` | `'Plus Jakarta Sans', 'IBM Plex Sans Arabic', 'Noto Sans Hebrew', system-ui, sans-serif` |
+| `--font-family-display` | `'Plus Jakarta Sans', 'IBM Plex Sans Arabic', 'Noto Sans Hebrew', system-ui, sans-serif` |
 | `--font-family-alt` | `Roboto, system-ui, sans-serif` |
 | `--font-weight-thin` | `100` |
 | `--font-weight-extralight` | `200` |
@@ -311,7 +358,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--leading-normal` | `1.5` |
 | `--leading-relaxed` | `1.625` |
 
-### tracking (5)
+### tracking (6)
 
 | Token | Value |
 | --- | --- |
@@ -320,6 +367,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--tracking-normal` | `0em` |
 | `--tracking-wide` | `0.025em` |
 | `--tracking-wider` | `0.05em` |
+| `--tracking-ui` | `-0.011em` |
 
 ### z (9)
 
@@ -1160,13 +1208,13 @@ WCAG 2.2 contrast floors SC 1.4.3 / 1.4.6 / 1.4.11 and use of color SC 1.4.1. Ro
 
 Source: https://design.ramoslabs.com/foundations/typography/
 
-RamosLabs types on three families and one ten-step scale. Every piece of text takes a role (Display, Headline, Title, Body, or Label), and the role hands it a family, size, weight, line-height, and tracking. Pick the role; the type takes care of itself.
+RamosLabs types on one typeface and one ten-step scale. Every piece of text takes a role (Display, Headline, Title, Body, or Label), and the role hands it a family, size, weight, line-height, and tracking. Pick the role; the type takes care of itself.
 
-## Three voices
+## One typeface, one fallback
 
-- `--font-family-display`, Red Hat Display: geometric, slightly condensed, built to carry weight above 36px. Reserved for Display and Headline. Below the Title role its personality costs legibility.
-- `--font-family-sans`, Rubik: humanist, large x-height, open apertures, distinct at small sizes. The default for the whole product. If unsure which family to use, it is this one.
-- `--font-family-alt`, Roboto: metric-compatible fallback for dense system UI, embedded documents, or while web fonts load. Use it for a whole block on its own, never mixed with Rubik.
+- `--font-family-display`, Plus Jakarta Sans: the same typeface as the body, set heavier and tighter for Display and Headline. One family, so a heading and the paragraph under it share proportions.
+- `--font-family-sans`, Plus Jakarta Sans: geometric humanist, large x-height, open apertures, distinct at small sizes. It runs wider than most UI faces, so leave room and let long labels wrap. Arabic and Hebrew fall back to IBM Plex Sans Arabic and Noto Sans Hebrew, loaded only for those scripts. The default for the whole product. If unsure which family to use, it is this one.
+- `--font-family-alt`, Roboto: metric-compatible fallback for dense system UI, embedded documents, or while web fonts load. Use it for a whole block on its own, never mixed with Plus Jakarta Sans.
 
 ## One scale, ten steps
 
@@ -1189,11 +1237,11 @@ Design and build against the role, never against a raw pixel. Five groups, after
 
 | Role | Family | Weight | Leading | Tracking |
 | --- | --- | --- | --- | --- |
-| Display | Red Hat Display | bold / extrabold | none / tight | tighter / tight |
-| Headline | Red Hat Display | bold | tight / snug | tight |
+| Display | Plus Jakarta Sans | bold / extrabold | none / tight | tighter / tight |
+| Headline | Plus Jakarta Sans | bold | tight / snug | tight |
 | Title | Display or Sans | semibold | snug | normal |
-| Body | Rubik | normal | normal / relaxed | normal |
-| Label | Rubik | medium / semibold | none / snug | wide / wider |
+| Body | Plus Jakarta Sans | normal | normal / relaxed | normal |
+| Label | Plus Jakarta Sans | medium / semibold | none / snug | wide / wider |
 
 ## Three axes carry the rest
 
@@ -1740,7 +1788,7 @@ Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file 
 - Border radius: `--radius-*`, eight steps. `sm` at 6px is the signature control radius; `pill` is the fully rounded accent.
 - Shadow: three elevation levels plus `--shadow-focus`. Each level is two soft, indigo-tinted layers. Shadow means height, never state.
 - State layers: `--state-*`, interaction feedback as opacity, not elevation.
-- Typography: `--font-family-*` (three families), `--font-weight-*` (eight weights), `--font-size-*` (ten steps), `--leading-*` (line height), `--tracking-*` (letter spacing).
+- Typography: `--font-family-*` (three family tokens, two typefaces), `--font-weight-*` (eight weights), `--font-size-*` (ten steps), `--leading-*` (line height), `--tracking-*` (letter spacing).
 - Motion: `--duration-*` (three) and `--easing-*` (five curves).
 - Z-index: `--z-*`, a stepped stacking order.
 - Breakpoints: `--breakpoint-*`, five minimum widths.

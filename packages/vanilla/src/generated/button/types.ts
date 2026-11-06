@@ -5,12 +5,12 @@
 export type SJButtonPressPayload = { originalEvent: Event };
 
 export interface SJButtonOptions {
-  /** @default "solid" */
-  variant?: 'solid' | 'soft' | 'outline' | 'ghost';
+  /** link is inline text: underlined at rest, inherits the surrounding font size, no padding, height or hit-area box (inline links are exempt from WCAG 2.5.8). @default "solid" */
+  variant?: 'solid' | 'soft' | 'outline' | 'ghost' | 'link';
   /** @default "primary" */
   tone?: 'primary' | 'neutral' | 'success' | 'warning' | 'error' | 'info';
-  /** @default "md" */
-  size?: 'sm' | 'md' | 'lg';
+  /** Visual height 24 / 32 / 36 / 44 CSS px. The visual floor is 24px (WCAG 2.5.8); on a coarse pointer an invisible hit area extends every size to 44px. Ignored by variant link. @default "md" */
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   /** @default false */
   disabled?: boolean;
   /** Button element only; never an implicit submit. @default "button" */

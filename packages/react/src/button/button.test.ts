@@ -56,6 +56,13 @@ describe('rendering', () => {
     expect(b.children).toEqual(['Save']);
   });
 
+  it('renders the link variant and the xs size as button and as anchor', () => {
+    const b = host(mount(h(SJButton, { variant: 'link', size: 'xs' }, 'More')), 'button');
+    expect(b.props).toMatchObject({ 'data-variant': 'link', 'data-size': 'xs' });
+    const a = host(mount(h(SJButton, { variant: 'link', size: 'xs', href: '/x' }, 'More')), 'a');
+    expect(a.props).toMatchObject({ 'data-variant': 'link', 'data-size': 'xs', href: '/x' });
+  });
+
   it('renders <a> for a non-empty href, with rel for target=_blank', () => {
     const r = mount(h(SJButton, { href: '/x', target: '_blank' }, 'Go'));
     const a = host(r, 'a');

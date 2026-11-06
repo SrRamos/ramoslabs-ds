@@ -117,8 +117,9 @@
   "props": [
     {
       "name": "variant",
-      "type": "'solid' | 'soft' | 'outline' | 'ghost'",
-      "default": "solid"
+      "type": "'solid' | 'soft' | 'outline' | 'ghost' | 'link'",
+      "default": "solid",
+      "description": "link is inline text: underlined at rest, inherits the surrounding font size, no padding, height or hit-area box (inline links are exempt from WCAG 2.5.8)."
     },
     {
       "name": "tone",
@@ -127,8 +128,9 @@
     },
     {
       "name": "size",
-      "type": "'sm' | 'md' | 'lg'",
-      "default": "md"
+      "type": "'xs' | 'sm' | 'md' | 'lg'",
+      "default": "md",
+      "description": "Visual height 24 / 32 / 36 / 44 CSS px. The visual floor is 24px (WCAG 2.5.8); on a coarse pointer an invisible hit area extends every size to 44px. Ignored by variant link."
     },
     {
       "name": "disabled",

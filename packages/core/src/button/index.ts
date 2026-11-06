@@ -11,9 +11,9 @@ declare const console: { warn(message: string): void };
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 /** The `variant x tone x size` axes (ADR-009); the vocabulary the contrast matrix proves. */
-export const buttonVariants = ['solid', 'soft', 'outline', 'ghost'] as const;
+export const buttonVariants = ['solid', 'soft', 'outline', 'ghost', 'link'] as const;
 export const buttonTones = ['primary', 'neutral', 'success', 'warning', 'error', 'info'] as const;
-export const buttonSizes = ['sm', 'md', 'lg'] as const;
+export const buttonSizes = ['xs', 'sm', 'md', 'lg'] as const;
 export type ButtonVariant = (typeof buttonVariants)[number];
 export type ButtonTone = (typeof buttonTones)[number];
 export type ButtonSize = (typeof buttonSizes)[number];
