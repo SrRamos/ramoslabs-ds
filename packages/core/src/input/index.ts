@@ -36,6 +36,7 @@ export type InputProps = {
   readonly meaningful?: boolean;
   readonly digits?: boolean;
   readonly uppercase?: boolean;
+  /** Standalone only: inside a form the owner's `autoSubmit` decides. */
   readonly autoSubmit?: boolean;
   /** Standalone only: inside an SJField the field's id, name, required and disabled win. */
   readonly id?: string;
@@ -73,6 +74,9 @@ export function createInput(getProps: () => InputProps, ctx: InputContext = {}):
   const kind = () => getProps().kind ?? 'text';
   const resolved = () => {
     const p = getProps();
+    // Inside a form the owner's hint is final (ADR-007): it already folds in the form's autoSubmit and
+    // every kind override. The input's own autoSubmit applies standalone only.
+    const h = field?.enterHint();
     const k: KindContext = {
       variant: p.variant,
       autocomplete: p.autocomplete,
@@ -80,10 +84,11 @@ export function createInput(getProps: () => InputProps, ctx: InputContext = {}):
       meaningful: p.meaningful,
       digits: p.digits,
       uppercase: p.uppercase,
-      autoSubmit: p.autoSubmit,
-      enter: field?.enterHint(),
+      autoSubmit: h === undefined ? p.autoSubmit : undefined,
+      enter: h,
     };
-    return resolveKind(kind(), kind() === 'country' ? { ...k, variant: 'text' } : k);
+    const r = resolveKind(kind(), kind() === 'country' ? { ...k, variant: 'text' } : k);
+    return h === undefined ? r : { ...r, enterkeyhint: h };
   };
   const tag = () => {
     return resolved().type === 'textarea' ? 'textarea' : 'input';
