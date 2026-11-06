@@ -47,8 +47,12 @@ export interface FieldParts {
   getControlProps(consumer?: Props): Props;
   getHintProps(consumer?: Props): Props;
   getErrorProps(consumer?: Props): Props;
-  /** Client only, after mount: registers with the form owner (kind unknown). Returns the cleanup. */
-  connect(): () => void;
+  /**
+   * Client only, after mount: registers with the form owner (kind unknown). `index` is the control's
+   * index in `form.elements` (DOM order); give it so late-mounted or reordered fields keep the right
+   * Enter position. Call again with the new index after a reorder or rename. Returns the cleanup.
+   */
+  connect(index?: number): () => void;
   /** SJInput reports the kind of its control; re-registers the field so the Enter order is right. */
   setKind(kind: Kind | undefined): void;
   /** Client only, after each commit: announces a new error text once. True when it was handed over. */
@@ -74,7 +78,8 @@ export function createField(getProps: () => FieldProps, ctx: FieldContext): Fiel
   let last = error();
   let kind: Kind | undefined;
   let on = false;
-  const add = () => ctx.form?.register({ key: key(), kind });
+  let index: number | undefined;
+  const add = () => ctx.form?.register({ key: key(), kind, ...(index !== undefined && { index }) });
   const part = (name: keyof typeof ids | 'root', own: Props, consumer: Props) =>
     mergeProps(
       consumer,
@@ -117,8 +122,9 @@ export function createField(getProps: () => FieldProps, ctx: FieldContext): Fiel
         protect: ['name', 'required', 'disabled'],
       });
     },
-    connect() {
+    connect(i) {
       on = true;
+      index = i;
       const off = add();
       return () => {
         on = false;

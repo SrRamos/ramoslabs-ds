@@ -185,9 +185,9 @@ describe('enterKeyHints (form owner)', () => {
   });
   it('go / send / search on the last field', () => {
     expect(enterKeyHints(['name', 'email'], { submits: true })).toEqual(['next', 'go']);
-    expect(enterKeyHints(['text'], { action: 'send' })).toEqual(['send']);
-    expect(enterKeyHints(['text'], { action: 'search' })).toEqual(['search']);
-    expect(enterKeyHints(['name', 'text'], { action: 'send', submits: true })).toEqual([
+    expect(enterKeyHints(['text'], { enter: 'send' })).toEqual(['send']);
+    expect(enterKeyHints(['text'], { enter: 'search' })).toEqual(['search']);
+    expect(enterKeyHints(['name', 'text'], { enter: 'send', submits: true })).toEqual([
       'next',
       'send',
     ]);

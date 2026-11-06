@@ -176,7 +176,7 @@
       "name": "autoSubmit",
       "type": "boolean",
       "default": false,
-      "description": "OTP submits on Enter (enterkeyhint go) instead of done."
+      "description": "OTP submits on Enter (enterkeyhint go) instead of done. Standalone only: inside an SJForm the form's autoSubmit decides (the owner computes the hint)."
     },
     {
       "name": "id",
