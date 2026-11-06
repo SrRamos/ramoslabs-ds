@@ -79,6 +79,7 @@ export function mountInput(
       el.append(next);
       bind(next, ctx);
     }
+    field?.sync();
     applyProps(el, parts.getRootProps(), seen.root);
     applyProps(control, parts.getControlProps(), seen.control);
     // `kind` may change after mount: report it to the field again (re-registers for the Enter order).

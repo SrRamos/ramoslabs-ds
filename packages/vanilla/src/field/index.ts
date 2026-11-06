@@ -7,25 +7,24 @@
 // FACE is not used (ADR-014): the control is a real <input>/<textarea> in the light DOM and submits natively.
 // `define()` registers the optional `sj-field` element; nothing runs at import.
 import { createField, type FieldParts } from '@ramoslabs/core/field';
-import type { IconData } from '@ramoslabs/core/icon';
 import type { FormInstance } from '../form/index';
 import { applyProps, createListeners, type Applied } from '../form/apply';
+import { circleAlert } from '../generated/icons/circle-alert';
 import { fieldLive, type SJFieldOptions } from '../generated/field/index';
 import { mountIcon, type IconInstance } from '../icon/index';
 import { setText, type Bag, type Instance, type VanillaHost } from '../runtime/index';
 
 type Plain<T> = { [K in keyof T]: T[K] };
-/** Vanilla options: the contract props and slots, plus the error icon data (ADR-016: the consumer passes it). */
-export type FieldOptions = Plain<Omit<SJFieldOptions, 'default'>> & {
-  /** `alert-circle` icon data for the error part (size sm, aria-hidden). Absent: the error is text only. */
-  readonly errorIcon?: IconData;
-};
+/** Vanilla options: the contract props and slots (the error part always draws the system `circleAlert`). */
+export type FieldOptions = Plain<Omit<SJFieldOptions, 'default'>>;
 
 export interface FieldInstance extends Instance<FieldOptions> {
   /** The core field parts: SJInput passes them as its `field` context. */
   readonly parts: FieldParts;
   /** Insert the control (an SJInput root) after the label and hint, before the error. */
   place(node: Node): void;
+  /** Re-registers with the form when the name or the control's position in `form.elements` changed. */
+  sync(): void;
   /** Calls `fn` when the form's Enter position or retained values may have changed. */
   subscribe(fn: () => void): () => void;
   readonly element: Element | undefined;
@@ -76,13 +75,27 @@ export function mountField(
   const placed: Node[] = [];
   const listeners = createListeners();
 
-  const reconnect = (ctxId: string, p: FieldOptions) => {
-    const k = p.name ?? ctxId;
-    if (k === key) return;
-    key = k;
-    off?.(); // `connect()` registers with the key at call time (core note)
-    off = parts!.connect();
+  // Registration carries the control's DOM position in the form (`form.elements`), so the Enter order follows
+  // the document, not the mount order. A rename or a move runs the old cleanup, then connects again.
+  let at: number | undefined;
+  const position = (): number | undefined => {
+    const c = el.querySelector('input, textarea');
+    const els = (form?.element as HTMLFormElement | undefined)?.elements;
+    const i = c && els ? Array.prototype.indexOf.call(els, c) : -1;
+    return i < 0 ? undefined : i;
   };
+  let id = '';
+  const sync = () => {
+    if (!parts || !off) return;
+    const k = latest().name ?? id;
+    const i = position();
+    if (k === key && i === at) return;
+    key = k;
+    at = i;
+    off(); // `connect()` registers with the key at call time (core note)
+    off = parts.connect(i);
+  };
+  let latest = (): FieldOptions => props;
 
   const instance = host.mount(
     el,
@@ -144,9 +157,7 @@ export function mountField(
           text = doc.createElement('span');
           error.append(icon, text);
           el.append(error);
-          if (p.errorIcon) {
-            iconInst = mountIcon(host, icon, { icon: p.errorIcon, size: 'sm' });
-          }
+          iconInst = mountIcon(host, icon, { icon: circleAlert, size: 'sm' });
         } else if (!message && error) {
           iconInst?.destroy();
           error.remove();
@@ -163,13 +174,16 @@ export function mountField(
           );
           setText(text!, message);
         }
-        if (off) reconnect(ctx.id, p);
+        sync();
         // After the commit: a NEW error text goes to the live registry once; a standing one stays silent.
         f.announce();
       },
       attach(ctx) {
-        key = undefined;
-        reconnect(ctx.id, ctx.props() as FieldOptions);
+        id = ctx.id;
+        latest = () => ctx.props() as FieldOptions;
+        key = latest().name ?? id;
+        at = position();
+        off = parts!.connect(at);
         ctx.onCleanup(() => {
           off?.();
           off = undefined;
@@ -184,6 +198,7 @@ export function mountField(
     const n = typeof node === 'string' ? doc.createTextNode(node) : node;
     placed.push(n);
     el.insertBefore(n, error ?? null);
+    sync();
   }
 
   const update = instance.update.bind(instance);
@@ -194,6 +209,7 @@ export function mountField(
   return Object.defineProperties(instance, {
     parts: { get: () => parts! },
     place: { value: place },
+    sync: { value: sync },
     subscribe: {
       // The control re-renders on the form's Enter position AND on this field's own props (error, name, ...).
       value: (fn: () => void) => {
@@ -252,7 +268,6 @@ export function define(
   host: VanillaHost,
   name = 'sj-field',
   registry: Registry = globalThis.customElements,
-  errorIcon?: IconData,
 ): void {
   if (registry.get(name)) return;
   class SJFieldElement extends HTMLElement {
@@ -270,12 +285,9 @@ export function define(
       const kids = Array.from(this.childNodes);
       this.append(root);
       const form = (this.closest('sj-form') as { form?: FormInstance } | null)?.form;
-      this.#instance = mountField(
-        host,
-        root,
-        { ...optionsFromAttributes(this), ...(errorIcon && { errorIcon }) },
-        { ...(form && { form }) },
-      );
+      this.#instance = mountField(host, root, optionsFromAttributes(this), {
+        ...(form && { form }),
+      });
       for (const k of kids) this.#instance.place(k);
     }
     disconnectedCallback(): void {
@@ -284,7 +296,7 @@ export function define(
       this.#instance = this.#root = undefined;
     }
     attributeChangedCallback(): void {
-      this.#instance?.update({ ...optionsFromAttributes(this), ...(errorIcon && { errorIcon }) });
+      this.#instance?.update(optionsFromAttributes(this));
     }
   }
   registry.define(name, SJFieldElement);

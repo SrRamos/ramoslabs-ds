@@ -121,6 +121,14 @@ class FakeEl extends FakeNode {
   all(): FakeEl[] {
     return [this, ...this.children.flatMap((c) => c.all())];
   }
+  /** Real `form.elements`: every input and textarea below, in document order. */
+  get elements(): FakeEl[] {
+    return this.all().filter((e) => e.tagName === 'input' || e.tagName === 'textarea');
+  }
+  querySelector(sel: string): FakeEl | null {
+    const tags = sel.split(',').map((s) => s.trim());
+    return this.all().find((e) => e !== this && tags.includes(e.tagName)) ?? null;
+  }
   q(sel: string): FakeEl | null {
     return this.all().find((e) => e !== this && e.attrs.get('data-part') === sel) ?? null;
   }
@@ -245,12 +253,30 @@ describe('SJForm vanilla', () => {
     expect(a.control.getAttribute('enterkeyhint')).toBe('go');
   });
 
+  it('registers by DOM position (form.elements), not mount order, and follows a reorder', () => {
+    const { host } = setup();
+    const formEl = mk('form');
+    const form = mountForm(host, el(formEl), {});
+    const b = mountRow(host, form, 'b', 'name');
+    const a = mountRow(host, form, 'a', 'email');
+    formEl.append(a.root, b.root); // document order: a, b
+    a.field.sync();
+    b.field.sync();
+    expect(a.control.getAttribute('enterkeyhint')).toBe('next');
+    expect(b.control.getAttribute('enterkeyhint')).toBe('go');
+    formEl.append(a.root); // moved after b
+    a.field.sync();
+    b.field.sync();
+    expect(a.control.getAttribute('enterkeyhint')).toBe('go');
+    expect(b.control.getAttribute('enterkeyhint')).toBe('next');
+  });
+
   it('submits:false gives the last field done, and a form update re-renders the controls', () => {
     const { host } = setup();
     const form = mountForm(host, el(mk('form')), { submits: false });
     const a = mountRow(host, form, 'email', 'email');
     expect(a.control.getAttribute('enterkeyhint')).toBe('done');
-    form.update({ action: 'search' });
+    form.update({ enter: 'search' });
     expect(a.control.getAttribute('enterkeyhint')).toBe('search');
   });
 
@@ -345,7 +371,6 @@ describe('SJField vanilla', () => {
     mountField(host, el(root), {
       label: 'L',
       error: 'Bad',
-      errorIcon: { name: 'alert-circle', nodes: [['circle', { cx: 12, cy: 12, r: 10 }]] },
     });
     const err = root.q('error')!;
     const icon = err.q('icon')!;
@@ -579,6 +604,7 @@ describe('define()', () => {
     const f = make('sj-form', 'sj-form');
     const fld = make('sj-field', 'sj-field');
     const inp = make('sj-input', 'sj-input');
+    f.setAttribute('action', '/post'); // native action, not an Enter label
     fld.setAttribute('name', 'mail');
     fld.setAttribute('label', 'Email');
     inp.setAttribute('kind', 'email');
@@ -586,6 +612,7 @@ describe('define()', () => {
     f.append(fld);
     f.connectedCallback(); // moves fld into the native <form>
     const form = f.tag('form')!;
+    expect(form.getAttribute('action')).toBe('/post');
     expect(form.children).toEqual([fld]);
     fld.connectedCallback();
     inp.connectedCallback();
@@ -594,6 +621,7 @@ describe('define()', () => {
     expect(control.getAttribute('enterkeyhint')).toBe('go'); // saw the form context through the field
     expect(control.getAttribute('name')).toBe('mail');
     expect(f.attrs.has('attachShadow')).toBe(false);
+    expect((f as unknown as { form: { element: unknown } }).form.element).toBe(form);
     inp.disconnectedCallback();
     fld.disconnectedCallback();
     f.disconnectedCallback();

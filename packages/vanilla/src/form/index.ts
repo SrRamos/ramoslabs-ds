@@ -66,12 +66,13 @@ interface Registry {
   define(name: string, ctor: CustomElementConstructor): void;
 }
 
-const ATTRS = ['action', 'submits', 'auto-submit'] as const;
+const ATTRS = ['enter', 'action', 'method', 'submits', 'auto-submit'] as const;
 
 function optionsFromAttributes(el: Element): FormOptions {
-  const action = el.getAttribute('action');
+  // `action` stays the native form action (copied to the <form>); the Enter label is `enter`.
+  const enter = el.getAttribute('enter');
   return {
-    ...((action === 'go' || action === 'send' || action === 'search') && { action }),
+    ...((enter === 'go' || enter === 'send' || enter === 'search') && { enter }),
     ...(el.getAttribute('submits') === 'false' && { submits: false }),
     ...(el.hasAttribute('auto-submit') && { autoSubmit: true }),
   };
@@ -101,7 +102,15 @@ export function define(
       this.#form = form;
       form.append(...Array.from(this.childNodes));
       this.append(form);
+      this.#native(form);
       this.#instance = mountForm(host, form, optionsFromAttributes(this));
+    }
+    #native(form: Element): void {
+      for (const n of ['action', 'method']) {
+        const v = this.getAttribute(n);
+        if (v === null) form.removeAttribute(n);
+        else form.setAttribute(n, v);
+      }
     }
     disconnectedCallback(): void {
       this.#instance?.destroy();
@@ -109,6 +118,7 @@ export function define(
       this.#instance = this.#form = undefined;
     }
     attributeChangedCallback(): void {
+      if (this.#form) this.#native(this.#form);
       this.#instance?.update(optionsFromAttributes(this));
     }
   }
