@@ -142,6 +142,7 @@ export const PART_ELEMENT = {
   icon: 'span',
   title: 'p',
   description: 'p',
+  skeleton: 'div',
   actions: 'div',
 } as const;
 
