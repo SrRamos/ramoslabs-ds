@@ -99,6 +99,23 @@ describe('SJField markup and derived ARIA', () => {
     expect(host.querySelector('.sj-field__root')!.getAttribute('data-invalid')).toBe('true');
   });
 
+  it('renders label, hint, control, error in that order (same as the React and vanilla adapters)', () => {
+    const { host } = mount(() =>
+      h(
+        SJField,
+        { id: 'f', label: 'Email', hint: 'We never share it', error: 'Enter an email' },
+        { default: () => h(SJInput, { kind: 'email' }) },
+      ),
+    );
+    const root = host.querySelector('.sj-field__root')!;
+    expect([...root.children].map((c) => c.getAttribute('data-part'))).toEqual([
+      'label',
+      'hint',
+      'root', // the SJInput root, holding the control
+      'error',
+    ]);
+  });
+
   it('a valid field has no aria-invalid, no error element and describes only the hint', () => {
     const { host } = mount(() =>
       h(

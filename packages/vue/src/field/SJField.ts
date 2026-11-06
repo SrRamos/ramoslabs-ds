@@ -134,10 +134,10 @@ export const SJField = defineComponent({
           label !== undefined
             ? h('label', field.getLabelProps({ class: c.label }), label as string)
             : null,
-          slots.default?.(),
           hint !== undefined
             ? h('div', field.getHintProps({ class: c.hint }), hint as string)
             : null,
+          slots.default?.(),
           error
             ? h('div', field.getErrorProps({ class: c.error }), [
                 h(
