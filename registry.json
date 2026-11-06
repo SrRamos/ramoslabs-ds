@@ -339,7 +339,7 @@
       "name": "SJDisclosure",
       "slug": "disclosure",
       "contractVersion": "0.1.0",
-      "status": "draft",
+      "status": "beta",
       "pattern": {
         "apg": "disclosure",
         "evidence": "disclosure",
