@@ -8,6 +8,7 @@ import {
   forwardRef,
   useEffect,
   useLayoutEffect,
+  useRef,
   type ComponentPropsWithoutRef,
   type ForwardRefExoticComponent,
   type ReactElement,
@@ -81,12 +82,17 @@ export const SJStateRoot: ForwardRefExoticComponent<
   } = props;
 
   const copy = has(title) ? title : heading;
-  const model = createState(() => ({
+  // Only a string (or number) heading is known at render time; any other node is read back from the DOM after commit.
+  const text = typeof copy === 'string' || typeof copy === 'number' ? String(copy) : undefined;
+  const nodeCopy = has(copy) && text === undefined;
+  const modelProps = {
     ...(variant !== undefined && { variant }),
-    // Only text can be announced; a node heading needs an explicit `announce`.
-    ...(typeof copy === 'string' && { heading: copy }),
     ...(announce !== undefined && { announce }),
     ...(interrupt !== undefined && { interrupt }),
+  };
+  const model = createState(() => ({
+    ...modelProps,
+    ...(text !== undefined && { heading: text }),
   }));
 
   // Stateless: the shared runtime supplies the live registry; the contract's `stateLive` decides whether
@@ -96,16 +102,42 @@ export const SJStateRoot: ForwardRefExoticComponent<
     if (stateLive === 'eager') requireLive?.();
   }, [requireLive]);
 
-  const note = model.getAnnouncement();
-  const text = note?.text;
-  const urgent = note?.urgent === true;
-  // After commit, client only. The call is deferred one scheduler tick and cancelled by the cleanup, so
-  // StrictMode's simulated remount (which re-attaches the registry) yields exactly one announcement.
+  // One announcement per change (ADR-006), after commit and client only. A heading that is an element is announced
+  // as the text the user sees (read from the DOM), as the Vue and vanilla adapters do. The call is deferred one
+  // scheduler tick. The pending call and the memory of the last message live in refs and are dropped by the
+  // lifecycle cleanup only, so StrictMode's simulated remount (which re-attaches the registry) re-announces
+  // exactly once, and a re-render with the same text never cancels or repeats it.
   const { scheduler } = runtime;
+  const titleEl = useRef<HTMLElement | null>(null);
+  const last = useRef({ key: '', live });
+  const pending = useRef<(() => void) | undefined>(undefined);
   useEffect(
-    () => (text ? scheduler.after(() => void live.announce(text, { urgent }), 0) : undefined),
-    [live, scheduler, text, urgent],
+    () => () => {
+      pending.current?.();
+      pending.current = undefined;
+      last.current.key = '';
+    },
+    [],
   );
+  useEffect(() => {
+    const note = nodeCopy
+      ? createState(() => ({
+          ...modelProps,
+          heading: titleEl.current?.textContent ?? '',
+        })).getAnnouncement()
+      : model.getAnnouncement();
+    if (last.current.live !== live) last.current = { key: '', live };
+    const key = note ? `${note.urgent ? '!' : ''}${note.text}` : '';
+    if (key === last.current.key) return;
+    last.current.key = key;
+    pending.current?.();
+    pending.current = undefined;
+    if (note)
+      pending.current = scheduler.after(
+        () => void live.announce(note.text, { urgent: note.urgent }),
+        0,
+      );
+  });
 
   const body = has(children) ? children : description;
   return createElement(
@@ -113,7 +145,12 @@ export const SJStateRoot: ForwardRefExoticComponent<
     { ...fromGetter(model.getRootProps(toGetter(own(rest, classes?.root)))), ref },
     has(icon) &&
       createElement('span', { ...fromGetter(model.getIconProps(), classes?.icon) }, icon),
-    has(copy) && createElement('p', { ...fromGetter(model.getTitleProps(), classes?.title) }, copy),
+    has(copy) &&
+      createElement(
+        'p',
+        { ...fromGetter(model.getTitleProps(), classes?.title), ref: titleEl },
+        copy,
+      ),
     has(body) &&
       createElement(
         'p',

@@ -228,13 +228,39 @@ describe('announcements (client, after mount)', () => {
     c.speak();
     expect(c.host.said).toEqual([{ role: 'status', text: 'x' }]);
   });
-  it('a title slot string is announced; a node heading needs announce', () => {
+  it('a title slot string is announced; an element heading is announced as the text it renders (read after commit)', () => {
     const a = live(() => h(SJState, { variant: 'loading', title: 'Slot text' }));
     a.speak();
     expect(a.host.said[0]?.text).toBe('Slot text');
-    const b = live(() => h(SJState, { variant: 'loading', title: h('b', null, 'n') }));
-    b.speak();
-    expect(b.host.said).toEqual([]);
+    // The test renderer has no DOM: the title element's text comes from the node mock (what the browser would hold).
+    const host = new Host();
+    const sched = createFakeScheduler();
+    let rendered!: ReactTestRenderer;
+    act(() => {
+      rendered = create(
+        h(
+          SJProvider,
+          { liveHost: () => host, scheduler: sched },
+          h(SJState, { variant: 'no-results', title: h('b', null, '3 results') }),
+        ) as never,
+        { createNodeMock: () => ({ textContent: '3 results' }) },
+      );
+    });
+    mounted.push(rendered);
+    act(() => (sched.advance(0), sched.flush()));
+    expect(host.said).toEqual([{ role: 'status', text: '3 results' }]);
+    // A re-render with the same element heading says nothing more.
+    act(() =>
+      rendered.update(
+        h(
+          SJProvider,
+          { liveHost: () => host, scheduler: sched },
+          h(SJState, { variant: 'no-results', title: h('b', null, '3 results') }),
+        ) as never,
+      ),
+    );
+    act(() => (sched.advance(0), sched.flush()));
+    expect(host.said).toHaveLength(1);
   });
   it('one announcement per change: StrictMode and re-renders do not repeat it', () => {
     const { host, sched, r, inner, speak } = live(

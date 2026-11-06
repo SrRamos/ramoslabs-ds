@@ -283,6 +283,31 @@ describe('SJState vanilla: announcements (ADR-006)', () => {
   });
 });
 
+describe('SJState vanilla: a Node in the title slot is announced as its text (parity with Vue and React)', () => {
+  it('speaks the rendered text of an element heading once, and again only when it changes', async () => {
+    const { host, said } = setup();
+    const doc = new FakeDoc();
+    const title = (text: string) => {
+      const b = doc.createElement('b');
+      b.textContent = text;
+      return b as unknown as Node;
+    };
+    const inst = mountState(host, asEl(doc.createElement('div')), {
+      variant: 'no-results',
+      title: title('3 results'),
+    });
+    await tick();
+    expect(said).toEqual([{ role: 'status', text: '3 results' }]);
+    // The same Node again: nothing more; a new Node with new text: one more.
+    inst.update({ variant: 'no-results', title: title('3 results') });
+    await tick();
+    expect(said).toHaveLength(1);
+    inst.update({ variant: 'no-results', title: title('5 results') });
+    await tick();
+    expect(said.map((m) => m.text)).toEqual(['3 results', '5 results']);
+  });
+});
+
 describe('SJState vanilla: update and destroy', () => {
   it('update patches in place: same elements, parts added and removed, stale attributes dropped', () => {
     const { host } = setup();
