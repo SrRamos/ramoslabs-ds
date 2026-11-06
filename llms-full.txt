@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (274 tokens)
+## Token reference (430 tokens)
 
 ### breakpoint (5)
 
@@ -21,7 +21,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--breakpoint-xl` | `1200px` |
 | `--breakpoint-2xl` | `1366px` |
 
-### color (131)
+### color (285)
 
 | Token | Value |
 | --- | --- |
@@ -49,6 +49,17 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-slate-800` | `#1e293b` |
 | `--color-slate-900` | `#0f172a` |
 | `--color-slate-950` | `#020617` |
+| `--color-ink-50` | `#f6f6fb` |
+| `--color-ink-100` | `#ecedf5` |
+| `--color-ink-200` | `#e1e3ed` |
+| `--color-ink-300` | `#d1d3e0` |
+| `--color-ink-400` | `#8e91a2` |
+| `--color-ink-500` | `#6d7083` |
+| `--color-ink-600` | `#56596e` |
+| `--color-ink-700` | `#42465b` |
+| `--color-ink-800` | `#303448` |
+| `--color-ink-900` | `#222538` |
+| `--color-ink-950` | `#151829` |
 | `--color-emerald-50` | `#ecfdf5` |
 | `--color-emerald-100` | `#d1fae5` |
 | `--color-emerald-200` | `#a7f3d0` |
@@ -115,33 +126,166 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-violet-800` | `#5b21b6` |
 | `--color-violet-900` | `#4c1d95` |
 | `--color-violet-950` | `#2e1065` |
+| `--color-jade-50` | `#effaf3` |
+| `--color-jade-100` | `#e1f3e8` |
+| `--color-jade-200` | `#cce8d7` |
+| `--color-jade-300` | `#7ed3a7` |
+| `--color-jade-400` | `#3f9a6f` |
+| `--color-jade-500` | `#03734a` |
+| `--color-jade-600` | `#006641` |
+| `--color-jade-700` | `#005636` |
+| `--color-jade-800` | `#1c422f` |
+| `--color-jade-900` | `#153424` |
+| `--color-jade-950` | `#0e271b` |
+| `--color-honey-50` | `#fcf6e9` |
+| `--color-honey-100` | `#f8edd5` |
+| `--color-honey-200` | `#f3ddb3` |
+| `--color-honey-300` | `#f8be52` |
+| `--color-honey-400` | `#efb146` |
+| `--color-honey-500` | `#e4a038` |
+| `--color-honey-600` | `#b66c18` |
+| `--color-honey-700` | `#8d4908` |
+| `--color-honey-800` | `#723606` |
+| `--color-honey-900` | `#442911` |
+| `--color-honey-950` | `#331d0b` |
+| `--color-crimson-50` | `#fff4f3` |
+| `--color-crimson-100` | `#ffe7e6` |
+| `--color-crimson-200` | `#ffd4d1` |
+| `--color-crimson-300` | `#ffa09c` |
+| `--color-crimson-400` | `#db5054` |
+| `--color-crimson-500` | `#ae212f` |
+| `--color-crimson-600` | `#9e1326` |
+| `--color-crimson-700` | `#89061d` |
+| `--color-crimson-800` | `#5f2324` |
+| `--color-crimson-900` | `#4b1b1b` |
+| `--color-crimson-950` | `#3b1313` |
+| `--color-cerulean-50` | `#f0f8ff` |
+| `--color-cerulean-100` | `#e0f0ff` |
+| `--color-cerulean-200` | `#c9e3fb` |
+| `--color-cerulean-300` | `#80c5ff` |
+| `--color-cerulean-400` | `#348dcf` |
+| `--color-cerulean-500` | `#0065a1` |
+| `--color-cerulean-600` | `#00598f` |
+| `--color-cerulean-700` | `#004b7a` |
+| `--color-cerulean-800` | `#183c59` |
+| `--color-cerulean-900` | `#122f46` |
+| `--color-cerulean-950` | `#0c2436` |
 | `--color-primary` | `#4f46e5` |
 | `--color-primary-light` | `#6366f1` |
 | `--color-primary-dark` | `#4338ca` |
 | `--color-primary-surface` | `#eef2ff` |
+| `--color-primary-text-dark` | `#818cf8` |
+| `--color-primary-text-strong-dark` | `#a5b4fc` |
+| `--color-primary-outline-dark` | `#818cf8` |
+| `--color-primary-surface-dark` | `#1e1b4b` |
+| `--color-primary-surface-hover-dark` | `#312e81` |
+| `--color-primary-surface-press-dark` | `#3730a3` |
 | `--color-secondary` | `#8b5cf6` |
 | `--color-secondary-light` | `#a78bfa` |
 | `--color-secondary-dark` | `#7c3aed` |
 | `--color-secondary-surface` | `#f5f3ff` |
-| `--color-success` | `#10b981` |
-| `--color-success-strong` | `#059669` |
-| `--color-success-surface` | `#f0fdf4` |
-| `--color-success-border` | `#bbf7d0` |
-| `--color-success-text` | `#166534` |
-| `--color-warning` | `#f59e0b` |
-| `--color-warning-strong` | `#d97706` |
-| `--color-warning-surface` | `#fffbeb` |
-| `--color-warning-border` | `#fde68a` |
-| `--color-warning-text` | `#78350f` |
-| `--color-error` | `#ef4444` |
-| `--color-error-strong` | `#dc2626` |
-| `--color-error-surface` | `#fef2f2` |
-| `--color-error-border` | `#fecaca` |
-| `--color-error-text` | `#991b1b` |
-| `--color-info` | `#3b82f6` |
-| `--color-info-surface` | `#eff6ff` |
-| `--color-info-border` | `#bfdbfe` |
-| `--color-info-text` | `#1e40af` |
+| `--color-success` | `#03734a` |
+| `--color-success-strong` | `#006641` |
+| `--color-success-solid` | `#03734a` |
+| `--color-success-solid-hover` | `#006641` |
+| `--color-success-solid-press` | `#005636` |
+| `--color-success-on-solid` | `#ffffff` |
+| `--color-success-surface` | `#effaf3` |
+| `--color-success-surface-hover` | `#e1f3e8` |
+| `--color-success-surface-press` | `#cce8d7` |
+| `--color-success-border` | `#cce8d7` |
+| `--color-success-text` | `#006641` |
+| `--color-success-text-strong` | `#005636` |
+| `--color-success-outline` | `#3f9a6f` |
+| `--color-success-text-dark` | `#7ed3a7` |
+| `--color-success-text-strong-dark` | `#cce8d7` |
+| `--color-success-outline-dark` | `#3f9a6f` |
+| `--color-success-surface-dark` | `#0e271b` |
+| `--color-success-surface-hover-dark` | `#153424` |
+| `--color-success-surface-press-dark` | `#1c422f` |
+| `--color-success-border-dark` | `#1c422f` |
+| `--color-warning` | `#f8be52` |
+| `--color-warning-strong` | `#b66c18` |
+| `--color-warning-solid` | `#f8be52` |
+| `--color-warning-solid-hover` | `#efb146` |
+| `--color-warning-solid-press` | `#e4a038` |
+| `--color-warning-on-solid` | `#331d0b` |
+| `--color-warning-surface` | `#fcf6e9` |
+| `--color-warning-surface-hover` | `#f8edd5` |
+| `--color-warning-surface-press` | `#f3ddb3` |
+| `--color-warning-border` | `#f3ddb3` |
+| `--color-warning-text` | `#8d4908` |
+| `--color-warning-text-strong` | `#723606` |
+| `--color-warning-outline` | `#b66c18` |
+| `--color-warning-text-dark` | `#f8be52` |
+| `--color-warning-text-strong-dark` | `#f3ddb3` |
+| `--color-warning-outline-dark` | `#b66c18` |
+| `--color-warning-surface-dark` | `#331d0b` |
+| `--color-warning-surface-hover-dark` | `#442911` |
+| `--color-warning-surface-press-dark` | `#442911` |
+| `--color-warning-border-dark` | `#442911` |
+| `--color-error` | `#ae212f` |
+| `--color-error-strong` | `#9e1326` |
+| `--color-error-solid` | `#ae212f` |
+| `--color-error-solid-hover` | `#9e1326` |
+| `--color-error-solid-press` | `#89061d` |
+| `--color-error-on-solid` | `#ffffff` |
+| `--color-error-surface` | `#fff4f3` |
+| `--color-error-surface-hover` | `#ffe7e6` |
+| `--color-error-surface-press` | `#ffd4d1` |
+| `--color-error-border` | `#ffd4d1` |
+| `--color-error-text` | `#9e1326` |
+| `--color-error-text-strong` | `#89061d` |
+| `--color-error-outline` | `#db5054` |
+| `--color-error-text-dark` | `#ffa09c` |
+| `--color-error-text-strong-dark` | `#ffd4d1` |
+| `--color-error-outline-dark` | `#db5054` |
+| `--color-error-surface-dark` | `#3b1313` |
+| `--color-error-surface-hover-dark` | `#4b1b1b` |
+| `--color-error-surface-press-dark` | `#5f2324` |
+| `--color-error-border-dark` | `#5f2324` |
+| `--color-info` | `#0065a1` |
+| `--color-info-strong` | `#00598f` |
+| `--color-info-solid` | `#0065a1` |
+| `--color-info-solid-hover` | `#00598f` |
+| `--color-info-solid-press` | `#004b7a` |
+| `--color-info-on-solid` | `#ffffff` |
+| `--color-info-surface` | `#f0f8ff` |
+| `--color-info-surface-hover` | `#e0f0ff` |
+| `--color-info-surface-press` | `#c9e3fb` |
+| `--color-info-border` | `#c9e3fb` |
+| `--color-info-text` | `#00598f` |
+| `--color-info-text-strong` | `#004b7a` |
+| `--color-info-outline` | `#348dcf` |
+| `--color-info-text-dark` | `#80c5ff` |
+| `--color-info-text-strong-dark` | `#c9e3fb` |
+| `--color-info-outline-dark` | `#348dcf` |
+| `--color-info-surface-dark` | `#0c2436` |
+| `--color-info-surface-hover-dark` | `#122f46` |
+| `--color-info-surface-press-dark` | `#183c59` |
+| `--color-info-border-dark` | `#183c59` |
+| `--color-neutral-solid` | `#222538` |
+| `--color-neutral-solid-hover` | `#303448` |
+| `--color-neutral-solid-press` | `#151829` |
+| `--color-neutral-on-solid` | `#ffffff` |
+| `--color-neutral-surface` | `#f6f6fb` |
+| `--color-neutral-surface-hover` | `#ecedf5` |
+| `--color-neutral-surface-press` | `#e1e3ed` |
+| `--color-neutral-border` | `#d1d3e0` |
+| `--color-neutral-text` | `#42465b` |
+| `--color-neutral-text-strong` | `#303448` |
+| `--color-neutral-outline` | `#6d7083` |
+| `--color-neutral-solid-dark` | `#f6f6fb` |
+| `--color-neutral-solid-hover-dark` | `#ecedf5` |
+| `--color-neutral-solid-press-dark` | `#e1e3ed` |
+| `--color-neutral-on-solid-dark` | `#222538` |
+| `--color-neutral-text-dark` | `#d1d3e0` |
+| `--color-neutral-text-strong-dark` | `#e1e3ed` |
+| `--color-neutral-outline-dark` | `#8e91a2` |
+| `--color-neutral-surface-dark` | `#222538` |
+| `--color-neutral-surface-hover-dark` | `#303448` |
+| `--color-neutral-surface-press-dark` | `#42465b` |
+| `--color-neutral-border-dark` | `#303448` |
 | `--color-text-heading` | `#0f172a` |
 | `--color-text-strong` | `#1e293b` |
 | `--color-text-secondary` | `#475569` |
@@ -156,6 +300,16 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--color-border-light` | `#e2e8f0` |
 | `--color-border-subtle` | `#f1f5f9` |
 | `--color-focus` | `#4f46e5` |
+| `--color-focus-dark` | `#818cf8` |
+| `--color-surface-dark` | `#0f172a` |
+| `--color-background-dark` | `#020617` |
+| `--color-surface-hover-dark` | `#1e293b` |
+| `--color-border-dark` | `#334155` |
+| `--color-text-heading-dark` | `#f8fafc` |
+| `--color-text-body-dark` | `#cbd5e1` |
+| `--color-text-secondary-dark` | `#cbd5e1` |
+| `--color-text-muted-dark` | `#94a3b8` |
+| `--color-text-disabled-dark` | `#475569` |
 
 ### target (2)
 
@@ -212,18 +366,25 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | --- | --- |
 | `--border-width-hairline` | `1px` |
 
-### opacity (2)
+### opacity (3)
 
 | Token | Value |
 | --- | --- |
 | `--opacity-sheen` | `12%` |
 | `--opacity-soft-ring` | `10%` |
+| `--opacity-glow` | `18%` |
 
 ### gradient (1)
 
 | Token | Value |
 | --- | --- |
 | `--gradient-sheen-stop` | `55%` |
+
+### glow (1)
+
+| Token | Value |
+| --- | --- |
+| `--glow-width` | `3px` |
 
 ### icon (4)
 
