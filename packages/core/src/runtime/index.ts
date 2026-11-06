@@ -38,6 +38,50 @@ export function detectAnchorPositioning(
   return ANCHOR_PROPERTIES.every(([p, v]) => cssSupports(p, v) === true);
 }
 
+/** The slice of `window` that `detectSupports` reads. Injected: core never touches a global. */
+export interface SupportsEnv {
+  CSS?: { supports(...args: string[]): boolean };
+  HTMLElement?: { prototype: object };
+  HTMLButtonElement?: { prototype: object };
+  HTMLDialogElement?: { prototype: object };
+  HTMLDetailsElement?: { prototype: object };
+  Intl?: { Locale?: { prototype: object } };
+  document?: object;
+  scheduler?: object;
+}
+
+/**
+ * Feature detection for every `SupportKey` (ADR-013). Pure: `env` is `window` (or a fake). A probe
+ * that throws or is absent is `false`, so a missing API never takes the native path.
+ */
+export function detectSupports(env: SupportsEnv): SupportsMap {
+  // Each probe is isolated: one that throws (a partial fake, a locked-down engine) is false alone.
+  const t = (probe: () => boolean): boolean => {
+    try {
+      return probe() === true;
+    } catch {
+      return false;
+    }
+  };
+  const css = (...a: string[]): boolean => t(() => env.CSS!.supports(...a));
+  const fn = (o: object | undefined, k: string): boolean =>
+    t(() => typeof (o as Record<string, unknown>)[k] === 'function');
+  const proto = (c: { prototype: object } | undefined, ...ks: string[]): boolean =>
+    t(() => ks.some((k) => k in c!.prototype));
+  return {
+    anchorPositioning: t(() => detectAnchorPositioning(css)),
+    popover: proto(env.HTMLElement, 'popover'),
+    dialogRequestClose: proto(env.HTMLDialogElement, 'requestClose'),
+    invokerCommands: proto(env.HTMLButtonElement, 'commandForElement'),
+    detailsName: proto(env.HTMLDetailsElement, 'name'),
+    userInvalid: css('selector(:user-invalid)'),
+    viewTransitions: fn(env.document, 'startViewTransition'),
+    schedulerYield: fn(env.scheduler, 'yield'),
+    weekInfo: proto(env.Intl?.Locale, 'getWeekInfo', 'weekInfo'),
+    focusVisible: css('selector(:focus-visible)'),
+  };
+}
+
 export interface Scheduler {
   /** Run `fn` after `ms`; returns a cancel function. */
   after(fn: () => void, ms: number): () => void;
@@ -60,6 +104,8 @@ export interface SJRuntime {
   readonly idFactory?: () => string;
   readonly density: 'touch' | 'compact';
   readonly supports: SupportsMap;
+  /** True when `config.supports` was given: adapters then skip detection, so a forced run keeps winning. */
+  readonly supportsExplicit?: true;
   readonly scheduler: Scheduler;
 }
 
@@ -77,7 +123,9 @@ export interface RuntimeConfig {
 
 /** The part of a runtime that is serialized from the server render to the client. */
 export type SerializedRuntime = Pick<SJRuntime, 'locale' | 'dir' | 'idPrefix' | 'density'> & {
-  readonly supports: SupportsMap;
+  /** Present only when the server runtime was created with explicit `supports`. */
+  readonly supports?: SupportsMap;
+  readonly supportsExplicit?: true;
 };
 
 export const noSupport: SupportsMap = Object.freeze(
@@ -151,6 +199,7 @@ export function createRuntime(config: RuntimeConfig = {}): SJRuntime {
     scheduler:
       config.scheduler ?? (config.target === 'client' ? platformScheduler : createFakeScheduler()),
     ...(config.idFactory && { idFactory: config.idFactory }),
+    ...(config.supports !== undefined && { supportsExplicit: true as const }),
   };
   return Object.freeze(runtime);
 }
@@ -166,7 +215,9 @@ export function serializeRuntime(r: SJRuntime): SerializedRuntime {
     dir: r.dir,
     idPrefix: r.idPrefix,
     density: r.density,
-    supports: r.supports,
+    // A default server runtime knows nothing about the client: omit `supports` so the client
+    // rebuilt from this value is not explicit and detects after mount.
+    ...(r.supportsExplicit && { supports: r.supports, supportsExplicit: true as const }),
   };
 }
 

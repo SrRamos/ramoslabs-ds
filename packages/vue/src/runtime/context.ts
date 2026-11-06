@@ -12,7 +12,13 @@ import {
   type InjectionKey,
   type PropType,
 } from 'vue';
-import { createRuntime, type RuntimeConfig, type SJRuntime } from '@ramoslabs/core/runtime';
+import {
+  createRuntime,
+  detectSupports,
+  withSupports,
+  type RuntimeConfig,
+  type SJRuntime,
+} from '@ramoslabs/core/runtime';
 import { createLiveRegistry, type LiveHost, type LiveRegistry } from '@ramoslabs/core/live';
 import { createDomLiveHost } from './dom';
 
@@ -44,8 +50,14 @@ export const SJProvider = defineComponent({
     liveHost: { type: Object as PropType<LiveHost>, default: undefined },
   },
   setup(props, { slots }) {
+    const base =
+      props.runtime ?? createRuntime({ ...props.config, target: props.config?.target ?? 'client' });
+    // Detected here, in setup, so every child's setup already reads real capabilities. Markup never
+    // reads `supports`, so hydration is unaffected; an explicit `supports` (forced run) is kept.
     const ctx = createContext(
-      props.runtime ?? createRuntime({ ...props.config, target: props.config?.target ?? 'client' }),
+      !base.supportsExplicit && typeof window !== 'undefined'
+        ? withSupports(base, detectSupports(window))
+        : base,
     );
     provide(SJ_CONTEXT, ctx);
     let dom: ReturnType<typeof createDomLiveHost> | undefined;

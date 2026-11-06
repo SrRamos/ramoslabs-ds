@@ -430,3 +430,48 @@ describe('live host (G1 MUST-3)', () => {
     expect(attrs.style).toBe(HIDDEN_STYLE);
   });
 });
+
+describe('capability detection (supports)', () => {
+  const win = {
+    CSS: { supports: () => true },
+    HTMLDetailsElement: { prototype: { name: '' } },
+  };
+  afterEach(() => vi.unstubAllGlobals());
+  const probe = () => {
+    const seen: boolean[] = [];
+    const C = () => {
+      seen.push(useRuntime().supports.detailsName);
+      return createElement('p', null, 'x');
+    };
+    return { seen, C };
+  };
+
+  it('detects after mount; markup is identical with and without detection (no hydration mismatch)', () => {
+    const server = renderToString(createElement(SJProvider, null, createElement(probe().C)));
+    vi.stubGlobal('window', win);
+    const { seen, C } = probe();
+    const r = mount(createElement(SJProvider, null, createElement(C)));
+    expect(seen).toEqual([true]);
+    expect(JSON.stringify(r.toJSON())).toBe(
+      JSON.stringify({ type: 'p', props: {}, children: ['x'] }),
+    );
+    expect(server).toBe('<p>x</p>');
+  });
+
+  it('an explicit supports (forced false) is never overridden, via props or a given runtime', () => {
+    vi.stubGlobal('window', win);
+    for (const el of [
+      (c: ReactNode) => createElement(SJProvider, { supports: { detailsName: false } }, c),
+      (c: ReactNode) =>
+        createElement(
+          SJProvider,
+          { runtime: createRuntime({ target: 'client', supports: { detailsName: false } }) },
+          c,
+        ),
+    ]) {
+      const { seen, C } = probe();
+      mount(el(createElement(C)));
+      expect(seen.every((v) => v === false)).toBe(true);
+    }
+  });
+});
