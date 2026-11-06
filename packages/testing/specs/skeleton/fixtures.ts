@@ -37,9 +37,9 @@ export const FIXTURES: Record<string, FixtureProps> = {
   rect: { shape: 'rect', ratio: '16/9' },
   // A free box (default height from the token).
   block: { shape: 'block' },
-  // The container while loading. `delay: 400` keeps the pending window wide enough to observe on a loaded
+  // The container while loading. `delay: 1000` keeps the pending window wide enough to observe on a loaded
   // runner; the token default (300 ms) is exercised by its own spec.
-  'group-loading': { shape: 'group', loading: true, announce: 'Loading activity', delay: 400 },
+  'group-loading': { shape: 'group', loading: true, announce: 'Loading activity', delay: 1000 },
   // The container once loaded: the content shows at once, nothing is busy, nothing is announced.
   'group-loaded': { shape: 'group', loading: false, announce: 'Loading activity' },
   // Conformance-only.

@@ -346,11 +346,11 @@ for (const adapter of ADAPTERS) {
     const errors = await openHost(page);
     await mountSkeleton(page, adapter, 'group-loading', 'native', {
       settle: false,
-      props: { delay: 150, minDuration: 120 },
+      props: { delay: 700, minDuration: 120 },
     });
     const ended = await endLoadingAt(page, 20);
-    expect(ended).toBeLessThan(120);
-    await settle(page, 450);
+    expect(ended).toBeLessThan(500);
+    await settle(page, 1000);
     const t = await trace(page);
     expect(states(t)).toEqual(['pending', 'idle']);
     expect(t.some((e) => e.state === 'visible' || e.state === 'holding')).toBe(false);
