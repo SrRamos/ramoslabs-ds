@@ -342,6 +342,9 @@ export async function generate({ contractsDir } = {}) {
 const generatedDirs = () =>
   ['core', ...ADAPTERS].map((p) => join(repoRoot, 'packages', p, 'src', 'generated'));
 
+/** Adapter `generated/icons/**` is emitted by packages/icons/scripts/generate.mjs, not by this codegen. */
+const isSystemIcon = (rel) => /^packages\/(?:react|vue|vanilla)\/src\/generated\/icons\//.test(rel);
+
 function listFiles(dir) {
   if (!existsSync(dir)) return [];
   const out = [];
@@ -365,6 +368,7 @@ export async function checkDrift({ contractsDir } = {}) {
   for (const dir of generatedDirs())
     for (const f of listFiles(dir)) {
       const rel = relative(repoRoot, f).split('\\').join('/');
+      if (isSystemIcon(rel)) continue; // owned and byte-checked by packages/icons (icons:check)
       if (!(rel in gen)) drift.push({ path: rel, problem: 'stale (no contract produces it)' });
     }
   return drift;
@@ -373,7 +377,10 @@ export async function checkDrift({ contractsDir } = {}) {
 /** Write the generated tree; removes stale files so the directories are exactly the output. */
 export async function writeGenerated({ contractsDir } = {}) {
   const gen = await generate({ contractsDir });
-  for (const dir of generatedDirs()) rmSync(dir, { recursive: true, force: true });
+  for (const dir of generatedDirs())
+    for (const f of listFiles(dir)) {
+      if (!isSystemIcon(relative(repoRoot, f).split('\\').join('/'))) rmSync(f, { force: true });
+    }
   for (const [path, code] of Object.entries(gen)) {
     const abs = join(repoRoot, path);
     mkdirSync(dirname(abs), { recursive: true });
