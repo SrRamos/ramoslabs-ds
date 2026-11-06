@@ -79,11 +79,11 @@ export function resolveKind(kind: Kind, ctx: KindContext = {}): ResolvedKind {
 /**
  * Form-owner `enterkeyhint` for an ordered list of fields. Textarea kinds are fixed to `enter` and excluded
  * from position; kind overrides (url go, search search, otp done/go, cc-csc done) win; otherwise `next`
- * while another non-textarea field follows, else `action` (go/send/search) or `go` when `submits`, else `done`.
+ * while another non-textarea field follows, else `enter` (go/send/search) or `go` when `submits`, else `done`.
  */
 export function enterKeyHints(
   kinds: readonly Kind[],
-  o: { action?: 'go' | 'send' | 'search'; submits?: boolean; autoSubmit?: boolean } = {},
+  o: { enter?: 'go' | 'send' | 'search'; submits?: boolean; autoSubmit?: boolean } = {},
 ): EnterHint[] {
   const text = kinds.map((k) => (KINDS[k] as Row)[3] !== 'enter');
   const last = text.lastIndexOf(true);
@@ -92,7 +92,7 @@ export function enterKeyHints(
     return (
       resolveKind(k, {
         autoSubmit: o.autoSubmit,
-        enter: !text[i] ? 'enter' : i < last ? 'next' : (o.action ?? (o.submits ? 'go' : 'done')),
+        enter: !text[i] ? 'enter' : i < last ? 'next' : (o.enter ?? (o.submits ? 'go' : 'done')),
       }).enterkeyhint ?? (e as EnterHint)
     );
   });
