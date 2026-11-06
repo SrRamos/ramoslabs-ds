@@ -840,7 +840,7 @@
       "name": "SJState",
       "slug": "state",
       "contractVersion": "0.1.0",
-      "status": "draft",
+      "status": "beta",
       "pattern": {
         "apg": "live-region",
         "evidence": "live-region"
