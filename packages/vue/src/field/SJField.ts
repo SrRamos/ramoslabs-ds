@@ -24,21 +24,11 @@ import {
 } from 'vue';
 import { baseId } from '@ramoslabs/core/ids';
 import { createField } from '@ramoslabs/core/field';
-import type { IconData } from '@ramoslabs/core/icon';
 import { SJIcon } from '../icon/index';
 import { useSJContext } from '../runtime/index';
 import { SJ_FIELD, SJ_FORM } from '../form/context';
+import { circleAlert } from '../generated/icons/circle-alert';
 import { fieldLive } from '../generated/field/index';
-
-/** Lucide `circle-alert` (ISC; see packages/icons/THIRD-PARTY-NOTICES.md). Inlined: adapters never import `@ramoslabs/icons`. */
-const alertCircle: IconData = {
-  name: 'circle-alert',
-  nodes: [
-    ['circle', { cx: '12', cy: '12', r: '10' }],
-    ['line', { x1: '12', x2: '12', y1: '8', y2: '12' }],
-    ['line', { x1: '12', x2: '12.01', y1: '16', y2: '16' }],
-  ],
-};
 
 /** Per-part class overrides, appended after the library class (ADR-004). */
 export interface SJFieldClasses {
@@ -92,23 +82,35 @@ export const SJField = defineComponent({
 
     // Children mount first (SJInput reports its kind), then this registers with the form owner.
     let off: (() => void) | undefined;
+    let root: HTMLElement | null = null;
+    let at: number | undefined;
+    // DOM position among the form's controls (`form.elements`), so Enter order follows the page.
+    const position = () => {
+      const control = root?.querySelector('input,textarea,select');
+      const f = root?.closest('form');
+      const i = control && f ? Array.prototype.indexOf.call(f.elements, control) : -1;
+      return i < 0 ? undefined : i;
+    };
+    const reconnect = () => {
+      off?.();
+      at = position();
+      off = field.connect(at);
+    };
     let alive = true;
     const say = () => void (alive && field.announce());
     onMounted(() => {
       if (fieldLive === 'eager') sj.requireLive?.();
-      off = field.connect();
+      at = position();
+      off = field.connect(at);
       // The provider attaches its live host in its own `onMounted`, after its children's.
       void nextTick(say);
       // The 3.3.7 key is the name (or id): a change re-registers under the new key.
-      watch(
-        () => props.name ?? field.ids.control,
-        () => {
-          off?.();
-          off = field.connect();
-        },
-      );
+      watch(() => props.name ?? field.ids.control, reconnect);
     });
-    onUpdated(say);
+    onUpdated(() => {
+      say();
+      if (off && position() !== at) reconnect();
+    });
     onBeforeUnmount(() => {
       alive = false;
       off?.();
@@ -122,27 +124,36 @@ export const SJField = defineComponent({
       const label = (slots.label?.() ?? text(props.label)) as VNodeChild;
       const hint = (slots.hint?.() ?? text(props.hint)) as VNodeChild;
       const error = (props.error ?? '').trim();
-      return h('div', field.getRootProps({ ...rest, class: cls(attrClass, c.root) }), [
-        label !== undefined
-          ? h('label', field.getLabelProps({ class: c.label }), label as string)
-          : null,
-        slots.default?.(),
-        hint !== undefined ? h('div', field.getHintProps({ class: c.hint }), hint as string) : null,
-        error
-          ? h('div', field.getErrorProps({ class: c.error }), [
-              h(
-                'span',
-                {
-                  class: cls('sj-field__icon', c.icon),
-                  'data-part': 'icon',
-                  'aria-hidden': 'true',
-                },
-                h(SJIcon, { icon: alertCircle, size: 'sm' }),
-              ),
-              error,
-            ])
-          : null,
-      ]);
+      return h(
+        'div',
+        {
+          ...field.getRootProps({ ...rest, class: cls(attrClass, c.root) }),
+          ref: (el: unknown) => void (root = el as HTMLElement | null),
+        },
+        [
+          label !== undefined
+            ? h('label', field.getLabelProps({ class: c.label }), label as string)
+            : null,
+          slots.default?.(),
+          hint !== undefined
+            ? h('div', field.getHintProps({ class: c.hint }), hint as string)
+            : null,
+          error
+            ? h('div', field.getErrorProps({ class: c.error }), [
+                h(
+                  'span',
+                  {
+                    class: cls('sj-field__icon', c.icon),
+                    'data-part': 'icon',
+                    'aria-hidden': 'true',
+                  },
+                  h(SJIcon, { icon: circleAlert, size: 'sm' }),
+                ),
+                error,
+              ])
+            : null,
+        ],
+      );
     };
   },
 });

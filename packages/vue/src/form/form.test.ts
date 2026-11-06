@@ -31,7 +31,7 @@ describe('SJForm root', () => {
         class: 'mine',
         classes: { root: 'r' },
         'aria-label': 'Sign in',
-        action: undefined,
+        action: '/submit',
       }),
     );
     const form = host.querySelector('form')!;
@@ -39,7 +39,8 @@ describe('SJForm root', () => {
     expect(form.getAttribute('data-part')).toBe('root');
     expect(form.getAttribute('aria-label')).toBe('Sign in');
     expect(form.hasAttribute('novalidate')).toBe(false);
-    expect(form.getAttributeNames().sort()).toEqual(['aria-label', 'class', 'data-part']);
+    expect(form.getAttribute('action')).toBe('/submit');
+    expect(form.getAttributeNames().sort()).toEqual(['action', 'aria-label', 'class', 'data-part']);
   });
 });
 
@@ -50,11 +51,11 @@ describe('SJForm Enter position', () => {
     expect(hints(host)).toEqual(['next', 'next', 'go']);
   });
 
-  it('submits=false gives the last field done; action wins', async () => {
+  it('submits=false gives the last field done; enter wins', async () => {
     const quiet = mount(() => h(SJForm, { submits: false }, () => [field('a'), field('b')]));
     await nextTick();
     expect(hints(quiet.host)).toEqual(['next', 'done']);
-    const search = mount(() => h(SJForm, { action: 'search' }, () => [field('a'), field('b')]));
+    const search = mount(() => h(SJForm, { enter: 'search' }, () => [field('a'), field('b')]));
     await nextTick();
     expect(hints(search.host)).toEqual(['next', 'search']);
   });
@@ -103,5 +104,20 @@ describe('SJForm Enter position', () => {
     await nextTick();
     await nextTick();
     expect(hints(host)).toEqual(['next', 'go']);
+  });
+});
+
+describe('SJForm DOM order', () => {
+  it('a field inserted before another takes its DOM position; a reorder re-registers', async () => {
+    const early = ref(false);
+    const { host } = mount(() =>
+      h(SJForm, null, () => [...(early.value ? [field('a')] : []), field('b'), field('c')]),
+    );
+    await nextTick();
+    expect(hints(host)).toEqual(['next', 'go']);
+    early.value = true;
+    await nextTick();
+    await nextTick();
+    expect(hints(host)).toEqual(['next', 'next', 'go']);
   });
 });

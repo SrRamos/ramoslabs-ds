@@ -19,7 +19,8 @@ export const SJForm = defineComponent({
   props: {
     /** Optional ordered field list (data first, SSR safe). */
     fields: { type: Array as PropType<readonly FormField[]>, default: undefined },
-    action: { type: String as PropType<'go' | 'send' | 'search'>, default: undefined },
+    /** Enter label of the last editable field. (A native `action` attribute reaches the `<form>`.) */
+    enter: { type: String as PropType<'go' | 'send' | 'search'>, default: undefined },
     submits: { type: Boolean, default: true },
     autoSubmit: { type: Boolean, default: false },
     classes: { type: Object as PropType<SJFormClasses>, default: undefined },
@@ -27,7 +28,7 @@ export const SJForm = defineComponent({
   setup(props, { attrs, slots }) {
     const owner = createForm(() => ({
       fields: props.fields,
-      action: props.action,
+      enter: props.enter,
       submits: props.submits,
       autoSubmit: props.autoSubmit,
     }));

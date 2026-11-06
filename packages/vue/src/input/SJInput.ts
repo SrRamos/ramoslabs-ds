@@ -60,11 +60,7 @@ export const SJInput = defineComponent({
         meaningful: props.meaningful,
         digits: props.digits,
         uppercase: props.uppercase,
-        // A one-time code submits on Enter when its own prop or the form's `autoSubmit` says so:
-        // the form owner already computed that into `enterHint()` (`go` for an otp kind), but core
-        // `createInput` only reads the input's own prop (follow-up in C02-NOTES).
-        autoSubmit:
-          props.autoSubmit || (/^otp/.test(props.kind ?? '') && field?.enterHint() === 'go'),
+        autoSubmit: props.autoSubmit,
         id: props.id,
         name: props.name,
         required: props.required,
