@@ -1,0 +1,3 @@
+- text: $LONG_LABEL
+- textbox "$LONG_LABEL"
+- button "Send"

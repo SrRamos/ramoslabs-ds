@@ -92,6 +92,6 @@ export const KINDS = {
     null,
     null,
   ],
-  country: [['select', 'text'], null, ['country', 'country-name'], 'position', null, null, null],
+  country: [['select', 'text'], 'text', ['country', 'country-name'], 'position', null, null, null],
   organization: ['text', 'text', ['organization'], 'position', 'words', null, null],
 } as const satisfies Record<Kind, Row>;

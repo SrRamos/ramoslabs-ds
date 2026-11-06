@@ -522,7 +522,8 @@
     {
       "kind": "country",
       "type": ["select", "text"],
-      "inputmode": null,
+      "inputmode": "text",
+      "inputmodeWhen": "text variant",
       "autocomplete": {
         "policy": "token",
         "tokens": ["country"],

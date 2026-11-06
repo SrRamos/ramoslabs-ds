@@ -1,0 +1,7 @@
+- text: Email address
+- textbox "Email address"
+- text: Billing email
+- textbox "Billing email"
+- text: Password
+- textbox "Password"
+- button "Send"

@@ -451,7 +451,7 @@
       "name": "SJField",
       "slug": "field",
       "contractVersion": "0.1.0",
-      "status": "draft",
+      "status": "beta",
       "pattern": {
         "apg": "text-field",
         "evidence": "text-field"
@@ -551,7 +551,7 @@
       "name": "SJForm",
       "slug": "form",
       "contractVersion": "0.1.0",
-      "status": "draft",
+      "status": "beta",
       "pattern": {
         "apg": "text-field",
         "evidence": "form",
@@ -710,7 +710,7 @@
       "name": "SJInput",
       "slug": "input",
       "contractVersion": "0.1.0",
-      "status": "draft",
+      "status": "beta",
       "pattern": {
         "apg": "text-field",
         "evidence": "text-field"
@@ -1702,7 +1702,8 @@
           "select",
           "text"
         ],
-        "inputmode": null,
+        "inputmode": "text",
+        "inputmodeWhen": "text variant",
         "autocomplete": {
           "policy": "token",
           "tokens": [

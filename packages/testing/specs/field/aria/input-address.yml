@@ -1,0 +1,3 @@
+- text: Street address
+- textbox "Street address"
+- button "Send"

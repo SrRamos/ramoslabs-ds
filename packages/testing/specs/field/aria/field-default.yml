@@ -1,0 +1,3 @@
+- text: Email address
+- textbox "Email address"
+- button "Send"
