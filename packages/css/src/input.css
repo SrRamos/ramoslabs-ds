@@ -1,0 +1,97 @@
+/* sj-input: SJInput stylesheet (W1-C02.b). Authored from the contract anatomy. Tokens only (stylelint sj/* rules enforce it).
+   Parts (contract anatomy): root <span>, control <input> or <textarea> (native; address renders a textarea).
+   Core emits `sj-input__root` and `sj-input__control`, data-part on both, data-kind on the root, and on the control
+   data-touched="true" once the :user-invalid fallback has seen a user change or a failed submit, aria-invalid="true"
+   while the SJField error shows (ADR-014), and the native disabled/required attributes.
+   Invalid paint has three triggers, each its own rule because an unsupported pseudo-class would drop a whole selector list:
+   [aria-invalid='true'] (the field error), :user-invalid (Chromium 119+, Firefox 88+, Safari 16.5+), and
+   [data-touched]:invalid (the floor fallback for Chromium 114-118 and older Safari, ADR-001 / ADR-014).
+   Invalid is never colour alone (WCAG 1.4.1): the border is also twice as thick. The words come from the SJField error part.
+   Focus (2.4.7, 2.4.13) comes from base/focus.css and the 44 px target (2.5.8) and 16 px text from base/base.css; this file
+   adds neither a box-shadow nor an outline reset, so the indicator stays.
+   Layers: structure in sj.component, invalid, disabled and forced colors in sj.state. */
+
+@layer sj.component {
+  .sj-input__root {
+    display: block;
+    min-inline-size: 0;
+  }
+
+  .sj-input__control {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-block-size: var(--sj-target, var(--target-min));
+    padding-block: var(--space-2);
+    padding-inline: var(--space-3);
+    border-width: var(--border-width-hairline);
+    border-style: solid;
+    border-color: var(--color-slate-500);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-text-body);
+    line-height: var(--leading-normal);
+  }
+
+  .sj-input__control::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  /* Address renders a textarea: room for a multi-line value, resizable on the block axis only. */
+  textarea.sj-input__control {
+    min-block-size: calc(var(--sj-target, var(--target-min)) * 2);
+    resize: block;
+  }
+}
+
+@layer sj.state {
+  /* Invalid: error-strong border (4.8:1 on white) and a border twice as thick, so the shape changes too. The padding
+     gives back the extra border width so the text does not move. */
+  .sj-input__control[aria-invalid='true'] {
+    border-color: var(--color-error-strong);
+    border-width: calc(var(--border-width-hairline) * 2);
+    padding-block: calc(var(--space-2) - var(--border-width-hairline));
+    padding-inline: calc(var(--space-3) - var(--border-width-hairline));
+  }
+
+  .sj-input__control:user-invalid {
+    border-color: var(--color-error-strong);
+    border-width: calc(var(--border-width-hairline) * 2);
+    padding-block: calc(var(--space-2) - var(--border-width-hairline));
+    padding-inline: calc(var(--space-3) - var(--border-width-hairline));
+  }
+
+  .sj-input__control[data-touched]:invalid {
+    border-color: var(--color-error-strong);
+    border-width: calc(var(--border-width-hairline) * 2);
+    padding-block: calc(var(--space-2) - var(--border-width-hairline));
+    padding-inline: calc(var(--space-3) - var(--border-width-hairline));
+  }
+
+  /* Disabled: grey surface and text, no pointer. Text-disabled is exempt from 1.4.3; the native state carries the meaning. */
+  .sj-input__control:disabled {
+    color: var(--color-text-disabled);
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+  }
+
+  /* Forced colors (ADR-009): keep a boundary, mark invalid with Highlight (and the thickness above),     and a distinct system colour, and grey the disabled control. */
+  @media (forced-colors: active) {
+    .sj-input__control {
+      border-color: ButtonBorder;
+    }
+
+    .sj-input__control[aria-invalid='true'],
+    .sj-input__control:user-invalid,
+    .sj-input__control[data-touched]:invalid {
+      border-color: Highlight;
+    }
+
+    .sj-input__control:disabled {
+      color: GrayText;
+      border-color: GrayText;
+    }
+  }
+}

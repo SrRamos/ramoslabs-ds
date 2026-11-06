@@ -11,6 +11,7 @@ export const fieldAria = {
     control: { element: 'input', native: true },
     hint: { element: 'div' },
     error: { element: 'div' },
+    icon: { element: 'span' },
   },
   transitions: {},
 } as const;
