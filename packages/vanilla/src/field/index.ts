@@ -167,11 +167,7 @@ export function mountField(
         }
         if (error) {
           applyProps(error, f.getErrorProps(), seen.error);
-          applyProps(
-            icon!,
-            { class: 'sj-field__icon', 'data-part': 'icon', 'aria-hidden': 'true' },
-            seen.icon,
-          );
+          applyProps(icon!, f.getIconProps(), seen.icon);
           setText(text!, message);
         }
         sync();

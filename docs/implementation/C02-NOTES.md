@@ -143,4 +143,4 @@ Core (ADR-011): field 0.724 KiB, form 0.699 KiB, input 0.904 KiB gzip, inside th
 - Two fields announcing in one commit still speak only the last text (known core limit).
 - Real-browser coverage of the custom elements (moving children, upgrade order) is `.f`; unit tests use a DOM double.
 
-`sj-form`: `enter` is the Enter label attribute; `action` and `method` are copied to the native `<form>` (test: `action="/post"` reaches the form and is not an Enter label). The input's own `autoSubmit` applies standalone only (core, `field.enterHint()` is final inside a field). The `data-part="icon"` span is still hand-built; it moves to core `getIconProps` once #105 lands.
+`sj-form`: `enter` is the Enter label attribute; `action` and `method` are copied to the native `<form>` (test: `action="/post"` reaches the form and is not an Enter label). The input's own `autoSubmit` applies standalone only (core, `field.enterHint()` is final inside a field). The icon part uses core `getIconProps`.
