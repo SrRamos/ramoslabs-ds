@@ -9,5 +9,6 @@ export * from './form/index';
 export * from './icon/index';
 export * from './input/index';
 export * from './kinds/index';
+export * from './skeleton/index';
 export * from './state/index';
 export * from './switch/index';

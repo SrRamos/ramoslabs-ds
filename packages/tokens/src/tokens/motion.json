@@ -20,6 +20,21 @@
         "$value": 0.97,
         "$description": "Scale of a solid control while pressed (SJButton). Not applied under prefers-reduced-motion."
       }
+    },
+    "skeleton": {
+      "$type": "duration",
+      "delay": {
+        "$value": "300ms",
+        "$description": "SJSkeleton: how long a load must last before its placeholder becomes visible. A load that ends sooner never flashes a skeleton (NN/g response-time limits)."
+      },
+      "min-duration": {
+        "$value": "500ms",
+        "$description": "SJSkeleton: once visible, the placeholder stays at least this long, so content that arrives just after the delay does not flash it in and out."
+      },
+      "shimmer": {
+        "$value": "1600ms",
+        "$description": "SJSkeleton: one pass of the shimmer sweep. Slow and subtle; static under prefers-reduced-motion and forced colors."
+      }
     }
   }
 }

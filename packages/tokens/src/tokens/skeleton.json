@@ -1,0 +1,52 @@
+{
+  "skeleton": {
+    "color": {
+      "$type": "color",
+      "base": {
+        "$value": "{color.slate.200}",
+        "$description": "Placeholder fill. Decorative: hidden from assistive tech and never the only carrier of meaning, so the 3:1 UI-component floor (WCAG 1.4.11) does not apply; forced colors draws a CanvasText border instead."
+      },
+      "highlight": {
+        "$value": "{color.slate.100}",
+        "$description": "Shimmer sweep highlight on top of the base fill."
+      }
+    },
+    "line": {
+      "$type": "dimension",
+      "height": {
+        "$value": "0.875rem",
+        "$description": "One text line placeholder (14px), close to the x-height band of body copy."
+      },
+      "last-width": {
+        "$value": "60%",
+        "$description": "Width of the last text line when there is more than one."
+      }
+    },
+    "avatar": {
+      "$type": "dimension",
+      "sm": {
+        "$value": "2rem",
+        "$description": "32px circle."
+      },
+      "md": {
+        "$value": "2.5rem",
+        "$description": "40px circle."
+      },
+      "lg": {
+        "$value": "3rem",
+        "$description": "48px circle."
+      },
+      "xl": {
+        "$value": "4rem",
+        "$description": "64px circle."
+      }
+    },
+    "block": {
+      "$type": "dimension",
+      "height": {
+        "$value": "4rem",
+        "$description": "Default height of a free block placeholder (64px); override with --sj-skeleton-height."
+      }
+    }
+  }
+}

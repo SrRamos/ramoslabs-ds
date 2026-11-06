@@ -30,6 +30,7 @@ export interface SJStateClasses {
   icon?: string;
   title?: string;
   description?: string;
+  skeleton?: string;
   actions?: string;
 }
 
@@ -110,6 +111,9 @@ export const SJState = defineComponent({
       const icon = slots.icon?.() as VNodeChild;
       const title = (slots.title?.() ?? props.heading) as VNodeChild;
       const body = (slots.default?.() ?? props.description) as VNodeChild;
+      // Loading only: SJSkeleton shapes stand in for the default loading visuals. Decorative (aria-hidden); the
+      // heading or `announce` still speaks once through the registry, and the timing stays on SJSkeleton group.
+      const skeleton = (props.variant === 'loading' ? slots.skeleton?.() : undefined) as VNodeChild;
       const actions = slots.actions?.() as VNodeChild;
       const has = filled;
       return h('div', state.getRootProps({ ...rest, class: cls(attrClass, c.root) }), [
@@ -126,6 +130,9 @@ export const SJState = defineComponent({
           : null,
         has(body)
           ? h('p', state.getDescriptionProps({ class: c.description }), body as string)
+          : null,
+        has(skeleton)
+          ? h('div', state.getSkeletonProps({ class: c.skeleton }), skeleton as string)
           : null,
         has(actions)
           ? h('div', state.getActionsProps({ class: c.actions }), actions as string)

@@ -25,6 +25,8 @@ export interface SJStateSlots {
   title?: () => unknown;
   /** Description copy; alternative to the description prop. */
   default?: () => unknown;
+  /** Loading variant only: SJSkeleton shapes that mirror the final layout, in place of the default loading visuals. The part is aria-hidden; the heading or announce still speaks once through the live registry. The delay and minimum duration stay on SJSkeleton shape=group, never here. */
+  skeleton?: () => unknown;
   /** Next-step controls (SJButton): the first action for first-use, change or clear filters for no-results. */
   actions?: () => unknown;
 }
