@@ -54,3 +54,31 @@ createDisclosureParts ctx.closePeers?: (rootId) => void   // adapter-supplied ow
 - `.f`: the forced-false (`detailsName: false`) fixture must include a controlled group.
 - `.c/.d/.e`: apply `open` as a property; React must not set both `open` and a default; run the `open` effect in the layout drain; a forced commit after a rejected controlled report (as the Switch React adapter does) is required for the corrective effect.
 - `.c/.d/.e` (SHOULD-1): `<details>` works before hydration, so at mount report `native('open', el.open)` when it differs from the view; the .f hydrate spec toggles before hydrating. Implement `ctx.closePeers` from the DOM and `runtime.supports.detailsName`.
+
+## W1-C06.b: SJDisclosure CSS
+
+Branch `feature/m4-c06-css`. Owned: `packages/css/src/disclosure.css`, `packages/css/test/disclosure.test.js`, this section, and the `disclosure` entries added to the two real-contract lists in `packages/css/test/template.test.js` (registration step, as icon and state did). No other shared file touched: the build picks the file up by glob.
+
+### Decisions
+
+- **Root and trigger classes are the ones the getters emit.** Unlike SJState, core emits `sj-disclosure__root` and `sj-disclosure__trigger`, so the selectors are the plain `__root`/`__trigger`/`__content` names and the anatomy check needs no alias.
+- **The stylesheet never sets `display` on the root or the content.** A closed `<details>` hides its panel through the UA (Chromium through the details slot). Setting `display` on the panel would override that collapse. The test checks `checkVisibility()`, not the panel's own `display`, because Chromium keeps the panel's own computed `display` at `block`.
+- **Marker.** The native triangle is hidden (`list-style: none`, `::-webkit-details-marker`), and a border-drawn chevron on `summary::after` replaces it. Its colour is `currentColor`, so forced colours keep it; forced colours also set the border colour to `CanvasText` explicitly.
+- **Open state is keyed on the root's native `open` attribute**, not on `data-state`. `data-state` only updates after an adapter reports back. A plain native click (before any script runs) should still turn the chevron, so `.sj-disclosure__root[open] > .sj-disclosure__trigger::after` is the selector. Test: a native click turns the chevron, with no script.
+- **Exclusive groups.** The stylesheet has no rule keyed on `name`, so a group and a plain disclosure render identically (test: pixel-identical screenshots). The fallback that closes peers is script-side (C06.a `peersToClose`, adapters `.c/.d/.e`), so the CSS has nothing to add.
+- **Disabled.** The trigger keeps `data-disabled` styling (inactive text colour, `not-allowed` cursor) and stays focusable, so the 2.4.13 ring still draws on it. `color-text-disabled` is exempt from the 4.5:1 check (WCAG 1.4.3 inactive), the same exemption the shared matrix makes.
+- **Focus and target.** The summary is a `[data-part]` element, so `base/base.css` gives it the 44 px target and `base/focus.css` the ring. No focus rule is repeated here.
+- **Reduced motion.** The chevron rotates with `--sj-duration-fast`. `base/motion.css` collapses the transition to `0s` under `prefers-reduced-motion` (the chevron is a `[data-part]::after`). The native open/close has no animation of its own.
+
+### Measured
+
+Built `dist/disclosure.css`: 3543 B raw, 1455 B gzip. ADR-011 has no CSS-specific ceiling. The core module's budget (`contract budgets.gzipKiB: 3`) is measured by `node packages/testing/size/cli.js` and is not affected by this file.
+
+### Tests
+
+`packages/css/test/disclosure.test.js` (20 tests): anatomy against the contract, stylelint, no raw values in source; native collapse and a native click without script; 44 px summary and 2.4.13 focus ring pixels; contrast on every surface (with a seeded weak chevron); open and closed chevron values, disabled colour and cursor; forced colours (chevron visible, seeded missing border style fails); RTL (title at the start, chevron at the end, mirrored); long-title wrap; name group pixel-identical to a plain group; reduced motion. The css package suite passes: 200 tests, 9 files; lint and `format:check` green.
+
+### Follow-ups
+
+- `.c/.d/.e` adapters must emit `data-state` and `data-disabled` (the getters already do). The chevron does not depend on `data-state`, so a missing adapter update cannot break the open look.
+- SJDisclosure has no `.f` hydration evidence yet; `.f` owns the pre-hydration check.
