@@ -82,3 +82,14 @@ Built `dist/disclosure.css`: 3543 B raw, 1455 B gzip. ADR-011 has no CSS-specifi
 
 - `.c/.d/.e` adapters must emit `data-state` and `data-disabled` (the getters already do). The chevron does not depend on `data-state`, so a missing adapter update cannot break the open look.
 - SJDisclosure has no `.f` hydration evidence yet; `.f` owns the pre-hydration check.
+
+## W1-C06.c: SJDisclosure Vue adapter
+
+Branch `feature/m4-c06-vue`. Owned: `packages/vue/src/disclosure/{SJDisclosure,index,disclosure.test,ssr.test}.ts`. Shared files touched: `packages/vue/src/index.ts` (barrel export) and `packages/vue/src/index.test.ts` (expected export list). The `./disclosure` entry in `package.json` `exports` already existed.
+
+### Decisions
+- Flat component over `createDisclosureParts` and `useSJStore` (shared runtime, `disclosureFields`). Props `open/defaultOpen/disabled/name/id/summary/classes`; `summary` is prop-or-slot (slot wins), default slot is the panel; emits `update:open` and `openChange`. Attrs and `class`/`style` go to the root `<details>`.
+- The vnode carries only the INITIAL `open` (what SSR emits); the live state is written to the property after updates (`onVnodeUpdated`) and by the `open` corrective effect (controlled rejection, forced commit through the store's `resync`). `onVnodeMounted` deliberately does not sync: it would run before `onMounted` and erase a pre-hydration native open.
+- Pre-hydration (audit SHOULD-1): `onMounted` calls `native('open', el.open)` when it differs from the view (test hydrates server markup the user opened).
+- `closePeers` (audit MUST-1) is built from the DOM: returns when `runtime.supports.detailsName` is true; else collects `details[name]` in the root's own root node, runs `peersToClose` and sets `open = false` on the returned elements (their own `toggle` reports). Note the default client runtime has `detailsName: false`, so the fallback is active unless `SJProvider` config sets `supports.detailsName`; it is harmless on native engines.
+- Tests (14): markup, prop-or-slot, classes, uncontrolled and controlled (accept, reject), disabled, pre-hydration, `closePeers` on forced-false (uncontrolled, controlled programmatic, rejected, other names/unnamed untouched, native no-op), 1,000 mount/destroy retaining no store/listener/DOM, SSR.
