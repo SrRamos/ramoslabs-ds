@@ -38,6 +38,10 @@
     "parity:icon": "node parity/cli.js --results node_modules/.cache/e2e/icon-results.json --expected node_modules/.cache/e2e/icon-expected.json --out node_modules/.cache/e2e/parity-icon",
     "visual:icon": "node specs/icon/visual/cli.js check",
     "voiceover:icon": "node specs/icon/render-voiceover.js",
+    "test:e2e:disclosure": "playwright test -c specs/disclosure/playwright.config.ts",
+    "parity:disclosure": "node parity/cli.js --results node_modules/.cache/e2e/disclosure-results.json --expected node_modules/.cache/e2e/disclosure-expected.json --out node_modules/.cache/e2e/parity-disclosure",
+    "visual:disclosure": "node specs/disclosure/visual/cli.js check",
+    "voiceover:disclosure": "node specs/disclosure/render-voiceover.js",
     "specs:check": "node specs/check.mjs"
   },
   "exports": {
