@@ -93,3 +93,22 @@ Branch `feature/m4-c06-vue`. Owned: `packages/vue/src/disclosure/{SJDisclosure,i
 - Pre-hydration (audit SHOULD-1): `onMounted` calls `native('open', el.open)` when it differs from the view (test hydrates server markup the user opened).
 - `closePeers` (audit MUST-1) is built from the DOM: returns when `runtime.supports.detailsName` is true; else collects `details[name]` in the root's own root node, runs `peersToClose` and sets `open = false` on the returned elements (their own `toggle` reports). Note the default client runtime has `detailsName: false`, so the fallback is active unless `SJProvider` config sets `supports.detailsName`; it is harmless on native engines.
 - Tests (14): markup, prop-or-slot, classes, uncontrolled and controlled (accept, reject), disabled, pre-hydration, `closePeers` on forced-false (uncontrolled, controlled programmatic, rejected, other names/unnamed untouched, native no-op), 1,000 mount/destroy retaining no store/listener/DOM, SSR.
+## W1-C06.d: SJDisclosure React adapter
+
+Branch `feature/m4-c06-react`. Owned: `packages/react/src/disclosure/{index.ts,disclosure.test.ts}`. Shared files touched (checkbox-adapter precedent): `packages/react/src/index.ts` (barrel line) and `packages/react/src/index.test.ts` (barrel key list). The `./disclosure` subpath export already existed.
+
+### Shape
+- `SJDisclosure.Root` (`<details>`), `.Trigger` (`<summary>`), `.Content` (`<div>`), plus flat `SJDisclosureRoot/Trigger/Content` (ADR-002). Prop-or-slot: `summary` renders the trigger, `children` the content; without `summary`, children are explicit parts. `classes` per part concatenates after the library class.
+- State via the shared `useMachine` with `disclosureFields`; `open` is both rendered (SSR markup, hydration) and kept in step by a layout effect that writes `el.open` only when the VIEW changed (so a queued native toggle is never undone by an unrelated render). The corrective `open` effect of a rejected controlled change sets the property after commit.
+
+### Decisions
+- **Pre-hydration (SHOULD-1).** In the first layout effect, `native('open', el.open)` is called when the element differs from the view. A controlled owner that rejects it gets the element corrected by the same effect path.
+- **closePeers.** Supplied to `createDisclosureParts`. Returns when `runtime.supports.detailsName` is true. Otherwise it queries `details[name]` in the element's root node (document or shadow root, the same scope native `name` uses), feeds `{id, name, open}` to `peersToClose`, and sets `open = false` on the returned elements; their own `toggle` then reports. Works for controlled, programmatic and rejected opens because core calls it before the view comparison.
+- **Open point.** `SJProvider` does not detect `supports`, so by default `detailsName` is false and the fallback runs on every engine. That is harmless on native engines (the peers are already closed when the handler runs, `peersToClose` is empty) but it is a DOM query per open. Detection of `supports` after mount belongs to the provider owner.
+- No `aria-expanded`/`aria-controls` on the summary; reduced motion is CSS-only (nothing in the adapter).
+
+### Proof
+`disclosure.test.ts` (31 tests): naming, structure, prop-or-slot, classes, ownership, uncontrolled/controlled (accept, reject, outside prop change), pre-hydration (three cases), disabled, closePeers on forced-false `detailsName` (basic, outside-group, controlled, rejected, programmatic, close-does-not-touch, native engine no-op), SSR (no document, ids), StrictMode (one callback, one pre-hydration report), 1,000 mount/unmount retention (stores, listeners, nodes, live hosts). A seeded mutation (fallback disabled) fails four tests.
+
+### Bytes
+Core `disclosure` module 0.939 KiB gzip (1,997 B raw) against the 3 KiB ceiling; the adapter adds no ceiling of its own (`adapter:react` is reported only).
