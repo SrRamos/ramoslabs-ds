@@ -112,3 +112,29 @@ Branch `feature/m4-c06-react`. Owned: `packages/react/src/disclosure/{index.ts,d
 
 ### Bytes
 Core `disclosure` module 0.939 KiB gzip (1,997 B raw) against the 3 KiB ceiling; the adapter adds no ceiling of its own (`adapter:react` is reported only).
+## W1-C06.e: SJDisclosure vanilla adapter
+
+Branch `feature/m4-c06-vanilla`. Owned: `packages/vanilla/src/disclosure/{index,disclosure.test}.ts` and this section. No shared file touched (`./disclosure` was already in the vanilla `exports` map; the barrel stays empty).
+
+### Decisions
+
+- **API.** `mountDisclosure(host, details, props)` returns the runtime `Instance` plus live `trigger` / `content` accessors. Props are the core props plus plain-text `summary`, `content` and `classes {root, trigger, content}` (appended after the library class through the getters' consumer argument). `define(host, name = 'sj-disclosure', registry)` is explicit and idempotent; its light-DOM children become the panel and are handed back on disconnect.
+- **Prop-or-slot.** An existing `<summary>` and panel child are adopted untouched (the SSR / slot form); missing ones are created and removed on destroy. A `summary` / `content` prop, when defined, is written as a text node.
+- **`open` is a property.** `details.open` is written only when it differs from the view, so the adapter's own writes cause a `toggle` equal to the view, which the core handler ignores. The `open` effect (rejected controlled change) sets the property.
+- **Owned exclusive fallback.** The adapter supplies `DisclosureContext.closePeers`: it returns at once when `runtime.supports.detailsName` is true; otherwise it collects `details[name]` from the element's root node, runs `peersToClose`, and sets `open = false` on each result. The peers' own `toggle` then reports, so `onOpenChange` fires for them as native does. Covered for uncontrolled, programmatic opens of a controlled member, owner-accepted and owner-rejected opens.
+- **Initial state is prop-driven (Fable SHOULD-1 / ruling 2).** `initialSnapshot(open ?? defaultOpen ?? el.open)`: with neither prop the element's own `open` is the initial state (a consumer's `<details open>` stays open, nothing to report).
+- **Pre-hydration report (C06.a SHOULD-1).** When the element came with a `<summary>` (server markup) and its `open` differs from the view at mount, the first patch leaves it alone and `attach` calls `native('open', el.open)`: uncontrolled (`defaultOpen`) keeps the user's state and fires `onOpenChange`; a controlled owner gets the request and, if it rejects, the `open` effect resyncs the DOM. A bare `<details>` has no pre-script history, so its default is the view. On a fallback engine a pre-opened named member also closes its peers once.
+- **Detection.** `closePeers` reads `ctx.runtime.supports.detailsName` at call time; `createHost` runs `detectSupports(defaultView)` at the first mount (unless `supports` was explicit), so the fallback switches on the detected value (test: a fake view with and without `HTMLDetailsElement.prototype.name`).
+- **No `aria-expanded`/`aria-controls`/`role`**, no pointer or touch listener (so no `touch-action` part), no animation (CSS-only under reduced motion). Listeners: `toggle` on the root and `click` on the summary, both with the instance signal.
+
+### Measured
+
+`node packages/testing/size/cli.js`: core `disclosure` 0.939 KiB gzip (1,997 B) against its 3 KiB ceiling; the shared vanilla runtime row is unchanged (the adapter itself is not a ceiling row).
+
+### Tests
+
+`disclosure.test.ts` (20 tests): anatomy and text-only, slot adoption, prop-or-slot update, `classes`, uncontrolled and controlled (rejection corrected, no feedback loop), disabled, `name`, initial state (element open kept) and pre-hydration (defaultOpen kept, controlled resynced, agreeing), signalled listeners and none after destroy, 1,000 mount/destroy cycles, `closePeers` on a forced-false `detailsName` (plain, programmatic controlled, accepted controlled, native engine and unnamed no-ops), `define()` (no import-time registration, idempotent, children moved in and handed back). The DOM double fires an async `toggle` on every `open` change, as a browser does.
+
+### Follow-ups
+
+- Real-browser proof of the fallback and of pre-hydration belongs to `.f` (forced-false run, hydrate spec).
