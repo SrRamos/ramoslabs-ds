@@ -122,7 +122,9 @@ export interface RuntimeConfig {
 
 /** The part of a runtime that is serialized from the server render to the client. */
 export type SerializedRuntime = Pick<SJRuntime, 'locale' | 'dir' | 'idPrefix' | 'density'> & {
-  readonly supports: SupportsMap;
+  /** Present only when the server runtime was created with explicit `supports`. */
+  readonly supports?: SupportsMap;
+  readonly supportsExplicit?: true;
 };
 
 export const noSupport: SupportsMap = Object.freeze(
@@ -212,7 +214,9 @@ export function serializeRuntime(r: SJRuntime): SerializedRuntime {
     dir: r.dir,
     idPrefix: r.idPrefix,
     density: r.density,
-    supports: r.supports,
+    // A default server runtime knows nothing about the client: omit `supports` so the client
+    // rebuilt from this value is not explicit and detects after mount.
+    ...(r.supportsExplicit && { supports: r.supports, supportsExplicit: true as const }),
   };
 }
 

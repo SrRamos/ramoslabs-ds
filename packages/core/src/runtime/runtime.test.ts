@@ -214,3 +214,26 @@ describe('supportsExplicit', () => {
     expect(withSupports(forced, { popover: true }).supportsExplicit).toBe(true);
   });
 });
+
+describe('SSR round trip and detection', () => {
+  const wire = (r: ReturnType<typeof createRuntime>) =>
+    JSON.parse(JSON.stringify(serializeRuntime(r)));
+
+  it('a default server leads to a non-explicit client that detects', () => {
+    const w = wire(createRuntime());
+    expect(w.supports).toBeUndefined();
+    expect(w.supportsExplicit).toBeUndefined();
+    const client = createRuntime({ ...w, target: 'client' });
+    expect(client.supportsExplicit).toBeUndefined();
+    expect(withSupports(client, detectSupports(fullEnv())).supports.popover).toBe(true);
+  });
+
+  it('an explicit server keeps the client values and stays explicit', () => {
+    const w = wire(createRuntime({ supports: { popover: true } }));
+    expect(w.supportsExplicit).toBe(true);
+    const client = createRuntime({ ...w, target: 'client' });
+    expect(client.supportsExplicit).toBe(true);
+    expect(client.supports.popover).toBe(true);
+    expect(client.supports.detailsName).toBe(false);
+  });
+});
