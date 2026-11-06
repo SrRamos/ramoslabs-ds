@@ -1,0 +1,4 @@
+{
+  "$comment": "Reviewed list of Lucide icons the adapters themselves need (ADR-016). packages/icons/scripts/generate.mjs emits src/generated/icons/<name>.ts into the vue, react and vanilla packages from the pinned lucide-static; icons:check fails on drift. Adding a name is a reviewed change.",
+  "icons": ["circle-alert"]
+}

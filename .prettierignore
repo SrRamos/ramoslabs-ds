@@ -33,3 +33,8 @@ AUDIT-*.md
 # Committed codegen output of @ramoslabs/icons, byte-checked against lucide-static by icons:check.
 packages/icons/src/generated
 packages/icons/THIRD-PARTY-NOTICES.md
+# System-icon copies emitted by packages/icons (byte-checked against lucide-static by icons:check).
+packages/*/src/generated/icons
+packages/vue/THIRD-PARTY-NOTICES.md
+packages/react/THIRD-PARTY-NOTICES.md
+packages/vanilla/THIRD-PARTY-NOTICES.md

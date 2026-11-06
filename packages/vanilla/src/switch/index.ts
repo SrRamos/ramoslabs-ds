@@ -147,17 +147,18 @@ export function mountSwitch(
   let mounted: Instance<VanillaSwitchProps> | undefined;
   const spec = createSpec(() => mounted?.update(latest));
   const instance = (mounted = host.mount(el, spec, props));
-  const control = el.querySelector('input') ?? undefined;
   const update = instance.update.bind(instance);
   instance.update = (next) => {
     latest = next;
     update(next);
   };
-  return Object.assign(instance, {
-    get control() {
-      return instance.destroyed ? undefined : control;
-    },
-  }) as SwitchInstance;
+  // defineProperty, not Object.assign: assign would read the getter once and copy its value, freezing it.
+  Object.defineProperty(instance, 'control', {
+    get: () => (instance.destroyed ? undefined : (el.querySelector('input') ?? undefined)),
+    enumerable: true,
+    configurable: true,
+  });
+  return instance as SwitchInstance;
 }
 
 const ATTRS = ['checked', 'disabled', 'name', 'value', 'label', 'id'] as const;

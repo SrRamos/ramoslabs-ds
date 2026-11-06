@@ -246,6 +246,16 @@ describe('SJCheckbox vanilla', () => {
     expect(inst.destroyed).toBe(true);
   });
 
+  it('`control` is a live accessor: undefined after destroy, not a value frozen at mount', () => {
+    const { host } = setup();
+    const root = mk();
+    const inst = mountCheckbox(host, asEl(root), {});
+    expect(inst.control).toBe(root.querySelector('input') as unknown as HTMLInputElement);
+    expect(Object.getOwnPropertyDescriptor(inst, 'control')?.get).toBeTypeOf('function');
+    inst.destroy();
+    expect(inst.control).toBeUndefined();
+  });
+
   it('registers no pointer or touch listener (activation is native)', () => {
     const { host } = setup();
     const root = mk();
