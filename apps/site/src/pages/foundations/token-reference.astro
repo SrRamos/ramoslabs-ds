@@ -139,7 +139,7 @@ const ramps = {
     </div>
   ))}
 
-  <table class="token-table" style={{ 'margin-top': '1.25rem' }}>
+  <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table" style={{ 'margin-top': '1.25rem' }}>
     <thead>
       <tr><th>Preview</th><th>Token</th><th>Value</th></tr>
     </thead>
@@ -155,7 +155,7 @@ const ramps = {
         <td><span class="token-value">#000000</span></td>
       </tr>
     </tbody>
-  </table>
+  </table></div>
 </div>
 
 <div class="token-ref-section" id="semantic-color">
@@ -167,7 +167,7 @@ const ramps = {
   <div class="two-col-layout">
     <div>
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Brand</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
@@ -187,10 +187,10 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
 
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Text</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
@@ -208,10 +208,10 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
 
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Surface and Border</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
@@ -231,7 +231,7 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
 
       <div class="callout">
         <div class="callout-title">Borders are dividers, not control outlines</div>
@@ -243,7 +243,7 @@ const ramps = {
 
     <div>
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Feedback</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
@@ -273,7 +273,7 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
   </div>
 </div>
@@ -283,7 +283,7 @@ const ramps = {
   <p class="token-ref-lede">
     A single scale for margin, padding, and gap. One <code>--space-*</code> step in, one step out, so rhythm stays consistent across every component.
   </p>
-  <table class="token-table">
+  <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
     <thead>
       <tr><th style={{ width: '150px' }}>Preview</th><th>Token</th><th>Value</th></tr>
     </thead>
@@ -311,7 +311,7 @@ const ramps = {
         </tr>
       ))}
     </tbody>
-  </table>
+  </table></div>
 </div>
 
 <div class="two-col-layout">
@@ -320,7 +320,7 @@ const ramps = {
     <p class="token-ref-lede">
       Eight steps. <code>sm</code> at 6px is the signature control radius. <code>pill</code> is the fully rounded accent, for chips, tags, and toggles, never for wide buttons or cards.
     </p>
-    <table class="token-table">
+    <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
       <thead>
         <tr><th>Preview</th><th>Token</th><th>Value</th></tr>
       </thead>
@@ -342,7 +342,7 @@ const ramps = {
           </tr>
         ))}
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <div class="token-ref-section" id="state">
@@ -350,7 +350,7 @@ const ramps = {
     <p class="token-ref-lede">
       Interaction feedback is opacity, not elevation. Each token is the opacity of an indigo overlay painted on a control for hover, focus, press, and drag. Numbers only, so the same layer works on any surface color.
     </p>
-    <table class="token-table">
+    <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
       <thead>
         <tr><th>Preview</th><th>Token</th><th>Value</th><th>Role</th></tr>
       </thead>
@@ -369,7 +369,7 @@ const ramps = {
           </tr>
         ))}
       </tbody>
-    </table>
+    </table></div>
   </div>
 </div>
 
@@ -378,7 +378,7 @@ const ramps = {
   <p class="token-ref-lede">
     Three elevation levels plus a focus ring. Each level is two soft, indigo-tinted layers rather than one hard black drop. Shadow means height, never state. See <strong>Foundations / Shadows</strong> for the full rationale.
   </p>
-  <table class="token-table">
+  <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
     <thead>
       <tr><th>Preview</th><th>Token</th><th>Value</th></tr>
     </thead>
@@ -404,7 +404,7 @@ const ramps = {
         <td><span class="token-value">0 0 0 2px #ffffff, 0 0 0 4px #4f46e5</span></td>
       </tr>
     </tbody>
-  </table>
+  </table></div>
 </div>
 
 <div class="token-ref-section" id="typography">
@@ -416,17 +416,17 @@ const ramps = {
   <div class="two-col-layout">
     <div>
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Families</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           <tr><td><span class="token-name" data-token="--font-family-sans">--font-family-sans</span></td><td><span class="token-value" style={{ 'font-family': "'Plus Jakarta Sans', sans-serif" }}>Plus Jakarta Sans, system-ui, sans-serif</span></td></tr>
           <tr><td><span class="token-name" data-token="--font-family-display">--font-family-display</span></td><td><span class="token-value" style={{ 'font-family': "'Plus Jakarta Sans', sans-serif" }}>'Plus Jakarta Sans', system-ui, sans-serif</span></td></tr>
           <tr><td><span class="token-name" data-token="--font-family-alt">--font-family-alt</span></td><td><span class="token-value" style={{ 'font-family': "'Roboto', sans-serif" }}>Roboto, system-ui, sans-serif</span></td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Weights</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Sample</th><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
@@ -446,10 +446,10 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
 
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Line Height</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
         <tbody>
           {[
@@ -466,12 +466,12 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
 
     <div>
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '0.5rem', 'margin-bottom': '0.75rem' }}>Sizes</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
@@ -492,10 +492,10 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
 
       <h3 style={{ 'font-family': "'Plus Jakarta Sans', sans-serif", 'font-size': '0.9375rem', color: '#0f172a', 'margin-top': '2rem', 'margin-bottom': '0.75rem' }}>Letter Spacing</h3>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
         <tbody>
           {[
@@ -512,7 +512,7 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
   </div>
 </div>
@@ -521,7 +521,7 @@ const ramps = {
   <div class="token-ref-section" id="motion">
     <h2 class="token-ref-section-title"><Icon name="animation" /> Motion</h2>
     <p class="token-ref-lede">Three durations and five easing curves. Pair a short duration with an ease-out for enters, an ease-in for exits.</p>
-    <table class="token-table">
+    <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
       <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
       <tbody>
         {[
@@ -536,8 +536,8 @@ const ramps = {
           </tr>
         ))}
       </tbody>
-    </table>
-    <table class="token-table" style={{ 'margin-top': '1rem' }}>
+    </table></div>
+    <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table" style={{ 'margin-top': '1rem' }}>
       <thead><tr><th>Token</th><th>Value</th></tr></thead>
       <tbody>
         {[
@@ -553,14 +553,14 @@ const ramps = {
           </tr>
         ))}
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <div>
     <div class="token-ref-section" id="z-index" style={{ 'margin-top': '3rem' }}>
       <h2 class="token-ref-section-title"><Icon name="stacks" /> Z-Index Scale</h2>
       <p class="token-ref-lede">A stepped stacking order. Use the token, never a raw integer, so overlays never fight.</p>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
         <tbody>
           {[
@@ -581,13 +581,13 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
 
     <div class="token-ref-section" id="breakpoints">
       <h2 class="token-ref-section-title"><Icon name="devices" /> Breakpoints</h2>
       <p class="token-ref-lede">Minimum widths for the responsive scale. See <strong>Foundations / Responsive</strong> for usage.</p>
-      <table class="token-table">
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="token-table">
         <thead><tr><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
@@ -603,7 +603,7 @@ const ramps = {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
   </div>
 </div>
@@ -1123,7 +1123,7 @@ const ramps = {
   }
 
   @media (max-width: 900px) {
-    .two-col-layout { grid-template-columns: 1fr; }
+    .two-col-layout { grid-template-columns: minmax(0, 1fr); }
   }
 
   /* Callout */

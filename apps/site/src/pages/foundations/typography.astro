@@ -443,7 +443,7 @@ const page = pages.find((p) => p.id === 'typography')!
   }
 
   /* ---------- Scale ramp ---------- */
-  .ty-scale { display: grid; gap: 0.5rem; }
+  .ty-scale { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
   .ty-scale-row {
     display: flex;
     align-items: baseline;
@@ -601,6 +601,7 @@ const page = pages.find((p) => p.id === 'typography')!
   @media (max-width: 640px) {
     .ty-scale-row { flex-wrap: wrap; }
     .ty-scale-tok { min-width: 0; }
+    .ty-scale-sample { flex-basis: 100%; white-space: normal; overflow-wrap: anywhere; }
   }
 </style>
 </BaseLayout>

@@ -58,7 +58,7 @@ const page = pages.find((p) => p.id === 'spacing')!
     <div class="sp-ladder-row"><span class="sp-ladder-token">--space-32</span><span class="sp-ladder-value">128px</span><span class="sp-ladder-bar" style={{ width: '128px' }}></span></div>
   </div>
 
-  <table class="sp-table">
+  <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="sp-table">
     <thead>
       <tr><th>Token</th><th>rem</th><th>px</th><th>Typical use</th></tr>
     </thead>
@@ -78,7 +78,7 @@ const page = pages.find((p) => p.id === 'spacing')!
       <tr><td><code>--space-24</code></td><td class="sp-n">6rem</td><td class="sp-n">96px</td><td>Desktop section padding</td></tr>
       <tr><td><code>--space-32</code></td><td class="sp-n">8rem</td><td class="sp-n">128px</td><td>Hero spacing, the grand entrance</td></tr>
     </tbody>
-  </table>
+  </table></div>
 </div>
 
 <div class="sp-section">
@@ -125,7 +125,7 @@ const page = pages.find((p) => p.id === 'spacing')!
   <p class="sp-intro">
     Density is how tightly the same components pack. A <strong>comfortable</strong> default suits touch and reading; a <strong>compact</strong> mode fits more on screen for pointer-driven, data-dense views. You get there by stepping the interior spacing down the scale, never by inventing off-scale values.
   </p>
-  <table class="sp-table" style={{ 'margin-top': 0 }}>
+  <div class="tbl-scroll" tabindex="0" role="region" aria-label="Scrollable table"><table class="sp-table" style={{ 'margin-top': 0 }}>
     <thead>
       <tr><th>Mode</th><th>Interior step</th><th>When to apply</th></tr>
     </thead>
@@ -141,7 +141,7 @@ const page = pages.find((p) => p.id === 'spacing')!
         <td>Data tables, dashboards, admin tools, power-user views.</td>
       </tr>
     </tbody>
-  </table>
+  </table></div>
   <div class="sp-callout">
     <div class="sp-callout-mark">i</div>
     <div class="sp-callout-body">

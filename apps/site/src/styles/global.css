@@ -85,6 +85,15 @@ h4,
 h5,
 h6 {
   font-family: var(--font-family-display, 'Plus Jakarta Sans', system-ui, sans-serif);
+  text-wrap: balance;
+}
+
+/* Chromium's balance ignores forced line breaks, so a heading set one idea per line with <br> still orphans a word
+   ("You choose a / role"); pretty avoids the orphan there. */
+h1:has(br),
+h2:has(br),
+h3:has(br) {
+  text-wrap: pretty;
 }
 
 /* ---- Inline SVG icons (Material Symbols).
@@ -114,4 +123,20 @@ h6 {
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+/* Wide data tables scroll inside their own region instead of widening the page (the region is focusable so a
+   keyboard user can scroll it). */
+.tbl-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.tbl-scroll:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Long unbreakable strings (URLs, identifiers) wrap inside prose instead of widening the page on small screens. */
+.rl-main :where(p, li, dd, dt, blockquote, figcaption) {
+  overflow-wrap: break-word;
 }

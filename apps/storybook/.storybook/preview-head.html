@@ -44,5 +44,14 @@
   .sb-unstyled h2,
   .sb-unstyled h3,
   .sb-unstyled h4 {
+    text-wrap: balance;
+  }
+
+  /* Balance ignores forced <br> breaks and still orphans a word; pretty avoids the orphan. */
+  .sb-main-wrapper h1:has(br),
+  .sb-main-wrapper h2:has(br),
+  .sb-unstyled h1:has(br),
+  .sb-unstyled h2:has(br) {
+    text-wrap: pretty;
   }
 </style>

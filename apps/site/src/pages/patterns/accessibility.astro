@@ -808,6 +808,8 @@ const page = pages.find((p) => p.id === 'accessibility')!
   }
   .a11y-numbered li strong { color: var(--color-slate-900); }
   .a11y-numbered li code {
+    min-width: 0;
+    overflow-wrap: anywhere;
     background: var(--color-indigo-50);
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
