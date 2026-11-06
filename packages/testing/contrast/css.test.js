@@ -2,6 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   checkContrastMatrix,
+  extractLayerUses,
   extractPairs,
   extractUiPairs,
   formatFailure,
@@ -103,5 +104,50 @@ describe('extractUiPairs', () => {
         `@layer sj.state { .sj-x__root[data-state='on'] { background-color: #fff; } }`,
       ),
     ).toThrow(/tokens only/);
+  });
+});
+
+describe('extractLayerUses and the component/state layer pass (SHOULD-2)', () => {
+  const L = `
+@layer sj.component {
+  .sj-x__title { color: var(--color-text-heading); }
+  .sj-x__box { border-color: var(--color-slate-500); }
+  .sj-x__box::after { border-color: var(--color-white); }
+  .sj-x__title:disabled, .sj-x__title[data-disabled] { color: var(--color-slate-300); }
+  .sj-x__hint { color: var(--color-text-disabled); }
+  .sj-x__link { color: currentColor; }
+}
+@layer sj.variant {
+  .sj-x__icon[data-variant='a'] { color: var(--color-text-muted); }
+  .sj-x__root[data-variant='solid'][data-tone='primary'] { color: var(--color-white); }
+}
+@layer sj.state { @media (forced-colors: active) { .sj-x__box[data-state='on'] { color: CanvasText; } } }
+@layer sj.base { .sj-x__other { color: var(--color-slate-300); } }`;
+  it('reads color and border-color, skipping disabled, glyph borders, keywords, toned variants and other layers', () => {
+    expect(extractLayerUses(L).map((u) => `${u.part}:${u.prop}:${u.token}`)).toEqual([
+      'title:color:color-text-heading',
+      'box:border-color:color-slate-500',
+      'icon:color:color-text-muted',
+    ]);
+  });
+  it('passes the real tokens and fails a seeded slate-300 text and a too-light border', () => {
+    expect(checkContrastMatrix(tokens, { css: L }).failures.map(formatFailure)).toEqual([]);
+    const text = L.replace('var(--color-text-heading)', 'var(--color-slate-300)');
+    const f1 = checkContrastMatrix(tokens, { css: text }).failures;
+    expect(f1.filter((f) => f.id.startsWith('x/title/component/text-on-')).length).toBe(3);
+    expect(f1[0].min).toBe(4.5);
+    const border = L.replace(
+      'border-color: var(--color-slate-500)',
+      'border-color: var(--color-slate-300)',
+    );
+    const f2 = checkContrastMatrix(tokens, { css: border }).failures;
+    expect(
+      f2.filter((f) => f.id.startsWith('x/box/component/border-on-') && f.min === 3).length,
+    ).toBe(3);
+  });
+  it('rejects a raw color', () => {
+    expect(() => extractLayerUses(`@layer sj.state { .sj-x__a { color: #fff; } }`)).toThrow(
+      /tokens only/,
+    );
   });
 });

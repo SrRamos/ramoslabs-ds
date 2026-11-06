@@ -162,6 +162,68 @@ export function extractUiPairs(css) {
   return out;
 }
 
+/**
+ * @typedef {{ component: string, part: string, layer: string, selector: string, prop: 'color' | 'border-color', token: string }} CssLayerUse
+ * A `color` or `border-color` declared in a component or state layer (SHOULD-2). Each is checked against every
+ * page surface: `color` at 4.5:1, `border-color` at 3:1. Rules in `sj.variant` that name a `[data-tone]` belong
+ * to the variant matrix and are skipped here; toneless variant rules (state kinds) are read.
+ * Exempt (WCAG 1.4.3 / 1.4.11 inactive components): `--color-text-disabled`, and any selector with `:disabled`
+ * or `[data-disabled]`; `border-color` on `::before`/`::after` is a drawn glyph, not on the page. Keywords (`currentColor`, `inherit`, system colours, `transparent`) carry no token and
+ * are skipped; a raw hex or functional colour throws (tokens only).
+ */
+
+const LAYER_PASS = ['sj.component', 'sj.state', 'sj.variant'];
+
+/**
+ * @param {string} css built stylesheet
+ * @returns {CssLayerUse[]}
+ */
+export function extractLayerUses(css) {
+  const text = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  /** @type {CssLayerUse[]} */
+  const out = [];
+  /** @param {string} src @param {string} layer */
+  const walk = (src, layer) => {
+    for (const { prelude, body } of blocks(src)) {
+      if (prelude.startsWith('@layer')) walk(body, prelude.replace('@layer', '').trim());
+      else if (prelude.startsWith('@media') || prelude.startsWith('@supports')) walk(body, layer);
+      else if (prelude.startsWith('@') || !LAYER_PASS.includes(layer)) continue;
+      else {
+        for (const d of splitTop(body, ';')) {
+          const i = d.indexOf(':');
+          if (i < 0) continue;
+          const prop = d.slice(0, i).trim();
+          if (prop !== 'color' && prop !== 'border-color') continue;
+          const v = d.slice(i + 1).trim();
+          if (/^(#|rgba?\(|hsla?\(|oklch\(|oklab\(|color\()/i.test(v))
+            throw new Error(`Layer CSS ${prop} "${v}" is not var(--color-*) (tokens only)`);
+          const token = /^var\(\s*--(color-[\w-]+)\s*\)$/.exec(v)?.[1];
+          if (!token || token === 'color-text-disabled') continue;
+          for (const sel of splitTop(prelude, ',')) {
+            if (/:disabled\b|\[data-disabled/.test(sel)) continue;
+            if (layer === 'sj.variant' && /\[data-tone/.test(sel)) continue;
+            // A border on a pseudo-element is a glyph drawn inside its part (checkmark on the checked fill):
+            // it is not on the page, and the component test proves it against the fill.
+            if (prop === 'border-color' && /::(before|after)\b/.test(sel)) continue;
+            const m = /\.sj-([a-z0-9-]+?)(?:__([a-z0-9-]+))?(?![a-z0-9_-])/.exec(sel);
+            if (!m) continue;
+            out.push({
+              component: m[1],
+              part: m[2] ?? 'root',
+              layer,
+              selector: sel.trim().replace(/\s+/g, ' '),
+              prop,
+              token,
+            });
+          }
+        }
+      }
+    }
+  };
+  walk(text, '');
+  return out;
+}
+
 /** @param {string | undefined} v @returns {string | undefined} token name, or 'transparent' */
 function tokenOf(v) {
   if (!v) return undefined;

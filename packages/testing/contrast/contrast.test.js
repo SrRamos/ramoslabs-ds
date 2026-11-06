@@ -1,5 +1,5 @@
 // W1-203: seeded token changes fail with pair, ratio and token; the real tokens pass.
-import { mkdtempSync, readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -12,6 +12,7 @@ import {
   checkContrastMatrix,
   compositeOver,
   contrastRatio,
+  extractLayerUses,
   formatFailure,
   loadTokens,
   meets,
@@ -85,6 +86,36 @@ describe('contrast matrix (light theme)', () => {
     );
     expect(weak).not.toBe(css);
     expect(checkContrastMatrix(tokens, { css: weak }).failures.length).toBeGreaterThan(0);
+  });
+
+  it('reads component and state layer colours from every registered stylesheet, with no per-component list', () => {
+    const srcDir = new URL('../../css/src', import.meta.url).pathname;
+    const seen = new Set(extractLayerUses(css).map((u) => u.component));
+    const { pairs } = checkContrastMatrix(tokens, { css });
+    for (const file of readdirSync(srcDir).filter((f) => f.endsWith('.css'))) {
+      const own = extractLayerUses(readFileSync(join(srcDir, file), 'utf8'));
+      for (const c of new Set(own.map((u) => u.component))) {
+        expect(seen.has(c), `${file}: ${c} reaches the built stylesheet`).toBe(true);
+        expect(
+          pairs.some(
+            (p) =>
+              p.id.startsWith(`${c}/`) &&
+              /\/(component|state|variant)\/(text|border)-on-/.test(p.id),
+          ),
+        ).toBe(true);
+      }
+    }
+    expect(seen.has('state')).toBe(true);
+  });
+
+  it('a seeded slate-300 text colour in the built css fails the layer pass', () => {
+    const weak = css.replace(
+      /(\.sj-state__description\s*\{[^}]*color:\s*)var\(--color-text-secondary\)/,
+      '$1var(--color-slate-300)',
+    );
+    expect(weak).not.toBe(css);
+    const ids = checkContrastMatrix(tokens, { css: weak }).failures.map((f) => f.id);
+    expect(ids).toContain('state/description/component/text-on-color-surface');
   });
 
   it('expands the transparent outline and ghost RECIPE fills across every surface', () => {

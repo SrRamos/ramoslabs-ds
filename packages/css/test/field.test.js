@@ -5,12 +5,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import stylelint from 'stylelint';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import {
-  SURFACES,
-  checkContrastMatrix,
-  contrastRatio,
-  loadTokens,
-} from '../../testing/contrast/index.js';
+import { checkContrastMatrix, extractLayerUses, loadTokens } from '../../testing/contrast/index.js';
 import { checkStylesheets, cssParts } from '../src/_template/generate.mjs';
 import { buildReal, doc, launch, srcDir } from './helpers.js';
 
@@ -21,18 +16,6 @@ const contract = JSON.parse(
 const realContracts = new URL('../../contracts/contracts', import.meta.url).pathname;
 const configFile = new URL('../.stylelintrc.json', import.meta.url).pathname;
 const fieldCss = readFileSync(join(srcDir, 'field.css'), 'utf8');
-
-/** Every `color: var(--color-*)` use with its selector. All of them are text on the page: 4.5:1. */
-function colourUses(src) {
-  const text = src.replace(/\/\*[\s\S]*?\*\//g, '');
-  const out = [];
-  for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-    for (const d of m[2].matchAll(/(?<![-\w])color:\s*var\(--(color-[\w-]+)\)/g)) {
-      out.push({ token: d[1], selector: m[1].trim() });
-    }
-  }
-  return out;
-}
 
 /** A field as core emits it. */
 function fieldHtml({ error = '', disabled = false, hint = true } = {}) {
@@ -96,24 +79,16 @@ describe('anatomy and build', () => {
 });
 
 describe('contrast on every page surface (WCAG 1.4.3 text 4.5:1)', () => {
-  it('every text colour the field stylesheet uses clears 4.5:1 on every surface', () => {
-    const uses = colourUses(fieldCss);
+  it('the shared pass reads the field text colours', () => {
+    const uses = extractLayerUses(css).filter((u) => u.component === 'field');
     expect(uses.map((u) => u.token)).toEqual(
-      expect.arrayContaining([
-        'color-text-heading',
-        'color-text-secondary',
-        'color-error-text',
-        'color-text-muted',
-      ]),
+      expect.arrayContaining(['color-text-heading', 'color-text-secondary', 'color-error-text']),
     );
-    for (const u of uses) {
-      for (const s of SURFACES) {
-        expect(
-          contrastRatio(tokens[u.token], tokens[s]),
-          `${u.token} on ${s} (${u.selector})`,
-        ).toBeGreaterThanOrEqual(4.5);
-      }
-    }
+    // The disabled label (color-text-muted) is exempt from the pass as an inactive component; the matrix
+    // still holds muted text to 4.5:1 on every surface through TEXT_ROLES.
+    expect(uses.some((u) => u.token === 'color-text-muted')).toBe(false);
+    const ids = checkContrastMatrix(tokens).pairs.map((p) => p.id);
+    expect(ids).toContain('text/color-text-muted-on-color-surface');
   });
 
   it('the shared contrast matrix reports no failure for a field id', () => {
@@ -122,13 +97,13 @@ describe('contrast on every page surface (WCAG 1.4.3 text 4.5:1)', () => {
   });
 
   it('a seeded weak hint colour (slate 400) fails the text floor on white', () => {
-    const seeded = fieldCss.replace(
+    const seeded = css.replace(
       /(\.sj-field__hint\s*\{[^}]*color:\s*)var\(--color-text-secondary\)/,
       '$1var(--color-slate-400)',
     );
-    expect(seeded).not.toBe(fieldCss);
-    expect(colourUses(seeded).some((u) => u.token === 'color-slate-400')).toBe(true);
-    expect(contrastRatio(tokens['color-slate-400'], tokens['color-white'])).toBeLessThan(4.5);
+    expect(seeded).not.toBe(css);
+    const ids = checkContrastMatrix(tokens, { css: seeded }).failures.map((f) => f.id);
+    expect(ids).toContain('field/hint/component/text-on-color-surface');
   });
 });
 

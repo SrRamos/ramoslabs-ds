@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import stylelint from 'stylelint';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { SURFACES, contrastRatio, loadTokens } from '../../testing/contrast/index.js';
+import { checkContrastMatrix, extractLayerUses, loadTokens } from '../../testing/contrast/index.js';
 import { checkStylesheets, cssParts } from '../src/_template/generate.mjs';
 import { buildReal, doc, launch, srcDir } from './helpers.js';
 
@@ -21,26 +21,6 @@ const contract = JSON.parse(
 const realContracts = new URL('../../contracts/contracts', import.meta.url).pathname;
 const configFile = new URL('../.stylelintrc.json', import.meta.url).pathname;
 const disclosureCss = readFileSync(join(srcDir, 'disclosure.css'), 'utf8');
-
-/**
- * Token colours used by the stylesheet, with the WCAG minimum each one needs (chevron 3:1, text 4.5:1).
- * `color-text-disabled` is exempt (WCAG 1.4.3: inactive components), the same exemption the shared matrix makes.
- */
-function colourUses(src) {
-  const text = src.replace(/\/\*[\s\S]*?\*\//g, '');
-  const out = [];
-  for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-    const selector = m[1].trim();
-    const chevron = /::after/.test(selector);
-    for (const d of m[2].matchAll(
-      /(?<![-\w])(?:color|border-color|border-(?:inline|block)-end):\s*var\(--(color-[\w-]+)\)/g,
-    )) {
-      if (d[1] === 'color-text-disabled') continue;
-      out.push({ token: d[1], selector, min: chevron ? 3 : 4.5 });
-    }
-  }
-  return out;
-}
 
 /**
  * The disclosure as core emits it: root <details> (class, data-part, data-state, optional open/name), summary trigger,
@@ -171,27 +151,25 @@ describe('target size and focus (ADR-008, WCAG 2.4.13) on the summary', () => {
 });
 
 describe('colour pairs on every page surface (WCAG 1.4.3 text 4.5:1, 1.4.11 chevron 3:1)', () => {
-  it('every colour the stylesheet uses clears its minimum on every surface', () => {
-    const uses = colourUses(disclosureCss);
+  it('the shared contrast matrix reads the text and chevron colours and reports no failure', () => {
+    const uses = extractLayerUses(css).filter((u) => u.component === 'disclosure');
     expect(uses.length).toBeGreaterThan(0);
-    for (const u of uses) {
-      for (const s of SURFACES) {
-        const ratio = contrastRatio(tokens[u.token], tokens[s]);
-        expect(ratio, `${u.token} on ${s} (${u.selector})`).toBeGreaterThanOrEqual(u.min);
-      }
-    }
+    expect(uses.some((u) => u.part === 'trigger' && /::after/.test(u.selector))).toBe(true);
+    expect(uses.some((u) => u.token === 'color-text-disabled')).toBe(false); // inactive: exempt
+    const { failures } = checkContrastMatrix(tokens, { css });
+    expect(failures.filter((f) => f.id.startsWith('disclosure'))).toEqual([]);
   });
 
-  it('a seeded weak chevron colour (slate 300) fails the 3:1 floor on every surface', () => {
-    const seeded = disclosureCss.replace(
+  it('a seeded weak chevron colour (slate 300) fails on every surface', () => {
+    const seeded = css.replace(
       /(\.sj-disclosure__trigger::after\s*\{[^}]*?)color:\s*var\(--color-text-secondary\)/,
       '$1color: var(--color-slate-300)',
     );
-    expect(seeded).not.toBe(disclosureCss);
-    const uses = colourUses(seeded).filter((u) => u.token === 'color-slate-300');
-    expect(uses.length).toBeGreaterThan(0);
-    for (const s of SURFACES)
-      expect(contrastRatio(tokens['color-slate-300'], tokens[s])).toBeLessThan(3);
+    expect(seeded).not.toBe(css);
+    const f = checkContrastMatrix(tokens, { css: seeded }).failures.filter((x) =>
+      x.id.startsWith('disclosure/trigger/component/text-on-'),
+    );
+    expect(f).toHaveLength(3);
   });
 });
 
