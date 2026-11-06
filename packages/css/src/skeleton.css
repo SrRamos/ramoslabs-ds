@@ -1,0 +1,203 @@
+/* sj-skeleton: SJSkeleton stylesheet. Generated from src/_template, then authored. Tokens only (stylelint sj/* rules enforce it).
+   Parts (contract anatomy): root <div> (a shape or the group), line <div> (one text line).
+   Core emits the root class `sj-skeleton` (no `__root`), so the root selector names both, as sj-state does; issue #88.
+   Hooks from core: data-shape (group | text | circle | rect | block), data-lines, data-ratio, data-size, data-animation,
+   and on the group data-state (pending | visible | holding | idle) plus aria-busy.
+   Colour (decision): the fill is --skeleton-color-base (slate 200) with a --skeleton-color-highlight (slate 100) sweep. A placeholder
+   is decorative: it is aria-hidden and the loading text/announcement carries the meaning, so WCAG 1.4.11 (3:1 for UI components and
+   graphics required to understand content) does not apply and the fill is deliberately quiet, as in Material, Carbon and Polaris.
+   Where structure must stay perceivable (forced colors, which removes backgrounds) a 1px system-colour border draws the shape.
+   Layout: a group lays its placeholder out at once but keeps it invisible while pending (visibility), so it reserves the space and
+   swapping the content in shifts nothing (CLS 0). The delay and minimum duration are JS timing over the motion.skeleton tokens.
+   Layers: structure in sj.component, the pending/visible rules in sj.state (last layer, with reduced motion and forced colors). */
+
+@layer sj.component {
+  :is(.sj-skeleton, .sj-skeleton__root) {
+    --sj-skeleton-fill: var(--skeleton-color-base);
+    display: block;
+    box-sizing: border-box;
+    max-inline-size: 100%;
+  }
+
+  /* The container is plain layout; it paints nothing. */
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='group'] {
+    background: none;
+  }
+
+  /* Every drawn shape: a quiet fill with a one-pass sweep (see the keyframes and the shimmer rule below). */
+  :is(.sj-skeleton, .sj-skeleton__root):is(
+    [data-shape='circle'],
+    [data-shape='rect'],
+    [data-shape='block']
+  ),
+  .sj-skeleton__line {
+    background-color: var(--sj-skeleton-fill);
+    background-image: linear-gradient(
+      90deg,
+      transparent 25%,
+      var(--skeleton-color-highlight) 50%,
+      transparent 75%
+    );
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    animation: sj-skeleton-shimmer var(--motion-skeleton-shimmer) var(--easing-in-out) infinite;
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-animation='none']:is(
+      [data-shape='circle'],
+      [data-shape='rect'],
+      [data-shape='block']
+    ),
+  :is(.sj-skeleton, .sj-skeleton__root)[data-animation='none'] .sj-skeleton__line {
+    background-image: none;
+    animation: none;
+  }
+
+  /* text: a stack of lines; the last one is shorter whenever there is more than one. */
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='text'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    inline-size: 100%;
+  }
+
+  .sj-skeleton__line {
+    block-size: var(--skeleton-line-height);
+    border-radius: var(--radius-xs);
+  }
+
+  .sj-skeleton__line:last-child:not(:first-child) {
+    inline-size: var(--skeleton-line-last-width);
+  }
+
+  /* circle: an avatar. */
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='circle'] {
+    flex: none;
+    inline-size: var(--skeleton-avatar-md);
+    block-size: var(--skeleton-avatar-md);
+    border-radius: var(--radius-pill);
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='circle'][data-size='sm'] {
+    inline-size: var(--skeleton-avatar-sm);
+    block-size: var(--skeleton-avatar-sm);
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='circle'][data-size='lg'] {
+    inline-size: var(--skeleton-avatar-lg);
+    block-size: var(--skeleton-avatar-lg);
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='circle'][data-size='xl'] {
+    inline-size: var(--skeleton-avatar-xl);
+    block-size: var(--skeleton-avatar-xl);
+  }
+
+  /* rect: a media box. The aspect ratio reserves the height before any media arrives. */
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='rect'] {
+    inline-size: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='rect'][data-ratio='1/1'] {
+    aspect-ratio: 1 / 1;
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='rect'][data-ratio='4/3'] {
+    aspect-ratio: 4 / 3;
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='rect'][data-ratio='3/2'] {
+    aspect-ratio: 3 / 2;
+  }
+
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='rect'][data-ratio='21/9'] {
+    aspect-ratio: 21 / 9;
+  }
+
+  /* block: a free box. Size it with --sj-skeleton-width and --sj-skeleton-height (any length or token). */
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='block'] {
+    inline-size: var(--sj-skeleton-width, 100%);
+    block-size: var(--sj-skeleton-height, var(--skeleton-block-height));
+    border-radius: var(--radius-md);
+  }
+
+  @keyframes sj-skeleton-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+
+    to {
+      background-position: 0 0;
+    }
+  }
+
+  /* Direction: the sweep follows reading order, so it runs the other way in RTL. `:dir()` follows the computed
+     direction; engines without it fall back to the `dir` attribute on an ancestor (two blocks, as disclosure.css). */
+  @supports selector(:dir(rtl)) {
+    :is(.sj-skeleton, .sj-skeleton__root):dir(rtl):is(
+        [data-shape='circle'],
+        [data-shape='rect'],
+        [data-shape='block']
+      ),
+    :is(.sj-skeleton, .sj-skeleton__root):dir(rtl) .sj-skeleton__line {
+      animation-direction: reverse;
+    }
+  }
+
+  @supports not selector(:dir(rtl)) {
+    [dir='rtl']
+      :is(.sj-skeleton, .sj-skeleton__root):is(
+        [data-shape='circle'],
+        [data-shape='rect'],
+        [data-shape='block']
+      ),
+    [dir='rtl'] :is(.sj-skeleton, .sj-skeleton__root) .sj-skeleton__line {
+      animation-direction: reverse;
+    }
+  }
+}
+
+@layer sj.state {
+  /* pending: laid out (it reserves the space) but invisible until the delay has passed, so a fast load never flashes. */
+  :is(.sj-skeleton, .sj-skeleton__root)[data-shape='group'][data-state='pending'] {
+    visibility: hidden;
+  }
+
+  /* No script, no timer: show the placeholder (the server render of a group starts pending). */
+  @media (scripting: none) {
+    :is(.sj-skeleton, .sj-skeleton__root)[data-shape='group'][data-state='pending'] {
+      visibility: visible;
+    }
+  }
+
+  /* Reduced motion (WCAG 2.2.2, ADR-009): no sweep at all, a flat fill. The base net only zeroes durations, which would
+     leave a frozen gradient, so the sweep is removed here. */
+  @media (prefers-reduced-motion: reduce) {
+    :is(.sj-skeleton, .sj-skeleton__root):is(
+      [data-shape='circle'],
+      [data-shape='rect'],
+      [data-shape='block']
+    ),
+    .sj-skeleton__line {
+      background-image: none;
+      animation: none;
+    }
+  }
+
+  /* Forced colors (ADR-009): backgrounds are replaced, so draw each shape with a border and drop the sweep. */
+  @media (forced-colors: active) {
+    :is(.sj-skeleton, .sj-skeleton__root):is(
+      [data-shape='circle'],
+      [data-shape='rect'],
+      [data-shape='block']
+    ),
+    .sj-skeleton__line {
+      border: var(--border-width-hairline) solid CanvasText;
+      background-image: none;
+      animation: none;
+    }
+  }
+}
