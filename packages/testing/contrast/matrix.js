@@ -11,9 +11,9 @@
 import { THRESHOLDS, contrastRatio } from './wcag.js';
 import { extractLayerUses, extractPairs, extractUiPairs } from './css.js';
 
-export const VARIANTS = ['solid', 'soft', 'outline', 'ghost'];
+export const VARIANTS = ['solid', 'soft', 'outline', 'ghost', 'link'];
 export const TONES = ['primary', 'neutral', 'success', 'warning', 'error', 'info'];
-export const SIZES = ['sm', 'md', 'lg'];
+export const SIZES = ['xs', 'sm', 'md', 'lg'];
 
 /** Page surfaces a control can sit on (light theme). */
 export const SURFACES = ['color-surface', 'color-surface-secondary', 'color-background'];
@@ -27,10 +27,10 @@ export const SURFACES = ['color-surface', 'color-surface-secondary', 'color-back
 export const RECIPE = {
   solid: {
     primary: { fg: 'color-white', bg: 'color-primary' },
-    neutral: { fg: 'color-white', bg: 'color-slate-800' },
-    success: { fg: 'color-white', bg: 'color-emerald-700' },
+    neutral: { fg: 'color-white', bg: 'color-slate-900' },
+    success: { fg: 'color-white', bg: 'color-emerald-800' },
     warning: { fg: 'color-slate-900', bg: 'color-amber-500' },
-    error: { fg: 'color-white', bg: 'color-error-strong' },
+    error: { fg: 'color-white', bg: 'color-red-700' },
     info: { fg: 'color-white', bg: 'color-blue-700' },
   },
   soft: {
@@ -52,6 +52,14 @@ export const RECIPE = {
   ghost: {
     primary: { fg: 'color-primary', bg: 'transparent' },
     neutral: { fg: 'color-text-body', bg: 'transparent' },
+    success: { fg: 'color-success-text', bg: 'transparent' },
+    warning: { fg: 'color-warning-text', bg: 'transparent' },
+    error: { fg: 'color-error-text', bg: 'transparent' },
+    info: { fg: 'color-info-text', bg: 'transparent' },
+  },
+  link: {
+    primary: { fg: 'color-primary', bg: 'transparent' },
+    neutral: { fg: 'color-text-heading', bg: 'transparent' },
     success: { fg: 'color-success-text', bg: 'transparent' },
     warning: { fg: 'color-warning-text', bg: 'transparent' },
     error: { fg: 'color-error-text', bg: 'transparent' },

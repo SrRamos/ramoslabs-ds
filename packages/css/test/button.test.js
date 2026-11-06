@@ -9,6 +9,8 @@ import {
   TONES,
   VARIANTS,
   checkContrastMatrix,
+  compositeOver,
+  contrastRatio,
   extractPairs,
   formatFailure,
   loadTokens,
@@ -19,7 +21,14 @@ import { buildReal, doc, launch, srcDir } from './helpers.js';
 const tokens = loadTokens();
 const source = readFileSync(`${srcDir}/button.css`, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
 const contractsDir = fileURLToPath(new URL('../../contracts/contracts', import.meta.url));
-const SIZES = ['sm', 'md', 'lg'];
+const SIZES = ['xs', 'sm', 'md', 'lg'];
+/** Direction B: visual height, label size and inline padding per size (px). */
+const B = {
+  xs: { h: 24, fs: 12, px: 8 },
+  sm: { h: 32, fs: 13, px: 12 },
+  md: { h: 36, fs: 14, px: 14 },
+  lg: { h: 44, fs: 15, px: 20 },
+};
 
 let b;
 let css;
@@ -85,7 +94,7 @@ describe('contrast from the built CSS', () => {
   it('passes: every variant x tone text pair at 4.5:1, outline boundary at 3:1', () => {
     expect(failures.map(formatFailure)).toEqual([]);
   });
-  it('reads all 24 variant x tone combos at rest, hover and active from the CSS, not RECIPE', () => {
+  it('reads all 30 variant x tone combos at rest, hover and active from the CSS, not RECIPE', () => {
     const fromCss = pairs.filter((p) => p.source === 'css' && p.id.startsWith('button/'));
     for (const v of VARIANTS)
       for (const t of TONES)
@@ -103,12 +112,12 @@ describe('contrast from the built CSS', () => {
   it('a seeded weak fill, hover and outline border fail with the pair and token', () => {
     const bad = (from, to) => checkContrastMatrix(tokens, { css: css.replace(from, to) }).failures;
     const solid = bad(
-      /(data-variant='solid'\]\[data-tone='error'\]\s*\{[^}]*?background-color: )var\(--color-error-strong\)/,
+      /(data-variant='solid'\]\[data-tone='error'\]\s*\{[^}]*?background-color: )var\(--color-red-700\)/,
       '$1var(--color-red-200)',
     );
     expect(solid.map((f) => f.id)).toContain('button/solid/error/text');
     const hover = bad(
-      /(data-variant='solid'\]\[data-tone='success'\]:hover\s*\{\s*background-color: )var\(--color-emerald-800\)/,
+      /(data-variant='solid'\]\[data-tone='success'\]:hover\s*\{\s*background-color: )var\(--color-emerald-900\)/,
       '$1var(--color-emerald-200)',
     );
     expect(hover.map((f) => f.id)).toContain('button/solid/success/hover/text');
@@ -121,9 +130,9 @@ describe('contrast from the built CSS', () => {
 });
 
 describe('real cascade matches the extractor', () => {
-  it('computed color, fill and border equal the extracted tokens for all 72 combos', async () => {
+  it('computed color, fill and border equal the extracted tokens for all 90 combos', async () => {
     const pairs = extractPairs(css).filter((p) => p.component === 'button');
-    expect(pairs).toHaveLength(72);
+    expect(pairs).toHaveLength(90);
     const body = VARIANTS.flatMap((v) =>
       TONES.map(
         (t) =>
@@ -147,31 +156,182 @@ describe('real cascade matches the extractor', () => {
   });
 });
 
-describe('target size (ADR-008)', () => {
-  it('every button, link, disabled link, small and icon-only target is at least 44px', async () => {
-    const page = await open();
-    for (const id of ['root', 'link', 'dlink', 'sm', 'lg', 'icon', 'off', 'long']) {
-      const r = await box(page, id);
-      expect(r.height, id).toBeGreaterThanOrEqual(44);
-      expect(r.width, id).toBeGreaterThanOrEqual(44);
+describe('target size (WCAG 2.5.8 visual floor, 44px touch hit area)', () => {
+  const SPREAD = SIZES.map(
+    (z) =>
+      `<div style="padding:40px 120px"><button id="t-${z}" class="sj-button__root" data-part="root" ${attrs('solid', 'primary', z)} type="button">Go</button></div><div style="padding:40px 120px"><button id="i-${z}" class="sj-button__root" data-part="root" ${attrs('outline', 'neutral', z)} data-icon-only="true" aria-label="More" type="button"><span class="sj-button__icon" data-part="icon" aria-hidden="true">+</span></button></div>`,
+  ).join('');
+  it('each size is its own visibly different height: 24 / 32 / 36 / 44 (never below the 24px floor)', async () => {
+    const page = await open({}, SPREAD);
+    const heights = [];
+    for (const z of SIZES) {
+      const r = await box(page, `t-${z}`);
+      expect(r.height, z).toBeCloseTo(B[z].h, 0);
+      expect(r.height, z).toBeGreaterThanOrEqual(24);
+      const fs = (await style(page, `t-${z}`, ['font-size']))['font-size'];
+      expect(Number.parseFloat(fs), z).toBe(B[z].fs);
+      const pad = (await style(page, `t-${z}`, ['padding-left']))['padding-left'];
+      expect(Number.parseFloat(pad), z).toBe(B[z].px);
+      heights.push(r.height);
     }
-    const icon = await box(page, 'icon');
-    expect(Math.abs(icon.width - icon.height)).toBeLessThan(1);
+    expect(new Set(heights).size).toBe(4);
+    expect(heights).toEqual([...heights].sort((x, y) => x - y));
   });
-  it('compact density keeps the 24px floor on fine pointers, 44px on coarse', async () => {
-    const body = `<div data-density="compact">${BODY}</div>`;
-    const fine = await open({}, body);
-    const r = await box(fine, 'sm');
-    expect(r.height).toBeGreaterThanOrEqual(24);
-    expect(r.height).toBeLessThan(44);
-    const coarse = await open({ hasTouch: true, isMobile: true }, body);
-    expect((await box(coarse, 'sm')).height).toBeGreaterThanOrEqual(44);
+  it('icon-only buttons are squares at every size', async () => {
+    const page = await open({}, SPREAD);
+    for (const z of SIZES) {
+      const r = await box(page, `i-${z}`);
+      expect(r.width, z).toBeCloseTo(B[z].h, 0);
+      expect(r.height, z).toBeCloseTo(B[z].h, 0);
+    }
+  });
+  it('radius is 6 / 6 / 8 / 10 and reads the tokens', async () => {
+    const page = await open({}, SPREAD);
+    const want = { xs: 6, sm: 6, md: 8, lg: 10 };
+    for (const z of SIZES)
+      expect(
+        Number.parseFloat(
+          (await style(page, `t-${z}`, ['border-top-left-radius']))['border-top-left-radius'],
+        ),
+        z,
+      ).toBe(want[z]);
+  });
+  it('a fine pointer has no hit-area extension and the 44px min-size is gone', async () => {
+    const page = await open({}, SPREAD);
+    for (const z of SIZES) {
+      const s = await style(page, `t-${z}`, ['min-height']);
+      expect(Number.parseFloat(s['min-height']), z).toBeLessThan(44 + (z === 'lg' ? 1 : -1));
+      const pseudo = await page.evaluate(
+        (i) => getComputedStyle(document.getElementById(i), '::before').content,
+        `t-${z}`,
+      );
+      expect(['none', 'normal']).toContain(pseudo);
+    }
+  });
+  it('a coarse pointer extends the hit area to 44px (elementFromPoint at the edges) without moving layout', async () => {
+    const fine = await open({}, SPREAD);
+    const coarse = await open({ hasTouch: true, isMobile: true }, SPREAD);
+    for (const id of SIZES.flatMap((z) => [`t-${z}`, `i-${z}`])) {
+      const f = await box(fine, id);
+      const c = await box(coarse, id);
+      // Layout is identical: the extension is a pseudo-element, not size.
+      expect(c.height, id).toBeCloseTo(f.height, 3);
+      expect(c.width, id).toBeCloseTo(f.width, 3);
+      const hits = await coarse.evaluate((i) => {
+        const el = document.getElementById(i);
+        const r = el.getBoundingClientRect();
+        const cx = r.x + r.width / 2;
+        const cy = r.y + r.height / 2;
+        const at = (x, y) => document.elementFromPoint(x, y) === el;
+        const half = 22; // half of the 44px target
+        return {
+          top: at(cx, cy - half + 1),
+          bottom: at(cx, cy + half - 1),
+          left: at(cx - half + 1, cy),
+          right: at(cx + half - 1, cy),
+          beyondTop: at(cx, cy - half - 2),
+          beyondBottom: at(cx, cy + half + 2),
+          w: r.width,
+          h: r.height,
+        };
+      }, id);
+      expect(hits.top && hits.bottom, `${id} vertical edges`).toBe(true);
+      expect(hits.left && hits.right, `${id} horizontal edges`).toBe(true);
+      // Never larger than 44px where the button is shorter than it (nothing hit 2px past the target).
+      if (hits.h <= 44) expect(hits.beyondTop || hits.beyondBottom, `${id} beyond`).toBe(false);
+    }
+  });
+  it('the link variant has no hit-area box (inline links are exempt from 2.5.8)', async () => {
+    const page = await open(
+      { hasTouch: true, isMobile: true },
+      `<p style="font-size:20px">Read <a id="lv" class="sj-button__link" data-part="link" href="#x" ${attrs('link', 'primary', 'md')}>the docs</a> now.</p>`,
+    );
+    expect((await style(page, 'lv', ['display']))['display']).toBe('inline');
+    const pseudo = await page.evaluate(
+      () => getComputedStyle(document.getElementById('lv'), '::before').content,
+    );
+    expect(['none', 'normal']).toContain(pseudo);
   });
   it('long labels wrap inside their box instead of overflowing', async () => {
     const page = await open();
     const r = await box(page, 'long');
     expect(r.width).toBeLessThanOrEqual(129);
-    expect(r.height).toBeGreaterThan(44);
+    expect(r.height).toBeGreaterThan(36);
+  });
+});
+
+describe('link variant', () => {
+  const P = `<p id="p" style="font-size:20px;line-height:1.6;font-family:serif">Read <a id="lv" class="sj-button__link" data-part="link" href="#x" ${attrs('link', 'primary', 'sm')}>the docs</a> or <button id="lb" class="sj-button__root" data-part="root" ${attrs('link', 'error', 'lg')} type="button">remove it</button>.</p>`;
+  it('is inline text: inherits font size and line, underlined at rest, no padding or height', async () => {
+    const page = await open({}, P);
+    for (const id of ['lv', 'lb']) {
+      const s = await style(page, id, [
+        'font-size',
+        'line-height',
+        'padding-top',
+        'padding-left',
+        'text-decoration-line',
+        'text-decoration-thickness',
+        'border-top-width',
+      ]);
+      expect(s['font-size'], id).toBe('20px');
+      expect(s['line-height'], id).toBe('32px');
+      expect(s['padding-top'], id).toBe('0px');
+      expect(s['padding-left'], id).toBe('0px');
+      expect(s['text-decoration-line'], id).toBe('underline');
+      expect(s['text-decoration-thickness'], id).toBe('1px');
+      expect(s['border-top-width'], id).toBe('0px');
+    }
+    // The anchor is a real inline box: it does not push the line taller than the paragraph's own line.
+    const p = await box(page, 'p');
+    expect(p.height).toBeLessThanOrEqual(33);
+  });
+  it('hover thickens the underline, press deepens it, focus keeps the ring', async () => {
+    const page = await open({}, P);
+    await page.hover('#lv');
+    await page.waitForTimeout(250);
+    expect(
+      (await style(page, 'lv', ['text-decoration-thickness']))['text-decoration-thickness'],
+    ).toBe('2px');
+    expect((await style(page, 'lv', ['color']))['color']).toBe(rgb(tokens['color-primary-dark']));
+    await page.mouse.move(0, 0);
+    await page.keyboard.press('Tab');
+    expect((await style(page, 'lv', ['box-shadow']))['box-shadow']).not.toBe('none');
+  });
+  it('disabled drops to the disabled color with a dotted underline', async () => {
+    const page = await open(
+      {},
+      `<p><a id="dl" class="sj-button__link" data-part="link" role="link" aria-disabled="true" data-disabled="true" ${attrs('link', 'primary', 'md')}>Off</a></p>`,
+    );
+    const s = await style(page, 'dl', [
+      'color',
+      'text-decoration-style',
+      'background-color',
+      'cursor',
+    ]);
+    expect(s.color).toBe(rgb(tokens['color-text-disabled']));
+    expect(s['text-decoration-style']).toBe('dotted');
+    expect(s['background-color']).toBe('rgba(0, 0, 0, 0)');
+    expect(s.cursor).toBe('not-allowed');
+  });
+});
+
+describe('solid sheen contrast (lightest pixel of the fill)', () => {
+  // The sheen is white at --opacity-sheen over the top of the fill; the label sits on that lightest pixel.
+  it('keeps every solid label at 4.5:1 on the sheened fill, and on the darker gradient end', () => {
+    const sheen = Number.parseFloat(tokens['opacity-sheen']) / 100;
+    expect(sheen).toBeGreaterThan(0);
+    const solid = extractPairs(css).filter(
+      (p) => p.component === 'button' && p.variant === 'solid' && p.state !== 'active',
+    );
+    expect(solid.length).toBeGreaterThan(0);
+    for (const p of solid) {
+      const lit = compositeOver('#ffffff', sheen, tokens[p.bg]);
+      expect(
+        Math.floor(contrastRatio(tokens[p.fg], lit) * 100) / 100,
+        `${p.tone}/${p.state} ${p.fg} on sheened ${p.bg}`,
+      ).toBeGreaterThanOrEqual(4.5);
+    }
   });
 });
 
@@ -188,6 +348,20 @@ describe('states', () => {
       expect(await style(page, id, ['background-color', 'color', 'cursor'])).toEqual(before);
       await page.mouse.up();
     }
+  });
+  it('pressed scales to the token (0.97) and not under reduced motion', async () => {
+    const page = await open();
+    await page.hover('#root');
+    await page.mouse.down();
+    await page.waitForTimeout(250);
+    expect((await style(page, 'root', ['scale']))['scale']).toBe(tokens['motion-press-scale']);
+    await page.mouse.up();
+    const reduced = await open({ media: { reducedMotion: 'reduce' } });
+    await reduced.hover('#root');
+    await reduced.mouse.down();
+    await reduced.waitForTimeout(100);
+    expect((await style(reduced, 'root', ['scale']))['scale']).toBe('none');
+    await reduced.mouse.up();
   });
   it('hover and pressed darken an enabled solid button (pointer devices)', async () => {
     const page = await open();
@@ -265,7 +439,7 @@ describe('reduced motion', () => {
 });
 
 describe('sizes', () => {
-  it('the three sizes grow the font', async () => {
+  it('the four sizes grow the font 12 / 13 / 14 / 15', async () => {
     const body = SIZES.map(
       (s) =>
         `<button id="s-${s}" class="sj-button__root" data-part="root" ${attrs('solid', 'primary', s)}>x</button>`,
@@ -274,7 +448,6 @@ describe('sizes', () => {
     const f = [];
     for (const s of SIZES)
       f.push(Number.parseFloat((await style(page, `s-${s}`, ['font-size']))['font-size']));
-    expect(f[0]).toBeLessThan(f[1]);
-    expect(f[1]).toBeLessThan(f[2]);
+    expect(f).toEqual([12, 13, 14, 15]);
   });
 });

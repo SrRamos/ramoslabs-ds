@@ -38,7 +38,9 @@
   }
 
   /* Hit area is the element box. min-size, never an expanded pseudo-element, so neighbours cannot
-     overlap (ADR-008). Inline links are exempt from WCAG 2.5.8 and carry no data-part target. */
+     overlap (ADR-008). Inline links are exempt from WCAG 2.5.8 and carry no data-part target.
+     One documented exception: SJButton keeps a compact 24px+ visual box and extends its hit area to
+     --target-min with an invisible ::before on a coarse pointer (button.css overrides this min-size). */
   [data-part]:is(
     button,
     summary,

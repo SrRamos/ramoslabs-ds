@@ -139,14 +139,14 @@ describe('contrast matrix (light theme)', () => {
   });
 
   it('fails a seeded token change, naming the pair, ratio and token', () => {
-    const { failures } = checkContrastMatrix({ ...tokens, 'color-error-strong': '#fca5a5' });
+    const { failures } = checkContrastMatrix({ ...tokens, 'color-red-700': '#fca5a5' });
     const f = failures.find((x) => x.id === 'solid/error/md/text');
     if (!f) throw new Error('expected a failure');
-    expect(f.bg).toBe('color-error-strong');
+    expect(f.bg).toBe('color-red-700');
     expect(f.ratio).toBeLessThan(4.5);
     const line = formatFailure(f);
     expect(line).toContain('solid/error/md/text');
-    expect(line).toContain('color-error-strong');
+    expect(line).toContain('color-red-700');
     expect(line).toMatch(/= \d\.\d\d:1, needs 4\.50:1/);
   });
 

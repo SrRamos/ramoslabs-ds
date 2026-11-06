@@ -1,43 +1,82 @@
-/* sj-button: SJButton, the golden CSS reference (W1-C01.b). Tokens only (stylelint sj/* enforces it).
-   Parts come from button.contract.json anatomy: root (<button>), link (<a>), icon. The link variant is its
-   own anatomy part, so `root` and `link` are always styled together through :is(). Axes are
-   data-variant (solid|soft|outline|ghost) x data-tone (primary|neutral|success|warning|error|info) x
-   data-size (sm|md|lg). Every variant x tone color pair below is read back from this built file by
-   packages/testing/contrast (extractor), checked at 4.5:1 for text and 3:1 for the outline boundary.
-   Layers: structure in sj.component, axes and pointer states in sj.variant, disabled and forced colors in
-   sj.state. Focus ring (2.4.13), motion collapse and the 44px target come from base/. */
+/* sj-button: SJButton, the golden CSS reference (W1-C01.b), Direction B "Luminous Indigo" (owner-approved).
+   Tokens only (stylelint sj/* enforces it). Parts come from button.contract.json anatomy: root (<button>),
+   link (<a>), icon. The link element is its own anatomy part, so `root` and `link` are always styled together
+   through :is(). Axes are data-variant (solid|soft|outline|ghost|link) x data-tone
+   (primary|neutral|success|warning|error|info) x data-size (xs|sm|md|lg). Every variant x tone color pair below
+   is read back from this built file by packages/testing/contrast (extractor), checked at 4.5:1 for text and 3:1
+   for the outline boundary. Solid fills carry a gradient and a sheen on top of the background-color the extractor
+   reads; the lightest pixel of that sheen is checked separately (contrast.test.js, "sheen").
+   Layers: structure in sj.component, axes and pointer states in sj.variant, disabled, reduced motion and forced
+   colors in sj.state. The focus ring (2.4.13) and the motion collapse come from base/.
+   Target size: the visual box is 24px (xs) to 44px (lg), never below the 24px WCAG 2.5.8 floor. On a coarse
+   pointer an invisible ::before extends the hit area to the 44px --target-min token without changing layout.
+   Neighbouring compact buttons on touch need a gap of at least (44px - height) / 2 so hit areas do not reach a
+   neighbour's visible box: --space-3 around xs, --space-2 around sm and md. */
 
 @layer sj.component {
   :is(.sj-button__root, .sj-button__link) {
+    /* md is the default size; the data-size rules below swap these six values. */
+    --_h: var(--control-height-md);
+    --_px: var(--control-padding-inline-md);
+    --_fs: var(--control-font-size-md);
+    --_gap: var(--control-gap-md);
+    --_icon: var(--control-icon-size-md);
+    --_r: var(--radius-md);
+    --_end: var(--color-indigo-700);
+    --_sheen: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-white) var(--opacity-sheen), transparent),
+      transparent var(--gradient-sheen-stop)
+    );
+
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2);
+    gap: var(--_gap);
     box-sizing: border-box;
     max-inline-size: 100%;
-    /* 44px target, 24px floor in compact density (ADR-008). Also on a disabled <a> (no href), which the
-       base a[href] rule does not match. */
-    min-block-size: var(--sj-target, var(--target-min));
-    min-inline-size: var(--sj-target, var(--target-min));
+    /* The visual box is --_h; the 44px touch target is the ::before below, not min-size, so layout stays
+       compact. Overrides the 44px min-size that sj.base gives every [data-part] control. */
+    min-block-size: var(--_h);
+    min-inline-size: var(--_h);
     margin: 0;
-    padding-block: var(--space-2);
-    padding-inline: var(--space-4);
+    /* Centres one text line inside --_h; a wrapped label grows the box and keeps the same padding. */
+    padding-block: calc((var(--_h) - 1lh) / 2 - var(--border-width-hairline));
+    padding-inline: var(--_px);
     border-width: var(--border-width-hairline);
     border-style: solid;
     border-color: transparent;
-    border-radius: var(--radius-md);
+    border-radius: var(--_r);
     font-family: var(--font-family-sans);
-    font-weight: var(--font-weight-semibold);
-    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--_fs);
+    letter-spacing: var(--tracking-ui);
     line-height: var(--leading-snug);
     text-align: center;
     text-decoration: none;
     overflow-wrap: anywhere;
     cursor: pointer;
     user-select: none;
-    transition-property: color, background-color, border-color;
+    -webkit-tap-highlight-color: transparent;
+    transition-property: color, background-color, border-color, box-shadow, scale;
     transition-duration: var(--sj-duration-fast, var(--duration-fast));
     transition-timing-function: var(--easing-out);
+  }
+
+  /* Touch hit area: invisible, centred on the box, never changes layout. Only on a coarse pointer; a fine
+     pointer keeps the compact 24px+ target (WCAG 2.5.8 AA). Margins, not translate, so it is RTL-safe. */
+  @media (pointer: coarse) {
+    :is(.sj-button__root, .sj-button__link)::before {
+      content: '';
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      inline-size: var(--target-min);
+      block-size: var(--target-min);
+      margin-block-start: calc(var(--target-min) / -2);
+      margin-inline-start: calc(var(--target-min) / -2);
+    }
   }
 
   .sj-button__icon {
@@ -45,78 +84,99 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    inline-size: 1.25em;
-    block-size: 1.25em;
+    inline-size: var(--_icon);
+    block-size: var(--_icon);
     font-size: inherit;
   }
 
-  /* Icon-only: a square target; the accessible name comes from aria-label (contract/icon-only-name). */
+  /* Icon-only: a square at every height; the accessible name comes from aria-label (contract/icon-only-name). */
   :is(.sj-button__root, .sj-button__link)[data-icon-only]:not([data-icon-only='false']) {
     padding-inline: 0;
-    aspect-ratio: 1;
+    padding-block: 0;
+    inline-size: var(--_h);
+    block-size: var(--_h);
   }
 }
 
 @layer sj.variant {
-  /* Size */
+  /* Size: heights 24/32/36/44, padding 8/12/14/20, radius 6/6/8/10, label 12/13/14/15. */
+  :is(.sj-button__root, .sj-button__link)[data-size='xs'] {
+    --_h: var(--control-height-xs);
+    --_px: var(--control-padding-inline-xs);
+    --_fs: var(--control-font-size-xs);
+    --_gap: var(--control-gap-xs);
+    --_icon: var(--control-icon-size-xs);
+    --_r: var(--radius-sm);
+  }
+
   :is(.sj-button__root, .sj-button__link)[data-size='sm'] {
-    padding-inline: var(--space-3);
-    font-size: var(--font-size-sm);
+    --_h: var(--control-height-sm);
+    --_px: var(--control-padding-inline-sm);
+    --_fs: var(--control-font-size-sm);
+    --_gap: var(--control-gap-sm);
+    --_icon: var(--control-icon-size-sm);
+    --_r: var(--radius-sm);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-size='md'] {
-    padding-inline: var(--space-4);
-    font-size: var(--font-size-base);
+    --_h: var(--control-height-md);
+    --_px: var(--control-padding-inline-md);
+    --_fs: var(--control-font-size-md);
+    --_gap: var(--control-gap-md);
+    --_icon: var(--control-icon-size-md);
+    --_r: var(--radius-md);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-size='lg'] {
-    padding-inline: var(--space-6);
-    padding-block: var(--space-3);
-    font-size: var(--font-size-lg);
-    min-block-size: max(var(--sj-target, var(--target-min)), var(--space-12));
-  }
-
-  :is(.sj-button__root, .sj-button__link)[data-size='lg'][data-icon-only]:not(
-      [data-icon-only='false']
-    ) {
-    padding-inline: 0;
+    --_h: var(--control-height-lg);
+    --_px: var(--control-padding-inline-lg);
+    --_fs: var(--control-font-size-lg);
+    --_gap: var(--control-gap-lg);
+    --_icon: var(--control-icon-size-lg);
+    --_r: var(--radius-control-lg);
   }
 
   /* Rest */
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='primary'] {
     color: var(--color-white);
     background-color: var(--color-primary);
-    border-color: var(--color-primary);
+    border-color: var(--color-indigo-700);
+    --_end: var(--color-indigo-700);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral'] {
     color: var(--color-white);
-    background-color: var(--color-slate-800);
-    border-color: var(--color-slate-800);
+    background-color: var(--color-slate-900);
+    border-color: var(--color-slate-950);
+    --_end: var(--color-slate-950);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success'] {
     color: var(--color-white);
-    background-color: var(--color-emerald-700);
-    border-color: var(--color-emerald-700);
+    background-color: var(--color-emerald-800);
+    border-color: var(--color-emerald-900);
+    --_end: var(--color-emerald-900);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning'] {
     color: var(--color-slate-900);
     background-color: var(--color-amber-500);
-    border-color: var(--color-amber-500);
+    border-color: var(--color-amber-600);
+    --_end: var(--color-amber-600);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error'] {
     color: var(--color-white);
-    background-color: var(--color-error-strong);
-    border-color: var(--color-error-strong);
+    background-color: var(--color-red-700);
+    border-color: var(--color-red-800);
+    --_end: var(--color-red-800);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info'] {
     color: var(--color-white);
     background-color: var(--color-blue-700);
-    border-color: var(--color-blue-700);
+    border-color: var(--color-blue-800);
+    --_end: var(--color-blue-800);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary'] {
@@ -227,36 +287,121 @@
     border-color: transparent;
   }
 
+  /* Solid: a gradient from the fill to --_end, a sheen on the top half, a 1px inner highlight and a tight lift. */
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid'] {
+    background-image: var(--_sheen), linear-gradient(to bottom, transparent, var(--_end));
+    box-shadow: var(--shadow-highlight), var(--shadow-lift);
+  }
+
+  /* Soft: a 1px inner ring mixed from the label color keeps the fill from looking flat. */
+  :is(.sj-button__root, .sj-button__link)[data-variant='soft'] {
+    box-shadow: inset 0 0 0 var(--border-width-hairline)
+      color-mix(in srgb, currentColor var(--opacity-soft-ring), transparent);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='outline'] {
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Link: inline text. Underlined at rest (never color alone), inherits the sentence's font size and line, no
+     padding, height or hit-area box. Inline links are exempt from WCAG 2.5.8; the focus ring still draws. */
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'] {
+    display: inline;
+    min-block-size: 0;
+    min-inline-size: 0;
+    inline-size: auto;
+    block-size: auto;
+    padding: 0;
+    border-width: 0;
+    border-radius: var(--radius-xs);
+    font-size: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    text-align: start;
+    overflow-wrap: normal;
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--control-link-underline-thickness);
+    text-underline-offset: var(--control-link-underline-offset);
+    box-shadow: none;
+    transition-property: color, text-decoration-thickness;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link']::before {
+    content: none;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='primary'] {
+    color: var(--color-primary);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral'] {
+    color: var(--color-text-heading);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success'] {
+    color: var(--color-success-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning'] {
+    color: var(--color-warning-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error'] {
+    color: var(--color-error-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info'] {
+    color: var(--color-info-text);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
   /* Hover: pointer devices only, so a tap never leaves a sticky hover */
   @media (hover: hover) {
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='primary']:hover {
       background-color: var(--color-primary-dark);
-      border-color: var(--color-primary-dark);
+      border-color: var(--color-indigo-700);
+      --_end: var(--color-indigo-700);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:hover {
-      background-color: var(--color-slate-700);
-      border-color: var(--color-slate-700);
+      background-color: var(--color-slate-800);
+      border-color: var(--color-slate-950);
+      --_end: var(--color-slate-950);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success']:hover {
-      background-color: var(--color-emerald-800);
-      border-color: var(--color-emerald-800);
+      background-color: var(--color-emerald-900);
+      border-color: var(--color-emerald-950);
+      --_end: var(--color-emerald-950);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning']:hover {
       background-color: var(--color-amber-400);
-      border-color: var(--color-amber-400);
+      border-color: var(--color-amber-500);
+      --_end: var(--color-amber-500);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error']:hover {
-      background-color: var(--color-red-700);
-      border-color: var(--color-red-700);
+      background-color: var(--color-red-800);
+      border-color: var(--color-red-900);
+      --_end: var(--color-red-900);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info']:hover {
       background-color: var(--color-blue-800);
-      border-color: var(--color-blue-800);
+      border-color: var(--color-blue-900);
+      --_end: var(--color-blue-900);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary']:hover {
@@ -336,6 +481,38 @@
     :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info']:hover {
       background-color: var(--color-info-surface);
     }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid']:hover {
+      box-shadow: var(--shadow-highlight), var(--shadow-glow);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link']:hover {
+      text-decoration-thickness: var(--control-link-underline-thickness-hover);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='primary']:hover {
+      color: var(--color-primary-dark);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral']:hover {
+      color: var(--color-text-heading);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success']:hover {
+      color: var(--color-success-text);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning']:hover {
+      color: var(--color-warning-text);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error']:hover {
+      color: var(--color-error-text);
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info']:hover {
+      color: var(--color-info-text);
+    }
   }
 
   /* Pressed */
@@ -345,13 +522,13 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:active {
-    background-color: var(--color-slate-900);
-    border-color: var(--color-slate-900);
+    background-color: var(--color-slate-950);
+    border-color: var(--color-slate-950);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success']:active {
-    background-color: var(--color-emerald-900);
-    border-color: var(--color-emerald-900);
+    background-color: var(--color-emerald-950);
+    border-color: var(--color-emerald-950);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning']:active {
@@ -360,8 +537,8 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error']:active {
-    background-color: var(--color-red-800);
-    border-color: var(--color-red-800);
+    background-color: var(--color-red-900);
+    border-color: var(--color-red-900);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info']:active {
@@ -446,6 +623,43 @@
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info']:active {
     background-color: var(--color-blue-100);
   }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='solid']:active {
+    background-image: none;
+    box-shadow: var(--shadow-press);
+  }
+
+  :is(.sj-button__root, .sj-button__link):not([data-variant='link']):active {
+    scale: var(--motion-press-scale);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link']:active {
+    text-decoration-thickness: var(--control-link-underline-thickness-hover);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='primary']:active {
+    color: var(--color-indigo-800);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral']:active {
+    color: var(--color-text-heading);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success']:active {
+    color: var(--color-success-text);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning']:active {
+    color: var(--color-warning-text);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error']:active {
+    color: var(--color-error-text);
+  }
+
+  :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info']:active {
+    color: var(--color-info-text);
+  }
 }
 
 @layer sj.state {
@@ -454,28 +668,53 @@
   :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']) {
     color: var(--color-text-disabled);
     background-color: var(--color-surface-hover);
+    background-image: none;
     border-color: var(--color-border);
+    box-shadow: none;
+    scale: none;
     cursor: not-allowed;
   }
 
   :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']):is(
       [data-variant='outline'],
-      [data-variant='ghost']
+      [data-variant='ghost'],
+      [data-variant='link']
     ) {
     background-color: transparent;
   }
 
-  :is(.sj-button__root, .sj-button__link)[data-disabled]:not(
-      [data-disabled='false']
-    )[data-variant='ghost'] {
+  :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']):is(
+      [data-variant='ghost'],
+      [data-variant='link']
+    ) {
     border-color: transparent;
   }
 
-  /* Forced colors (ADR-009): the UA replaces colors; keep a visible boundary on both elements. */
+  :is(.sj-button__root, .sj-button__link)[data-disabled]:not(
+      [data-disabled='false']
+    )[data-variant='link'] {
+    text-decoration-style: dotted;
+    text-decoration-thickness: var(--control-link-underline-thickness);
+  }
+
+  /* No press feedback under reduced motion (the transition collapse comes from base/motion.css). */
+  @media (prefers-reduced-motion: reduce) {
+    :is(.sj-button__root, .sj-button__link):active {
+      scale: none;
+    }
+  }
+
+  /* Forced colors (ADR-009): the UA replaces colors; keep a visible boundary on both elements. The gradient
+     and the shadows are dropped; the link variant stays borderless text with its underline. */
   @media (forced-colors: active) {
     :is(.sj-button__root, .sj-button__link) {
       border: var(--border-width-hairline) solid ButtonBorder;
+      background-image: none;
       forced-color-adjust: auto;
+    }
+
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'] {
+      border-width: 0;
     }
 
     :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']) {
