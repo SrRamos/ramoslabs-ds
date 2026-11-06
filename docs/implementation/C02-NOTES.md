@@ -112,3 +112,35 @@ Branch `feature/m4-c02-css`. Owned: `packages/css/src/{field,input}.css`, `packa
 - The error "!" is no longer CSS text: `content: '!' / ''` is hidden only on Chromium 77+, Firefox 128+ and Safari 17.4+, so on the ADR-001 floor (Firefox 125-127, Safari 17.0-17.3) it would enter the accessible description through `aria-describedby`. The field contract gains a static `icon` part (`span`, mirrors SJState), core gains `getIconProps` (`sj-field__icon`, `aria-hidden="true"`), and `field.css` styles only its size and the gap. The adapters (.c/.d/.e) render an `aria-hidden` SJIcon `alert-circle`, size sm, in that part inside the error. A test asserts no `content:` on the error part.
 - `input.css` uses `--leading-normal`.
 - The local contrast checks stay; a separate testing stream extends the shared matrix and deletes them.
+## W1-C02.e: SJForm, SJField and SJInput vanilla adapters
+
+Branch `feature/m4-c02-vanilla`. Owned: `packages/vanilla/src/{form,field,input}/**` and this section. Shared file: `packages/vanilla/package.json` gains the `./form` export (the `./field` and `./input` entries existed). `src/form/apply.ts` is an internal helper shared by the three modules (not an entry point; lives in `form/` because `field/` modules must all reference `fieldLive`).
+
+### Surface
+
+- `mountForm(host, formEl, props) -> FormInstance` (`owner`, `subscribe`, `element`): applies the root part to a native `<form>`; no listeners, no `novalidate`, no submission handling. Re-notifies subscribers on `update` (the Enter position depends on `action`/`submits`).
+- `mountField(host, divEl, props, { form?, control? }) -> FieldInstance` (`parts`, `place(node)`, `subscribe`): root `<div>` > label, hint (only while `hint`/`hasHint`), the control(s) placed with `place`, error (only while an error shows). `hasHint` is derived from a non-empty `hint` unless passed. Label and hint accept `string | Node` (prop-or-slot), always as text nodes or the consumer's own Node. The error part holds an `aria-hidden` icon part (`sj-field__icon`) and the visible text; it carries no `role`/`aria-live`. The icon is an SJIcon (`size: 'sm'`) drawn from the generated system icon `circleAlert` (`../generated/icons/circle-alert`). Registration passes `connect(index)` with the control's position in `form.elements`; `field.sync()` re-registers (old cleanup, then `connect(newIndex)`) when the name or the position changed, and runs on patch, `place` and every input render.
+- `mountInput(host, spanEl, props, { field? }) -> InputInstance` (`control`): root `<span>` > native `<input>`, or `<textarea>` for `address` (the control is replaced, value kept, listeners moved, when `kind` crosses that line). Kind attributes come from the core row; `kind` changes re-report to the field; the field's id/name/required/disabled/ARIA and Enter position are used inside a field.
+- `define(host, name?, registry?)` in each module registers `sj-form`, `sj-field`, `sj-input` (light DOM, no shadow, idempotent, never at import). `sj-form` moves its children into one `<form>`; `sj-field` wraps its children as the control; `sj-input` finds `closest('sj-field')`. Define in the order form, field, input so each ancestor is upgraded first.
+
+### Decisions
+
+- **No FACE** (ADR-014 "only where a custom control needs native form participation"): the control is a real `<input>`/`<textarea>` in the light DOM, so it is a form-associated descendant of the surrounding `<form>`, submits, validates, autofills and resets natively. `attachInternals()` would add a second source of form state. Same reasoning as the checkbox adapter.
+- **Live region** (ADR-006): the field spec passes the generated `fieldLive` (`'eager'`) as `live`, so the host inserts the status node at mount; `announce()` runs after every patch. A standing error at mount is silent (ruling 3); a changed text announces once; the registry's 1 s dedupe window keeps an identical repeat silent (core behaviour).
+- **Re-render fan-out**: an SJInput subscribes to its field, and the field notifies on its own `update` (error, name, required) and on form store changes (Enter position, retained values). SJInput subscribes after reporting its kind, so the registration it causes does not re-enter a half-mounted instance.
+- **Retention (3.3.7)**: `change` (committed value) hands the value to `field.retain`; secrets are filtered by the form owner. `prior()`/`offers()` are exposed on `field.parts`; nothing is auto-filled.
+- **`:user-invalid`**: `host.runtime.supports.userInvalid` feeds `ctx.userInvalid`; below it the touched fallback sets `data-touched` on `change`/`invalid`, never blur, and the document-level `reset` (target === `control.form`) clears it. One signalled document listener per input.
+- **Instance accessors** use `Object.defineProperties`, not `Object.assign` with getters (assign would freeze the value at call time; the checkbox adapter's `control` has that latent flaw: a follow-up for the C03 owners, not touched here).
+- A `name` change on a field re-registers under the new key.
+
+### Size
+
+Core (ADR-011): field 0.724 KiB, form 0.699 KiB, input 0.904 KiB gzip, inside their ceilings. Adapter output (tsc, all files per directory, gzip -9, includes the shared helper once per directory count): form 1.7 KiB, field 2.9 KiB, input 2.4 KiB. No ADR-011 ceiling applies to adapter code; `size` reports the shared vanilla runtime (1.4 KiB).
+
+### Not done / follow-ups
+
+- A forced-false `:user-invalid` browser run and the SSR no-live-markup specs are `.f`.
+- Two fields announcing in one commit still speak only the last text (known core limit).
+- Real-browser coverage of the custom elements (moving children, upgrade order) is `.f`; unit tests use a DOM double.
+
+`sj-form`: `enter` is the Enter label attribute; `action` and `method` are copied to the native `<form>` (test: `action="/post"` reaches the form and is not an Enter label). The input's own `autoSubmit` applies standalone only (core, `field.enterHint()` is final inside a field). The icon part uses core `getIconProps`.

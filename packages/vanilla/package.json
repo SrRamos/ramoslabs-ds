@@ -26,6 +26,10 @@
       "types": "./dist/icon/index.d.ts",
       "import": "./dist/icon/index.js"
     },
+    "./form": {
+      "types": "./dist/form/index.d.ts",
+      "import": "./dist/form/index.js"
+    },
     "./field": {
       "types": "./dist/field/index.d.ts",
       "import": "./dist/field/index.js"
