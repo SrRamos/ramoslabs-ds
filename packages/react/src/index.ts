@@ -2,3 +2,4 @@
 export * from './switch/index';
 export * from './checkbox/index';
 export * from './icon/index';
+export * from './state/index';
