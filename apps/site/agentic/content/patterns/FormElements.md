@@ -198,6 +198,68 @@ On defaults: pre-check the reminder because people want it, leave the newsletter
 4. What can go wrong, and how is it fixed? Write the help and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.
 5. Only now, assemble it from the primitives: visible label, control, help, error, in one column, states inherited from Patterns / Interactive. If the pattern is not in HTML, build the matching APG pattern over a native base.
 
+## Field height: taller than a button, on purpose
+
+A text field is read, tapped and corrected. A button is only tapped. So the field is taller than the compact buttons, and that difference is intentional. The numbers are a house decision: the sources support the principle (bigger targets on touch, 44 to 48 px), not the exact 48 and 56.
+
+### ✓ Recommended: Field height
+
+**Rule:** Set a text field to **48 px** by default (`--control-height-field`) and **56 px** under `@media (pointer: coarse)` (`--control-height-field-coarse`). A textarea is twice that, so it scales with it. The invalid state keeps the same height.
+**Why:** The field is where people read what they typed, tap into it and fix a mistake, so it earns more room than a button. It also clears the 24 px floor of WCAG 2.5.8 and the 44 px touch target, and a taller field is easier to hit with a thumb.
+
+### ✕ Avoid: Field height
+
+**Rule:** Do not size a text field to the compact button heights (24, 32 or 36 px), and do not let density shrink it.
+**Why:** A short field cramps the text, makes the caret and selection hard to place, and is easy to mis-tap beside another control.
+
+*Sources: W3C Understanding SC 2.5.8 Target Size (Minimum); Apple, UI Design Dos and Don’ts (44 pt); web.dev, Accessible tap targets (48 px); NN/g, Touch Target Size. See docs/research/patterns-2026-11.md, item 7.*
+
+## Group long numbers for reading, never change the data
+
+Account, card and phone numbers are checked against a source: a card, a statement, a screen. Groups of four make that check easier. The grouping is display only; the value that is submitted is unchanged. It ties into the ADR-007 kinds (`account`, `cc-number`, `phone`).
+
+### ✓ Recommended: Grouped display
+
+**Rule:** Show long digit strings in groups of four (`0123 4567 8901`) wherever they are read: review screens, receipts, lists. In an input, auto-group card numbers and accept the value with or without spaces. Submit the raw digits.
+**Why:** Groups are easier to compare with the original and to read aloud. A card field that allows and formats spaces lowers entry errors (Baymard). Formatting the display must not change the stored value, or search and matching break.
+
+### ✕ Avoid: Grouped display
+
+**Rule:** Do not mask a phone number as the user types, do not reformat it after entry, and do not use `maxlength` to force a format.
+**Why:** GOV.UK advises against it: a mask fights paste, autofill and international numbers, and cuts off a valid value. Group for display, validate on submit.
+
+*Sources: Baymard, The Credit Card Number Field Must Allow and Auto-Format Spaces; GOV.UK Design System, Telephone numbers and Text input; MDN, autocomplete. See item 10 in the research file, which flags that no primary source covers account-number grouping.*
+
+Try it. Storybook: Patterns/Demos/Send Money (grouped account and amount, 48 and 56 px fields).
+
+## Keep the label above the field
+
+### ✓ Recommended: Label placement
+
+**Rule:** Keep a visible label **above** the field, always. It stays put while the person types and when the field is empty.
+**Why:** An empty field with a visible label reads as a field to fill. NN/g and GOV.UK both place the label above the control, and it never vanishes or moves.
+
+### ✕ Avoid: Label placement
+
+**Rule:** Do not use floating labels inside the field: the label starts inside the box and shrinks to about 12 px above the text once it has a value.
+**Why:** An empty floating-label field reads like a field that already holds a placeholder, and the label at about 12 px is small and light. NN/g calls floating labels only a partial fix for placeholders and Baymard has not shown them to help. The label above the field has none of these costs.
+
+*Sources: NN/g, Placeholders in Form Fields Are Harmful; Baymard, Mobile Forms: Avoid Inline Labels; GOV.UK Design System, Text input. The research file flags that neither NN/g nor Baymard publishes a measured increase in errors for floating labels, so the claim here is about legibility and clarity, not an error rate.*
+
+## Keep the border that marks the control
+
+### ✓ Recommended: Input boundary
+
+**Rule:** Give every input a visible boundary at 3:1 or better against its surface: the `--color-slate-500` border (4.8:1 on white). Disabled fields are exempt.
+**Why:** WCAG 1.4.11 asks for a 3:1 boundary where the boundary is what identifies a control. A border that does not rely on a fill also survives forced colors and a bright screen.
+
+### ✕ Avoid: Input boundary
+
+**Rule:** Do not use a borderless input with a pale grey fill (about 1.2:1 against the page).
+**Why:** The edge of the control is barely visible, so people with low vision cannot find where to tap. WCAG 1.4.11 allows another cue, such as a label, when the boundary is not needed to identify the control, so this is a house rule stricter than the minimum: the DS never relies on a 1.2:1 fill alone.
+
+*Sources: W3C Understanding SC 1.4.11 Non-text Contrast; W3C Understanding SC 2.4.7 Focus Visible. House rule: the DS keeps the slate-500 border on every input.*
+
 ## Sources
 
 MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<input>` types, `inputmode` and `enterkeyhint`, the `autocomplete` token list, `:user-invalid`. web.dev "accent-color" and Learn Forms (four themable controls, automatic accent contrast, HTML form elements are difficult to customize). caniuse: `accent-color` roughly 97 percent (2026), baseline since Chrome/Edge 93, Firefox 92, Safari 15.4 (March 2022). WAI-ARIA APG patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog, Toolbar. GOV.UK Design System: progressive enhancement, the Select component, and the Date input three-field memorable-date pattern. W3C Understanding WCAG 2.2: SC 3.3.2 (A), 3.3.1 (A) with ARIA21 `aria-invalid`, 3.3.3 (AA), 1.3.5 (AA), 2.5.8 (24px, AA), 2.5.5 (44px, AAA). Mihael Konjevic, "Inline Validation in Web Forms" (Smashing, 2022), source of "reward early, punish late". CSS-Tricks and defensivecss.dev: 16px prevents iOS input zoom. Apple HIG Text fields: content-appropriate keyboards, 44pt minimum. NN/g and Baymard: placeholders cannot replace labels, error messages must be visible/specific/constructive, single-column forms complete faster. The reward-while-typing timing and single-accent error-only use of `--color-error` are house rules layered on the cited guidance.

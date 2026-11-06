@@ -14,6 +14,9 @@
     "16": { "$value": "4rem" },
     "20": { "$value": "5rem" },
     "24": { "$value": "6rem" },
-    "32": { "$value": "8rem" }
+    "32": { "$value": "8rem" },
+    "related": {"$value": "{space.2}", "$description": "8px. Space between items that belong together: a label and its value, a title and its subtitle, an icon and its caption (Gestalt proximity). Always smaller than space.group. Use inside a group, never between groups."},
+    "group": {"$value": "{space.6}", "$description": "24px. Space between groups inside one section or card: one metric row and the next, one form field and the next. Larger than space.related so the eye reads the groups, smaller than space.section. Never use the same value inside and between groups."},
+    "section": {"$value": "{space.12}", "$description": "48px. Space between sections of a page or between major blocks of a flow. The largest rhythm step; larger than space.group."}
   }
 }

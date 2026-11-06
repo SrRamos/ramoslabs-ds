@@ -125,6 +125,24 @@ Words persuade, so words can manipulate. This system draws the line in the copy 
 4. Is every word true and free of pressure? No invented urgency, no shame, no hidden cost. In doubt, see Patterns / Persuasion.
 5. Only now, ship it, in the DS primitives. See Patterns / Form Elements.
 
+## The metadata line
+
+The line under a title that says who, when and where: `Laura Gómez • hace 2 h • Parque Arví`. It is small and quiet, so it must be easy to scan and must not read as noise to a screen reader.
+
+### ✓ Recommended: Metadata line
+
+**Rule:** Join the items with a `•` separator wrapped in `aria-hidden`. Put the relative time in `<time datetime="2026-11-05T06:42">hace 2 h</time>`. Keep to three items, ordered who, when, where, and set it in the muted text colour (never lighter than slate-500).
+**Why:** A separator is decoration, so a screen reader should not read “bullet” between every item. `<time datetime>` gives assistive technology and search the exact moment while sighted readers get the friendly “hace 2 h”. Three items scan at a glance.
+
+### ✕ Avoid: Metadata line
+
+**Rule:** Do not use `|` or `/` as a separator without hiding it, do not write “hace 2 h” with no `datetime`, and do not run past three items.
+**Why:** A pipe or slash is read aloud, a relative time alone loses the date as soon as it is copied or cached, and a long line stops being scanned.
+
+*Sources: MDN, the `<time>` element; WHATWG HTML Standard, The time element. The research file notes there is no primary source for the bullet separator itself; it is a house convention.*
+
+Try it. Storybook: Patterns/Demos/Activity Card.
+
 ## Sources
 
 Mailchimp Content Style Guide, "Voice and Tone": one voice, many tones. Nielsen Norman Group, "The Four Dimensions of Tone of Voice": funny-serious, formal-casual, respectful-irreverent, enthusiastic-matter-of-fact. NN/g reading behavior: "How Users Read on the Web" and "Concise, SCANNABLE, and Objective". NN/g microcopy: "The 3 Cs of Microcopy" and "Error-Message Guidelines". Nielsen's 10 Usability Heuristics (H9). GOV.UK writing standards (plain English, front-load, active voice, reading-age-of-9). U.S. plain language guidance. Shopify Polaris content guidelines. Deceptive patterns: Brignull's deceptive.design and NN/g's "Deceptive Patterns". The four-dial positions and the framing of copy ethics as hard prohibitions are house doctrine.

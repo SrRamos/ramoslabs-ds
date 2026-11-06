@@ -98,7 +98,7 @@ for (const adapter of ADAPTERS) {
     }
   });
 
-  test(`@pr 2.5.8 | field ${adapter} | every control and the submit button are at least 24px, the design target 44px`, async ({
+  test(`@pr 2.5.8 | field ${adapter} | every control and the submit button are at least 24px, the field design height 48px`, async ({
     page,
   }) => {
     await openHost(page);
@@ -110,13 +110,13 @@ for (const adapter of ADAPTERS) {
     expect(targets.length).toBe(6);
     for (const name of ['rest', 'hinted', 'bad', 'req', 'street']) {
       const box = (await control(page, name).boundingBox())!;
-      expect(Math.min(box.width, box.height), name).toBeGreaterThanOrEqual(44);
+      expect(Math.min(box.width, box.height), name).toBeGreaterThanOrEqual(48);
     }
     const off = (await control(page, 'off').boundingBox())!;
     expect(
       Math.min(off.width, off.height),
       'the disabled control keeps its size',
-    ).toBeGreaterThanOrEqual(44);
+    ).toBeGreaterThanOrEqual(48);
   });
 
   test(`@pr contrast | field ${adapter} | text is >= 4.5:1 and the invalid border >= 3:1 in the invalid state`, async ({

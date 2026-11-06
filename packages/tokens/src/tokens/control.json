@@ -46,7 +46,9 @@
       "lg": {
         "$value": "{target.min}",
         "$description": "44px. Large control height (SJButton lg). Meets the touch target without a hit-area extension."
-      }
+      },
+      "field": {"$value": "{space.12}", "$description": "48px. Height of a text-entry field (SJInput) by default. Taller than the 36px button because a field is read, tapped and corrected, while a button is only tapped. Textarea min height is twice this."},
+      "field-coarse": {"$value": "3.5rem", "$description": "56px. Height of a text-entry field under a coarse pointer (@media (pointer: coarse)). A comfortable thumb target for the field the user types in; between space.12 and space.16."}
     },
     "padding-inline": {
       "$type": "dimension",

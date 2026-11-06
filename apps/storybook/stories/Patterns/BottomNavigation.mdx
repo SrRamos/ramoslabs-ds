@@ -1,0 +1,29 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as BottomNav from './Demos/BottomNav.stories';
+
+<Meta title="Patterns/Bottom Navigation" />
+
+<div className="pt-hero">
+  <p className="pt-hero-eyebrow">Patterns / Bottom Navigation</p>
+  <h1>Say where you are<br />in words and in shape</h1>
+  <p>Bottom navigation puts the main destinations under the thumb. An icon alone is a guess; the active state must be more than a colour. This page sets labels, the active state, the count of destinations and the optional centre action.</p>
+</div>
+
+<div className="pt-wrap">
+<h2 className="pt-h2">1. Icon plus a visible label</h2>
+<p className="pt-head">Labels</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> Give every destination an <strong>icon and a visible label</strong>. Keep three to five destinations. Each tab is at least 44 px wide and 64 px tall, and the bar respects the bottom safe area.</p><p className="pt-line"><strong>Why:</strong> Icons are ambiguous without words, and NN/g reports that labelled icons are understood faster. Three to five destinations fit a phone width without truncating labels, and Material limits the bar to five.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not ship icon-only tabs, and do not go beyond five destinations.</p><p className="pt-line"><strong>Why:</strong> People guess, and six tabs squeeze labels or targets under 44 px.</p></div></div>
+<h2 className="pt-h2">2. The active tab: shape, colour and weight</h2>
+<p className="pt-head">Active state</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> Mark the active tab with a <strong>filled icon</strong>, the primary colour and a bolder label, and set <code>aria-current="page"</code>.</p><p className="pt-line"><strong>Why:</strong> WCAG 1.4.1: colour alone does not carry meaning. A filled shape and a heavier label are visible without colour, and <code>aria-current</code> tells a screen reader which page is current.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not show the active tab by colour alone.</p><p className="pt-line"><strong>Why:</strong> Someone who cannot tell the hues apart cannot find where they are.</p></div></div>
+<p className="pt-src">Sources: NN/g, Icon Usability and Mobile Navigation Patterns; Material Design 3, Navigation bar; W3C Understanding SC 1.4.1. The research file could not confirm the Material and Apple pages directly for the filled-icon convention, so the filled-icon active state is a DS design choice backed by 1.4.1.</p>
+<h2 className="pt-h2">3. The optional centre action</h2>
+<p className="pt-head">Centre action</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> A prominent centre action is allowed <strong>only when it is THE primary action of the app</strong> (for example “Registrar” in a tracking app). It needs an accessible name and a visible label. If a design cannot have a visible label, document the exception.</p><p className="pt-line"><strong>Why:</strong> One standing action in the bar is a strong promise to the user. Two competing actions, or an unlabelled round button, weaken the bar and fail the label rule.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not add a centre action for something that is not the app’s main action, and do not leave it without a label.</p><p className="pt-line"><strong>Why:</strong> It takes the most prominent place in the screen, so it must earn it, and an unlabelled round button is a guess.</p></div></div>
+<p className="pt-src">The research file found no primary source for the centre-action caveat; it is a DS rule layered on the Material guidance for the single primary action.</p>
+<p className="pt-demo"><strong>Try it.</strong> Storybook: Patterns/Demos/Bottom Navigation (recommended against icon-only, plus a centre action and an RTL variant)</p>
+</div>
+
+## Live demo
+
+<Canvas of={BottomNav.SideBySide} />

@@ -20,7 +20,7 @@ async function lint(/** @type {string} */ code) {
 const rulesOf = async (/** @type {string} */ code) => (await lint(code)).map((w) => w.rule);
 
 describe('sj stylelint rules', () => {
-  it('registers all six rules', () => {
+  it('registers all seven rules', () => {
     expect(plugins.map((p) => /** @type {any} */ (p).ruleName).sort()).toEqual([
       'sj/logical-properties',
       'sj/no-outline-none',
@@ -28,6 +28,7 @@ describe('sj stylelint rules', () => {
       'sj/no-raw-duration',
       'sj/no-raw-px',
       'sj/no-remote-url',
+      'sj/spacing-proximity',
     ]);
   });
 
@@ -49,6 +50,27 @@ describe('sj stylelint rules', () => {
       @media (min-width: 640px) { .sj-a { padding: 0; } }
     `;
     expect(await lint(css)).toEqual([]);
+  });
+
+  describe('sj/spacing-proximity', () => {
+    it('flags a rule whose gap reuses a margin token (equal inner and outer spacing)', async () => {
+      expect(
+        await rulesOf(
+          '.sj-a { display: flex; gap: var(--space-4); margin-block-end: var(--space-4); }',
+        ),
+      ).toEqual(['sj/spacing-proximity']);
+      expect(
+        await rulesOf('.sj-a { margin: 0 0 var(--space-6); gap: var(--space-6) var(--space-1); }'),
+      ).toEqual(['sj/spacing-proximity']);
+    });
+
+    it('accepts a smaller gap inside a larger margin, edge padding equal to the gap, and rules without both', async () => {
+      expect(
+        await rulesOf('.sj-a { margin-block-end: var(--space-group); gap: var(--space-related); }'),
+      ).toEqual([]);
+      expect(await rulesOf('.sj-a { padding: var(--space-4); gap: var(--space-4); }')).toEqual([]);
+      expect(await rulesOf('.sj-a { gap: var(--space-4); }')).toEqual([]);
+    });
   });
 
   describe('sj/no-raw-color', () => {

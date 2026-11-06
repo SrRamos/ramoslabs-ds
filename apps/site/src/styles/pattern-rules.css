@@ -1,0 +1,138 @@
+/* Pattern rule blocks (Recommended / Avoid with Rule and Why) and the hero of the newer pattern pages.
+   Shared by the docs site and Storybook. Tokens only; logical properties so it mirrors under RTL. Prefix: pt-. */
+.pt-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-group);
+  margin-block: var(--space-section);
+  font-family: var(--font-family-sans);
+  color: var(--color-text-body);
+}
+.pt-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-related);
+  padding: var(--space-12) var(--space-8);
+  color: var(--color-white);
+  background: var(--color-indigo-800);
+  border-radius: var(--radius-2xl);
+}
+.pt-hero h1 {
+  margin: 0;
+  max-inline-size: 18ch;
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-white);
+}
+.pt-hero p {
+  margin: 0;
+  max-inline-size: 42rem;
+  font-size: var(--font-size-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-indigo-100);
+}
+.pt-hero .pt-hero-eyebrow {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-indigo-200);
+}
+.pt-h2 {
+  margin: var(--space-group) 0 0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-text-heading);
+}
+.pt-text {
+  margin: 0;
+  max-inline-size: 48rem;
+  font-size: var(--font-size-base);
+  line-height: var(--leading-relaxed);
+}
+.pt-head {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.pt-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--space-4);
+}
+.pt-rule {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-related);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: var(--border-width-hairline) solid var(--color-border);
+  border-inline-start-width: var(--space-1);
+  border-radius: var(--radius-lg);
+}
+.pt-rule--rec {
+  border-inline-start-color: var(--color-success);
+}
+.pt-rule--avoid {
+  border-inline-start-color: var(--color-error);
+}
+.pt-tag {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+.pt-rule--rec .pt-tag {
+  color: var(--color-success-text);
+}
+.pt-rule--avoid .pt-tag {
+  color: var(--color-error-text);
+}
+.pt-line {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--leading-normal);
+}
+.pt-src {
+  margin: 0;
+  max-inline-size: 48rem;
+  font-size: var(--font-size-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+}
+.pt-demo {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  background: var(--color-primary-surface);
+  border-inline-start: var(--space-1) solid var(--color-primary);
+  border-radius: var(--radius-md);
+}
+.pt-tablewrap {
+  max-inline-size: 100%;
+  overflow-x: auto;
+}
+.pt-table {
+  border-collapse: collapse;
+  inline-size: 100%;
+  font-size: var(--font-size-sm);
+}
+.pt-table th,
+.pt-table td {
+  padding: var(--space-related) var(--space-3);
+  text-align: start;
+  vertical-align: top;
+  border-block-end: var(--border-width-hairline) solid var(--color-border);
+}
+.pt-table th {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+.pt-wrap code {
+  font-size: 0.9em;
+}

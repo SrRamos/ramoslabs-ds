@@ -134,18 +134,38 @@ describe('contrast on every page surface (WCAG 1.4.3 text 4.5:1, 1.4.11 boundary
 });
 
 describe('control shape, target and text size', () => {
-  it('is a 44 px target (2.5.8) and keeps 16 px text so iOS does not zoom', async () => {
+  it('is 48 px tall (control.height.field), above the 2.5.8 floor, and keeps 16 px text so iOS does not zoom', async () => {
     const page = await open(inputHtml());
     const r = await rect(page, '#c');
-    expect(r.height).toBeGreaterThanOrEqual(44);
+    expect(r.height).toBe(48);
     const f = await cs(page, '#c', ['font-size']);
     expect(parseFloat(f['font-size'])).toBeGreaterThanOrEqual(16);
   });
 
-  it('compact density never drops below the 24 px floor and stays at 44 px on coarse pointers', async () => {
+  it('a coarse pointer makes the field 56 px (control.height.field-coarse) and the textarea twice that', async () => {
+    const touch = { hasTouch: true, isMobile: true };
+    const page = await open(inputHtml(), touch);
+    expect((await rect(page, '#c')).height).toBe(56);
+    const area = await open(inputHtml({ tag: 'textarea', value: 'Line one' }), touch);
+    expect((await rect(area, '#c')).height).toBeGreaterThanOrEqual(112);
+  });
+
+  it('density does not shrink a field: compact stays 48 px, and 56 px on a coarse pointer', async () => {
     const page = await open(inputHtml(), {}, 'data-density="compact"');
-    const r = await rect(page, '#c');
-    expect(r.height).toBeGreaterThanOrEqual(24);
+    expect((await rect(page, '#c')).height).toBe(48);
+    const touch = await open(
+      inputHtml(),
+      { hasTouch: true, isMobile: true },
+      'data-density="compact"',
+    );
+    expect((await rect(touch, '#c')).height).toBe(56);
+  });
+
+  it('the invalid state keeps the same height on a coarse pointer', async () => {
+    const touch = { hasTouch: true, isMobile: true };
+    const rest = await open(inputHtml(), touch);
+    const bad = await open(inputHtml({ attrs: 'aria-invalid="true"' }), touch);
+    expect((await rect(bad, '#c')).height).toBe((await rect(rest, '#c')).height);
   });
 
   it('fills the inline size of its root', async () => {
@@ -158,7 +178,7 @@ describe('control shape, target and text size', () => {
   it('address renders a textarea: taller than the input, resizable on the block axis only', async () => {
     const page = await open(inputHtml({ tag: 'textarea', value: 'Line one' }));
     const r = await rect(page, '#c');
-    expect(r.height).toBeGreaterThanOrEqual(88);
+    expect(r.height).toBeGreaterThanOrEqual(96);
     const c = await cs(page, '#c', ['resize']);
     expect(c.resize).toBe('block');
   });
