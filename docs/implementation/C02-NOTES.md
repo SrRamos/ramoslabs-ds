@@ -166,3 +166,40 @@ Branch `feature/m4-c02-vue`. Owned: `packages/vue/src/{form,field,input}/**` and
 ### Size (ADR-011, `node packages/testing/size/cli.js`; adapter chunks gzip from `vite build`)
 
 Core: field 0.724 KiB, form 0.699 KiB, input 0.904 KiB. Vue adapter chunks: SJField 1,268 B, SJForm 629 B, SJInput 1,174 B (shared runtime, icon and core chunks excluded).
+## W1-C02.d: SJField, SJInput and SJForm React adapters
+
+Branch `feature/m4-c02-react`. Owned: `packages/react/src/{form,field,input}/**` plus tests, this section. Shared files touched: `packages/react/package.json` (`./form` subpath export; `./field` and `./input` existed), `packages/react/src/index.ts` and `index.test.ts` (barrel, as the checkbox adapter did).
+
+### Shape
+
+- `SJForm` / `SJForm.Root`, `SJField.{Root,Label,Hint}`, `SJInput` / `SJInput.Root` (+ flat `SJFormRoot`, `SJFieldRoot`, `SJFieldLabel`, `SJFieldHint`, `SJInputRoot`, ADR-002). Also exported: `SJFormContext`, `SJFieldContext`, `useSJField()` (custom controls, tests).
+- One `createForm` per `SJForm` instance, one `createField` per `SJField` (keeps the announce de-duplication and the registration), one `createInput` per `SJInput`; each reads the latest props through a ref. Rebuilt only when `id`/form/live (field) or field/`userInvalid` (input) change.
+- Fields re-render when the form's `fields` list changes (a `useSyncExternalStore` on the `fields` slice, so retained values on each keystroke do not re-render siblings); SJForm's context carries a signature of its props so `submits`/`action`/`fields` changes reach the fields.
+- Field effects: layout (`requireLive()` guarded by the generated `fieldLive`), passive `connect()` (children report their kind first, then the field registers; keyed on `name`), passive `announce()` after every commit. A standing error at mount is silent (core ruling 3); StrictMode announces once.
+- Input: `data-touched` via a store subscription; the form `reset` listener is attached in an effect through the control ref (`AbortController`), `userInvalid` read from `runtime.supports` (no provider: fallback on).
+- Error part: `<div id=-error class=sj-field__error>` = `<span class=sj-field__icon data-part=icon aria-hidden>` holding an aria-hidden `SJIcon` `alert-circle` size `sm`, then the visible text. Rendered only while the trimmed error is non-empty; no `role`/`aria-live` on it.
+
+### Decisions and ambiguities
+
+- **Icon data.** ADR-016 forbids adapters importing `@ramoslabs/icons`, but the ruling needs an `alert-circle` in the adapter. The three Lucide `circle-alert` nodes (ISC) are inlined as an `IconData` constant in `field/index.ts`. Follow-up for the owner: a core-owned constant or an `errorIcon` slot would remove the duplicate.
+- **Icon part props.** `getIconProps` lives on #105 (core `field` icon part), not on main yet; the adapter builds `sj-field__icon` / `data-part=icon` / `aria-hidden` itself. Switch to `parts.getIconProps()` once #105 lands.
+- **`action` collides with the native form attribute.** The contract prop `action: 'go'|'send'|'search'` wins; the native submission target is not a prop of `SJForm` (type error, never reaches the DOM). Use `onSubmit`. Worth a contract rename (`enterAction`) before `beta`.
+- **Contract names stay lowercase.** `autocomplete` is the prop; React's `autoComplete`, `type`, `inputMode`, `enterKeyHint`, `autoCapitalize`, `autoCorrect`, `spellCheck` and `maxLength` are omitted from the types and stripped at runtime (an untyped spread cannot turn an identifier into `type=number` or add `maxlength`).
+- **Prop-or-slot.** `label`/`hint` props or `SJField.Label`/`SJField.Hint` parts (give one, not both). The hint part registers itself with the field in a layout effect (one re-render before paint, like Vue), so no `hasHint` is needed in slot form; on the server render only the prop form or `hasHint` references it. `error` is prop-only. Order: label, hint, control, error (matches the CSS fixtures).
+- **SSR Enter position** needs the data-first `fields` prop; without it the position appears after mount (registration order).
+- Native `:user-invalid` detection is not done by `SJProvider` yet, so unless the app passes `supports.userInvalid` the touched fallback runs (harmless beside the native rule).
+
+### Size
+
+Unminified `tsc` output gzip (comments included, so an upper bound): form 1.04 KiB, field 2.42 KiB, input 1.82 KiB. The `size` tool reports only the whole `adapter:react` barrel (not per component) for adapters.
+
+### Not done / follow-ups
+
+- Two fields announcing in one commit still speak only the last text (known limit, see a1).
+- Browser (L2/L3) and forced-false `:user-invalid` runs are `.f`.
+
+### Rebase onto #114/#115 (C02.d)
+
+- Form prop `action` is now `enter`; the native `action` passes through to `<form>` (test). Inside a field the owner's `enterHint()` is final; the input's own `autoSubmit` is standalone only (core, test).
+- Field registers with `connect(Array.prototype.indexOf.call(form.elements, control))`; SJInput hands its element to the field (`useSJFieldControl`). Re-read after every commit: a rename or reorder runs the old cleanup, then `connect(newIndex)`.
+- Error icon is the generated `circleAlert` (`../generated/icons/circle-alert`); the inlined nodes and the ADR-016 follow-up are gone. The icon part now uses core `getIconProps` (#105).

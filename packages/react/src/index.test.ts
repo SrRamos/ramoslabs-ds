@@ -13,8 +13,18 @@ describe('@ramoslabs/react barrel', () => {
       'SJDisclosureContent',
       'SJDisclosureRoot',
       'SJDisclosureTrigger',
+      'SJField',
+      'SJFieldContext',
+      'SJFieldHint',
+      'SJFieldLabel',
+      'SJFieldRoot',
+      'SJForm',
+      'SJFormContext',
+      'SJFormRoot',
       'SJIcon',
       'SJIconRoot',
+      'SJInput',
+      'SJInputRoot',
       'SJState',
       'SJStateRoot',
       'SJSwitch',
@@ -22,6 +32,8 @@ describe('@ramoslabs/react barrel', () => {
       'SJSwitchLabel',
       'SJSwitchRoot',
       'SJSwitchThumb',
+      'useSJField',
+      'useSJFieldControl',
     ]);
   });
 });
