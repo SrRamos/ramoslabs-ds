@@ -408,3 +408,45 @@ describe('live host (G1 MUST-3)', () => {
     expect(attrs.style).toBe(HIDDEN_STYLE);
   });
 });
+
+describe('capability detection (supports)', () => {
+  const win = { CSS: { supports: () => true }, HTMLDetailsElement: { prototype: { name: '' } } };
+  const render = (props: Record<string, unknown>) => {
+    const seen: boolean[] = [];
+    let ctx!: ReturnType<typeof useSJContext>;
+    const Comp = defineComponent({
+      setup() {
+        ctx = useSJContext();
+        seen.push(ctx.runtime.supports.detailsName);
+        return () => h('p', 'x');
+      },
+    });
+    const root = mk('root');
+    createApp({
+      render: () => h(SJProvider, { liveHost: fakeLive().host, ...props }, () => h(Comp)),
+    }).mount(root);
+    return { seen, ctx, root };
+  };
+
+  it('detects after mount; markup does not depend on supports', () => {
+    const before = render({});
+    expect(before.ctx.runtime.supports.detailsName).toBe(false);
+    vi.stubGlobal('window', win);
+    const after = render({});
+    vi.unstubAllGlobals();
+    expect(after.seen).toEqual([false]);
+    expect(after.ctx.runtime.supports.detailsName).toBe(true);
+    expect(JSON.stringify(after.root.children, ['type', 'children', 'text'])).toBe(
+      JSON.stringify(before.root.children, ['type', 'children', 'text']),
+    );
+  });
+
+  it('explicit supports wins over detection', () => {
+    vi.stubGlobal('window', win);
+    const a = render({ config: { supports: { detailsName: false } } });
+    const b = render({ runtime: createRuntime({ target: 'client', supports: {} }) });
+    vi.unstubAllGlobals();
+    expect(a.ctx.runtime.supports.detailsName).toBe(false);
+    expect(b.ctx.runtime.supports.detailsName).toBe(false);
+  });
+});

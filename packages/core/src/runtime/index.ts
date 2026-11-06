@@ -38,6 +38,49 @@ export function detectAnchorPositioning(
   return ANCHOR_PROPERTIES.every(([p, v]) => cssSupports(p, v) === true);
 }
 
+/** The slice of `window` that `detectSupports` reads. Injected: core never touches a global. */
+export interface SupportsEnv {
+  CSS?: { supports(...args: string[]): boolean };
+  HTMLElement?: { prototype: object };
+  HTMLButtonElement?: { prototype: object };
+  HTMLDialogElement?: { prototype: object };
+  HTMLDetailsElement?: { prototype: object };
+  Intl?: { Locale?: { prototype: object } };
+  document?: object;
+  scheduler?: object;
+}
+
+const has = (c: { prototype: object } | undefined, k: string): boolean => !!c && k in c.prototype;
+
+/**
+ * Feature detection for every `SupportKey` (ADR-013). Pure: `env` is `window` (or a fake). A probe
+ * that throws or is absent is `false`, so a missing API never takes the native path.
+ */
+export function detectSupports(env: SupportsEnv): SupportsMap {
+  const css = (...a: string[]): boolean => {
+    try {
+      return env.CSS?.supports(...a) === true;
+    } catch {
+      return false;
+    }
+  };
+  const fn = (o: object | undefined, k: string): boolean =>
+    typeof (o as Record<string, unknown> | undefined)?.[k] === 'function';
+  const week = env.Intl?.Locale;
+  return {
+    anchorPositioning: detectAnchorPositioning(css),
+    popover: has(env.HTMLElement, 'popover'),
+    dialogRequestClose: has(env.HTMLDialogElement, 'requestClose'),
+    invokerCommands: has(env.HTMLButtonElement, 'commandForElement'),
+    detailsName: has(env.HTMLDetailsElement, 'name'),
+    userInvalid: css('selector(:user-invalid)'),
+    viewTransitions: fn(env.document, 'startViewTransition'),
+    schedulerYield: fn(env.scheduler, 'yield'),
+    weekInfo: has(week, 'getWeekInfo') || has(week, 'weekInfo'),
+    focusVisible: css('selector(:focus-visible)'),
+  };
+}
+
 export interface Scheduler {
   /** Run `fn` after `ms`; returns a cancel function. */
   after(fn: () => void, ms: number): () => void;
@@ -60,6 +103,8 @@ export interface SJRuntime {
   readonly idFactory?: () => string;
   readonly density: 'touch' | 'compact';
   readonly supports: SupportsMap;
+  /** True when `config.supports` was given: adapters then skip detection, so a forced run keeps winning. */
+  readonly supportsExplicit?: true;
   readonly scheduler: Scheduler;
 }
 
@@ -151,6 +196,7 @@ export function createRuntime(config: RuntimeConfig = {}): SJRuntime {
     scheduler:
       config.scheduler ?? (config.target === 'client' ? platformScheduler : createFakeScheduler()),
     ...(config.idFactory && { idFactory: config.idFactory }),
+    ...(config.supports !== undefined && { supportsExplicit: true as const }),
   };
   return Object.freeze(runtime);
 }

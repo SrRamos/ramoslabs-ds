@@ -10,11 +10,18 @@ import {
   useLayoutEffect,
   useMemo,
   useRef,
+  useState,
   type Context,
   type ReactElement,
   type ReactNode,
 } from 'react';
-import { createRuntime, type RuntimeConfig, type SJRuntime } from '@ramoslabs/core/runtime';
+import {
+  createRuntime,
+  detectSupports,
+  withSupports,
+  type RuntimeConfig,
+  type SJRuntime,
+} from '@ramoslabs/core/runtime';
 import { createLiveRegistry, type LiveHost, type LiveRegistry } from '@ramoslabs/core/live';
 import { createDomLiveHost, type DisposableLiveHost } from './live-host';
 
@@ -42,7 +49,7 @@ export interface SJProviderProps extends RuntimeConfig {
 export function SJProvider(props: SJProviderProps): ReactElement {
   const { runtime: given, liveHost, children } = props;
   const { locale, dir, idPrefix, idFactory, density, supports, scheduler, target } = props;
-  const runtime = useMemo(
+  const base = useMemo(
     () =>
       given ??
       createRuntime({
@@ -59,7 +66,15 @@ export function SJProvider(props: SJProviderProps): ReactElement {
       }),
     [given, locale, dir, idPrefix, idFactory, density, supports, scheduler, target],
   );
-  const live = useMemo(() => createLiveRegistry(runtime.scheduler), [runtime]);
+  // Capability detection runs after mount only (markup never reads `supports`, so no hydration
+  // mismatch) and never over an explicit `supports`. The registry keys on `base`: the scheduler is shared.
+  const [detected, setDetected] = useState<{ base: SJRuntime; runtime: SJRuntime } | null>(null);
+  useLayoutEffect(() => {
+    if (!base.supportsExplicit && typeof window !== 'undefined')
+      setDetected({ base, runtime: withSupports(base, detectSupports(window)) });
+  }, [base]);
+  const runtime = detected?.base === base ? detected.runtime : base;
+  const live = useMemo(() => createLiveRegistry(base.scheduler), [base]);
   const eager = useRef(false);
   const attachedHost = useRef<(LiveHost & { ensure?: () => void }) | undefined>(undefined);
   const requireLive = useCallback(() => {

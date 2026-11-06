@@ -475,3 +475,38 @@ describe('RT follow-ups (vanilla)', () => {
     inst.destroy();
   });
 });
+
+describe('capability detection (supports)', () => {
+  const view = { CSS: { supports: () => true }, HTMLDetailsElement: { prototype: { name: '' } } };
+  const elWith = (v: unknown) => {
+    const el = new Target();
+    el.ownerDocument = { defaultView: v } as unknown as Document;
+    return el;
+  };
+  const spec: ComponentSpec<S, E, Record<string, unknown>, X> = {
+    initial: () => ({ open: false, count: 0 }),
+    reduce: (s) => ({ state: s }),
+    patch: () => undefined,
+  };
+  const host = (runtime: ReturnType<typeof createRuntime>) =>
+    createHost(runtime, { liveHost: noopLive, allowFakeScheduler: true });
+
+  it('applies detection on the first mount, before the instance context is built', () => {
+    const h = host(createRuntime({ idFactory: () => 'a' }));
+    expect(h.runtime.supports.detailsName).toBe(false);
+    h.mount(elWith(view) as unknown as Element, spec, {});
+    expect(h.runtime.supports.detailsName).toBe(true);
+  });
+
+  it('an explicit supports (forced false) is never overridden', () => {
+    const h = host(createRuntime({ idFactory: () => 'a', supports: { detailsName: false } }));
+    h.mount(elWith(view) as unknown as Element, spec, {});
+    expect(h.runtime.supports.detailsName).toBe(false);
+  });
+
+  it('no window (no defaultView): supports stay as given', () => {
+    const h = host(createRuntime({ idFactory: () => 'a' }));
+    h.mount(elWith(null) as unknown as Element, spec, {});
+    expect(h.runtime.supports.detailsName).toBe(false);
+  });
+});

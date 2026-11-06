@@ -6,6 +6,8 @@ import {
   createFakeScheduler,
   createRuntime,
   detectAnchorPositioning,
+  detectSupports,
+  type SupportsEnv,
   platformScheduler,
   serializeRuntime,
   withSupports,
@@ -144,5 +146,71 @@ describe('undefined supports entries (G1 NICE-3)', () => {
     expect(r.supports.weekInfo).toBe(true);
     expect(withSupports(r, { weekInfo: undefined }).supports.weekInfo).toBe(true);
     expect(Object.values(r.supports).every((v) => typeof v === 'boolean')).toBe(true);
+  });
+});
+
+const proto = (...keys: string[]) => ({
+  prototype: Object.fromEntries(keys.map((k) => [k, true])),
+});
+const fullEnv = (): SupportsEnv => ({
+  CSS: { supports: () => true },
+  HTMLElement: proto('popover'),
+  HTMLButtonElement: proto('commandForElement'),
+  HTMLDialogElement: proto('requestClose'),
+  HTMLDetailsElement: proto('name'),
+  Intl: { Locale: proto('getWeekInfo') },
+  document: { startViewTransition: () => undefined },
+  scheduler: { yield: () => undefined },
+});
+
+describe('detectSupports (ADR-013, injected env)', () => {
+  it('covers every SupportKey; a full env is all true, an empty env all false', () => {
+    const all = detectSupports(fullEnv());
+    expect(Object.keys(all).sort()).toEqual([...SUPPORT_KEYS].sort());
+    expect(Object.values(all).every((v) => v === true)).toBe(true);
+    expect(Object.values(detectSupports({})).every((v) => v === false)).toBe(true);
+  });
+
+  it('probes each capability independently', () => {
+    const only = (env: SupportsEnv) =>
+      Object.entries(detectSupports(env))
+        .filter(([, v]) => v)
+        .map(([k]) => k);
+    expect(only({ HTMLDetailsElement: proto('name') })).toEqual(['detailsName']);
+    expect(only({ HTMLElement: proto('popover') })).toEqual(['popover']);
+    expect(only({ HTMLDialogElement: proto('requestClose') })).toEqual(['dialogRequestClose']);
+    expect(only({ HTMLButtonElement: proto('commandForElement') })).toEqual(['invokerCommands']);
+    expect(only({ scheduler: { yield: () => 1 } })).toEqual(['schedulerYield']);
+    expect(only({ document: { startViewTransition: () => 1 } })).toEqual(['viewTransitions']);
+    expect(only({ Intl: { Locale: proto('weekInfo') } })).toEqual(['weekInfo']);
+    const sel = (ok: string) => ({ CSS: { supports: (q: string) => q === `selector(${ok})` } });
+    expect(only(sel(':user-invalid'))).toEqual(['userInvalid']);
+    expect(only(sel(':focus-visible'))).toEqual(['focusVisible']);
+  });
+
+  it('anchorPositioning needs every anchor property (partial engine = false)', () => {
+    const css = (skip: string) => ({ supports: (p: string) => p !== skip });
+    expect(detectSupports({ CSS: css('position-area') }).anchorPositioning).toBe(false);
+    expect(detectSupports({ CSS: css('none') }).anchorPositioning).toBe(true);
+  });
+
+  it('a throwing CSS.supports is false, not an error', () => {
+    const boom = {
+      CSS: {
+        supports: () => {
+          throw new Error('x');
+        },
+      },
+    };
+    expect(detectSupports(boom).userInvalid).toBe(false);
+  });
+});
+
+describe('supportsExplicit', () => {
+  it('is set only when config.supports is given, and survives withSupports', () => {
+    expect(createRuntime().supportsExplicit).toBeUndefined();
+    const forced = createRuntime({ supports: {} });
+    expect(forced.supportsExplicit).toBe(true);
+    expect(withSupports(forced, { popover: true }).supportsExplicit).toBe(true);
   });
 });
