@@ -218,11 +218,7 @@ export const SJFieldRoot: ForwardRefExoticComponent<
             fromGetter(parts.getErrorProps(), classes?.error),
             createElement(
               'span',
-              {
-                className: ['sj-field__icon', classes?.icon].filter(Boolean).join(' '),
-                'data-part': 'icon',
-                'aria-hidden': 'true',
-              },
+              fromGetter(parts.getIconProps(), classes?.icon),
               createElement(SJIcon, { icon: circleAlert, size: 'sm' }),
             ),
             errorText,

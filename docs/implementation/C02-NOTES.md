@@ -202,4 +202,4 @@ Unminified `tsc` output gzip (comments included, so an upper bound): form 1.04 K
 
 - Form prop `action` is now `enter`; the native `action` passes through to `<form>` (test). Inside a field the owner's `enterHint()` is final; the input's own `autoSubmit` is standalone only (core, test).
 - Field registers with `connect(Array.prototype.indexOf.call(form.elements, control))`; SJInput hands its element to the field (`useSJFieldControl`). Re-read after every commit: a rename or reorder runs the old cleanup, then `connect(newIndex)`.
-- Error icon is the generated `circleAlert` (`../generated/icons/circle-alert`); the inlined nodes and the ADR-016 follow-up are gone. The hand-built icon part stays until #105 lands (`getIconProps`).
+- Error icon is the generated `circleAlert` (`../generated/icons/circle-alert`); the inlined nodes and the ADR-016 follow-up are gone. The icon part now uses core `getIconProps` (#105).
