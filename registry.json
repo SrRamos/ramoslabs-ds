@@ -13,13 +13,13 @@
     "at-support": "https://design.ramoslabs.com/schema/at-support.v1.json"
   },
   "tokens": {
-    "total": 418,
+    "total": 427,
     "byCategory": {
       "breakpoint": 5,
       "color": 285,
       "target": 2,
       "focus": 2,
-      "control": 24,
+      "control": 26,
       "scroll": 1,
       "border": 1,
       "opacity": 3,
@@ -32,11 +32,12 @@
       "overlay": 4,
       "radius": 9,
       "shadow": 8,
-      "space": 14,
+      "space": 17,
       "state": 4,
       "font": 21,
       "leading": 5,
       "tracking": 6,
+      "metric": 4,
       "z": 9
     },
     "url": "https://design.ramoslabs.com/tokens.json"
@@ -71,6 +72,24 @@
       "title": "Modals",
       "url": "https://design.ramoslabs.com/patterns/modals/",
       "summary": "The six accessibility requirements of a modal, native <dialog>.showModal() as the way to get them, dialog vs alertdialog, when not to use a modal, the Popover API, pitfalls, and the mobile bottom sheet"
+    },
+    {
+      "id": "cards-metrics",
+      "title": "Cards and Metrics",
+      "url": "https://design.ramoslabs.com/patterns/cards-metrics/",
+      "summary": "One hero figure per card, number and muted-unit typography with tabular figures, context placed next to its datum, the metadata line, and a compact overflow button with a 44px hit area"
+    },
+    {
+      "id": "multi-step-flows",
+      "title": "Multi-step Flows",
+      "url": "https://design.ramoslabs.com/patterns/multi-step-flows/",
+      "summary": "One question per screen with the question as the heading, a stepper that pairs the text 1 de 3 with a segmented bar, grouped display of long numbers over a raw submitted value, and a sticky full-width action"
+    },
+    {
+      "id": "bottom-navigation",
+      "title": "Bottom Navigation",
+      "url": "https://design.ramoslabs.com/patterns/bottom-navigation/",
+      "summary": "Icon plus a visible label on three to five destinations, an active tab marked by a filled icon, colour and weight and never colour alone, and an optional centre action only when it is the primary action of the app"
     },
     {
       "id": "mobile-first",
