@@ -7,7 +7,7 @@ import { createElement, StrictMode } from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createApp, defineComponent, h, nextTick, ref, type App } from 'vue';
-import { createRuntime, type SJRuntime } from '@ramoslabs/core/runtime';
+import { createRuntime, detectSupports, type SJRuntime } from '@ramoslabs/core/runtime';
 import { createHost } from '@ramoslabs/vanilla/runtime';
 import { define, mountCheckbox } from '@ramoslabs/vanilla/checkbox';
 import { SJCheckbox as ReactCheckbox } from '@ramoslabs/react/checkbox';
@@ -17,7 +17,6 @@ import {
   useRuntime as useReactRuntime,
 } from '@ramoslabs/react/runtime';
 import { SJProvider as VueProvider, useSJRuntime as useVueRuntime } from '@ramoslabs/vue/runtime';
-import { detectSupports } from '../../../e2e/supports/detect';
 import { applyPath, parsePath, type SupportsMap } from '../../../e2e/supports/paths';
 import type { Adapter, CheckboxFixtureProps } from '../fixtures';
 

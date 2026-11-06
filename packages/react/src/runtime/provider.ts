@@ -14,7 +14,13 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react';
-import { createRuntime, type RuntimeConfig, type SJRuntime } from '@ramoslabs/core/runtime';
+import {
+  createRuntime,
+  detectSupports,
+  withSupports,
+  type RuntimeConfig,
+  type SJRuntime,
+} from '@ramoslabs/core/runtime';
 import { createLiveRegistry, type LiveHost, type LiveRegistry } from '@ramoslabs/core/live';
 import { createDomLiveHost, type DisposableLiveHost } from './live-host';
 
@@ -42,8 +48,8 @@ export interface SJProviderProps extends RuntimeConfig {
 export function SJProvider(props: SJProviderProps): ReactElement {
   const { runtime: given, liveHost, children } = props;
   const { locale, dir, idPrefix, idFactory, density, supports, scheduler, target } = props;
-  const runtime = useMemo(
-    () =>
+  const runtime = useMemo(() => {
+    const r =
       given ??
       createRuntime({
         ...(locale !== undefined && { locale }),
@@ -56,9 +62,13 @@ export function SJProvider(props: SJProviderProps): ReactElement {
         // Effects and timers only run on the client; the server render never reads the scheduler.
         // A fake scheduler on the client would never clear the live region (G1 SHOULD-1).
         target: target ?? 'client',
-      }),
-    [given, locale, dir, idPrefix, idFactory, density, supports, scheduler, target],
-  );
+      });
+    // Detected inside the memo (no second render): markup never reads `supports`, so hydration is
+    // unaffected; an explicit `supports` (forced run) is kept.
+    return !r.supportsExplicit && typeof window !== 'undefined'
+      ? withSupports(r, detectSupports(window))
+      : r;
+  }, [given, locale, dir, idPrefix, idFactory, density, supports, scheduler, target]);
   const live = useMemo(() => createLiveRegistry(runtime.scheduler), [runtime]);
   const eager = useRef(false);
   const attachedHost = useRef<(LiveHost & { ensure?: () => void }) | undefined>(undefined);

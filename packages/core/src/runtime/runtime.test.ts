@@ -6,6 +6,8 @@ import {
   createFakeScheduler,
   createRuntime,
   detectAnchorPositioning,
+  detectSupports,
+  type SupportsEnv,
   platformScheduler,
   serializeRuntime,
   withSupports,
@@ -144,5 +146,104 @@ describe('undefined supports entries (G1 NICE-3)', () => {
     expect(r.supports.weekInfo).toBe(true);
     expect(withSupports(r, { weekInfo: undefined }).supports.weekInfo).toBe(true);
     expect(Object.values(r.supports).every((v) => typeof v === 'boolean')).toBe(true);
+  });
+});
+
+const proto = (...keys: string[]) => ({
+  prototype: Object.fromEntries(keys.map((k) => [k, true])),
+});
+const fullEnv = (): SupportsEnv => ({
+  CSS: { supports: () => true },
+  HTMLElement: proto('popover'),
+  HTMLButtonElement: proto('commandForElement'),
+  HTMLDialogElement: proto('requestClose'),
+  HTMLDetailsElement: proto('name'),
+  Intl: { Locale: proto('getWeekInfo') },
+  document: { startViewTransition: () => undefined },
+  scheduler: { yield: () => undefined },
+});
+
+describe('detectSupports (ADR-013, injected env)', () => {
+  it('covers every SupportKey; a full env is all true, an empty env all false', () => {
+    const all = detectSupports(fullEnv());
+    expect(Object.keys(all).sort()).toEqual([...SUPPORT_KEYS].sort());
+    expect(Object.values(all).every((v) => v === true)).toBe(true);
+    expect(Object.values(detectSupports({})).every((v) => v === false)).toBe(true);
+  });
+
+  it('probes each capability independently', () => {
+    const only = (env: SupportsEnv) =>
+      Object.entries(detectSupports(env))
+        .filter(([, v]) => v)
+        .map(([k]) => k);
+    expect(only({ HTMLDetailsElement: proto('name') })).toEqual(['detailsName']);
+    expect(only({ HTMLElement: proto('popover') })).toEqual(['popover']);
+    expect(only({ HTMLDialogElement: proto('requestClose') })).toEqual(['dialogRequestClose']);
+    expect(only({ HTMLButtonElement: proto('commandForElement') })).toEqual(['invokerCommands']);
+    expect(only({ scheduler: { yield: () => 1 } })).toEqual(['schedulerYield']);
+    expect(only({ document: { startViewTransition: () => 1 } })).toEqual(['viewTransitions']);
+    expect(only({ Intl: { Locale: proto('weekInfo') } })).toEqual(['weekInfo']);
+    const sel = (ok: string) => ({ CSS: { supports: (q: string) => q === `selector(${ok})` } });
+    expect(only(sel(':user-invalid'))).toEqual(['userInvalid']);
+    expect(only(sel(':focus-visible'))).toEqual(['focusVisible']);
+  });
+
+  it('anchorPositioning needs every anchor property (partial engine = false)', () => {
+    const css = (skip: string) => ({ supports: (p: string) => p !== skip });
+    expect(detectSupports({ CSS: css('position-area') }).anchorPositioning).toBe(false);
+    expect(detectSupports({ CSS: css('none') }).anchorPositioning).toBe(true);
+  });
+
+  it('a throwing CSS.supports is false, not an error', () => {
+    const boom = {
+      CSS: {
+        supports: () => {
+          throw new Error('x');
+        },
+      },
+    };
+    expect(detectSupports(boom).userInvalid).toBe(false);
+  });
+});
+
+describe('detectSupports isolation', () => {
+  it('a partial env (undefined prototype) fails only its own probe', () => {
+    const env = { ...fullEnv(), HTMLDetailsElement: {} } as unknown as SupportsEnv;
+    const got = detectSupports(env);
+    expect(got.detailsName).toBe(false);
+    expect(got.popover).toBe(true);
+    expect(got.weekInfo).toBe(true);
+  });
+});
+
+describe('supportsExplicit', () => {
+  it('is set only when config.supports is given, and survives withSupports', () => {
+    expect(createRuntime().supportsExplicit).toBeUndefined();
+    const forced = createRuntime({ supports: {} });
+    expect(forced.supportsExplicit).toBe(true);
+    expect(withSupports(forced, { popover: true }).supportsExplicit).toBe(true);
+  });
+});
+
+describe('SSR round trip and detection', () => {
+  const wire = (r: ReturnType<typeof createRuntime>) =>
+    JSON.parse(JSON.stringify(serializeRuntime(r)));
+
+  it('a default server leads to a non-explicit client that detects', () => {
+    const w = wire(createRuntime());
+    expect(w.supports).toBeUndefined();
+    expect(w.supportsExplicit).toBeUndefined();
+    const client = createRuntime({ ...w, target: 'client' });
+    expect(client.supportsExplicit).toBeUndefined();
+    expect(withSupports(client, detectSupports(fullEnv())).supports.popover).toBe(true);
+  });
+
+  it('an explicit server keeps the client values and stays explicit', () => {
+    const w = wire(createRuntime({ supports: { popover: true } }));
+    expect(w.supportsExplicit).toBe(true);
+    const client = createRuntime({ ...w, target: 'client' });
+    expect(client.supportsExplicit).toBe(true);
+    expect(client.supports.popover).toBe(true);
+    expect(client.supports.detailsName).toBe(false);
   });
 });
