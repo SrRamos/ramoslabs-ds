@@ -6,15 +6,14 @@ import { createElement, StrictMode } from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createApp, defineComponent, h, nextTick, ref, type App } from 'vue';
-import { createRuntime, type SJRuntime } from '@ramoslabs/core/runtime';
+import { createRuntime, detectSupports, type SJRuntime } from '@ramoslabs/core/runtime';
 import { createHost } from '@ramoslabs/vanilla/runtime';
 import {
   SJProvider as ReactProvider,
   useRuntime as useReactRuntime,
 } from '@ramoslabs/react/runtime';
 import { SJProvider as VueProvider, useSJRuntime as useVueRuntime } from '@ramoslabs/vue/runtime';
-// W1-309b: real detection plus the forced-false injector (path recorded by the caller).
-import { detectSupports } from '../../supports/detect';
+// W1-309b: the forced-false injector (real detection is core's `detectSupports`) (path recorded by the caller).
 import { applyPath, parsePath, type SupportsMap } from '../../supports/paths';
 // The probe barrel pulls node:path for its contract paths; the browser bundle takes the wrappers directly.
 import { SJProbe as ReactProbe } from '../../../probe/react/index';

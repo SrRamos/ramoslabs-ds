@@ -24,7 +24,7 @@ import {
   type LiveRegistry,
   type LiveRole,
 } from '@ramoslabs/core/live';
-import type { SJRuntime } from '@ramoslabs/core/runtime';
+import { detectSupports, withSupports, type SJRuntime } from '@ramoslabs/core/runtime';
 import { createStore, type Reducer, type Store } from '@ramoslabs/core/store';
 
 export type { Bag, CorrectiveEffect, Effect, EffectInput, LiveHost, SJRuntime };
@@ -155,7 +155,8 @@ export function setText(el: Node, text: string | number): void {
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 /** One host per runtime: owns the live-region registry and the set of live instances. */
-export function createHost(runtime: SJRuntime, options: HostOptions = {}): VanillaHost {
+export function createHost(initial: SJRuntime, options: HostOptions = {}): VanillaHost {
+  let runtime = initial;
   // A fake scheduler's timers never fire in a browser: effects would never drain and the live
   // region would never clear. Fail loudly in development (G1 SHOULD-1).
   if (
@@ -172,6 +173,7 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
   let attached = false;
   let liveHost: LiveHost | undefined;
   let closed = false;
+  let detectedOnce = false;
 
   const mount: VanillaHost['mount'] = <S extends object, E, P extends Bag, X extends EffectInput>(
     el: Element,
@@ -179,6 +181,12 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
     initialProps: P,
   ): Instance<P> => {
     if (closed) throw new Error('[sj] mount on a destroyed host');
+    // First mount = after the DOM exists: detect once, never over an explicit `supports`.
+    const view = el.ownerDocument?.defaultView;
+    if (!detectedOnce) {
+      detectedOnce = true;
+      if (!runtime.supportsExplicit && view) runtime = withSupports(runtime, detectSupports(view));
+    }
     if (!attached) {
       attached = true;
       liveHost = options.liveHost ?? domLiveHost(el.ownerDocument, nodes);
@@ -328,7 +336,9 @@ export function createHost(runtime: SJRuntime, options: HostOptions = {}): Vanil
   };
 
   return {
-    runtime,
+    get runtime() {
+      return runtime;
+    },
     live,
     mount,
     destroy() {
