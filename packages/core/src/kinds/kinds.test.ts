@@ -82,7 +82,7 @@ describe('resolveKind', () => {
       const r = resolveKind(c.kind as Kind);
       expect(r.type).toBe(c.type[0]);
       const gated = c.group === 'postal-reference-account' || c.kind === 'tax-id';
-      if (c.inputmode && !(c.kind === 'tax-id') && c.type[0] !== 'number')
+      if (c.inputmode && c.kind !== 'tax-id' && !['number', 'select'].includes(c.type[0]))
         expect(r.inputmode).toBe(c.inputmode);
       else if (!gated || c.kind === 'tax-id') expect(r.inputmode).toBeUndefined();
       const cap = c.autocapitalize as { value: string | null; when?: string };
