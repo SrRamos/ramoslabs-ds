@@ -21,12 +21,12 @@ const sha = (rel: string) =>
 /** sha256 of each frozen SJButton file at the commit .f was written against (origin/main 9b50b29). */
 export const FROZEN: Record<string, string> = {
   'packages/contracts/contracts/button.contract.json':
-    '8503c9e1c2b1913815f6278ec39c7af8b63ee863733c050fb337271dbbc7929f',
+    '7202d79428f26a8b7749a8006a1be0005abecea76e5d006848ba3794ca4eef26',
   'packages/core/src/button/index.ts':
-    '2a88b0175d7d01eae436c332d68e267ba77ebc3766ecc5380eeec8b97de383a9',
+    'bdc4551483fb059d0ac45bfcb4ea64054ef9255e921e834952290c11fe4eca93',
   'packages/core/src/button/reducer.ts':
     'ce5a6ddac7c54952054814db579b58358404e5f07b509aef2b4f6531e18cee55',
-  'packages/css/src/button.css': 'fcb392fc18543503cba574f3da4c8af87845ff5e1b0d3bb20561f22418d2fd19',
+  'packages/css/src/button.css': 'd5220b8d5b3c4f840cd63727ab66bcf32ab4410049a7d1f3b1965a7060d3bdc7',
 };
 
 /** Pure: which pinned files differ from the given hashes. */

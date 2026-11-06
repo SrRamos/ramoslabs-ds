@@ -11,19 +11,18 @@ const page = pages.find((p) => p.id === 'typography')!
   <p class="ty-hero-eyebrow">Foundations / Typography</p>
   <h1>You don't choose a size. You choose a role.</h1>
   <p>
-    RamosLabs types on <strong>three families</strong> and <strong>one ten-step scale</strong>. Every piece of text
+    RamosLabs types on <strong>one typeface</strong> and <strong>one ten-step scale</strong>. Every piece of text
     takes a role, Display, Headline, Title, Body or Label, and the role hands it a family, a size, a weight, a
-    line-height and a tracking. Body and UI are <strong>Rubik</strong>, headlines are <strong>Red Hat Display</strong>,
+    line-height and a tracking. Body, UI and headlines are all <strong>Plus Jakarta Sans</strong>, set at different weights and tracking,
     and <strong>Roboto</strong> waits as the fallback. Pick the role; the type takes care of itself.
   </p>
 </div>
 
 <div class="ty-section">
   <span class="ty-num">01</span>
-  <h2 class="ty-h2">Three voices</h2>
+  <h2 class="ty-h2">One typeface, one fallback</h2>
   <p class="ty-intro">
-    Two families with a job, plus a safe substitute. One geometric face with presence for headings, one humanist face
-    that disappears into reading, one metric-friendly fallback for when the others cannot load.
+    One geometric humanist typeface carries headings, body and controls, so hierarchy comes from role, weight and tracking and never from a second face. Roboto is the safe substitute. Arabic and Hebrew text falls back to IBM Plex Sans Arabic and Noto Sans Hebrew, loaded only when those scripts appear.
   </p>
 
   <div class="ty-fam-grid">
@@ -33,15 +32,14 @@ const page = pages.find((p) => p.id === 'typography')!
         <span class="ty-fam-token">--font-family-display</span>
       </div>
       <div class="ty-fam-body">
-        <div class="ty-fam-specimen" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-weight': 800, 'letter-spacing': '-0.025em' }}>
-          Red Hat Display
+        <div class="ty-fam-specimen" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-weight': 800, 'letter-spacing': '-0.025em' }}>
+          Plus Jakarta Sans
         </div>
-        <div class="ty-fam-glyphs" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif" }}>
+        <div class="ty-fam-glyphs" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif" }}>
           AaBbCc 0123456789 &amp; Your next adventure starts here
         </div>
         <p class="ty-fam-note">
-          Geometric, slightly condensed, built to carry weight above 36px. Reserved for Display and Headline. Below the
-          Title role its personality stops helping and starts costing legibility.
+          The same typeface as the body, set heavier and tighter (bold to extrabold, negative tracking) for Display and Headline. One family, so a heading and the paragraph under it always share proportions.
         </p>
       </div>
     </div>
@@ -52,15 +50,14 @@ const page = pages.find((p) => p.id === 'typography')!
         <span class="ty-fam-token">--font-family-sans</span>
       </div>
       <div class="ty-fam-body">
-        <div class="ty-fam-specimen" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 500 }}>
-          Rubik
+        <div class="ty-fam-specimen" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-weight': 500 }}>
+          Plus Jakarta Sans
         </div>
-        <div class="ty-fam-glyphs" style={{ 'font-family': "'Rubik', system-ui, sans-serif" }}>
+        <div class="ty-fam-glyphs" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif" }}>
           AaBbCc 0123456789 &amp; Good typography is invisible and lets the reader keep moving.
         </div>
         <p class="ty-fam-note">
-          Humanist, large x-height, open apertures, which is what keeps letters distinct at small sizes on real screens.
-          The default for the whole product. If you are unsure which family to use, it is this one.
+          Geometric humanist, large x-height, open apertures, which keeps letters distinct at small sizes. It runs wider than most UI faces, so leave room: a long label wraps instead of clipping. The default for the whole product. If you are unsure which family to use, it is this one.
         </p>
       </div>
     </div>
@@ -79,7 +76,7 @@ const page = pages.find((p) => p.id === 'typography')!
         </div>
         <p class="ty-fam-note">
           A metric-compatible substitute for dense system UI, embedded documents, or while the web fonts load. Use it
-          for a whole block on its own, never mixed with Rubik, since it is a stand-in, not a third accent.
+          for a whole block on its own, never mixed with Plus Jakarta Sans, since it is a stand-in, not a third accent.
         </p>
       </div>
     </div>
@@ -98,52 +95,52 @@ const page = pages.find((p) => p.id === 'typography')!
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-6xl</span>
       <span class="ty-pill">Display</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '3.75rem', 'font-weight': 800, 'letter-spacing': '-0.025em' }}>3.75rem 60px</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '3.75rem', 'font-weight': 800, 'letter-spacing': '-0.025em' }}>3.75rem 60px</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-5xl</span>
       <span class="ty-pill">Display</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '3rem', 'font-weight': 800, 'letter-spacing': '-0.025em' }}>3rem 48px</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '3rem', 'font-weight': 800, 'letter-spacing': '-0.025em' }}>3rem 48px</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-4xl</span>
       <span class="ty-pill">Display</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '2.25rem', 'font-weight': 700 }}>2.25rem 36px</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '2.25rem', 'font-weight': 700 }}>2.25rem 36px</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-3xl</span>
       <span class="ty-pill">Headline</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '1.875rem', 'font-weight': 700 }}>1.875rem 30px</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '1.875rem', 'font-weight': 700 }}>1.875rem 30px</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-2xl</span>
       <span class="ty-pill">Headline</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '1.5rem', 'font-weight': 700 }}>1.5rem 24px</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '1.5rem', 'font-weight': 700 }}>1.5rem 24px</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-xl</span>
       <span class="ty-pill">Title</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1.25rem', 'font-weight': 600 }}>1.25rem 20px</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '1.25rem', 'font-weight': 600 }}>1.25rem 20px</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-lg</span>
       <span class="ty-pill">Title</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1.125rem', 'font-weight': 600 }}>1.125rem 18px</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '1.125rem', 'font-weight': 600 }}>1.125rem 18px</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-base</span>
       <span class="ty-pill">Body</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1rem', 'font-weight': 400 }}>1rem 16px, the body reading floor</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '1rem', 'font-weight': 400 }}>1rem 16px, the body reading floor</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-sm</span>
       <span class="ty-pill">Label</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '0.875rem', 'font-weight': 500 }}>0.875rem 14px, helper and labels</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '0.875rem', 'font-weight': 500 }}>0.875rem 14px, helper and labels</span>
     </div>
     <div class="ty-scale-row">
       <span class="ty-scale-tok">--font-size-xs</span>
       <span class="ty-pill">Label</span>
-      <span class="ty-scale-sample" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '0.75rem', 'font-weight': 500 }}>0.75rem 12px, metadata only</span>
+      <span class="ty-scale-sample" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '0.75rem', 'font-weight': 500 }}>0.75rem 12px, metadata only</span>
     </div>
   </div>
 </div>
@@ -170,14 +167,14 @@ const page = pages.find((p) => p.id === 'typography')!
       <tbody>
         <tr>
           <td><span class="role">Display</span></td>
-          <td>Red Hat Display</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>bold</code> / <code>extrabold</code></td>
           <td><code>none</code> / <code>tight</code></td>
           <td><code>tighter</code> / <code>tight</code></td>
         </tr>
         <tr>
           <td><span class="role">Headline</span></td>
-          <td>Red Hat Display</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>bold</code></td>
           <td><code>tight</code> / <code>snug</code></td>
           <td><code>tight</code></td>
@@ -191,14 +188,14 @@ const page = pages.find((p) => p.id === 'typography')!
         </tr>
         <tr>
           <td><span class="role">Body</span></td>
-          <td>Rubik</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>normal</code></td>
           <td><code>normal</code> / <code>relaxed</code></td>
           <td><code>normal</code></td>
         </tr>
         <tr>
           <td><span class="role">Label</span></td>
-          <td>Rubik</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>medium</code> / <code>semibold</code></td>
           <td><code>none</code> / <code>snug</code></td>
           <td><code>wide</code> / <code>wider</code></td>
@@ -220,11 +217,11 @@ const page = pages.find((p) => p.id === 'typography')!
     <div class="ty-axis">
       <div class="ty-axis-title">Weight, a working range of five</div>
       <div class="ty-weights">
-        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 400 }}>Aa</div><div class="ty-weight-l">400 body</div></div>
-        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 500 }}>Aa</div><div class="ty-weight-l">500 label</div></div>
-        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-weight': 600 }}>Aa</div><div class="ty-weight-l">600 title</div></div>
-        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-weight': 700 }}>Aa</div><div class="ty-weight-l">700 head</div></div>
-        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-weight': 800 }}>Aa</div><div class="ty-weight-l">800 display</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-weight': 400 }}>Aa</div><div class="ty-weight-l">400 body</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-weight': 500 }}>Aa</div><div class="ty-weight-l">500 label</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-weight': 600 }}>Aa</div><div class="ty-weight-l">600 title</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-weight': 700 }}>Aa</div><div class="ty-weight-l">700 head</div></div>
+        <div class="ty-weight"><div class="ty-weight-g" style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-weight': 800 }}>Aa</div><div class="ty-weight-l">800 display</div></div>
       </div>
       <p class="ty-axis-note">
         The scale runs 100 to 800.<br />
@@ -255,15 +252,15 @@ const page = pages.find((p) => p.id === 'typography')!
     <div class="ty-axis">
       <div class="ty-axis-title">Tracking, tight for big, wide for caps</div>
       <div class="ty-track-row">
-        <span style={{ 'font-family': "'Red Hat Display', system-ui, sans-serif", 'font-size': '1.5rem', 'font-weight': 800, 'letter-spacing': '-0.05em', color: '#0f172a' }}>Headline</span>
+        <span style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '1.5rem', 'font-weight': 800, 'letter-spacing': '-0.05em', color: '#0f172a' }}>Headline</span>
         <span class="ty-track-l">tighter -0.05em</span>
       </div>
       <div class="ty-track-row">
-        <span style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '1rem', 'letter-spacing': '0', color: '#0f172a' }}>Body copy</span>
+        <span style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '1rem', 'letter-spacing': '0', color: '#0f172a' }}>Body copy</span>
         <span class="ty-track-l">normal 0em</span>
       </div>
       <div class="ty-track-row">
-        <span style={{ 'font-family': "'Rubik', system-ui, sans-serif", 'font-size': '0.75rem', 'font-weight': 600, 'letter-spacing': '0.05em', 'text-transform': 'uppercase', color: '#0f172a' }}>Label</span>
+        <span style={{ 'font-family': "'Plus Jakarta Sans', system-ui, sans-serif", 'font-size': '0.75rem', 'font-weight': 600, 'letter-spacing': '0.05em', 'text-transform': 'uppercase', color: '#0f172a' }}>Label</span>
         <span class="ty-track-l">wider 0.05em</span>
       </div>
       <p class="ty-axis-note">
@@ -328,7 +325,7 @@ const page = pages.find((p) => p.id === 'typography')!
     --muted: var(--color-slate-500);
     --accent: var(--color-indigo-600);
     --line: var(--color-border);
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: var(--ink-2);
   }
 
@@ -350,7 +347,7 @@ const page = pages.find((p) => p.id === 'typography')!
     margin: 0 0 1rem;
   }
   .ty-hero h1 {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: var(--color-white);
     font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
     font-weight: 900;
@@ -378,7 +375,7 @@ const page = pages.find((p) => p.id === 'typography')!
     letter-spacing: 0.1em;
   }
   .ty-h2 {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 1.625rem;
     font-weight: 800;
     color: var(--ink);
@@ -510,7 +507,7 @@ const page = pages.find((p) => p.id === 'typography')!
   }
   .ty-table td { font-size: 0.8125rem; color: var(--ink-3); }
   .ty-table tr:last-child td { border-bottom: none; }
-  .ty-table .role { font-family: 'Red Hat Display', system-ui, sans-serif; font-weight: 700; color: var(--ink); }
+  .ty-table .role { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 700; color: var(--ink); }
   .ty-table code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.75rem; color: var(--accent); }
 
   /* ---------- Axes ---------- */
@@ -522,7 +519,7 @@ const page = pages.find((p) => p.id === 'typography')!
     padding: 1.25rem 1.5rem;
   }
   .ty-axis-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     color: var(--ink);

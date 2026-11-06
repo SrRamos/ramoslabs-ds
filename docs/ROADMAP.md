@@ -85,8 +85,8 @@ CHANGELOG.
   title, meta description, canonical, OpenGraph (`og.png`), Twitter card, JSON-LD.
   `src/layouts/BaseLayout.astro` is a two-column shell (sidebar + main), near-zero JS,
   on-brand via tokens; replicate the global footer from `DocsContainer.tsx`.
-- **Fonts (performance):** self-host via `@fontsource-variable/*` (Red Hat Display, Rubik,
-  Roboto) with preload of the two critical faces; Material Symbols as a subsetted local
+- **Fonts (performance):** self-host the OFL variable fonts (Plus Jakarta Sans as the one typeface; Roboto as the fallback)
+  with preload of the critical face; Material Symbols as a subsetted local
   `@font-face`, non-blocking. Delete the Google `<link>`s in `preview-head.html` and the
   inline `@import` in `Introduction.mdx`.
 - **Agentic pipeline (preserve 100%):** convert `build-agentic.mjs` into an Astro

@@ -21,7 +21,7 @@ color, spacing, typography, radius, shadow, and motion values ship as CSS variab
 ## Foundations
 
 - [Colors](https://design.ramoslabs.com/foundations/colors/): Mono-indigo accent, slate neutral ramp, reserved status colors, role tokens over raw hex, and measured contrast floors
-- [Typography](https://design.ramoslabs.com/foundations/typography/): Three font families, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules
+- [Typography](https://design.ramoslabs.com/foundations/typography/): One typeface, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules
 - [Spacing](https://design.ramoslabs.com/foundations/spacing/): A 4px base with an 8px rhythm, fourteen fixed steps, touch-target floors, and density rules
 - [Border Radius](https://design.ramoslabs.com/foundations/border-radius/): Eight radius steps, the 6px control signature, pill as accent only, and the concentric and squircle rules
 - [Shadows](https://design.ramoslabs.com/foundations/shadows/): Three indigo-tinted two-layer elevation levels plus a focus ring, with shadow meaning height and never state

@@ -241,7 +241,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
   </div>
 
   <p class="a11y-section-text">
-    A control has to be big enough to hit. <strong>SC 2.5.8</strong> sets a floor of <strong>24 by 24 CSS pixels</strong>; we aim for <strong>44 by 44</strong>, the size Apple and WCAG AAA both recommend. Motion is the other half of Operable: honor <code>prefers-reduced-motion</code> as a floor, collapse the motion, keep the meaning (<strong>SC 2.3.3</strong>, <strong>SC 2.2.2</strong>).
+    A control has to be big enough to hit. <strong>SC 2.5.8</strong> sets a floor of <strong>24 by 24 CSS pixels</strong> for the visual box; on a coarse pointer the effective touch target is <strong>44 by 44</strong>, the size Apple and WCAG AAA both recommend, reached with an invisible hit area rather than a bigger button. Keep adjacent compact buttons at least 8px apart on touch (12px around the 24px size) so the hit areas do not reach a neighbour. Motion is the other half of Operable: honor <code>prefers-reduced-motion</code> as a floor, collapse the motion, keep the meaning (<strong>SC 2.3.3</strong>, <strong>SC 2.2.2</strong>).
   </p>
 
   <div class="a11y-xref">
@@ -614,7 +614,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     margin: 0 0 1rem;
   }
   .a11y-hero h1 {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: var(--color-white);
     font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
     font-weight: 900;
@@ -666,13 +666,13 @@ const page = pages.find((p) => p.id === 'accessibility')!
     margin-bottom: 0.75rem;
   }
   .a11y-section-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-slate-900);
   }
   .a11y-section-text {
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: var(--color-slate-600);
     font-size: 0.9375rem;
     line-height: 1.7;
@@ -743,14 +743,14 @@ const page = pages.find((p) => p.id === 'accessibility')!
     color: var(--color-indigo-600);
   }
   .a11y-card-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     color: var(--color-slate-900);
     margin-bottom: 0.375rem;
   }
   .a11y-card-text {
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: var(--color-slate-500);
     font-size: 0.8125rem;
     line-height: 1.5;
@@ -785,7 +785,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     border: 1px solid var(--color-slate-200);
     border-radius: 10px;
     padding: 0.85rem 1.1rem;
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.875rem;
     color: var(--color-slate-600);
     line-height: 1.55;
@@ -799,7 +799,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     border-radius: 50%;
     background: var(--color-indigo-600);
     color: var(--color-white);
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.75rem;
     display: flex;
@@ -839,7 +839,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
   }
   .a11y-rule-label .material-symbols-outlined { font-size: 0.9rem; }
   .a11y-rule-text {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.9375rem;
     font-weight: 700;
     color: var(--color-slate-900);
@@ -854,7 +854,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     font-family: 'SF Mono', monospace;
   }
   .a11y-rule-why {
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
     color: var(--color-slate-600);
     line-height: 1.55;
@@ -891,7 +891,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.875rem;
     margin-bottom: 0.65rem;
@@ -912,7 +912,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     overflow-x: auto;
   }
   .a11y-ra-note {
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
     line-height: 1.5;
     color: var(--color-slate-600);
@@ -994,7 +994,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     color: var(--color-slate-600);
   }
   .a11y-demo-btn {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.875rem;
     color: var(--color-white);
@@ -1054,7 +1054,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
     color: var(--color-indigo-600);
@@ -1108,7 +1108,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
     border-top: 2px solid var(--color-indigo-600);
   }
   .a11y-code-section-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-slate-900);
@@ -1127,7 +1127,7 @@ const page = pages.find((p) => p.id === 'accessibility')!
   }
   .a11y-code-block { margin-bottom: 2rem; }
   .a11y-code-block-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 1rem;
     font-weight: 700;
     color: var(--color-slate-900);

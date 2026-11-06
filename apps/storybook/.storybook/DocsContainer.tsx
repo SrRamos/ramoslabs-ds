@@ -17,14 +17,14 @@ const footerStyles = `
     margin-top: var(--space-16, 4rem);
     padding: var(--space-6) 0 var(--space-8);
     border-top: 1px solid var(--color-border);
-    font-family: var(--font-family-sans, 'Rubik', system-ui, sans-serif);
+    font-family: var(--font-family-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
     font-size: var(--font-size-sm);
     line-height: 1.6;
     color: var(--color-text-muted);
     text-align: center;
   }
   .rl-docs-footer__brand {
-    font-family: var(--font-family-display, 'Red Hat Display', system-ui, sans-serif);
+    font-family: var(--font-family-display, 'Plus Jakarta Sans', system-ui, sans-serif);
     font-size: var(--font-size-sm);
     font-weight: 600;
     color: var(--color-text-heading, #0f172a);

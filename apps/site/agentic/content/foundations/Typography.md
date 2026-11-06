@@ -3,16 +3,16 @@ id: typography
 title: Typography
 group: foundations
 storybookTitle: Foundations/Typography
-summary: Three font families, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules
+summary: One typeface, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules
 ---
 
-RamosLabs types on three families and one ten-step scale. Every piece of text takes a role (Display, Headline, Title, Body, or Label), and the role hands it a family, size, weight, line-height, and tracking. Pick the role; the type takes care of itself.
+RamosLabs types on one typeface and one ten-step scale. Every piece of text takes a role (Display, Headline, Title, Body, or Label), and the role hands it a family, size, weight, line-height, and tracking. Pick the role; the type takes care of itself.
 
-## Three voices
+## One typeface, one fallback
 
-- `--font-family-display`, Red Hat Display: geometric, slightly condensed, built to carry weight above 36px. Reserved for Display and Headline. Below the Title role its personality costs legibility.
-- `--font-family-sans`, Rubik: humanist, large x-height, open apertures, distinct at small sizes. The default for the whole product. If unsure which family to use, it is this one.
-- `--font-family-alt`, Roboto: metric-compatible fallback for dense system UI, embedded documents, or while web fonts load. Use it for a whole block on its own, never mixed with Rubik.
+- `--font-family-display`, Plus Jakarta Sans: the same typeface as the body, set heavier and tighter for Display and Headline. One family, so a heading and the paragraph under it share proportions.
+- `--font-family-sans`, Plus Jakarta Sans: geometric humanist, large x-height, open apertures, distinct at small sizes. It runs wider than most UI faces, so leave room and let long labels wrap. Arabic and Hebrew fall back to IBM Plex Sans Arabic and Noto Sans Hebrew, loaded only for those scripts. The default for the whole product. If unsure which family to use, it is this one.
+- `--font-family-alt`, Roboto: metric-compatible fallback for dense system UI, embedded documents, or while web fonts load. Use it for a whole block on its own, never mixed with Plus Jakarta Sans.
 
 ## One scale, ten steps
 
@@ -35,11 +35,11 @@ Design and build against the role, never against a raw pixel. Five groups, after
 
 | Role | Family | Weight | Leading | Tracking |
 | --- | --- | --- | --- | --- |
-| Display | Red Hat Display | bold / extrabold | none / tight | tighter / tight |
-| Headline | Red Hat Display | bold | tight / snug | tight |
+| Display | Plus Jakarta Sans | bold / extrabold | none / tight | tighter / tight |
+| Headline | Plus Jakarta Sans | bold | tight / snug | tight |
 | Title | Display or Sans | semibold | snug | normal |
-| Body | Rubik | normal | normal / relaxed | normal |
-| Label | Rubik | medium / semibold | none / snug | wide / wider |
+| Body | Plus Jakarta Sans | normal | normal / relaxed | normal |
+| Label | Plus Jakarta Sans | medium / semibold | none / snug | wide / wider |
 
 ## Three axes carry the rest
 

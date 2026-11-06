@@ -50,6 +50,7 @@ function btn(props, text = '', icon = '') {
 const row = (...items) =>
   `<div style="display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center">${items.join('')}</div>`;
 const VARIANTS = ['solid', 'soft', 'outline', 'ghost'];
+const SIZES = ['xs', 'sm', 'md', 'lg'];
 const TONES = ['primary', 'neutral', 'success', 'warning', 'error', 'info'];
 
 export const SCENES = [
@@ -64,7 +65,19 @@ export const SCENES = [
   },
   {
     name: 'button-sizes',
-    html: row(...['sm', 'md', 'lg'].map((size) => btn({ size }, size))),
+    html: row(...SIZES.map((size) => btn({ size }, size))),
+  },
+  {
+    name: 'button-sizes-icon-only',
+    html: row(
+      ...SIZES.map((size) =>
+        btn({ size, iconOnly: true, variant: 'outline', label: `Add ${size}` }, '', '+'),
+      ),
+    ),
+  },
+  {
+    name: 'button-link-variant',
+    html: `<p style="margin:0;max-inline-size:28rem;font-size:var(--font-size-base);line-height:var(--leading-relaxed);color:var(--color-slate-700)">Your trial ends on 30 November. ${btn({ variant: 'link', href: '#billing' }, 'Review billing')} or ${btn({ variant: 'link', tone: 'neutral', href: '#plans' }, 'compare plans')} before then. No longer needed? ${btn({ variant: 'link', tone: 'error' }, 'Cancel the subscription')}.</p>`,
   },
   {
     name: 'button-disabled',

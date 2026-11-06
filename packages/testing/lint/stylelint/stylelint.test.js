@@ -124,7 +124,7 @@ describe('sj stylelint rules', () => {
 
   describe('sj/no-remote-url', () => {
     it.each([
-      '@import url("https://fonts.googleapis.com/css2?family=Rubik");',
+      '@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans");',
       "@import 'https://example.com/x.css';",
       '@import "//example.com/x.css";',
       '@font-face { font-family: X; src: url(https://example.com/x.woff2); }',
@@ -198,9 +198,11 @@ describe('no remote font anywhere in the tree (ADR-009)', () => {
   });
 
   it('seeded remote font URLs fail the scan (preview head, MDX, CSS)', () => {
-    expect(REMOTE_FONT.test('<link href="https://fonts.googleapis.com/css2?family=Rubik" />')).toBe(
-      true,
-    );
+    expect(
+      REMOTE_FONT.test(
+        '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans" />',
+      ),
+    ).toBe(true);
     expect(
       REMOTE_FONT.test("<style>\n  @import url('https://fonts.gstatic.com/x.woff2');</style>"),
     ).toBe(true);

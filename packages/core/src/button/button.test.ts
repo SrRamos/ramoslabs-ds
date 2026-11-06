@@ -91,6 +91,18 @@ describe('element selection', () => {
   });
 });
 
+describe('link variant and xs size', () => {
+  it('accepts link and xs on both parts and keeps the axes closed', () => {
+    expect([...buttonVariants]).toContain('link');
+    expect([...buttonSizes]).toContain('xs');
+    for (const part of ['getRootProps', 'getLinkProps'] as const) {
+      const bag = mk({ variant: 'link', size: 'xs', href: '/x' })[part]();
+      expect(bag['data-variant']).toBe('link');
+      expect(bag['data-size']).toBe('xs');
+    }
+  });
+});
+
 describe('getRootProps (button)', () => {
   it('defaults', () => {
     expect(mk().getRootProps()).toEqual({

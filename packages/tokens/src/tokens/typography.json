@@ -3,12 +3,24 @@
     "family": {
       "$type": "fontFamily",
       "sans": {
-        "$value": ["Rubik", "system-ui", "sans-serif"],
-        "$description": "Body and UI text."
+        "$value": [
+          "Plus Jakarta Sans",
+          "IBM Plex Sans Arabic",
+          "Noto Sans Hebrew",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$description": "Body and UI text. Plus Jakarta Sans, self-hosted (OFL). The Arabic and Hebrew faces load only for those scripts (unicode-range)."
       },
       "display": {
-        "$value": ["Red Hat Display", "system-ui", "sans-serif"],
-        "$description": "Headings and display."
+        "$value": [
+          "Plus Jakarta Sans",
+          "IBM Plex Sans Arabic",
+          "Noto Sans Hebrew",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$description": "Headings and display. The same family as sans: one typeface across body, UI and headings."
       },
       "alt": {
         "$value": ["Roboto", "system-ui", "sans-serif"],
@@ -54,6 +66,10 @@
     "tight": { "$value": "-0.025em" },
     "normal": { "$value": "0em" },
     "wide": { "$value": "0.025em" },
-    "wider": { "$value": "0.05em" }
+    "wider": { "$value": "0.05em" },
+    "ui": {
+      "$value": "-0.011em",
+      "$description": "Tracking of control labels (SJButton). Slight tightening that offsets the optical looseness of Plus Jakarta Sans at 12-15px."
+    }
   }
 }

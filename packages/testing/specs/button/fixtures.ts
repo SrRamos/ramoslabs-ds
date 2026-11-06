@@ -46,5 +46,8 @@ export const EXTRA_FIXTURES = ['submit'];
 /** Fixtures that must not fire `press` (the contract's inert fixture name, plus nothing else). */
 export const INERT = ['disabled'];
 
+/** Visual height (CSS px) of each size: xs 24, sm 32, md 36, lg 44 (Direction B). The 44px touch target is a hit area. */
+export const SIZE_PX: Record<string, number> = { xs: 24, sm: 32, md: 36, lg: 44 };
+
 /** Container width (CSS px) for the long-label fixture, so wrapping is exercised in every engine. */
 export const NARROW_PX = 240;

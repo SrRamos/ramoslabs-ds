@@ -36,8 +36,8 @@ export const REQUIRED = [
   'visual/cli.js',
   'visual/scenes.js',
 ];
-/** Present only where the component is (or wraps) a native form control. */
-export const OPTIONAL = ['form.e2e.ts'];
+/** form.e2e.ts: only where the component is (or wraps) a native form control. touch.e2e.ts: only where it extends its hit area on a coarse pointer. */
+export const OPTIONAL = ['form.e2e.ts', 'touch.e2e.ts'];
 /**
  * Optional subdirectories (G-ICON MUST-2): `composition/` holds specs that compose this component with another
  * (e.g. an icon inside a button); its files must be `*.e2e.ts`, `*.test.ts` or `fixtures.ts`.

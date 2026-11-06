@@ -82,13 +82,20 @@ async function assertFonts(page, scene) {
     async (families) => {
       await document.fonts.ready;
       // Force-load every face: `font-display: block` only hides text, it does not trigger a fetch.
-      await Promise.all(families.map((f) => document.fonts.load(`16px "${f}"`)));
+      // A face with a unicode-range loads only for text in that range, and a static weight only for that weight.
+      await Promise.all(
+        families.map((f) => document.fonts.load(`${f.weight} 16px "${f.family}"`, f.sample)),
+      );
       return {
         faces: [...document.fonts].map((f) => [f.family, f.status, f.display]),
-        ok: families.map((f) => document.fonts.check(`16px "${f}"`)),
+        ok: families.map((f) => document.fonts.check(`${f.weight} 16px "${f.family}"`, f.sample)),
       };
     },
-    FONTS.map((f) => f.family),
+    FONTS.map((f) => ({
+      family: f.family,
+      sample: f.sample ?? ' ',
+      weight: f.weight && !f.weight.includes(' ') ? f.weight : '400',
+    })),
   );
   const bad = state.faces.filter(([, status]) => status !== 'loaded');
   const wrongDisplay = state.faces.filter(([, , display]) => display !== 'block');
