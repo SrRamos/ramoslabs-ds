@@ -200,7 +200,13 @@ export const SJDisclosureRoot: ForwardRefExoticComponent<
     { value: ctx },
     createElement(
       'details',
-      { ...fromGetter(parts.getRootProps(toGetter(rest)), classes?.root), ref: setRoot },
+      {
+        ...fromGetter(parts.getRootProps(toGetter(rest)), classes?.root),
+        // The user may toggle `<details>` before hydration, so `open` can legitimately differ from the
+        // server markup. The mount-time report (above) reconciles it; React's dev warning is a false positive.
+        suppressHydrationWarning: true,
+        ref: setRoot,
+      },
       body,
     ),
   );

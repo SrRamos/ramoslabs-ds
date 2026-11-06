@@ -386,6 +386,10 @@ describe('SSR and hydration', () => {
   it('closed markup has no open attribute', () => {
     expect(renderToStaticMarkup(full())).not.toContain('open');
   });
+  it('the root opts out of the dev hydration warning: the user may toggle <details> before hydration', () => {
+    const r = mount(full());
+    expect(detailsOf(r).props['suppressHydrationWarning']).toBe(true);
+  });
   it('ids are stable between two server renders; explicit id wins', () => {
     const id = (s: string) => /id="([^"]+)"/.exec(s)![1];
     expect(id(renderToString(tree()))).toBe(id(renderToString(tree())));

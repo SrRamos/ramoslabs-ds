@@ -14,6 +14,9 @@
 
   /* Hide the native disclosure triangle in every engine; the chevron below replaces it. */
   .sj-disclosure__trigger {
+    /* +1 in LTR, -1 in RTL (set below): the chevron is a logical corner (inline-end + block-end) that mirrors with
+       the writing direction, so the turn that makes it a down or up chevron must flip with it. */
+    --sj-disclosure-turn: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -40,11 +43,26 @@
     border-inline-end: calc(var(--border-width-hairline) * 2) solid currentColor;
     border-block-end: calc(var(--border-width-hairline) * 2) solid currentColor;
     color: var(--color-text-secondary);
-    rotate: 45deg;
+    rotate: calc(45deg * var(--sj-disclosure-turn));
     translate: 0 -25%;
     transition-property: rotate, translate;
     transition-duration: var(--sj-duration-fast);
     transition-timing-function: var(--easing-out);
+  }
+
+  /* Direction. `:dir()` follows the computed direction (an `rtl` island inside `ltr` is right); engines without it
+     (Chromium before 120) fall back to the `dir` attribute on an ancestor. Two blocks, because one unsupported
+     selector in a list would drop the whole rule. */
+  @supports selector(:dir(rtl)) {
+    .sj-disclosure__trigger:dir(rtl) {
+      --sj-disclosure-turn: -1;
+    }
+  }
+
+  @supports not selector(:dir(rtl)) {
+    [dir='rtl'] .sj-disclosure__trigger {
+      --sj-disclosure-turn: -1;
+    }
   }
 
   /* Panel: padding only. The UA hides a closed <details>' content, so no display is set here. */
@@ -60,7 +78,7 @@
   /* Open: the chevron points up. Keyed on the native `open` of the root, not data-state, so a plain native click
      (before any adapter reports back) turns the chevron in step with the panel the browser just showed. */
   .sj-disclosure__root[open] > .sj-disclosure__trigger::after {
-    rotate: -135deg;
+    rotate: calc(-135deg * var(--sj-disclosure-turn));
     translate: 0 25%;
   }
 

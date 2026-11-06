@@ -24,6 +24,10 @@ describe('SJDisclosure SSR (node environment)', () => {
     expect(await render({ summary: 'S', name: 'g', defaultOpen: true })).toBe(html);
   });
 
+  it('marks the root so Vue 3.5 does not flag a pre-hydration native toggle as a mismatch', async () => {
+    expect(await render({ summary: 'S' })).toContain('data-allow-mismatch="attribute"');
+  });
+
   it('renders closed and disabled', async () => {
     const html = await render({ disabled: true, id: 'mine' });
     expect(html).toContain('id="mine"');
