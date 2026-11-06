@@ -127,7 +127,7 @@
       "name": "animation",
       "type": "'shimmer' | 'none'",
       "default": "shimmer",
-      "description": "A subtle shimmer sweep. It is static under prefers-reduced-motion and under forced colors whatever this value is."
+      "description": "A subtle shimmer sweep. It sweeps three times (under 5 seconds, WCAG 2.2.2) and then rests, and is static under prefers-reduced-motion and under forced colors whatever this value is."
     }
   ],
   "slots": [

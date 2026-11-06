@@ -283,6 +283,16 @@ export const pages: Page[] = [
     contentFile: 'patterns/MobileFirst.md',
   },
   {
+    id: 'loading',
+    title: 'Loading',
+    group: 'patterns',
+    path: '/patterns/loading/',
+    icon: 'schedule',
+    summary:
+      'When to use a skeleton, a spinner, or a button busy state, the 300ms delay and 500ms minimum timing tokens, layout-mirroring shapes with no layout shift, reduced-motion, forced-colors and RTL behavior, and announce-once accessibility for SJSkeleton',
+    contentFile: 'patterns/Loading.md',
+  },
+  {
     id: 'persuasion',
     title: 'Persuasion',
     group: 'patterns',

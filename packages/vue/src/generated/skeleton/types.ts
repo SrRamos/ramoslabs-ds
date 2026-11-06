@@ -20,7 +20,7 @@ export interface SJSkeletonProps {
   minDuration?: number;
   /** Group only: the single polite announcement ('Loading activity'), handed to the live-region registry after mount, once, when the skeleton becomes visible. A load that finishes before the delay announces nothing. Omit it when the skeleton sits inside SJState, which announces its own heading. */
   announce?: string;
-  /** A subtle shimmer sweep. It is static under prefers-reduced-motion and under forced colors whatever this value is. @default "shimmer" */
+  /** A subtle shimmer sweep. It sweeps three times (under 5 seconds, WCAG 2.2.2) and then rests, and is static under prefers-reduced-motion and under forced colors whatever this value is. @default "shimmer" */
   animation?: 'shimmer' | 'none';
 }
 
