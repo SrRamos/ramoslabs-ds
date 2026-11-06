@@ -76,7 +76,7 @@ Built `dist/disclosure.css`: 3543 B raw, 1455 B gzip. ADR-011 has no CSS-specifi
 
 ### Tests
 
-`packages/css/test/disclosure.test.js` (19 tests): anatomy against the contract, stylelint, no raw values in source; native collapse and a native click without script; 44 px summary and 2.4.13 focus ring pixels; contrast on every surface (with a seeded weak chevron); open and closed chevron values, disabled colour and cursor; forced colours (chevron visible, seeded missing border style fails); RTL (title at the start, chevron at the end, mirrored); long-title wrap; name group pixel-identical to a plain group; reduced motion. The css package suite passes: 200 tests, 9 files; lint and `format:check` green.
+`packages/css/test/disclosure.test.js` (20 tests): anatomy against the contract, stylelint, no raw values in source; native collapse and a native click without script; 44 px summary and 2.4.13 focus ring pixels; contrast on every surface (with a seeded weak chevron); open and closed chevron values, disabled colour and cursor; forced colours (chevron visible, seeded missing border style fails); RTL (title at the start, chevron at the end, mirrored); long-title wrap; name group pixel-identical to a plain group; reduced motion. The css package suite passes: 200 tests, 9 files; lint and `format:check` green.
 
 ### Follow-ups
 
@@ -122,7 +122,8 @@ Branch `feature/m4-c06-vanilla`. Owned: `packages/vanilla/src/disclosure/{index,
 - **Prop-or-slot.** An existing `<summary>` and panel child are adopted untouched (the SSR / slot form); missing ones are created and removed on destroy. A `summary` / `content` prop, when defined, is written as a text node.
 - **`open` is a property.** `details.open` is written only when it differs from the view, so the adapter's own writes cause a `toggle` equal to the view, which the core handler ignores. The `open` effect (rejected controlled change) sets the property.
 - **Owned exclusive fallback.** The adapter supplies `DisclosureContext.closePeers`: it returns at once when `runtime.supports.detailsName` is true; otherwise it collects `details[name]` from the element's root node, runs `peersToClose`, and sets `open = false` on each result. The peers' own `toggle` then reports, so `onOpenChange` fires for them as native does. Covered for uncontrolled, programmatic opens of a controlled member, owner-accepted and owner-rejected opens.
-- **Initial state is prop-driven (Fable SHOULD-1).** `initialSnapshot(open ?? defaultOpen ?? el.open)`: with neither prop, the element's own `open` is the initial state (a consumer's `<details open>` stays open); with either prop the view wins and is written to the element. The `<summary>` heuristic is used only for slot adoption. No separate pre-hydration report remains: a toggle before the script is either kept (no props) or overridden by the owner's prop.
+- **Initial state is prop-driven (Fable SHOULD-1 / ruling 2).** `initialSnapshot(open ?? defaultOpen ?? el.open)`: with neither prop the element's own `open` is the initial state (a consumer's `<details open>` stays open, nothing to report).
+- **Pre-hydration report (C06.a SHOULD-1).** When the element came with a `<summary>` (server markup) and its `open` differs from the view at mount, the first patch leaves it alone and `attach` calls `native('open', el.open)`: uncontrolled (`defaultOpen`) keeps the user's state and fires `onOpenChange`; a controlled owner gets the request and, if it rejects, the `open` effect resyncs the DOM. A bare `<details>` has no pre-script history, so its default is the view. On a fallback engine a pre-opened named member also closes its peers once.
 - **No `aria-expanded`/`aria-controls`/`role`**, no pointer or touch listener (so no `touch-action` part), no animation (CSS-only under reduced motion). Listeners: `toggle` on the root and `click` on the summary, both with the instance signal.
 
 ### Measured
@@ -131,7 +132,7 @@ Branch `feature/m4-c06-vanilla`. Owned: `packages/vanilla/src/disclosure/{index,
 
 ### Tests
 
-`disclosure.test.ts` (19 tests): anatomy and text-only, slot adoption, prop-or-slot update, `classes`, uncontrolled and controlled (rejection corrected, no feedback loop), disabled, `name`, initial state (element open kept, defaultOpen wins, controlled open wins), signalled listeners and none after destroy, 1,000 mount/destroy cycles, `closePeers` on a forced-false `detailsName` (plain, programmatic controlled, accepted controlled, native engine and unnamed no-ops), `define()` (no import-time registration, idempotent, children moved in and handed back). The DOM double fires an async `toggle` on every `open` change, as a browser does.
+`disclosure.test.ts` (20 tests): anatomy and text-only, slot adoption, prop-or-slot update, `classes`, uncontrolled and controlled (rejection corrected, no feedback loop), disabled, `name`, initial state (element open kept) and pre-hydration (defaultOpen kept, controlled resynced, agreeing), signalled listeners and none after destroy, 1,000 mount/destroy cycles, `closePeers` on a forced-false `detailsName` (plain, programmatic controlled, accepted controlled, native engine and unnamed no-ops), `define()` (no import-time registration, idempotent, children moved in and handed back). The DOM double fires an async `toggle` on every `open` change, as a browser does.
 
 ### Follow-ups
 

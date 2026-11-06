@@ -65,6 +65,8 @@ function createSpec(
   let summary: Element | undefined;
   let content: Element | undefined;
   let parts: ReturnType<typeof createDisclosureParts> | undefined;
+  // `open` of server/author markup before the first patch (the user may toggle before any script runs).
+  let pre = false;
   let closeGroup: ((rootId: string) => void) | undefined;
   const seen = { root: new Set<string>(), trigger: new Set<string>(), content: new Set<string>() };
 
@@ -74,6 +76,8 @@ function createSpec(
     const kids = Array.from(el.children);
     summary = kids.find(isSummary);
     content = kids.find((k) => !isSummary(k));
+    // Only existing markup (an adopted `<summary>`) has pre-script history; a bare `<details>` is just a default.
+    pre = summary ? el.open : ctx.view().open;
     const madeSummary = !summary;
     const madeContent = !content;
     if (!summary) {
@@ -118,12 +122,13 @@ function createSpec(
 
   return {
     // Prop-driven: with neither prop the element's own `open` is the initial state (a consumer's
-    // `<details open>` stays open); with either prop the view wins and is written to the element.
+    // `<details open>` stays open, nothing to report).
     initial: (p) => initialSnapshot(p.open ?? p.defaultOpen ?? initialOpen),
     reduce: storeReducer,
     fields: disclosureFields,
     patch(view, ctx) {
-      if (!parts) build(ctx);
+      const first = !parts;
+      if (first) build(ctx);
       const el = ctx.el as HTMLDetailsElement;
       const props = ctx.props();
       const cls = props.classes;
@@ -138,7 +143,8 @@ function createSpec(
         parts!.getContentProps(cls?.content ? { class: cls.content } : {}),
         seen.content,
       );
-      if (el.open !== view.open) el.open = view.open;
+      // The first patch leaves a pre-script toggle alone: `attach` reports it to the store.
+      if (!(first && pre !== view.open) && el.open !== view.open) el.open = view.open;
       if (props.summary !== undefined) setText(summary!, props.summary);
       if (props.content !== undefined) setText(content!, props.content);
     },
@@ -148,6 +154,12 @@ function createSpec(
       const trigger = parts!.getTriggerProps();
       ctx.listen(el, 'toggle', (e) => (root.onToggle as (e: Event) => void)(e));
       ctx.listen(summary!, 'click', (e) => (trigger.onClick as (e: Event) => void)(e));
+      // Pre-hydration (C06.a SHOULD-1): `<details>` worked before any script. Report a state that differs
+      // from the view; uncontrolled keeps it, a controlled owner may reject and the effect resyncs the DOM.
+      if (pre !== ctx.view().open) {
+        if (pre && ctx.props().name) closeGroup!(ctx.id);
+        ctx.native('open', pre);
+      }
     },
     run(effect, ctx) {
       // `open` on `root`: put the native element back to the committed value (a rejected controlled change).

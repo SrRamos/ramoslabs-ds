@@ -288,24 +288,44 @@ describe('SJDisclosure vanilla', () => {
     }
   });
 
-  it("initial state: defaultOpen wins over the element's open", async () => {
+  it('pre-hydration, defaultOpen: a toggle made before the script is reported and kept', async () => {
     const { host, doc } = setup();
-    const root = slotted(doc);
-    root.open = true;
-    mountDisclosure(host, asEl(root), { defaultOpen: false });
+    const root = slotted(doc); // server markup reflected defaultOpen: false
+    root.open = true; // the user opened it before hydration
+    await tick(); // the browser's toggle event for it fired long before any script
+    const onOpenChange = vi.fn();
+    mountDisclosure(host, asEl(root), { defaultOpen: false, onOpenChange });
     await tick();
-    expect(root.open).toBe(false);
-    expect(root.getAttribute('data-state')).toBe('closed');
+    expect(root.open).toBe(true);
+    expect(root.getAttribute('data-state')).toBe('open');
+    expect(onOpenChange).toHaveBeenCalledOnce();
+    expect(onOpenChange).toHaveBeenCalledWith(true);
   });
 
-  it("initial state: a controlled open wins over the element's open", async () => {
+  it('pre-hydration, controlled open: reported to the owner, then resynced to the view if rejected', async () => {
     const { host, doc } = setup();
     const root = slotted(doc);
     root.open = true;
-    mountDisclosure(host, asEl(root), { open: false, onOpenChange: () => undefined });
     await tick();
+    const onOpenChange = vi.fn();
+    const inst = mountDisclosure(host, asEl(root), { open: false, onOpenChange });
+    await tick();
+    expect(onOpenChange).toHaveBeenCalledOnce();
+    expect(onOpenChange).toHaveBeenCalledWith(true);
     expect(root.open).toBe(false);
     expect(root.getAttribute('data-state')).toBe('closed');
+    inst.update({ open: true, onOpenChange }); // an owner that accepts follows the request
+    expect(root.open).toBe(true);
+  });
+
+  it('pre-hydration, agreeing element: nothing to report', async () => {
+    const { host, doc } = setup();
+    const root = slotted(doc);
+    root.open = true;
+    const onOpenChange = vi.fn();
+    mountDisclosure(host, asEl(root), { defaultOpen: true, onOpenChange });
+    await tick();
+    expect(onOpenChange).not.toHaveBeenCalled();
   });
 
   it('every listener carries the instance signal; no pointer or touch listener; none left after destroy', () => {
