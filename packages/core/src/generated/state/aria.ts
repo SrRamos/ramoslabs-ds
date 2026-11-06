@@ -10,6 +10,7 @@ export const stateAria = {
     icon: { element: 'span' },
     title: { element: 'p' },
     description: { element: 'p' },
+    skeleton: { element: 'div' },
     actions: { element: 'div' },
   },
   transitions: {},

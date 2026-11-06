@@ -1,0 +1,148 @@
+{
+  "$schema": "https://design.ramoslabs.com/schema/contract.v1.json",
+  "name": "SJSkeleton",
+  "contractVersion": "0.1.0",
+  "status": "beta",
+  "pattern": {
+    "apg": "live-region",
+    "evidence": "live-region"
+  },
+  "anatomy": [
+    {
+      "part": "root",
+      "element": "div"
+    },
+    {
+      "part": "line",
+      "element": "div"
+    }
+  ],
+  "state": {
+    "machine": ["idle"],
+    "controllable": []
+  },
+  "actions": [],
+  "keyboard": {},
+  "focus": {
+    "strategy": "native"
+  },
+  "kinds": [],
+  "runtime": ["scheduler"],
+  "support": [],
+  "a11y": {
+    "wcag": ["1.3.1", "1.4.1", "1.4.11", "2.2.2", "4.1.3"],
+    "liveRegions": [
+      {
+        "id": "status",
+        "politeness": "polite"
+      }
+    ],
+    "atAssertions": ["manual-skeleton-busy-polite-once"],
+    "atSupport": [
+      {
+        "at": "voiceover",
+        "platform": "macos",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/live-region.json#vo-macos-safari-ariaat545"]
+      },
+      {
+        "at": "voiceover",
+        "platform": "ios",
+        "browser": "safari",
+        "test_status": "pending-real-test",
+        "evidence": ["at-support/live-region.json#vo-ios-safari-tetralogical-live"]
+      },
+      {
+        "at": "nvda",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/live-region.json#nvda-chrome-ariaat544"]
+      },
+      {
+        "at": "jaws",
+        "platform": "windows",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/live-region.json#jaws-chrome-ariaat565"]
+      },
+      {
+        "at": "talkback",
+        "platform": "android",
+        "browser": "chrome",
+        "test_status": "evidence-only",
+        "evidence": ["at-support/live-region.json#talkback-chrome-tetralogical-live"]
+      }
+    ]
+  },
+  "events": [],
+  "props": [
+    {
+      "name": "shape",
+      "type": "'group' | 'text' | 'circle' | 'rect' | 'block'",
+      "default": "block",
+      "description": "What the placeholder mirrors. text: a stack of lines, the last one shorter. circle: an avatar. rect: a media box with an aspect ratio. block: a free box sized by the consumer through --sj-skeleton-width and --sj-skeleton-height. group: the container of a layout, it carries aria-busy, owns the delay and minimum-duration timing and swaps the skeleton slot for the loaded content. An unknown value falls back to block."
+    },
+    {
+      "name": "lines",
+      "type": "number",
+      "default": 3,
+      "description": "Text only: how many lines, clamped to 1..12. The last line is shorter whenever there is more than one."
+    },
+    {
+      "name": "ratio",
+      "type": "'1/1' | '4/3' | '3/2' | '16/9' | '21/9'",
+      "default": "16/9",
+      "description": "Rect only: width to height ratio, reserved before any media loads so the swap causes no layout shift. An unknown value falls back to 16/9."
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg' | 'xl'",
+      "default": "md",
+      "description": "Circle only: avatar diameter from the control size tokens. An unknown value falls back to md."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": true,
+      "description": "Group only: true while the content is loading. The skeleton is laid out (and reserves its space) at once but stays invisible until delay has passed, so a fast load never flashes; once visible it stays at least minDuration."
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "description": "Group only: milliseconds to wait before the skeleton becomes visible. Defaults to the --motion-skeleton-delay token (300ms). 0 shows it at once."
+    },
+    {
+      "name": "minDuration",
+      "type": "number",
+      "description": "Group only: milliseconds the skeleton stays visible once shown, even if the content arrives sooner. Defaults to the --motion-skeleton-min-duration token (500ms)."
+    },
+    {
+      "name": "announce",
+      "type": "string",
+      "description": "Group only: the single polite announcement ('Loading activity'), handed to the live-region registry after mount, once, when the skeleton becomes visible. A load that finishes before the delay announces nothing. Omit it when the skeleton sits inside SJState, which announces its own heading."
+    },
+    {
+      "name": "animation",
+      "type": "'shimmer' | 'none'",
+      "default": "shimmer",
+      "description": "A subtle shimmer sweep. It is static under prefers-reduced-motion and under forced colors whatever this value is."
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "description": "Group only: the loaded content, rendered once loading is over and the minimum duration has elapsed."
+    },
+    {
+      "name": "skeleton",
+      "description": "Group only: the placeholder shapes that mirror the final layout, rendered while loading. Compose SJSkeleton shapes (text, circle, rect, block)."
+    }
+  ],
+  "fixtures": ["text", "circle", "rect", "block", "group-loading", "group-loaded"],
+  "budgets": {
+    "gzipKiB": 1.5,
+    "shared": ["merge"]
+  }
+}

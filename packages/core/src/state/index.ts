@@ -1,5 +1,6 @@
 // SJState core (W1-C11.a, ADR-006 "Live regions"). Pure getters over props; no DOM, no registry.
 //   getRootProps / getIconProps / getTitleProps / getDescriptionProps / getActionsProps(consumer?)
+//   getSkeletonProps    the loading placeholder part (aria-hidden)
 //   getAnnouncement()   { text, urgent } the adapter passes to the live registry AFTER mount, or
 //                       undefined. Nothing here renders live markup, so SSR output has none.
 // The three empty kinds are distinct variants (first-use, no-results, cleared); loading and error
@@ -34,6 +35,7 @@ export interface State {
   readonly getIconProps: (consumer?: Props) => Props;
   readonly getTitleProps: (consumer?: Props) => Props;
   readonly getDescriptionProps: (consumer?: Props) => Props;
+  readonly getSkeletonProps: (consumer?: Props) => Props;
   readonly getActionsProps: (consumer?: Props) => Props;
   readonly getAnnouncement: () => StateAnnouncement | undefined;
 }
@@ -87,6 +89,8 @@ export function createState(getProps: () => StateProps): State {
     getIconProps: (consumer) => part('icon', { 'aria-hidden': 'true' })(consumer),
     getTitleProps: (consumer) => part('title')(consumer),
     getDescriptionProps: (consumer) => part('description')(consumer),
+    // Loading placeholder shapes: decorative, so hidden from assistive tech (the heading/announce speaks).
+    getSkeletonProps: (consumer) => part('skeleton', { 'aria-hidden': 'true' })(consumer),
     getActionsProps: (consumer) => part('actions')(consumer),
     getAnnouncement() {
       const p = getProps();
