@@ -8,7 +8,6 @@ import { SJProvider } from '../runtime/index';
 import { SJState } from '../state/index';
 import { SJSkeleton } from './index';
 import * as flat from './index';
-import source from './index.ts?raw';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -206,8 +205,13 @@ describe('SSR and source', () => {
       expect(html).not.toMatch(/role=|aria-live|aria-atomic/);
     }
   });
-  it('uses the generated live constant', () => {
-    expect(source).toMatch(/skeletonLive/);
-    expect(source).not.toMatch(/innerHTML|live:\s*'(eager|lazy)'/);
+  it('uses the generated live constant', async () => {
+    const mod = (n: string) => import(/* @vite-ignore */ n) as Promise<Record<string, unknown>>;
+    const fs = (await mod('node:fs')) as { readFileSync(u: URL, e: string): string };
+    const code = fs
+      .readFileSync(new URL('./index.ts', import.meta.url), 'utf8')
+      .replace(/^\s*\/\/.*$/gm, '');
+    expect(code).toMatch(/\bskeletonLive\b/);
+    expect(code).not.toMatch(/innerHTML|live:\s*['"]/);
   });
 });
