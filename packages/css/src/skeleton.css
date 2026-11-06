@@ -24,7 +24,8 @@
     background: none;
   }
 
-  /* Every drawn shape: a quiet fill with a one-pass sweep (see the keyframes and the shimmer rule below). */
+  /* Every drawn shape: a quiet fill with a sweep. It runs 3 passes (4.8s at the token duration) and then rests, so it never
+     moves for more than 5 seconds next to other content (WCAG 2.2.2 pause, stop, hide). */
   :is(.sj-skeleton, .sj-skeleton__root):is(
     [data-shape='circle'],
     [data-shape='rect'],
@@ -41,7 +42,7 @@
     background-repeat: no-repeat;
     background-size: 200% 100%;
     background-position: 100% 0;
-    animation: sj-skeleton-shimmer var(--motion-skeleton-shimmer) var(--easing-in-out) infinite;
+    animation: sj-skeleton-shimmer var(--motion-skeleton-shimmer) var(--easing-in-out) 3;
   }
 
   :is(.sj-skeleton, .sj-skeleton__root)[data-animation='none']:is(

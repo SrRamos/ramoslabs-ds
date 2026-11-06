@@ -169,7 +169,7 @@ describe('shimmer', () => {
     ]);
     expect(a['animation-name']).toBe('sj-skeleton-shimmer');
     expect(a['animation-duration']).toBe('1.6s');
-    expect(a['animation-iteration-count']).toBe('infinite');
+    expect(a['animation-iteration-count']).toBe('3'); // 3 x 1.6s = 4.8s: under the 5s of WCAG 2.2.2
     const off = await open(
       shape('block').replace('data-animation="shimmer"', 'data-animation="none"'),
     );
