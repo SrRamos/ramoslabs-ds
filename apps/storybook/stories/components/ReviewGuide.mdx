@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Components/Review Guide" />
+
+# Component review guide
+
+Try every component by hand. Each story's description says what to press and what a screen reader should say. Do each check in **Chromium**, then repeat the keyboard ones in Firefox and Safari if you can. Turn on a screen reader (VoiceOver: Cmd+F5) for the announcement checks.
+
+**Every component, every time**
+
+- **Tab** reaches it (unless disabled) and a clear focus ring shows.
+- Works with keyboard alone; the mouse is optional.
+- Look is styled and readable; state is never shown by colour alone.
+- The **RTL** story mirrors correctly.
+- Zoom to 200%: nothing is clipped or overlaps.
+
+## What is covered
+
+| Component | Stories | Specific things to check |
+| --- | --- | --- |
+| Button | Playground, Variants And Tones, Sizes, Disabled, As Link, Icon Only, Inside Form, RTL | Enter/Space press; link ignores Space; a plain button never submits; `target=_blank` adds `rel`. |
+| Switch | Playground, Uncontrolled, Controlled, Controlled Rejecting, Disabled, In Form, RTL | Space toggles; a rejecting owner snaps it back; form data only when on. |
+| Checkbox | Playground, Uncontrolled, Indeterminate, Select All Controller, Controlled, Controlled Rejecting, Disabled, In Form, RTL | Mixed state read as "mixed"; parent/child select-all; clicking mixed checks it. |
+| Disclosure | Playground, Closed And Open, Disabled, Long Title, Exclusive Group, Controlled, Controlled Rejecting, Controlled Group, RTL | Enter/Space toggle; opening one closes its `name` peers; RTL chevron direction. |
+| State | Playground, First Use, No Results, Cleared, Loading, Error, Interrupting Error, All Variants, RTL | Each variant reads as text; polite announce once; `interrupt` is assertive. |
+| Field | Playground, Default, With Hint, Invalid, Invalid With Errormessage, Required, Long Label, Disabled, Live Validation, RTL | Label click focuses; hint and error read on focus; error announced once. |
+| Input | Playground, All Kinds, Otp, Textarea, Disabled, Standalone, RTL | The attribute readout per ADR-007 kind; right mobile keyboard; password masked. |
+| Form | Playground, Enter Key Hint, Enter Key Hint Textarea Last, Enter Variants And Done, User Invalid, Server Errors, Otp Auto Submit, Value Preservation, RTL | No error on tab-through; error after change or failed submit; Reset clears; `autoSubmit` gives `go`. |
+
+## Not available to review
+
+Dialog, Popover, Radio Group, Select, Tabs and Tooltip are placeholders in `@ramoslabs/vue` (an empty module), so they have no stories yet. Add them when each ships.
+
+## Known limits (from the C-notes)
+
+- **Two announcements at once**: when two fields or states announce in the same moment, only the last text is spoken. Both stay visible. (C02, C11)
+- **Disclosure fallback**: current engines all group `<details name>` natively, so the owned fallback is covered by unit tests only, not by what you see here. (C06)
+- **Safari floor**: `details name` is native from Safari 17.2; the contract records 18 as the conservative major (issue #92). `:user-invalid` has a fallback below Chromium 119 / Safari 16.5 that you cannot trigger here.
+- **VoiceOver wording** in the disclosure notes ("disclosure triangle", "expanded") is a best guess; what you actually hear is the authority. Report any difference.
+- **Playwright AX-tree checks** run in Chromium only (issue #49); other engines are covered by ARIA snapshots.
+- **Switch/Checkbox controlled mode**: the owner must accept synchronously inside the change event, otherwise the control snaps back until its render commits.

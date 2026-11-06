@@ -3,6 +3,8 @@ import type { Preview } from '@storybook/vue3-vite';
 // Load the generated token variables so every story renders with the
 // RamosLabs design tokens available as CSS custom properties.
 import '@ramoslabs/tokens/css';
+// Real component CSS (layered, ADR-009), so stories render styled, not raw.
+import '@ramoslabs/css';
 
 // Wraps every docs page with the global RamosLabs footer.
 import { DocsContainer } from './DocsContainer';
@@ -28,6 +30,8 @@ const preview: Preview = {
           ],
           'Patterns',
           ['Interactive', 'Accessibility', 'Persuasion', 'Form Elements', 'Data Tables', 'Modals', 'Mobile First', 'AI Content', 'Voice & Tone'],
+          'Components',
+          ['Review Guide'],
         ],
       },
     },

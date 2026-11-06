@@ -1,0 +1,41 @@
+/* Story-local layout only. Tokens only: no raw color, spacing or size values (AGENTS.md hard rule). */
+.sbx-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-inline-size: 36rem;
+  font-family: var(--font-family-sans);
+  color: var(--color-slate-900);
+}
+.sbx-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.sbx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: var(--space-4);
+}
+.sbx-card {
+  padding: var(--space-4);
+  background: var(--color-white);
+  border: var(--border-width-hairline) solid var(--color-slate-200);
+  border-radius: var(--radius-lg);
+}
+.sbx-note {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-slate-600);
+}
+.sbx-readout {
+  margin: 0;
+  padding: var(--space-3);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-xs);
+  color: var(--color-slate-700);
+  background: var(--color-slate-100);
+  border-radius: var(--radius-md);
+  white-space: pre-wrap;
+}
