@@ -19,7 +19,7 @@ import {
 } from '../runtime/index';
 
 export type StateSlot = string | Node;
-export type StatePart = 'root' | 'icon' | 'title' | 'description' | 'actions';
+export type StatePart = 'root' | 'icon' | 'title' | 'description' | 'skeleton' | 'actions';
 
 /** Generated options plus per-part class overrides (`classes.title`, ...). */
 export type VanillaStateProps = SJStateOptions & {
@@ -28,9 +28,15 @@ export type VanillaStateProps = SJStateOptions & {
 
 type Ctx = InstanceContext<{ state: 'idle' }, never, VanillaStateProps & Bag>;
 type Child = Exclude<StatePart, 'root'>;
-const CHILDREN: readonly Child[] = ['icon', 'title', 'description', 'actions'];
+const CHILDREN: readonly Child[] = ['icon', 'title', 'description', 'skeleton', 'actions'];
 // Elements per the contract anatomy (state.contract.json).
-const TAG: Record<Child, string> = { icon: 'span', title: 'p', description: 'p', actions: 'div' };
+const TAG: Record<Child, string> = {
+  icon: 'span',
+  title: 'p',
+  description: 'p',
+  skeleton: 'div',
+  actions: 'div',
+};
 
 /** Write a getter's Props onto an element; attributes dropped since the last write are removed. */
 function applyProps(el: Element, props: Props, prev: Set<string>): void {
@@ -61,6 +67,7 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaStateProps
     icon: new Set(),
     title: new Set(),
     description: new Set(),
+    skeleton: new Set(),
     actions: new Set(),
   };
 
@@ -90,6 +97,7 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaStateProps
         icon: state.getIconProps,
         title: state.getTitleProps,
         description: state.getDescriptionProps,
+        skeleton: state.getSkeletonProps,
         actions: state.getActionsProps,
       };
       const own = (p: StatePart): Props => (cls[p] ? { class: cls[p] } : {});
@@ -99,6 +107,8 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaStateProps
         icon: current.icon,
         title: filled(current.title) ? current.title : current.heading,
         description: filled(current.default) ? current.default : current.description,
+        // Loading only: SJSkeleton shapes in place of the default loading visuals (decorative, aria-hidden).
+        skeleton: current.variant === 'loading' ? current.skeleton : undefined,
         actions: current.actions,
       };
       const doc = ctx.el.ownerDocument;
