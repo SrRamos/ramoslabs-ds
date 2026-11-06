@@ -45,6 +45,7 @@
       "name": "storybook",
       "version": "0.0.0",
       "dependencies": {
+        "@ramoslabs/css": "workspace:*",
         "@ramoslabs/tokens": "workspace:*",
         "@ramoslabs/vue": "workspace:*",
         "vue": "^3.5.0",

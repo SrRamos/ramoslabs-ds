@@ -10,6 +10,7 @@
     "build": "storybook build"
   },
   "dependencies": {
+    "@ramoslabs/css": "workspace:*",
     "@ramoslabs/tokens": "workspace:*",
     "@ramoslabs/vue": "workspace:*",
     "vue": "^3.5.0"
