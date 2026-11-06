@@ -71,3 +71,25 @@
     }
   }
 }
+
+@layer sj.state {
+  /* Dark surfaces: any ancestor with data-theme='dark'. Each colour has a *-dark counterpart checked at 4.5:1 on
+     slate 900 and 950 (packages/testing/contrast); the error text stays the error hue. */
+  :where([data-theme='dark']) .sj-field__label {
+    color: var(--color-text-heading-dark);
+  }
+
+  :where([data-theme='dark']) .sj-field__hint {
+    color: var(--color-text-secondary-dark);
+  }
+
+  :where([data-theme='dark']) .sj-field__error {
+    color: var(--color-error-text-dark);
+  }
+
+  :where([data-theme='dark'])
+    .sj-field__root[data-disabled]:not([data-disabled='false'])
+    .sj-field__label {
+    color: var(--color-text-muted-dark);
+  }
+}

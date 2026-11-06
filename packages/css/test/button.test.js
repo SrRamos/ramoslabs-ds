@@ -112,17 +112,17 @@ describe('contrast from the built CSS', () => {
   it('a seeded weak fill, hover and outline border fail with the pair and token', () => {
     const bad = (from, to) => checkContrastMatrix(tokens, { css: css.replace(from, to) }).failures;
     const solid = bad(
-      /(data-variant='solid'\]\[data-tone='error'\]\s*\{[^}]*?background-color: )var\(--color-red-700\)/,
-      '$1var(--color-red-200)',
+      /(data-variant='solid'\]\[data-tone='error'\]\s*\{[^}]*?background-color: )var\(--color-error-solid\)/,
+      '$1var(--color-crimson-200)',
     );
     expect(solid.map((f) => f.id)).toContain('button/solid/error/text');
     const hover = bad(
-      /(data-variant='solid'\]\[data-tone='success'\]:hover\s*\{\s*background-color: )var\(--color-emerald-900\)/,
-      '$1var(--color-emerald-200)',
+      /(data-variant='solid'\]\[data-tone='success'\]:hover\s*\{\s*background-color: )var\(--color-success-solid-hover\)/,
+      '$1var(--color-jade-200)',
     );
     expect(hover.map((f) => f.id)).toContain('button/solid/success/hover/text');
     const outline = bad(
-      /(data-variant='outline'\]\[data-tone='neutral'\]\s*\{[^}]*?border-color: )var\(--color-text-muted\)/,
+      /(data-variant='outline'\]\[data-tone='neutral'\]\s*\{[^}]*?border-color: )var\(--color-neutral-outline\)/,
       '$1var(--color-slate-300)',
     );
     expect(outline.some((f) => f.id.startsWith('button/outline/neutral/border-on-'))).toBe(true);
@@ -151,6 +151,34 @@ describe('real cascade matches the extractor', () => {
       await page.waitForTimeout(250);
       expect(
         (await style(page, `${p.variant}-${p.tone}`, ['background-color']))['background-color'],
+      ).toBe(rgb(tokens[p.bg]));
+    }
+  });
+});
+
+describe('dark surfaces: real cascade matches the dark extractor', () => {
+  it("under a [data-theme='dark'] ancestor, rest and hover colours equal the dark-extracted tokens", async () => {
+    const pairs = extractPairs(css, { theme: 'dark' }).filter((p) => p.component === 'button');
+    expect(pairs).toHaveLength(90);
+    const body = `<div data-theme="dark">${VARIANTS.flatMap((v) =>
+      TONES.map(
+        (t) =>
+          `<button id="${v}-${t}" class="sj-button__root" data-part="root" ${attrs(v, t, 'md')}>x</button>`,
+      ),
+    ).join('')}</div>`;
+    const page = await open({}, body);
+    for (const p of pairs.filter((x) => x.state === 'rest')) {
+      const s = await style(page, `${p.variant}-${p.tone}`, ['color', 'background-color']);
+      expect(s.color, `dark ${p.variant}/${p.tone} color`).toBe(rgb(tokens[p.fg]));
+      if (p.bg === 'transparent') expect(s['background-color']).toBe('rgba(0, 0, 0, 0)');
+      else expect(s['background-color']).toBe(rgb(tokens[p.bg]));
+    }
+    for (const p of pairs.filter((x) => x.state === 'hover' && x.bg !== 'transparent')) {
+      await page.hover(`#${p.variant}-${p.tone}`);
+      await page.waitForTimeout(250);
+      expect(
+        (await style(page, `${p.variant}-${p.tone}`, ['background-color']))['background-color'],
+        `dark ${p.variant}/${p.tone} hover`,
       ).toBe(rgb(tokens[p.bg]));
     }
   });
@@ -318,10 +346,10 @@ describe('link variant', () => {
 
 describe('solid sheen contrast (lightest pixel of the fill)', () => {
   // The sheen is white at --opacity-sheen over the top of the fill; the label sits on that lightest pixel.
-  it('keeps every solid label at 4.5:1 on the sheened fill, and on the darker gradient end', () => {
+  it('keeps every solid label at 4.5:1 on the sheened fill, light and dark (inverted neutral)', () => {
     const sheen = Number.parseFloat(tokens['opacity-sheen']) / 100;
     expect(sheen).toBeGreaterThan(0);
-    const solid = extractPairs(css).filter(
+    const solid = [...extractPairs(css), ...extractPairs(css, { theme: 'dark' })].filter(
       (p) => p.component === 'button' && p.variant === 'solid' && p.state !== 'active',
     );
     expect(solid.length).toBeGreaterThan(0);

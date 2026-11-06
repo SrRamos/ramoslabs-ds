@@ -4,7 +4,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
+  DARK_SURFACES,
   RECIPE,
+  STATUS_TONES,
   SIZES,
   SURFACES,
   TONES,
@@ -13,11 +15,13 @@ import {
   compositeOver,
   contrastRatio,
   extractLayerUses,
+  extractPairs,
   formatFailure,
   loadTokens,
   meets,
   parseHex,
   relativeLuminance,
+  statusRolePairs,
 } from './index.js';
 
 // Dynamic specifier: the css build script is plain JS outside this package's typecheck graph.
@@ -139,14 +143,14 @@ describe('contrast matrix (light theme)', () => {
   });
 
   it('fails a seeded token change, naming the pair, ratio and token', () => {
-    const { failures } = checkContrastMatrix({ ...tokens, 'color-red-700': '#fca5a5' });
+    const { failures } = checkContrastMatrix({ ...tokens, 'color-error-solid': '#fca5a5' });
     const f = failures.find((x) => x.id === 'solid/error/md/text');
     if (!f) throw new Error('expected a failure');
-    expect(f.bg).toBe('color-red-700');
+    expect(f.bg).toBe('color-error-solid');
     expect(f.ratio).toBeLessThan(4.5);
     const line = formatFailure(f);
     expect(line).toContain('solid/error/md/text');
-    expect(line).toContain('color-red-700');
+    expect(line).toContain('color-error-solid');
     expect(line).toMatch(/= \d\.\d\d:1, needs 4\.50:1/);
   });
 
@@ -161,7 +165,7 @@ describe('contrast matrix (light theme)', () => {
   });
 
   it('fails a weak focus color and a weak outline border', () => {
-    const t = { ...tokens, 'color-focus': '#a5b4fc', 'color-text-muted': '#cbd5e1' };
+    const t = { ...tokens, 'color-focus': '#a5b4fc', 'color-neutral-outline': '#cbd5e1' };
     const ids = checkContrastMatrix(t).failures.map((f) => f.id);
     expect(ids).toContain('focus/ring-on-color-surface');
     expect(ids).toContain('outline/neutral/sm/border-on-color-surface');
@@ -169,7 +173,76 @@ describe('contrast matrix (light theme)', () => {
 
   it('rejects an unknown token loudly', () => {
     const t = { ...tokens };
-    delete t['color-blue-700'];
-    expect(() => checkContrastMatrix(t)).toThrow(/color-blue-700/);
+    delete t['color-info-solid'];
+    expect(() => checkContrastMatrix(t)).toThrow(/color-info-solid/);
+  });
+});
+
+describe('status palette and dark theme (Harmonic, docs/research/status-tones-2026.md)', () => {
+  const tokens = loadTokens();
+  const outDir = mkdtempSync(join(tmpdir(), 'sj-contrast-dark-'));
+  buildCss({ srcDir: new URL('../../css/src', import.meta.url).pathname, outDir });
+  const css = readFileSync(join(outDir, 'index.css'), 'utf8');
+  const { pairs, failures } = checkContrastMatrix(tokens, { css });
+
+  it('checks every status role pair, light and dark, including the sheen, hover and press', () => {
+    for (const t of STATUS_TONES)
+      for (const p of statusRolePairs(t))
+        expect(
+          pairs.some((x) => x.id === p.id),
+          p.id,
+        ).toBe(true);
+    for (const id of ['solid-sheen', 'solid-hover-sheen', 'solid-press', 'solid-dark-sheen'])
+      expect(pairs.some((x) => x.id === `status/warning/${id}`)).toBe(true);
+    expect(failures.map(formatFailure)).toEqual([]);
+  });
+
+  it('reads the dark button, field, input and state rules and checks them on the dark surfaces', () => {
+    const dark = pairs.filter((p) => p.id.startsWith('dark/'));
+    for (const c of ['button', 'field', 'input', 'state'])
+      expect(
+        dark.some((p) => p.id.startsWith(`dark/${c}/`)),
+        c,
+      ).toBe(true);
+    expect(dark.every((p) => p.bg.endsWith('-dark') || !DARK_SURFACES.includes(p.bg))).toBe(true);
+    expect(
+      dark.some((p) => p.id === 'dark/button/outline/primary/text-on-color-surface-dark'),
+    ).toBe(true);
+  });
+
+  it('dark extraction keeps light-only components out and lets dark rules win over light ones', () => {
+    const light = extractPairs(css).find(
+      (p) =>
+        p.component === 'button' &&
+        p.variant === 'ghost' &&
+        p.tone === 'primary' &&
+        p.state === 'rest',
+    );
+    const dark = extractPairs(css, { theme: 'dark' }).find(
+      (p) =>
+        p.component === 'button' &&
+        p.variant === 'ghost' &&
+        p.tone === 'primary' &&
+        p.state === 'rest',
+    );
+    expect(light?.fg).toBe('color-primary');
+    expect(dark?.fg).toBe('color-primary-text-dark');
+    expect(extractPairs(css, { theme: 'dark' }).some((p) => p.component === 'switch')).toBe(false);
+  });
+
+  it('fails the old indigo 600 outline on a dark surface, naming the pair', () => {
+    const weak = css.replaceAll('var(--color-primary-text-dark)', 'var(--color-primary)');
+    const ids = checkContrastMatrix(tokens, { css: weak }).failures.map((f) => f.id);
+    expect(ids).toContain('dark/button/outline/primary/text-on-color-surface-dark');
+  });
+
+  it('fails a seeded weak sheen pair and a weak dark text token', () => {
+    const ids = checkContrastMatrix({
+      ...tokens,
+      'color-success-solid': '#3f9a6f',
+      'color-error-text-dark': '#5f2324',
+    }).failures.map((f) => f.id);
+    expect(ids).toContain('status/success/solid-sheen');
+    expect(ids).toContain('status/error/text-dark-on-color-surface-dark');
   });
 });

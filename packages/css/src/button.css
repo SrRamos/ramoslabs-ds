@@ -4,7 +4,9 @@
    through :is(). Axes are data-variant (solid|soft|outline|ghost|link) x data-tone
    (primary|neutral|success|warning|error|info) x data-size (xs|sm|md|lg). Every variant x tone color pair below
    is read back from this built file by packages/testing/contrast (extractor), checked at 4.5:1 for text and 3:1
-   for the outline boundary. Solid fills carry a gradient and a sheen on top of the background-color the extractor
+   for the outline boundary, on light surfaces and, for the [data-theme='dark'] rules, on the dark surfaces.
+   Status colours are the Harmonic palette (docs/research/status-tones-2026.md).
+   Solid fills carry a gradient and a sheen on top of the background-color the extractor
    reads; the lightest pixel of that sheen is checked separately (contrast.test.js, "sheen").
    Layers: structure in sj.component, axes and pointer states in sj.variant, disabled, reduced motion and forced
    colors in sj.state. The focus ring (2.4.13) and the motion collapse come from base/.
@@ -136,47 +138,54 @@
     --_r: var(--radius-control-lg);
   }
 
-  /* Rest */
+  /* Rest. Light surfaces read the semantic tone tokens; a [data-theme='dark'] ancestor swaps in the *-dark
+     counterparts below (status solids are shared; the neutral solid inverts). */
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='primary'] {
     color: var(--color-white);
     background-color: var(--color-primary);
     border-color: var(--color-indigo-700);
     --_end: var(--color-indigo-700);
+    --_glow: var(--color-primary-light);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral'] {
-    color: var(--color-white);
-    background-color: var(--color-slate-900);
-    border-color: var(--color-slate-950);
-    --_end: var(--color-slate-950);
+    color: var(--color-neutral-on-solid);
+    background-color: var(--color-neutral-solid);
+    border-color: var(--color-neutral-solid-press);
+    --_end: var(--color-neutral-solid-hover);
+    --_glow: var(--color-neutral-solid);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success'] {
-    color: var(--color-white);
-    background-color: var(--color-emerald-800);
-    border-color: var(--color-emerald-900);
-    --_end: var(--color-emerald-900);
+    color: var(--color-success-on-solid);
+    background-color: var(--color-success-solid);
+    border-color: var(--color-success-solid-press);
+    --_end: var(--color-success-solid-hover);
+    --_glow: var(--color-success-solid);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning'] {
-    color: var(--color-slate-900);
-    background-color: var(--color-amber-500);
-    border-color: var(--color-amber-600);
-    --_end: var(--color-amber-600);
+    color: var(--color-warning-on-solid);
+    background-color: var(--color-warning-solid);
+    border-color: var(--color-warning-solid-press);
+    --_end: var(--color-warning-solid-hover);
+    --_glow: var(--color-warning-solid);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error'] {
-    color: var(--color-white);
-    background-color: var(--color-red-700);
-    border-color: var(--color-red-800);
-    --_end: var(--color-red-800);
+    color: var(--color-error-on-solid);
+    background-color: var(--color-error-solid);
+    border-color: var(--color-error-solid-press);
+    --_end: var(--color-error-solid-hover);
+    --_glow: var(--color-error-solid);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info'] {
-    color: var(--color-white);
-    background-color: var(--color-blue-700);
-    border-color: var(--color-blue-800);
-    --_end: var(--color-blue-800);
+    color: var(--color-info-on-solid);
+    background-color: var(--color-info-solid);
+    border-color: var(--color-info-solid-press);
+    --_end: var(--color-info-solid-hover);
+    --_glow: var(--color-info-solid);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary'] {
@@ -186,9 +195,9 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral'] {
-    color: var(--color-text-body);
-    background-color: var(--color-surface-hover);
-    border-color: var(--color-surface-hover);
+    color: var(--color-neutral-text);
+    background-color: var(--color-neutral-surface);
+    border-color: var(--color-neutral-surface);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success'] {
@@ -222,33 +231,33 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral'] {
-    color: var(--color-text-body);
+    color: var(--color-neutral-text);
     background-color: transparent;
-    border-color: var(--color-text-muted);
+    border-color: var(--color-neutral-outline);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success'] {
     color: var(--color-success-text);
     background-color: transparent;
-    border-color: var(--color-success-text);
+    border-color: var(--color-success-outline);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning'] {
     color: var(--color-warning-text);
     background-color: transparent;
-    border-color: var(--color-warning-text);
+    border-color: var(--color-warning-outline);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error'] {
     color: var(--color-error-text);
     background-color: transparent;
-    border-color: var(--color-error-text);
+    border-color: var(--color-error-outline);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info'] {
     color: var(--color-info-text);
     background-color: transparent;
-    border-color: var(--color-info-text);
+    border-color: var(--color-info-outline);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary'] {
@@ -258,7 +267,7 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral'] {
-    color: var(--color-text-body);
+    color: var(--color-neutral-text);
     background-color: transparent;
     border-color: transparent;
   }
@@ -338,7 +347,7 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral'] {
-    color: var(--color-text-heading);
+    color: var(--color-neutral-text-strong);
     background-color: transparent;
     border-color: transparent;
   }
@@ -376,33 +385,33 @@
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:hover {
-      background-color: var(--color-slate-800);
-      border-color: var(--color-slate-950);
-      --_end: var(--color-slate-950);
+      background-color: var(--color-neutral-solid-hover);
+      border-color: var(--color-neutral-solid-press);
+      --_end: var(--color-neutral-solid-press);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success']:hover {
-      background-color: var(--color-emerald-900);
-      border-color: var(--color-emerald-950);
-      --_end: var(--color-emerald-950);
+      background-color: var(--color-success-solid-hover);
+      border-color: var(--color-success-solid-press);
+      --_end: var(--color-success-solid-press);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning']:hover {
-      background-color: var(--color-amber-400);
-      border-color: var(--color-amber-500);
-      --_end: var(--color-amber-500);
+      background-color: var(--color-warning-solid-hover);
+      border-color: var(--color-warning-solid-press);
+      --_end: var(--color-warning-solid-press);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error']:hover {
-      background-color: var(--color-red-800);
-      border-color: var(--color-red-900);
-      --_end: var(--color-red-900);
+      background-color: var(--color-error-solid-hover);
+      border-color: var(--color-error-solid-press);
+      --_end: var(--color-error-solid-press);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info']:hover {
-      background-color: var(--color-blue-800);
-      border-color: var(--color-blue-900);
-      --_end: var(--color-blue-900);
+      background-color: var(--color-info-solid-hover);
+      border-color: var(--color-info-solid-press);
+      --_end: var(--color-info-solid-press);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary']:hover {
@@ -411,28 +420,28 @@
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral']:hover {
-      background-color: var(--color-slate-200);
-      border-color: var(--color-slate-200);
+      background-color: var(--color-neutral-surface-hover);
+      border-color: var(--color-neutral-surface-hover);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success']:hover {
-      background-color: var(--color-green-100);
-      border-color: var(--color-green-100);
+      background-color: var(--color-success-surface-hover);
+      border-color: var(--color-success-surface-hover);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning']:hover {
-      background-color: var(--color-amber-100);
-      border-color: var(--color-amber-100);
+      background-color: var(--color-warning-surface-hover);
+      border-color: var(--color-warning-surface-hover);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error']:hover {
-      background-color: var(--color-red-100);
-      border-color: var(--color-red-100);
+      background-color: var(--color-error-surface-hover);
+      border-color: var(--color-error-surface-hover);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info']:hover {
-      background-color: var(--color-blue-100);
-      border-color: var(--color-blue-100);
+      background-color: var(--color-info-surface-hover);
+      border-color: var(--color-info-surface-hover);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary']:hover {
@@ -440,7 +449,7 @@
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral']:hover {
-      background-color: var(--color-surface-hover);
+      background-color: var(--color-neutral-surface);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success']:hover {
@@ -464,7 +473,7 @@
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral']:hover {
-      background-color: var(--color-surface-hover);
+      background-color: var(--color-neutral-surface);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success']:hover {
@@ -483,8 +492,12 @@
       background-color: var(--color-info-surface);
     }
 
+    /* The halo takes the tone's own fill (--_glow), so a green button never gets an indigo fringe. */
     :is(.sj-button__root, .sj-button__link)[data-variant='solid']:hover {
-      box-shadow: var(--shadow-highlight), var(--shadow-glow);
+      box-shadow:
+        var(--shadow-highlight),
+        var(--shadow-lift),
+        0 0 0 var(--glow-width) color-mix(in srgb, var(--_glow) var(--opacity-glow), transparent);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='link']:hover {
@@ -496,23 +509,23 @@
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral']:hover {
-      color: var(--color-text-heading);
+      color: var(--color-neutral-text-strong);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success']:hover {
-      color: var(--color-success-text);
+      color: var(--color-success-text-strong);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning']:hover {
-      color: var(--color-warning-text);
+      color: var(--color-warning-text-strong);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error']:hover {
-      color: var(--color-error-text);
+      color: var(--color-error-text-strong);
     }
 
     :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info']:hover {
-      color: var(--color-info-text);
+      color: var(--color-info-text-strong);
     }
   }
 
@@ -523,28 +536,28 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:active {
-    background-color: var(--color-slate-950);
-    border-color: var(--color-slate-950);
+    background-color: var(--color-neutral-solid-press);
+    border-color: var(--color-neutral-solid-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='success']:active {
-    background-color: var(--color-emerald-950);
-    border-color: var(--color-emerald-950);
+    background-color: var(--color-success-solid-press);
+    border-color: var(--color-success-solid-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='warning']:active {
-    background-color: var(--color-amber-600);
-    border-color: var(--color-amber-600);
+    background-color: var(--color-warning-solid-press);
+    border-color: var(--color-warning-solid-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='error']:active {
-    background-color: var(--color-red-900);
-    border-color: var(--color-red-900);
+    background-color: var(--color-error-solid-press);
+    border-color: var(--color-error-solid-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='info']:active {
-    background-color: var(--color-blue-900);
-    border-color: var(--color-blue-900);
+    background-color: var(--color-info-solid-press);
+    border-color: var(--color-info-solid-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary']:active {
@@ -553,28 +566,28 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral']:active {
-    background-color: var(--color-slate-300);
-    border-color: var(--color-slate-300);
+    background-color: var(--color-neutral-surface-press);
+    border-color: var(--color-neutral-surface-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success']:active {
-    background-color: var(--color-green-200);
-    border-color: var(--color-green-200);
+    background-color: var(--color-success-surface-press);
+    border-color: var(--color-success-surface-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning']:active {
-    background-color: var(--color-amber-200);
-    border-color: var(--color-amber-200);
+    background-color: var(--color-warning-surface-press);
+    border-color: var(--color-warning-surface-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error']:active {
-    background-color: var(--color-red-200);
-    border-color: var(--color-red-200);
+    background-color: var(--color-error-surface-press);
+    border-color: var(--color-error-surface-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info']:active {
-    background-color: var(--color-blue-200);
-    border-color: var(--color-blue-200);
+    background-color: var(--color-info-surface-press);
+    border-color: var(--color-info-surface-press);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary']:active {
@@ -582,23 +595,23 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral']:active {
-    background-color: var(--color-slate-200);
+    background-color: var(--color-neutral-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success']:active {
-    background-color: var(--color-green-100);
+    background-color: var(--color-success-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning']:active {
-    background-color: var(--color-amber-100);
+    background-color: var(--color-warning-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error']:active {
-    background-color: var(--color-red-100);
+    background-color: var(--color-error-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info']:active {
-    background-color: var(--color-blue-100);
+    background-color: var(--color-info-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary']:active {
@@ -606,23 +619,23 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral']:active {
-    background-color: var(--color-slate-200);
+    background-color: var(--color-neutral-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success']:active {
-    background-color: var(--color-green-100);
+    background-color: var(--color-success-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='warning']:active {
-    background-color: var(--color-amber-100);
+    background-color: var(--color-warning-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='error']:active {
-    background-color: var(--color-red-100);
+    background-color: var(--color-error-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info']:active {
-    background-color: var(--color-blue-100);
+    background-color: var(--color-info-surface-hover);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='solid']:active {
@@ -643,23 +656,471 @@
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral']:active {
-    color: var(--color-text-heading);
+    color: var(--color-neutral-text-strong);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success']:active {
-    color: var(--color-success-text);
+    color: var(--color-success-text-strong);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning']:active {
-    color: var(--color-warning-text);
+    color: var(--color-warning-text-strong);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error']:active {
-    color: var(--color-error-text);
+    color: var(--color-error-text-strong);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info']:active {
-    color: var(--color-info-text);
+    color: var(--color-info-text-strong);
+  }
+
+  /* Dark surfaces: any ancestor with data-theme='dark'. :where() keeps the specificity of the light rules, so
+     these win by source order and the state rules below still win over them. */
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral'] {
+    color: var(--color-neutral-on-solid-dark);
+    background-color: var(--color-neutral-solid-dark);
+    border-color: var(--color-neutral-solid-press-dark);
+    --_end: var(--color-neutral-solid-hover-dark);
+    --_glow: var(--color-neutral-solid-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary'] {
+    color: var(--color-primary-text-strong-dark);
+    background-color: var(--color-primary-surface-dark);
+    border-color: var(--color-primary-surface-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral'] {
+    color: var(--color-neutral-text-dark);
+    background-color: var(--color-neutral-surface-dark);
+    border-color: var(--color-neutral-surface-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success'] {
+    color: var(--color-success-text-dark);
+    background-color: var(--color-success-surface-dark);
+    border-color: var(--color-success-surface-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning'] {
+    color: var(--color-warning-text-dark);
+    background-color: var(--color-warning-surface-dark);
+    border-color: var(--color-warning-surface-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error'] {
+    color: var(--color-error-text-dark);
+    background-color: var(--color-error-surface-dark);
+    border-color: var(--color-error-surface-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info'] {
+    color: var(--color-info-text-dark);
+    background-color: var(--color-info-surface-dark);
+    border-color: var(--color-info-surface-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary'] {
+    color: var(--color-primary-text-dark);
+    background-color: transparent;
+    border-color: var(--color-primary-outline-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral'] {
+    color: var(--color-neutral-text-dark);
+    background-color: transparent;
+    border-color: var(--color-neutral-outline-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success'] {
+    color: var(--color-success-text-dark);
+    background-color: transparent;
+    border-color: var(--color-success-outline-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning'] {
+    color: var(--color-warning-text-dark);
+    background-color: transparent;
+    border-color: var(--color-warning-outline-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error'] {
+    color: var(--color-error-text-dark);
+    background-color: transparent;
+    border-color: var(--color-error-outline-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info'] {
+    color: var(--color-info-text-dark);
+    background-color: transparent;
+    border-color: var(--color-info-outline-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary'] {
+    color: var(--color-primary-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral'] {
+    color: var(--color-neutral-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success'] {
+    color: var(--color-success-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='warning'] {
+    color: var(--color-warning-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='error'] {
+    color: var(--color-error-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info'] {
+    color: var(--color-info-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='primary'] {
+    color: var(--color-primary-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral'] {
+    color: var(--color-neutral-text-strong-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success'] {
+    color: var(--color-success-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning'] {
+    color: var(--color-warning-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error'] {
+    color: var(--color-error-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info'] {
+    color: var(--color-info-text-dark);
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  @media (hover: hover) {
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:hover {
+      background-color: var(--color-neutral-solid-hover-dark);
+      border-color: var(--color-neutral-solid-press-dark);
+      --_end: var(--color-neutral-solid-press-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary']:hover {
+      background-color: var(--color-primary-surface-hover-dark);
+      border-color: var(--color-primary-surface-hover-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral']:hover {
+      background-color: var(--color-neutral-surface-hover-dark);
+      border-color: var(--color-neutral-surface-hover-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success']:hover {
+      background-color: var(--color-success-surface-hover-dark);
+      border-color: var(--color-success-surface-hover-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning']:hover {
+      background-color: var(--color-warning-surface-hover-dark);
+      border-color: var(--color-warning-surface-hover-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error']:hover {
+      background-color: var(--color-error-surface-hover-dark);
+      border-color: var(--color-error-surface-hover-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info']:hover {
+      background-color: var(--color-info-surface-hover-dark);
+      border-color: var(--color-info-surface-hover-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary']:hover {
+      background-color: var(--color-primary-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral']:hover {
+      background-color: var(--color-neutral-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success']:hover {
+      background-color: var(--color-success-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning']:hover {
+      background-color: var(--color-warning-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error']:hover {
+      background-color: var(--color-error-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info']:hover {
+      background-color: var(--color-info-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary']:hover {
+      background-color: var(--color-primary-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral']:hover {
+      background-color: var(--color-neutral-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success']:hover {
+      background-color: var(--color-success-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='warning']:hover {
+      background-color: var(--color-warning-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='error']:hover {
+      background-color: var(--color-error-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info']:hover {
+      background-color: var(--color-info-surface-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='primary']:hover {
+      color: var(--color-primary-text-strong-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral']:hover {
+      color: var(--color-neutral-text-strong-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success']:hover {
+      color: var(--color-success-text-strong-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning']:hover {
+      color: var(--color-warning-text-strong-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error']:hover {
+      color: var(--color-error-text-strong-dark);
+    }
+
+    :where([data-theme='dark'])
+      :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info']:hover {
+      color: var(--color-info-text-strong-dark);
+    }
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='solid'][data-tone='neutral']:active {
+    background-color: var(--color-neutral-solid-press-dark);
+    border-color: var(--color-neutral-solid-press-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='primary']:active {
+    background-color: var(--color-primary-surface-press-dark);
+    border-color: var(--color-primary-surface-press-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='neutral']:active {
+    background-color: var(--color-neutral-surface-press-dark);
+    border-color: var(--color-neutral-surface-press-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='success']:active {
+    background-color: var(--color-success-surface-press-dark);
+    border-color: var(--color-success-surface-press-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='warning']:active {
+    background-color: var(--color-warning-surface-press-dark);
+    border-color: var(--color-warning-surface-press-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='error']:active {
+    background-color: var(--color-error-surface-press-dark);
+    border-color: var(--color-error-surface-press-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='soft'][data-tone='info']:active {
+    background-color: var(--color-info-surface-press-dark);
+    border-color: var(--color-info-surface-press-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='primary']:active {
+    color: var(--color-primary-text-strong-dark);
+    background-color: var(--color-primary-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='neutral']:active {
+    background-color: var(--color-neutral-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='success']:active {
+    background-color: var(--color-success-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='warning']:active {
+    background-color: var(--color-warning-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='error']:active {
+    background-color: var(--color-error-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='outline'][data-tone='info']:active {
+    background-color: var(--color-info-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='primary']:active {
+    color: var(--color-primary-text-strong-dark);
+    background-color: var(--color-primary-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='neutral']:active {
+    background-color: var(--color-neutral-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='success']:active {
+    background-color: var(--color-success-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='warning']:active {
+    background-color: var(--color-warning-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='error']:active {
+    background-color: var(--color-error-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='ghost'][data-tone='info']:active {
+    background-color: var(--color-info-surface-hover-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='primary']:active {
+    color: var(--color-primary-text-strong-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='neutral']:active {
+    color: var(--color-neutral-text-strong-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='success']:active {
+    color: var(--color-success-text-strong-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='warning']:active {
+    color: var(--color-warning-text-strong-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='error']:active {
+    color: var(--color-error-text-strong-dark);
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-variant='link'][data-tone='info']:active {
+    color: var(--color-info-text-strong-dark);
   }
 }
 
@@ -674,6 +1135,13 @@
     box-shadow: none;
     scale: none;
     cursor: not-allowed;
+  }
+
+  :where([data-theme='dark'])
+    :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']) {
+    color: var(--color-text-disabled-dark);
+    background-color: var(--color-surface-hover-dark);
+    border-color: var(--color-border-dark);
   }
 
   :is(.sj-button__root, .sj-button__link)[data-disabled]:not([data-disabled='false']):is(

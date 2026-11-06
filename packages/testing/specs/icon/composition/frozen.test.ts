@@ -18,7 +18,7 @@ const sha = (rel: string) =>
     .update(readFileSync(join(repo, rel)))
     .digest('hex');
 
-/** sha256 of each frozen SJButton file at the commit .f was written against (origin/main 9b50b29). */
+/** sha256 of each frozen SJButton file. button.css re-pinned for the Harmonic status palette (PR #128). */
 export const FROZEN: Record<string, string> = {
   'packages/contracts/contracts/button.contract.json':
     '7202d79428f26a8b7749a8006a1be0005abecea76e5d006848ba3794ca4eef26',
@@ -26,7 +26,7 @@ export const FROZEN: Record<string, string> = {
     'bdc4551483fb059d0ac45bfcb4ea64054ef9255e921e834952290c11fe4eca93',
   'packages/core/src/button/reducer.ts':
     'ce5a6ddac7c54952054814db579b58358404e5f07b509aef2b4f6531e18cee55',
-  'packages/css/src/button.css': 'd5220b8d5b3c4f840cd63727ab66bcf32ab4410049a7d1f3b1965a7060d3bdc7',
+  'packages/css/src/button.css': '5330569b42df9539be9742a4d467f7e1f2cec531750cbb54f61b7dcedcf90b2a',
 };
 
 /** Pure: which pinned files differ from the given hashes. */

@@ -95,3 +95,29 @@
     }
   }
 }
+
+@layer sj.state {
+  /* Dark surfaces: any ancestor with data-theme='dark'. Slate 500 still clears 3:1 as the boundary on slate 900 and
+     950; the invalid border takes the dark error outline. The invalid rules repeat the selectors above so they
+     keep winning over the dark resting border. */
+  :where([data-theme='dark']) .sj-input__control {
+    background-color: var(--color-surface-dark);
+    color: var(--color-text-body-dark);
+  }
+
+  :where([data-theme='dark']) .sj-input__control::placeholder {
+    color: var(--color-text-muted-dark);
+  }
+
+  :where([data-theme='dark']) .sj-input__control[aria-invalid='true'],
+  :where([data-theme='dark']) .sj-input__control:user-invalid,
+  :where([data-theme='dark']) .sj-input__control[data-touched]:invalid {
+    border-color: var(--color-error-outline-dark);
+  }
+
+  :where([data-theme='dark']) .sj-input__control:disabled {
+    color: var(--color-text-disabled-dark);
+    background-color: var(--color-surface-hover-dark);
+    border-color: var(--color-border-dark);
+  }
+}

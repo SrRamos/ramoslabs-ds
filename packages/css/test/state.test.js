@@ -100,7 +100,10 @@ describe('contrast on every page surface (shared matrix: text and glyph at 4.5:1
     expect(uses.map((u) => u.part)).toEqual(
       expect.arrayContaining(['root', 'title', 'description', 'icon']),
     );
-    expect(uses.filter((u) => u.part === 'icon')).toHaveLength(VARIANTS.length);
+    for (const theme of ['light', 'dark'])
+      expect(uses.filter((u) => u.part === 'icon' && u.theme === theme)).toHaveLength(
+        VARIANTS.length,
+      );
   });
 });
 
