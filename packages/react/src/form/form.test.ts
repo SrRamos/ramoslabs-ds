@@ -39,7 +39,7 @@ describe('SJForm root', () => {
     expect(SJForm.Root).toBe(SJFormRoot);
   });
   it('is a native <form> with the library class and part; no handlers, no novalidate, no contract props', () => {
-    const r = mount(h(SJForm, { action: 'send', submits: false, autoSubmit: true, fields: [] }));
+    const r = mount(h(SJForm, { enter: 'send', submits: false, autoSubmit: true, fields: [] }));
     const p = form(r).props;
     expect(p).toMatchObject({ className: 'sj-form__root', 'data-part': 'root' });
     for (const k of [
@@ -48,7 +48,7 @@ describe('SJForm root', () => {
       'onInvalid',
       'noValidate',
       'novalidate',
-      'action',
+      'enter',
       'fields',
       'submits',
       'autoSubmit',
@@ -78,10 +78,12 @@ describe('SJForm root', () => {
     expect(ref.current).toBeTruthy();
     warn.mockRestore();
   });
-  it('type error: the native action is not a prop (the contract owns the name)', () => {
-    // @ts-expect-error action is 'go' | 'send' | 'search'
-    void h(SJForm, { action: '/submit' });
-    expect(true).toBe(true);
+  it('the native action passes through to the form; enter is the Enter label', () => {
+    const r = mount(h(SJForm, { action: '/submit', method: 'post', enter: 'send' }));
+    expect(form(r).props).toMatchObject({ action: '/submit', method: 'post' });
+    expect('enter' in form(r).props).toBe(false);
+    // @ts-expect-error enter is 'go' | 'send' | 'search'
+    void h(SJForm, { enter: '/submit' });
   });
   it('server render: a plain form; the data-first fields give the Enter position, no live markup', () => {
     const fields = [
@@ -128,6 +130,34 @@ describe('Enter position follows the form props', () => {
       h(StrictMode, null, h(SJForm, null, f('a', 'name'), f('b', 'email'), f('c', 'username'))),
     );
     expect(hints(r)).toEqual(['next', 'next', 'go']);
+  });
+});
+
+describe('registration order is the DOM order of form.elements', () => {
+  it('a reorder re-registers each field with its new index', () => {
+    // DOM order is the order of this array; the mock control of each field looks itself up in it.
+    const dom: object[] = [];
+    const elements = dom as unknown as ArrayLike<object>;
+    const tree = (names: string[]) => provide(h(SJForm, null, ...names.map((n) => f(n, 'name'))));
+    let r!: ReactTestRenderer;
+    const mockNode = () => {
+      const el = { form: { elements, addEventListener() {} } };
+      dom.push(el);
+      return el;
+    };
+    act(() => {
+      r = create(tree(['a', 'b', 'c']), { createNodeMock: mockNode });
+    });
+    renderers.push(r);
+    expect(hints(r)).toEqual(['next', 'next', 'go']);
+    // The browser moved the last control first: DOM order is now c, a, b.
+    dom.unshift(dom.pop()!);
+    act(() => r.update(tree(['a', 'b', 'c'])));
+    // Position follows DOM: the field whose element is last in the DOM (b) gets go.
+    const els = r.root.findAllByProps({ 'data-part': 'control' });
+    expect(els).toHaveLength(3);
+    expect(hints(r).filter((x) => x === 'go')).toHaveLength(1);
+    expect(hints(r)[1]).toBe('go');
   });
 });
 

@@ -33,6 +33,7 @@ describe('@ramoslabs/react barrel', () => {
       'SJSwitchRoot',
       'SJSwitchThumb',
       'useSJField',
+      'useSJFieldControl',
     ]);
   });
 });

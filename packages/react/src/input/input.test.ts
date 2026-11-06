@@ -179,10 +179,10 @@ describe('Enter position from the form owner (ADR-007)', () => {
     const r = mount(h(SJForm, null, f('a', 'name'), f('b', 'email'), f('c', 'username')));
     expect(hints(r)).toEqual(['next', 'next', 'go']);
   });
-  it('submits=false gives the last field done; action wins', () => {
+  it('submits=false gives the last field done; enter wins', () => {
     const r = mount(h(SJForm, { submits: false }, f('a', 'name'), f('b', 'email')));
     expect(hints(r)).toEqual(['next', 'done']);
-    const s = mount(h(SJForm, { action: 'search' }, f('q', 'search')));
+    const s = mount(h(SJForm, { enter: 'search' }, f('q', 'search')));
     expect(hints(s)).toEqual(['search']);
   });
   it('adding a field re-renders the others (order recomputed)', () => {
@@ -198,6 +198,18 @@ describe('Enter position from the form owner (ADR-007)', () => {
     expect(hints(r)).toEqual(['next', 'go']);
     act(() => r.update(tree(3)));
     expect(hints(r)).toEqual(['next', 'next', 'go']);
+  });
+  it('inside a form the owner hint is final: the input autoSubmit does not turn done into go', () => {
+    const r = mount(
+      h(
+        SJForm,
+        { submits: false },
+        h(SJField.Root, { name: 'otp', label: 'c' }, h(SJInput, { kind: 'otp', autoSubmit: true })),
+      ),
+    );
+    expect(hints(r)).toEqual(['done']);
+    const s = mount(h(SJInput, { kind: 'otp', autoSubmit: true }));
+    expect(control(s).props.enterKeyHint).toBe('go');
   });
   it('a standalone input in no field gets no owner hint', () => {
     const r = mount(h(SJInput, { kind: 'email' }));

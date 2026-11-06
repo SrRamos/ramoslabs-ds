@@ -20,7 +20,7 @@ import {
 } from 'react';
 import { createInput, type InputProps } from '@ramoslabs/core/input';
 import type { Props } from '@ramoslabs/core/merge';
-import { useSJField } from '../field/index';
+import { useSJField, useSJFieldControl } from '../field/index';
 import { useOptionalRuntime } from '../runtime/index';
 import type { SJInputProps as GeneratedProps } from '../generated/input/index';
 
@@ -117,6 +117,7 @@ export const SJInputRoot: ForwardRefExoticComponent<
   } = props;
   for (const owned of KIND_OWNED) delete (rest as Record<string, unknown>)[owned];
   const field = useSJField();
+  const fieldControl = useSJFieldControl();
   const userInvalid = useOptionalRuntime()?.supports.userInvalid === true;
 
   const latest = useRef<InputProps>({});
@@ -154,10 +155,11 @@ export const SJInputRoot: ForwardRefExoticComponent<
   const merged = useCallback(
     (el: SJInputElement | null) => {
       control.current = el;
+      if (fieldControl) fieldControl.current = el;
       if (typeof ref === 'function') ref(el);
       else if (ref) ref.current = el;
     },
-    [ref],
+    [ref, fieldControl],
   );
   // The owning form's `reset` clears the touched fallback (no `change` event fires on reset).
   useEffect(() => {

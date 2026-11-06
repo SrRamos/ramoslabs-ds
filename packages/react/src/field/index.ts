@@ -28,11 +28,11 @@ import {
 } from 'react';
 import { createField, type FieldParts, type FieldProps } from '@ramoslabs/core/field';
 import type { FormField } from '@ramoslabs/core/form';
-import type { IconData } from '@ramoslabs/core/icon';
 import { baseId } from '@ramoslabs/core/ids';
 import type { Props } from '@ramoslabs/core/merge';
 import { SJFormContext } from '../form/index';
 import { SJIcon } from '../icon/index';
+import { circleAlert } from '../generated/icons/circle-alert';
 import { useRuntimeBag } from '../runtime/index';
 import { fieldLive, type SJFieldProps as GeneratedProps } from '../generated/field/index';
 
@@ -69,6 +69,8 @@ export interface FieldContextValue {
   readonly classes: SJFieldClasses | undefined;
   /** The Hint part calls this in a layout effect; returns its cleanup. */
   readonly registerHint: () => () => void;
+  /** The control element, set by SJInput: its index in `form.elements` orders the field (DOM order). */
+  readonly control: { current: Element | null };
 }
 export const SJFieldContext: Context<FieldContextValue | null> =
   createContext<FieldContextValue | null>(null);
@@ -76,6 +78,11 @@ export const SJFieldContext: Context<FieldContextValue | null> =
 /** The enclosing field's parts, or null outside one (SJInput works standalone). */
 export function useSJField(): FieldParts | null {
   return useContext(SJFieldContext)?.parts ?? null;
+}
+
+/** The enclosing field's control slot (SJInput sets it so the field can read its DOM order), or null. */
+export function useSJFieldControl(): { current: Element | null } | null {
+  return useContext(SJFieldContext)?.control ?? null;
 }
 
 function useCtx(part: string): FieldContextValue {
@@ -101,16 +108,6 @@ const fromGetter = (p: Props, extra?: string): Record<string, unknown> => {
     ...(className && { className }),
     ...(htmlFor !== undefined && { htmlFor }),
   };
-};
-
-/** Lucide `circle-alert` (alias alert-circle), ISC. Inlined: adapters never import @ramoslabs/icons (ADR-016). */
-const alertCircle: IconData = {
-  name: 'alert-circle',
-  nodes: [
-    ['circle', { cx: '12', cy: '12', r: '10' }],
-    ['line', { x1: '12', x2: '12', y1: '8', y2: '12' }],
-    ['line', { x1: '12', x2: '12.01', y1: '16', y2: '16' }],
-  ],
 };
 
 const noFields: readonly FormField[] = [];
@@ -145,6 +142,7 @@ export const SJFieldRoot: ForwardRefExoticComponent<
   const hasHintNow =
     slotHint || hasHint === true || (hint !== undefined && hint !== null && hint !== false);
 
+  const control = useRef<Element | null>(null);
   const latest = useRef<FieldProps>({});
   latest.current = {
     ...(name !== undefined && { name }),
@@ -168,18 +166,39 @@ export const SJFieldRoot: ForwardRefExoticComponent<
   useLayoutEffect(() => {
     if (fieldLive === 'eager') requireLive?.();
   }, [requireLive]);
-  // Children (SJInput) report their kind first, then the field registers; a new `name` re-registers.
+  // Children (SJInput) report their kind and element first, then the field registers with its DOM index
+  // in `form.elements`. After every commit the key/index is re-read: a rename or a reorder cleans up the
+  // old registration and connects the new one.
+  const reg = useRef<{
+    name: string | undefined;
+    index: number | undefined;
+    off: () => void;
+  } | null>(null);
   useEffect(() => {
-    void name;
-    return parts.connect();
-  }, [parts, name]);
+    const el = control.current as
+      (Element & { form?: { elements?: ArrayLike<Element> } | null }) | null;
+    const els = el?.form?.elements;
+    const at = els ? Array.prototype.indexOf.call(els, el) : -1;
+    const index = at < 0 ? undefined : at;
+    const r = reg.current;
+    if (r && r.name === name && r.index === index) return;
+    r?.off();
+    reg.current = { name, index, off: parts.connect(index) };
+  });
+  useEffect(
+    () => () => {
+      reg.current?.off();
+      reg.current = null;
+    },
+    [parts],
+  );
   // After every commit: a new error text is handed to the registry once (the same text is silent).
   useEffect(() => {
     parts.announce();
   });
 
   const errorText = (error ?? '').trim();
-  const ctx: FieldContextValue = { parts, classes, registerHint };
+  const ctx: FieldContextValue = { parts, classes, registerHint, control };
   return createElement(
     SJFieldContext.Provider,
     { value: ctx },
@@ -204,7 +223,7 @@ export const SJFieldRoot: ForwardRefExoticComponent<
                 'data-part': 'icon',
                 'aria-hidden': 'true',
               },
-              createElement(SJIcon, { icon: alertCircle, size: 'sm' }),
+              createElement(SJIcon, { icon: circleAlert, size: 'sm' }),
             ),
             errorText,
           )

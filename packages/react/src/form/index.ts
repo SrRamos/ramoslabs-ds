@@ -27,11 +27,8 @@ export interface SJFormClasses {
   root?: string;
 }
 
-/**
- * Native `<form>` attributes, except `action`: the contract owns that name (Enter label of the last
- * field), so the native submission URL/function is not a prop of SJForm. Use `onSubmit`.
- */
-type RootAttrs = Omit<ComponentPropsWithoutRef<'form'>, 'children' | 'action'>;
+/** Native `<form>` attributes, including the native `action` (the Enter label prop is `enter`). */
+type RootAttrs = Omit<ComponentPropsWithoutRef<'form'>, 'children'>;
 
 export interface SJFormRootProps extends RootAttrs, Omit<GeneratedProps, 'children'> {
   classes?: SJFormClasses;
@@ -60,11 +57,11 @@ const fromGetter = (p: Props, extra?: string): Record<string, unknown> => {
 export const SJFormRoot: ForwardRefExoticComponent<
   SJFormRootProps & RefAttributes<HTMLFormElement>
 > = forwardRef<HTMLFormElement, SJFormRootProps>(function SJFormRoot(props, ref) {
-  const { fields, action, submits, autoSubmit, classes, children, ...rest } = props;
+  const { fields, enter, submits, autoSubmit, classes, children, ...rest } = props;
   const latest = useRef<FormProps>({});
   latest.current = {
     ...(fields !== undefined && { fields }),
-    ...(action !== undefined && { action }),
+    ...(enter !== undefined && { enter }),
     ...(submits !== undefined && { submits }),
     ...(autoSubmit !== undefined && { autoSubmit }),
   };
@@ -74,7 +71,7 @@ export const SJFormRoot: ForwardRefExoticComponent<
   // Fields below must re-render when the order or the kinds change; the owner itself is stable.
   const signature = JSON.stringify([
     fields ?? null,
-    action ?? null,
+    enter ?? null,
     submits ?? null,
     autoSubmit ?? null,
   ]);
