@@ -1,0 +1,4 @@
+- text: Email address
+- textbox "Email address" [invalid]
+- text: Enter an email address like name@example.com
+- button "Send"

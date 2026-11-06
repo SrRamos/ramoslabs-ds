@@ -203,3 +203,52 @@ Unminified `tsc` output gzip (comments included, so an upper bound): form 1.04 K
 - Form prop `action` is now `enter`; the native `action` passes through to `<form>` (test). Inside a field the owner's `enterHint()` is final; the input's own `autoSubmit` is standalone only (core, test).
 - Field registers with `connect(Array.prototype.indexOf.call(form.elements, control))`; SJInput hands its element to the field (`useSJFieldControl`). Re-read after every commit: a rename or reorder runs the old cleanup, then `connect(newIndex)`.
 - Error icon is the generated `circleAlert` (`../generated/icons/circle-alert`); the inlined nodes and the ADR-016 follow-up are gone. The icon part now uses core `getIconProps` (#105).
+
+## W1-C02.f: SJField, SJInput and SJForm conformance
+
+Branch `feature/m4-c02-field-conformance`. Owned: `packages/testing/specs/field/**`, the four `*:field` scripts in `packages/testing/package.json`, the `status` of the three contracts, this section. Defects fixed in the components are listed below.
+
+### One combined `field` directory (justification)
+
+`specs:check` and the template tie a directory to one slug (`SJ_FIELD_PORT`, `field-results.json`, the four `*:field` scripts) and `parity/cli.js` takes one expected declaration per run. The three components are one unit at run time: the form owner computes the Enter position the input renders, the field owns ids, ARIA and the announcement, and every scenario mounts all three together. Three directories would have tripled twenty-three files with one shared host and no composition seam (`composition/` is for specs that compose a component with another, not for a unit that cannot be mounted alone). So: one `field` dir, matrix `component` `SJField`, scenarios named by the contract they exercise, contract fixtures kept per contract (`field/<f>`, `input/<f>`, `form/<f>`). SJForm has no stylesheet by design (C02.b); there is no SJForm visual scene. Consequence for CI: `scripts/e2e-components.mjs` narrows only on `specs/field/`, `*/src/field/` and `field.contract.json`; a change confined to `input` or `form` files runs every component (the safe direction).
+
+### What runs
+
+- **L2 matrix**, 30 scenarios x 3 adapters x 3 engines x 2 paths (`native`, `fallback:all`) = 540 executed cells, parity PASS: 7560 cells, 540 executed (540 passed), 2700 not-applicable (ten single-key paths, with reasons), 4320 not run (floor lanes and devices, with reasons), 0 missing.
+- **Kinds from the contract, not the core table.** `matrix.ts` derives every ADR-007 expectation (`expectedAttrs`, `expectedHints`) from `kinds.contract.json` and the rendered control is compared with it: type, inputmode, autocomplete, autocapitalize, autocorrect, spellcheck, enterkeyhint, tag, no `maxlength`, `type=number` only for `quantity`. 30 kinds plus 23 flag cases (variant, digits, section, tokens, meaningful, uppercase). `choice` is SJSelect's (C10) and is left out by name; `country` runs as its text variant.
+- **Enter hints**: owner order, overrides (url go, search, otp/cc-csc done), `enter` send/search/go, `submits:false`, textarea exclusion, late-mounted fields (end and middle), reordered fields (four permutations, DOM order checked), data-first list wins over DOM order. OTP: owner `autoSubmit` final inside a form (five combinations, including a contradicting own prop), own `autoSubmit` standalone and in a field without a form.
+- **`enter` vs native `action`/`method`**: `action="send"` with `enter="search"` and the mirror case; the attributes reach the `<form>`, no `enter` attribute leaks, no `novalidate`. A real Enter key press submits and a real GET lands on `/echo`. The `<sj-form>` custom element is upgraded in place (`hydrate.e2e.ts`, `form.e2e.ts`).
+- **Form state equals bare native inputs** (`form.e2e.ts`, 3 scenes x 10 operation sequences x 3 adapters x 3 engines, plus the `L2` rows): FormData, value, defaultValue, `value` attribute, required, disabled, validity, `:invalid`, query string, after fill, clear and `form.reset()`, plus a real submit.
+- **`:user-invalid`**: the two paths run different code, asserted on the page: `native` (real detection) leaves `data-touched` unset and `:user-invalid` paints; `fallback:all` sets `data-touched` and the `[data-touched]:invalid` rule paints (`uv-code-path`, and `expectMechanism` in every `uv-*`). Tab-through paints nothing, change and a failed submit paint, reset clears both. `fallback:all` on current Chromium is the stand-in for the Chromium 114-118 run (the component behaves from the `supports` map, not the UA string; the real 114 floor lane stays declared `not run`, ADR-013).
+- **3.3.7**: retained values offered across keys, deduplicated, never for password/otp/cc-csc, a tab-through (forward and back, six fields) keeps the value and retains no empty string.
+- **Announcement**: silent at mount (standing error, both with and without a region), once on the transition, silent on re-render, a changed text announces, the same text after the 1 s window announces again; the error has no `role`/`aria-live`; the icon part and its svg are `aria-hidden`, the description is the words exactly (Playwright algorithm on three engines, CDP AX tree on Chromium), no `::before/::after` content.
+- **Derived ARIA**: ids, `for`, `aria-describedby` order (hint, error), `aria-invalid` only while an error shows (never `"false"`, whitespace is not an error), `aria-errormessage` only with `errorMessage` and only while invalid, native `required`/`disabled`/`name`, no `aria-required`.
+- **Hydration/SSR** (React, Vue): 6 fixtures, same nodes adopted, same ids and IDREFs, no live markup, data-first Enter position in the server markup, hydrated control behaves and resets to the server default. jsdom SSR determinism, cross-root collisions.
+- **a11y**: axe on 21 states x 3 adapters x 3 engines (target-size enabled), 2.4.13 on rest/invalid/textarea, 2.5.8 (24 px floor, 44 px design target, disabled keeps its size), contrast of label/hint/error/typed text 4.5:1 and rest/invalid border 3:1 with a thicker invalid border, forced colors, RTL. ARIA snapshots: 18 files (every contract fixture) shared by all adapters and engines, seeded regressions, CDP AX tree (Chromium).
+- **Bundle**: core field 0.758, form 0.777, input 0.920 KiB gzip (ceilings 3, 1.5, 3); together 2.46 KiB inside the field 3 KiB; adapter one-entry fixtures import only the field set, icon, runtime and generated code. **VoiceOver hook**: six `atAssertions` from the three contracts, two lanes, expected speech from the fixtures and the kinds contract. **Visual**: 17 scenes (candidates only, `baselines/` empty until human review).
+
+### Known limit: two fields announcing in one commit speak only the last text
+
+Known limit, documented and pinned by the scenario `field: two errors in one commit speak only the last (known limit)` (`announce-limit`): when two fields' errors appear in the same commit the live registry holds one pending text per role, so one of the two messages is spoken (which one depends on the adapter's effect order); both stay visible and both controls are `aria-invalid` and described by their own error. Fields that change one at a time each announce. A consumer-side summary or focus path is the mitigation (not part of the two SJForm duties, ADR-014). It is asserted, not hidden: the scenario fails if the behaviour changes either way.
+
+### Defects found and fixed
+
+1. **Vue SJField rendered the hint after the control** (`label, control, hint, error`), while React and vanilla render `label, hint, control, error` (the order the CSS fixtures and the React notes assume). Found by the shared ARIA snapshot failing on Vue only. Fixed in `packages/vue/src/field/SJField.ts` with a unit test for the child order.
+2. **`country` text variant lacked `inputmode="text"`**: the kinds contract note says "The text variant (type=text, inputmode=text) uses country-name" but the row had `inputmode: null`, so the rendered control had no inputmode. Fixed in `kinds.contract.json` (`inputmode: "text"`, `inputmodeWhen: "text variant"`), regenerated the table, and `resolveKind` now never emits `inputmode` for `type=select` (the default `country` is SJSelect's). Unit tests added in `kinds.test.ts`.
+
+### Test-harness findings (not component defects)
+
+- The vanilla live region is `<div role="status" class="sj-sr-only">` appended to `body` (no `data-sj-live`), the React and Vue one carries `data-sj-live`; the host observes `body > [role=status|alert]`, which both produce.
+- A Vue `<textarea>` has no default-value channel through SJInput (`value` is a DOM property, so `form.reset()` empties it); this is Vue, not SJ, and is why the textarea fixtures carry no default in the Vue-equivalence scene. React and vanilla reset to the default.
+- React writes `enterKeyHint` in server HTML; attribute names are case-insensitive.
+- Submission normalises textarea line breaks to CRLF; the host's `query()` does too so the comparison with the real navigation is exact.
+
+### Skips
+
+Only the CDP AX-tree tests (Chromium-only API) skip on Firefox and WebKit: 42 skipped, all `test.skip(browserName !== 'chromium', ...)` carrying `#49` and owner `SrRamos` (reused, as for checkbox).
+
+### Open questions
+
+- Disabled control text is `--color-text-disabled` (#cbd5e1) on `--color-surface-hover` (#f1f5f9), 1.36:1. WCAG 1.4.3 exempts inactive components, but AGENTS.md says text lighter than slate 500 on white "is not allowed for text". The suite pins today's 1.3:1 floor and the disabled label stays 4.5:1; whether the token should move is a design decision, not made here.
+- The 3.3.7 offers have no UI: the adapters expose `prior()`/`offers()` and nothing is auto-filled or rendered, so `manual-form-prior-values-offered` describes the consumer-built offer list. A shared offer part would be a new anatomy part (contract change).
+- Chromium 114-118 on real binaries remains the per-release floor lane; this PR evidences the code path, not the UA.

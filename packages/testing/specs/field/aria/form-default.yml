@@ -1,0 +1,5 @@
+- text: Email address
+- textbox "Email address"
+- text: Full name
+- textbox "Full name"
+- button "Send"

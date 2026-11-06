@@ -1,0 +1,3 @@
+- text: Email address We only use it to send receipts
+- textbox "Email address"
+- button "Send"

@@ -1,0 +1,3 @@
+- text: Note
+- textbox "Note" [disabled]
+- button "Send"
