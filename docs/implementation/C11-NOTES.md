@@ -73,3 +73,22 @@ Built `dist/state.css`: 4259 B raw, 1591 B gzip (1.55 KiB). ADR-011 gives no CSS
 
 - `.c/.d/.e` adapters must emit `data-variant` on every part and set the glyph via SJIcon with `data-spin` for loading. `.f` conformance should add the VoiceOver and NVDA evidence rows.
 - Issue #88: root class convention. This file follows the current emit.
+
+## W1-C11.c: SJState Vue adapter
+
+Branch `feature/m4-c11-state-vue`. Owned: `packages/vue/src/state/**` (`SJState.ts`, `index.ts`, `state.test.ts`), `packages/vue/src/index.ts` and `index.test.ts` (barrel line, as icon/checkbox did), this section. `vite.config.ts` and `package.json` already list the `state` entry.
+
+**Shared file touched:** none (`stateLive` comes from the per-package `generated/state/index`, #103).
+
+### Decisions
+
+- **Flat, stateless; no `useSJStore`.** SJState has no actions, so the only runtime work is the announcement. The component reads `useSJContext()` and, after mount, calls `ctx.requireLive?.()` when `stateLive === 'eager'` (the status region exists, empty, before its first message) and hands `getAnnouncement()` to `ctx.live.announce(text, { urgent })`. No `live:` literal anywhere.
+- **First announcement waits one `nextTick`.** Children mount before `SJProvider` attaches its host in its own `onMounted`, so an immediate announce would be dropped. Later changes use a `flush: 'post'` watcher keyed on `urgent+text`; the registry de-duplicates identical text.
+- **Politeness** comes from core: loading, no-results, error and `announce` go to polite `status`; `alert` only for `variant: 'error'` with `interrupt`. First-use and cleared are silent.
+- **No live markup in SSR**: the render function only uses core getters (role/aria-live/aria-atomic deleted); tested for all five variants, deterministic, no ids.
+- **Prop-or-slot** for heading (`title` slot), description (default slot), icon, actions; slots win. Empty parts are not rendered. `heading` prop, never `title`. Per-part `classes`: root, icon, title, description, actions.
+- **Outside a provider** `useSJContext` warns in development and the fallback registry is never attached, so the component stays silent (ADR-003).
+
+### Tests and bytes
+
+`state.test.ts` (13 tests): parts and data-variant on every part, three empty kinds distinct, unknown variant falls back to first-use, slots win, class merging, eager status region, polite loading and count (de-duplicated), silent first-use/cleared, alert only for interrupting error, no announce after unmount, SSR for five variants, source check (no literal, no innerHTML), 1,000 mount/destroy leaves no DOM and no host callbacks. Bytes: see the PR body (size harness row for adapters).
