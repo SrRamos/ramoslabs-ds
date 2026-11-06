@@ -413,23 +413,23 @@ const copyToken = async () => {
 }
 
 .token-picker__contrast-badge--aaa {
-  background: var(--color-green-100);
-  color: var(--color-green-800);
+  background: var(--color-success-surface-hover);
+  color: var(--color-success-text);
 }
 
 .token-picker__contrast-badge--aa {
-  background: var(--color-emerald-100);
-  color: var(--color-emerald-700);
+  background: var(--color-success-surface);
+  color: var(--color-success-text);
 }
 
 .token-picker__contrast-badge--aa-large {
-  background: var(--color-amber-100);
-  color: var(--color-amber-800);
+  background: var(--color-warning-surface-hover);
+  color: var(--color-warning-text);
 }
 
 .token-picker__contrast-badge--fail {
-  background: var(--color-red-100);
-  color: var(--color-red-600);
+  background: var(--color-error-surface-hover);
+  color: var(--color-error-text);
 }
 
 .token-picker__copy {
@@ -464,7 +464,7 @@ const copyToken = async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-green-500);
+  color: var(--color-success-text);
 }
 
 .token-picker__toast {
@@ -484,7 +484,7 @@ const copyToken = async () => {
 }
 
 .token-picker__toast svg {
-  color: var(--color-green-500);
+  color: var(--color-success-text-dark);
 }
 
 /* Transitions */
@@ -564,26 +564,26 @@ const copyToken = async () => {
 
 .dark .token-picker__contrast-badge--aaa,
 :global([data-theme='dark']) .token-picker__contrast-badge--aaa {
-  background: var(--color-green-950);
-  color: var(--color-green-400);
+  background: var(--color-success-surface-dark);
+  color: var(--color-success-text-dark);
 }
 
 .dark .token-picker__contrast-badge--aa,
 :global([data-theme='dark']) .token-picker__contrast-badge--aa {
-  background: var(--color-emerald-900);
-  color: var(--color-emerald-400);
+  background: var(--color-success-surface-hover-dark);
+  color: var(--color-success-text-strong-dark);
 }
 
 .dark .token-picker__contrast-badge--aa-large,
 :global([data-theme='dark']) .token-picker__contrast-badge--aa-large {
-  background: var(--color-amber-950);
-  color: var(--color-amber-400);
+  background: var(--color-warning-surface-dark);
+  color: var(--color-honey-300);
 }
 
 .dark .token-picker__contrast-badge--fail,
 :global([data-theme='dark']) .token-picker__contrast-badge--fail {
-  background: var(--color-red-950);
-  color: var(--color-red-400);
+  background: var(--color-error-surface-dark);
+  color: var(--color-error-text-dark);
 }
 
 .dark .token-picker__copy,

@@ -114,7 +114,7 @@ const copyToClipboard = async () => {
   display: flex;
   align-items: center;
   gap: 0.375rem;
-  color: #22c55e;
+  color: var(--color-success-text-dark);
 }
 
 .code-block__copy-text {
@@ -138,12 +138,12 @@ const copyToClipboard = async () => {
 
 /* Syntax highlighting classes */
 :deep(.comment) { color: #64748b; font-style: italic; }
-:deep(.selector) { color: #fbbf24; }
+:deep(.selector) { color: var(--color-honey-300); }
 :deep(.property) { color: #7dd3fc; }
 :deep(.value) { color: #a5f3fc; }
 :deep(.punctuation) { color: #94a3b8; }
 :deep(.keyword) { color: #c084fc; }
-:deep(.string) { color: #86efac; }
+:deep(.string) { color: var(--color-jade-300); }
 :deep(.function) { color: #f472b6; }
 :deep(.number) { color: #fb923c; }
 </style>

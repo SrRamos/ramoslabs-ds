@@ -49,15 +49,36 @@ const preview: Preview = {
       container: DocsContainer,
     },
   },
+  // Theme toolbar: components switch to their dark rules under any
+  // [data-theme='dark'] ancestor, so the decorator sets it on <html>.
+  globalTypes: {
+    theme: {
+      description: 'Colour theme for component stories',
+      toolbar: {
+        title: 'Theme',
+        icon: 'mirror',
+        items: [
+          { value: 'light', title: 'Light' },
+          { value: 'dark', title: 'Dark' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    theme: 'light',
+  },
   decorators: [
-    (story) => {
-      document.documentElement.setAttribute('data-theme', 'light');
-      document.body.style.backgroundColor = '#f8fafc';
+    (story, context) => {
+      const theme = context.globals.theme === 'dark' ? 'dark' : 'light';
+      const background = theme === 'dark' ? 'var(--color-background-dark)' : 'var(--color-background)';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.body.style.backgroundColor = background;
 
       return {
         components: { story },
         template: `
-          <div class="sb-main-wrapper" style="background-color: #f8fafc; min-height: 100vh; padding: 1rem;">
+          <div class="sb-main-wrapper" style="background-color: ${background}; font-family: var(--font-family-sans); min-height: 100vh; padding: 1rem;">
             <story />
           </div>
         `,

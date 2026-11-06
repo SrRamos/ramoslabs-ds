@@ -82,20 +82,20 @@ export const Default: Story = {
       { name: 'Primary', token: '--color-primary', value: '#4f46e5' },
       { name: 'Primary Light', token: '--color-primary-light', value: '#6366f1' },
       { name: 'Primary Dark', token: '--color-primary-dark', value: '#4338ca' },
-      { name: 'Secondary', token: '--color-secondary', value: '#8B5CF6' },
+      { name: 'Secondary', token: '--color-secondary', value: '#8b5cf6' },
       // Text
       { name: 'Heading', token: '--color-text-heading', value: '#0f172a' },
-      { name: 'Body', token: '--color-text-body', value: '#64748b' },
+      { name: 'Body', token: '--color-text-body', value: '#334155' },
       { name: 'Muted', token: '--color-text-muted', value: '#64748b' },
       // Surface
       { name: 'Surface', token: '--color-surface', value: '#ffffff' },
       { name: 'Background', token: '--color-background', value: '#f8fafc' },
-      { name: 'Border', token: '--color-border', value: '#e6e8eb' },
+      { name: 'Border', token: '--color-border', value: '#e2e8f0' },
       // Semantic
-      { name: 'Success', token: '--color-success', value: '#10b981' },
-      { name: 'Warning', token: '--color-warning', value: '#f59e0b' },
-      { name: 'Error', token: '--color-error', value: '#ef4444' },
-      { name: 'Info', token: '--color-info', value: '#3b82f6' },
+      { name: 'Success', token: '--color-success', value: '#03734a' },
+      { name: 'Warning', token: '--color-warning', value: '#f8be52' },
+      { name: 'Error', token: '--color-error', value: '#ae212f' },
+      { name: 'Info', token: '--color-info', value: '#0065a1' },
     ],
   },
 };
@@ -107,7 +107,7 @@ export const BrandColors: Story = {
       { name: 'Primary', token: '--color-primary', value: '#4f46e5', description: 'Main brand color' },
       { name: 'Primary Light', token: '--color-primary-light', value: '#6366f1', description: 'Hover states' },
       { name: 'Primary Dark', token: '--color-primary-dark', value: '#4338ca', description: 'Pressed states' },
-      { name: 'Secondary', token: '--color-secondary', value: '#8B5CF6', description: 'Gradients, accents' },
+      { name: 'Secondary', token: '--color-secondary', value: '#8b5cf6', description: 'Gradients, accents' },
     ],
   },
 };
@@ -117,7 +117,7 @@ export const TextColors: Story = {
     title: 'Text Colors',
     colors: [
       { name: 'Heading', token: '--color-text-heading', value: '#0f172a', description: 'Headlines' },
-      { name: 'Body', token: '--color-text-body', value: '#64748b', description: 'Paragraphs' },
+      { name: 'Body', token: '--color-text-body', value: '#334155', description: 'Paragraphs' },
       { name: 'Muted', token: '--color-text-muted', value: '#64748b', description: 'Labels, hints' },
       { name: 'Disabled', token: '--color-text-disabled', value: '#cbd5e1', description: 'Disabled text' },
     ],
@@ -128,14 +128,14 @@ export const SemanticColors: Story = {
   args: {
     title: 'Semantic Colors',
     colors: [
-      { name: 'Success', token: '--color-success', value: '#10b981', description: 'Confirmations' },
-      { name: 'Success Surface', token: '--color-success-surface', value: '#f0fdf4', description: 'Success bg' },
-      { name: 'Warning', token: '--color-warning', value: '#f59e0b', description: 'Cautions' },
-      { name: 'Warning Surface', token: '--color-warning-surface', value: '#fffbeb', description: 'Warning bg' },
-      { name: 'Error', token: '--color-error', value: '#ef4444', description: 'Errors' },
-      { name: 'Error Surface', token: '--color-error-surface', value: '#fef2f2', description: 'Error bg' },
-      { name: 'Info', token: '--color-info', value: '#3b82f6', description: 'Information' },
-      { name: 'Info Surface', token: '--color-info-surface', value: '#eff6ff', description: 'Info bg' },
+      { name: 'Success', token: '--color-success', value: '#03734a', description: 'Confirmations' },
+      { name: 'Success Surface', token: '--color-success-surface', value: '#effaf3', description: 'Success bg' },
+      { name: 'Warning', token: '--color-warning', value: '#f8be52', description: 'Cautions' },
+      { name: 'Warning Surface', token: '--color-warning-surface', value: '#fcf6e9', description: 'Warning bg' },
+      { name: 'Error', token: '--color-error', value: '#ae212f', description: 'Errors' },
+      { name: 'Error Surface', token: '--color-error-surface', value: '#fff4f3', description: 'Error bg' },
+      { name: 'Info', token: '--color-info', value: '#0065a1', description: 'Information' },
+      { name: 'Info Surface', token: '--color-info-surface', value: '#f0f8ff', description: 'Info bg' },
     ],
   },
 };
@@ -146,7 +146,7 @@ export const SurfaceColors: Story = {
     colors: [
       { name: 'Surface', token: '--color-surface', value: '#ffffff', description: 'Cards, modals' },
       { name: 'Background', token: '--color-background', value: '#f8fafc', description: 'Page background' },
-      { name: 'Border', token: '--color-border', value: '#e6e8eb', description: 'Dividers, borders' },
+      { name: 'Border', token: '--color-border', value: '#e2e8f0', description: 'Dividers, borders' },
     ],
   },
 };

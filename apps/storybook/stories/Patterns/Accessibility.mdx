@@ -386,8 +386,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     color: #475569;
   }
   .a11y-pass {
-    background: #dcfce7;
-    color: #15803d;
+    background: var(--color-success-surface-hover);
+    color: var(--color-success-text);
     font-size: 0.5625rem;
     font-weight: 700;
     padding: 0.125rem 0.375rem;
@@ -578,9 +578,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     border-bottom: 1px solid #475569;
   }
   .a11y-code-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .a11y-code-dot.red { background: #ef4444; }
-  .a11y-code-dot.yellow { background: #f59e0b; }
-  .a11y-code-dot.green { background: #22c55e; }
+  .a11y-code-dot.red { background: var(--color-crimson-400); }
+  .a11y-code-dot.yellow { background: var(--color-honey-300); }
+  .a11y-code-dot.green { background: var(--color-jade-400); }
   .a11y-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
@@ -598,11 +598,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     overflow-x: auto;
   }
   .a11y-code .comment { color: #94a3b8; font-style: italic; }
-  .a11y-code .selector { color: #fbbf24; }
+  .a11y-code .selector { color: var(--color-honey-300); }
   .a11y-code .property { color: #7dd3fc; }
   .a11y-code .value { color: #a5f3fc; }
   .a11y-code .tag { color: #f472b6; }
-  .a11y-code .attr { color: #fbbf24; }
+  .a11y-code .attr { color: var(--color-honey-300); }
   .a11y-code .string { color: #a5f3fc; }
   .a11y-code .punctuation { color: #cbd5e1; }
 

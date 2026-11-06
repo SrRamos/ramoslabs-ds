@@ -97,3 +97,43 @@
     }
   }
 }
+
+@layer sj.state {
+  /* Dark surfaces: any ancestor with data-theme='dark'. Every colour swaps to its *-dark counterpart (4.5:1 on
+     slate 900 and 950); the error variant keeps the error hue. */
+  :where([data-theme='dark']) :is(.sj-state, .sj-state__root) {
+    color: var(--color-text-body-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__title {
+    color: var(--color-text-heading-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__description {
+    color: var(--color-text-secondary-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__icon[data-variant='first-use'] {
+    color: var(--color-primary-text-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__icon[data-variant='no-results'] {
+    color: var(--color-text-secondary-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__icon[data-variant='cleared'] {
+    color: var(--color-text-muted-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__icon[data-variant='loading'] {
+    color: var(--color-primary-text-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__icon[data-variant='error'] {
+    color: var(--color-error-text-dark);
+  }
+
+  :where([data-theme='dark']) .sj-state__title[data-variant='error'] {
+    color: var(--color-error-text-dark);
+  }
+}

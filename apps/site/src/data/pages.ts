@@ -206,7 +206,7 @@ export const pages: Page[] = [
     path: '/foundations/token-reference/',
     icon: 'tag',
     summary:
-      'How the 213 tokens are named, the two-tier primitive and semantic model, categories, and how to consume and author them',
+      'How every token is named, the two-tier primitive and semantic model, categories, and how to consume and author them',
     contentFile: 'foundations/TokenReference.md',
   },
   {

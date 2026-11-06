@@ -8,6 +8,10 @@
     "soft-ring": {
       "$value": "10%",
       "$description": "Strength of the 1px inner ring on a soft control (SJButton), mixed from the label color. A color-mix percentage."
+    },
+    "glow": {
+      "$value": "18%",
+      "$description": "Strength of the hover halo around a solid control (SJButton), mixed from the control's own fill (--_glow). A color-mix percentage; with indigo 500 it reproduces the former shadow.glow halo exactly."
     }
   },
   "gradient": {
@@ -15,6 +19,13 @@
     "sheen-stop": {
       "$value": "55%",
       "$description": "Where the sheen of a solid control fades out, measured from the top (SJButton)."
+    }
+  },
+  "glow": {
+    "$type": "dimension",
+    "width": {
+      "$value": "3px",
+      "$description": "Spread of the hover halo around a solid control (SJButton). The halo colour comes from the tone, so a status button never gets an indigo fringe."
     }
   }
 }

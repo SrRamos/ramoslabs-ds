@@ -1,5 +1,6 @@
 // @ts-check
-// Build-time contrast matrix (W1-203, ADR-009 "Contrast at build time", ADR-013). LIGHT THEME ONLY.
+// Build-time contrast matrix (W1-203, ADR-009 "Contrast at build time", ADR-013). Light theme, plus the
+// `[data-theme='dark']` rules of the built CSS checked against the dark surfaces.
 //
 // `RECIPE` is the canonical token pairing for the `variant x tone` axes of the library. Variant CSS
 // in the `sj.variant` layer must use exactly these tokens; the matrix proves, from the token source,
@@ -8,7 +9,7 @@
 //
 // Sizes: text color does not depend on size, so each pair is evaluated per size. All sizes are
 // treated as normal text (4.5:1); the large-text 3:1 allowance is deliberately not used.
-import { THRESHOLDS, contrastRatio } from './wcag.js';
+import { THRESHOLDS, compositeOver, contrastRatio } from './wcag.js';
 import { extractLayerUses, extractPairs, extractUiPairs } from './css.js';
 
 export const VARIANTS = ['solid', 'soft', 'outline', 'ghost', 'link'];
@@ -17,6 +18,9 @@ export const SIZES = ['xs', 'sm', 'md', 'lg'];
 
 /** Page surfaces a control can sit on (light theme). */
 export const SURFACES = ['color-surface', 'color-surface-secondary', 'color-background'];
+
+/** Dark page surfaces: every `[data-theme='dark']` colour is checked against both. */
+export const DARK_SURFACES = ['color-surface-dark', 'color-background-dark'];
 
 /**
  * `fg`: label/icon color. `bg`: fill the label sits on. `border`: the control outline when it is the
@@ -27,15 +31,15 @@ export const SURFACES = ['color-surface', 'color-surface-secondary', 'color-back
 export const RECIPE = {
   solid: {
     primary: { fg: 'color-white', bg: 'color-primary' },
-    neutral: { fg: 'color-white', bg: 'color-slate-900' },
-    success: { fg: 'color-white', bg: 'color-emerald-800' },
-    warning: { fg: 'color-slate-900', bg: 'color-amber-500' },
-    error: { fg: 'color-white', bg: 'color-red-700' },
-    info: { fg: 'color-white', bg: 'color-blue-700' },
+    neutral: { fg: 'color-neutral-on-solid', bg: 'color-neutral-solid' },
+    success: { fg: 'color-success-on-solid', bg: 'color-success-solid' },
+    warning: { fg: 'color-warning-on-solid', bg: 'color-warning-solid' },
+    error: { fg: 'color-error-on-solid', bg: 'color-error-solid' },
+    info: { fg: 'color-info-on-solid', bg: 'color-info-solid' },
   },
   soft: {
     primary: { fg: 'color-primary-dark', bg: 'color-primary-surface' },
-    neutral: { fg: 'color-text-body', bg: 'color-surface-hover' },
+    neutral: { fg: 'color-neutral-text', bg: 'color-neutral-surface' },
     success: { fg: 'color-success-text', bg: 'color-success-surface' },
     warning: { fg: 'color-warning-text', bg: 'color-warning-surface' },
     error: { fg: 'color-error-text', bg: 'color-error-surface' },
@@ -43,15 +47,15 @@ export const RECIPE = {
   },
   outline: {
     primary: { fg: 'color-primary', bg: 'transparent', border: 'color-primary' },
-    neutral: { fg: 'color-text-body', bg: 'transparent', border: 'color-text-muted' },
-    success: { fg: 'color-success-text', bg: 'transparent', border: 'color-success-text' },
-    warning: { fg: 'color-warning-text', bg: 'transparent', border: 'color-warning-text' },
-    error: { fg: 'color-error-text', bg: 'transparent', border: 'color-error-text' },
-    info: { fg: 'color-info-text', bg: 'transparent', border: 'color-info-text' },
+    neutral: { fg: 'color-neutral-text', bg: 'transparent', border: 'color-neutral-outline' },
+    success: { fg: 'color-success-text', bg: 'transparent', border: 'color-success-outline' },
+    warning: { fg: 'color-warning-text', bg: 'transparent', border: 'color-warning-outline' },
+    error: { fg: 'color-error-text', bg: 'transparent', border: 'color-error-outline' },
+    info: { fg: 'color-info-text', bg: 'transparent', border: 'color-info-outline' },
   },
   ghost: {
     primary: { fg: 'color-primary', bg: 'transparent' },
-    neutral: { fg: 'color-text-body', bg: 'transparent' },
+    neutral: { fg: 'color-neutral-text', bg: 'transparent' },
     success: { fg: 'color-success-text', bg: 'transparent' },
     warning: { fg: 'color-warning-text', bg: 'transparent' },
     error: { fg: 'color-error-text', bg: 'transparent' },
@@ -59,7 +63,7 @@ export const RECIPE = {
   },
   link: {
     primary: { fg: 'color-primary', bg: 'transparent' },
-    neutral: { fg: 'color-text-heading', bg: 'transparent' },
+    neutral: { fg: 'color-neutral-text-strong', bg: 'transparent' },
     success: { fg: 'color-success-text', bg: 'transparent' },
     warning: { fg: 'color-warning-text', bg: 'transparent' },
     error: { fg: 'color-error-text', bg: 'transparent' },
@@ -75,6 +79,61 @@ export const TEXT_ROLES = [
   'color-text-secondary',
   'color-text-muted',
 ];
+
+/** Text roles on dark surfaces. */
+export const TEXT_ROLES_DARK = [
+  'color-text-heading-dark',
+  'color-text-body-dark',
+  'color-text-secondary-dark',
+  'color-text-muted-dark',
+];
+
+/** Tones with a full semantic role set (status palette, docs/research/status-tones-2026.md). */
+export const STATUS_TONES = ['success', 'warning', 'error', 'info', 'neutral'];
+
+/**
+ * Every role pair of one status tone, light and dark, at token level (alerts, badges and field messages use
+ * them outside any component CSS). Solid labels are checked on the fill, on the lightest pixel of the 12%
+ * sheen (light and hover) and on the pressed fill; text on white-ish surfaces and on the tone's own soft
+ * fills; outlines at 3:1; the dark set on the dark surfaces and the dark soft fills.
+ * @param {string} t tone
+ * @returns {{ id: string, kind: 'text' | 'ui', fg: string, bg: string, sheen?: boolean }[]}
+ */
+export function statusRolePairs(t) {
+  const c = (/** @type {string} */ r) => `color-${t}-${r}`;
+  /** @type {{ id: string, kind: 'text' | 'ui', fg: string, bg: string, sheen?: boolean }[]} */
+  const out = [];
+  /** @type {(id: string, kind: 'text' | 'ui', fg: string, bg: string, sheen?: boolean) => number} */
+  const add = (id, kind, fg, bg, sheen = false) =>
+    out.push({ id: `status/${t}/${id}`, kind, fg, bg, sheen });
+  for (const [sfx, surfaces] of /** @type {const} */ ([
+    ['', SURFACES],
+    ['-dark', DARK_SURFACES],
+  ])) {
+    const solid = t === 'neutral' ? sfx : '';
+    add(`solid${sfx}`, 'text', c(`on-solid${solid}`), c(`solid${solid}`));
+    add(`solid${sfx}-sheen`, 'text', c(`on-solid${solid}`), c(`solid${solid}`), true);
+    add(`solid-hover${sfx}`, 'text', c(`on-solid${solid}`), c(`solid-hover${solid}`));
+    add(`solid-hover${sfx}-sheen`, 'text', c(`on-solid${solid}`), c(`solid-hover${solid}`), true);
+    add(`solid-press${sfx}`, 'text', c(`on-solid${solid}`), c(`solid-press${solid}`));
+    for (const bg of [
+      ...surfaces,
+      c(`surface${sfx}`),
+      c(`surface-hover${sfx}`),
+      c(`surface-press${sfx}`),
+    ])
+      add(`text${sfx}-on-${bg}`, 'text', c(`text${sfx}`), bg);
+    add(`text-strong${sfx}-on-surface`, 'text', c(`text-strong${sfx}`), c(`surface${sfx}`));
+    add(
+      `body${sfx}-on-surface`,
+      'text',
+      sfx ? 'color-text-body-dark' : 'color-text-body',
+      c(`surface${sfx}`),
+    );
+    for (const bg of surfaces) add(`outline${sfx}-on-${bg}`, 'ui', c(`outline${sfx}`), bg);
+  }
+  return out;
+}
 
 /** AGENTS.md: muted text is never lighter than slate 500 on white. */
 export const MUTED_FLOOR_TOKEN = 'color-slate-500';
@@ -161,15 +220,48 @@ export function checkContrastMatrix(tokens, options = {}) {
   // Colours declared in sj.component / sj.state (and toneless sj.variant) rules: text 4.5:1, border 3:1, on every surface.
   if (options.css)
     for (const u of extractLayerUses(options.css))
-      for (const s of SURFACES)
+      for (const s of u.theme === 'dark' ? DARK_SURFACES : SURFACES)
         add({
-          id: `${u.component}/${u.part}/${u.layer.replace('sj.', '')}/${u.prop === 'color' ? 'text' : 'border'}-on-${s}`,
+          id: `${u.theme === 'dark' ? 'dark/' : ''}${u.component}/${u.part}/${u.layer.replace('sj.', '')}/${u.prop === 'color' ? 'text' : 'border'}-on-${s}`,
           kind: u.prop === 'color' ? 'text' : 'ui',
           source: 'css',
           fg: u.token,
           bg: s,
           min: u.prop === 'color' ? THRESHOLDS.text : THRESHOLDS.ui,
         });
+
+  // Dark theme (G-dark): the built CSS read with its `[data-theme='dark']` rules, on the dark surfaces.
+  if (options.css) {
+    for (const p of extractPairs(options.css, { theme: 'dark' })) {
+      const state = p.state === 'rest' ? '' : `${p.state}/`;
+      const id = `dark/${p.component}/${p.variant}/${p.tone}/${state}`;
+      const surfaces = p.bg === 'transparent' ? DARK_SURFACES : p.bg ? [p.bg] : [];
+      if (p.fg && p.fg !== 'transparent')
+        for (const bg of surfaces)
+          add({
+            id: `${id}text${surfaces.length > 1 ? `-on-${bg}` : ''}`,
+            kind: 'text',
+            source: 'css',
+            variant: p.variant,
+            tone: p.tone,
+            fg: p.fg,
+            bg,
+            min: THRESHOLDS.text,
+          });
+      if (p.border && p.border !== 'transparent' && p.bg === 'transparent')
+        for (const s of DARK_SURFACES)
+          add({
+            id: `${id}border-on-${s}`,
+            kind: 'ui',
+            source: 'css',
+            variant: p.variant,
+            tone: p.tone,
+            fg: p.border,
+            bg: s,
+            min: THRESHOLDS.ui,
+          });
+    }
+  }
 
   for (const variant of VARIANTS) {
     for (const tone of TONES) {
@@ -214,6 +306,34 @@ export function checkContrastMatrix(tokens, options = {}) {
     for (const s of SURFACES)
       add({ id: `text/${role}-on-${s}`, kind: 'text', fg: role, bg: s, min: THRESHOLDS.text });
   }
+  for (const role of TEXT_ROLES_DARK)
+    for (const s of DARK_SURFACES)
+      add({ id: `text/${role}-on-${s}`, kind: 'text', fg: role, bg: s, min: THRESHOLDS.text });
+  // Status role pairs at token level. The sheen pairs composite white at --opacity-sheen over the fill.
+  const sheen = tokens['opacity-sheen'] ? Number.parseFloat(tokens['opacity-sheen']) / 100 : 0;
+  for (const t of STATUS_TONES)
+    for (const p of statusRolePairs(t)) {
+      const min = p.kind === 'text' ? THRESHOLDS.text : THRESHOLDS.ui;
+      if (!p.sheen) {
+        add({ id: p.id, kind: p.kind, tone: t, fg: p.fg, bg: p.bg, min });
+        continue;
+      }
+      const fgValue = value(p.fg);
+      const bgValue = compositeOver('#ffffff', sheen, value(p.bg));
+      const ratio = contrastRatio(fgValue, bgValue);
+      pairs.push({
+        id: p.id,
+        kind: 'text',
+        tone: t,
+        fg: p.fg,
+        bg: `${p.bg}+sheen`,
+        fgValue,
+        bgValue,
+        ratio,
+        min,
+        pass: Math.floor(ratio * 100) / 100 >= min,
+      });
+    }
   for (const s of SURFACES)
     add({ id: `focus/ring-on-${s}`, kind: 'focus', fg: 'color-focus', bg: s, min: THRESHOLDS.ui });
   // Muted floor: never lighter than slate 500 on white, even if the token is re-pointed.

@@ -1,4 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import tokens from '@ramoslabs/tokens/json';
+
+export const tokenCount = Object.keys(tokens).length;
 import { useEffect } from 'react';
 
 <Meta title="Foundations/Token Reference" />
@@ -34,14 +37,19 @@ export const CopySetup = () => {
 <CopySetup />
 
 export const ramps = {
-  indigo: [['50','#eef2ff'],['100','#e0e7ff'],['200','#c7d2fe'],['300','#a5b4fc'],['400','#818cf8'],['500','#6366f1'],['600','#4f46e5'],['700','#4338ca'],['800','#3730a3'],['900','#312e81'],['950','#1e1b4b']],
-  slate: [['50','#f8fafc'],['100','#f1f5f9'],['200','#e2e8f0'],['300','#cbd5e1'],['400','#94a3b8'],['500','#64748b'],['600','#475569'],['700','#334155'],['800','#1e293b'],['900','#0f172a'],['950','#020617']],
-  emerald: [['50','#ecfdf5'],['100','#d1fae5'],['200','#a7f3d0'],['300','#6ee7b7'],['400','#34d399'],['500','#10b981'],['600','#059669'],['700','#047857'],['800','#065f46'],['900','#064e3b'],['950','#022c22']],
-  green: [['50','#f0fdf4'],['100','#dcfce7'],['200','#bbf7d0'],['300','#86efac'],['400','#4ade80'],['500','#22c55e'],['600','#16a34a'],['700','#15803d'],['800','#166534'],['900','#14532d'],['950','#052e16']],
-  amber: [['50','#fffbeb'],['100','#fef3c7'],['200','#fde68a'],['300','#fcd34d'],['400','#fbbf24'],['500','#f59e0b'],['600','#d97706'],['700','#b45309'],['800','#92400e'],['900','#78350f'],['950','#451a03']],
-  red: [['50','#fef2f2'],['100','#fee2e2'],['200','#fecaca'],['300','#fca5a5'],['400','#f87171'],['500','#ef4444'],['600','#dc2626'],['700','#b91c1c'],['800','#991b1b'],['900','#7f1d1d'],['950','#450a0a']],
-  blue: [['50','#eff6ff'],['100','#dbeafe'],['200','#bfdbfe'],['300','#93c5fd'],['400','#60a5fa'],['500','#3b82f6'],['600','#2563eb'],['700','#1d4ed8'],['800','#1e40af'],['900','#1e3a8a'],['950','#172554']],
-  violet: [['50','#f5f3ff'],['100','#ede9fe'],['200','#ddd6fe'],['300','#c4b5fd'],['400','#a78bfa'],['500','#8b5cf6'],['600','#7c3aed'],['700','#6d28d9'],['800','#5b21b6'],['900','#4c1d95'],['950','#2e1065']],
+  indigo: [['50','#eef2ff','#0f172a'],['100','#e0e7ff','#0f172a'],['200','#c7d2fe','#0f172a'],['300','#a5b4fc','#0f172a'],['400','#818cf8','#0f172a'],['500','#6366f1','#ffffff'],['600','#4f46e5','#ffffff'],['700','#4338ca','#ffffff'],['800','#3730a3','#ffffff'],['900','#312e81','#ffffff'],['950','#1e1b4b','#ffffff']],
+  slate: [['50','#f8fafc','#0f172a'],['100','#f1f5f9','#0f172a'],['200','#e2e8f0','#0f172a'],['300','#cbd5e1','#0f172a'],['400','#94a3b8','#0f172a'],['500','#64748b','#ffffff'],['600','#475569','#ffffff'],['700','#334155','#ffffff'],['800','#1e293b','#ffffff'],['900','#0f172a','#ffffff'],['950','#020617','#ffffff']],
+  ink: [['50','#f6f6fb','#0f172a'],['100','#ecedf5','#0f172a'],['200','#e1e3ed','#0f172a'],['300','#d1d3e0','#0f172a'],['400','#8e91a2','#0f172a'],['500','#6d7083','#ffffff'],['600','#56596e','#ffffff'],['700','#42465b','#ffffff'],['800','#303448','#ffffff'],['900','#222538','#ffffff'],['950','#151829','#ffffff']],
+  jade: [['50','#effaf3','#0f172a'],['100','#e1f3e8','#0f172a'],['200','#cce8d7','#0f172a'],['300','#7ed3a7','#0f172a'],['400','#3f9a6f','#0f172a'],['500','#03734a','#ffffff'],['600','#006641','#ffffff'],['700','#005636','#ffffff'],['800','#1c422f','#ffffff'],['900','#153424','#ffffff'],['950','#0e271b','#ffffff']],
+  honey: [['50','#fcf6e9','#0f172a'],['100','#f8edd5','#0f172a'],['200','#f3ddb3','#0f172a'],['300','#f8be52','#0f172a'],['400','#efb146','#0f172a'],['500','#e4a038','#0f172a'],['600','#b66c18','#0f172a'],['700','#8d4908','#ffffff'],['800','#723606','#ffffff'],['900','#442911','#ffffff'],['950','#331d0b','#ffffff']],
+  crimson: [['50','#fff4f3','#0f172a'],['100','#ffe7e6','#0f172a'],['200','#ffd4d1','#0f172a'],['300','#ffa09c','#0f172a'],['400','#db5054','#0f172a'],['500','#ae212f','#ffffff'],['600','#9e1326','#ffffff'],['700','#89061d','#ffffff'],['800','#5f2324','#ffffff'],['900','#4b1b1b','#ffffff'],['950','#3b1313','#ffffff']],
+  cerulean: [['50','#f0f8ff','#0f172a'],['100','#e0f0ff','#0f172a'],['200','#c9e3fb','#0f172a'],['300','#80c5ff','#0f172a'],['400','#348dcf','#0f172a'],['500','#0065a1','#ffffff'],['600','#00598f','#ffffff'],['700','#004b7a','#ffffff'],['800','#183c59','#ffffff'],['900','#122f46','#ffffff'],['950','#0c2436','#ffffff']],
+  violet: [['50','#f5f3ff','#0f172a'],['100','#ede9fe','#0f172a'],['200','#ddd6fe','#0f172a'],['300','#c4b5fd','#0f172a'],['400','#a78bfa','#0f172a'],['500','#8b5cf6','#ffffff'],['600','#7c3aed','#ffffff'],['700','#6d28d9','#ffffff'],['800','#5b21b6','#ffffff'],['900','#4c1d95','#ffffff'],['950','#2e1065','#ffffff']],
+  emerald: [['50','#ecfdf5','#0f172a'],['100','#d1fae5','#0f172a'],['200','#a7f3d0','#0f172a'],['300','#6ee7b7','#0f172a'],['400','#34d399','#0f172a'],['500','#10b981','#0f172a'],['600','#059669','#0f172a'],['700','#047857','#ffffff'],['800','#065f46','#ffffff'],['900','#064e3b','#ffffff'],['950','#022c22','#ffffff']],
+  green: [['50','#f0fdf4','#0f172a'],['100','#dcfce7','#0f172a'],['200','#bbf7d0','#0f172a'],['300','#86efac','#0f172a'],['400','#4ade80','#0f172a'],['500','#22c55e','#0f172a'],['600','#16a34a','#0f172a'],['700','#15803d','#ffffff'],['800','#166534','#ffffff'],['900','#14532d','#ffffff'],['950','#052e16','#ffffff']],
+  amber: [['50','#fffbeb','#0f172a'],['100','#fef3c7','#0f172a'],['200','#fde68a','#0f172a'],['300','#fcd34d','#0f172a'],['400','#fbbf24','#0f172a'],['500','#f59e0b','#0f172a'],['600','#d97706','#0f172a'],['700','#b45309','#ffffff'],['800','#92400e','#ffffff'],['900','#78350f','#ffffff'],['950','#451a03','#ffffff']],
+  red: [['50','#fef2f2','#0f172a'],['100','#fee2e2','#0f172a'],['200','#fecaca','#0f172a'],['300','#fca5a5','#0f172a'],['400','#f87171','#0f172a'],['500','#ef4444','#0f172a'],['600','#dc2626','#ffffff'],['700','#b91c1c','#ffffff'],['800','#991b1b','#ffffff'],['900','#7f1d1d','#ffffff'],['950','#450a0a','#ffffff']],
+  blue: [['50','#eff6ff','#0f172a'],['100','#dbeafe','#0f172a'],['200','#bfdbfe','#0f172a'],['300','#93c5fd','#0f172a'],['400','#60a5fa','#0f172a'],['500','#3b82f6','#0f172a'],['600','#2563eb','#ffffff'],['700','#1d4ed8','#ffffff'],['800','#1e40af','#ffffff'],['900','#1e3a8a','#ffffff'],['950','#172554','#ffffff']],
 };
 
 export const Ramp = ({ name }) => (
@@ -51,14 +59,13 @@ export const Ramp = ({ name }) => (
       <code className="palette-pattern">--color-{name}-50 … 950</code>
     </div>
     <div className="palette-strip">
-      {ramps[name].map(([shade, hex]) => {
-        const dark = Number(shade) <= 400;
+      {ramps[name].map(([shade, hex, fg]) => {
         return (
           <button
             key={shade}
             className="swatch"
             data-token={`--color-${name}-${shade}`}
-            style={{ background: hex, color: dark ? '#0f172a' : '#ffffff', border: shade === '50' ? '1px solid #e2e8f0' : 'none' }}
+            style={{ background: hex, color: fg, border: shade === '50' ? '1px solid #e2e8f0' : 'none' }}
           >
             <span className="swatch-shade">{shade}</span>
             <span className="swatch-hex">{hex}</span>
@@ -728,7 +735,7 @@ export const Ramp = ({ name }) => (
     <p className="tr-hero-eyebrow">Foundations / Tokens</p>
     <h1>Every design decision, named once</h1>
     <p>
-      A token is the smallest unit of the language: <strong>one color, one step of space, one shadow</strong>, authored as data and published to CSS and TypeScript from a single source. This is the canonical list of all 213, and the two-tier system that generates them. Click any token to copy its <span className="tr-hero-code">var(...)</span> reference.
+      A token is the smallest unit of the language: <strong>one color, one step of space, one shadow</strong>, authored as data and published to CSS and TypeScript from a single source. This is the canonical list of all {tokenCount}, and the two-tier system that generates them. Click any token to copy its <span className="tr-hero-code">var(...)</span> reference.
     </p>
   </div>
 
@@ -750,7 +757,7 @@ export const Ramp = ({ name }) => (
 
 <div className="quick-ref">
   <div className="quick-ref-item">
-    <div className="quick-ref-value">213</div>
+    <div className="quick-ref-value">{tokenCount}</div>
     <div className="quick-ref-label">Total Tokens</div>
   </div>
   <div className="quick-ref-item">
@@ -818,17 +825,25 @@ export const Ramp = ({ name }) => (
 <div className="token-ref-section" id="primitives">
   <h2 className="token-ref-section-title"><span className="material-symbols-outlined">palette</span> Tier 1: Primitive Palette</h2>
   <p className="token-ref-lede">
-    The raw material. These ramps are Tailwind CSS’s open-source (MIT) default palette, adopted hex-for-hex as the primitive layer; what this system owns sits on top, the mono-indigo constraint and the semantic mapping. Indigo is the brand ramp and the single action accent of the whole system. Slate carries text, surfaces, and borders. The four status ramps, emerald and green for success, amber for warning, red for error, blue for info, feed the feedback tokens. Violet backs the secondary role, a decorative accent only, never for action. Click any shade to copy its variable.
+    The raw material. Indigo, slate and violet are Tailwind CSS’s open-source (MIT) default ramps, adopted hex-for-hex; ink, jade, honey, crimson and cerulean are this system’s own, authored in OKLCH so the status hues share one lightness with the brand (the Harmonic palette, see docs/research/status-tones-2026.md). Indigo is the brand ramp and the single action accent. Slate carries text, surfaces and borders; ink is the indigo-tinted neutral behind the neutral tone. Jade, honey, crimson and cerulean feed success, warning, error and info. Violet backs the secondary role, a decorative accent only, never for action. Emerald, green, amber, red and blue are deprecated: still published so nothing breaks, used by no role, and removed in a future major. Click any shade to copy its variable.
   </p>
 
   <Ramp name="indigo" />
   <Ramp name="slate" />
+  <Ramp name="ink" />
+  <Ramp name="jade" />
+  <Ramp name="honey" />
+  <Ramp name="crimson" />
+  <Ramp name="cerulean" />
+  <Ramp name="violet" />
+
+  <p className="token-ref-lede">Deprecated, kept for compatibility. No role uses them.</p>
+
   <Ramp name="emerald" />
   <Ramp name="green" />
   <Ramp name="amber" />
   <Ramp name="red" />
   <Ramp name="blue" />
-  <Ramp name="violet" />
 
   <table className="token-table" style={{ marginTop: '1.25rem' }}>
     <thead>
@@ -863,13 +878,13 @@ export const Ramp = ({ name }) => (
         <tbody>
           {[
             ['--color-primary', '#4f46e5', 'indigo 600, the single accent'],
-            ['--color-primary-light', '#6366f1', 'indigo 500'],
-            ['--color-primary-dark', '#4338ca', 'indigo 700'],
+            ['--color-primary-light', '#6366f1', 'indigo 500, light'],
+            ['--color-primary-dark', '#4338ca', 'indigo 700, dark'],
             ['--color-primary-surface', '#eef2ff', 'indigo 50, tinted fill'],
-            ['--color-secondary', '#8b5cf6', 'violet 500'],
-            ['--color-secondary-light', '#a78bfa', 'violet 400'],
-            ['--color-secondary-dark', '#7c3aed', 'violet 600'],
-            ['--color-secondary-surface', '#f5f3ff', 'violet 50, tinted fill'],
+            ['--color-secondary', '#8b5cf6', 'violet 500, decorative only'],
+            ['--color-secondary-light', '#a78bfa', 'violet 400, secondary light'],
+            ['--color-secondary-dark', '#7c3aed', 'violet 600, secondary (dark)'],
+            ['--color-secondary-surface', '#f5f3ff', 'violet 50, secondary surface'],
           ].map(([name, hex, role]) => (
             <tr key={name}>
               <td><div className="color-dot" style={{ background: hex, border: hex === '#eef2ff' || hex === '#f5f3ff' ? '1px solid #e2e8f0' : 'none' }}></div></td>
@@ -888,9 +903,9 @@ export const Ramp = ({ name }) => (
             ['--color-text-heading', '#0f172a', 'slate 900, headings'],
             ['--color-text-strong', '#1e293b', 'slate 800, emphasis'],
             ['--color-text-secondary', '#475569', 'slate 600, supporting'],
-            ['--color-text-body', '#64748b', 'slate 500, body copy'],
-            ['--color-text-muted', '#64748b', 'slate 500, muted'],
-            ['--color-text-disabled', '#cbd5e1', 'slate 300, disabled'],
+            ['--color-text-body', '#334155', 'slate 700, body copy'],
+            ['--color-text-muted', '#64748b', 'slate 500, muted, the floor on white'],
+            ['--color-text-disabled', '#cbd5e1', 'slate 300, disabled, exempt from 1.4.3'],
           ].map(([name, hex, role]) => (
             <tr key={name}>
               <td><div className="color-dot" style={{ background: hex }}></div></td>
@@ -906,11 +921,11 @@ export const Ramp = ({ name }) => (
         <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
-            ['--color-surface', '#ffffff', 'cards, panels'],
+            ['--color-surface', '#ffffff', 'white, cards, panels'],
             ['--color-surface-secondary', '#f8fafc', 'slate 50, sunken fill'],
             ['--color-surface-hover', '#f1f5f9', 'slate 100, hover fill'],
             ['--color-background', '#f8fafc', 'slate 50, page canvas'],
-            ['--color-border', '#e6e8eb', 'default divider'],
+            ['--color-border', '#e2e8f0', 'slate 200, default divider'],
             ['--color-border-light', '#e2e8f0', 'slate 200, soft divider'],
             ['--color-border-subtle', '#f1f5f9', 'slate 100, hairline'],
             ['--color-focus', '#4f46e5', 'indigo 600, focus ring'],
@@ -938,26 +953,156 @@ export const Ramp = ({ name }) => (
         <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
         <tbody>
           {[
-            ['--color-success', '#10b981', 'emerald 500'],
-            ['--color-success-strong', '#059669', 'emerald 600, AA fill for a white glyph'],
-            ['--color-success-surface', '#f0fdf4', 'green 50, fill'],
-            ['--color-success-border', '#bbf7d0', 'green 200'],
-            ['--color-success-text', '#166534', 'green 800, on-surface text'],
-            ['--color-warning', '#f59e0b', 'amber 500'],
-            ['--color-warning-surface', '#fffbeb', 'amber 50, fill'],
-            ['--color-warning-border', '#fde68a', 'amber 200'],
-            ['--color-warning-text', '#78350f', 'amber 900, on-surface text'],
-            ['--color-error', '#ef4444', 'red 500'],
-            ['--color-error-strong', '#dc2626', 'red 600, AA fill for white text'],
-            ['--color-error-surface', '#fef2f2', 'red 50, fill'],
-            ['--color-error-border', '#fecaca', 'red 200'],
-            ['--color-error-text', '#991b1b', 'red 800, on-surface text'],
-            ['--color-info', '#3b82f6', 'blue 500'],
-            ['--color-info-surface', '#eff6ff', 'blue 50, fill'],
-            ['--color-info-border', '#bfdbfe', 'blue 200'],
-            ['--color-info-text', '#1e40af', 'blue 800, on-surface text'],
+            ['--color-success', '#03734a', 'jade 500, hue'],
+            ['--color-success-strong', '#006641', 'jade 600, strong'],
+            ['--color-success-solid', '#03734a', 'jade 500, solid'],
+            ['--color-success-solid-hover', '#006641', 'jade 600, solid hover'],
+            ['--color-success-solid-press', '#005636', 'jade 700, solid press'],
+            ['--color-success-on-solid', '#ffffff', 'white, on solid'],
+            ['--color-success-surface', '#effaf3', 'jade 50, surface'],
+            ['--color-success-surface-hover', '#e1f3e8', 'jade 100, surface hover'],
+            ['--color-success-surface-press', '#cce8d7', 'jade 200, surface press'],
+            ['--color-success-border', '#cce8d7', 'jade 200, border'],
+            ['--color-success-text', '#006641', 'jade 600, text'],
+            ['--color-success-text-strong', '#005636', 'jade 700, text strong'],
+            ['--color-success-outline', '#3f9a6f', 'jade 400, outline'],
+            ['--color-warning', '#f8be52', 'honey 300, hue'],
+            ['--color-warning-strong', '#b66c18', 'honey 600, strong'],
+            ['--color-warning-solid', '#f8be52', 'honey 300, solid'],
+            ['--color-warning-solid-hover', '#efb146', 'honey 400, solid hover'],
+            ['--color-warning-solid-press', '#e4a038', 'honey 500, solid press'],
+            ['--color-warning-on-solid', '#331d0b', 'honey 950, on solid'],
+            ['--color-warning-surface', '#fcf6e9', 'honey 50, surface'],
+            ['--color-warning-surface-hover', '#f8edd5', 'honey 100, surface hover'],
+            ['--color-warning-surface-press', '#f3ddb3', 'honey 200, surface press'],
+            ['--color-warning-border', '#f3ddb3', 'honey 200, border'],
+            ['--color-warning-text', '#8d4908', 'honey 700, text'],
+            ['--color-warning-text-strong', '#723606', 'honey 800, text strong'],
+            ['--color-warning-outline', '#b66c18', 'honey 600, outline'],
+            ['--color-error', '#ae212f', 'crimson 500, hue'],
+            ['--color-error-strong', '#9e1326', 'crimson 600, strong'],
+            ['--color-error-solid', '#ae212f', 'crimson 500, solid'],
+            ['--color-error-solid-hover', '#9e1326', 'crimson 600, solid hover'],
+            ['--color-error-solid-press', '#89061d', 'crimson 700, solid press'],
+            ['--color-error-on-solid', '#ffffff', 'white, on solid'],
+            ['--color-error-surface', '#fff4f3', 'crimson 50, surface'],
+            ['--color-error-surface-hover', '#ffe7e6', 'crimson 100, surface hover'],
+            ['--color-error-surface-press', '#ffd4d1', 'crimson 200, surface press'],
+            ['--color-error-border', '#ffd4d1', 'crimson 200, border'],
+            ['--color-error-text', '#9e1326', 'crimson 600, text'],
+            ['--color-error-text-strong', '#89061d', 'crimson 700, text strong'],
+            ['--color-error-outline', '#db5054', 'crimson 400, outline'],
+            ['--color-info', '#0065a1', 'cerulean 500, hue'],
+            ['--color-info-strong', '#00598f', 'cerulean 600, strong'],
+            ['--color-info-solid', '#0065a1', 'cerulean 500, solid'],
+            ['--color-info-solid-hover', '#00598f', 'cerulean 600, solid hover'],
+            ['--color-info-solid-press', '#004b7a', 'cerulean 700, solid press'],
+            ['--color-info-on-solid', '#ffffff', 'white, on solid'],
+            ['--color-info-surface', '#f0f8ff', 'cerulean 50, surface'],
+            ['--color-info-surface-hover', '#e0f0ff', 'cerulean 100, surface hover'],
+            ['--color-info-surface-press', '#c9e3fb', 'cerulean 200, surface press'],
+            ['--color-info-border', '#c9e3fb', 'cerulean 200, border'],
+            ['--color-info-text', '#00598f', 'cerulean 600, text'],
+            ['--color-info-text-strong', '#004b7a', 'cerulean 700, text strong'],
+            ['--color-info-outline', '#348dcf', 'cerulean 400, outline'],
           ].map(([name, hex, role]) => (
             <tr key={name}>
+              <td><div className="color-dot" style={{ background: hex, border: '1px solid #e2e8f0' }}></div></td>
+              <td><span className="token-name" data-token={name}>{name}</span></td>
+              <td><span className="token-value">{hex}</span><div className="token-description">{role}</div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '0.9375rem', color: '#0f172a', marginTop: '2rem', marginBottom: '0.75rem' }}>Neutral tone</h3>
+      <table className="token-table">
+        <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--color-neutral-solid', '#222538', 'ink 900, solid'],
+            ['--color-neutral-solid-hover', '#303448', 'ink 800, solid hover'],
+            ['--color-neutral-solid-press', '#151829', 'ink 950, solid press'],
+            ['--color-neutral-on-solid', '#ffffff', 'white, on solid'],
+            ['--color-neutral-surface', '#f6f6fb', 'ink 50, surface'],
+            ['--color-neutral-surface-hover', '#ecedf5', 'ink 100, surface hover'],
+            ['--color-neutral-surface-press', '#e1e3ed', 'ink 200, surface press'],
+            ['--color-neutral-border', '#d1d3e0', 'ink 300, border'],
+            ['--color-neutral-text', '#42465b', 'ink 700, text'],
+            ['--color-neutral-text-strong', '#303448', 'ink 800, text strong'],
+            ['--color-neutral-outline', '#6d7083', 'ink 500, outline'],
+          ].map(([name, hex, role]) => (
+            <tr>
+              <td><div className="color-dot" style={{ background: hex, border: '1px solid #e2e8f0' }}></div></td>
+              <td><span className="token-name" data-token={name}>{name}</span></td>
+              <td><span className="token-value">{hex}</span><div className="token-description">{role}</div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '0.9375rem', color: '#0f172a', marginTop: '2rem', marginBottom: '0.75rem' }}>Dark theme</h3>
+      <table className="token-table">
+        <thead><tr><th>Preview</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          {[
+            ['--color-primary-text-dark', '#818cf8', 'indigo 400, text (dark)'],
+            ['--color-primary-text-strong-dark', '#a5b4fc', 'indigo 300, text strong (dark)'],
+            ['--color-primary-outline-dark', '#818cf8', 'indigo 400, outline (dark)'],
+            ['--color-primary-surface-dark', '#1e1b4b', 'indigo 950, surface (dark)'],
+            ['--color-primary-surface-hover-dark', '#312e81', 'indigo 900, surface hover (dark)'],
+            ['--color-primary-surface-press-dark', '#3730a3', 'indigo 800, surface press (dark)'],
+            ['--color-success-text-dark', '#7ed3a7', 'jade 300, text (dark)'],
+            ['--color-success-text-strong-dark', '#cce8d7', 'jade 200, text strong (dark)'],
+            ['--color-success-outline-dark', '#3f9a6f', 'jade 400, outline (dark)'],
+            ['--color-success-surface-dark', '#0e271b', 'jade 950, surface (dark)'],
+            ['--color-success-surface-hover-dark', '#153424', 'jade 900, surface hover (dark)'],
+            ['--color-success-surface-press-dark', '#1c422f', 'jade 800, surface press (dark)'],
+            ['--color-success-border-dark', '#1c422f', 'jade 800, border (dark)'],
+            ['--color-warning-text-dark', '#f8be52', 'honey 300, text (dark)'],
+            ['--color-warning-text-strong-dark', '#f3ddb3', 'honey 200, text strong (dark)'],
+            ['--color-warning-outline-dark', '#b66c18', 'honey 600, outline (dark)'],
+            ['--color-warning-surface-dark', '#331d0b', 'honey 950, surface (dark)'],
+            ['--color-warning-surface-hover-dark', '#442911', 'honey 900, surface hover (dark)'],
+            ['--color-warning-surface-press-dark', '#442911', 'honey 900, surface press (dark)'],
+            ['--color-warning-border-dark', '#442911', 'honey 900, border (dark)'],
+            ['--color-error-text-dark', '#ffa09c', 'crimson 300, text (dark)'],
+            ['--color-error-text-strong-dark', '#ffd4d1', 'crimson 200, text strong (dark)'],
+            ['--color-error-outline-dark', '#db5054', 'crimson 400, outline (dark)'],
+            ['--color-error-surface-dark', '#3b1313', 'crimson 950, surface (dark)'],
+            ['--color-error-surface-hover-dark', '#4b1b1b', 'crimson 900, surface hover (dark)'],
+            ['--color-error-surface-press-dark', '#5f2324', 'crimson 800, surface press (dark)'],
+            ['--color-error-border-dark', '#5f2324', 'crimson 800, border (dark)'],
+            ['--color-info-text-dark', '#80c5ff', 'cerulean 300, text (dark)'],
+            ['--color-info-text-strong-dark', '#c9e3fb', 'cerulean 200, text strong (dark)'],
+            ['--color-info-outline-dark', '#348dcf', 'cerulean 400, outline (dark)'],
+            ['--color-info-surface-dark', '#0c2436', 'cerulean 950, surface (dark)'],
+            ['--color-info-surface-hover-dark', '#122f46', 'cerulean 900, surface hover (dark)'],
+            ['--color-info-surface-press-dark', '#183c59', 'cerulean 800, surface press (dark)'],
+            ['--color-info-border-dark', '#183c59', 'cerulean 800, border (dark)'],
+            ['--color-neutral-solid-dark', '#f6f6fb', 'ink 50, solid (dark)'],
+            ['--color-neutral-solid-hover-dark', '#ecedf5', 'ink 100, solid hover (dark)'],
+            ['--color-neutral-solid-press-dark', '#e1e3ed', 'ink 200, solid press (dark)'],
+            ['--color-neutral-on-solid-dark', '#222538', 'ink 900, on solid (dark)'],
+            ['--color-neutral-text-dark', '#d1d3e0', 'ink 300, text (dark)'],
+            ['--color-neutral-text-strong-dark', '#e1e3ed', 'ink 200, text strong (dark)'],
+            ['--color-neutral-outline-dark', '#8e91a2', 'ink 400, outline (dark)'],
+            ['--color-neutral-surface-dark', '#222538', 'ink 900, surface (dark)'],
+            ['--color-neutral-surface-hover-dark', '#303448', 'ink 800, surface hover (dark)'],
+            ['--color-neutral-surface-press-dark', '#42465b', 'ink 700, surface press (dark)'],
+            ['--color-neutral-border-dark', '#303448', 'ink 800, border (dark)'],
+            ['--color-focus-dark', '#818cf8', 'indigo 400, focus (dark)'],
+            ['--color-surface-dark', '#0f172a', 'slate 900, surface (dark)'],
+            ['--color-background-dark', '#020617', 'slate 950, background (dark)'],
+            ['--color-surface-hover-dark', '#1e293b', 'slate 800, surface hover (dark)'],
+            ['--color-border-dark', '#334155', 'slate 700, border (dark)'],
+            ['--color-text-heading-dark', '#f8fafc', 'slate 50, text heading (dark)'],
+            ['--color-text-body-dark', '#cbd5e1', 'slate 300, text body (dark)'],
+            ['--color-text-secondary-dark', '#cbd5e1', 'slate 300, text secondary (dark)'],
+            ['--color-text-muted-dark', '#94a3b8', 'slate 400, text muted (dark)'],
+            ['--color-text-disabled-dark', '#475569', 'slate 600, text disabled (dark)'],
+          ].map(([name, hex, role]) => (
+            <tr>
               <td><div className="color-dot" style={{ background: hex, border: '1px solid #e2e8f0' }}></div></td>
               <td><span className="token-name" data-token={name}>{name}</span></td>
               <td><span className="token-value">{hex}</span><div className="token-description">{role}</div></td>
@@ -972,7 +1117,7 @@ export const Ramp = ({ name }) => (
 <div className="token-ref-section" id="spacing">
   <h2 className="token-ref-section-title"><span className="material-symbols-outlined">straighten</span> Spacing Scale</h2>
   <p className="token-ref-lede">
-    A single scale for margin, padding, and gap. One <code>--space-*</code> step in, one step out, so rhythm stays consistent across every component.
+    A single scale for margin, padding, and gap. One <code>{'--space-*'}</code> step in, one step out, so rhythm stays consistent across every component.
   </p>
   <table className="token-table">
     <thead>

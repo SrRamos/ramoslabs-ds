@@ -62,88 +62,110 @@ const page = pages.find((p) => p.id === 'colors')!
     </div>
   </div>
 
+  <div class="col-ramp">
+    <div class="col-ramp-head">
+      <span class="col-ramp-name">Ink</span>
+      <span class="col-ramp-role">--color-ink-* · indigo-tinted neutral for the neutral tone</span>
+    </div>
+    <div class="col-ramp-strip">
+      <div class="col-ramp-cell" style={{ background: '#f6f6fb', color: '#151829' }}><span class="col-ramp-step">50</span><span class="col-ramp-hex">f6f6fb</span></div>
+      <div class="col-ramp-cell" style={{ background: '#ecedf5', color: '#151829' }}><span class="col-ramp-step">100</span><span class="col-ramp-hex">ecedf5</span></div>
+      <div class="col-ramp-cell" style={{ background: '#e1e3ed', color: '#151829' }}><span class="col-ramp-step">200</span><span class="col-ramp-hex">e1e3ed</span></div>
+      <div class="col-ramp-cell" style={{ background: '#d1d3e0', color: '#151829' }}><span class="col-ramp-step">300</span><span class="col-ramp-hex">d1d3e0</span></div>
+      <div class="col-ramp-cell" style={{ background: '#8e91a2', color: '#151829' }}><span class="col-ramp-step">400</span><span class="col-ramp-hex">8e91a2</span></div>
+      <div class="col-ramp-cell" style={{ background: '#6d7083', color: '#ffffff' }}><span class="col-ramp-step">500</span><span class="col-ramp-hex">6d7083</span></div>
+      <div class="col-ramp-cell" style={{ background: '#56596e', color: '#ffffff' }}><span class="col-ramp-step">600</span><span class="col-ramp-hex">56596e</span></div>
+      <div class="col-ramp-cell" style={{ background: '#42465b', color: '#ffffff' }}><span class="col-ramp-step">700</span><span class="col-ramp-hex">42465b</span></div>
+      <div class="col-ramp-cell" style={{ background: '#303448', color: '#ffffff' }}><span class="col-ramp-step">800</span><span class="col-ramp-hex">303448</span></div>
+      <div class="col-ramp-cell" style={{ background: '#222538', color: '#ffffff' }}><span class="col-ramp-mark">Solid</span><span class="col-ramp-step">900</span><span class="col-ramp-hex">222538</span></div>
+      <div class="col-ramp-cell" style={{ background: '#151829', color: '#ffffff' }}><span class="col-ramp-step">950</span><span class="col-ramp-hex">151829</span></div>
+    </div>
+  </div>
+
   <div class="col-kicker">Reserved for state, never decoration</div>
+  <p class="col-intro">
+    The status families are authored in OKLCH so they share one lightness: the jade, crimson and cerulean solids sit at L 49, one step under Indigo 600 (L 51), so the primary stays the brightest action. Chroma is tuned per hue so no tone shouts, and honey keeps a dark ink label instead of fighting for white. Each ramp is a full 50 to 950 scale; the semantic roles below point into it. The research is in <code>docs/research/status-tones-2026.md</code>.
+  </p>
+  <div class="col-ramp">
+    <div class="col-ramp-head">
+      <span class="col-ramp-name">Jade</span>
+      <span class="col-ramp-role">--color-jade-* · success</span>
+    </div>
+    <div class="col-ramp-strip">
+      <div class="col-ramp-cell" style={{ background: '#effaf3', color: '#0e271b' }}><span class="col-ramp-step">50</span><span class="col-ramp-hex">effaf3</span></div>
+      <div class="col-ramp-cell" style={{ background: '#e1f3e8', color: '#0e271b' }}><span class="col-ramp-step">100</span><span class="col-ramp-hex">e1f3e8</span></div>
+      <div class="col-ramp-cell" style={{ background: '#cce8d7', color: '#0e271b' }}><span class="col-ramp-step">200</span><span class="col-ramp-hex">cce8d7</span></div>
+      <div class="col-ramp-cell" style={{ background: '#7ed3a7', color: '#0e271b' }}><span class="col-ramp-step">300</span><span class="col-ramp-hex">7ed3a7</span></div>
+      <div class="col-ramp-cell" style={{ background: '#3f9a6f', color: '#0e271b' }}><span class="col-ramp-step">400</span><span class="col-ramp-hex">3f9a6f</span></div>
+      <div class="col-ramp-cell" style={{ background: '#03734a', color: '#ffffff' }}><span class="col-ramp-mark">Solid</span><span class="col-ramp-step">500</span><span class="col-ramp-hex">03734a</span></div>
+      <div class="col-ramp-cell" style={{ background: '#006641', color: '#ffffff' }}><span class="col-ramp-step">600</span><span class="col-ramp-hex">006641</span></div>
+      <div class="col-ramp-cell" style={{ background: '#005636', color: '#ffffff' }}><span class="col-ramp-step">700</span><span class="col-ramp-hex">005636</span></div>
+      <div class="col-ramp-cell" style={{ background: '#1c422f', color: '#ffffff' }}><span class="col-ramp-step">800</span><span class="col-ramp-hex">1c422f</span></div>
+      <div class="col-ramp-cell" style={{ background: '#153424', color: '#ffffff' }}><span class="col-ramp-step">900</span><span class="col-ramp-hex">153424</span></div>
+      <div class="col-ramp-cell" style={{ background: '#0e271b', color: '#ffffff' }}><span class="col-ramp-step">950</span><span class="col-ramp-hex">0e271b</span></div>
+    </div>
+  </div>
+  <div class="col-ramp">
+    <div class="col-ramp-head">
+      <span class="col-ramp-name">Honey</span>
+      <span class="col-ramp-role">--color-honey-* · warning, ink label</span>
+    </div>
+    <div class="col-ramp-strip">
+      <div class="col-ramp-cell" style={{ background: '#fcf6e9', color: '#331d0b' }}><span class="col-ramp-step">50</span><span class="col-ramp-hex">fcf6e9</span></div>
+      <div class="col-ramp-cell" style={{ background: '#f8edd5', color: '#331d0b' }}><span class="col-ramp-step">100</span><span class="col-ramp-hex">f8edd5</span></div>
+      <div class="col-ramp-cell" style={{ background: '#f3ddb3', color: '#331d0b' }}><span class="col-ramp-step">200</span><span class="col-ramp-hex">f3ddb3</span></div>
+      <div class="col-ramp-cell" style={{ background: '#f8be52', color: '#331d0b' }}><span class="col-ramp-mark">Solid</span><span class="col-ramp-step">300</span><span class="col-ramp-hex">f8be52</span></div>
+      <div class="col-ramp-cell" style={{ background: '#efb146', color: '#331d0b' }}><span class="col-ramp-step">400</span><span class="col-ramp-hex">efb146</span></div>
+      <div class="col-ramp-cell" style={{ background: '#e4a038', color: '#331d0b' }}><span class="col-ramp-step">500</span><span class="col-ramp-hex">e4a038</span></div>
+      <div class="col-ramp-cell" style={{ background: '#b66c18', color: '#000000' }}><span class="col-ramp-step">600</span><span class="col-ramp-hex">b66c18</span></div>
+      <div class="col-ramp-cell" style={{ background: '#8d4908', color: '#ffffff' }}><span class="col-ramp-step">700</span><span class="col-ramp-hex">8d4908</span></div>
+      <div class="col-ramp-cell" style={{ background: '#723606', color: '#ffffff' }}><span class="col-ramp-step">800</span><span class="col-ramp-hex">723606</span></div>
+      <div class="col-ramp-cell" style={{ background: '#442911', color: '#ffffff' }}><span class="col-ramp-step">900</span><span class="col-ramp-hex">442911</span></div>
+      <div class="col-ramp-cell" style={{ background: '#331d0b', color: '#ffffff' }}><span class="col-ramp-step">950</span><span class="col-ramp-hex">331d0b</span></div>
+    </div>
+  </div>
+  <div class="col-ramp">
+    <div class="col-ramp-head">
+      <span class="col-ramp-name">Crimson</span>
+      <span class="col-ramp-role">--color-crimson-* · error</span>
+    </div>
+    <div class="col-ramp-strip">
+      <div class="col-ramp-cell" style={{ background: '#fff4f3', color: '#3b1313' }}><span class="col-ramp-step">50</span><span class="col-ramp-hex">fff4f3</span></div>
+      <div class="col-ramp-cell" style={{ background: '#ffe7e6', color: '#3b1313' }}><span class="col-ramp-step">100</span><span class="col-ramp-hex">ffe7e6</span></div>
+      <div class="col-ramp-cell" style={{ background: '#ffd4d1', color: '#3b1313' }}><span class="col-ramp-step">200</span><span class="col-ramp-hex">ffd4d1</span></div>
+      <div class="col-ramp-cell" style={{ background: '#ffa09c', color: '#3b1313' }}><span class="col-ramp-step">300</span><span class="col-ramp-hex">ffa09c</span></div>
+      <div class="col-ramp-cell" style={{ background: '#db5054', color: '#000000' }}><span class="col-ramp-step">400</span><span class="col-ramp-hex">db5054</span></div>
+      <div class="col-ramp-cell" style={{ background: '#ae212f', color: '#ffffff' }}><span class="col-ramp-mark">Solid</span><span class="col-ramp-step">500</span><span class="col-ramp-hex">ae212f</span></div>
+      <div class="col-ramp-cell" style={{ background: '#9e1326', color: '#ffffff' }}><span class="col-ramp-step">600</span><span class="col-ramp-hex">9e1326</span></div>
+      <div class="col-ramp-cell" style={{ background: '#89061d', color: '#ffffff' }}><span class="col-ramp-step">700</span><span class="col-ramp-hex">89061d</span></div>
+      <div class="col-ramp-cell" style={{ background: '#5f2324', color: '#ffffff' }}><span class="col-ramp-step">800</span><span class="col-ramp-hex">5f2324</span></div>
+      <div class="col-ramp-cell" style={{ background: '#4b1b1b', color: '#ffffff' }}><span class="col-ramp-step">900</span><span class="col-ramp-hex">4b1b1b</span></div>
+      <div class="col-ramp-cell" style={{ background: '#3b1313', color: '#ffffff' }}><span class="col-ramp-step">950</span><span class="col-ramp-hex">3b1313</span></div>
+    </div>
+  </div>
+  <div class="col-ramp">
+    <div class="col-ramp-head">
+      <span class="col-ramp-name">Cerulean</span>
+      <span class="col-ramp-role">--color-cerulean-* · info, 32° clear of indigo</span>
+    </div>
+    <div class="col-ramp-strip">
+      <div class="col-ramp-cell" style={{ background: '#f0f8ff', color: '#0c2436' }}><span class="col-ramp-step">50</span><span class="col-ramp-hex">f0f8ff</span></div>
+      <div class="col-ramp-cell" style={{ background: '#e0f0ff', color: '#0c2436' }}><span class="col-ramp-step">100</span><span class="col-ramp-hex">e0f0ff</span></div>
+      <div class="col-ramp-cell" style={{ background: '#c9e3fb', color: '#0c2436' }}><span class="col-ramp-step">200</span><span class="col-ramp-hex">c9e3fb</span></div>
+      <div class="col-ramp-cell" style={{ background: '#80c5ff', color: '#0c2436' }}><span class="col-ramp-step">300</span><span class="col-ramp-hex">80c5ff</span></div>
+      <div class="col-ramp-cell" style={{ background: '#348dcf', color: '#000000' }}><span class="col-ramp-step">400</span><span class="col-ramp-hex">348dcf</span></div>
+      <div class="col-ramp-cell" style={{ background: '#0065a1', color: '#ffffff' }}><span class="col-ramp-mark">Solid</span><span class="col-ramp-step">500</span><span class="col-ramp-hex">0065a1</span></div>
+      <div class="col-ramp-cell" style={{ background: '#00598f', color: '#ffffff' }}><span class="col-ramp-step">600</span><span class="col-ramp-hex">00598f</span></div>
+      <div class="col-ramp-cell" style={{ background: '#004b7a', color: '#ffffff' }}><span class="col-ramp-step">700</span><span class="col-ramp-hex">004b7a</span></div>
+      <div class="col-ramp-cell" style={{ background: '#183c59', color: '#ffffff' }}><span class="col-ramp-step">800</span><span class="col-ramp-hex">183c59</span></div>
+      <div class="col-ramp-cell" style={{ background: '#122f46', color: '#ffffff' }}><span class="col-ramp-step">900</span><span class="col-ramp-hex">122f46</span></div>
+      <div class="col-ramp-cell" style={{ background: '#0c2436', color: '#ffffff' }}><span class="col-ramp-step">950</span><span class="col-ramp-hex">0c2436</span></div>
+    </div>
+  </div>
+  <p class="col-spec-note">
+    Deprecated: <code>--color-emerald-*</code>, <code>--color-green-*</code>, <code>--color-amber-*</code>, <code>--color-red-*</code> and <code>--color-blue-*</code> are still published so nothing breaks, but no role or component uses them. Move to the roles (or to the families above); they will be removed in a future major.
+  </p>
   <div class="col-ramps-compact">
-    <div class="col-ramp">
-      <div class="col-ramp-head"><span class="col-ramp-name">Emerald</span><span class="col-ramp-role">--color-emerald-* · success solid</span></div>
-      <div class="col-ramp-strip">
-        <div class="col-ramp-cell" style={{ background: '#ecfdf5' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#d1fae5' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#a7f3d0' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#6ee7b7' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#34d399' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#10b981' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#059669' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#047857' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#065f46' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#064e3b' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#022c22' }}></div>
-      </div>
-    </div>
-    <div class="col-ramp">
-      <div class="col-ramp-head"><span class="col-ramp-name">Green</span><span class="col-ramp-role">--color-green-* · success surface &amp; text</span></div>
-      <div class="col-ramp-strip">
-        <div class="col-ramp-cell" style={{ background: '#f0fdf4' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#dcfce7' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#bbf7d0' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#86efac' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#4ade80' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#22c55e' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#16a34a' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#15803d' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#166534' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#14532d' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#052e16' }}></div>
-      </div>
-    </div>
-    <div class="col-ramp">
-      <div class="col-ramp-head"><span class="col-ramp-name">Amber</span><span class="col-ramp-role">--color-amber-* · warning</span></div>
-      <div class="col-ramp-strip">
-        <div class="col-ramp-cell" style={{ background: '#fffbeb' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#fef3c7' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#fde68a' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#fcd34d' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#fbbf24' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#f59e0b' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#d97706' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#b45309' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#92400e' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#78350f' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#451a03' }}></div>
-      </div>
-    </div>
-    <div class="col-ramp">
-      <div class="col-ramp-head"><span class="col-ramp-name">Red</span><span class="col-ramp-role">--color-red-* · error</span></div>
-      <div class="col-ramp-strip">
-        <div class="col-ramp-cell" style={{ background: '#fef2f2' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#fee2e2' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#fecaca' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#fca5a5' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#f87171' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#ef4444' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#dc2626' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#b91c1c' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#991b1b' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#7f1d1d' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#450a0a' }}></div>
-      </div>
-    </div>
-    <div class="col-ramp">
-      <div class="col-ramp-head"><span class="col-ramp-name">Blue</span><span class="col-ramp-role">--color-blue-* · info</span></div>
-      <div class="col-ramp-strip">
-        <div class="col-ramp-cell" style={{ background: '#eff6ff' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#dbeafe' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#bfdbfe' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#93c5fd' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#60a5fa' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#3b82f6' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#2563eb' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#1d4ed8' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#1e40af' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#1e3a8a' }}></div>
-        <div class="col-ramp-cell" style={{ background: '#172554' }}></div>
-      </div>
-    </div>
     <div class="col-ramp">
       <div class="col-ramp-head"><span class="col-ramp-name">Violet</span><span class="col-ramp-role">--color-secondary · decorative support only</span></div>
       <div class="col-ramp-strip">
@@ -223,7 +245,8 @@ const page = pages.find((p) => p.id === 'colors')!
           <div class="col-textrow"><span class="t" style={{ color: '#0f172a' }}>Heading</span><span class="meta">--text-heading · 17.85:1</span></div>
           <div class="col-textrow"><span class="t" style={{ color: '#1e293b' }}>Strong label</span><span class="meta">--text-strong · 14.63:1</span></div>
           <div class="col-textrow"><span class="t" style={{ color: '#475569' }}>Secondary copy</span><span class="meta">--text-secondary · 7.58:1</span></div>
-          <div class="col-textrow"><span class="t" style={{ color: '#64748b' }}>Body / muted</span><span class="meta">--text-body · 4.76:1</span></div>
+          <div class="col-textrow"><span class="t" style={{ color: '#334155' }}>Body copy</span><span class="meta">--text-body · 10.35:1</span></div>
+          <div class="col-textrow"><span class="t" style={{ color: '#64748b' }}>Muted</span><span class="meta">--text-muted · 4.75:1</span></div>
           <div class="col-textrow"><span class="t" style={{ color: '#cbd5e1' }}>Disabled</span><span class="meta">--text-disabled · state only</span></div>
         </div>
       </div>
@@ -231,36 +254,36 @@ const page = pages.find((p) => p.id === 'colors')!
       <div>
         <div class="col-spec-label">Feedback, each a full triad</div>
         <div class="col-banners">
-          <div class="col-banner" style={{ background: '#f0fdf4', 'border-color': '#bbf7d0' }}>
-            <span class="col-banner-icon" style={{ background: '#059669' }}>&#10003;</span>
+          <div class="col-banner" style={{ background: 'var(--color-success-surface)', 'border-color': 'var(--color-success-border)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-success-solid)', color: 'var(--color-success-on-solid)' }}>&#10003;</span>
             <div>
-              <div class="col-banner-title" style={{ color: '#166534' }}>Saved</div>
-              <div class="col-banner-body" style={{ color: '#166534' }}>Strong solid for the icon so the white check clears 3:1, tinted surface behind, dark text on top.</div>
-              <div class="col-banner-tok" style={{ color: '#166534' }}>--color-success-strong + -surface + -text</div>
+              <div class="col-banner-title" style={{ color: 'var(--color-success-text-strong)' }}>Saved</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body)' }}>The solid jade fill carries a white label; the soft surface takes jade text.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-success-text)' }}>--color-success-solid · -surface · -text</div>
             </div>
           </div>
-          <div class="col-banner" style={{ background: '#fffbeb', 'border-color': '#fde68a' }}>
-            <span class="col-banner-icon" style={{ background: '#f59e0b', color: '#0f172a' }}>!</span>
+          <div class="col-banner" style={{ background: 'var(--color-warning-surface)', 'border-color': 'var(--color-warning-border)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-warning-solid)', color: 'var(--color-warning-on-solid)' }}>!</span>
             <div>
-              <div class="col-banner-title" style={{ color: '#78350f' }}>Heads up</div>
-              <div class="col-banner-body" style={{ color: '#78350f' }}>Amber is bright, so it carries dark text, never white.</div>
-              <div class="col-banner-tok" style={{ color: '#78350f' }}>--color-warning + -surface + -text</div>
+              <div class="col-banner-title" style={{ color: 'var(--color-warning-text-strong)' }}>Heads up</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body)' }}>Honey is light, so it carries a dark ink label, never white.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-warning-text)' }}>--color-warning-solid · -surface · -text</div>
             </div>
           </div>
-          <div class="col-banner" style={{ background: '#fef2f2', 'border-color': '#fecaca' }}>
-            <span class="col-banner-icon" style={{ background: '#ef4444' }}>&#215;</span>
+          <div class="col-banner" style={{ background: 'var(--color-error-surface)', 'border-color': 'var(--color-error-border)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-error-solid)', color: 'var(--color-error-on-solid)' }}>&#215;</span>
             <div>
-              <div class="col-banner-title" style={{ color: '#991b1b' }}>Something failed</div>
-              <div class="col-banner-body" style={{ color: '#991b1b' }}>For a red button with white text, use <span class="col-mono">--color-error-strong</span>.</div>
-              <div class="col-banner-tok" style={{ color: '#991b1b' }}>--color-error + -surface + -text</div>
+              <div class="col-banner-title" style={{ color: 'var(--color-error-text-strong)' }}>Something failed</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body)' }}>Crimson, kept off the brick zone so it reads urgent, not rustic.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-error-text)' }}>--color-error-solid · -surface · -text</div>
             </div>
           </div>
-          <div class="col-banner" style={{ background: '#eff6ff', 'border-color': '#bfdbfe' }}>
-            <span class="col-banner-icon" style={{ background: '#3b82f6' }}>i</span>
+          <div class="col-banner" style={{ background: 'var(--color-info-surface)', 'border-color': 'var(--color-info-border)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-info-solid)', color: 'var(--color-info-on-solid)' }}>i</span>
             <div>
-              <div class="col-banner-title" style={{ color: '#1e40af' }}>For your info</div>
-              <div class="col-banner-body" style={{ color: '#1e40af' }}>Kept distinct from indigo so context never reads as an action.</div>
-              <div class="col-banner-tok" style={{ color: '#1e40af' }}>--color-info + -surface + -text</div>
+              <div class="col-banner-title" style={{ color: 'var(--color-info-text-strong)' }}>For your info</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body)' }}>Cerulean sits 32° from indigo, so context never reads as an action.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-info-text)' }}>--color-info-solid · -surface · -text</div>
             </div>
           </div>
         </div>
@@ -282,7 +305,7 @@ const page = pages.find((p) => p.id === 'colors')!
       <div class="col-pair-swatch" style={{ background: '#ffffff', color: '#4f46e5' }}>Aa</div>
       <div class="col-pair-meta">
         <div class="col-pair-name">Primary on white</div>
-        <div class="col-pair-foot"><span class="col-ratio">6.29</span><span class="col-badge col-badge--aa">AA</span></div>
+        <div class="col-pair-foot"><span class="col-ratio">6.28</span><span class="col-badge col-badge--aa">AA</span></div>
       </div>
     </div>
     <div class="col-pair">
@@ -302,40 +325,61 @@ const page = pages.find((p) => p.id === 'colors')!
     <div class="col-pair">
       <div class="col-pair-swatch" style={{ background: '#ffffff', color: '#64748b' }}>Aa</div>
       <div class="col-pair-meta">
-        <div class="col-pair-name">Body / muted on white</div>
-        <div class="col-pair-foot"><span class="col-ratio">4.76</span><span class="col-badge col-badge--aa">AA</span></div>
+        <div class="col-pair-name">Muted on white (the floor)</div>
+        <div class="col-pair-foot"><span class="col-ratio">4.75</span><span class="col-badge col-badge--aa">AA</span></div>
       </div>
     </div>
     <div class="col-pair">
-      <div class="col-pair-swatch" style={{ background: '#dc2626', color: '#ffffff' }}>Aa</div>
+      <div class="col-pair-swatch" style={{ background: '#218460', color: '#ffffff' }}>Aa</div>
       <div class="col-pair-meta">
-        <div class="col-pair-name">White on error-strong</div>
-        <div class="col-pair-foot"><span class="col-ratio">4.83</span><span class="col-badge col-badge--aa">AA</span></div>
+        <div class="col-pair-name">White on success-solid, lightest sheen pixel</div>
+        <div class="col-pair-foot"><span class="col-ratio">4.63</span><span class="col-badge col-badge--aa">AA</span></div>
       </div>
     </div>
     <div class="col-pair">
-      <div class="col-pair-swatch" style={{ background: '#ef4444', color: '#ffffff' }}>Aa</div>
+      <div class="col-pair-swatch" style={{ background: '#b83c48', color: '#ffffff' }}>Aa</div>
       <div class="col-pair-meta">
-        <div class="col-pair-name">White on error (red 500)</div>
-        <div class="col-pair-foot"><span class="col-ratio">3.76</span><span class="col-badge col-badge--large">Large only</span></div>
+        <div class="col-pair-name">White on error-solid, lightest sheen pixel</div>
+        <div class="col-pair-foot"><span class="col-ratio">5.55</span><span class="col-badge col-badge--aa">AA</span></div>
       </div>
     </div>
     <div class="col-pair">
-      <div class="col-pair-swatch" style={{ background: '#f59e0b', color: '#0f172a' }}>Aa</div>
+      <div class="col-pair-swatch" style={{ background: '#1f77ac', color: '#ffffff' }}>Aa</div>
       <div class="col-pair-meta">
-        <div class="col-pair-name">Dark text on warning</div>
-        <div class="col-pair-foot"><span class="col-ratio">8.31</span><span class="col-badge col-badge--aaa">AAA</span></div>
+        <div class="col-pair-name">White on info-solid, lightest sheen pixel</div>
+        <div class="col-pair-foot"><span class="col-ratio">4.89</span><span class="col-badge col-badge--aa">AA</span></div>
       </div>
     </div>
     <div class="col-pair">
-      <div class="col-pair-swatch" style={{ background: '#f59e0b', color: '#ffffff' }}>Aa</div>
+      <div class="col-pair-swatch" style={{ background: '#f8be52', color: '#331d0b' }}>Aa</div>
       <div class="col-pair-meta">
-        <div class="col-pair-name">White on warning</div>
-        <div class="col-pair-foot"><span class="col-ratio">2.15</span><span class="col-badge col-badge--fail">Fail</span></div>
+        <div class="col-pair-name">Ink on warning-solid</div>
+        <div class="col-pair-foot"><span class="col-ratio">9.44</span><span class="col-badge col-badge--aaa">AAA</span></div>
       </div>
     </div>
     <div class="col-pair">
-      <div class="col-pair-swatch" style={{ background: '#cbd5e1', color: '#ffffff' }}>Aa</div>
+      <div class="col-pair-swatch" style={{ background: '#f8be52', color: '#ffffff' }}>Aa</div>
+      <div class="col-pair-meta">
+        <div class="col-pair-name">White on warning-solid</div>
+        <div class="col-pair-foot"><span class="col-ratio">1.68</span><span class="col-badge col-badge--fail">Fail</span></div>
+      </div>
+    </div>
+    <div class="col-pair">
+      <div class="col-pair-swatch" style={{ background: '#0f172a', color: '#818cf8' }}>Aa</div>
+      <div class="col-pair-meta">
+        <div class="col-pair-name">Primary text on dark (indigo 400)</div>
+        <div class="col-pair-foot"><span class="col-ratio">5.98</span><span class="col-badge col-badge--aa">AA</span></div>
+      </div>
+    </div>
+    <div class="col-pair">
+      <div class="col-pair-swatch" style={{ background: '#0f172a', color: '#4f46e5' }}>Aa</div>
+      <div class="col-pair-meta">
+        <div class="col-pair-name">Indigo 600 on dark</div>
+        <div class="col-pair-foot"><span class="col-ratio">2.83</span><span class="col-badge col-badge--fail">Fail</span></div>
+      </div>
+    </div>
+    <div class="col-pair">
+      <div class="col-pair-swatch" style={{ background: '#ffffff', color: '#cbd5e1' }}>Aa</div>
       <div class="col-pair-meta">
         <div class="col-pair-name">Disabled on white</div>
         <div class="col-pair-foot"><span class="col-ratio">1.48</span><span class="col-badge col-badge--fail">By design</span></div>
@@ -348,6 +392,64 @@ const page = pages.find((p) => p.id === 'colors')!
     <p class="col-callout-body">
       <strong>Rule:</strong> pair every status color with an icon and a label, give every invalid field real text, and make focus a visible ring. <strong>Why:</strong> color is never the only channel (WCAG 2.2 SC 1.4.1), so meaning survives for color-blind and low-vision users. Color reinforces, it never carries meaning by itself.
     </p>
+  </div>
+</div>
+
+<div class="col-section">
+  <span class="col-num">05</span>
+  <h2 class="col-h2">Dark surfaces</h2>
+  <p class="col-intro">
+    Every role has a <code>-dark</code> counterpart, checked at 4.5:1 for text and 3:1 for edges on slate 900 and slate 950. Status solids are shared between light and dark; text, soft fills, borders and outlines change. Components switch when any ancestor carries <code>data-theme="dark"</code>. Primary keeps Indigo 600 as the fill, but its outline, ghost and link text move to Indigo 400 (<code>--color-primary-text-dark</code>), because Indigo 600 is only 2.83:1 on slate 900.
+  </p>
+  <div class="col-stage" data-theme="dark" style={{ background: 'var(--color-surface-dark)', 'border-color': 'var(--color-border-dark)' }}>
+    <div class="col-specimens">
+      <div>
+        <div class="col-spec-label" style={{ color: 'var(--color-text-muted-dark)' }}>Text scale on slate 900</div>
+        <div class="col-textscale">
+          <div class="col-textrow"><span class="t" style={{ color: 'var(--color-text-heading-dark)' }}>Heading</span><span class="meta" style={{ color: 'var(--color-text-muted-dark)' }}>--text-heading-dark · 17.06:1</span></div>
+          <div class="col-textrow"><span class="t" style={{ color: 'var(--color-text-body-dark)' }}>Body copy</span><span class="meta" style={{ color: 'var(--color-text-muted-dark)' }}>--text-body-dark · 12.02:1</span></div>
+          <div class="col-textrow"><span class="t" style={{ color: 'var(--color-text-secondary-dark)' }}>Secondary copy</span><span class="meta" style={{ color: 'var(--color-text-muted-dark)' }}>--text-secondary-dark · 12.02:1</span></div>
+          <div class="col-textrow"><span class="t" style={{ color: 'var(--color-text-muted-dark)' }}>Muted (the dark floor)</span><span class="meta" style={{ color: 'var(--color-text-muted-dark)' }}>--text-muted-dark · 6.96:1</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-spec-label" style={{ color: 'var(--color-text-muted-dark)' }}>Feedback on dark</div>
+        <div class="col-banners">
+          <div class="col-banner" style={{ background: 'var(--color-success-surface-dark)', 'border-color': 'var(--color-success-border-dark)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-success-solid)', color: 'var(--color-success-on-solid)' }}>&#10003;</span>
+            <div>
+              <div class="col-banner-title" style={{ color: 'var(--color-success-text-strong-dark)' }}>Saved</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body-dark)' }}>The solid jade fill carries a white label; the soft surface takes jade text.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-success-text-dark)' }}>--color-success-solid · -surface-dark · -text-dark</div>
+            </div>
+          </div>
+          <div class="col-banner" style={{ background: 'var(--color-warning-surface-dark)', 'border-color': 'var(--color-warning-border-dark)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-warning-solid)', color: 'var(--color-warning-on-solid)' }}>!</span>
+            <div>
+              <div class="col-banner-title" style={{ color: 'var(--color-warning-text-strong-dark)' }}>Heads up</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body-dark)' }}>Honey is light, so it carries a dark ink label, never white.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-warning-text-dark)' }}>--color-warning-solid · -surface-dark · -text-dark</div>
+            </div>
+          </div>
+          <div class="col-banner" style={{ background: 'var(--color-error-surface-dark)', 'border-color': 'var(--color-error-border-dark)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-error-solid)', color: 'var(--color-error-on-solid)' }}>&#215;</span>
+            <div>
+              <div class="col-banner-title" style={{ color: 'var(--color-error-text-strong-dark)' }}>Something failed</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body-dark)' }}>Crimson, kept off the brick zone so it reads urgent, not rustic.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-error-text-dark)' }}>--color-error-solid · -surface-dark · -text-dark</div>
+            </div>
+          </div>
+          <div class="col-banner" style={{ background: 'var(--color-info-surface-dark)', 'border-color': 'var(--color-info-border-dark)' }}>
+            <span class="col-banner-icon" style={{ background: 'var(--color-info-solid)', color: 'var(--color-info-on-solid)' }}>i</span>
+            <div>
+              <div class="col-banner-title" style={{ color: 'var(--color-info-text-strong-dark)' }}>For your info</div>
+              <div class="col-banner-body" style={{ color: 'var(--color-text-body-dark)' }}>Cerulean sits 32° from indigo, so context never reads as an action.</div>
+              <div class="col-banner-tok" style={{ color: 'var(--color-info-text-dark)' }}>--color-info-solid · -surface-dark · -text-dark</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -688,10 +790,10 @@ const page = pages.find((p) => p.id === 'colors')!
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
-  .col-badge--aaa { background: #dcfce7; color: #166534; }
-  .col-badge--aa { background: #d1fae5; color: #047857; }
-  .col-badge--large { background: #fef3c7; color: #92400e; }
-  .col-badge--fail { background: #fee2e2; color: #991b1b; }
+  .col-badge--aaa { background: var(--color-success-surface); color: var(--color-success-text-strong); }
+  .col-badge--aa { background: var(--color-success-surface); color: var(--color-success-text); }
+  .col-badge--large { background: var(--color-warning-surface); color: var(--color-warning-text-strong); }
+  .col-badge--fail { background: var(--color-error-surface); color: var(--color-error-text-strong); }
 
   /* ---------- Callout ---------- */
   .col-callout {
@@ -701,11 +803,11 @@ const page = pages.find((p) => p.id === 'colors')!
     border-radius: 12px;
     padding: 1rem 1.25rem;
     margin-top: 1.5rem;
-    background: #fffbeb;
+    background: var(--color-warning-surface);
   }
-  .col-callout-bar { border-radius: 4px; background: #f59e0b; }
-  .col-callout-body { font-size: 0.875rem; line-height: 1.55; color: #78350f; }
-  .col-callout-body strong { color: #451a03; }
+  .col-callout-bar { border-radius: 4px; background: var(--color-warning-solid); }
+  .col-callout-body { font-size: 0.875rem; line-height: 1.55; color: var(--color-warning-text); }
+  .col-callout-body strong { color: var(--color-warning-text-strong); }
 
   /* ---------- Refs ---------- */
   .col-refs { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }

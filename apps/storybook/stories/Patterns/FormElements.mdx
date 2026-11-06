@@ -223,7 +223,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin-bottom: 0.25rem;
   }
 
-  .fe-label .fe-req { color: #dc2626; margin-left: 0.15rem; }
+  .fe-label .fe-req { color: var(--color-error-text); margin-left: 0.15rem; }
   .fe-label .fe-opt {
     color: #64748b;
     font-weight: 400;
@@ -274,14 +274,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .fe-input.error {
-    border-color: #ef4444;
+    border-color: var(--color-error-outline);
   }
 
   .fe-input.error:focus-visible {
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #dc2626;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--color-error-strong);
   }
 
-  .fe-input.success { border-color: #059669; }
+  .fe-input.success { border-color: var(--color-success-outline); }
 
   select.fe-input { appearance: auto; cursor: pointer; }
 
@@ -291,12 +291,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
     gap: 0.35rem;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #991b1b;
+    color: var(--color-error-text);
     margin-top: 0.35rem;
     line-height: 1.45;
   }
 
-  .fe-error .fe-material { font-size: 1rem; color: #dc2626; flex-shrink: 0; margin-top: 0.05rem; }
+  .fe-error .fe-material { font-size: 1rem; color: var(--color-error-text); flex-shrink: 0; margin-top: 0.05rem; }
 
   .fe-success-text {
     display: flex;
@@ -304,11 +304,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     gap: 0.35rem;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #166534;
+    color: var(--color-success-text);
     margin-top: 0.35rem;
   }
 
-  .fe-success-text .fe-material { font-size: 1rem; color: #059669; }
+  .fe-success-text .fe-material { font-size: 1rem; color: var(--color-success-text); }
 
   /* ===== ANATOMY ===== */
   .fe-anatomy {
@@ -398,8 +398,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     white-space: nowrap;
   }
 
-  .fe-yes { color: #166534; font-weight: 700; }
-  .fe-no { color: #991b1b; font-weight: 700; }
+  .fe-yes { color: var(--color-success-text); font-weight: 700; }
+  .fe-no { color: var(--color-error-text); font-weight: 700; }
   .fe-yes .fe-material, .fe-no .fe-material { font-size: 0.95rem; vertical-align: -0.15rem; }
 
   /* ===== TIMELINE (validation) ===== */
@@ -527,8 +527,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     background: #fbfcfd;
   }
 
-  .fe-demo-label.rec { color: #166534; }
-  .fe-demo-label.avoid { color: #991b1b; }
+  .fe-demo-label.rec { color: var(--color-success-text); }
+  .fe-demo-label.avoid { color: var(--color-error-text); }
 
   /* ===== RULES (Rule / Why) ===== */
   .fe-rules {
@@ -712,7 +712,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     white-space: nowrap;
   }
 
-  .fe-verdict.native { color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .fe-verdict.native { color: var(--color-success-text); background: var(--color-success-surface); border: 1px solid var(--color-success-border); }
   .fe-verdict.custom { color: #4338ca; background: #eef2ff; border: 1px solid #c7d2fe; }
   .fe-verdict.hybrid { color: #475569; background: #f1f5f9; border: 1px solid #e2e8f0; }
 

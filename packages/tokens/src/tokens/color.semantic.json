@@ -8,6 +8,30 @@
     "primary-light": { "$value": "{color.indigo.500}" },
     "primary-dark": { "$value": "{color.indigo.700}" },
     "primary-surface": { "$value": "{color.indigo.50}" },
+    "primary-text-dark": {
+      "$value": "{color.indigo.400}",
+      "$description": "Primary outline, ghost and link text on dark surfaces. Indigo 600 is 2.83:1 on slate 900; indigo 400 is 5.98:1."
+    },
+    "primary-text-strong-dark": {
+      "$value": "{color.indigo.300}",
+      "$description": "Primary soft label and pressed text on dark surfaces."
+    },
+    "primary-outline-dark": {
+      "$value": "{color.indigo.400}",
+      "$description": "Primary outline border on dark surfaces."
+    },
+    "primary-surface-dark": {
+      "$value": "{color.indigo.950}",
+      "$description": "Primary soft fill on dark surfaces."
+    },
+    "primary-surface-hover-dark": {
+      "$value": "{color.indigo.900}",
+      "$description": "Primary soft fill on hover, dark surfaces."
+    },
+    "primary-surface-press-dark": {
+      "$value": "{color.indigo.800}",
+      "$description": "Primary soft fill pressed, dark surfaces."
+    },
     "secondary": {
       "$value": "{color.violet.500}",
       "$description": "Violet. Decorative accent only, never for interactive or action affordances."
@@ -15,34 +39,414 @@
     "secondary-light": { "$value": "{color.violet.400}" },
     "secondary-dark": { "$value": "{color.violet.600}" },
     "secondary-surface": { "$value": "{color.violet.50}" },
-    "success": { "$value": "{color.emerald.500}" },
+    "success": {
+      "$value": "{color.jade.500}",
+      "$description": "The success hue: the solid fill colour (jade)."
+    },
     "success-strong": {
-      "$value": "{color.emerald.600}",
-      "$description": "AA-safe green fill for a white glyph on the success color (emerald 500 is only 2.54:1 with white, below the 3:1 non-text floor)."
+      "$value": "{color.jade.600}",
+      "$description": "AA-safe fill for a white glyph (at least 3:1 non-text)."
     },
-    "success-surface": { "$value": "{color.green.50}" },
-    "success-border": { "$value": "{color.green.200}" },
-    "success-text": { "$value": "{color.green.800}" },
-    "warning": { "$value": "{color.amber.500}" },
+    "success-solid": {
+      "$value": "{color.jade.500}",
+      "$description": "Solid control fill. Label: success-on-solid."
+    },
+    "success-solid-hover": {
+      "$value": "{color.jade.600}",
+      "$description": "Solid fill on hover and the gradient end at rest."
+    },
+    "success-solid-press": {
+      "$value": "{color.jade.700}",
+      "$description": "Solid fill pressed, the solid border and the gradient end on hover."
+    },
+    "success-on-solid": {
+      "$value": "{color.white}",
+      "$description": "Label on the solid fill; holds 4.5:1 on the 12% sheen, hover and press."
+    },
+    "success-surface": {
+      "$value": "{color.jade.50}",
+      "$description": "Soft fill, alert and badge background."
+    },
+    "success-surface-hover": {
+      "$value": "{color.jade.100}",
+      "$description": "Soft fill on hover."
+    },
+    "success-surface-press": {
+      "$value": "{color.jade.200}",
+      "$description": "Soft fill pressed."
+    },
+    "success-border": {
+      "$value": "{color.jade.200}",
+      "$description": "Alert and badge hairline."
+    },
+    "success-text": {
+      "$value": "{color.jade.600}",
+      "$description": "Text and icons on light surfaces (4.5:1 on white and on the soft fills)."
+    },
+    "success-text-strong": {
+      "$value": "{color.jade.700}",
+      "$description": "Alert titles, link hover and press."
+    },
+    "success-outline": {
+      "$value": "{color.jade.400}",
+      "$description": "Outline variant border (3:1 on light surfaces)."
+    },
+    "success-text-dark": {
+      "$value": "{color.jade.300}",
+      "$description": "Text and icons on dark surfaces (4.5:1 on slate 900 / 950 and the dark soft fills)."
+    },
+    "success-text-strong-dark": {
+      "$value": "{color.jade.200}",
+      "$description": "Alert titles, link hover and press on dark surfaces."
+    },
+    "success-outline-dark": {
+      "$value": "{color.jade.400}",
+      "$description": "Outline variant border on dark surfaces (3:1)."
+    },
+    "success-surface-dark": {
+      "$value": "{color.jade.950}",
+      "$description": "Soft fill on dark surfaces."
+    },
+    "success-surface-hover-dark": {
+      "$value": "{color.jade.900}",
+      "$description": "Soft fill on hover, dark surfaces."
+    },
+    "success-surface-press-dark": {
+      "$value": "{color.jade.800}",
+      "$description": "Soft fill pressed, dark surfaces."
+    },
+    "success-border-dark": {
+      "$value": "{color.jade.800}",
+      "$description": "Alert and badge hairline on dark surfaces."
+    },
+    "warning": {
+      "$value": "{color.honey.300}",
+      "$description": "The warning hue: the solid fill colour (honey)."
+    },
     "warning-strong": {
-      "$value": "{color.amber.600}",
-      "$description": "AA-safe amber fill for a white glyph on the warning color (amber 500 is only 2.15:1 with white; amber 600 #d97706 is ~3.18:1, clearing the 3:1 non-text floor)."
+      "$value": "{color.honey.600}",
+      "$description": "AA-safe fill for a white glyph (at least 3:1 non-text)."
     },
-    "warning-surface": { "$value": "{color.amber.50}" },
-    "warning-border": { "$value": "{color.amber.200}" },
-    "warning-text": { "$value": "{color.amber.900}" },
-    "error": { "$value": "{color.red.500}" },
+    "warning-solid": {
+      "$value": "{color.honey.300}",
+      "$description": "Solid control fill. Label: warning-on-solid (dark ink; a light amber with dark text is the premium pattern, see docs/research/status-tones-2026.md)."
+    },
+    "warning-solid-hover": {
+      "$value": "{color.honey.400}",
+      "$description": "Solid fill on hover and the gradient end at rest."
+    },
+    "warning-solid-press": {
+      "$value": "{color.honey.500}",
+      "$description": "Solid fill pressed, the solid border and the gradient end on hover."
+    },
+    "warning-on-solid": {
+      "$value": "{color.honey.950}",
+      "$description": "Label on the solid fill; holds 4.5:1 on the 12% sheen, hover and press."
+    },
+    "warning-surface": {
+      "$value": "{color.honey.50}",
+      "$description": "Soft fill, alert and badge background."
+    },
+    "warning-surface-hover": {
+      "$value": "{color.honey.100}",
+      "$description": "Soft fill on hover."
+    },
+    "warning-surface-press": {
+      "$value": "{color.honey.200}",
+      "$description": "Soft fill pressed."
+    },
+    "warning-border": {
+      "$value": "{color.honey.200}",
+      "$description": "Alert and badge hairline."
+    },
+    "warning-text": {
+      "$value": "{color.honey.700}",
+      "$description": "Text and icons on light surfaces (4.5:1 on white and on the soft fills)."
+    },
+    "warning-text-strong": {
+      "$value": "{color.honey.800}",
+      "$description": "Alert titles, link hover and press."
+    },
+    "warning-outline": {
+      "$value": "{color.honey.600}",
+      "$description": "Outline variant border (3:1 on light surfaces)."
+    },
+    "warning-text-dark": {
+      "$value": "{color.honey.300}",
+      "$description": "Text and icons on dark surfaces (4.5:1 on slate 900 / 950 and the dark soft fills)."
+    },
+    "warning-text-strong-dark": {
+      "$value": "{color.honey.200}",
+      "$description": "Alert titles, link hover and press on dark surfaces."
+    },
+    "warning-outline-dark": {
+      "$value": "{color.honey.600}",
+      "$description": "Outline variant border on dark surfaces (3:1)."
+    },
+    "warning-surface-dark": {
+      "$value": "{color.honey.950}",
+      "$description": "Soft fill on dark surfaces."
+    },
+    "warning-surface-hover-dark": {
+      "$value": "{color.honey.900}",
+      "$description": "Soft fill on hover, dark surfaces."
+    },
+    "warning-surface-press-dark": {
+      "$value": "{color.honey.900}",
+      "$description": "Soft fill pressed, dark surfaces."
+    },
+    "warning-border-dark": {
+      "$value": "{color.honey.900}",
+      "$description": "Alert and badge hairline on dark surfaces."
+    },
+    "error": {
+      "$value": "{color.crimson.500}",
+      "$description": "The error hue: the solid fill colour (crimson)."
+    },
     "error-strong": {
-      "$value": "{color.red.600}",
-      "$description": "AA-safe red fill for white text on buttons (red 500 is only 3.76:1 on white)."
+      "$value": "{color.crimson.600}",
+      "$description": "AA-safe fill for a white glyph or a 3:1 boundary (input invalid border)."
     },
-    "error-surface": { "$value": "{color.red.50}" },
-    "error-border": { "$value": "{color.red.200}" },
-    "error-text": { "$value": "{color.red.800}" },
-    "info": { "$value": "{color.blue.500}" },
-    "info-surface": { "$value": "{color.blue.50}" },
-    "info-border": { "$value": "{color.blue.200}" },
-    "info-text": { "$value": "{color.blue.800}" },
+    "error-solid": {
+      "$value": "{color.crimson.500}",
+      "$description": "Solid control fill. Label: error-on-solid."
+    },
+    "error-solid-hover": {
+      "$value": "{color.crimson.600}",
+      "$description": "Solid fill on hover and the gradient end at rest."
+    },
+    "error-solid-press": {
+      "$value": "{color.crimson.700}",
+      "$description": "Solid fill pressed, the solid border and the gradient end on hover."
+    },
+    "error-on-solid": {
+      "$value": "{color.white}",
+      "$description": "Label on the solid fill; holds 4.5:1 on the 12% sheen, hover and press."
+    },
+    "error-surface": {
+      "$value": "{color.crimson.50}",
+      "$description": "Soft fill, alert and badge background."
+    },
+    "error-surface-hover": {
+      "$value": "{color.crimson.100}",
+      "$description": "Soft fill on hover."
+    },
+    "error-surface-press": {
+      "$value": "{color.crimson.200}",
+      "$description": "Soft fill pressed."
+    },
+    "error-border": {
+      "$value": "{color.crimson.200}",
+      "$description": "Alert and badge hairline."
+    },
+    "error-text": {
+      "$value": "{color.crimson.600}",
+      "$description": "Text and icons on light surfaces (4.5:1 on white and on the soft fills)."
+    },
+    "error-text-strong": {
+      "$value": "{color.crimson.700}",
+      "$description": "Alert titles, link hover and press."
+    },
+    "error-outline": {
+      "$value": "{color.crimson.400}",
+      "$description": "Outline variant border (3:1 on light surfaces)."
+    },
+    "error-text-dark": {
+      "$value": "{color.crimson.300}",
+      "$description": "Text and icons on dark surfaces (4.5:1 on slate 900 / 950 and the dark soft fills)."
+    },
+    "error-text-strong-dark": {
+      "$value": "{color.crimson.200}",
+      "$description": "Alert titles, link hover and press on dark surfaces."
+    },
+    "error-outline-dark": {
+      "$value": "{color.crimson.400}",
+      "$description": "Outline variant border on dark surfaces (3:1)."
+    },
+    "error-surface-dark": {
+      "$value": "{color.crimson.950}",
+      "$description": "Soft fill on dark surfaces."
+    },
+    "error-surface-hover-dark": {
+      "$value": "{color.crimson.900}",
+      "$description": "Soft fill on hover, dark surfaces."
+    },
+    "error-surface-press-dark": {
+      "$value": "{color.crimson.800}",
+      "$description": "Soft fill pressed, dark surfaces."
+    },
+    "error-border-dark": {
+      "$value": "{color.crimson.800}",
+      "$description": "Alert and badge hairline on dark surfaces."
+    },
+    "info": {
+      "$value": "{color.cerulean.500}",
+      "$description": "The info hue: the solid fill colour (cerulean)."
+    },
+    "info-strong": {
+      "$value": "{color.cerulean.600}",
+      "$description": "AA-safe fill for a white glyph (at least 3:1 non-text)."
+    },
+    "info-solid": {
+      "$value": "{color.cerulean.500}",
+      "$description": "Solid control fill. Label: info-on-solid."
+    },
+    "info-solid-hover": {
+      "$value": "{color.cerulean.600}",
+      "$description": "Solid fill on hover and the gradient end at rest."
+    },
+    "info-solid-press": {
+      "$value": "{color.cerulean.700}",
+      "$description": "Solid fill pressed, the solid border and the gradient end on hover."
+    },
+    "info-on-solid": {
+      "$value": "{color.white}",
+      "$description": "Label on the solid fill; holds 4.5:1 on the 12% sheen, hover and press."
+    },
+    "info-surface": {
+      "$value": "{color.cerulean.50}",
+      "$description": "Soft fill, alert and badge background."
+    },
+    "info-surface-hover": {
+      "$value": "{color.cerulean.100}",
+      "$description": "Soft fill on hover."
+    },
+    "info-surface-press": {
+      "$value": "{color.cerulean.200}",
+      "$description": "Soft fill pressed."
+    },
+    "info-border": {
+      "$value": "{color.cerulean.200}",
+      "$description": "Alert and badge hairline."
+    },
+    "info-text": {
+      "$value": "{color.cerulean.600}",
+      "$description": "Text and icons on light surfaces (4.5:1 on white and on the soft fills)."
+    },
+    "info-text-strong": {
+      "$value": "{color.cerulean.700}",
+      "$description": "Alert titles, link hover and press."
+    },
+    "info-outline": {
+      "$value": "{color.cerulean.400}",
+      "$description": "Outline variant border (3:1 on light surfaces)."
+    },
+    "info-text-dark": {
+      "$value": "{color.cerulean.300}",
+      "$description": "Text and icons on dark surfaces (4.5:1 on slate 900 / 950 and the dark soft fills)."
+    },
+    "info-text-strong-dark": {
+      "$value": "{color.cerulean.200}",
+      "$description": "Alert titles, link hover and press on dark surfaces."
+    },
+    "info-outline-dark": {
+      "$value": "{color.cerulean.400}",
+      "$description": "Outline variant border on dark surfaces (3:1)."
+    },
+    "info-surface-dark": {
+      "$value": "{color.cerulean.950}",
+      "$description": "Soft fill on dark surfaces."
+    },
+    "info-surface-hover-dark": {
+      "$value": "{color.cerulean.900}",
+      "$description": "Soft fill on hover, dark surfaces."
+    },
+    "info-surface-press-dark": {
+      "$value": "{color.cerulean.800}",
+      "$description": "Soft fill pressed, dark surfaces."
+    },
+    "info-border-dark": {
+      "$value": "{color.cerulean.800}",
+      "$description": "Alert and badge hairline on dark surfaces."
+    },
+    "neutral-solid": {
+      "$value": "{color.ink.900}",
+      "$description": "Neutral solid fill (indigo-tinted ink). Label: neutral-on-solid."
+    },
+    "neutral-solid-hover": {
+      "$value": "{color.ink.800}",
+      "$description": "Neutral solid on hover (lighter, like slate 800 before)."
+    },
+    "neutral-solid-press": {
+      "$value": "{color.ink.950}",
+      "$description": "Neutral solid pressed, solid border and gradient end."
+    },
+    "neutral-on-solid": {
+      "$value": "{color.white}",
+      "$description": "Label on the neutral solid."
+    },
+    "neutral-surface": {
+      "$value": "{color.ink.50}",
+      "$description": "Neutral soft fill."
+    },
+    "neutral-surface-hover": {
+      "$value": "{color.ink.100}",
+      "$description": "Neutral soft fill on hover."
+    },
+    "neutral-surface-press": {
+      "$value": "{color.ink.200}",
+      "$description": "Neutral soft fill pressed."
+    },
+    "neutral-border": {
+      "$value": "{color.ink.300}",
+      "$description": "Neutral badge and alert hairline."
+    },
+    "neutral-text": {
+      "$value": "{color.ink.700}",
+      "$description": "Neutral control label on light surfaces."
+    },
+    "neutral-text-strong": {
+      "$value": "{color.ink.800}",
+      "$description": "Neutral link and strong label."
+    },
+    "neutral-outline": {
+      "$value": "{color.ink.500}",
+      "$description": "Neutral outline border (3:1 on light surfaces)."
+    },
+    "neutral-solid-dark": {
+      "$value": "{color.ink.50}",
+      "$description": "Neutral solid on dark surfaces: inverts to a light fill so it stays visible."
+    },
+    "neutral-solid-hover-dark": {
+      "$value": "{color.ink.100}",
+      "$description": "Neutral dark solid on hover."
+    },
+    "neutral-solid-press-dark": {
+      "$value": "{color.ink.200}",
+      "$description": "Neutral dark solid pressed and its border."
+    },
+    "neutral-on-solid-dark": {
+      "$value": "{color.ink.900}",
+      "$description": "Label on the inverted neutral solid."
+    },
+    "neutral-text-dark": {
+      "$value": "{color.ink.300}",
+      "$description": "Neutral control label on dark surfaces."
+    },
+    "neutral-text-strong-dark": {
+      "$value": "{color.ink.200}",
+      "$description": "Neutral link and strong label on dark surfaces."
+    },
+    "neutral-outline-dark": {
+      "$value": "{color.ink.400}",
+      "$description": "Neutral outline border on dark surfaces (3:1)."
+    },
+    "neutral-surface-dark": {
+      "$value": "{color.ink.900}",
+      "$description": "Neutral soft fill on dark surfaces."
+    },
+    "neutral-surface-hover-dark": {
+      "$value": "{color.ink.800}",
+      "$description": "Neutral soft fill on hover, dark surfaces."
+    },
+    "neutral-surface-press-dark": {
+      "$value": "{color.ink.700}",
+      "$description": "Neutral soft fill pressed, dark surfaces."
+    },
+    "neutral-border-dark": {
+      "$value": "{color.ink.800}",
+      "$description": "Neutral hairline on dark surfaces."
+    },
     "text-heading": { "$value": "{color.slate.900}" },
     "text-strong": { "$value": "{color.slate.800}" },
     "text-secondary": { "$value": "{color.slate.600}" },
@@ -59,6 +463,46 @@
     "border": { "$value": "{color.slate.200}" },
     "border-light": { "$value": "{color.slate.200}" },
     "border-subtle": { "$value": "{color.slate.100}" },
-    "focus": { "$value": "{color.indigo.600}" }
+    "focus": { "$value": "{color.indigo.600}" },
+    "focus-dark": {
+      "$value": "{color.indigo.400}",
+      "$description": "Focus ring on dark surfaces (indigo 600 is below 3:1 on slate 900)."
+    },
+    "surface-dark": {
+      "$value": "{color.slate.900}",
+      "$description": "Dark page and card surface. Every *-dark pair is checked against it."
+    },
+    "background-dark": {
+      "$value": "{color.slate.950}",
+      "$description": "Dark app background."
+    },
+    "surface-hover-dark": {
+      "$value": "{color.slate.800}",
+      "$description": "Dark hover surface."
+    },
+    "border-dark": {
+      "$value": "{color.slate.700}",
+      "$description": "Dark hairline."
+    },
+    "text-heading-dark": {
+      "$value": "{color.slate.50}",
+      "$description": "Headings on dark surfaces."
+    },
+    "text-body-dark": {
+      "$value": "{color.slate.300}",
+      "$description": "Body text on dark surfaces."
+    },
+    "text-secondary-dark": {
+      "$value": "{color.slate.300}",
+      "$description": "Secondary text on dark surfaces."
+    },
+    "text-muted-dark": {
+      "$value": "{color.slate.400}",
+      "$description": "Muted text on dark surfaces: the dark floor (slate 500 is 3.75:1 on slate 900)."
+    },
+    "text-disabled-dark": {
+      "$value": "{color.slate.600}",
+      "$description": "Disabled text on dark surfaces (exempt from 1.4.3)."
+    }
   }
 }

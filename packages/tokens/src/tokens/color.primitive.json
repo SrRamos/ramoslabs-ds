@@ -29,7 +29,56 @@
       "900": { "$value": "#0f172a" },
       "950": { "$value": "#020617" }
     },
+    "ink": {
+      "$description": "Ink, an indigo-tinted neutral (OKLCH h 277, low chroma). Neutral tone.",
+      "50": {
+        "$value": "#f6f6fb",
+        "$description": "Soft surface; solid fill on dark surfaces. oklch(97.5% 0.007 286)."
+      },
+      "100": {
+        "$value": "#ecedf5",
+        "$description": "Soft surface on hover; dark solid hover. oklch(94.8% 0.011 280)."
+      },
+      "200": {
+        "$value": "#e1e3ed",
+        "$description": "Soft surface pressed; dark solid pressed; dark-surface strong text. oklch(91.7% 0.014 277)."
+      },
+      "300": {
+        "$value": "#d1d3e0",
+        "$description": "Alert border; text on dark surfaces. oklch(86.9% 0.018 279)."
+      },
+      "400": {
+        "$value": "#8e91a2",
+        "$description": "Outline border on dark surfaces. oklch(66.0% 0.025 278)."
+      },
+      "500": {
+        "$value": "#6d7083",
+        "$description": "Outline border on light surfaces. oklch(54.9% 0.030 278)."
+      },
+      "600": {
+        "$value": "#56596e",
+        "$description": "Secondary text. oklch(46.9% 0.034 279)."
+      },
+      "700": {
+        "$value": "#42465b",
+        "$description": "Text and icons on light surfaces; dark-surface soft pressed. oklch(39.9% 0.036 276)."
+      },
+      "800": {
+        "$value": "#303448",
+        "$description": "Strong text; solid hover; dark-surface soft hover and border. oklch(33.0% 0.036 276)."
+      },
+      "900": {
+        "$value": "#222538",
+        "$description": "Solid fill (neutral); dark-surface soft fill; label on the dark solid. oklch(27.1% 0.036 277)."
+      },
+      "950": {
+        "$value": "#151829",
+        "$description": "Solid pressed and solid border. oklch(21.5% 0.034 276)."
+      }
+    },
     "emerald": {
+      "$description": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH jade family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
+      "$deprecated": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH jade family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
       "50": { "$value": "#ecfdf5" },
       "100": { "$value": "#d1fae5" },
       "200": { "$value": "#a7f3d0" },
@@ -43,6 +92,8 @@
       "950": { "$value": "#022c22" }
     },
     "green": {
+      "$description": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH jade family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
+      "$deprecated": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH jade family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
       "50": { "$value": "#f0fdf4" },
       "100": { "$value": "#dcfce7" },
       "200": { "$value": "#bbf7d0" },
@@ -56,6 +107,8 @@
       "950": { "$value": "#052e16" }
     },
     "amber": {
+      "$description": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH honey family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
+      "$deprecated": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH honey family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
       "50": { "$value": "#fffbeb" },
       "100": { "$value": "#fef3c7" },
       "200": { "$value": "#fde68a" },
@@ -69,6 +122,8 @@
       "950": { "$value": "#451a03" }
     },
     "red": {
+      "$description": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH crimson family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
+      "$deprecated": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH crimson family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
       "50": { "$value": "#fef2f2" },
       "100": { "$value": "#fee2e2" },
       "200": { "$value": "#fecaca" },
@@ -82,6 +137,8 @@
       "950": { "$value": "#450a0a" }
     },
     "blue": {
+      "$description": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH cerulean family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
+      "$deprecated": "Deprecated. No semantic token or component uses it since the Harmonic status palette; status colours moved to the OKLCH cerulean family (docs/research/status-tones-2026.md). Kept so consumers do not break; removal is planned for a future major.",
       "50": { "$value": "#eff6ff" },
       "100": { "$value": "#dbeafe" },
       "200": { "$value": "#bfdbfe" },
@@ -106,6 +163,194 @@
       "800": { "$value": "#5b21b6" },
       "900": { "$value": "#4c1d95" },
       "950": { "$value": "#2e1065" }
+    },
+    "jade": {
+      "$description": "Jade (OKLCH h 160). Success.",
+      "50": {
+        "$value": "#effaf3",
+        "$description": "Soft surface. oklch(97.5% 0.015 158)."
+      },
+      "100": {
+        "$value": "#e1f3e8",
+        "$description": "Soft surface on hover. oklch(94.8% 0.024 159)."
+      },
+      "200": {
+        "$value": "#cce8d7",
+        "$description": "Soft surface pressed, alert border; dark-surface strong text. oklch(90.6% 0.037 159)."
+      },
+      "300": {
+        "$value": "#7ed3a7",
+        "$description": "Text and icons on dark surfaces. oklch(80.1% 0.105 160)."
+      },
+      "400": {
+        "$value": "#3f9a6f",
+        "$description": "Outline border (3:1 on white and on slate 900). oklch(61.9% 0.109 160)."
+      },
+      "500": {
+        "$value": "#03734a",
+        "$description": "Solid fill (success); white label. oklch(49.0% 0.110 160)."
+      },
+      "600": {
+        "$value": "#006641",
+        "$description": "Solid hover and gradient end; text and icons on light surfaces. oklch(45.0% 0.102 160)."
+      },
+      "700": {
+        "$value": "#005636",
+        "$description": "Solid pressed and solid border; strong text on light surfaces. oklch(40.0% 0.091 160)."
+      },
+      "800": {
+        "$value": "#1c422f",
+        "$description": "Dark-surface soft pressed and border. oklch(34.5% 0.055 160)."
+      },
+      "900": {
+        "$value": "#153424",
+        "$description": "Dark-surface soft hover. oklch(29.6% 0.048 159)."
+      },
+      "950": {
+        "$value": "#0e271b",
+        "$description": "Dark-surface soft fill. oklch(24.8% 0.039 161)."
+      }
+    },
+    "honey": {
+      "$description": "Honey (OKLCH h 80 fill; text steps drift to h 55 so dark amber never turns olive). Warning.",
+      "50": {
+        "$value": "#fcf6e9",
+        "$description": "Soft surface. oklch(97.4% 0.018 86)."
+      },
+      "100": {
+        "$value": "#f8edd5",
+        "$description": "Soft surface on hover. oklch(94.8% 0.034 86)."
+      },
+      "200": {
+        "$value": "#f3ddb3",
+        "$description": "Soft surface pressed, alert border; dark-surface strong text. oklch(90.5% 0.060 83)."
+      },
+      "300": {
+        "$value": "#f8be52",
+        "$description": "Solid fill (warning) with the 950 ink label; text and icons on dark surfaces. oklch(83.5% 0.140 80)."
+      },
+      "400": {
+        "$value": "#efb146",
+        "$description": "Solid hover and gradient end. oklch(80.0% 0.140 78)."
+      },
+      "500": {
+        "$value": "#e4a038",
+        "$description": "Solid pressed and solid border. oklch(75.4% 0.140 74)."
+      },
+      "600": {
+        "$value": "#b66c18",
+        "$description": "Outline border (3:1 on white and on slate 900); AA-safe glyph fill. oklch(60.1% 0.130 62)."
+      },
+      "700": {
+        "$value": "#8d4908",
+        "$description": "Text and icons on light surfaces. oklch(48.0% 0.114 56)."
+      },
+      "800": {
+        "$value": "#723606",
+        "$description": "Strong text on light surfaces. oklch(40.5% 0.100 52)."
+      },
+      "900": {
+        "$value": "#442911",
+        "$description": "Dark-surface soft hover, pressed and border. oklch(30.9% 0.054 60)."
+      },
+      "950": {
+        "$value": "#331d0b",
+        "$description": "Ink label on the solid fill; dark-surface soft fill. oklch(25.6% 0.045 58)."
+      }
+    },
+    "crimson": {
+      "$description": "Crimson (OKLCH h 22). Error.",
+      "50": {
+        "$value": "#fff4f3",
+        "$description": "Soft surface. oklch(97.5% 0.012 24)."
+      },
+      "100": {
+        "$value": "#ffe7e6",
+        "$description": "Soft surface on hover. oklch(94.7% 0.026 21)."
+      },
+      "200": {
+        "$value": "#ffd4d1",
+        "$description": "Soft surface pressed, alert border; dark-surface strong text. oklch(90.6% 0.049 23)."
+      },
+      "300": {
+        "$value": "#ffa09c",
+        "$description": "Text and icons on dark surfaces. oklch(80.1% 0.114 23)."
+      },
+      "400": {
+        "$value": "#db5054",
+        "$description": "Outline border (3:1 on white and on slate 900). oklch(62.0% 0.174 22)."
+      },
+      "500": {
+        "$value": "#ae212f",
+        "$description": "Solid fill (error); white label. oklch(49.0% 0.175 22)."
+      },
+      "600": {
+        "$value": "#9e1326",
+        "$description": "Solid hover and gradient end; text and icons on light surfaces. oklch(45.0% 0.170 22)."
+      },
+      "700": {
+        "$value": "#89061d",
+        "$description": "Solid pressed and solid border; strong text on light surfaces. oklch(40.1% 0.157 22)."
+      },
+      "800": {
+        "$value": "#5f2324",
+        "$description": "Dark-surface soft pressed and border. oklch(34.6% 0.088 22)."
+      },
+      "900": {
+        "$value": "#4b1b1b",
+        "$description": "Dark-surface soft hover. oklch(29.6% 0.073 23)."
+      },
+      "950": {
+        "$value": "#3b1313",
+        "$description": "Dark-surface soft fill. oklch(25.1% 0.064 23)."
+      }
+    },
+    "cerulean": {
+      "$description": "Cerulean (OKLCH h 245), 32 degrees clear of indigo. Info.",
+      "50": {
+        "$value": "#f0f8ff",
+        "$description": "Soft surface. oklch(97.5% 0.013 244)."
+      },
+      "100": {
+        "$value": "#e0f0ff",
+        "$description": "Soft surface on hover. oklch(94.8% 0.026 246)."
+      },
+      "200": {
+        "$value": "#c9e3fb",
+        "$description": "Soft surface pressed, alert border; dark-surface strong text. oklch(90.4% 0.043 246)."
+      },
+      "300": {
+        "$value": "#80c5ff",
+        "$description": "Text and icons on dark surfaces. oklch(80.0% 0.108 245)."
+      },
+      "400": {
+        "$value": "#348dcf",
+        "$description": "Outline border (3:1 on white and on slate 900). oklch(62.1% 0.130 245)."
+      },
+      "500": {
+        "$value": "#0065a1",
+        "$description": "Solid fill (info); white label. oklch(49.0% 0.124 245)."
+      },
+      "600": {
+        "$value": "#00598f",
+        "$description": "Solid hover and gradient end; text and icons on light surfaces. oklch(44.9% 0.113 245)."
+      },
+      "700": {
+        "$value": "#004b7a",
+        "$description": "Solid pressed and solid border; strong text on light surfaces. oklch(39.9% 0.101 245)."
+      },
+      "800": {
+        "$value": "#183c59",
+        "$description": "Dark-surface soft pressed and border. oklch(34.5% 0.066 246)."
+      },
+      "900": {
+        "$value": "#122f46",
+        "$description": "Dark-surface soft hover. oklch(29.5% 0.055 245)."
+      },
+      "950": {
+        "$value": "#0c2436",
+        "$description": "Dark-surface soft fill. oklch(25.1% 0.045 244)."
+      }
     }
   }
 }

@@ -258,9 +258,9 @@ const page = pages.find((p) => p.id === 'modals')!
       <div class="md-ra-head"><Icon name="description" class="md-material" />role dialog</div>
       <p class="md-ra-body">Forms, pickers, multi-step content. Nothing is destroyed by opening it. Focus the first field or the primary control.</p>
     </div>
-    <div class="md-ra-card avoid" style={{ border: '1px solid var(--color-red-200)', background: 'var(--color-red-50)' }}>
-      <div class="md-ra-head" style={{ color: 'var(--color-red-800)' }}><Icon name="warning" class="md-material" style="color:var(--color-red-700)" />role alertdialog</div>
-      <p class="md-ra-body" style={{ color: 'var(--color-red-900)' }}>Delete, cancel, wipe, anything irreversible. Requires <code>aria-describedby</code> on the message, and focus starts on Cancel.</p>
+    <div class="md-ra-card avoid" style={{ border: '1px solid var(--color-error-border)', background: 'var(--color-error-surface)' }}>
+      <div class="md-ra-head" style={{ color: 'var(--color-error-text)' }}><Icon name="warning" class="md-material" style="color:var(--color-error-text)" />role alertdialog</div>
+      <p class="md-ra-body" style={{ color: 'var(--color-error-text-strong)' }}>Delete, cancel, wipe, anything irreversible. Requires <code>aria-describedby</code> on the message, and focus starts on Cancel.</p>
     </div>
   </div>
 
@@ -658,7 +658,7 @@ const page = pages.find((p) => p.id === 'modals')!
 
     <div class="md-rule">
       <p class="md-rule-line"><span class="md-rule-tag rule">Rule</span>Reserve the <code>--color-error</code> family for the destructive path and keep everything else mono-indigo; radius 6px on buttons, 12px on the dialog.</p>
-      <p class="md-rule-line"><span class="md-rule-tag why">Why</span>Red carries a single meaning, danger, so it stays out of chrome and buttons that do not destroy. The destructive fill uses red 600 because red 500 clears only 3.76:1 under white text.</p>
+      <p class="md-rule-line"><span class="md-rule-tag why">Why</span>Red carries a single meaning, danger, so it stays out of chrome and buttons that do not destroy. The destructive fill is the error solid, crimson 500, at 6.87:1 under white text.</p>
     </div>
 
   </div>
@@ -818,13 +818,13 @@ const page = pages.find((p) => p.id === 'modals')!
 
   /* Warning-toned callout still stays inside the indigo family for chrome,
      using the error token only where the meaning is truly destructive. */
-  .md-callout.warn { background: var(--color-red-50); border-color: var(--color-red-200); }
-  .md-callout.warn .md-material { color: var(--color-red-700); }
-  .md-callout.warn .md-callout-text { color: var(--color-red-800); }
-  .md-callout.warn .md-callout-text strong { color: var(--color-red-900); }
+  .md-callout.warn { background: var(--color-error-surface); border-color: var(--color-error-border); }
+  .md-callout.warn .md-material { color: var(--color-error-text); }
+  .md-callout.warn .md-callout-text { color: var(--color-error-text); }
+  .md-callout.warn .md-callout-text strong { color: var(--color-error-text-strong); }
   .md-callout.warn .md-callout-text code {
     background: rgba(153,27,27,0.08);
-    color: var(--color-red-800);
+    color: var(--color-error-text);
   }
 
   /* ===== DEMO LAB ===== */
@@ -912,25 +912,25 @@ const page = pages.find((p) => p.id === 'modals')!
   .md-btn-ghost:active { background: var(--color-slate-100); }
 
   /* Destructive uses the error token with an AA-safe red under white text.
-     Red 500 is only 3.76:1 on white, so the fill is red 600 (var(--color-red-600)). */
+     The fill is the error solid (crimson 500), 6.87:1 under white. */
   .md-btn-danger {
-    background: var(--color-error-strong, var(--color-red-600));
+    background: var(--color-error-solid);
     color: var(--color-white);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-danger:hover { background: var(--color-red-700); }
+    .md-btn-danger:hover { background: var(--color-error-solid-hover); }
   }
-  .md-btn-danger:active { background: var(--color-red-800); }
+  .md-btn-danger:active { background: var(--color-error-solid-press); }
 
   .md-btn-danger-outline {
     background: var(--color-white);
-    color: var(--color-red-800);
-    border: 1px solid var(--color-red-200);
+    color: var(--color-error-text);
+    border: 1px solid var(--color-error-border);
   }
   @media (hover: hover) and (pointer: fine) {
-    .md-btn-danger-outline:hover { background: var(--color-red-50); }
+    .md-btn-danger-outline:hover { background: var(--color-error-surface); }
   }
-  .md-btn-danger-outline:active { background: var(--color-red-100); }
+  .md-btn-danger-outline:active { background: var(--color-error-surface-hover); }
 
   /* ===== NATIVE DIALOG ===== */
   .md-dialog {
@@ -1031,8 +1031,8 @@ const page = pages.find((p) => p.id === 'modals')!
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 8px;
-    background: var(--color-red-50);
-    color: var(--color-red-700);
+    background: var(--color-error-surface);
+    color: var(--color-error-text);
     flex-shrink: 0;
   }
   .md-alert-mark .md-material { font-size: 1.35rem; }
@@ -1465,9 +1465,9 @@ const page = pages.find((p) => p.id === 'modals')!
     border-bottom: 1px solid var(--color-slate-600);
   }
   .md-code-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .md-code-dot.red { background: var(--color-red-500); }
-  .md-code-dot.yellow { background: var(--color-amber-500); }
-  .md-code-dot.green { background: var(--color-green-500); }
+  .md-code-dot.red { background: var(--color-crimson-400); }
+  .md-code-dot.yellow { background: var(--color-honey-300); }
+  .md-code-dot.green { background: var(--color-jade-400); }
   .md-code-lang {
     margin-left: auto;
     font-family: 'SF Mono', 'Monaco', monospace;
@@ -1486,7 +1486,7 @@ const page = pages.find((p) => p.id === 'modals')!
     overflow-x: auto;
   }
   .md-code .comment { color: var(--color-slate-400); font-style: italic; }
-  .md-code .tag { color: var(--color-amber-400); }
+  .md-code .tag { color: var(--color-honey-300); }
   .md-code .attr { color: var(--color-indigo-300); }
   .md-code .value { color: var(--color-indigo-200); }
   .md-code .function { color: var(--color-violet-300); }

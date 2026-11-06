@@ -137,7 +137,7 @@ On a phone a centered modal usually becomes a bottom sheet, a panel that rises f
 **Why:** the trap is legal under WCAG 2.1.2 only while the user can untrap with Escape or Cancel, and animating a dialog drops the automatic focus return.
 
 **Rule:** Reserve the `--color-error` family for the destructive path and keep everything else mono-indigo; radius 6px on buttons, 12px on the dialog.
-**Why:** red carries a single meaning, danger, so it stays out of chrome. The destructive fill uses red 600 (`#dc2626`) because red 500 clears only 3.76:1 under white text.
+**Why:** red carries a single meaning, danger, so it stays out of chrome. The destructive fill is `--color-error-solid` (crimson 500, `#ae212f`), 6.86:1 under white text.
 
 ## Sources
 

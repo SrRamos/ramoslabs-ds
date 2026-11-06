@@ -10,10 +10,14 @@
 // The border is an identifying boundary (3:1) only when the fill is transparent or a surface token.
 
 /** @typedef {'rest' | 'hover' | 'active'} CssState */
+/** @typedef {'light' | 'dark'} Theme */
 /** @typedef {{ component: string, variant: string, tone: string, state: CssState,
  *   fg?: string, bg?: string, border?: string }} CssPair */
 /** @typedef {{ component: string | null, variant: string | null, tone: string | null,
- *   state: CssState | null, order: number, decls: Record<string, string> }} CssRule */
+ *   state: CssState | null, theme: Theme, order: number, decls: Record<string, string> }} CssRule */
+
+/** A selector scoped under a `[data-theme='dark']` ancestor belongs to the dark theme. @param {string} sel @returns {Theme} */
+export const themeOf = (sel) => (/\[data-theme=['"]?dark/.test(sel) ? 'dark' : 'light');
 
 /** Splits `text` on top-level `sep` (outside parens, brackets and quotes). @param {string} text @param {string} sep */
 function splitTop(text, sep) {
@@ -86,6 +90,7 @@ function addRule(prelude, body, order, out) {
       variant,
       tone,
       state: /** @type {CssState | null} */ (pseudo ?? null),
+      theme: themeOf(sel),
       order: order++,
       decls,
     });
@@ -163,7 +168,7 @@ export function extractUiPairs(css) {
 }
 
 /**
- * @typedef {{ component: string, part: string, layer: string, selector: string, prop: 'color' | 'border-color', token: string }} CssLayerUse
+ * @typedef {{ component: string, part: string, layer: string, selector: string, prop: 'color' | 'border-color', token: string, theme: Theme }} CssLayerUse
  * A `color` or `border-color` declared in a component or state layer (SHOULD-2). Each is checked against every
  * page surface: `color` at 4.5:1, `border-color` at 3:1. Rules in `sj.variant` that name a `[data-tone]` belong
  * to the variant matrix and are skipped here; toneless variant rules (state kinds) are read.
@@ -214,6 +219,7 @@ export function extractLayerUses(css) {
               selector: sel.trim().replace(/\s+/g, ' '),
               prop,
               token,
+              theme: themeOf(sel),
             });
           }
         }
@@ -235,13 +241,21 @@ function tokenOf(v) {
 }
 
 /**
+ * Light reads only the unscoped rules. Dark reads both: a `[data-theme='dark']` rule overrides the light rule
+ * with the same number of constraints (it also comes later in the source, as in the real cascade).
  * @param {string} css built stylesheet
+ * @param {{ theme?: Theme }} [options]
  * @returns {CssPair[]} one entry per (component, variant, tone, state) that resolves a color or fill
  */
-export function extractPairs(css) {
-  const rules = rulesIn(css);
+export function extractPairs(css, options = {}) {
+  const theme = options.theme ?? 'light';
+  const rules = rulesIn(css).filter((r) => theme === 'dark' || r.theme === 'light');
+  // Dark covers only components that declare dark rules: a light-only component makes no dark claim.
+  const darkComponents = new Set(rules.filter((r) => r.theme === 'dark').map((r) => r.component));
   const combos = new Set(
-    rules.filter((r) => r.variant && r.tone).map((r) => `${r.component}|${r.variant}|${r.tone}`),
+    rules
+      .filter((r) => r.variant && r.tone && (theme === 'light' || darkComponents.has(r.component)))
+      .map((r) => `${r.component}|${r.variant}|${r.tone}`),
   );
   /** @type {CssPair[]} */
   const out = [];
@@ -257,7 +271,12 @@ export function extractPairs(css) {
             (!r.state || r.state === state),
         )
         .map((r) => ({ r, n: [r.variant, r.tone, r.state].filter(Boolean).length }))
-        .sort((a, b) => a.n - b.n || a.r.order - b.r.order);
+        .sort(
+          (a, b) =>
+            a.n - b.n ||
+            Number(a.r.theme === 'dark') - Number(b.r.theme === 'dark') ||
+            a.r.order - b.r.order,
+        );
       /** @type {Record<string, string>} */
       const d = {};
       for (const { r } of hit) Object.assign(d, r.decls);

@@ -537,9 +537,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .mo-code-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .mo-code-dot.red { background: #ef4444; }
-  .mo-code-dot.yellow { background: #f59e0b; }
-  .mo-code-dot.green { background: #22c55e; }
+  .mo-code-dot.red { background: var(--color-crimson-400); }
+  .mo-code-dot.yellow { background: var(--color-honey-300); }
+  .mo-code-dot.green { background: var(--color-jade-400); }
 
   .mo-code-lang {
     margin-left: auto;
@@ -561,7 +561,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
 
   .mo-code .comment { color: #94a3b8; font-style: italic; }
-  .mo-code .selector { color: #fbbf24; }
+  .mo-code .selector { color: var(--color-honey-300); }
   .mo-code .property { color: #7dd3fc; }
   .mo-code .value { color: #a5f3fc; }
   .mo-code .function { color: #c4b5fd; }

@@ -1168,8 +1168,8 @@ const page = pages.find((p) => p.id === 'data-tables')!
     background: var(--color-slate-50);
   }
 
-  .dt-demo-label.rec { color: var(--color-green-800); }
-  .dt-demo-label.avoid { color: var(--color-red-800); }
+  .dt-demo-label.rec { color: var(--color-success-text); }
+  .dt-demo-label.avoid { color: var(--color-error-text); }
 
   /* ===== THE DATA TABLE ITSELF ===== */
   .dt-scroll {
@@ -1254,8 +1254,8 @@ const page = pages.find((p) => p.id === 'data-tables')!
     padding: 0.15rem 0.5rem;
     white-space: nowrap;
   }
-  .dt-badge.paid { color: var(--color-green-800); background: var(--color-green-50); border: 1px solid var(--color-green-200); }
-  .dt-badge.pending { color: var(--color-amber-800); background: var(--color-amber-50); border: 1px solid var(--color-amber-200); }
+  .dt-badge.paid { color: var(--color-success-text); background: var(--color-success-surface); border: 1px solid var(--color-success-border); }
+  .dt-badge.pending { color: var(--color-warning-text); background: var(--color-warning-surface); border: 1px solid var(--color-warning-border); }
   .dt-badge.failed { color: var(--color-error-text); background: var(--color-error-surface); border: 1px solid var(--color-error-border); }
 
   /* ===== SORT BUTTON ===== */
@@ -1549,7 +1549,7 @@ const page = pages.find((p) => p.id === 'data-tables')!
     border-bottom: 1px solid var(--color-border);
     vertical-align: top;
   }
-  .dt-fork th.a { background: var(--color-green-50); }
+  .dt-fork th.a { background: var(--color-success-surface); }
   .dt-fork th.b { background: var(--color-indigo-50); }
   .dt-fork td {
     padding: 0.7rem 1rem;
@@ -1734,9 +1734,9 @@ const page = pages.find((p) => p.id === 'data-tables')!
     padding: 0.15rem 0.55rem;
     white-space: nowrap;
   }
-  .dt-verdict.def { color: var(--color-green-800); background: var(--color-green-50); border: 1px solid var(--color-green-200); }
+  .dt-verdict.def { color: var(--color-success-text); background: var(--color-success-surface); border: 1px solid var(--color-success-border); }
   .dt-verdict.alt { color: var(--color-indigo-700); background: var(--color-indigo-50); border: 1px solid var(--color-indigo-200); }
-  .dt-verdict.care { color: var(--color-amber-800); background: var(--color-amber-50); border: 1px solid var(--color-amber-200); }
+  .dt-verdict.care { color: var(--color-warning-text); background: var(--color-warning-surface); border: 1px solid var(--color-warning-border); }
   .dt-pattern-body {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 0.8125rem;
@@ -1751,8 +1751,8 @@ const page = pages.find((p) => p.id === 'data-tables')!
     border-top: 1px dashed var(--color-slate-200);
     padding-top: 0.5rem;
   }
-  .dt-pattern-tradeoff b { color: var(--color-green-800); }
-  .dt-pattern-tradeoff i { color: var(--color-red-800); font-style: normal; font-weight: 600; }
+  .dt-pattern-tradeoff b { color: var(--color-success-text); }
+  .dt-pattern-tradeoff i { color: var(--color-error-text); font-style: normal; font-weight: 600; }
 
   /* Sticky first column inside the responsive demo */
   table.dt-data.sticky-first th.stick,
@@ -1924,9 +1924,9 @@ const page = pages.find((p) => p.id === 'data-tables')!
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6rem;
     font-weight: 700;
-    color: var(--color-amber-800);
-    background: var(--color-amber-50);
-    border: 1px solid var(--color-amber-200);
+    color: var(--color-warning-text);
+    background: var(--color-warning-surface);
+    border: 1px solid var(--color-warning-border);
     border-radius: 4px;
     padding: 0.05rem 0.35rem;
     text-transform: uppercase;
