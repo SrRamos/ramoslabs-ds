@@ -11,7 +11,7 @@ const page = pages.find((p) => p.id === 'data-tables')!
 
 <div class="dt-hero">
   <p class="dt-hero-eyebrow">Patterns / Data Tables</p>
-  <h1>The semantics are the component. Everything else is paint.</h1>
+  <h1>The semantics are the component<br />Everything else is paint</h1>
   <p>
     A data table is a native <strong>&lt;table&gt;</strong> first, always. Density, sorting, pagination and the mobile transform are behavior layered on top of correct structure, they are not a substitute for it. Reach for an ARIA role only when native HTML genuinely cannot express the interaction. This page is the last word on how we build tables that stay readable, operable by keyboard, and announced correctly by a screen reader, from a 320px phone to a wide analytics grid.
   </p>
@@ -39,11 +39,11 @@ const page = pages.find((p) => p.id === 'data-tables')!
 
   <div class="dt-rules">
     <div class="dt-rule">
-      <p class="dt-rule-line"><span class="dt-tag rule">Rule</span> Use a real <code>&lt;table&gt;</code> with <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code>, and <code>&lt;th scope="col"&gt;</code> for column headers plus <code>&lt;th scope="row"&gt;</code> for each row's identifying cell.</p>
+      <p class="dt-rule-line"><span class="dt-tag rule">Rule</span> Use a real <code>&lt;table&gt;</code> with <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code>, and <code>&lt;th scope="col"&gt;</code> for column headers plus <code>&lt;th scope="row"&gt;</code> for each row’s identifying cell.</p>
       <p class="dt-rule-why"><span class="dt-tag why">Why</span> WCAG 2.1 SC 1.3.1 Info and Relationships (Level A) requires that structure conveyed visually be programmatically determinable. Scope is inferred in simple tables, but MDN and GOV.UK both advise setting it explicitly, because some assistive technology draws the wrong inference.</p>
     </div>
     <div class="dt-rule">
-      <p class="dt-rule-line"><span class="dt-tag rule">Rule</span> The <code>&lt;caption&gt;</code> is the table's accessible name. Give every table one.</p>
+      <p class="dt-rule-line"><span class="dt-tag rule">Rule</span> The <code>&lt;caption&gt;</code> is the table’s accessible name. Give every table one.</p>
       <p class="dt-rule-why"><span class="dt-tag why">Why</span> GOV.UK: a caption helps users find, navigate and understand tables. It lets a screen reader user decide whether to read on or skip the table entirely.</p>
     </div>
     <div class="dt-rule">
@@ -277,7 +277,7 @@ const page = pages.find((p) => p.id === 'data-tables')!
   </div>
 
   <p class="dt-text">
-    Anchor row height to IBM Carbon's five-tier scale, the most complete published density system. Ship at least two densities: a comfortable default around 48px, which is touch and low-vision friendlier, and a compact opt-in around 32px for power users comparing many rows at once. Never ship compact only.
+    Anchor row height to IBM Carbon’s five-tier scale, the most complete published density system. Ship at least two densities: a comfortable default around 48px, which is touch and low-vision friendlier, and a compact opt-in around 32px for power users comparing many rows at once. Never ship compact only.
   </p>
 
   <div class="dt-ref-scroll">
@@ -383,7 +383,7 @@ const page = pages.find((p) => p.id === 'data-tables')!
       </thead>
       <tbody>
         <tr><td>Numbers</td><td>Right-align, <code>tabular-nums</code>, group thousands. Keep a shared unit in the header, <code>Price (COP)</code>, not repeated in every cell.</td></tr>
-        <tr><td>Currency</td><td>Right-align, one consistent symbol and decimal count per column. For this product's COP context, whole pesos.</td></tr>
+        <tr><td>Currency</td><td>Right-align, one consistent symbol and decimal count per column. For this product’s COP context, whole pesos.</td></tr>
         <tr><td>Dates</td><td>One format per column. Wrap the machine value in <code>&lt;time datetime="..."&gt;</code>. Show relative dates only when a precise value is available on hover or focus.</td></tr>
         <tr><td>Text</td><td>Left-align. Decide truncate or wrap per column, not per table.</td></tr>
         <tr><td>Empty cells</td><td>Use an explicit placeholder, <span class="dt-null">an em value</span> shown as a dash, with an accessible meaning, never a blank cell that reads as nothing.</td></tr>
@@ -712,7 +712,7 @@ const page = pages.find((p) => p.id === 'data-tables')!
   <div class="dt-callout">
     <Icon name="rule" class="dt-material" />
     <p class="dt-callout-text">
-      <strong>The conflict, resolved in favor of Roselli.</strong> CSS-Tricks (Coyier, 2011) claims the <code>display:block</code> card transform stays accessible. Roselli's assistive-technology testing (2017, updated 2024) shows the opposite: as soon as the table becomes <code>display:block</code>, screen readers stop treating it as a table. We trust Roselli, the AT-tested specialist. If you use the card pattern you must repair semantics with ARIA roles. Otherwise, prefer Pattern A.
+      <strong>The conflict, resolved in favor of Roselli.</strong> CSS-Tricks (Coyier, 2011) claims the <code>display:block</code> card transform stays accessible. Roselli’s assistive-technology testing (2017, updated 2024) shows the opposite: as soon as the table becomes <code>display:block</code>, screen readers stop treating it as a table. We trust Roselli, the AT-tested specialist. If you use the card pattern you must repair semantics with ARIA roles. Otherwise, prefer Pattern A.
     </p>
   </div>
 
@@ -836,7 +836,7 @@ const page = pages.find((p) => p.id === 'data-tables')!
   <div class="dt-callout">
     <Icon name="info" class="dt-material" />
     <p class="dt-callout-text">
-      <strong>Why the region needs <code>tabindex="0"</code>.</strong> Roselli's under-engineered pattern wraps the table in <code>&lt;div role="region" aria-labelledby="..." tabindex="0"&gt;</code>. The tabindex satisfies WCAG SC 2.1.1 Keyboard so a keyboard user can tab to the region and scroll it. Avoid CSS scroll-snap here: it clips cells, and users need to compare adjacent cells freely.
+      <strong>Why the region needs <code>tabindex="0"</code>.</strong> Roselli’s under-engineered pattern wraps the table in <code>&lt;div role="region" aria-labelledby="..." tabindex="0"&gt;</code>. The tabindex satisfies WCAG SC 2.1.1 Keyboard so a keyboard user can tab to the region and scroll it. Avoid CSS scroll-snap here: it clips cells, and users need to compare adjacent cells freely.
     </p>
   </div>
 </div>
@@ -902,7 +902,7 @@ const page = pages.find((p) => p.id === 'data-tables')!
       <strong>IBM Carbon Design System.</strong> Row-height tiers Compact 24, Short 32, Medium 40, Default 48, Tall 64 from GitHub issue #8874, and the row-size versus expanded-content bug from issue #4796. github.com/carbon-design-system/carbon <span class="dt-note">values from repo issues, rendered docs are a SPA</span>
     </li>
     <li>
-      <strong>CSS-Tricks, Responsive Data Tables (Coyier, 2011).</strong> The <code>display:block</code> card transform with <code>td::before</code> labels. Cited for the pattern, and for the accessibility claim that Roselli's testing contradicts. Resolved in favor of Roselli. css-tricks.com/responsive-data-tables
+      <strong>CSS-Tricks, Responsive Data Tables (Coyier, 2011).</strong> The <code>display:block</code> card transform with <code>td::before</code> labels. Cited for the pattern, and for the accessibility claim that Roselli’s testing contradicts. Resolved in favor of Roselli. css-tricks.com/responsive-data-tables
     </li>
     <li>
       House rules layered on the cited guidance, not verbatim claims: the width-driven zebra-versus-dividers heuristic (NN/g endorses the aids but publishes no winner), <code>tabular-nums</code> on numeric columns (standard CSS, GOV.UK documents only right-alignment), the checkbox plus indeterminate select-all with bulk announce, the sticky-header guidance, and the filter, states and virtualization accessibility hooks (standard ARIA and WCAG).

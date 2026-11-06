@@ -677,7 +677,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <div className="vt-hero">
   <p className="vt-hero-eyebrow">Patterns / Voice &amp; Tone</p>
-  <h1>One voice, every screen. The tone reads the room.</h1>
+  <h1>One voice, every screen<br />The tone reads the room</h1>
   <p>
     Every label, empty state, and error is the product talking, and the words are not a coat applied after the design; <strong>they are the design</strong>. The voice never changes. The tone bends to the moment: warm at a win, calm at a break, plain when it counts.
   </p>
@@ -752,7 +752,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="vt-dim">
       <div className="vt-dim-ends"><span>Respectful</span><span className="here">Respectful</span><span>Irreverent</span></div>
       <div className="vt-dim-track"><span className="vt-dim-marker" style={{ left: '12%' }}></span></div>
-      <p className="vt-dim-note">Never at the user's expense. No sarcasm in errors, no jokes where they are stuck.</p>
+      <p className="vt-dim-note">Never at the user’s expense. No sarcasm in errors, no jokes where they are stuck.</p>
     </div>
     <div className="vt-dim">
       <div className="vt-dim-ends"><span>Enthusiastic</span><span className="here">Measured, warm at wins</span><span>Matter-of-fact</span></div>
@@ -793,7 +793,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <h2 className="vt-principle-title">Human, Not Robotic</h2>
   </div>
   <p className="vt-lede">
-    Machine copy hides in the passive voice and the system's point of view: "an error occurred". Human copy says "you" and "we", takes responsibility, and prefers the active voice so it is always clear who does what. It sounds like one careful person helping another.
+    Machine copy hides in the passive voice and the system’s point of view: "an error occurred". Human copy says "you" and "we", takes responsibility, and prefers the active voice so it is always clear who does what. It sounds like one careful person helping another.
   </p>
   <p className="vt-lede">
     Human does not mean chatty; warmth comes from plainness, not exclamation marks. The test: read the line aloud. If no real person would say it to another across a desk, rewrite it.
@@ -934,6 +934,27 @@ import { Meta } from '@storybook/addon-docs/blocks';
       </ul>
     </div>
   </div>
+
+  <div className="vt-rule-label">Headings &amp; punctuation</div>
+  <p className="vt-section-sub" style={{ marginBottom: '0.25rem' }}>
+    Two typographic rules for headings and body copy in Plus Jakarta Sans. Each states the rule, then the reason.
+  </p>
+  <div className="vt-pair">
+    <div className="vt-pair-col do">
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">check_circle</span> Recommended</div>
+      <ul className="vt-pair-list">
+        <li><span className="say">Design for the content, not the device</span><span className="why"><b>Rule:</b> end a heading without a full stop, and set a multi-sentence heading as one idea per line with no period, using a line break between them. <b>Why:</b> a trailing period in a heading adds visual noise, and Plus Jakarta Sans has no kern pair for a letter plus a period at display weights, so the stop floats away from the word.</span></li>
+        <li><span className="say">You don’t choose a size</span><span className="why"><b>Rule:</b> write apostrophes as the typographic ’, never the straight &#39;. <b>Why:</b> straight quotes look detached in Plus Jakarta Sans.</span></li>
+      </ul>
+    </div>
+    <div className="vt-pair-col dont">
+      <div className="vt-pair-head"><span className="vt-material" aria-hidden="true">cancel</span> Avoid</div>
+      <ul className="vt-pair-list">
+        <li><span className="say">Design for the content, not the device&#46;</span><span className="why"><b>Rule:</b> do not close a heading, or any line of it, with a period. <b>Why:</b> it reads as a gap before the stop and adds noise a heading does not need.</span></li>
+        <li><span className="say">You don&#39;t choose a size</span><span className="why"><b>Rule:</b> do not use the straight apostrophe in copy. <b>Why:</b> it sits apart from the letters in this typeface.</span></li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 {/* ============================================ */}
@@ -1006,14 +1027,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="vt-section-label">The hardest lines to get right</div>
   <h2 className="vt-section-title">Writing Errors People Can Act On</h2>
   <p className="vt-section-sub">
-    Error copy is tested hardest, because the reader is already stuck. A good message answers three questions in the user's words: <strong>what happened, why (if it helps), and how to fix it.</strong> Everything else, blame, apology theatre, codes, jargon, is noise to wade through.
+    Error copy is tested hardest, because the reader is already stuck. A good message answers three questions in the user’s words: <strong>what happened, why (if it helps), and how to fix it.</strong> Everything else, blame, apology theatre, codes, jargon, is noise to wade through.
   </p>
 
   <div className="vt-anatomy">
     <div className="vt-anatomy-step">
       <div className="vt-anatomy-n">01</div>
       <div className="vt-anatomy-title">What happened</div>
-      <p className="vt-anatomy-text">Name the problem in plain words, from the user's side. "This card was declined", not "Gateway returned 402".</p>
+      <p className="vt-anatomy-text">Name the problem in plain words, from the user’s side. "This card was declined", not "Gateway returned 402".</p>
     </div>
     <div className="vt-anatomy-step">
       <div className="vt-anatomy-n">02</div>
@@ -1091,7 +1112,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
     <div className="vt-rule-item">
       <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Write in the active voice and speak to the reader as "you".</p>
-      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>The passive voice and the system's point of view sound like a machine, not a person.</p>
+      <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>The passive voice and the system’s point of view sound like a machine, not a person.</p>
     </div>
     <div className="vt-rule-item">
       <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Keep every line plain enough to read at a glance.</p>
@@ -1102,7 +1123,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>"An error occurred" or a raw code leaves the reader stuck at a wall.</p>
     </div>
     <div className="vt-rule-item">
-      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Match the register to the reader's moment, not the team's.</p>
+      <p className="vt-rule-stmt"><span className="vt-rule-tag">Rule</span>Match the register to the reader’s moment, not the team’s.</p>
       <p className="vt-rule-why"><span className="vt-rule-tag why">Why</span>Cheer on a destructive step, or a buried consequence, breaks trust exactly where it counts.</p>
     </div>
     <div className="vt-rule-item">
@@ -1168,7 +1189,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <strong>Shopify Polaris, content guidelines.</strong> Product voice and tone, actionable and accurate language, and ready patterns for buttons, banners, and empty states. <code>polaris.shopify.com/content</code>
     </li>
     <li>
-      <strong>Deceptive patterns.</strong> Brignull's deceptive.design catalogue and NN/g's "Deceptive Patterns" name the harms this system's copy ethics prohibit: false urgency, confirmshaming, hidden cost. <code>deceptive.design</code> · <code>nngroup.com/articles/deceptive-patterns</code>
+      <strong>Deceptive patterns.</strong> Brignull’s deceptive.design catalogue and NN/g’s "Deceptive Patterns" name the harms this system’s copy ethics prohibit: false urgency, confirmshaming, hidden cost. <code>deceptive.design</code> · <code>nngroup.com/articles/deceptive-patterns</code>
     </li>
     <li>
       <span className="vt-spa">Note</span> Exact article URLs may shift as these sites are reorganized; each landing page above resolves to the current version. The four-dial positions chosen for our voice, and the framing of copy ethics as hard prohibitions rather than guidance, are house doctrine, not claims made by the cited authors.

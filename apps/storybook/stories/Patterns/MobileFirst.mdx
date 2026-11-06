@@ -970,7 +970,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <div className="mf-hero">
   <p className="mf-hero-eyebrow">Patterns / Mobile First</p>
-  <h1>The same content does not deserve the same container.</h1>
+  <h1>The same content does not deserve the same container</h1>
   <p>
     A modal is centered on a desktop because a cursor can reach the middle of a wide screen without effort. A thumb on a 375px phone cannot. So the mobile equivalent of a centered modal is a <strong>bottom sheet anchored to the bottom edge</strong>, where the thumb already rests. This page is the last word on how we relocate desktop patterns downward, into the reachable zone, anchored to the safe area, and how we keep every one of them operable by keyboard and announced correctly. It is not a coat of paint on the desktop layout. It is a different container for the same content.
   </p>
@@ -993,7 +993,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="mf-text">
-    Patterns that lean on a cursor, on hover, and on a wide screen (a centered modal, a hover menu, a tooltip, a right click, a persistent sidebar) are ergonomically hostile to a thumb. Steven Hoober's field study of 1,333 observations found that <strong>49% of people use a phone one-handed</strong>, with the thumb as the dominant actuator, and that grip changes "very often, sometimes every few seconds." The comfortable arc of the thumb covers the lower half of the screen; the top edge forces a regrip. That single fact drives the whole map: primary actions and navigation move <strong>down</strong>, anchored to the bottom edge, inside the safe area.
+    Patterns that lean on a cursor, on hover, and on a wide screen (a centered modal, a hover menu, a tooltip, a right click, a persistent sidebar) are ergonomically hostile to a thumb. Steven Hoober’s field study of 1,333 observations found that <strong>49% of people use a phone one-handed</strong>, with the thumb as the dominant actuator, and that grip changes "very often, sometimes every few seconds." The comfortable arc of the thumb covers the lower half of the screen; the top edge forces a regrip. That single fact drives the whole map: primary actions and navigation move <strong>down</strong>, anchored to the bottom edge, inside the safe area.
   </p>
 
   <div className="mf-scroll">
@@ -1072,11 +1072,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <div className="mf-section">
   <div className="mf-section-header">
     <span className="mf-section-number">2</span>
-    <h2 className="mf-section-title">Bottom sheet, the modal's mobile form</h2>
+    <h2 className="mf-section-title">Bottom sheet, the modal’s mobile form</h2>
   </div>
 
   <p className="mf-text">
-    Material draws two variants. A <strong>standard bottom sheet</strong> "co-exists with the screen's main UI region and allows for simultaneously viewing and interacting with both regions," so it carries no scrim, good for secondary content that stays on screen while the main area scrolls. A <strong>modal bottom sheet</strong> "present[s] a set of choices while blocking interaction with the rest of the screen," sits above a scrim, and is the direct replacement for a centered modal and for inline menus. iOS expresses the same idea as a sheet with resizable detents (medium and large snap points) and an optional grabber, treated here as an iOS convention rather than a verbatim rule (see Sources).
+    Material draws two variants. A <strong>standard bottom sheet</strong> "co-exists with the screen’s main UI region and allows for simultaneously viewing and interacting with both regions," so it carries no scrim, good for secondary content that stays on screen while the main area scrolls. A <strong>modal bottom sheet</strong> "present[s] a set of choices while blocking interaction with the rest of the screen," sits above a scrim, and is the direct replacement for a centered modal and for inline menus. iOS expresses the same idea as a sheet with resizable detents (medium and large snap points) and an optional grabber, treated here as an iOS convention rather than a verbatim rule (see Sources).
   </p>
 
   <p className="mf-text">
@@ -1176,10 +1176,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="mf-text">
-    Hoober's field data is the anchor here. One-handed use: <strong>49%</strong> (67% right thumb, 33% left). Cradling: 36%. Two-handed: 15%, and 90% of that in portrait. When cradling, the thumb is on the screen 72% of the time. And, verbatim: users "change the way they're holding their phone very often, sometimes every few seconds." The thumb owns the lower band; the top edge is the stretch zone. So the primary action lives at the bottom, pinned (sticky), full width or aligned to the dominant thumb.
+    Hoober’s field data is the anchor here. One-handed use: <strong>49%</strong> (67% right thumb, 33% left). Cradling: 36%. Two-handed: 15%, and 90% of that in portrait. When cradling, the thumb is on the screen 72% of the time. And, verbatim: users "change the way they’re holding their phone very often, sometimes every few seconds." The thumb owns the lower band; the top edge is the stretch zone. So the primary action lives at the bottom, pinned (sticky), full width or aligned to the dominant thumb.
   </p>
 
-  <p className="mf-text"><strong>Target size: the legal floor is not the goal.</strong> WCAG 2.5.8 (AA) sets the minimum at "24 by 24 CSS pixels," but that is a floor with exceptions, not a target. NN/g recommends far more: interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide," and targets must be big enough and then also spaced well enough. Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material's 48dp and NN/g's 1cm. Never the bare 24px for a primary action. A compact control may look smaller than that if it extends an invisible hit area to 44px under <code>(pointer: coarse)</code>, without changing layout; keep adjacent compact buttons at least 8px apart so those areas do not reach a neighbour.</p>
+  <p className="mf-text"><strong>Target size: the legal floor is not the goal.</strong> WCAG 2.5.8 (AA) sets the minimum at "24 by 24 CSS pixels," but that is a floor with exceptions, not a target. NN/g recommends far more: interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide," and targets must be big enough and then also spaced well enough. Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material’s 48dp and NN/g’s 1cm. Never the bare 24px for a primary action. A compact control may look smaller than that if it extends an invisible hit area to 44px under <code>(pointer: coarse)</code>, without changing layout; keep adjacent compact buttons at least 8px apart so those areas do not reach a neighbour.</p>
 
   <div className="mf-rules">
     <div className="mf-rule">
@@ -1187,7 +1187,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <p className="mf-rule-why"><span className="mf-tag why">Why</span> Hoober: the thumb comfortably covers the lower half, and grip shifts constantly. A bottom-pinned action is reachable regardless of the current grip.</p>
     </div>
     <div className="mf-rule">
-      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Pad the sticky bar's bottom with <code>calc(base + env(safe-area-inset-bottom))</code>.</p>
+      <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Pad the sticky bar’s bottom with <code>calc(base + env(safe-area-inset-bottom))</code>.</p>
       <p className="mf-rule-why"><span className="mf-tag why">Why</span> MDN gives this exact pattern so "fixed app toolbar buttons are not obscured" by the home indicator. Section 7 covers the insets.</p>
     </div>
   </div>
@@ -1277,7 +1277,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="mf-text">
-    Material: snackbars "provide brief messages about app processes at the bottom of the screen" and "shouldn't interrupt the user experience." Only one shows at a time (a new one dismisses any previous), it may carry a single optional action such as undo or retry, and it is "the preferred mechanism for displaying feedback messages," with toast reserved for when a snackbar cannot be used. It replaces the desktop toast that lived in the top-right corner. On web: a region with <code>role="status"</code> (or <code>aria-live="polite"</code>) anchored to the bottom with <code>env(safe-area-inset-bottom)</code>; if it has an action, that action is a real <code>&lt;button&gt;</code> reachable by keyboard, and never dependent on a swipe (Section 6).
+    Material: snackbars "provide brief messages about app processes at the bottom of the screen" and "shouldn’t interrupt the user experience." Only one shows at a time (a new one dismisses any previous), it may carry a single optional action such as undo or retry, and it is "the preferred mechanism for displaying feedback messages," with toast reserved for when a snackbar cannot be used. It replaces the desktop toast that lived in the top-right corner. On web: a region with <code>role="status"</code> (or <code>aria-live="polite"</code>) anchored to the bottom with <code>env(safe-area-inset-bottom)</code>; if it has an action, that action is a real <code>&lt;button&gt;</code> reachable by keyboard, and never dependent on a swipe (Section 6).
   </p>
 
   <div className="mf-demo">
@@ -1323,7 +1323,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="mf-text">
-    Swipe to delete, long press for a context menu, pull to refresh, drag on a sheet's snap points: all useful, all mobile-native. The non-negotiable rule: <strong>a gesture can never be the only path.</strong> There must always be an alternative that works with a single pointer and with a keyboard.
+    Swipe to delete, long press for a context menu, pull to refresh, drag on a sheet’s snap points: all useful, all mobile-native. The non-negotiable rule: <strong>a gesture can never be the only path.</strong> There must always be an alternative that works with a single pointer and with a keyboard.
   </p>
 
   <div className="mf-rules">
@@ -1333,7 +1333,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     </div>
     <div className="mf-rule">
       <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Any dragging movement has a no-drag alternative.</p>
-      <p className="mf-rule-why"><span className="mf-tag why">Why</span> WCAG 2.5.7 Dragging Movements (2.2, Level AA): achievable "by a single pointer without dragging," for example tapping buttons to move items or picking from a pop-up menu. The sheet's drag handle needs buttons or taps that expand, collapse, and close it.</p>
+      <p className="mf-rule-why"><span className="mf-tag why">Why</span> WCAG 2.5.7 Dragging Movements (2.2, Level AA): achievable "by a single pointer without dragging," for example tapping buttons to move items or picking from a pop-up menu. The sheet’s drag handle needs buttons or taps that expand, collapse, and close it.</p>
     </div>
     <div className="mf-rule">
       <p className="mf-rule-line"><span className="mf-tag rule">Rule</span> Long press replaces right click only alongside a visible overflow control.</p>
@@ -1412,7 +1412,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="mf-text">
-    Do not read <code>navigator.userAgent</code>. Detect the capability of the input and the size of the viewport, because that is what actually decides whether these patterns fit. MDN's <code>pointer</code> media feature tests the primary pointer's accuracy: <code>coarse</code> is "a pointing device of limited accuracy, such as a finger on a touchscreen," <code>fine</code> is "an accurate pointing device, such as a mouse," and <code>none</code> is no pointer at all. Use <code>pointer</code> for the primary device and <code>any-pointer</code> for any device present.
+    Do not read <code>navigator.userAgent</code>. Detect the capability of the input and the size of the viewport, because that is what actually decides whether these patterns fit. MDN’s <code>pointer</code> media feature tests the primary pointer’s accuracy: <code>coarse</code> is "a pointing device of limited accuracy, such as a finger on a touchscreen," <code>fine</code> is "an accurate pointing device, such as a mouse," and <code>none</code> is no pointer at all. Use <code>pointer</code> for the primary device and <code>any-pointer</code> for any device present.
   </p>
 
   <div className="mf-code">

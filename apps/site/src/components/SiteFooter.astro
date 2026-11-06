@@ -42,7 +42,12 @@ const licenseUrl = `${SITE.repo}/blob/main/LICENSE`
     margin: 0;
     font-size: 0.78rem;
   }
+  /* Astro compresses the whitespace between the inline links, so there is no break opportunity; a wrapping flex row gives one. */
   .rl-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: var(--space-1, 0.25rem);
     margin-top: var(--space-3, 0.75rem);
     font-size: 0.78rem;
   }

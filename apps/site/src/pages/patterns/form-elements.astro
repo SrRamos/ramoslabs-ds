@@ -7,7 +7,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
 <BaseLayout title={page.title} description={page.summary} path={page.path}>
 <div class="fe-hero">
   <p class="fe-hero-eyebrow">Patterns / Form Elements</p>
-  <h1>Every screen persuades. The form is where they act.</h1>
+  <h1>Every screen persuades<br />The form is where they act</h1>
   <p>
     It is also the single easiest place to lose the people the rest of the product worked to earn. A hidden label, the wrong keyboard, an error that only says <strong>"invalid"</strong>: each is a small tax, and forms are where small taxes compound into abandonment. This page is the last word on how we build them. The spine is one rule: <strong>reach for the native control first</strong>, tune it with the right attributes, and build custom only where the platform genuinely falls short.
   </p>
@@ -43,7 +43,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
   <div class="fe-callout">
     <Icon name="info" class="fe-material" />
     <p class="fe-callout-text">
-      <strong>Native controls are hard to style, and that is the whole tension.</strong> web.dev says it plainly: today's HTML form elements are difficult to customize. You can style the field box (border, radius, padding, type) of almost anything. What you cannot reliably restyle cross-browser is the <code>&lt;select&gt;</code> arrow and popup, and the date and time picker widgets. That single limit, not taste, is what pushes a control from native to custom.
+      <strong>Native controls are hard to style, and that is the whole tension.</strong> web.dev says it plainly: today’s HTML form elements are difficult to customize. You can style the field box (border, radius, padding, type) of almost anything. What you cannot reliably restyle cross-browser is the <code>&lt;select&gt;</code> arrow and popup, and the date and time picker widgets. That single limit, not taste, is what pushes a control from native to custom.
     </p>
   </div>
 
@@ -123,7 +123,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
       <tbody>
         <tr>
           <td class="fe-kbd"><code>accent-color</code></td>
-          <td>Tints the control's accent to the brand, keeping native behaviour</td>
+          <td>Tints the control’s accent to the brand, keeping native behaviour</td>
           <td><span class="fe-yes">checkbox, radio, <code>range</code>, <code>progress</code></span></td>
           <td><span class="fe-no">select, date, time, color, file, text</span></td>
         </tr>
@@ -316,7 +316,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
   <div class="fe-callout">
     <Icon name="palette" class="fe-material" />
     <p class="fe-callout-text">
-      <strong>Errors use <code>--color-error</code>, the only warm colour on the page.</strong> Everything interactive stays indigo; red's single job is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so its appearance always means something is wrong.
+      <strong>Errors use <code>--color-error</code>, the only warm colour on the page.</strong> Everything interactive stays indigo; red’s single job is to mark a genuine problem. Do not tint help text, borders or icons red for emphasis. Reserve it, so its appearance always means something is wrong.
     </p>
   </div>
 </div>
@@ -399,7 +399,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
   </div>
 
   <p class="fe-text">
-    Two numbers are non-negotiable. Inputs render at <strong><code>font-size: 16px</code> or larger</strong>, because iOS Safari auto-zooms any field below that on focus, and the fix is the size, never disabling <code>user-scalable</code>, which breaks zoom for everyone. Interactive targets are at least <strong>24 by 24 CSS pixels</strong> to clear WCAG 2.5.8, and the comfortable goal is <strong>44 by 44</strong>, the AAA target size and Apple's minimum. Native UA controls are exempt from the strict measure, which is one more reason to lean native on small screens.
+    Two numbers are non-negotiable. Inputs render at <strong><code>font-size: 16px</code> or larger</strong>, because iOS Safari auto-zooms any field below that on focus, and the fix is the size, never disabling <code>user-scalable</code>, which breaks zoom for everyone. Interactive targets are at least <strong>24 by 24 CSS pixels</strong> to clear WCAG 2.5.8, and the comfortable goal is <strong>44 by 44</strong>, the AAA target size and Apple’s minimum. Native UA controls are exempt from the strict measure, which is one more reason to lean native on small screens.
   </p>
 
   <div class="fe-callout">
@@ -472,7 +472,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
   <div class="fe-callout">
     <Icon name="accessibility_new" class="fe-material" />
     <p class="fe-callout-text">
-      <strong>The label is a click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input's <code>id</code> names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. Group related controls in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> so the group's question is announced too. This is the accessible default, not optional polish.
+      <strong>The label is a click target, for free.</strong> A real <code>&lt;label for&gt;</code> pointed at the input’s <code>id</code> names the field for assistive technology and extends the tap area to the words, so a checkbox becomes far easier to hit. Group related controls in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> so the group’s question is announced too. This is the accessible default, not optional polish.
     </p>
   </div>
 
@@ -1001,7 +1001,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
     </div>
     <ul class="fe-cat-notes">
       <li><Icon name="devices_other" class="fe-material" /> Chips are 44px targets; each removable by keyboard, not hover alone.</li>
-      <li><Icon name="accessibility_new" class="fe-material" /> Input follows <strong>APG Combobox</strong>; each chip's remove button has a label.</li>
+      <li><Icon name="accessibility_new" class="fe-material" /> Input follows <strong>APG Combobox</strong>; each chip’s remove button has a label.</li>
     </ul>
   </div>
 
@@ -1136,7 +1136,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
       <p class="fe-ladder-text"><strong>Can a native control answer it?</strong> A <code>&lt;select&gt;</code>, <code>type="date"</code>, a checkbox. Use it, and keyboard and accessibility come built in.</p>
     </div>
     <div class="fe-ladder-step">
-      <p class="fe-ladder-text"><strong>What is the answer's shape?</strong> Pick the <code>type</code> and <code>inputmode</code> that raise the matching keyboard, add <code>enterkeyhint</code> and the <code>autocomplete</code> token, and brand it with <code>accent-color</code>.</p>
+      <p class="fe-ladder-text"><strong>What is the answer’s shape?</strong> Pick the <code>type</code> and <code>inputmode</code> that raise the matching keyboard, add <code>enterkeyhint</code> and the <code>autocomplete</code> token, and brand it with <code>accent-color</code>.</p>
     </div>
     <div class="fe-ladder-step">
       <p class="fe-ladder-text"><strong>What can go wrong, and how is it fixed?</strong> Write the help and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.</p>
@@ -1185,7 +1185,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
       <strong>Nielsen Norman Group and Baymard Institute.</strong> Placeholders cannot replace labels; error messages must be visible, specific and constructive; single-column forms complete faster and validate on blur. nngroup.com/articles/form-design-placeholders, baymard.com/blog/avoid-multi-column-forms
     </li>
     <li>
-      The reward-while-typing timing and the single-accent, error-only use of <code>--color-error</code> are this system's house rules layered on the cited guidance, not verbatim claims from the authors.
+      The reward-while-typing timing and the single-accent, error-only use of <code>--color-error</code> are this system’s house rules layered on the cited guidance, not verbatim claims from the authors.
     </li>
   </ul>
 </div>
@@ -1916,6 +1916,8 @@ const page = pages.find((p) => p.id === 'form-elements')!
   }
 
   .fe-cat-attrs code {
+    min-width: 0;
+    overflow-wrap: anywhere;
     font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.6875rem;
     color: var(--color-indigo-700);
@@ -1935,6 +1937,7 @@ const page = pages.find((p) => p.id === 'form-elements')!
 
   .fe-cat-notes li {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: 0.45rem;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
