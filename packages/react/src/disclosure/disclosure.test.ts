@@ -127,6 +127,12 @@ describe('structure', () => {
     );
     expect(detailsOf(r).props['data-state']).toBe('open');
   });
+  it('summary without children still renders an empty content part', () => {
+    const r = mount(h(SJDisclosure.Root, { summary: 'More' }));
+    const c = r.root.findByProps({ 'data-part': 'content' });
+    expect(c.type).toBe('div');
+    expect(c.children).toEqual([]);
+  });
   it('classes per part concatenate after the library class; consumer className too', () => {
     const r = mount(
       h(
@@ -285,6 +291,25 @@ describe('exclusive group fallback (supports.detailsName forced false)', () => {
     expect(spies[0]!.mock.calls).toEqual([[{ open: true }], [{ open: false }]]);
     const views = r.root.findAllByType('details').map((d) => d.props['data-state']);
     expect(views).toEqual(['closed', 'open', 'closed']);
+  });
+  it('peers without an id do not collide', () => {
+    const r = mount(
+      h(
+        'div',
+        null,
+        ...[0, 1, 2].map((i) =>
+          h(
+            SJDisclosure.Root,
+            { key: i, name: 'g', defaultOpen: i > 0 },
+            h(SJDisclosure.Trigger, null, 't'),
+          ),
+        ),
+      ),
+      off,
+    );
+    nodes.forEach((n) => (n.id = ''));
+    toggle(r, nodes[0]!, true, 0);
+    expect(nodes.map((n) => n.open)).toEqual([true, false, false]);
   });
   it('members outside the group and unnamed members are left alone', () => {
     const r = mount(

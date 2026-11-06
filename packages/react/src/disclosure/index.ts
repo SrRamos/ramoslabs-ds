@@ -5,7 +5,6 @@
 // `native('open', ...)`. No `aria-expanded` is emitted (registry decision). Nothing here reads `document`
 // in render; the DOM is touched only in effects and in the `closePeers` hook (after a toggle).
 import {
-  Children,
   createContext,
   createElement,
   forwardRef,
@@ -158,19 +157,24 @@ export const SJDisclosureRoot: ForwardRefExoticComponent<
 
   // Owned exclusive-group fallback (engines without native `<details name>`): close the other open
   // members of the group; their own `toggle` then reports, as native does.
-  const closePeers = (rootId: string): void => {
+  const closePeers = (): void => {
     if (runtime.supports.detailsName) return;
     const el = root.current;
     if (!el) return;
     const scope = el.getRootNode() as ParentNode;
     const nodes = Array.from(scope.querySelectorAll<HTMLDetailsElement>('details[name]'));
-    const members: DisclosureMember[] = nodes.map((d) => ({
-      id: d.id,
+    // Index ids: elements without an id (or with duplicates) must not collide.
+    const self = nodes.indexOf(el);
+    if (self < 0) return;
+    const members: DisclosureMember[] = nodes.map((d, i) => ({
+      id: String(i),
       name: d.getAttribute('name'),
       open: d.open,
     }));
-    const close = new Set(peersToClose(rootId, members));
-    for (const d of nodes) if (d !== el && close.has(d.id)) d.open = false;
+    const close = new Set(peersToClose(String(self), members));
+    nodes.forEach((d, i) => {
+      if (i !== self && close.has(String(i))) d.open = false;
+    });
   };
 
   const parts = createDisclosureParts({
@@ -183,16 +187,14 @@ export const SJDisclosureRoot: ForwardRefExoticComponent<
   const ctx: Ctx = { parts, classes };
 
   const body =
-    summary !== undefined && Children.count(children) === 0
-      ? createElement(SJDisclosureTrigger, null, summary)
-      : summary !== undefined
-        ? createElement(
-            Fragment,
-            null,
-            createElement(SJDisclosureTrigger, null, summary),
-            createElement(SJDisclosureContent, null, children),
-          )
-        : children;
+    summary !== undefined
+      ? createElement(
+          Fragment,
+          null,
+          createElement(SJDisclosureTrigger, null, summary),
+          createElement(SJDisclosureContent, null, children),
+        )
+      : children;
   return createElement(
     DisclosureContext.Provider,
     { value: ctx },
