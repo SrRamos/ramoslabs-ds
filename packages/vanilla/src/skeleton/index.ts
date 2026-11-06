@@ -52,7 +52,9 @@ function applyProps(el: Element, props: Props, prev: Set<string>): void {
   for (const a of next) prev.add(a);
 }
 
-function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaSkeletonProps & Bag, never> {
+function createSpec(
+  group: boolean,
+): ComponentSpec<{ state: 'idle' }, never, VanillaSkeletonProps & Bag, never> {
   let model: Skeleton | undefined;
   let current: VanillaSkeletonProps = {};
   let phase: SkeletonPhase = 'idle';
@@ -123,8 +125,8 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaSkeletonPr
   return {
     initial: () => ({ state: 'idle' as const }),
     reduce: (s) => ({ state: s }),
-    // The contract declares liveRegions: the host inserts its region at mount (generated constant).
-    live: skeletonLive,
+    // Only the group announces, so only the group inserts the region at mount (generated constant); a shape stays lazy, as in React and Vue.
+    live: group ? skeletonLive : undefined,
     patch(_view, ctx: Ctx) {
       current = ctx.props();
       ctxRef = ctx;
@@ -181,7 +183,11 @@ export function mountSkeleton(
   el: Element,
   props: VanillaSkeletonProps = {},
 ): SkeletonInstance {
-  const instance = host.mount(el, createSpec(), props as VanillaSkeletonProps & Bag);
+  const instance = host.mount(
+    el,
+    createSpec(props.shape === 'group'),
+    props as VanillaSkeletonProps & Bag,
+  );
   return {
     update: (next: VanillaSkeletonProps) => instance.update(next as VanillaSkeletonProps & Bag),
     destroy: () => instance.destroy(),

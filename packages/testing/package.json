@@ -50,6 +50,10 @@
     "parity:state": "node parity/cli.js --results node_modules/.cache/e2e/state-results.json --expected node_modules/.cache/e2e/state-expected.json --out node_modules/.cache/e2e/parity-state",
     "visual:state": "node specs/state/visual/cli.js check",
     "voiceover:state": "node specs/state/render-voiceover.js",
+    "test:e2e:skeleton": "playwright test -c specs/skeleton/playwright.config.ts",
+    "parity:skeleton": "node parity/cli.js --results node_modules/.cache/e2e/skeleton-results.json --expected node_modules/.cache/e2e/skeleton-expected.json --out node_modules/.cache/e2e/parity-skeleton",
+    "visual:skeleton": "node specs/skeleton/visual/cli.js check",
+    "voiceover:skeleton": "node specs/skeleton/render-voiceover.js",
     "specs:check": "node specs/check.mjs"
   },
   "exports": {
