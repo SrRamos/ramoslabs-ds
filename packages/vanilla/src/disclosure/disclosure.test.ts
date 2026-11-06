@@ -101,6 +101,7 @@ class FakeEl extends EventTarget {
   }
 }
 class FakeDoc extends EventTarget {
+  defaultView: object | null = null;
   readonly details: FakeEl[] = [];
   createElement(tag: string): FakeEl {
     return new FakeEl(tag, this);
@@ -443,6 +444,33 @@ describe('exclusive group fallback (supports.detailsName forced false)', () => {
       await tick();
       expect(roots.map((r) => r.open)).toEqual([true, true]);
     }
+  });
+});
+
+describe('detection at first mount (createHost)', () => {
+  // No explicit `supports`: `detectSupports(doc.defaultView)` runs at the first mount, and `closePeers`
+  // reads the detected value through `ctx.runtime`.
+  it.each([
+    ['engine without HTMLDetailsElement.name', {}, false],
+    ['engine with HTMLDetailsElement.name', { name: '' }, true],
+  ])('%s', async (_l, proto, native) => {
+    let n = 0;
+    const runtime = createRuntime({ target: 'client', idFactory: () => `d${n++}` });
+    const host = createHost(runtime, {
+      liveHost: { create: () => ({ setText: () => undefined }) },
+    });
+    const doc = new FakeDoc();
+    doc.defaultView = { HTMLDetailsElement: { prototype: proto } };
+    const a = doc.createElement('details');
+    const b = doc.createElement('details');
+    mountDisclosure(host, asEl(a), { name: 'g', defaultOpen: true });
+    mountDisclosure(host, asEl(b), { name: 'g' });
+    expect(host.runtime.supports.detailsName).toBe(native);
+    await tick(); // let the toggle from the initial write settle
+    userClick(b);
+    await tick();
+    expect(b.open).toBe(true);
+    expect(a.open).toBe(native); // the adapter closes the peer only without native `name`
   });
 });
 
