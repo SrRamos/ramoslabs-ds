@@ -21,6 +21,8 @@ export interface SJStateOptions {
   title?: string | Node;
   /** Description copy; alternative to the description prop. */
   default?: string | Node;
+  /** Loading variant only: SJSkeleton shapes that mirror the final layout, in place of the default loading visuals. The part is aria-hidden; the heading or announce still speaks once through the live registry. The delay and minimum duration stay on SJSkeleton shape=group, never here. */
+  skeleton?: string | Node;
   /** Next-step controls (SJButton): the first action for first-use, change or clear filters for no-results. */
   actions?: string | Node;
 }

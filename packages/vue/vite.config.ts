@@ -22,6 +22,7 @@ export default defineConfig({
         'popover/index': resolve(__dirname, 'src/popover/index.ts'),
         'tooltip/index': resolve(__dirname, 'src/tooltip/index.ts'),
         'select/index': resolve(__dirname, 'src/select/index.ts'),
+        'skeleton/index': resolve(__dirname, 'src/skeleton/index.ts'),
         'state/index': resolve(__dirname, 'src/state/index.ts'),
         'icon/index': resolve(__dirname, 'src/icon/index.ts'),
       },
