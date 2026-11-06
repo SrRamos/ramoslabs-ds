@@ -132,6 +132,9 @@ export const SJDisclosure = defineComponent({
         {
           ...rootProps,
           open: initialOpen,
+          // The user may toggle `<details>` before hydration, so `open` can legitimately differ from the
+          // server markup; the mount-time report reconciles it. Tell Vue's dev check (3.5+) not to flag it.
+          'data-allow-mismatch': 'attribute',
           ref: (el: unknown) => void (root = el as HTMLDetailsElement | null),
           onVnodeUpdated: syncOpen,
         },
