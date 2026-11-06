@@ -477,6 +477,10 @@
         {
           "part": "error",
           "element": "div"
+        },
+        {
+          "part": "icon",
+          "element": "span"
         }
       ],
       "roles": [],

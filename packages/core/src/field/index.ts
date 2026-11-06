@@ -47,6 +47,7 @@ export interface FieldParts {
   getControlProps(consumer?: Props): Props;
   getHintProps(consumer?: Props): Props;
   getErrorProps(consumer?: Props): Props;
+  getIconProps(consumer?: Props): Props;
   /**
    * Client only, after mount: registers with the form owner (kind unknown). `index` is the control's
    * index in `form.elements` (DOM order); give it so late-mounted or reordered fields keep the right
@@ -80,7 +81,7 @@ export function createField(getProps: () => FieldProps, ctx: FieldContext): Fiel
   let on = false;
   let index: number | undefined;
   const add = () => ctx.form?.register({ key: key(), kind, ...(index !== undefined && { index }) });
-  const part = (name: keyof typeof ids | 'root', own: Props, consumer: Props) =>
+  const part = (name: keyof typeof ids | 'root' | 'icon', own: Props, consumer: Props) =>
     mergeProps(
       consumer,
       { class: `sj-field__${name}`, 'data-part': name, ...own },
@@ -101,6 +102,7 @@ export function createField(getProps: () => FieldProps, ctx: FieldContext): Fiel
     getLabelProps: (consumer = {}) => part('label', { id: ids.label, for: ids.control }, consumer),
     getHintProps: (consumer = {}) => part('hint', { id: ids.hint }, consumer),
     getErrorProps: (consumer = {}) => part('error', { id: ids.error }, consumer),
+    getIconProps: (consumer = {}) => part('icon', { 'aria-hidden': 'true' }, consumer),
     getControlProps(consumer = {}) {
       const p = getProps();
       const e = error();

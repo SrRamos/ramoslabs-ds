@@ -35,7 +35,7 @@ describe('contract', () => {
       ['disabled', 'error', 'errorMessage', 'hasHint', 'id', 'name', 'required'].sort(),
     );
     expect(contract.anatomy.map((a) => a.part).sort()).toEqual(
-      ['control', 'error', 'hint', 'label', 'root'].sort(),
+      ['control', 'error', 'hint', 'icon', 'label', 'root'].sort(),
     );
   });
 });
