@@ -144,3 +144,25 @@ Core (ADR-011): field 0.724 KiB, form 0.699 KiB, input 0.904 KiB gzip, inside th
 - Real-browser coverage of the custom elements (moving children, upgrade order) is `.f`; unit tests use a DOM double.
 
 `sj-form`: `enter` is the Enter label attribute; `action` and `method` are copied to the native `<form>` (test: `action="/post"` reaches the form and is not an Enter label). The input's own `autoSubmit` applies standalone only (core, `field.enterHint()` is final inside a field). The icon part uses core `getIconProps`.
+## W1-C02.c: SJField, SJInput and SJForm Vue adapters
+
+Branch `feature/m4-c02-vue`. Owned: `packages/vue/src/{form,field,input}/**` and tests, this section. Shared files touched (checkbox-adapter precedent): `packages/vue/package.json` (`./form` export; `./field` and `./input` existed), `packages/vue/vite.config.ts` (`form/index` entry), `packages/vue/src/index.ts` and `index.test.ts` (barrel).
+
+- **Layout**: `form/{context,SJForm}.ts`, `field/SJField.ts`, `input/SJInput.ts`, each dir with a pure re-export `index.ts`. The two injection keys (`SJ_FORM`, `SJ_FIELD`) live in `form/context.ts` so no module under `field/` other than `SJField.ts` exists; every non-test `field/` module references the generated `fieldLive` (lint `contract/live-from-contract`). SJField calls `requireLive` at mount guarded by `fieldLive === 'eager'`.
+- **Stores through the shared bridge**: `createForm` and `createInput` own their stores, so `useSJStore` is given `makeStore: () => owner.store` (the existing factory seam) and subscribes/destroys through the runtime bridge (ADR-003). A field registering after mount re-renders inputs because SJInput reads the form snapshot ref in render. Test: 1,000 mount/destroy cycles, created === destroyed stores, listeners back to baseline, no live node left.
+- **Announcement**: SJField calls `field.announce()` after mount (next tick, once the provider attached its host) and `onUpdated`. A standing error at mount is silent; a changed text announces once; clear then repeat announces again after the registry's own 1 s dedupe window. The error element has no `role`/`aria-live`; SSR has no live markup.
+- **Icon part**: `@ramoslabs/icons` cannot be imported by an adapter (ADR-016), so the Lucide `circle-alert` data (the `alert-circle` alias) is inlined (ISC, noted in the source). The `icon` part (`<span class="sj-field__icon" data-part="icon" aria-hidden="true">` holding `SJIcon size="sm"`) was hand-built before #105 landed `getIconProps`. Follow-up: switch to `field.getIconProps()` once #105 lands (identical output).
+- **Label and hint** are prop-or-slot (slot wins); a `hint` prop or slot sets `hasHint` by itself, a blank prop renders nothing. Extra adapter props `label`/`hint` are not in the contract (same as SJCheckbox `label`).
+- **Ids**: `baseId(props.id, useId, runtime.idPrefix + 'sj-field-')`.
+- **`:user-invalid`**: `runtime.supports.userInvalid` (false without a provider) picks the fallback; `reset` listener is added on the control's owning `form` after mount and removed on unmount.
+- **Attributes**: `class`/`style` go to the SJInput root, everything else (value, placeholder, `onInput`, ...) to the control; no `v-model` surface (not in the contract).
+
+### Decisions and open questions
+
+- **Audit round (#110)**: form prop `action` is now `enter` (a native `action` reaches the `<form>`); the OTP autoSubmit workaround is removed (inside a field `enterHint()` is final, core #115); SJField registers with `connect(index)`, the control's index in `form.elements`, and reconnects (old cleanup first) on rename or reorder; the error icon data is the generated `circleAlert`. The old "dynamic order" limit is gone.
+- The icon part now comes from core `getIconProps()` (#105).
+- 3.3.7 auto-population (`prior()`, `offers()`) is not wired to a value or list; core does not set a value (a2), the owner is reachable through the injected context.
+
+### Size (ADR-011, `node packages/testing/size/cli.js`; adapter chunks gzip from `vite build`)
+
+Core: field 0.724 KiB, form 0.699 KiB, input 0.904 KiB. Vue adapter chunks: SJField 1,268 B, SJForm 629 B, SJInput 1,174 B (shared runtime, icon and core chunks excluded).
