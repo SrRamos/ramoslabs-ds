@@ -136,7 +136,7 @@ export const pages: Page[] = [
     path: '/foundations/typography/',
     icon: 'format_size',
     summary:
-      'Three font families, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules',
+      'One typeface, a ten-step size scale, five role recipes, and the weight, leading, tracking, and measure rules',
     contentFile: 'foundations/Typography.md',
   },
   {

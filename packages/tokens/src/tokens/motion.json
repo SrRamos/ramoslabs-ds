@@ -12,5 +12,14 @@
     "out": { "$value": [0, 0, 0.2, 1] },
     "in-out": { "$value": [0.4, 0, 0.2, 1] },
     "spring": { "$value": [0.34, 1.56, 0.64, 1] }
+  },
+  "motion": {
+    "press": {
+      "$type": "number",
+      "scale": {
+        "$value": 0.97,
+        "$description": "Scale of a solid control while pressed (SJButton). Not applied under prefers-reduced-motion."
+      }
+    }
   }
 }

@@ -31,9 +31,7 @@
       "devDependencies": {
         "@astrojs/sitemap": "^3.7.0",
         "@astrojs/vue": "^7.0.0",
-        "@fontsource-variable/red-hat-display": "^5.2.0",
         "@fontsource-variable/roboto": "^5.2.0",
-        "@fontsource-variable/rubik": "^5.2.0",
         "@ramoslabs/contracts": "workspace:*",
         "astro": "^7.0.0",
         "postcss-html": "^1.8.0",
@@ -456,11 +454,7 @@
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.7.3", "", { "dependencies": { "@eslint/core": "^1.2.1", "levn": "^0.4.1" } }, "sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q=="],
 
-    "@fontsource-variable/red-hat-display": ["@fontsource-variable/red-hat-display@5.2.8", "", {}, "sha512-OslUyiQ5y9MqU5G020NbJALqY2obalyCoxy+0f9mU2tXmhw35uFTnNQvncuOooxXApKnGCadKh6sdhpSnOAV8Q=="],
-
     "@fontsource-variable/roboto": ["@fontsource-variable/roboto@5.2.10", "", {}, "sha512-LJ0iLg6aHbLzN515gyHzmdTqJzd9NlI95cCg1DW0F5G7KkFqRLBBKBbqEJx4nSu4aby3IKmw3ZH6Fe928IfaSQ=="],
-
-    "@fontsource-variable/rubik": ["@fontsource-variable/rubik@5.2.8", "", {}, "sha512-vGDExLzB4a2Fj9mca5LqNoA2ZKcU9o+x5FEBLte/nxYkCB9hOQwZS6ZlItUv+Ssn7YMzKauGuI/Po+YueFuZbg=="],
 
     "@guidepup/guidepup": ["@guidepup/guidepup@0.38.0", "", { "dependencies": { "dbus-native": "^0.15.1", "debug": "^4.4.3", "plist": "^4.0.0" } }, "sha512-BESjF92DTIaw451unpFxzIfd39WwfqY9x3UUs0f+0r20KotR7u5Q+s3B4IwWAsMKHc7e3G7X47JKjMes8sxMHw=="],
 

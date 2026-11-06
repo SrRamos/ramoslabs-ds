@@ -11,7 +11,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     --muted: #64748b;
     --accent: #4f46e5;
     --line: #e6e8eb;
-    font-family: 'Rubik', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: var(--ink-2);
   }
 
@@ -33,7 +33,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     margin: 0 0 1rem;
   }
   .ty-hero h1 {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: #ffffff;
     font-size: clamp(2.25rem, 5vw + 1rem, 3.5rem);
     font-weight: 900;
@@ -61,7 +61,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     letter-spacing: 0.1em;
   }
   .ty-h2 {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 1.625rem;
     font-weight: 800;
     color: var(--ink);
@@ -193,7 +193,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   }
   .ty-table td { font-size: 0.8125rem; color: var(--ink-3); }
   .ty-table tr:last-child td { border-bottom: none; }
-  .ty-table .role { font-family: 'Red Hat Display', system-ui, sans-serif; font-weight: 700; color: var(--ink); }
+  .ty-table .role { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 700; color: var(--ink); }
   .ty-table code { font-family: 'SF Mono', 'Monaco', monospace; font-size: 0.75rem; color: var(--accent); }
 
   /* ---------- Axes ---------- */
@@ -205,7 +205,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     padding: 1.25rem 1.5rem;
   }
   .ty-axis-title {
-    font-family: 'Red Hat Display', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     color: var(--ink);
@@ -299,19 +299,18 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <p className="ty-hero-eyebrow">Foundations / Typography</p>
   <h1>You don't choose a size. You choose a role.</h1>
   <p>
-    RamosLabs types on <strong>three families</strong> and <strong>one ten-step scale</strong>. Every piece of text
+    RamosLabs types on <strong>one typeface</strong> and <strong>one ten-step scale</strong>. Every piece of text
     takes a role, Display, Headline, Title, Body or Label, and the role hands it a family, a size, a weight, a
-    line-height and a tracking. Body and UI are <strong>Rubik</strong>, headlines are <strong>Red Hat Display</strong>,
+    line-height and a tracking. Body, UI and headlines are all <strong>Plus Jakarta Sans</strong>, set at different weights and tracking,
     and <strong>Roboto</strong> waits as the fallback. Pick the role; the type takes care of itself.
   </p>
 </div>
 
 <div className="ty-section">
   <span className="ty-num">01</span>
-  <h2 className="ty-h2">Three voices</h2>
+  <h2 className="ty-h2">One typeface, one fallback</h2>
   <p className="ty-intro">
-    Two families with a job, plus a safe substitute. One geometric face with presence for headings, one humanist face
-    that disappears into reading, one metric-friendly fallback for when the others cannot load.
+    One geometric humanist typeface carries headings, body and controls, so hierarchy comes from role, weight and tracking and never from a second face. Roboto is the safe substitute. Arabic and Hebrew text falls back to IBM Plex Sans Arabic and Noto Sans Hebrew, loaded only when those scripts appear.
   </p>
 
   <div className="ty-fam-grid">
@@ -321,15 +320,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <span className="ty-fam-token">--font-family-display</span>
       </div>
       <div className="ty-fam-body">
-        <div className="ty-fam-specimen" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontWeight: 800, letterSpacing: '-0.025em' }}>
-          Red Hat Display
+        <div className="ty-fam-specimen" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 800, letterSpacing: '-0.025em' }}>
+          Plus Jakarta Sans
         </div>
-        <div className="ty-fam-glyphs" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif" }}>
+        <div className="ty-fam-glyphs" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
           AaBbCc 0123456789 &amp; Your next adventure starts here
         </div>
         <p className="ty-fam-note">
-          Geometric, slightly condensed, built to carry weight above 36px. Reserved for Display and Headline. Below the
-          Title role its personality stops helping and starts costing legibility.
+          The same typeface as the body, set heavier and tighter (bold to extrabold, negative tracking) for Display and Headline. One family, so a heading and the paragraph under it always share proportions.
         </p>
       </div>
     </div>
@@ -340,15 +338,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
         <span className="ty-fam-token">--font-family-sans</span>
       </div>
       <div className="ty-fam-body">
-        <div className="ty-fam-specimen" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontWeight: 500 }}>
-          Rubik
+        <div className="ty-fam-specimen" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 500 }}>
+          Plus Jakarta Sans
         </div>
-        <div className="ty-fam-glyphs" style={{ fontFamily: "'Rubik', system-ui, sans-serif" }}>
+        <div className="ty-fam-glyphs" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
           AaBbCc 0123456789 &amp; Good typography is invisible and lets the reader keep moving.
         </div>
         <p className="ty-fam-note">
-          Humanist, large x-height, open apertures, which is what keeps letters distinct at small sizes on real screens.
-          The default for the whole product. If you are unsure which family to use, it is this one.
+          Geometric humanist, large x-height, open apertures, which keeps letters distinct at small sizes. It runs wider than most UI faces, so leave room: a long label wraps instead of clipping. The default for the whole product. If you are unsure which family to use, it is this one.
         </p>
       </div>
     </div>
@@ -367,7 +364,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </div>
         <p className="ty-fam-note">
           A metric-compatible substitute for dense system UI, embedded documents, or while the web fonts load. Use it
-          for a whole block on its own, never mixed with Rubik, since it is a stand-in, not a third accent.
+          for a whole block on its own, never mixed with Plus Jakarta Sans, since it is a stand-in, not a third accent.
         </p>
       </div>
     </div>
@@ -386,52 +383,52 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-6xl</span>
       <span className="ty-pill">Display</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '3.75rem', fontWeight: 800, letterSpacing: '-0.025em' }}>3.75rem 60px</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '3.75rem', fontWeight: 800, letterSpacing: '-0.025em' }}>3.75rem 60px</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-5xl</span>
       <span className="ty-pill">Display</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '3rem', fontWeight: 800, letterSpacing: '-0.025em' }}>3rem 48px</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '3rem', fontWeight: 800, letterSpacing: '-0.025em' }}>3rem 48px</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-4xl</span>
       <span className="ty-pill">Display</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '2.25rem', fontWeight: 700 }}>2.25rem 36px</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '2.25rem', fontWeight: 700 }}>2.25rem 36px</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-3xl</span>
       <span className="ty-pill">Headline</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '1.875rem', fontWeight: 700 }}>1.875rem 30px</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '1.875rem', fontWeight: 700 }}>1.875rem 30px</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-2xl</span>
       <span className="ty-pill">Headline</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '1.5rem', fontWeight: 700 }}>1.5rem 24px</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '1.5rem', fontWeight: 700 }}>1.5rem 24px</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-xl</span>
       <span className="ty-pill">Title</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '1.25rem', fontWeight: 600 }}>1.25rem 20px</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '1.25rem', fontWeight: 600 }}>1.25rem 20px</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-lg</span>
       <span className="ty-pill">Title</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '1.125rem', fontWeight: 600 }}>1.125rem 18px</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '1.125rem', fontWeight: 600 }}>1.125rem 18px</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-base</span>
       <span className="ty-pill">Body</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '1rem', fontWeight: 400 }}>1rem 16px, the body reading floor</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '1rem', fontWeight: 400 }}>1rem 16px, the body reading floor</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-sm</span>
       <span className="ty-pill">Label</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '0.875rem', fontWeight: 500 }}>0.875rem 14px, helper and labels</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '0.875rem', fontWeight: 500 }}>0.875rem 14px, helper and labels</span>
     </div>
     <div className="ty-scale-row">
       <span className="ty-scale-tok">--font-size-xs</span>
       <span className="ty-pill">Label</span>
-      <span className="ty-scale-sample" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '0.75rem', fontWeight: 500 }}>0.75rem 12px, metadata only</span>
+      <span className="ty-scale-sample" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '0.75rem', fontWeight: 500 }}>0.75rem 12px, metadata only</span>
     </div>
   </div>
 </div>
@@ -458,14 +455,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
       <tbody>
         <tr>
           <td><span className="role">Display</span></td>
-          <td>Red Hat Display</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>bold</code> / <code>extrabold</code></td>
           <td><code>none</code> / <code>tight</code></td>
           <td><code>tighter</code> / <code>tight</code></td>
         </tr>
         <tr>
           <td><span className="role">Headline</span></td>
-          <td>Red Hat Display</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>bold</code></td>
           <td><code>tight</code> / <code>snug</code></td>
           <td><code>tight</code></td>
@@ -479,14 +476,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
         </tr>
         <tr>
           <td><span className="role">Body</span></td>
-          <td>Rubik</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>normal</code></td>
           <td><code>normal</code> / <code>relaxed</code></td>
           <td><code>normal</code></td>
         </tr>
         <tr>
           <td><span className="role">Label</span></td>
-          <td>Rubik</td>
+          <td>Plus Jakarta Sans</td>
           <td><code>medium</code> / <code>semibold</code></td>
           <td><code>none</code> / <code>snug</code></td>
           <td><code>wide</code> / <code>wider</code></td>
@@ -508,11 +505,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="ty-axis">
       <div className="ty-axis-title">Weight, a working range of five</div>
       <div className="ty-weights">
-        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontWeight: 400 }}>Aa</div><div className="ty-weight-l">400 body</div></div>
-        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontWeight: 500 }}>Aa</div><div className="ty-weight-l">500 label</div></div>
-        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontWeight: 600 }}>Aa</div><div className="ty-weight-l">600 title</div></div>
-        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontWeight: 700 }}>Aa</div><div className="ty-weight-l">700 head</div></div>
-        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontWeight: 800 }}>Aa</div><div className="ty-weight-l">800 display</div></div>
+        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 400 }}>Aa</div><div className="ty-weight-l">400 body</div></div>
+        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 500 }}>Aa</div><div className="ty-weight-l">500 label</div></div>
+        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 600 }}>Aa</div><div className="ty-weight-l">600 title</div></div>
+        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 700 }}>Aa</div><div className="ty-weight-l">700 head</div></div>
+        <div className="ty-weight"><div className="ty-weight-g" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 800 }}>Aa</div><div className="ty-weight-l">800 display</div></div>
       </div>
       <p className="ty-axis-note">
         The scale runs 100 to 800.<br />
@@ -543,15 +540,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     <div className="ty-axis">
       <div className="ty-axis-title">Tracking, tight for big, wide for caps</div>
       <div className="ty-track-row">
-        <span style={{ fontFamily: "'Red Hat Display', system-ui, sans-serif", fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.05em', color: '#0f172a' }}>Headline</span>
+        <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.05em', color: '#0f172a' }}>Headline</span>
         <span className="ty-track-l">tighter -0.05em</span>
       </div>
       <div className="ty-track-row">
-        <span style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '1rem', letterSpacing: '0', color: '#0f172a' }}>Body copy</span>
+        <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '1rem', letterSpacing: '0', color: '#0f172a' }}>Body copy</span>
         <span className="ty-track-l">normal 0em</span>
       </div>
       <div className="ty-track-row">
-        <span style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0f172a' }}>Label</span>
+        <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0f172a' }}>Label</span>
         <span className="ty-track-l">wider 0.05em</span>
       </div>
       <p className="ty-axis-note">

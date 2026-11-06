@@ -220,7 +220,7 @@ const copyToken = async () => {
 
 <style scoped>
 .token-picker {
-  font-family: 'Rubik', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   position: relative;
 }
 
@@ -229,7 +229,7 @@ const copyToken = async () => {
 }
 
 .token-picker__title {
-  font-family: 'Red Hat Display', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-text-heading, #0f172a);
@@ -326,7 +326,7 @@ const copyToken = async () => {
 }
 
 .token-picker__selected-name {
-  font-family: 'Red Hat Display', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-text-heading, #0f172a);

@@ -3,24 +3,117 @@
     "$type": "shadow",
     "sm": {
       "$value": [
-        { "offsetX": "0", "offsetY": "1px", "blur": "2px", "spread": "0", "color": "rgba(79, 70, 229, 0.06)" },
-        { "offsetX": "0", "offsetY": "1px", "blur": "3px", "spread": "0", "color": "rgba(15, 23, 42, 0.04)" }
+        {
+          "offsetX": "0",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0",
+          "color": "rgba(79, 70, 229, 0.06)"
+        },
+        {
+          "offsetX": "0",
+          "offsetY": "1px",
+          "blur": "3px",
+          "spread": "0",
+          "color": "rgba(15, 23, 42, 0.04)"
+        }
       ],
       "$description": "Raised. Buttons and resting cards. A whisper of lift, not a drop shadow."
     },
     "md": {
       "$value": [
-        { "offsetX": "0", "offsetY": "2px", "blur": "4px", "spread": "-1px", "color": "rgba(79, 70, 229, 0.06)" },
-        { "offsetX": "0", "offsetY": "8px", "blur": "16px", "spread": "-4px", "color": "rgba(79, 70, 229, 0.10)" }
+        {
+          "offsetX": "0",
+          "offsetY": "2px",
+          "blur": "4px",
+          "spread": "-1px",
+          "color": "rgba(79, 70, 229, 0.06)"
+        },
+        {
+          "offsetX": "0",
+          "offsetY": "8px",
+          "blur": "16px",
+          "spread": "-4px",
+          "color": "rgba(79, 70, 229, 0.10)"
+        }
       ],
       "$description": "Overlay. Dropdowns, popovers, menus. Two soft indigo layers, no pure black."
     },
     "lg": {
       "$value": [
-        { "offsetX": "0", "offsetY": "4px", "blur": "8px", "spread": "-2px", "color": "rgba(79, 70, 229, 0.06)" },
-        { "offsetX": "0", "offsetY": "16px", "blur": "32px", "spread": "-8px", "color": "rgba(79, 70, 229, 0.12)" }
+        {
+          "offsetX": "0",
+          "offsetY": "4px",
+          "blur": "8px",
+          "spread": "-2px",
+          "color": "rgba(79, 70, 229, 0.06)"
+        },
+        {
+          "offsetX": "0",
+          "offsetY": "16px",
+          "blur": "32px",
+          "spread": "-8px",
+          "color": "rgba(79, 70, 229, 0.12)"
+        }
       ],
       "$description": "Floating. Modals, sheets, command palettes. The elevation ceiling. Nothing sits higher."
+    },
+    "highlight": {
+      "$value": [
+        {
+          "offsetX": "0",
+          "offsetY": "1px",
+          "blur": "0",
+          "spread": "0",
+          "color": "rgba(255, 255, 255, 0.22)",
+          "inset": true
+        }
+      ],
+      "$description": "Inner top highlight. A 1px lit edge inside a solid control (SJButton). Pairs with shadow.lift; never on a flat surface."
+    },
+    "lift": {
+      "$value": [
+        {
+          "offsetX": "0",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0",
+          "color": "rgba(30, 27, 75, 0.28)"
+        }
+      ],
+      "$description": "Control lift. A tight indigo-950 shadow under a solid control at rest (SJButton)."
+    },
+    "glow": {
+      "$value": [
+        {
+          "offsetX": "0",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0",
+          "color": "rgba(30, 27, 75, 0.28)"
+        },
+        {
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "0",
+          "spread": "3px",
+          "color": "rgba(99, 102, 241, 0.18)"
+        }
+      ],
+      "$description": "Hover glow. shadow.lift plus a 3px soft indigo halo around a solid control on hover (SJButton). Not a focus ring."
+    },
+    "press": {
+      "$value": [
+        {
+          "offsetX": "0",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0",
+          "color": "rgba(0, 0, 0, 0.24)",
+          "inset": true
+        }
+      ],
+      "$description": "Pressed. An inner shadow replacing the lift while a solid control is held down (SJButton)."
     },
     "focus": {
       "$value": [

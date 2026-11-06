@@ -3,11 +3,11 @@
     "$type": "dimension",
     "min": {
       "$value": "2.75rem",
-      "$description": "44px. Minimum touch target for any interactive control (mobile-first floor)."
+      "$description": "44px. Effective touch target of any interactive control on a coarse pointer (mobile-first floor). The visual box may be smaller (down to target.floor); an invisible hit area extends it to this size."
     },
     "floor": {
       "$value": "1.5rem",
-      "$description": "24px. Absolute WCAG 2.5.8 target-size floor, only for a documented exception."
+      "$description": "24px. WCAG 2.5.8 AA visual target-size floor. The smallest a control may render (SJButton xs); on a coarse pointer the effective target is target.min."
     }
   },
   "focus": {
@@ -28,6 +28,116 @@
       "$type": "dimension",
       "$value": "1rem",
       "$description": "16px. Minimum font size of any text-entry control, so iOS Safari does not zoom on focus."
+    },
+    "height": {
+      "$type": "dimension",
+      "xs": {
+        "$value": "{target.floor}",
+        "$description": "24px. Compact control height (SJButton xs). Equals the WCAG 2.5.8 visual floor; the effective touch target is extended to target.min on coarse pointers."
+      },
+      "sm": {
+        "$value": "{space.8}",
+        "$description": "32px. Small control height (SJButton sm)."
+      },
+      "md": {
+        "$value": "2.25rem",
+        "$description": "36px. Default control height (SJButton md). A compact step between space.8 and space.10."
+      },
+      "lg": {
+        "$value": "{target.min}",
+        "$description": "44px. Large control height (SJButton lg). Meets the touch target without a hit-area extension."
+      }
+    },
+    "padding-inline": {
+      "$type": "dimension",
+      "xs": {
+        "$value": "{space.2}",
+        "$description": "8px. Inline padding of an xs control."
+      },
+      "sm": {
+        "$value": "{space.3}",
+        "$description": "12px. Inline padding of an sm control."
+      },
+      "md": {
+        "$value": "0.875rem",
+        "$description": "14px. Inline padding of an md control; between space.3 and space.4."
+      },
+      "lg": {
+        "$value": "{space.5}",
+        "$description": "20px. Inline padding of an lg control."
+      }
+    },
+    "font-size": {
+      "$type": "dimension",
+      "xs": {
+        "$value": "{font.size.xs}",
+        "$description": "12px. Label size of an xs control."
+      },
+      "sm": {
+        "$value": "0.8125rem",
+        "$description": "13px. Label size of an sm control; between font.size.xs and font.size.sm."
+      },
+      "md": {
+        "$value": "{font.size.sm}",
+        "$description": "14px. Label size of an md control."
+      },
+      "lg": {
+        "$value": "0.9375rem",
+        "$description": "15px. Label size of an lg control; between font.size.sm and font.size.base."
+      }
+    },
+    "gap": {
+      "$type": "dimension",
+      "xs": {
+        "$value": "{space.1}",
+        "$description": "4px. Gap between icon and label in an xs control."
+      },
+      "sm": {
+        "$value": "0.375rem",
+        "$description": "6px. Gap between icon and label in an sm control."
+      },
+      "md": {
+        "$value": "0.375rem",
+        "$description": "6px. Gap between icon and label in an md control."
+      },
+      "lg": {
+        "$value": "{space.2}",
+        "$description": "8px. Gap between icon and label in an lg control."
+      }
+    },
+    "icon-size": {
+      "$type": "dimension",
+      "xs": {
+        "$value": "{icon.size.sm}",
+        "$description": "14px. Glyph box inside an xs control."
+      },
+      "sm": {
+        "$value": "1rem",
+        "$description": "16px. Glyph box inside an sm control."
+      },
+      "md": {
+        "$value": "1rem",
+        "$description": "16px. Glyph box inside an md control."
+      },
+      "lg": {
+        "$value": "1.125rem",
+        "$description": "18px. Glyph box inside an lg control."
+      }
+    },
+    "link": {
+      "$type": "dimension",
+      "underline-thickness": {
+        "$value": "{border.width.hairline}",
+        "$description": "1px. Underline of a link-variant control at rest (SJButton variant link). Underlined at rest so the link never relies on color alone."
+      },
+      "underline-thickness-hover": {
+        "$value": "0.125rem",
+        "$description": "2px. Underline of a link-variant control on hover and press. The underline thickens; the box never moves."
+      },
+      "underline-offset": {
+        "$value": "0.2em",
+        "$description": "Gap between the text and the underline of a link-variant control. Relative to the font size, so it follows the surrounding sentence."
+      }
     }
   },
   "scroll": {

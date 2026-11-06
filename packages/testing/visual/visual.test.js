@@ -139,7 +139,7 @@ describe('hermetic site', () => {
   });
   it('uses the production font bytes the site ships', () => {
     const site = readFileSync(
-      new URL('../../../apps/site/public/fonts/rubik-var.woff2', import.meta.url),
+      new URL('../../../apps/site/public/fonts/plus-jakarta-sans-var.woff2', import.meta.url),
     );
     expect(site.length).toBeGreaterThan(1000);
   });

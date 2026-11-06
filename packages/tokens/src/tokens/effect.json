@@ -1,0 +1,20 @@
+{
+  "opacity": {
+    "$type": "dimension",
+    "sheen": {
+      "$value": "12%",
+      "$description": "Strength of the white sheen over the top of a solid control (SJButton). Used as a color-mix percentage; label contrast is checked against the sheened fill."
+    },
+    "soft-ring": {
+      "$value": "10%",
+      "$description": "Strength of the 1px inner ring on a soft control (SJButton), mixed from the label color. A color-mix percentage."
+    }
+  },
+  "gradient": {
+    "$type": "dimension",
+    "sheen-stop": {
+      "$value": "55%",
+      "$description": "Where the sheen of a solid control fades out, measured from the top (SJButton)."
+    }
+  }
+}

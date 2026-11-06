@@ -27,7 +27,7 @@ Pipeline: hand-authored DTCG JSON under `packages/tokens/src/tokens/` (one file 
 - Border radius: `--radius-*`, eight steps. `sm` at 6px is the signature control radius; `pill` is the fully rounded accent.
 - Shadow: three elevation levels plus `--shadow-focus`. Each level is two soft, indigo-tinted layers. Shadow means height, never state.
 - State layers: `--state-*`, interaction feedback as opacity, not elevation.
-- Typography: `--font-family-*` (three families), `--font-weight-*` (eight weights), `--font-size-*` (ten steps), `--leading-*` (line height), `--tracking-*` (letter spacing).
+- Typography: `--font-family-*` (three family tokens, two typefaces), `--font-weight-*` (eight weights), `--font-size-*` (ten steps), `--leading-*` (line height), `--tracking-*` (letter spacing).
 - Motion: `--duration-*` (three) and `--easing-*` (five curves).
 - Z-index: `--z-*`, a stepped stacking order.
 - Breakpoints: `--breakpoint-*`, five minimum widths.
