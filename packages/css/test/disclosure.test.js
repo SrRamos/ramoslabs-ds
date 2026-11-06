@@ -184,6 +184,29 @@ describe('open and closed chevron, disabled', () => {
     expect(o).toBe('-135deg');
   });
 
+  it('in RTL the chevron turns the other way, so it still points down when closed and up when open', async () => {
+    // The glyph is a logical corner (inline-end + block-end): in RTL it is the bottom-LEFT corner, so the same
+    // rotate would point it sideways. The turn flips with the direction (found by the SJDisclosure .f visuals).
+    for (const [dir, sign] of [
+      ['ltr', 1],
+      ['rtl', -1],
+    ]) {
+      const closed = await open(disclosureHtml({ open: false }), {}, `dir="${dir}"`);
+      const open_ = await open(disclosureHtml({ open: true }), {}, `dir="${dir}"`);
+      expect((await cs(closed, '#trig', ['rotate'], '::after'))['rotate'], dir).toBe(
+        `${45 * sign}deg`,
+      );
+      expect((await cs(open_, '#trig', ['rotate'], '::after'))['rotate'], dir).toBe(
+        `${-135 * sign}deg`,
+      );
+    }
+  });
+
+  it('an rtl island inside an ltr page flips too (the computed direction decides, not the page attribute)', async () => {
+    const page = await open(`<div dir="rtl">${disclosureHtml()}</div>`);
+    expect((await cs(page, '#trig', ['rotate'], '::after'))['rotate']).toBe('-45deg');
+  });
+
   it('a disabled trigger uses the inactive text colour and the not-allowed cursor', async () => {
     const page = await open(disclosureHtml({ disabled: true }));
     expect((await cs(page, '#trig', ['cursor']))['cursor']).toBe('not-allowed');
