@@ -872,7 +872,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 
   <p className="a11y-section-text">
-    A control has to be big enough to hit. <strong>SC 2.5.8</strong> sets a floor of <strong>24 by 24 CSS pixels</strong>; we aim for <strong>44 by 44</strong>, the size Apple and WCAG AAA both recommend. Motion is the other half of Operable: honor <code>prefers-reduced-motion</code> as a floor, collapse the motion, keep the meaning (<strong>SC 2.3.3</strong>, <strong>SC 2.2.2</strong>).
+    A control has to be big enough to hit. <strong>SC 2.5.8</strong> sets a floor of <strong>24 by 24 CSS pixels</strong> for the visual box; on a coarse pointer the effective touch target is <strong>44 by 44</strong>, the size Apple and WCAG AAA both recommend, reached with an invisible hit area rather than a bigger button. Keep adjacent compact buttons at least 8px apart on touch (12px around the 24px size) so the hit areas do not reach a neighbour. Motion is the other half of Operable: honor <code>prefers-reduced-motion</code> as a floor, collapse the motion, keep the meaning (<strong>SC 2.3.3</strong>, <strong>SC 2.2.2</strong>).
   </p>
 
   <div className="a11y-xref">

@@ -3,7 +3,7 @@
     "$type": "dimension",
     "min": {
       "$value": "2.75rem",
-      "$description": "44px. Effective touch target of any interactive control on a coarse pointer (mobile-first floor). The visual box may be smaller (down to target.floor); an invisible hit area extends it to this size."
+      "$description": "44px. Effective touch target of any interactive control on a coarse pointer (mobile-first floor). The visual box may be smaller (down to target.floor); an invisible hit area extends it to this size. On touch keep adjacent compact controls at least space.2 apart (space.3 around xs)."
     },
     "floor": {
       "$value": "1.5rem",

@@ -28,6 +28,7 @@ export const FONTS = [
     family: 'IBM Plex Sans Arabic',
     file: 'ibm-plex-sans-arabic-500.woff2',
     weight: '500',
+    sample: 'ع',
     range:
       'U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC',
   },
@@ -35,6 +36,7 @@ export const FONTS = [
     family: 'IBM Plex Sans Arabic',
     file: 'ibm-plex-sans-arabic-600.woff2',
     weight: '600',
+    sample: 'ع',
     range:
       'U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC',
   },
@@ -42,6 +44,7 @@ export const FONTS = [
     family: 'Noto Sans Hebrew',
     file: 'noto-sans-hebrew-var.woff2',
     weight: '100 900',
+    sample: 'א',
     range: 'U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F',
   },
   { family: 'Roboto', file: 'roboto-var.woff2' },

@@ -2016,7 +2016,7 @@ Helpers to add to `main.css`:
 
 ## 5. Target Size and Motion
 
-A control has to be big enough to hit. SC 2.5.8 sets a floor of 24 by 24 CSS pixels; we aim for 44 by 44, the size Apple and WCAG AAA both recommend. Honor `prefers-reduced-motion` as a floor, collapse the motion, keep the meaning (SC 2.3.3, SC 2.2.2).
+A control has to be big enough to hit. SC 2.5.8 SC 2.5.8 sets a floor of 24 by 24 CSS pixels for the visual box; on a coarse pointer the effective touch target is 44 by 44, the size Apple and WCAG AAA both recommend, reached with an invisible hit area rather than a bigger button. Keep adjacent compact buttons at least 8px apart on touch (12px around the 24px size) so the hit areas do not reach a neighbour. Honor `prefers-reduced-motion` as a floor, collapse the motion, keep the meaning (SC 2.3.3, SC 2.2.2).
 
 - `.touch-target`: pads the hit area to a minimum 44 by 44px without changing the visual
 - `.no-motion`: disables animation and transition on an element and its children
@@ -2042,7 +2042,7 @@ Run this before every PR.
 - Visible focus, never obscured behind sticky UI (SC 2.4.7 / 2.4.11)
 - Accessible name on every control, including icon-only buttons (SC 4.1.2)
 - Labels connected to form inputs (for/id) (SC 3.3.2)
-- Touch targets: 24x24px floor (AA), 44x44px target (AAA) (SC 2.5.8)
+- Touch targets: 24x24px visual floor (AA), 44x44px effective target on coarse pointers (SC 2.5.8)
 - Live regions announce dynamic status messages (SC 4.1.3)
 - prefers-reduced-motion respected (SC 2.3.3)
 - Keyboard: Tab reaches every control, Space and Enter activate by role, focus can always move away (SC 2.1.1 / 2.1.2)
@@ -2764,7 +2764,7 @@ Material draws two variants. A standard bottom sheet "co-exists with the screen'
 
 Hoober's field data: one-handed use 49% (67% right thumb, 33% left); cradling 36%; two-handed 15%, 90% of that in portrait. When cradling, the thumb is on the screen 72% of the time. Grip changes very often, sometimes every few seconds. The thumb owns the lower band; the top edge is the stretch zone. So the primary action lives at the bottom, pinned (sticky), full width or aligned to the dominant thumb.
 
-**Target size: the legal floor is not the goal.** WCAG 2.5.8 (AA) sets the minimum at 24 by 24 CSS pixels, but that is a floor with exceptions, not a target. NN/g recommends interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide." Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material's 48dp and NN/g's 1cm. Never the bare 24px for a primary action.
+**Target size: the legal floor is not the goal.** WCAG 2.5.8 (AA) sets the minimum at 24 by 24 CSS pixels, but that is a floor with exceptions, not a target. NN/g recommends interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide." Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material's 48dp and NN/g's 1cm. Never the bare 24px for a primary action. A compact control may look smaller than that if it extends an invisible hit area to 44px under `(pointer: coarse)`, without changing layout; keep adjacent compact buttons at least 8px apart so those areas do not reach a neighbour.
 
 **Rule:** The primary action is a full-width control pinned to the bottom, at least 48px tall, in the thumb band.
 **Why:** Hoober: the thumb comfortably covers the lower half, and grip shifts constantly. A bottom-pinned action is reachable regardless of the current grip.

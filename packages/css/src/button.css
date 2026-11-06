@@ -306,6 +306,7 @@
   /* Link: inline text. Underlined at rest (never color alone), inherits the sentence's font size and line, no
      padding, height or hit-area box. Inline links are exempt from WCAG 2.5.8; the focus ring still draws. */
   :is(.sj-button__root, .sj-button__link)[data-variant='link'] {
+    position: static;
     display: inline;
     min-block-size: 0;
     min-inline-size: 0;

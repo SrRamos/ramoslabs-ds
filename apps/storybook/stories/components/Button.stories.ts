@@ -3,7 +3,8 @@ import { ref } from 'vue';
 import { SJButton } from '@ramoslabs/vue/button';
 import { SJIcon, about, tryIt, iconPlus, textRender } from './_shared';
 
-const variants = ['solid', 'soft', 'outline', 'ghost'] as const;
+const variants = ['solid', 'soft', 'outline', 'ghost', 'link'] as const;
+const sizes = ['xs', 'sm', 'md', 'lg'] as const;
 const tones = ['primary', 'neutral', 'success', 'warning', 'error', 'info'] as const;
 
 const meta: Meta<typeof SJButton> = {
@@ -12,12 +13,12 @@ const meta: Meta<typeof SJButton> = {
   tags: ['autodocs'],
   parameters: about(`
 SJButton renders a native \`<button>\` (or an \`<a>\` when \`href\` is set). Variant x tone x size are data attributes styled by \`@ramoslabs/css\`. A button never submits a form unless \`type="submit"\`.
-The click target is at least 44 px (24 px in compact density), so even a small button is large to hit.
+The visual height runs 24 / 32 / 36 / 44 px (xs / sm / md / lg), never below the 24 px WCAG 2.5.8 floor. On a touch screen (\`pointer: coarse\`) an invisible hit area extends every size to 44 px without moving the layout. Space adjacent compact buttons by at least \`--space-2\` (\`--space-3\` around xs) so a finger cannot land on the wrong one.
   `),
   argTypes: {
     variant: { control: 'select', options: variants },
     tone: { control: 'select', options: tones },
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: 'inline-radio', options: sizes },
     type: { control: 'inline-radio', options: ['button', 'submit', 'reset'] },
     disabled: { control: 'boolean' },
     iconOnly: { control: 'boolean' },
@@ -52,17 +53,23 @@ export const VariantsAndTones: Story = {
       <SJButton v-for="t in tones" :key="t" :variant="v" :tone="t">{{ v }} {{ t }}</SJButton></div></div>`,
   }),
   parameters: tryIt(`
-Every variant x tone pair. Check each is clearly readable and that the focus ring (Tab through all 24) is visible on every one. Hover and press each: the colour must change without the text becoming hard to read.
+Every variant x tone pair. The last row is the inline link variant. Check each is clearly readable and that the focus ring (Tab through all 30) is visible on every one. Hover and press each: the colour must change without the text becoming hard to read. Solid buttons also lift (glow on hover) and press in to 97% scale.
   `),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { SJButton },
-    template: `<div class="sbx-row"><SJButton size="sm">Small</SJButton><SJButton size="md">Medium</SJButton><SJButton size="lg">Large</SJButton></div>`,
+    components: { SJButton, SJIcon },
+    setup: () => ({ sizes, iconPlus, heights: { xs: 24, sm: 32, md: 36, lg: 44 } }),
+    template: `<div class="sbx-stack">
+      <div class="sbx-row sbx-row--end"><div v-for="z in sizes" :key="z" class="sbx-cell">
+        <SJButton :size="z">{{ z }} button</SJButton><span class="sbx-note">{{ z }} · {{ heights[z] }} px</span></div></div>
+      <div class="sbx-row sbx-row--end"><div v-for="z in sizes" :key="z" class="sbx-cell">
+        <SJButton :size="z" icon-only variant="outline" :label="'Add item, ' + z"><template #icon><SJIcon :icon="iconPlus" /></template></SJButton>
+        <span class="sbx-note">{{ z }} · {{ heights[z] }} × {{ heights[z] }} px</span></div></div></div>`,
   }),
   parameters: tryIt(
-    `Three sizes. Even **Small** keeps a 44 px minimum hit area: click just outside the label and it should still activate.`,
+    `Four sizes with visibly different heights: xs 24, sm 32, md 36, lg 44 px, with icon-only squares below. The visual floor is 24 px (WCAG 2.5.8). Open the story on a phone, or emulate touch in the browser devtools: the hit area of every size grows to 44 px (an invisible area around the button) while the button looks the same. Tap just above or below **xs**: it should still activate.`,
   ),
 };
 
@@ -76,7 +83,7 @@ export const Disabled: Story = {
   `),
 };
 
-export const AsLink: Story = {
+export const AsAnchor: Story = {
   render: () => ({
     components: { SJButton },
     template: `<div class="sbx-row"><SJButton href="https://example.com">Same tab link</SJButton>
@@ -84,6 +91,19 @@ export const AsLink: Story = {
   }),
   parameters: tryIt(`
 Both render \`<a>\`. Inspect the second: \`target="_blank"\` adds \`rel="noopener noreferrer"\` automatically. Screen reader: "Same tab link, link". **Enter** follows it; **Space** does not.
+  `),
+};
+
+export const Link: Story = {
+  render: () => ({
+    components: { SJButton },
+    template: `<p class="sbx-prose">Tu prueba gratuita termina el 30 de noviembre.
+      <SJButton variant="link" href="#billing">Revisa la facturación</SJButton> o
+      <SJButton variant="link" tone="neutral" href="#plans">compara los planes</SJButton> antes de esa fecha.
+      ¿Ya no lo necesitas? <SJButton variant="link" tone="error">Cancela la suscripción</SJButton>.</p>`,
+  }),
+  parameters: tryIt(`
+The link variant is inline text: underlined at rest (never colour alone), the size and line height of the sentence, no padding, no height. Hover thickens the underline; **Tab** to it and the focus ring appears. It renders \`<a>\` with \`href\` and \`<button>\` without (the last one performs an action, so it stays a button). Screen reader: "Revisa la facturación, link".
   `),
 };
 

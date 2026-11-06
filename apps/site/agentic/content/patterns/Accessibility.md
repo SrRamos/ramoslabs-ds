@@ -69,7 +69,7 @@ Helpers to add to `main.css`:
 
 ## 5. Target Size and Motion
 
-A control has to be big enough to hit. SC 2.5.8 sets a floor of 24 by 24 CSS pixels; we aim for 44 by 44, the size Apple and WCAG AAA both recommend. Honor `prefers-reduced-motion` as a floor, collapse the motion, keep the meaning (SC 2.3.3, SC 2.2.2).
+A control has to be big enough to hit. SC 2.5.8 SC 2.5.8 sets a floor of 24 by 24 CSS pixels for the visual box; on a coarse pointer the effective touch target is 44 by 44, the size Apple and WCAG AAA both recommend, reached with an invisible hit area rather than a bigger button. Keep adjacent compact buttons at least 8px apart on touch (12px around the 24px size) so the hit areas do not reach a neighbour. Honor `prefers-reduced-motion` as a floor, collapse the motion, keep the meaning (SC 2.3.3, SC 2.2.2).
 
 - `.touch-target`: pads the hit area to a minimum 44 by 44px without changing the visual
 - `.no-motion`: disables animation and transition on an element and its children
@@ -95,7 +95,7 @@ Run this before every PR.
 - Visible focus, never obscured behind sticky UI (SC 2.4.7 / 2.4.11)
 - Accessible name on every control, including icon-only buttons (SC 4.1.2)
 - Labels connected to form inputs (for/id) (SC 3.3.2)
-- Touch targets: 24x24px floor (AA), 44x44px target (AAA) (SC 2.5.8)
+- Touch targets: 24x24px visual floor (AA), 44x44px effective target on coarse pointers (SC 2.5.8)
 - Live regions announce dynamic status messages (SC 4.1.3)
 - prefers-reduced-motion respected (SC 2.3.3)
 - Keyboard: Tab reaches every control, Space and Enter activate by role, focus can always move away (SC 2.1.1 / 2.1.2)
