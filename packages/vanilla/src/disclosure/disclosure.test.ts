@@ -274,39 +274,38 @@ describe('SJDisclosure vanilla', () => {
     expect(root.hasAttribute('name')).toBe(false);
   });
 
-  it('pre-hydration: a toggle made before the script is reported, not overwritten', async () => {
+  it("initial state: with neither prop, the element's own open is kept (consumer <details open>)", async () => {
     const { host, doc } = setup();
-    const root = slotted(doc);
-    root.open = true; // user opened the SSR-closed element before hydration
-    const onOpenChange = vi.fn();
-    mountDisclosure(host, asEl(root), { onOpenChange });
-    await tick();
-    expect(root.open).toBe(true);
-    expect(root.getAttribute('data-state')).toBe('open');
-    expect(onOpenChange).toHaveBeenCalledOnce();
-    expect(onOpenChange).toHaveBeenCalledWith(true);
+    for (const slot of [false, true]) {
+      const root = slot ? slotted(doc) : doc.createElement('details');
+      root.open = true;
+      const onOpenChange = vi.fn();
+      mountDisclosure(host, asEl(root), { onOpenChange });
+      await tick();
+      expect(root.open).toBe(true);
+      expect(root.getAttribute('data-state')).toBe('open');
+      expect(onOpenChange).not.toHaveBeenCalled();
+    }
   });
 
-  it('pre-hydration, controlled owner rejects: the element is put back', async () => {
+  it("initial state: defaultOpen wins over the element's open", async () => {
     const { host, doc } = setup();
     const root = slotted(doc);
     root.open = true;
-    const onOpenChange = vi.fn();
-    mountDisclosure(host, asEl(root), { open: false, onOpenChange });
+    mountDisclosure(host, asEl(root), { defaultOpen: false });
     await tick();
-    expect(onOpenChange).toHaveBeenCalledWith(true);
     expect(root.open).toBe(false);
     expect(root.getAttribute('data-state')).toBe('closed');
   });
 
-  it('pre-hydration: an element that agrees with the view reports nothing', async () => {
+  it("initial state: a controlled open wins over the element's open", async () => {
     const { host, doc } = setup();
     const root = slotted(doc);
     root.open = true;
-    const onOpenChange = vi.fn();
-    mountDisclosure(host, asEl(root), { defaultOpen: true, onOpenChange });
+    mountDisclosure(host, asEl(root), { open: false, onOpenChange: () => undefined });
     await tick();
-    expect(onOpenChange).not.toHaveBeenCalled();
+    expect(root.open).toBe(false);
+    expect(root.getAttribute('data-state')).toBe('closed');
   });
 
   it('every listener carries the instance signal; no pointer or touch listener; none left after destroy', () => {
@@ -424,18 +423,6 @@ describe('exclusive group fallback (supports.detailsName forced false)', () => {
       await tick();
       expect(roots.map((r) => r.open)).toEqual([true, true]);
     }
-  });
-
-  it('pre-hydration: a member opened before the script closes its open peer on a fallback engine', async () => {
-    const { host, doc } = setup({ detailsName: false });
-    const a = doc.createElement('details');
-    const b = slotted(doc);
-    mountDisclosure(host, asEl(a), { name: 'g', defaultOpen: true });
-    b.open = true;
-    mountDisclosure(host, asEl(b), { name: 'g' });
-    await tick();
-    expect(b.open).toBe(true);
-    expect(a.open).toBe(false);
   });
 });
 

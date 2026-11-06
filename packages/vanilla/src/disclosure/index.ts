@@ -59,18 +59,13 @@ function applyProps(el: Element, props: Record<string, unknown>, prev: Applied):
 
 const isSummary = (n: Element) => n.tagName.toLowerCase() === 'summary';
 
-function createSpec(): ComponentSpec<
-  DisclosureSnapshot,
-  DisclosureAction,
-  VanillaDisclosureProps,
-  never
-> {
+function createSpec(
+  initialOpen: boolean,
+): ComponentSpec<DisclosureSnapshot, DisclosureAction, VanillaDisclosureProps, never> {
   let summary: Element | undefined;
   let content: Element | undefined;
   let parts: ReturnType<typeof createDisclosureParts> | undefined;
   let closeGroup: ((rootId: string) => void) | undefined;
-  // `open` the element had before the first patch (the user may toggle before any script runs).
-  let pre = false;
   const seen = { root: new Set<string>(), trigger: new Set<string>(), content: new Set<string>() };
 
   const build = (ctx: Ctx) => {
@@ -78,9 +73,6 @@ function createSpec(): ComponentSpec<
     const doc = el.ownerDocument;
     const kids = Array.from(el.children);
     summary = kids.find(isSummary);
-    // Only server/author markup (an existing `<summary>`) can carry a pre-script toggle. A bare `<details>`
-    // has no history: its `open` is just the default, so the view wins.
-    pre = summary ? el.open : ctx.view().open;
     content = kids.find((k) => !isSummary(k));
     const madeSummary = !summary;
     const madeContent = !content;
@@ -125,12 +117,13 @@ function createSpec(): ComponentSpec<
   };
 
   return {
-    initial: (p) => initialSnapshot(p.open ?? p.defaultOpen ?? false),
+    // Prop-driven: with neither prop the element's own `open` is the initial state (a consumer's
+    // `<details open>` stays open); with either prop the view wins and is written to the element.
+    initial: (p) => initialSnapshot(p.open ?? p.defaultOpen ?? initialOpen),
     reduce: storeReducer,
     fields: disclosureFields,
     patch(view, ctx) {
-      const first = !parts;
-      if (first) build(ctx);
+      if (!parts) build(ctx);
       const el = ctx.el as HTMLDetailsElement;
       const props = ctx.props();
       const cls = props.classes;
@@ -145,8 +138,7 @@ function createSpec(): ComponentSpec<
         parts!.getContentProps(cls?.content ? { class: cls.content } : {}),
         seen.content,
       );
-      // The first patch leaves a pre-script toggle alone: `attach` reports it to the store.
-      if (!(first && pre !== view.open) && el.open !== view.open) el.open = view.open;
+      if (el.open !== view.open) el.open = view.open;
       if (props.summary !== undefined) setText(summary!, props.summary);
       if (props.content !== undefined) setText(content!, props.content);
     },
@@ -156,11 +148,6 @@ function createSpec(): ComponentSpec<
       const trigger = parts!.getTriggerProps();
       ctx.listen(el, 'toggle', (e) => (root.onToggle as (e: Event) => void)(e));
       ctx.listen(summary!, 'click', (e) => (trigger.onClick as (e: Event) => void)(e));
-      // Pre-hydration: `<details>` worked before any script, so report a state that differs from the view.
-      if (pre !== ctx.view().open) {
-        if (pre && ctx.props().name) closeGroup!(ctx.id);
-        ctx.native('open', pre);
-      }
     },
     run(effect, ctx) {
       // `open` on `root`: put the native element back to the committed value (a rejected controlled change).
@@ -180,7 +167,7 @@ export function mountDisclosure(
   el: Element,
   props: VanillaDisclosureProps = {},
 ): DisclosureInstance {
-  const instance = host.mount(el, createSpec(), props);
+  const instance = host.mount(el, createSpec((el as HTMLDetailsElement).open === true), props);
   // Live accessors, not values frozen at mount.
   const part = (pick: (kids: Element[]) => Element | undefined) => () =>
     instance.destroyed ? undefined : pick(Array.from(el.children));
