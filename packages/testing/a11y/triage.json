@@ -89,6 +89,78 @@
       "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
       "owner": "SrRamos",
       "reason": "The solid fill is a gradient with a sheen over a background-color, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens: every solid pair at 4.5:1 on the flat fill and on the lightest sheened pixel (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "state-first-use",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "state-no-results",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "state-error",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "state-error-interrupt",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "composition-button-icon",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "composition-link",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "state-icon-decorative",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
+    },
+    {
+      "rule": "color-contrast",
+      "fixture": "state-icon-label-ignored",
+      "result": "incomplete",
+      "reviewed": "pass",
+      "issue": "https://github.com/SrRamos/ramoslabs-ds/issues/125",
+      "owner": "SrRamos",
+      "reason": "The fixture holds a solid SJButton whose fill is a gradient with a sheen, so axe cannot sample the background (bgGradient). Label contrast is proven from the built CSS and tokens (packages/css/test/button.test.js)."
     }
   ],
   "targetSize": []
