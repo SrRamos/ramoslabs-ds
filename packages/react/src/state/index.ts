@@ -29,13 +29,14 @@ export interface SJStateClasses {
   icon?: string;
   title?: string;
   description?: string;
+  skeleton?: string;
   actions?: string;
 }
 
 export interface SJStateRootProps
   extends
     Omit<ComponentPropsWithoutRef<'div'>, 'children' | 'title'>,
-    Omit<GeneratedProps, 'icon' | 'title' | 'children' | 'actions'> {
+    Omit<GeneratedProps, 'icon' | 'title' | 'children' | 'actions' | 'skeleton'> {
   classes?: SJStateClasses;
   /** Slot: decorative glyph (an SJIcon); always `aria-hidden`. */
   icon?: ReactNode;
@@ -43,6 +44,8 @@ export interface SJStateRootProps
   title?: ReactNode;
   /** Slot: description copy. */
   children?: ReactNode;
+  /** Slot (loading only): SJSkeleton shapes in place of the default loading visuals; aria-hidden. */
+  skeleton?: ReactNode;
   /** Slot: next-step controls (SJButton). */
   actions?: ReactNode;
 }
@@ -77,6 +80,7 @@ export const SJStateRoot: ForwardRefExoticComponent<
     icon,
     title,
     children,
+    skeleton,
     actions,
     ...rest
   } = props;
@@ -156,6 +160,13 @@ export const SJStateRoot: ForwardRefExoticComponent<
         'p',
         { ...fromGetter(model.getDescriptionProps(), classes?.description) },
         body,
+      ),
+    variant === 'loading' &&
+      has(skeleton) &&
+      createElement(
+        'div',
+        { ...fromGetter(model.getSkeletonProps(), classes?.skeleton) },
+        skeleton,
       ),
     has(actions) &&
       createElement('div', { ...fromGetter(model.getActionsProps(), classes?.actions) }, actions),
