@@ -104,7 +104,7 @@ Branch `feature/m4-c06-react`. Owned: `packages/react/src/disclosure/{index.ts,d
 ### Decisions
 - **Pre-hydration (SHOULD-1).** In the first layout effect, `native('open', el.open)` is called when the element differs from the view. A controlled owner that rejects it gets the element corrected by the same effect path.
 - **closePeers.** Supplied to `createDisclosureParts`. Returns when `runtime.supports.detailsName` is true. Otherwise it queries `details[name]` in the element's root node (document or shadow root, the same scope native `name` uses), feeds `{id, name, open}` to `peersToClose`, and sets `open = false` on the returned elements; their own `toggle` then reports. Works for controlled, programmatic and rejected opens because core calls it before the view comparison.
-- **Open point.** `SJProvider` does not detect `supports`, so by default `detailsName` is false and the fallback runs on every engine. That is harmless on native engines (the peers are already closed when the handler runs, `peersToClose` is empty) but it is a DOM query per open. Detection of `supports` after mount belongs to the provider owner.
+- **Supports.** `SJProvider` now detects `supports` (`detectSupports`, #119) unless an explicit `supports` is given (forced run), so `closePeers` switches on the detected `supports.detailsName`: native engines return early, fallback engines close peers.
 - No `aria-expanded`/`aria-controls` on the summary; reduced motion is CSS-only (nothing in the adapter).
 
 ### Proof
