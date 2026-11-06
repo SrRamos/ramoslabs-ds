@@ -50,33 +50,34 @@ export interface SupportsEnv {
   scheduler?: object;
 }
 
-const has = (c: { prototype: object } | undefined, k: string): boolean => !!c && k in c.prototype;
-
 /**
  * Feature detection for every `SupportKey` (ADR-013). Pure: `env` is `window` (or a fake). A probe
  * that throws or is absent is `false`, so a missing API never takes the native path.
  */
 export function detectSupports(env: SupportsEnv): SupportsMap {
-  const css = (...a: string[]): boolean => {
+  // Each probe is isolated: one that throws (a partial fake, a locked-down engine) is false alone.
+  const t = (probe: () => boolean): boolean => {
     try {
-      return env.CSS?.supports(...a) === true;
+      return probe() === true;
     } catch {
       return false;
     }
   };
+  const css = (...a: string[]): boolean => t(() => env.CSS!.supports(...a));
   const fn = (o: object | undefined, k: string): boolean =>
-    typeof (o as Record<string, unknown> | undefined)?.[k] === 'function';
-  const week = env.Intl?.Locale;
+    t(() => typeof (o as Record<string, unknown>)[k] === 'function');
+  const proto = (c: { prototype: object } | undefined, ...ks: string[]): boolean =>
+    t(() => ks.some((k) => k in c!.prototype));
   return {
-    anchorPositioning: detectAnchorPositioning(css),
-    popover: has(env.HTMLElement, 'popover'),
-    dialogRequestClose: has(env.HTMLDialogElement, 'requestClose'),
-    invokerCommands: has(env.HTMLButtonElement, 'commandForElement'),
-    detailsName: has(env.HTMLDetailsElement, 'name'),
+    anchorPositioning: t(() => detectAnchorPositioning(css)),
+    popover: proto(env.HTMLElement, 'popover'),
+    dialogRequestClose: proto(env.HTMLDialogElement, 'requestClose'),
+    invokerCommands: proto(env.HTMLButtonElement, 'commandForElement'),
+    detailsName: proto(env.HTMLDetailsElement, 'name'),
     userInvalid: css('selector(:user-invalid)'),
     viewTransitions: fn(env.document, 'startViewTransition'),
     schedulerYield: fn(env.scheduler, 'yield'),
-    weekInfo: has(week, 'getWeekInfo') || has(week, 'weekInfo'),
+    weekInfo: proto(env.Intl?.Locale, 'getWeekInfo', 'weekInfo'),
     focusVisible: css('selector(:focus-visible)'),
   };
 }

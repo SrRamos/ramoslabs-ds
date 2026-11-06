@@ -3,7 +3,7 @@
 // Unit tests for the pure parts of the supports injector (W1-309b). The browser run is
 // `bun run test:e2e:supports`.
 import { describe, expect, it } from 'vitest';
-import { detectSupports } from './detect.ts';
+import { detectSupports } from '../../../core/src/runtime/index.ts';
 import { injectionProblems } from './injection.ts';
 import { NATIVE, SUPPORT_KEYS, applyPath, isNoop, parsePath, supportsPaths } from './paths.ts';
 import { probeExpected, probeScenarios } from './probe-matrix.ts';

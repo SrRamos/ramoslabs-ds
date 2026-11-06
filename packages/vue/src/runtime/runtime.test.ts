@@ -430,11 +430,12 @@ describe('capability detection (supports)', () => {
 
   it('detects after mount; markup does not depend on supports', () => {
     const before = render({});
-    expect(before.ctx.runtime.supports.detailsName).toBe(false);
+    expect(before.seen).toEqual([false]);
     vi.stubGlobal('window', win);
     const after = render({});
     vi.unstubAllGlobals();
-    expect(after.seen).toEqual([false]);
+    // A child's setup already reads the detected runtime (children run setup before onMounted).
+    expect(after.seen).toEqual([true]);
     expect(after.ctx.runtime.supports.detailsName).toBe(true);
     expect(JSON.stringify(after.root.children, ['type', 'children', 'text'])).toBe(
       JSON.stringify(before.root.children, ['type', 'children', 'text']),
@@ -446,7 +447,7 @@ describe('capability detection (supports)', () => {
     const a = render({ config: { supports: { detailsName: false } } });
     const b = render({ runtime: createRuntime({ target: 'client', supports: {} }) });
     vi.unstubAllGlobals();
-    expect(a.ctx.runtime.supports.detailsName).toBe(false);
-    expect(b.ctx.runtime.supports.detailsName).toBe(false);
+    expect(a.seen).toEqual([false]);
+    expect(b.seen).toEqual([false]);
   });
 });

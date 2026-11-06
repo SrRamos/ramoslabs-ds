@@ -451,8 +451,7 @@ describe('capability detection (supports)', () => {
     vi.stubGlobal('window', win);
     const { seen, C } = probe();
     const r = mount(createElement(SJProvider, null, createElement(C)));
-    expect(seen[0]).toBe(false);
-    expect(seen[seen.length - 1]).toBe(true);
+    expect(seen).toEqual([true]);
     expect(JSON.stringify(r.toJSON())).toBe(
       JSON.stringify({ type: 'p', props: {}, children: ['x'] }),
     );

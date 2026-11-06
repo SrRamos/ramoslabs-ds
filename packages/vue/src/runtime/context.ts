@@ -25,8 +25,7 @@ import { createDomLiveHost } from './dom';
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 export interface SJContext {
-  /** Replaced once after mount when capabilities are detected; read it at use time, not at setup. */
-  runtime: SJRuntime;
+  readonly runtime: SJRuntime;
   /** The one live-region registry (W1-111) of this runtime. Nothing is rendered before mount. */
   readonly live: LiveRegistry;
   /** Called at mount by a component whose contract declares `liveRegions`: the region exists before any text. */
@@ -51,8 +50,14 @@ export const SJProvider = defineComponent({
     liveHost: { type: Object as PropType<LiveHost>, default: undefined },
   },
   setup(props, { slots }) {
+    const base =
+      props.runtime ?? createRuntime({ ...props.config, target: props.config?.target ?? 'client' });
+    // Detected here, in setup, so every child's setup already reads real capabilities. Markup never
+    // reads `supports`, so hydration is unaffected; an explicit `supports` (forced run) is kept.
     const ctx = createContext(
-      props.runtime ?? createRuntime({ ...props.config, target: props.config?.target ?? 'client' }),
+      !base.supportsExplicit && typeof window !== 'undefined'
+        ? withSupports(base, detectSupports(window))
+        : base,
     );
     provide(SJ_CONTEXT, ctx);
     let dom: ReturnType<typeof createDomLiveHost> | undefined;
@@ -64,10 +69,6 @@ export const SJProvider = defineComponent({
       attached?.ensure?.();
     };
     onMounted(() => {
-      // Detection runs after mount only (no hydration mismatch: markup never reads `supports`), and
-      // never over an explicit `supports` (forced runs keep winning).
-      if (!ctx.runtime.supportsExplicit && typeof window !== 'undefined')
-        ctx.runtime = withSupports(ctx.runtime, detectSupports(window));
       // Client only, after mount: the server never emits live-region markup (ADR-006).
       const host: LiveHost & { ensure?(): void } = props.liveHost ?? (dom = createDomLiveHost());
       ctx.live.attach(host);

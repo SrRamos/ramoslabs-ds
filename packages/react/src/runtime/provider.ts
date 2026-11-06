@@ -10,7 +10,6 @@ import {
   useLayoutEffect,
   useMemo,
   useRef,
-  useState,
   type Context,
   type ReactElement,
   type ReactNode,
@@ -49,8 +48,8 @@ export interface SJProviderProps extends RuntimeConfig {
 export function SJProvider(props: SJProviderProps): ReactElement {
   const { runtime: given, liveHost, children } = props;
   const { locale, dir, idPrefix, idFactory, density, supports, scheduler, target } = props;
-  const base = useMemo(
-    () =>
+  const runtime = useMemo(() => {
+    const r =
       given ??
       createRuntime({
         ...(locale !== undefined && { locale }),
@@ -63,18 +62,14 @@ export function SJProvider(props: SJProviderProps): ReactElement {
         // Effects and timers only run on the client; the server render never reads the scheduler.
         // A fake scheduler on the client would never clear the live region (G1 SHOULD-1).
         target: target ?? 'client',
-      }),
-    [given, locale, dir, idPrefix, idFactory, density, supports, scheduler, target],
-  );
-  // Capability detection runs after mount only (markup never reads `supports`, so no hydration
-  // mismatch) and never over an explicit `supports`. The registry keys on `base`: the scheduler is shared.
-  const [detected, setDetected] = useState<{ base: SJRuntime; runtime: SJRuntime } | null>(null);
-  useLayoutEffect(() => {
-    if (!base.supportsExplicit && typeof window !== 'undefined')
-      setDetected({ base, runtime: withSupports(base, detectSupports(window)) });
-  }, [base]);
-  const runtime = detected?.base === base ? detected.runtime : base;
-  const live = useMemo(() => createLiveRegistry(base.scheduler), [base]);
+      });
+    // Detected inside the memo (no second render): markup never reads `supports`, so hydration is
+    // unaffected; an explicit `supports` (forced run) is kept.
+    return !r.supportsExplicit && typeof window !== 'undefined'
+      ? withSupports(r, detectSupports(window))
+      : r;
+  }, [given, locale, dir, idPrefix, idFactory, density, supports, scheduler, target]);
+  const live = useMemo(() => createLiveRegistry(runtime.scheduler), [runtime]);
   const eager = useRef(false);
   const attachedHost = useRef<(LiveHost & { ensure?: () => void }) | undefined>(undefined);
   const requireLive = useCallback(() => {

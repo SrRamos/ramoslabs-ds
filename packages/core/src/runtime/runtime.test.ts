@@ -206,6 +206,16 @@ describe('detectSupports (ADR-013, injected env)', () => {
   });
 });
 
+describe('detectSupports isolation', () => {
+  it('a partial env (undefined prototype) fails only its own probe', () => {
+    const env = { ...fullEnv(), HTMLDetailsElement: {} } as unknown as SupportsEnv;
+    const got = detectSupports(env);
+    expect(got.detailsName).toBe(false);
+    expect(got.popover).toBe(true);
+    expect(got.weekInfo).toBe(true);
+  });
+});
+
 describe('supportsExplicit', () => {
   it('is set only when config.supports is given, and survives withSupports', () => {
     expect(createRuntime().supportsExplicit).toBeUndefined();
