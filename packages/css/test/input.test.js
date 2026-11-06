@@ -8,9 +8,9 @@ import { join } from 'node:path';
 import stylelint from 'stylelint';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
-  SURFACES,
   checkContrastMatrix,
   contrastRatio,
+  extractLayerUses,
   loadTokens,
 } from '../../testing/contrast/index.js';
 import { checkStylesheets, cssParts } from '../src/_template/generate.mjs';
@@ -23,23 +23,6 @@ const contract = JSON.parse(
 const realContracts = new URL('../../contracts/contracts', import.meta.url).pathname;
 const configFile = new URL('../.stylelintrc.json', import.meta.url).pathname;
 const inputCss = readFileSync(join(srcDir, 'input.css'), 'utf8');
-
-/**
- * Every colour declaration with its selector. `color` is text (4.5:1), `border-color` is a UI boundary (3:1).
- * Disabled controls are exempt (WCAG 1.4.3 and 1.4.11 inactive components) and forced-colors system colours are skipped.
- */
-function colourUses(src) {
-  const text = src.replace(/\/\*[\s\S]*?\*\//g, '');
-  const out = [];
-  for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-    const selector = m[1].trim();
-    if (/:disabled/.test(selector)) continue;
-    for (const d of m[2].matchAll(/(?<![-\w])(color|border-color):\s*var\(--(color-[\w-]+)\)/g)) {
-      out.push({ prop: d[1], token: d[2], selector, min: d[1] === 'color' ? 4.5 : 3 });
-    }
-  }
-  return out;
-}
 
 const hexOf = (rgb) =>
   `#${rgb
@@ -110,8 +93,8 @@ describe('anatomy and build', () => {
 });
 
 describe('contrast on every page surface (WCAG 1.4.3 text 4.5:1, 1.4.11 boundary 3:1)', () => {
-  it('every colour the input stylesheet uses clears its minimum on every surface', () => {
-    const uses = colourUses(inputCss);
+  it('the shared pass reads the input text and boundary colours', () => {
+    const uses = extractLayerUses(css).filter((u) => u.component === 'input');
     expect(uses.map((u) => u.token)).toEqual(
       expect.arrayContaining([
         'color-slate-500',
@@ -120,14 +103,7 @@ describe('contrast on every page surface (WCAG 1.4.3 text 4.5:1, 1.4.11 boundary
         'color-text-muted',
       ]),
     );
-    for (const u of uses) {
-      for (const s of SURFACES) {
-        expect(
-          contrastRatio(tokens[u.token], tokens[s]),
-          `${u.token} on ${s} (${u.selector})`,
-        ).toBeGreaterThanOrEqual(u.min);
-      }
-    }
+    expect(uses.some((u) => u.token === 'color-border')).toBe(false); // disabled boundary is exempt
   });
 
   it('the control text clears 4.5:1 on its own surface fill', () => {
@@ -145,15 +121,15 @@ describe('contrast on every page surface (WCAG 1.4.3 text 4.5:1, 1.4.11 boundary
   });
 
   it('a seeded weak border (slate 300) fails the 3:1 boundary floor on every surface', () => {
-    const seeded = inputCss.replace(
+    const seeded = css.replace(
       /(\.sj-input__control\s*\{[^}]*border-color:\s*)var\(--color-slate-500\)/,
       '$1var(--color-slate-300)',
     );
-    expect(seeded).not.toBe(inputCss);
-    expect(colourUses(seeded).filter((u) => u.token === 'color-slate-300')).toHaveLength(1);
-    for (const s of SURFACES) {
-      expect(contrastRatio(tokens['color-slate-300'], tokens[s])).toBeLessThan(3);
-    }
+    expect(seeded).not.toBe(css);
+    const f = checkContrastMatrix(tokens, { css: seeded }).failures.filter(
+      (x) => x.id.startsWith('input/control/component/border-on-') && x.min === 3,
+    );
+    expect(f).toHaveLength(3);
   });
 });
 

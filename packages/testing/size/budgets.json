@@ -37,6 +37,12 @@
       "entries": ["packages/core/src/kinds/index.ts", "packages/core/src/number/index.ts"]
     },
     {
+      "id": "runtime",
+      "label": "Runtime config + scheduler + detectSupports (shared; provisional, measured 1.134 KiB on #119)",
+      "ceilingKiB": 1.5,
+      "entries": ["packages/core/src/runtime/index.ts"]
+    },
+    {
       "id": "fixture",
       "label": "Unused component in a fixture importing another",
       "ceilingKiB": 0,
@@ -68,11 +74,6 @@
       "id": "ids",
       "label": "Id derivation + CSS escape (reported, no ADR-011 ceiling)",
       "entries": ["packages/core/src/ids/index.ts"]
-    },
-    {
-      "id": "runtime",
-      "label": "Runtime config + scheduler (reported, no ADR-011 ceiling)",
-      "entries": ["packages/core/src/runtime/index.ts"]
     },
     {
       "id": "effects",

@@ -7,7 +7,7 @@ import { createElement, StrictMode } from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createApp, defineComponent, h, type App } from 'vue';
-import { createRuntime, type SJRuntime } from '@ramoslabs/core/runtime';
+import { createRuntime, detectSupports, type SJRuntime } from '@ramoslabs/core/runtime';
 import { createHost } from '@ramoslabs/vanilla/runtime';
 import { mountButton } from '@ramoslabs/vanilla/button';
 import { mountIcon } from '@ramoslabs/vanilla/icon';
@@ -20,7 +20,6 @@ import {
 import { SJButton as VueButton } from '@ramoslabs/vue/button';
 import { SJIcon as VueIcon } from '@ramoslabs/vue/icon';
 import { SJProvider as VueProvider, useSJRuntime as useVueRuntime } from '@ramoslabs/vue/runtime';
-import { detectSupports } from '../../../e2e/supports/detect';
 import { applyPath, parsePath, type SupportsMap } from '../../../e2e/supports/paths';
 import { COMPOSITIONS, type CompositionProps } from '../composition/fixtures';
 import { CONTEXT_TEXT, FIXTURES, type FixtureProps } from '../fixtures';

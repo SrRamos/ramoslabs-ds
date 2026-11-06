@@ -891,6 +891,7 @@ minified bytes, import graph and fixture execution):
 | Collection + focus kernel (shared) | **3 KiB** |
 | Live-region registry (shared) | **1 KiB** |
 | Field-kinds resolver + number parser (shared) | **2 KiB** |
+| Runtime config + scheduler + `detectSupports` (shared) | **1.5 KiB** |
 | Unused component in a fixture importing another | 0 KiB JavaScript |
 | Framework adapters | reported separately; peer framework code never counted; adapter rows exclude `@ramoslabs/core` by construction (it is an external, unbundled dependency) (G1 ruling, 2026-10-27) |
 
@@ -906,6 +907,11 @@ parser. **Derived consumer cost:** a one-component fixture caps at 3 + 1 + 4 = *
 prototype of each shared module is measured (minified+gzip, tree-shaken, pinned bundler); a ceiling
 is changed only by an ADR that cites that measurement, and no ceiling may rise more than 50% in one
 ADR without a design review of what was added.
+
+*Runtime row* (added 2026-11-05, provisional). The runtime module gained `detectSupports` (ADR-013),
+which no ceiling covered. Measured on #119: 1.134 KiB gzip for the whole entry (0.869 KiB before the
+detector, +0.265 KiB); the 1.5 KiB ceiling leaves about 32% headroom and is a revisable provisional
+gate like the others.
 
 *Conflict resolved:* 02's 3 KiB cannot hold a popover-family component with the geometry fallback
 inside it. Decision: shared kernel modules are separate artifacts with their own ceilings, and the
@@ -1088,6 +1094,9 @@ when a component first branches on it, never ad hoc. Three detections named else
 (`anchor-name`, `position-area`, `position-try-fallbacks`, `position-try-order`,
 `position-visibility`) passes `CSS.supports`, because the per-property floors differ; Chromium
 125-128 and Firefox 147 therefore take the fallback.
+`focusVisible` currently means `CSS.supports('selector(:focus-visible)')`; it does **not** probe
+`focus({ focusVisible })` (the 145 / 104 / 18.4 row of the platform table). Changing its meaning is an
+ADR.
 
 **Consequences.** Expensive matrix and manual release time (licences, devices). No "ship now, certify
 later".

@@ -6,12 +6,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import stylelint from 'stylelint';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import {
-  SURFACES,
-  checkContrastMatrix,
-  contrastRatio,
-  loadTokens,
-} from '../../testing/contrast/index.js';
+import { checkContrastMatrix, extractLayerUses, loadTokens } from '../../testing/contrast/index.js';
 import { checkStylesheets, cssParts } from '../src/_template/generate.mjs';
 import { buildReal, doc, launch, srcDir } from './helpers.js';
 
@@ -23,24 +18,6 @@ const realContracts = new URL('../../contracts/contracts', import.meta.url).path
 const configFile = new URL('../.stylelintrc.json', import.meta.url).pathname;
 const stateCss = readFileSync(join(srcDir, 'state.css'), 'utf8');
 const VARIANTS = ['first-use', 'no-results', 'cleared', 'loading', 'error'];
-
-/**
- * Parses `selector { decls }` blocks and returns, for each `color: var(--color-*)` declaration, the token name
- * and whether it sits on the icon part (non-text glyph, 3:1) or on text (4.5:1). Test-side only; the stylesheet
- * is not parsed by the build.
- */
-function colourUses(src) {
-  const text = src.replace(/\/\*[\s\S]*?\*\//g, '');
-  const out = [];
-  for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-    const selector = m[1].trim();
-    const icon = /__icon\b/.test(selector);
-    for (const d of m[2].matchAll(/(?<![-\w])color:\s*var\(--(color-[\w-]+)\)/g)) {
-      out.push({ token: d[1], selector, min: icon ? 3 : 4.5 });
-    }
-  }
-  return out;
-}
 
 /** A state root as core emits it, one per variant: root, icon (aria-hidden), title, description and actions. */
 function stateHtml({ variant = 'first-use', spinner = false, withActions = true } = {}) {
@@ -112,34 +89,18 @@ describe('anatomy and build', () => {
   });
 });
 
-describe('contrast on every page surface (WCAG 1.4.3 text 4.5:1, 1.4.11 icon 3:1)', () => {
-  it('every colour the state stylesheet uses clears its minimum on every surface', () => {
-    const uses = colourUses(stateCss);
-    expect(uses.length).toBeGreaterThan(0);
-    for (const u of uses) {
-      for (const s of SURFACES) {
-        const ratio = contrastRatio(tokens[u.token], tokens[s]);
-        expect(ratio, `${u.token} on ${s} (${u.selector})`).toBeGreaterThanOrEqual(u.min);
-      }
-    }
-  });
-
+describe('contrast on every page surface (shared matrix: text and glyph at 4.5:1, WCAG 1.4.3 and 1.4.11)', () => {
   it('the shared contrast matrix reports no failure for a state id', () => {
     const { failures } = checkContrastMatrix(tokens, { css });
     expect(failures.filter((f) => f.id.startsWith('state'))).toEqual([]);
   });
 
-  it('a seeded weak glyph colour (slate 300) fails the icon floor on every surface', () => {
-    const seeded = stateCss.replace(
-      /(\.sj-state__icon\[data-variant='cleared'\]\s*\{\s*color:\s*)var\(--color-text-muted\)/,
-      '$1var(--color-slate-300)',
+  it('the shared pass reads the state colours (title, description, root, every glyph kind)', () => {
+    const uses = extractLayerUses(css).filter((u) => u.component === 'state');
+    expect(uses.map((u) => u.part)).toEqual(
+      expect.arrayContaining(['root', 'title', 'description', 'icon']),
     );
-    expect(seeded).not.toBe(stateCss);
-    const uses = colourUses(seeded).filter((u) => u.token === 'color-slate-300');
-    expect(uses).toHaveLength(1);
-    for (const s of SURFACES) {
-      expect(contrastRatio(tokens['color-slate-300'], tokens[s])).toBeLessThan(3);
-    }
+    expect(uses.filter((u) => u.part === 'icon')).toHaveLength(VARIANTS.length);
   });
 });
 

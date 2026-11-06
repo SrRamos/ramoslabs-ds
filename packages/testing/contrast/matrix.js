@@ -9,7 +9,7 @@
 // Sizes: text color does not depend on size, so each pair is evaluated per size. All sizes are
 // treated as normal text (4.5:1); the large-text 3:1 allowance is deliberately not used.
 import { THRESHOLDS, contrastRatio } from './wcag.js';
-import { extractPairs, extractUiPairs } from './css.js';
+import { extractLayerUses, extractPairs, extractUiPairs } from './css.js';
 
 export const VARIANTS = ['solid', 'soft', 'outline', 'ghost'];
 export const TONES = ['primary', 'neutral', 'success', 'warning', 'error', 'info'];
@@ -148,6 +148,19 @@ export function checkContrastMatrix(tokens, options = {}) {
           fg: u.bg,
           bg: s,
           min: THRESHOLDS.ui,
+        });
+
+  // Colours declared in sj.component / sj.state (and toneless sj.variant) rules: text 4.5:1, border 3:1, on every surface.
+  if (options.css)
+    for (const u of extractLayerUses(options.css))
+      for (const s of SURFACES)
+        add({
+          id: `${u.component}/${u.part}/${u.layer.replace('sj.', '')}/${u.prop === 'color' ? 'text' : 'border'}-on-${s}`,
+          kind: u.prop === 'color' ? 'text' : 'ui',
+          source: 'css',
+          fg: u.token,
+          bg: s,
+          min: u.prop === 'color' ? THRESHOLDS.text : THRESHOLDS.ui,
         });
 
   for (const variant of VARIANTS) {
