@@ -55,6 +55,7 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaStateProps
   let drawn: Partial<Record<Child, StateSlot>> = {};
   let order = '';
   let lastKey = '';
+  let titleText: string | undefined;
   const seen: Record<StatePart, Set<string>> = {
     root: new Set(),
     icon: new Set(),
@@ -71,17 +72,16 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaStateProps
     patch(_view, ctx: Ctx) {
       current = ctx.props();
       if (!state) {
-        // The title slot (string) is the heading for announcements when no `heading` prop is given.
-        state = createState(() => ({
-          ...current,
-          heading: typeof current.title === 'string' ? current.title : current.heading,
-        }));
+        // A title slot (a string, or a Node read back as the text the user sees) is the heading for announcements
+        // and wins over the `heading` prop, as it does on screen.
+        state = createState(() => ({ ...current, heading: titleText ?? current.heading }));
         ctx.onCleanup(() => {
           for (const e of Object.values(els)) e.remove();
           els = {};
           drawn = {};
           order = '';
           state = undefined;
+          titleText = undefined;
         });
       }
       const cls = current.classes ?? {};
@@ -125,6 +125,8 @@ function createSpec(): ComponentSpec<{ state: 'idle' }, never, VanillaStateProps
         order = nextOrder;
         ctx.el.replaceChildren(...CHILDREN.flatMap((p) => (els[p] ? [els[p]!] : [])));
       }
+
+      titleText = filled(current.title) ? (els.title?.textContent ?? '') : undefined;
 
       // One announcement per change, handed to the registry after mount (no live markup in SSR).
       const a = state.getAnnouncement();
