@@ -156,8 +156,10 @@ describe('resolveKind', () => {
     expect(resolveKind('country')).toMatchObject({ type: 'select', autocomplete: 'country' });
     expect(resolveKind('country', { variant: 'text' })).toMatchObject({
       type: 'text',
+      inputmode: 'text', // contract note: the text variant is type=text, inputmode=text
       autocomplete: 'country-name',
     });
+    expect(resolveKind('country').inputmode).toBeUndefined(); // a select takes no inputmode
     expect(resolveKind('postal').inputmode).toBe('numeric');
     expect(resolveKind('postal', { digits: false }).inputmode).toBeUndefined();
     expect(resolveKind('tax-id').inputmode).toBeUndefined();

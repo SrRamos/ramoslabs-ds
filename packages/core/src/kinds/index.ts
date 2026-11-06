@@ -55,7 +55,10 @@ export function resolveKind(kind: Kind, ctx: KindContext = {}): ResolvedKind {
   const out: ResolvedKind = {
     type,
     inputmode:
-      type === 'number' || (gate === 1 && d === false) || (gate === 2 && d !== true)
+      type === 'number' ||
+      type === 'select' ||
+      (gate === 1 && d === false) ||
+      (gate === 2 && d !== true)
         ? undefined
         : (im ?? undefined),
     autocomplete,
