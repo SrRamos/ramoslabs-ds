@@ -1,0 +1,36 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as ActivityCard from './Demos/ActivityCard.stories';
+
+<Meta title="Patterns/Cards and Metrics" />
+
+<div className="pt-hero">
+  <p className="pt-hero-eyebrow">Patterns / Cards and Metrics</p>
+  <h1>One number leads<br />Everything else supports it</h1>
+  <p>A card that shows an activity, an order or a balance has to be read in a glance. The reader should find one figure first, then the figures that explain it, then the picture. This page sets the hierarchy, the number typography, the proximity of context to data, and the small buttons a card carries.</p>
+</div>
+
+<div className="pt-wrap">
+<h2 className="pt-h2">1. One hero figure per card</h2>
+<p className="pt-text">Order the card as three tiers: one <strong>hero figure</strong> (primary), a row of <strong>label and value</strong> metrics (secondary), then a visual or tertiary block such as a map or chart.</p>
+<p className="pt-head">Card hierarchy</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> Give each card <strong>one hero figure</strong>, set at <code>--metric-hero-value</code>. Follow it with a row of label and value metrics at <code>--metric-value</code>, then the visual block.</p><p className="pt-line"><strong>Why:</strong> The eye needs a single entry point. Two big numbers compete, and the reader has to decide which one the card is about. NN/g’s guidance is page level and tolerates up to two large elements; “exactly one per card” is the DS’s stricter extension.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not give every number on the card the same size and weight, and do not put two hero figures side by side.</p><p className="pt-line"><strong>Why:</strong> When everything is emphasised, nothing is. The reader scans the whole card for the point.</p></div></div>
+<p className="pt-src">Sources: NN/g, Visual Hierarchy in UX. See item 1 of the research file.</p>
+<h2 className="pt-h2">2. Number and unit typography</h2>
+<p className="pt-text">A metric reads as a large number with a smaller, muted unit: <code>35 min 37 s</code>, <code>5:05 /km</code>. Numbers use <code>font-variant-numeric: tabular-nums</code> so columns of digits line up and a live value does not jitter. Plus Jakarta Sans ships the <code>tnum</code> feature: with <code>tabular-nums</code> every digit is 86.41 px wide at 36 px bold, while the default figures vary from 57.97 px (1111) to 90.98 px (8888). The check was run in Chromium against the self-hosted font.</p>
+<div className="pt-tablewrap"><table className="pt-table"><thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead><tbody><tr><td><code>--metric-hero-value</code></td><td>36 px (<code>--font-size-4xl</code>)</td><td>The one hero figure of a card.</td></tr><tr><td><code>--metric-hero-unit</code></td><td>20 px (<code>--font-size-xl</code>)</td><td>The unit beside the hero figure.</td></tr><tr><td><code>--metric-value</code></td><td>24 px (<code>--font-size-2xl</code>)</td><td>A secondary metric value.</td></tr><tr><td><code>--metric-unit</code></td><td>16 px (<code>--font-size-base</code>)</td><td>The unit beside a secondary value.</td></tr></tbody></table></div>
+<p className="pt-head">Number and unit</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> Set the number in <code>--metric-&#42;-value</code> with <code>tabular-nums</code>, baseline-aligned, and the unit in the matching <code>--metric-&#42;-unit</code> and <code>--color-text-muted</code>. The unit colour is never lighter than slate-500.</p><p className="pt-line"><strong>Why:</strong> The number carries the meaning, so it leads; the unit only qualifies it. Tabular figures keep digits aligned. Slate 500 is the muted-text floor (4.8:1 on white), so the small unit stays legible.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not set the unit in slate 400 or lighter, and do not set a unit at the same size and weight as its number.</p><p className="pt-line"><strong>Why:</strong> A light small unit fails 4.5:1, and a unit as loud as the number blurs where the value ends.</p></div></div>
+<p className="pt-src">Sources: MDN, font-variant-numeric (it does nothing if the font lacks the feature, hence the check above); AGENTS.md muted-text floor. The unit steps down the scale by about 55 percent of the value rather than one raw step, which keeps a clear hierarchy at 36 px.</p>
+<h2 className="pt-h2">3. Proximity: context sits next to its data</h2>
+<p className="pt-head">Context next to the datum</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> Put context and metadata next to the datum it explains. A location chip belongs <strong>on the map</strong>, not in the card header. Use <code>--space-related</code> inside a group and <code>--space-group</code> between groups.</p><p className="pt-line"><strong>Why:</strong> Gestalt proximity: things that sit together are read as belonging together. A chip on the map says “this is where”. The same chip in the header makes the reader link the two.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not use one spacing value everywhere, and do not park a datum’s context in the header, far from the datum.</p><p className="pt-line"><strong>Why:</strong> Equal spacing erases the groups, and distant context makes the reader do the joining.</p></div></div>
+<p className="pt-src">Sources: NN/g, Proximity Principle in Visual Design; IxDF, Proximity principle.</p>
+<p className="pt-demo"><strong>Try it.</strong> Storybook: Patterns/Demos/Activity Card (recommended and equal-spacing counter-example side by side, with an RTL variant)</p>
+<h2 className="pt-h2">4. The metadata line and the overflow button</h2>
+<p className="pt-text">Under the title, a metadata line joins who, when and where with a <code>•</code> separator (<code>aria-hidden</code>) and a <code>&lt;time datetime&gt;</code> for the relative time. The rule is on the Voice and Tone page. A card’s overflow <code>•••</code> button stays visually small but keeps a 44 px hit area on touch (Mobile First page).</p>
+<p className="pt-demo"><strong>Try it.</strong> Storybook: Patterns/Demos/Overflow Button</p>
+</div>
+
+## Live demo
+
+<Canvas of={ActivityCard.SideBySide} />

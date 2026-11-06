@@ -1161,6 +1161,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
 {/* SOURCES                                      */}
 {/* ============================================ */}
 
+<div className="pt-wrap">
+<h2 className="pt-h2">The metadata line</h2>
+<p className="pt-text">The line under a title that says who, when and where: <code>Laura Gómez • hace 2 h • Parque Arví</code>. It is small and quiet, so it must be easy to scan and must not read as noise to a screen reader.</p>
+<p className="pt-head">Metadata line</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> Join the items with a <code>•</code> separator wrapped in <code>aria-hidden</code>. Put the relative time in <code>&lt;time datetime="2026-11-05T06:42"&gt;hace 2 h&lt;/time&gt;</code>. Keep to three items, ordered who, when, where, and set it in the muted text colour (never lighter than slate-500).</p><p className="pt-line"><strong>Why:</strong> A separator is decoration, so a screen reader should not read “bullet” between every item. <code>&lt;time datetime&gt;</code> gives assistive technology and search the exact moment while sighted readers get the friendly “hace 2 h”. Three items scan at a glance.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not use <code>|</code> or <code>/</code> as a separator without hiding it, do not write “hace 2 h” with no <code>datetime</code>, and do not run past three items.</p><p className="pt-line"><strong>Why:</strong> A pipe or slash is read aloud, a relative time alone loses the date as soon as it is copied or cached, and a long line stops being scanned.</p></div></div>
+<p className="pt-src">Sources: MDN, the <code>&lt;time&gt;</code> element; WHATWG HTML Standard, The time element. The research file notes there is no primary source for the bullet separator itself; it is a house convention.</p>
+<p className="pt-demo"><strong>Try it.</strong> Storybook: Patterns/Demos/Activity Card</p>
+</div>
+
+
 <div className="vt-section">
   <h2 className="vt-rule-label" style={{ marginTop: 0 }}>Sources</h2>
   <ul className="vt-sources-list">

@@ -458,6 +458,19 @@ import { Meta } from '@storybook/addon-docs/blocks';
   </div>
 </div>
 
+<div className="pt-wrap">
+<h2 className="pt-h2">Related, group, section: the semantic rhythm</h2>
+<p className="pt-text">The numeric scale says how much. The semantic tokens say what the space is for. Things that belong together sit closer than things that do not (the Gestalt law of proximity), so the space inside a group is always smaller than the space between groups, and that is smaller than the space between sections.</p>
+<div className="pt-tablewrap"><table className="pt-table"><thead><tr><th>Token</th><th>Maps to</th><th>Use</th></tr></thead><tbody><tr><td><code>--space-related</code></td><td><code>--space-2</code>, 8 px</td><td>Between items that belong together: a label and its value, a title and its subtitle.</td></tr><tr><td><code>--space-group</code></td><td><code>--space-6</code>, 24 px</td><td>Between groups inside one section or card: one metric row and the next, one form field and the next.</td></tr><tr><td><code>--space-section</code></td><td><code>--space-12</code>, 48 px</td><td>Between sections of a page or major blocks of a flow.</td></tr></tbody></table></div>
+<p className="pt-head">Spacing rhythm</p>
+<div className="pt-pair"><div className="pt-rule pt-rule--rec"><p className="pt-tag">✓ Recommended</p><p className="pt-line"><strong>Rule:</strong> Use <code>--space-related</code> inside a group and <code>--space-group</code> or <code>--space-section</code> around it. The space around a group is always larger than the space inside it.</p><p className="pt-line"><strong>Why:</strong> Proximity tells the eye what belongs together before it reads a word. When inner and outer spacing match, the groups blur and the layout looks like one long list.</p></div><div className="pt-rule pt-rule--avoid"><p className="pt-tag">✕ Avoid</p><p className="pt-line"><strong>Rule:</strong> Do not use one spacing value for the gap inside a group and the margin around it.</p><p className="pt-line"><strong>Why:</strong> With equal spacing nothing is grouped and nothing leads. A card with 16 px everywhere is harder to scan than one with 8 px inside and 24 px between.</p></div></div>
+<h2 className="pt-h2">The lint that checks it</h2>
+<p className="pt-text">The <code>sj/spacing-proximity</code> stylelint rule flags a rule whose <code>gap</code> and <code>margin</code> use the same <code>--space-&#42;</code> token (inner equals outer). It reads one rule at a time, so it cannot compare a parent’s gap with a child’s margin declared in another selector, or a value reached through a custom property. Those cases stay with review and this page. A container’s own padding is not compared: edge padding equal to the gap is normal.</p>
+<p className="pt-src">Sources: NN/g, Proximity Principle in Visual Design; Interaction Design Foundation, Proximity principle. The semantic token names and the lint are DS conventions with no external source.</p>
+<p className="pt-demo"><strong>Try it.</strong> Storybook: Patterns/Demos/Activity Card (the equal-spacing counter-example sits beside the recommended card)</p>
+</div>
+
+
 <div className="sp-refs">
   <p className="sp-refs-h">Sources</p>
   <p>

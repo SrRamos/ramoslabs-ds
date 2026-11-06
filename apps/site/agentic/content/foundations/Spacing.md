@@ -57,6 +57,34 @@ Density is how tightly the same components pack. You step interior spacing down 
 
 Rule: keep the 24px hit-area floor in every density mode, compact included. Why: density trims padding, not accessibility.
 
+## Related, group, section: the semantic rhythm
+
+The numeric scale says how much. The semantic tokens say what the space is for. Things that belong together sit closer than things that do not (the Gestalt law of proximity), so the space inside a group is always smaller than the space between groups, and that is smaller than the space between sections.
+
+| Token | Maps to | Use |
+| --- | --- | --- |
+| `--space-related` | `--space-2`, 8 px | Between items that belong together: a label and its value, a title and its subtitle. |
+| `--space-group` | `--space-6`, 24 px | Between groups inside one section or card: one metric row and the next, one form field and the next. |
+| `--space-section` | `--space-12`, 48 px | Between sections of a page or major blocks of a flow. |
+
+### ✓ Recommended: Spacing rhythm
+
+**Rule:** Use `--space-related` inside a group and `--space-group` or `--space-section` around it. The space around a group is always larger than the space inside it.
+**Why:** Proximity tells the eye what belongs together before it reads a word. When inner and outer spacing match, the groups blur and the layout looks like one long list.
+
+### ✕ Avoid: Spacing rhythm
+
+**Rule:** Do not use one spacing value for the gap inside a group and the margin around it.
+**Why:** With equal spacing nothing is grouped and nothing leads. A card with 16 px everywhere is harder to scan than one with 8 px inside and 24 px between.
+
+## The lint that checks it
+
+The `sj/spacing-proximity` stylelint rule flags a rule whose `gap` and `margin` use the same `--space-*` token (inner equals outer). It reads one rule at a time, so it cannot compare a parent’s gap with a child’s margin declared in another selector, or a value reached through a custom property. Those cases stay with review and this page. A container’s own padding is not compared: edge padding equal to the gap is normal.
+
+*Sources: NN/g, Proximity Principle in Visual Design; Interaction Design Foundation, Proximity principle. The semantic token names and the lint are DS conventions with no external source.*
+
+Try it. Storybook: Patterns/Demos/Activity Card (the equal-spacing counter-example sits beside the recommended card).
+
 ## Sources
 
 Touch-target floors: WCAG 2.2 SC 2.5.8 Target Size Minimum, 24px AA; Apple HIG 44pt; Material 48dp. The 8pt grid and density model after Material layout and density, and Refactoring UI numbered scales. Safe-area insets via CSS `env()`.

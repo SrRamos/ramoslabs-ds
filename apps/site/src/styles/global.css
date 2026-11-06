@@ -1,6 +1,7 @@
 /* RamosLabs DS documentation site — global base.
    Tokens are the single source of truth; everything reads CSS variables. */
 @import '@ramoslabs/tokens/css';
+@import './pattern-rules.css';
 
 /* ---- Self-hosted fonts (OFL). Plus Jakarta Sans is the one typeface; the Arabic and Hebrew faces load only
    when those scripts appear (unicode-range). Plain family names match the token stacks. ---- */
