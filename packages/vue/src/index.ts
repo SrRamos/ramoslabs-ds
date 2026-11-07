@@ -1,8 +1,10 @@
 // RamosLabs Vue component library barrel (hand-written). Adapters never import CSS (ADR-002): consumers import @ramoslabs/css.
+export * from './button/index';
 export * from './switch/index';
 export * from './checkbox/index';
 export * from './icon/index';
 export * from './state/index';
+export * from './skeleton/index';
 export * from './disclosure/index';
 export * from './form/index';
 export * from './field/index';

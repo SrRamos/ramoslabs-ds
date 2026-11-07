@@ -1,5 +1,5 @@
 /* sj-state: SJState stylesheet (W1-C11.b). Generated from src/_template, then authored. Tokens only (stylelint sj/* rules enforce it).
-   Parts (contract anatomy): root <div>, icon <span>, title <p>, description <p>, actions <div>.
+   Parts (contract anatomy): root <div>, icon <span>, title <p>, description <p>, skeleton <div>, actions <div>.
    Core emits the root class `sj-state` (no `__root`), so the root selector names both, as sj-icon does; issue #88
    tracks the class convention and this file does not change it.
    Hooks from core: data-part on every part, data-variant (first-use | no-results | cleared | loading | error) on every
@@ -43,6 +43,16 @@
     margin: 0;
     font-size: var(--font-size-base);
     color: var(--color-text-secondary);
+  }
+
+  /* Loading placeholder (SJSkeleton shapes), loading variant only. It spans the state and reads start-aligned: it mirrors
+     the content that will replace it, not a centred message. Decorative (aria-hidden); the heading text still shows. */
+  .sj-state__skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    align-self: stretch;
+    text-align: start;
   }
 
   /* Next-step controls (SJButton). Wrap on narrow screens; the gap is a token. */

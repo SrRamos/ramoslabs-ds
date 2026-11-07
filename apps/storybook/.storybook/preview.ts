@@ -31,7 +31,7 @@ const preview: Preview = {
             'Color Picker',
           ],
           'Patterns',
-          ['Interactive', 'Accessibility', 'Persuasion', 'Form Elements', 'Data Tables', 'Modals', 'Mobile First', 'AI Content', 'Voice & Tone', 'Cards and Metrics', 'Multi-step Flows', 'Bottom Navigation', 'Demos'],
+          ['Interactive', 'Accessibility', 'Persuasion', 'Form Elements', 'Data Tables', 'Modals', 'Mobile First', 'Loading', 'AI Content', 'Voice & Tone', 'Cards and Metrics', 'Multi-step Flows', 'Bottom Navigation', 'Demos'],
           'Components',
           ['Review Guide'],
         ],
