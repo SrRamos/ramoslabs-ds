@@ -95,6 +95,28 @@
     cursor: not-allowed;
   }
 
+  /* Dark surfaces: any ancestor with data-theme='dark'. Off track slate 500 (3.75:1 on slate 900), on track indigo 400
+     (5.98:1), knob slate 900 on either. The state is still carried by the knob's position, not by colour alone. */
+  :where([data-theme='dark']) .sj-switch__root {
+    color: var(--color-text-body-dark);
+  }
+
+  :where([data-theme='dark']) .sj-switch__root[data-state='off']::before {
+    background-color: var(--color-control-border-dark);
+  }
+
+  :where([data-theme='dark']) .sj-switch__root[data-state='on']::before {
+    background-color: var(--color-control-fill-dark);
+  }
+
+  :where([data-theme='dark']) .sj-switch__thumb {
+    background-color: var(--color-control-glyph-dark);
+  }
+
+  :where([data-theme='dark']) .sj-switch__root[data-disabled]:not([data-disabled='false'])::before {
+    background-color: var(--color-control-disabled-dark);
+  }
+
   /* Forced colors drops backgrounds, so the track and knob need a system-colour border to stay visible.
      The state is also carried by the knob's position, not by colour alone. */
   @media (forced-colors: active) {

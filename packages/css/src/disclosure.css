@@ -92,6 +92,27 @@
     color: var(--color-text-disabled);
   }
 
+  /* Dark surfaces: any ancestor with data-theme='dark'. Heading, body and secondary text swap to their dark roles
+     (4.5:1 on slate 900 and 950); the chevron is the secondary role. */
+  :where([data-theme='dark']) .sj-disclosure__root,
+  :where([data-theme='dark']) .sj-disclosure__content {
+    color: var(--color-text-body-dark);
+  }
+
+  :where([data-theme='dark']) .sj-disclosure__trigger {
+    color: var(--color-text-heading-dark);
+  }
+
+  :where([data-theme='dark']) .sj-disclosure__trigger::after {
+    color: var(--color-text-secondary-dark);
+  }
+
+  :where([data-theme='dark']) .sj-disclosure__trigger[data-disabled]:not([data-disabled='false']),
+  :where([data-theme='dark'])
+    .sj-disclosure__trigger[data-disabled]:not([data-disabled='false'])::after {
+    color: var(--color-text-disabled-dark);
+  }
+
   /* Forced colours: the chevron must stay a visible system colour, whatever the author colour was. */
   @media (forced-colors: active) {
     .sj-disclosure__trigger::after {

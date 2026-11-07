@@ -18,6 +18,11 @@
     }
   }
 
+  /* Dark surfaces: native parts the DS does not restyle (a bare <button>, <select>, scrollbars, autofill) follow the theme. */
+  :where([data-theme='dark']) {
+    color-scheme: dark;
+  }
+
   /* Keyboard viewport (ADR-005 step 9): svh is the stable size, dvh follows the browser UI.
      The interactive-widget behavior is a viewport meta setting; CSS cannot set it. */
   :where(:root) {

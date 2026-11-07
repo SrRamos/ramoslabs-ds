@@ -68,6 +68,18 @@ async function focusControl(page: Page, browserName: string): Promise<void> {
   expect(await page.evaluate(() => document.activeElement?.matches('[role=switch]'))).toBe(true);
 }
 
+/** The dark theme as the toolbar sets it: data-theme on the root and the dark page surface behind the control. */
+async function setDark(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.body.style.backgroundColor = getComputedStyle(document.documentElement)
+      .getPropertyValue('--color-surface-dark')
+      .trim();
+  });
+  // Let the colour transition (--sj-duration-fast) finish before measuring.
+  await page.waitForTimeout(300);
+}
+
 const STATES = [
   { name: 'off', fixture: 'off', focus: false },
   { name: 'on', fixture: 'on', focus: false },
@@ -114,6 +126,34 @@ for (const adapter of ADAPTERS) {
     browserName,
   }) => {
     await mount(page, adapter, 'on');
+    await focusControl(page, browserName);
+    const v = focusAppearance(await page.evaluate(collectFocusAppearance));
+    expect(v.failures).toEqual([]);
+  });
+
+  test(`@pr dark | switch ${adapter} | text 4.5:1, ring >= 2px and >= 3:1 on a dark surface`, async ({
+    page,
+    browserName,
+  }) => {
+    await mount(page, adapter, 'on');
+    await setDark(page);
+    const dark = await page.evaluate(() => ({
+      bg: getComputedStyle(document.body).backgroundColor,
+      fg: getComputedStyle(document.querySelector('[data-part="label"]')!).color,
+    }));
+    expect(
+      contrastRatio(hex(dark.fg), hex(dark.bg)),
+      'label on the dark page',
+    ).toBeGreaterThanOrEqual(4.5);
+    // The drawn box / track against the dark page: 3:1 (1.4.11).
+    const drawn = await page.evaluate((pseudo) => {
+      const el = document.querySelector('[data-part="root"]')!;
+      return getComputedStyle(el, pseudo).backgroundColor;
+    }, '::before');
+    expect(
+      contrastRatio(hex(drawn), hex(dark.bg)),
+      'drawn control on the dark page',
+    ).toBeGreaterThanOrEqual(3);
     await focusControl(page, browserName);
     const v = focusAppearance(await page.evaluate(collectFocusAppearance));
     expect(v.failures).toEqual([]);

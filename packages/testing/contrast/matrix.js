@@ -207,9 +207,9 @@ export function checkContrastMatrix(tokens, options = {}) {
   // Drawn fills on the page (switch track, G3A SHOULD-2): 3:1 against every surface.
   if (options.css)
     for (const u of extractUiPairs(options.css))
-      for (const s of SURFACES)
+      for (const s of u.theme === 'dark' ? DARK_SURFACES : SURFACES)
         add({
-          id: `${u.component}/${u.part}${u.pseudo}/${u.state}/ui-on-${s}`,
+          id: `${u.theme === 'dark' ? 'dark/' : ''}${u.component}/${u.part}${u.pseudo}/${u.state}/ui-on-${s}`,
           kind: 'ui',
           source: 'css',
           fg: u.bg,
@@ -336,6 +336,30 @@ export function checkContrastMatrix(tokens, options = {}) {
     }
   for (const s of SURFACES)
     add({ id: `focus/ring-on-${s}`, kind: 'focus', fg: 'color-focus', bg: s, min: THRESHOLDS.ui });
+  for (const s of DARK_SURFACES)
+    add({
+      id: `focus/ring-dark-on-${s}`,
+      kind: 'focus',
+      fg: 'color-focus-dark',
+      bg: s,
+      min: THRESHOLDS.ui,
+    });
+  // Dark controls: the drawn box/track on the dark surfaces is checked from the CSS above; these are the pairs
+  // between two drawn parts, which are not on the page (glyph on box, knob on track) and so are listed here.
+  for (const [id, fg, bg] of [
+    ['checkbox/glyph-on-checked', 'color-control-glyph-dark', 'color-control-fill-dark'],
+    ['switch/knob-on-on-track', 'color-control-glyph-dark', 'color-control-fill-dark'],
+    ['switch/knob-on-off-track', 'color-control-glyph-dark', 'color-control-border-dark'],
+    ['checkbox/box-on-field', 'color-control-border-dark', 'color-control-field-dark'],
+  ])
+    add({ id: `dark/${id}`, kind: 'ui', fg, bg, min: THRESHOLDS.ui });
+  // Skeleton fill is decorative (no 1.4.11 floor); it must still read as a shape on its surface, light and dark.
+  for (const [id, fg, bg] of [
+    ['skeleton/base-on-surface', 'skeleton-color-base', 'color-surface'],
+    ['dark/skeleton/base-on-surface-dark', 'skeleton-color-base-dark', 'color-surface-dark'],
+    ['dark/skeleton/base-on-background-dark', 'skeleton-color-base-dark', 'color-background-dark'],
+  ])
+    add({ id, kind: 'floor', fg, bg, min: 1.1 });
   // Muted floor: never lighter than slate 500 on white, even if the token is re-pointed.
   const floor =
     Math.floor(contrastRatio(value(MUTED_FLOOR_TOKEN), value('color-white')) * 100) / 100;

@@ -118,7 +118,7 @@ function rulesIn(css) {
 }
 
 /**
- * @typedef {{ component: string, part: string, pseudo: string, state: string, bg: string }} CssUiPair
+ * @typedef {{ component: string, part: string, pseudo: string, state: string, bg: string, theme: Theme }} CssUiPair
  * A drawn fill that sits on the page: `sj.state` rule keyed on `[data-state]` that sets `background-color`
  * on a part or its pseudo-element. Disabled rules are skipped (WCAG 1.4.11 exempts inactive components).
  */
@@ -158,6 +158,7 @@ export function extractUiPairs(css) {
             pseudo: /::(before|after)\b/.exec(sel)?.[0] ?? '',
             state,
             bg: /** @type {string} */ (tokenOf(bg)),
+            theme: themeOf(sel),
           });
         }
       }
@@ -172,7 +173,7 @@ export function extractUiPairs(css) {
  * A `color` or `border-color` declared in a component or state layer (SHOULD-2). Each is checked against every
  * page surface: `color` at 4.5:1, `border-color` at 3:1. Rules in `sj.variant` that name a `[data-tone]` belong
  * to the variant matrix and are skipped here; toneless variant rules (state kinds) are read.
- * Exempt (WCAG 1.4.3 / 1.4.11 inactive components): `--color-text-disabled`, and any selector with `:disabled`
+ * Exempt (WCAG 1.4.3 / 1.4.11 inactive components): `--color-text-disabled` (and `-dark`), and any selector with `:disabled`
  * or `[data-disabled]`; `border-color` on `::before`/`::after` is a drawn glyph, not on the page. Keywords (`currentColor`, `inherit`, system colours, `transparent`) carry no token and
  * are skipped; a raw hex or functional colour throws (tokens only).
  */
@@ -203,7 +204,8 @@ export function extractLayerUses(css) {
           if (/^(#|rgba?\(|hsla?\(|oklch\(|oklab\(|color\()/i.test(v))
             throw new Error(`Layer CSS ${prop} "${v}" is not var(--color-*) (tokens only)`);
           const token = /^var\(\s*--(color-[\w-]+)\s*\)$/.exec(v)?.[1];
-          if (!token || token === 'color-text-disabled') continue;
+          if (!token || token === 'color-text-disabled' || token === 'color-text-disabled-dark')
+            continue;
           for (const sel of splitTop(prelude, ',')) {
             if (/:disabled\b|\[data-disabled/.test(sel)) continue;
             if (layer === 'sj.variant' && /\[data-tone/.test(sel)) continue;

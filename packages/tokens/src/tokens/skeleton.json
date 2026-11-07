@@ -9,6 +9,14 @@
       "highlight": {
         "$value": "{color.slate.100}",
         "$description": "Shimmer sweep highlight on top of the base fill."
+      },
+      "base-dark": {
+        "$value": "{color.slate.800}",
+        "$description": "Placeholder fill on dark surfaces. Decorative, like the light fill: hidden from assistive tech, so 1.4.11 does not apply; forced colors draws a CanvasText border."
+      },
+      "highlight-dark": {
+        "$value": "{color.slate.700}",
+        "$description": "Shimmer sweep highlight on top of the dark base fill."
       }
     },
     "line": {

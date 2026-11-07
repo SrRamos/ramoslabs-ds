@@ -13,6 +13,13 @@
     box-shadow: var(--shadow-focus);
   }
 
+  /* Dark surfaces: a slate 900 gap inside an indigo 400 edge (5.98:1 on slate 900). The white gap of the light ring would
+     glare, and indigo 600 is 2.83:1 here. Placed before the forced-colors block, which must still win. */
+  :where([data-theme='dark']) [data-part]:focus-visible,
+  :where([data-theme='dark']) [data-part][data-active]:not([data-active='false']) {
+    box-shadow: var(--shadow-focus-dark);
+  }
+
   @media (forced-colors: active) {
     [data-part]:focus-visible,
     [data-part][data-active]:not([data-active='false']) {

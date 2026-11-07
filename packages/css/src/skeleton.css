@@ -14,6 +14,7 @@
 @layer sj.component {
   :is(.sj-skeleton, .sj-skeleton__root) {
     --sj-skeleton-fill: var(--skeleton-color-base);
+    --sj-skeleton-highlight: var(--skeleton-color-highlight);
     display: block;
     box-sizing: border-box;
     max-inline-size: 100%;
@@ -36,7 +37,7 @@
     background-image: linear-gradient(
       90deg,
       transparent 25%,
-      var(--skeleton-color-highlight) 50%,
+      var(--sj-skeleton-highlight) 50%,
       transparent 75%
     );
     background-repeat: no-repeat;
@@ -186,6 +187,13 @@
       background-image: none;
       animation: none;
     }
+  }
+
+  /* Dark surfaces: any ancestor with data-theme='dark'. Slate 800 fill with a slate 700 sweep. Still decorative (aria-hidden,
+     the loading text carries the meaning), so 1.4.11 does not apply; the fill is only checked to stay visible on the surface. */
+  :where([data-theme='dark']) :is(.sj-skeleton, .sj-skeleton__root) {
+    --sj-skeleton-fill: var(--skeleton-color-base-dark);
+    --sj-skeleton-highlight: var(--skeleton-color-highlight-dark);
   }
 
   /* Forced colors (ADR-009): backgrounds are replaced, so draw each shape with a border and drop the sweep. */

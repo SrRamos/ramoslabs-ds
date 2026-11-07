@@ -88,8 +88,22 @@ describe('extractUiPairs', () => {
 }`;
   it('reads state-keyed fills from sj.state only, skipping disabled and other layers', () => {
     expect(extractUiPairs(UI)).toEqual([
-      { component: 'x', part: 'root', pseudo: '::before', state: 'off', bg: 'color-slate-500' },
-      { component: 'x', part: 'root', pseudo: '::before', state: 'on', bg: 'color-primary' },
+      {
+        component: 'x',
+        part: 'root',
+        pseudo: '::before',
+        state: 'off',
+        bg: 'color-slate-500',
+        theme: 'light',
+      },
+      {
+        component: 'x',
+        part: 'root',
+        pseudo: '::before',
+        state: 'on',
+        bg: 'color-primary',
+        theme: 'light',
+      },
     ]);
   });
   it('fails a seeded weak fill on every surface', () => {
