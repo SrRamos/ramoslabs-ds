@@ -159,3 +159,41 @@
 .sbx-sk-cols .sbx-cell {
   align-items: stretch;
 }
+
+/* Dark theme toolbar: the story chrome follows onto the dark surfaces (semantic dark roles only). */
+:where([data-theme='dark']) .sbx-sk-label,
+:where([data-theme='dark']) .sbx-sk-bad,
+:where([data-theme='dark']) .sbx-sk-line--strong {
+  color: var(--color-text-heading-dark);
+}
+:where([data-theme='dark']) .sbx-sk-pad {
+  background: var(--color-surface-dark);
+  border-color: var(--color-border-dark);
+}
+:where([data-theme='dark']) .sbx-sk-readout,
+:where([data-theme='dark']) .sbx-sk-line,
+:where([data-theme='dark']) .sbx-sk-action {
+  color: var(--color-text-body-dark);
+}
+:where([data-theme='dark']) .sbx-sk-line--muted {
+  color: var(--color-text-muted-dark);
+}
+:where([data-theme='dark']) .sbx-sk-line--strong {
+  color: var(--color-text-heading-dark);
+}
+:where([data-theme='dark']) .sbx-sk-select {
+  color: var(--color-text-heading-dark);
+  background: var(--color-surface-dark);
+  border-color: var(--color-control-border-dark);
+}
+:where([data-theme='dark']) .sbx-sk-media,
+:where([data-theme='dark']) .sbx-sk-avatar {
+  color: var(--color-primary-text-dark);
+  background: var(--color-primary-surface-dark);
+}
+:where([data-theme='dark']) .sbx-sk-action {
+  border-color: var(--color-border-dark);
+}
+:where([data-theme='dark']) .sbx-sk-row {
+  border-block-end-color: var(--color-border-dark);
+}

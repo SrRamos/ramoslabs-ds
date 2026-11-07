@@ -589,3 +589,49 @@ const copyToken = async () => {
   color: #0f172a;
 }
 </style>
+
+<style>
+/* Dark theme toolbar: the picker chrome follows onto the dark surfaces (semantic dark roles only). The swatches themselves
+   keep their own colour, which is the point of the tool. */
+[data-theme='dark'] .token-picker__title,
+[data-theme='dark'] .token-picker__selected-name,
+[data-theme='dark'] .token-picker__contrast-value {
+  color: var(--color-text-heading-dark);
+}
+[data-theme='dark'] .token-picker__subtitle,
+[data-theme='dark'] .token-picker__selected-value,
+[data-theme='dark'] .token-picker__contrast-title {
+  color: var(--color-text-muted-dark);
+}
+[data-theme='dark'] .token-picker__details {
+  background: var(--color-surface-dark);
+  border-color: var(--color-border-dark);
+}
+[data-theme='dark'] .token-picker__selected-token {
+  color: var(--color-primary-text-dark);
+  background: var(--color-surface-hover-dark);
+}
+[data-theme='dark'] .token-picker__swatch:focus-visible {
+  box-shadow: var(--shadow-focus-dark);
+}
+[data-theme='dark'] .token-picker__contrast-badge--aaa,
+[data-theme='dark'] .token-picker__contrast-badge--aa {
+  background: var(--color-success-surface-dark);
+  color: var(--color-success-text-dark);
+}
+[data-theme='dark'] .token-picker__contrast-badge--aa-large {
+  background: var(--color-warning-surface-dark);
+  color: var(--color-warning-text-dark);
+}
+[data-theme='dark'] .token-picker__contrast-badge--fail {
+  background: var(--color-error-surface-dark);
+  color: var(--color-error-text-dark);
+}
+[data-theme='dark'] .token-picker__copy {
+  background: var(--color-control-fill-dark);
+  color: var(--color-control-glyph-dark);
+}
+[data-theme='dark'] .token-picker__copy-success {
+  color: var(--color-success-text-dark);
+}
+</style>

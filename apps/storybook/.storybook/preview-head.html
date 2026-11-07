@@ -32,8 +32,14 @@
      Without this, opted-out text falls back to the browser serif default. */
   .sb-main-wrapper,
   .sb-unstyled {
-    color: #334155;
+    color: var(--color-slate-700, #334155);
     line-height: 1.5;
+  }
+
+  /* Dark theme toolbar: the base text colour follows the dark surface the decorator paints behind the story. */
+  [data-theme='dark'] .sb-main-wrapper,
+  [data-theme='dark'] .sb-unstyled {
+    color: var(--color-text-body-dark, #cbd5e1);
   }
 
   .sb-main-wrapper h1,
