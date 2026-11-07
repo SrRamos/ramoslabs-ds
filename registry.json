@@ -13,13 +13,13 @@
     "at-support": "https://design.ramoslabs.com/schema/at-support.v1.json"
   },
   "tokens": {
-    "total": 427,
+    "total": 430,
     "byCategory": {
       "breakpoint": 5,
       "color": 285,
       "target": 2,
       "focus": 2,
-      "control": 26,
+      "control": 24,
       "scroll": 1,
       "border": 1,
       "opacity": 3,
@@ -28,16 +28,16 @@
       "icon": 4,
       "duration": 3,
       "easing": 5,
-      "motion": 1,
+      "motion": 4,
       "overlay": 4,
       "radius": 9,
       "shadow": 8,
-      "space": 17,
+      "skeleton": 9,
+      "space": 14,
       "state": 4,
       "font": 21,
       "leading": 5,
       "tracking": 6,
-      "metric": 4,
       "z": 9
     },
     "url": "https://design.ramoslabs.com/tokens.json"
@@ -96,6 +96,12 @@
       "title": "Mobile First",
       "url": "https://design.ramoslabs.com/patterns/mobile-first/",
       "summary": "The desktop-to-mobile pattern map, bottom sheets from native <dialog>, thumb-zone and sticky CTAs, bottom nav and FAB, snackbars, the gesture-alternative rules, safe-area insets, and capability-not-user-agent activation"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "url": "https://design.ramoslabs.com/patterns/loading/",
+      "summary": "When to use a skeleton, a spinner, or a button busy state, the 300ms delay and 500ms minimum timing tokens, layout-mirroring shapes with no layout shift, reduced-motion, forced-colors and RTL behavior, and announce-once accessibility for SJSkeleton"
     },
     {
       "id": "persuasion",
@@ -860,6 +866,89 @@
       "docs": []
     },
     {
+      "name": "SJSkeleton",
+      "slug": "skeleton",
+      "contractVersion": "0.1.0",
+      "status": "beta",
+      "pattern": {
+        "apg": "live-region",
+        "evidence": "live-region"
+      },
+      "anatomy": [
+        {
+          "part": "root",
+          "element": "div"
+        },
+        {
+          "part": "line",
+          "element": "div"
+        }
+      ],
+      "roles": [],
+      "state": {
+        "machine": [
+          "idle"
+        ],
+        "controllable": []
+      },
+      "keyboard": {},
+      "kinds": [],
+      "supportFloor": [],
+      "atSupport": [
+        {
+          "at": "voiceover",
+          "platform": "macos",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/live-region.json#vo-macos-safari-ariaat545"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "voiceover",
+          "platform": "ios",
+          "browser": "safari",
+          "test_status": "pending-real-test",
+          "evidence": [
+            "at-support/live-region.json#vo-ios-safari-tetralogical-live"
+          ],
+          "statement": "implemented to documented evidence, hands-on test pending and not yet logged"
+        },
+        {
+          "at": "nvda",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/live-region.json#nvda-chrome-ariaat544"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "jaws",
+          "platform": "windows",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/live-region.json#jaws-chrome-ariaat565"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        },
+        {
+          "at": "talkback",
+          "platform": "android",
+          "browser": "chrome",
+          "test_status": "evidence-only",
+          "evidence": [
+            "at-support/live-region.json#talkback-chrome-tetralogical-live"
+          ],
+          "statement": "implemented to documented evidence, not hands-on tested"
+        }
+      ],
+      "docs": []
+    },
+    {
       "name": "SJState",
       "slug": "state",
       "contractVersion": "0.1.0",
@@ -884,6 +973,10 @@
         {
           "part": "description",
           "element": "p"
+        },
+        {
+          "part": "skeleton",
+          "element": "div"
         },
         {
           "part": "actions",
