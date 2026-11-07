@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (430 tokens)
+## Token reference (439 tokens)
 
 ### breakpoint (5)
 
@@ -325,7 +325,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--focus-ring-width` | `0.125rem` |
 | `--focus-ring-offset` | `0.125rem` |
 
-### control (24)
+### control (26)
 
 | Token | Value |
 | --- | --- |
@@ -334,6 +334,8 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--control-height-sm` | `2rem` |
 | `--control-height-md` | `2.25rem` |
 | `--control-height-lg` | `2.75rem` |
+| `--control-height-field` | `3rem` |
+| `--control-height-field-coarse` | `3.5rem` |
 | `--control-padding-inline-xs` | `0.5rem` |
 | `--control-padding-inline-sm` | `0.75rem` |
 | `--control-padding-inline-md` | `0.875rem` |
@@ -472,7 +474,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--skeleton-avatar-xl` | `4rem` |
 | `--skeleton-block-height` | `4rem` |
 
-### space (14)
+### space (17)
 
 | Token | Value |
 | --- | --- |
@@ -490,6 +492,9 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--space-20` | `5rem` |
 | `--space-24` | `6rem` |
 | `--space-32` | `8rem` |
+| `--space-related` | `0.5rem` |
+| `--space-group` | `1.5rem` |
+| `--space-section` | `3rem` |
 
 ### state (4)
 
@@ -546,6 +551,15 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--tracking-wide` | `0.025em` |
 | `--tracking-wider` | `0.05em` |
 | `--tracking-ui` | `-0.011em` |
+
+### metric (4)
+
+| Token | Value |
+| --- | --- |
+| `--metric-hero-value` | `2.25rem` |
+| `--metric-hero-unit` | `1.25rem` |
+| `--metric-value` | `1.5rem` |
+| `--metric-unit` | `1rem` |
 
 ### z (9)
 
