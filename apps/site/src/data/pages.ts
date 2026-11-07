@@ -273,6 +273,36 @@ export const pages: Page[] = [
     contentFile: 'patterns/Modals.md',
   },
   {
+    id: 'cards-metrics',
+    title: 'Cards and Metrics',
+    group: 'patterns',
+    path: '/patterns/cards-metrics/',
+    icon: 'view_agenda',
+    summary:
+      'One hero figure per card, number and muted-unit typography with tabular figures, context placed next to its datum, the metadata line, and a compact overflow button with a 44px hit area',
+    contentFile: 'patterns/CardsMetrics.md',
+  },
+  {
+    id: 'multi-step-flows',
+    title: 'Multi-step Flows',
+    group: 'patterns',
+    path: '/patterns/multi-step-flows/',
+    icon: 'steps',
+    summary:
+      'One question per screen with the question as the heading, a stepper that pairs the text 1 de 3 with a segmented bar, grouped display of long numbers over a raw submitted value, and a sticky full-width action',
+    contentFile: 'patterns/MultiStepFlows.md',
+  },
+  {
+    id: 'bottom-navigation',
+    title: 'Bottom Navigation',
+    group: 'patterns',
+    path: '/patterns/bottom-navigation/',
+    icon: 'bottom_navigation',
+    summary:
+      'Icon plus a visible label on three to five destinations, an active tab marked by a filled icon, colour and weight and never colour alone, and an optional centre action only when it is the primary action of the app',
+    contentFile: 'patterns/BottomNavigation.md',
+  },
+  {
     id: 'mobile-first',
     title: 'Mobile First',
     group: 'patterns',

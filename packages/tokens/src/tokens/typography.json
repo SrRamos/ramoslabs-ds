@@ -71,5 +71,6 @@
       "$value": "-0.011em",
       "$description": "Tracking of control labels (SJButton). Slight tightening that offsets the optical looseness of Plus Jakarta Sans at 12-15px."
     }
-  }
+  },
+  "metric": {"$type": "dimension", "hero": {"value": {"$value": "{font.size.4xl}", "$description": "36px. Size of the one hero figure of a card (the primary metric). One per card. Pair with font-variant-numeric: tabular-nums and leading.none."}, "unit": {"$value": "{font.size.xl}", "$description": "20px. Size of the unit next to a hero figure (min, km, COP). Smaller than metric.hero.value and set in color.text-muted, never lighter than slate-500."}}, "value": {"$value": "{font.size.2xl}", "$description": "24px. Size of a secondary metric value in a label and value row. Pair with font-variant-numeric: tabular-nums."}, "unit": {"$value": "{font.size.base}", "$description": "16px. Size of the unit next to a secondary metric value. Smaller than metric.value and set in color.text-muted, never lighter than slate-500."}}
 }

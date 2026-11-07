@@ -154,6 +154,48 @@ export const logicalProperties = defineRule(
   },
 );
 
+const SPACE_TOKEN = /var\(\s*(--space-[\w-]+)\s*[,)]/g;
+
+/**
+ * Gestalt proximity (pattern decision 6): the space INSIDE a group must be smaller than the space AROUND it. In one
+ * rule, `gap` is the inner spacing (between the group's items) and `margin*` is the outer spacing (between this
+ * group and the next). The same spacing token on both makes the group blur into its neighbour, so the first `gap`
+ * that reuses a margin token is flagged. A container's own `padding` is not compared: edge padding equal to the
+ * gap is normal. This sees one rule at a time, so it cannot compare a parent's gap with a child's margin declared
+ * in another selector, nor a literal value reached through a custom property; those cases are left to review and
+ * to the docs (Spacing, "Related, group, section").
+ */
+export const spacingProximity = defineRule(
+  'spacing-proximity',
+  {
+    same: (/** @type {string} */ token) =>
+      `The gap and the margin of this rule both use ${token}. Inner and outer spacing must differ (Gestalt proximity): use a smaller token for the gap (var(--space-related)) or a larger one for the margin (var(--space-group), var(--space-section)).`,
+  },
+  ({ root, emit }) => {
+    root.walkRules((/** @type {any} */ rule) => {
+      /** @type {Set<string>} */
+      const outer = new Set();
+      /** @type {any[]} */
+      const gaps = [];
+      rule.each((/** @type {any} */ node) => {
+        if (node.type !== 'decl') return;
+        const prop = node.prop.toLowerCase();
+        if (/^margin(?:-(?:block|inline)(?:-(?:start|end))?)?$/.test(prop))
+          for (const m of node.value.matchAll(SPACE_TOKEN)) outer.add(m[1]);
+        else if (/^(?:gap|row-gap|column-gap)$/.test(prop)) gaps.push(node);
+      });
+      for (const g of gaps) {
+        for (const m of g.value.matchAll(SPACE_TOKEN)) {
+          if (outer.has(m[1])) {
+            emit(g, 'same', [m[1]]);
+            return;
+          }
+        }
+      }
+    });
+  },
+);
+
 export const plugins = [
   noRawColor,
   noRawPx,
@@ -161,4 +203,5 @@ export const plugins = [
   noOutlineNone,
   noRemoteUrl,
   logicalProperties,
+  spacingProximity,
 ];

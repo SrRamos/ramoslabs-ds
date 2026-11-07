@@ -5,6 +5,8 @@ import type { Preview } from '@storybook/vue3-vite';
 import '@ramoslabs/tokens/css';
 // Real component CSS (layered, ADR-009), so stories render styled, not raw.
 import '@ramoslabs/css';
+// Rule blocks (Recommended / Avoid) shared with the docs site.
+import '../../site/src/styles/pattern-rules.css';
 
 // Wraps every docs page with the global RamosLabs footer.
 import { DocsContainer } from './DocsContainer';
@@ -29,7 +31,7 @@ const preview: Preview = {
             'Color Picker',
           ],
           'Patterns',
-          ['Interactive', 'Accessibility', 'Persuasion', 'Form Elements', 'Data Tables', 'Modals', 'Mobile First', 'AI Content', 'Voice & Tone'],
+          ['Interactive', 'Accessibility', 'Persuasion', 'Form Elements', 'Data Tables', 'Modals', 'Mobile First', 'AI Content', 'Voice & Tone', 'Cards and Metrics', 'Multi-step Flows', 'Bottom Navigation', 'Demos'],
           'Components',
           ['Review Guide'],
         ],

@@ -133,6 +133,48 @@ Do not read `navigator.userAgent`. Detect the capability of the input and the si
 
 The whole detection surface is three signals: primary pointer accuracy (`pointer: coarse`), viewport width breakpoint, and hover availability (`any-hover: none`). No user-agent string appears anywhere in it.
 
+## The primary action: full width, at the bottom, in the action colour
+
+On a phone the thumb rests on the lower half of the screen. The one action that moves a flow forward belongs there, as wide as the screen, and it must never cover what the person is typing.
+
+### ✓ Recommended: Sticky bottom call to action
+
+**Rule:** On mobile, put the one primary action in a **full-width bar** fixed to the bottom (`position: sticky`, safe-area padding with `env(safe-area-inset-bottom)`). Set `scroll-padding-block-end` on the scroller to the bar height so a focused field is never hidden behind it.
+**Why:** The bottom is where the thumb is, a wide target is easy to hit, and one action means no choice to make. WCAG 2.4.11 (Focus Not Obscured) requires the focused control to stay visible, which a sticky bar breaks unless the scroll padding leaves room for it.
+
+### ✕ Avoid: Sticky bottom call to action
+
+**Rule:** Do not leave the only action at the end of long content, do not stack two sticky bars, and do not let the bar cover the focused field.
+**Why:** A button that scrolls away makes people hunt for it, and a bar over the keyboard focus fails 2.4.11.
+
+### ✓ Recommended: The action colour and radius
+
+**Rule:** Draw the primary action in **Indigo 600** (`--color-primary`) with the control radius of 6 to 10 px.
+**Why:** One action colour means the eye finds the action without reading. The approved radius keeps buttons, fields and cards in one family.
+
+### ✕ Avoid: The action colour and radius
+
+**Rule:** Do not use a black pill call to action.
+**Why:** Black is not the action colour, and a full pill is outside the approved 6 to 10 px radius. This is a house design decision, not an external rule.
+
+## Small icon buttons keep a 44 px hit area
+
+### ✓ Recommended: Overflow and other compact icon buttons
+
+**Rule:** An overflow `•••` button may stay visually small (SJButton `xs`, 24 px). On `@media (pointer: coarse)` its invisible hit area extends to 44 px (`--target-min`) without moving the layout. Give it an accessible name that says what it belongs to: “Más opciones de Carrera matutina”.
+**Why:** A 24 px box meets WCAG 2.5.8 on its own, but a thumb needs more. The invisible area gives the thumb 44 px and the layout keeps its density. Two compact buttons still need `--space-2` between them (`--space-3` around `xs`) so the areas do not overlap.
+
+### ✕ Avoid: Overflow and other compact icon buttons
+
+**Rule:** Do not make the visible glyph bigger just to reach 44 px, and do not let the hit area shrink to the glyph.
+**Why:** A big glyph breaks the visual hierarchy of the row, and a glyph-sized target is missed by a thumb.
+
+*Sources: W3C Understanding SC 2.5.8 and SC 2.4.11; web.dev, Accessible tap targets; Apple, UI Design Dos and Don’ts; NN/g, Touch Target Size and Mobile UX. The research file notes web.dev uses `any-pointer: coarse` where the DS uses `pointer: coarse`, and that there is no primary source for “full width” itself.*
+
+Try it. Storybook: Patterns/Demos/Overflow Button.
+
+For bottom navigation, see the Bottom navigation pattern: icon plus label, a filled active icon, and an optional centre action only when it is the primary action of the app.
+
 ## Sources
 
 Steven Hoober, How Do Users Really Hold Mobile Devices? (UXmatters, 2013): 1,333 observations, 49% one-handed (67% right thumb), 36% cradling, 15% two-handed; thumb on screen 72% while cradling; grip changes very often. Aurora Harley, Touch Targets on Touchscreens (NN/g, 2019): at least 1cm by 1cm; typical thumb impact area averages 2.5cm. W3C Understanding WCAG: SC 2.5.1 Pointer Gestures (A), SC 2.5.7 Dragging Movements (2.2, AA), SC 2.5.8 Target Size Minimum (2.2, AA, 24px floor with exceptions). MDN Web Docs: the `<dialog>` element (`showModal()` makes the rest inert, Escape closes, `aria-modal`, `::backdrop`, explicit close button), CSS `env()` and safe-area insets with the sticky footer pattern (Baseline 2020), the `pointer` media feature coarse/fine/none (Baseline 2018). Adam Argyle, Building a dialog component (web.dev): accessible native dialog, focus on the cancel action, the mega dialog transforming into a bottom-anchored action sheet. Material Components (official docs): Bottom Sheet (standard vs modal, scrim, the 48dp accessible drag handle), Snackbar (bottom, one at a time, one optional action, preferred over toast), Floating Action Button (single primary action), Bottom Navigation (three to five destinations). Apple Human Interface Guidelines, Sheets and Action Sheets (resizable detents, the grabber, action sheets at the bottom on iPhone), referenced as iOS conventions. House rules layered on the cited guidance: the desktop-to-mobile mapping table and the "same component, one media query" position, the 44 to 48px thumb-zone floor, the FAB and sticky-CTA mutual-exclusion guidance, and the capability-OR-width activation rule. The virtual keyboard subsection is out of scope and not yet verified against a primary source.

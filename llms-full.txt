@@ -9,7 +9,7 @@ Free to use under the MIT License. Keep the copyright and license notice, and cr
 
 Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tokens/css'`.
 
-## Token reference (418 tokens)
+## Token reference (427 tokens)
 
 ### breakpoint (5)
 
@@ -325,7 +325,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--focus-ring-width` | `0.125rem` |
 | `--focus-ring-offset` | `0.125rem` |
 
-### control (24)
+### control (26)
 
 | Token | Value |
 | --- | --- |
@@ -334,6 +334,8 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--control-height-sm` | `2rem` |
 | `--control-height-md` | `2.25rem` |
 | `--control-height-lg` | `2.75rem` |
+| `--control-height-field` | `3rem` |
+| `--control-height-field-coarse` | `3.5rem` |
 | `--control-padding-inline-xs` | `0.5rem` |
 | `--control-padding-inline-sm` | `0.75rem` |
 | `--control-padding-inline-md` | `0.875rem` |
@@ -455,7 +457,7 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--shadow-press` | `inset 0 1px 2px 0 rgba(0, 0, 0, 0.24)` |
 | `--shadow-focus` | `0 0 0 2px #ffffff, 0 0 0 4px #4f46e5` |
 
-### space (14)
+### space (17)
 
 | Token | Value |
 | --- | --- |
@@ -473,6 +475,9 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--space-20` | `5rem` |
 | `--space-24` | `6rem` |
 | `--space-32` | `8rem` |
+| `--space-related` | `0.5rem` |
+| `--space-group` | `1.5rem` |
+| `--space-section` | `3rem` |
 
 ### state (4)
 
@@ -529,6 +534,15 @@ Install: `bun add @ramoslabs/tokens` (public npm), then `@import '@ramoslabs/tok
 | `--tracking-wide` | `0.025em` |
 | `--tracking-wider` | `0.05em` |
 | `--tracking-ui` | `-0.011em` |
+
+### metric (4)
+
+| Token | Value |
+| --- | --- |
+| `--metric-hero-value` | `2.25rem` |
+| `--metric-hero-unit` | `1.25rem` |
+| `--metric-value` | `1.5rem` |
+| `--metric-unit` | `1rem` |
 
 ### z (9)
 
@@ -1493,6 +1507,34 @@ Density is how tightly the same components pack. You step interior spacing down 
 | Compact | `--space-2` / `--space-3` | Data tables, dashboards, admin tools, power-user views |
 
 Rule: keep the 24px hit-area floor in every density mode, compact included. Why: density trims padding, not accessibility.
+
+## Related, group, section: the semantic rhythm
+
+The numeric scale says how much. The semantic tokens say what the space is for. Things that belong together sit closer than things that do not (the Gestalt law of proximity), so the space inside a group is always smaller than the space between groups, and that is smaller than the space between sections.
+
+| Token | Maps to | Use |
+| --- | --- | --- |
+| `--space-related` | `--space-2`, 8 px | Between items that belong together: a label and its value, a title and its subtitle. |
+| `--space-group` | `--space-6`, 24 px | Between groups inside one section or card: one metric row and the next, one form field and the next. |
+| `--space-section` | `--space-12`, 48 px | Between sections of a page or major blocks of a flow. |
+
+### ✓ Recommended: Spacing rhythm
+
+**Rule:** Use `--space-related` inside a group and `--space-group` or `--space-section` around it. The space around a group is always larger than the space inside it.
+**Why:** Proximity tells the eye what belongs together before it reads a word. When inner and outer spacing match, the groups blur and the layout looks like one long list.
+
+### ✕ Avoid: Spacing rhythm
+
+**Rule:** Do not use one spacing value for the gap inside a group and the margin around it.
+**Why:** With equal spacing nothing is grouped and nothing leads. A card with 16 px everywhere is harder to scan than one with 8 px inside and 24 px between.
+
+## The lint that checks it
+
+The `sj/spacing-proximity` stylelint rule flags a rule whose `gap` and `margin` use the same `--space-*` token (inner equals outer). It reads one rule at a time, so it cannot compare a parent’s gap with a child’s margin declared in another selector, or a value reached through a custom property. Those cases stay with review and this page. A container’s own padding is not compared: edge padding equal to the gap is normal.
+
+*Sources: NN/g, Proximity Principle in Visual Design; Interaction Design Foundation, Proximity principle. The semantic token names and the lint are DS conventions with no external source.*
+
+Try it. Storybook: Patterns/Demos/Activity Card (the equal-spacing counter-example sits beside the recommended card).
 
 ## Sources
 
@@ -2558,6 +2600,68 @@ On defaults: pre-check the reminder because people want it, leave the newsletter
 4. What can go wrong, and how is it fixed? Write the help and the recovery message before the layout. If you cannot say how to fix it, the rule is wrong, not the user.
 5. Only now, assemble it from the primitives: visible label, control, help, error, in one column, states inherited from Patterns / Interactive. If the pattern is not in HTML, build the matching APG pattern over a native base.
 
+## Field height: taller than a button, on purpose
+
+A text field is read, tapped and corrected. A button is only tapped. So the field is taller than the compact buttons, and that difference is intentional. The numbers are a house decision: the sources support the principle (bigger targets on touch, 44 to 48 px), not the exact 48 and 56.
+
+### ✓ Recommended: Field height
+
+**Rule:** Set a text field to **48 px** by default (`--control-height-field`) and **56 px** under `@media (pointer: coarse)` (`--control-height-field-coarse`). A textarea is twice that, so it scales with it. The invalid state keeps the same height.
+**Why:** The field is where people read what they typed, tap into it and fix a mistake, so it earns more room than a button. It also clears the 24 px floor of WCAG 2.5.8 and the 44 px touch target, and a taller field is easier to hit with a thumb.
+
+### ✕ Avoid: Field height
+
+**Rule:** Do not size a text field to the compact button heights (24, 32 or 36 px), and do not let density shrink it.
+**Why:** A short field cramps the text, makes the caret and selection hard to place, and is easy to mis-tap beside another control.
+
+*Sources: W3C Understanding SC 2.5.8 Target Size (Minimum); Apple, UI Design Dos and Don’ts (44 pt); web.dev, Accessible tap targets (48 px); NN/g, Touch Target Size. See docs/research/patterns-2026-11.md, item 7.*
+
+## Group long numbers for reading, never change the data
+
+Account, card and phone numbers are checked against a source: a card, a statement, a screen. Groups of four make that check easier. The grouping is display only; the value that is submitted is unchanged. It ties into the ADR-007 kinds (`account`, `cc-number`, `phone`).
+
+### ✓ Recommended: Grouped display
+
+**Rule:** Show long digit strings in groups of four (`0123 4567 8901`) wherever they are read: review screens, receipts, lists. In an input, auto-group card numbers and accept the value with or without spaces. Submit the raw digits.
+**Why:** Groups are easier to compare with the original and to read aloud. A card field that allows and formats spaces lowers entry errors (Baymard). Formatting the display must not change the stored value, or search and matching break.
+
+### ✕ Avoid: Grouped display
+
+**Rule:** Do not mask a phone number as the user types, do not reformat it after entry, and do not use `maxlength` to force a format.
+**Why:** GOV.UK advises against it: a mask fights paste, autofill and international numbers, and cuts off a valid value. Group for display, validate on submit.
+
+*Sources: Baymard, The Credit Card Number Field Must Allow and Auto-Format Spaces; GOV.UK Design System, Telephone numbers and Text input; MDN, autocomplete. See item 10 in the research file, which flags that no primary source covers account-number grouping.*
+
+Try it. Storybook: Patterns/Demos/Send Money (grouped account and amount, 48 and 56 px fields).
+
+## Keep the label above the field
+
+### ✓ Recommended: Label placement
+
+**Rule:** Keep a visible label **above** the field, always. It stays put while the person types and when the field is empty.
+**Why:** An empty field with a visible label reads as a field to fill. NN/g and GOV.UK both place the label above the control, and it never vanishes or moves.
+
+### ✕ Avoid: Label placement
+
+**Rule:** Do not use floating labels inside the field: the label starts inside the box and shrinks to about 12 px above the text once it has a value.
+**Why:** An empty floating-label field reads like a field that already holds a placeholder, and the label at about 12 px is small and light. NN/g calls floating labels only a partial fix for placeholders and Baymard has not shown them to help. The label above the field has none of these costs.
+
+*Sources: NN/g, Placeholders in Form Fields Are Harmful; Baymard, Mobile Forms: Avoid Inline Labels; GOV.UK Design System, Text input. The research file flags that neither NN/g nor Baymard publishes a measured increase in errors for floating labels, so the claim here is about legibility and clarity, not an error rate.*
+
+## Keep the border that marks the control
+
+### ✓ Recommended: Input boundary
+
+**Rule:** Give every input a visible boundary at 3:1 or better against its surface: the `--color-slate-500` border (4.8:1 on white). Disabled fields are exempt.
+**Why:** WCAG 1.4.11 asks for a 3:1 boundary where the boundary is what identifies a control. A border that does not rely on a fill also survives forced colors and a bright screen.
+
+### ✕ Avoid: Input boundary
+
+**Rule:** Do not use a borderless input with a pale grey fill (about 1.2:1 against the page).
+**Why:** The edge of the control is barely visible, so people with low vision cannot find where to tap. WCAG 1.4.11 allows another cue, such as a label, when the boundary is not needed to identify the control, so this is a house rule stricter than the minimum: the DS never relies on a 1.2:1 fill alone.
+
+*Sources: W3C Understanding SC 1.4.11 Non-text Contrast; W3C Understanding SC 2.4.7 Focus Visible. House rule: the DS keeps the slate-500 border on every input.*
+
 ## Sources
 
 MDN Web Docs: `accent-color` (and its limits), `caret-color`, `color-scheme`, `<input>` types, `inputmode` and `enterkeyhint`, the `autocomplete` token list, `:user-invalid`. web.dev "accent-color" and Learn Forms (four themable controls, automatic accent contrast, HTML form elements are difficult to customize). caniuse: `accent-color` roughly 97 percent (2026), baseline since Chrome/Edge 93, Firefox 92, Safari 15.4 (March 2022). WAI-ARIA APG patterns for Combobox, Listbox, Switch, Slider, Slider Multi-Thumb, Spinbutton, Radio Group, Checkbox, Dialog, Toolbar. GOV.UK Design System: progressive enhancement, the Select component, and the Date input three-field memorable-date pattern. W3C Understanding WCAG 2.2: SC 3.3.2 (A), 3.3.1 (A) with ARIA21 `aria-invalid`, 3.3.3 (AA), 1.3.5 (AA), 2.5.8 (24px, AA), 2.5.5 (44px, AAA). Mihael Konjevic, "Inline Validation in Web Forms" (Smashing, 2022), source of "reward early, punish late". CSS-Tricks and defensivecss.dev: 16px prevents iOS input zoom. Apple HIG Text fields: content-appropriate keyboards, 44pt minimum. NN/g and Baymard: placeholders cannot replace labels, error messages must be visible/specific/constructive, single-column forms complete faster. The reward-while-typing timing and single-accent error-only use of `--color-error` are house rules layered on the cited guidance.
@@ -2886,6 +2990,165 @@ On a phone a centered modal usually becomes a bottom sheet, a panel that rises f
 
 The six requirements, roles, and keyboard model from the WAI-ARIA APG: Dialog (Modal) Pattern and Alert Dialog Pattern. The native element, `showModal()` vs `show()`, `::backdrop`, top layer, `method="dialog"`, the `open` and `tabindex` warnings, and Baseline support from MDN: `<dialog>`, `inert`, and the Popover API. The legal focus trap from WCAG 2.2 SC 2.1.2 No Keyboard Trap and the name/role floor from SC 4.1.2. The cost of interrupting from Nielsen Norman Group, Modal & Nonmodal Dialogs. The animation-breaks-focus-return caveat and focus-on-Cancel from web.dev, Building a dialog component. The one-thing-per-page stance from the GOV.UK Design System.
 
+# Cards and Metrics
+
+Source: https://design.ramoslabs.com/patterns/cards-metrics/
+
+A card that shows an activity, an order or a balance has to be read in a glance. The reader should find one figure first, then the figures that explain it, then the picture. This page sets the hierarchy, the number typography, the proximity of context to data, and the small buttons a card carries.
+
+## One hero figure per card
+
+Order the card as three tiers: one **hero figure** (primary), a row of **label and value** metrics (secondary), then a visual or tertiary block such as a map or chart.
+
+### ✓ Recommended: Card hierarchy
+
+**Rule:** Give each card **one hero figure**, set at `--metric-hero-value`. Follow it with a row of label and value metrics at `--metric-value`, then the visual block.
+**Why:** The eye needs a single entry point. Two big numbers compete, and the reader has to decide which one the card is about. NN/g’s guidance is page level and tolerates up to two large elements; “exactly one per card” is the DS’s stricter extension.
+
+### ✕ Avoid: Card hierarchy
+
+**Rule:** Do not give every number on the card the same size and weight, and do not put two hero figures side by side.
+**Why:** When everything is emphasised, nothing is. The reader scans the whole card for the point.
+
+*Sources: NN/g, Visual Hierarchy in UX. See item 1 of the research file.*
+
+## Number and unit typography
+
+A metric reads as a large number with a smaller, muted unit: `35 min 37 s`, `5:05 /km`. Numbers use `font-variant-numeric: tabular-nums` so columns of digits line up and a live value does not jitter. Plus Jakarta Sans ships the `tnum` feature: with `tabular-nums` every digit is 86.41 px wide at 36 px bold, while the default figures vary from 57.97 px (1111) to 90.98 px (8888). The check was run in Chromium against the self-hosted font.
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `--metric-hero-value` | 36 px (`--font-size-4xl`) | The one hero figure of a card. |
+| `--metric-hero-unit` | 20 px (`--font-size-xl`) | The unit beside the hero figure. |
+| `--metric-value` | 24 px (`--font-size-2xl`) | A secondary metric value. |
+| `--metric-unit` | 16 px (`--font-size-base`) | The unit beside a secondary value. |
+
+### ✓ Recommended: Number and unit
+
+**Rule:** Set the number in `--metric-*-value` with `tabular-nums`, baseline-aligned, and the unit in the matching `--metric-*-unit` and `--color-text-muted`. The unit colour is never lighter than slate-500.
+**Why:** The number carries the meaning, so it leads; the unit only qualifies it. Tabular figures keep digits aligned. Slate 500 is the muted-text floor (4.8:1 on white), so the small unit stays legible.
+
+### ✕ Avoid: Number and unit
+
+**Rule:** Do not set the unit in slate 400 or lighter, and do not set a unit at the same size and weight as its number.
+**Why:** A light small unit fails 4.5:1, and a unit as loud as the number blurs where the value ends.
+
+*Sources: MDN, font-variant-numeric (it does nothing if the font lacks the feature, hence the check above); AGENTS.md muted-text floor. The unit steps down the scale by about 55 percent of the value rather than one raw step, which keeps a clear hierarchy at 36 px.*
+
+## Proximity: context sits next to its data
+
+### ✓ Recommended: Context next to the datum
+
+**Rule:** Put context and metadata next to the datum it explains. A location chip belongs **on the map**, not in the card header. Use `--space-related` inside a group and `--space-group` between groups.
+**Why:** Gestalt proximity: things that sit together are read as belonging together. A chip on the map says “this is where”. The same chip in the header makes the reader link the two.
+
+### ✕ Avoid: Context next to the datum
+
+**Rule:** Do not use one spacing value everywhere, and do not park a datum’s context in the header, far from the datum.
+**Why:** Equal spacing erases the groups, and distant context makes the reader do the joining.
+
+*Sources: NN/g, Proximity Principle in Visual Design; IxDF, Proximity principle.*
+
+Try it. Storybook: Patterns/Demos/Activity Card (recommended and equal-spacing counter-example side by side, with an RTL variant).
+
+## The metadata line and the overflow button
+
+Under the title, a metadata line joins who, when and where with a `•` separator (`aria-hidden`) and a `<time datetime>` for the relative time. The rule is on the Voice and Tone page. A card’s overflow `•••` button stays visually small but keeps a 44 px hit area on touch (Mobile First page).
+
+Try it. Storybook: Patterns/Demos/Overflow Button.
+
+# Multi-step Flows
+
+Source: https://design.ramoslabs.com/patterns/multi-step-flows/
+
+A long form is a mountain; a sequence of single questions is a path. This page sets one question per screen, the stepper that shows progress, how long numbers are displayed, and the sticky action at the bottom.
+
+## One question per screen
+
+### ✓ Recommended: One question per screen
+
+**Rule:** Ask **one question per screen** in a multi-step flow and make the question the heading: “¿A quién le envías dinero?”. Move focus to the new heading when the screen changes.
+**Why:** GOV.UK’s “one thing per page” lets people focus, keeps errors specific to one answer, and works well on a small screen. Focus on the heading tells a screen reader that the page changed.
+
+### ✕ Avoid: One question per screen
+
+**Rule:** Do not put a long form on one screen when the answers are independent, and do not change the screen without moving focus.
+**Why:** A wall of fields is abandoned, and a silent change leaves keyboard and screen reader users stranded.
+
+*Sources: GOV.UK Design System, Question pages; GOV.UK Service Manual, Form structure; NN/g, Wizards. GOV.UK allows a statement heading where several closely related questions share a page.*
+
+## The stepper: text plus a bar
+
+### ✓ Recommended: Flow progress
+
+**Rule:** Show progress as the text **“1 de 3”** plus a **segmented bar**. The text is mandatory. Make the current segment taller as well as coloured, and mark the bar `aria-hidden` because the text already says it.
+**Why:** The bar alone is colour only, which fails WCAG 1.4.1 and says nothing to a screen reader. The text gives the exact position and the bar gives a quick sense of how far is left. NN/g finds progress indicators make waits feel shorter.
+
+### ✕ Avoid: Flow progress
+
+**Rule:** Do not show progress with a coloured bar alone, and do not hide the total.
+**Why:** People who cannot tell the colours apart, and screen reader users, get no information, and an unknown total makes the flow feel endless.
+
+*Sources: W3C Understanding SC 1.4.1 Use of Color; NN/g, Progress Indicators Make a Slow System Less Insufferable. The “1 de 3” plus segmented bar format is the DS’s own design.*
+
+## Display and submit are two different values
+
+Account numbers and amounts are shown in groups (`0123 4567 8901`, `1.250.000`). The submitted value stays raw digits. The demo reads the form data on submit and prints exactly what would be sent. The rule and its caveats (do not mask phone numbers) are on the Form Elements page.
+
+## The primary action stays in reach
+
+The continue button is full width and sticky at the bottom of the screen, in Indigo 600, with `scroll-padding` so a focused field is never hidden. Fields are 48 px, and 56 px on touch. Both rules live on the Mobile First and Form Elements pages.
+
+Try it. Storybook: Patterns/Demos/Send Money (three steps, with an RTL variant).
+
+# Bottom Navigation
+
+Source: https://design.ramoslabs.com/patterns/bottom-navigation/
+
+Bottom navigation puts the main destinations under the thumb. An icon alone is a guess; the active state must be more than a colour. This page sets labels, the active state, the count of destinations and the optional centre action.
+
+## Icon plus a visible label
+
+### ✓ Recommended: Labels
+
+**Rule:** Give every destination an **icon and a visible label**. Keep three to five destinations. Each tab is at least 44 px wide and 64 px tall, and the bar respects the bottom safe area.
+**Why:** Icons are ambiguous without words, and NN/g reports that labelled icons are understood faster. Three to five destinations fit a phone width without truncating labels, and Material limits the bar to five.
+
+### ✕ Avoid: Labels
+
+**Rule:** Do not ship icon-only tabs, and do not go beyond five destinations.
+**Why:** People guess, and six tabs squeeze labels or targets under 44 px.
+
+## The active tab: shape, colour and weight
+
+### ✓ Recommended: Active state
+
+**Rule:** Mark the active tab with a **filled icon**, the primary colour and a bolder label, and set `aria-current="page"`.
+**Why:** WCAG 1.4.1: colour alone does not carry meaning. A filled shape and a heavier label are visible without colour, and `aria-current` tells a screen reader which page is current.
+
+### ✕ Avoid: Active state
+
+**Rule:** Do not show the active tab by colour alone.
+**Why:** Someone who cannot tell the hues apart cannot find where they are.
+
+*Sources: NN/g, Icon Usability and Mobile Navigation Patterns; Material Design 3, Navigation bar; W3C Understanding SC 1.4.1. The research file could not confirm the Material and Apple pages directly for the filled-icon convention, so the filled-icon active state is a DS design choice backed by 1.4.1.*
+
+## The optional centre action
+
+### ✓ Recommended: Centre action
+
+**Rule:** A prominent centre action is allowed **only when it is THE primary action of the app** (for example “Registrar” in a tracking app). It needs an accessible name and a visible label. If a design cannot have a visible label, document the exception.
+**Why:** One standing action in the bar is a strong promise to the user. Two competing actions, or an unlabelled round button, weaken the bar and fail the label rule.
+
+### ✕ Avoid: Centre action
+
+**Rule:** Do not add a centre action for something that is not the app’s main action, and do not leave it without a label.
+**Why:** It takes the most prominent place in the screen, so it must earn it, and an unlabelled round button is a guess.
+
+*The research file found no primary source for the centre-action caveat; it is a DS rule layered on the Material guidance for the single primary action.*
+
+Try it. Storybook: Patterns/Demos/Bottom Navigation (recommended against icon-only, plus a centre action and an RTL variant).
+
 # Mobile First
 
 Source: https://design.ramoslabs.com/patterns/mobile-first/
@@ -3016,6 +3279,48 @@ Do not read `navigator.userAgent`. Detect the capability of the input and the si
 **Why:** width alone misses a small touch tablet; capability alone misses a narrow mouse window. The union of the two reliably picks the sheet-and-bottom-nav layout. `pointer` has been widely available since December 2018.
 
 The whole detection surface is three signals: primary pointer accuracy (`pointer: coarse`), viewport width breakpoint, and hover availability (`any-hover: none`). No user-agent string appears anywhere in it.
+
+## The primary action: full width, at the bottom, in the action colour
+
+On a phone the thumb rests on the lower half of the screen. The one action that moves a flow forward belongs there, as wide as the screen, and it must never cover what the person is typing.
+
+### ✓ Recommended: Sticky bottom call to action
+
+**Rule:** On mobile, put the one primary action in a **full-width bar** fixed to the bottom (`position: sticky`, safe-area padding with `env(safe-area-inset-bottom)`). Set `scroll-padding-block-end` on the scroller to the bar height so a focused field is never hidden behind it.
+**Why:** The bottom is where the thumb is, a wide target is easy to hit, and one action means no choice to make. WCAG 2.4.11 (Focus Not Obscured) requires the focused control to stay visible, which a sticky bar breaks unless the scroll padding leaves room for it.
+
+### ✕ Avoid: Sticky bottom call to action
+
+**Rule:** Do not leave the only action at the end of long content, do not stack two sticky bars, and do not let the bar cover the focused field.
+**Why:** A button that scrolls away makes people hunt for it, and a bar over the keyboard focus fails 2.4.11.
+
+### ✓ Recommended: The action colour and radius
+
+**Rule:** Draw the primary action in **Indigo 600** (`--color-primary`) with the control radius of 6 to 10 px.
+**Why:** One action colour means the eye finds the action without reading. The approved radius keeps buttons, fields and cards in one family.
+
+### ✕ Avoid: The action colour and radius
+
+**Rule:** Do not use a black pill call to action.
+**Why:** Black is not the action colour, and a full pill is outside the approved 6 to 10 px radius. This is a house design decision, not an external rule.
+
+## Small icon buttons keep a 44 px hit area
+
+### ✓ Recommended: Overflow and other compact icon buttons
+
+**Rule:** An overflow `•••` button may stay visually small (SJButton `xs`, 24 px). On `@media (pointer: coarse)` its invisible hit area extends to 44 px (`--target-min`) without moving the layout. Give it an accessible name that says what it belongs to: “Más opciones de Carrera matutina”.
+**Why:** A 24 px box meets WCAG 2.5.8 on its own, but a thumb needs more. The invisible area gives the thumb 44 px and the layout keeps its density. Two compact buttons still need `--space-2` between them (`--space-3` around `xs`) so the areas do not overlap.
+
+### ✕ Avoid: Overflow and other compact icon buttons
+
+**Rule:** Do not make the visible glyph bigger just to reach 44 px, and do not let the hit area shrink to the glyph.
+**Why:** A big glyph breaks the visual hierarchy of the row, and a glyph-sized target is missed by a thumb.
+
+*Sources: W3C Understanding SC 2.5.8 and SC 2.4.11; web.dev, Accessible tap targets; Apple, UI Design Dos and Don’ts; NN/g, Touch Target Size and Mobile UX. The research file notes web.dev uses `any-pointer: coarse` where the DS uses `pointer: coarse`, and that there is no primary source for “full width” itself.*
+
+Try it. Storybook: Patterns/Demos/Overflow Button.
+
+For bottom navigation, see the Bottom navigation pattern: icon plus label, a filled active icon, and an optional centre action only when it is the primary action of the app.
 
 ## Sources
 
@@ -3265,6 +3570,24 @@ Words persuade, so words can manipulate. This system draws the line in the copy 
 3. Does the register fit the moment? Warm at a win, calm at an error, plain and cheerless at a destructive step.
 4. Is every word true and free of pressure? No invented urgency, no shame, no hidden cost. In doubt, see Patterns / Persuasion.
 5. Only now, ship it, in the DS primitives. See Patterns / Form Elements.
+
+## The metadata line
+
+The line under a title that says who, when and where: `Laura Gómez • hace 2 h • Parque Arví`. It is small and quiet, so it must be easy to scan and must not read as noise to a screen reader.
+
+### ✓ Recommended: Metadata line
+
+**Rule:** Join the items with a `•` separator wrapped in `aria-hidden`. Put the relative time in `<time datetime="2026-11-05T06:42">hace 2 h</time>`. Keep to three items, ordered who, when, where, and set it in the muted text colour (never lighter than slate-500).
+**Why:** A separator is decoration, so a screen reader should not read “bullet” between every item. `<time datetime>` gives assistive technology and search the exact moment while sighted readers get the friendly “hace 2 h”. Three items scan at a glance.
+
+### ✕ Avoid: Metadata line
+
+**Rule:** Do not use `|` or `/` as a separator without hiding it, do not write “hace 2 h” with no `datetime`, and do not run past three items.
+**Why:** A pipe or slash is read aloud, a relative time alone loses the date as soon as it is copied or cached, and a long line stops being scanned.
+
+*Sources: MDN, the `<time>` element; WHATWG HTML Standard, The time element. The research file notes there is no primary source for the bullet separator itself; it is a house convention.*
+
+Try it. Storybook: Patterns/Demos/Activity Card.
 
 ## Sources
 

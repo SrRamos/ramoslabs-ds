@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { pages } from '../../data/pages'
+const page = pages.find((p) => p.id === 'multi-step-flows')!
+---
+<BaseLayout title={page.title} description={page.summary} path={page.path}>
+<div class="pt-hero">
+  <p class="pt-hero-eyebrow">Patterns / Multi-step Flows</p>
+  <h1>Ask one thing<br />Show where they are</h1>
+  <p>A long form is a mountain; a sequence of single questions is a path. This page sets one question per screen, the stepper that shows progress, how long numbers are displayed, and the sticky action at the bottom.</p>
+</div>
+
+<div class="pt-wrap">
+<h2 class="pt-h2">1. One question per screen</h2>
+<p class="pt-head">One question per screen</p>
+<div class="pt-pair"><div class="pt-rule pt-rule--rec"><p class="pt-tag">✓ Recommended</p><p class="pt-line"><strong>Rule:</strong> Ask <strong>one question per screen</strong> in a multi-step flow and make the question the heading: “¿A quién le envías dinero?”. Move focus to the new heading when the screen changes.</p><p class="pt-line"><strong>Why:</strong> GOV.UK’s “one thing per page” lets people focus, keeps errors specific to one answer, and works well on a small screen. Focus on the heading tells a screen reader that the page changed.</p></div><div class="pt-rule pt-rule--avoid"><p class="pt-tag">✕ Avoid</p><p class="pt-line"><strong>Rule:</strong> Do not put a long form on one screen when the answers are independent, and do not change the screen without moving focus.</p><p class="pt-line"><strong>Why:</strong> A wall of fields is abandoned, and a silent change leaves keyboard and screen reader users stranded.</p></div></div>
+<p class="pt-src">Sources: GOV.UK Design System, Question pages; GOV.UK Service Manual, Form structure; NN/g, Wizards. GOV.UK allows a statement heading where several closely related questions share a page.</p>
+<h2 class="pt-h2">2. The stepper: text plus a bar</h2>
+<p class="pt-head">Flow progress</p>
+<div class="pt-pair"><div class="pt-rule pt-rule--rec"><p class="pt-tag">✓ Recommended</p><p class="pt-line"><strong>Rule:</strong> Show progress as the text <strong>“1 de 3”</strong> plus a <strong>segmented bar</strong>. The text is mandatory. Make the current segment taller as well as coloured, and mark the bar <code>aria-hidden</code> because the text already says it.</p><p class="pt-line"><strong>Why:</strong> The bar alone is colour only, which fails WCAG 1.4.1 and says nothing to a screen reader. The text gives the exact position and the bar gives a quick sense of how far is left. NN/g finds progress indicators make waits feel shorter.</p></div><div class="pt-rule pt-rule--avoid"><p class="pt-tag">✕ Avoid</p><p class="pt-line"><strong>Rule:</strong> Do not show progress with a coloured bar alone, and do not hide the total.</p><p class="pt-line"><strong>Why:</strong> People who cannot tell the colours apart, and screen reader users, get no information, and an unknown total makes the flow feel endless.</p></div></div>
+<p class="pt-src">Sources: W3C Understanding SC 1.4.1 Use of Color; NN/g, Progress Indicators Make a Slow System Less Insufferable. The “1 de 3” plus segmented bar format is the DS’s own design.</p>
+<h2 class="pt-h2">3. Display and submit are two different values</h2>
+<p class="pt-text">Account numbers and amounts are shown in groups (<code>0123 4567 8901</code>, <code>1.250.000</code>). The submitted value stays raw digits. The demo reads the form data on submit and prints exactly what would be sent. The rule and its caveats (do not mask phone numbers) are on the Form Elements page.</p>
+<h2 class="pt-h2">4. The primary action stays in reach</h2>
+<p class="pt-text">The continue button is full width and sticky at the bottom of the screen, in Indigo 600, with <code>scroll-padding</code> so a focused field is never hidden. Fields are 48 px, and 56 px on touch. Both rules live on the Mobile First and Form Elements pages.</p>
+<p class="pt-demo"><strong>Try it.</strong> Storybook: Patterns/Demos/Send Money (three steps, with an RTL variant)</p>
+</div>
+
+</BaseLayout>
