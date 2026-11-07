@@ -18,14 +18,14 @@ Patterns that lean on a cursor, hover, and a wide screen are ergonomically hosti
 |-----------------|--------------------|---------------|
 | Centered modal / dialog | Bottom sheet (dialog anchored to the bottom edge) | web.dev: at a small viewport the bottom margin goes to `0` and the dialog "transforms into an action sheet." |
 | Hover menu / dropdown | Action sheet of options (a list-only bottom sheet) | Material modal bottom sheet: "present a set of choices while blocking interaction with the rest of the screen." |
-| Hover tooltip | Tap to reveal, inline disclosure, or tap to a sheet | There is no reliable `:hover` on `pointer: coarse`. |
+| Hover tooltip | Tap to reveal, inline disclosure, or tap to a sheet | There is no reliable `:hover` on touch input (`any-pointer: coarse`). |
 | Right click (context menu) | Long press, plus a visible overflow control | WCAG 2.5.1 lists "long press" as a valid single-pointer alternative. |
 | Persistent left sidebar | Bottom navigation bar (3 to 5) or a drawer | Material: the navigation bar "lets people switch between UI views on smaller devices." |
-| Hover to reveal actions | No such state. Make actions visible or reveal on tap | `pointer: coarse` does not fire hover. |
+| Hover to reveal actions | No such state. Make actions visible or reveal on tap | Hover does not fire on `any-pointer: coarse` input. |
 | Top toolbar of actions | Bottom app bar or a sticky bottom CTA | Thumb zone. |
 | Toast, top of the screen | Snackbar anchored to the bottom | Material: "brief messages ... at the bottom of the screen." |
 
-**How the map is switched on: by input capability, never by user agent.** Detect `@media (pointer: coarse)` and viewport width. A touchscreen laptop, an iPad with a trackpad, a phone in a desktop dock: none of these fit a substring match on `navigator.userAgent`, and all of them break it. The switch is a capability query combined with a width breakpoint.
+**How the map is switched on: by input capability, never by user agent.** Detect `@media (any-pointer: coarse)` and viewport width. A touchscreen laptop, an iPad with a trackpad, a phone in a desktop dock: none of these fit a substring match on `navigator.userAgent`, and all of them break it. The switch is a capability query combined with a width breakpoint.
 
 # Part 2: The components, anchored to the bottom
 
@@ -44,7 +44,7 @@ Material draws two variants. A standard bottom sheet "co-exists with the screen'
 7. The drag handle is a real control. In Material the handle "will automatically receive and handle accessibility commands to expand and collapse." On web that means a genuine `<button>` the keyboard can operate to cycle snap points, sized to the 48px touch-target floor, not a decorative bar you can only drag.
 
 **Bottom sheet or centered modal? Same component, one media query.**
-- Bottom sheet when: the viewport is small (`pointer: coarse` or width at or below the breakpoint), the task is scoped and tied to context, or it is a list of actions or a short form where thumb reach matters. The standard variant when the user needs to keep seeing the content behind.
+- Bottom sheet when: the viewport is small (`any-pointer: coarse` or width at or below the breakpoint), the task is scoped and tied to context, or it is a list of actions or a short form where thumb reach matters. The standard variant when the user needs to keep seeing the content behind.
 - Centered modal when: there is a cursor (desktop), or the dialog is genuinely blocking and critical (a destructive confirmation with forced focus), or content does not sit comfortably against the bottom edge.
 
 **Do not duplicate the component.** It is the same `<dialog>` in both cases. Only the positioning changes by media query: centered on wide screens, anchored to the bottom on narrow ones. One accessibility contract, two layouts. See Patterns / Modals for the full dialog contract.
@@ -53,7 +53,7 @@ Material draws two variants. A standard bottom sheet "co-exists with the screen'
 
 Hoober's field data: one-handed use 49% (67% right thumb, 33% left); cradling 36%; two-handed 15%, 90% of that in portrait. When cradling, the thumb is on the screen 72% of the time. Grip changes very often, sometimes every few seconds. The thumb owns the lower band; the top edge is the stretch zone. So the primary action lives at the bottom, pinned (sticky), full width or aligned to the dominant thumb.
 
-**Target size: the legal floor is not the goal.** WCAG 2.5.8 (AA) sets the minimum at 24 by 24 CSS pixels, but that is a floor with exceptions, not a target. NN/g recommends interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide." Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material's 48dp and NN/g's 1cm. Never the bare 24px for a primary action. A compact control may look smaller than that if it extends an invisible hit area to 44px under `(pointer: coarse)`, without changing layout; keep adjacent compact buttons at least 8px apart so those areas do not reach a neighbour.
+**Target size: the legal floor is not the goal.** WCAG 2.5.8 (AA) sets the minimum at 24 by 24 CSS pixels, but that is a floor with exceptions, not a target. NN/g recommends interactive elements "at least 1cm by 1cm," because "the impact area of the typical thumb is an average of 2.5cm wide." Our rule for anything in the thumb zone: at least 44 to 48px tall, in line with Material's 48dp and NN/g's 1cm. Never the bare 24px for a primary action. A compact control may look smaller than that if it extends an invisible hit area to 44px under `(any-pointer: coarse)`, without changing layout; keep adjacent compact buttons at least 8px apart so those areas do not reach a neighbour.
 
 **Rule:** The primary action is a full-width control pinned to the bottom, at least 48px tall, in the thumb band.
 **Why:** Hoober: the thumb comfortably covers the lower half, and grip shifts constantly. A bottom-pinned action is reachable regardless of the current grip.
@@ -115,23 +115,23 @@ Do not read `navigator.userAgent`. Detect the capability of the input and the si
 
 ```css
 /* Capability, not user agent */
-@media (pointer: coarse) {
+@media (any-pointer: coarse) {
   /* larger targets, touch patterns, no hover reveal */
 }
 @media (pointer: fine) {
   /* mouse density, hover affordances */
 }
 /* Switch container by capability OR width */
-@media (pointer: coarse), (max-width: 640px) { /* sheet, bottom nav */ }
+@media (any-pointer: coarse), (max-width: 640px) { /* sheet, bottom nav */ }
 ```
 
-**Rule:** On `pointer: coarse`, assume no reliable hover. Reveal-on-hover patterns do not exist; make actions visible or reveal on tap.
+**Rule:** Where `any-pointer: coarse` matches, assume hover may not be available. Reveal-on-hover patterns do not exist; make actions visible or reveal on tap.
 **Why:** a touchscreen has no persistent hover state. Anything hidden behind `:hover` is unreachable by a finger, which is why the map has no mobile home for "hover to reveal."
 
-**Rule:** Switch the container on `pointer: coarse` OR width at or below the breakpoint, so both phones and touch tablets are covered.
+**Rule:** Switch the container on `any-pointer: coarse` OR width at or below the breakpoint, so both phones and touch tablets are covered.
 **Why:** width alone misses a small touch tablet; capability alone misses a narrow mouse window. The union of the two reliably picks the sheet-and-bottom-nav layout. `pointer` has been widely available since December 2018.
 
-The whole detection surface is three signals: primary pointer accuracy (`pointer: coarse`), viewport width breakpoint, and hover availability (`any-hover: none`). No user-agent string appears anywhere in it.
+The whole detection surface is three signals: input accuracy of any attached pointer (`any-pointer: coarse`), viewport width breakpoint, and hover availability (`any-hover: none`). No user-agent string appears anywhere in it.
 
 ## The primary action: full width, at the bottom, in the action colour
 
@@ -161,7 +161,7 @@ On a phone the thumb rests on the lower half of the screen. The one action that 
 
 ### ✓ Recommended: Overflow and other compact icon buttons
 
-**Rule:** An overflow `•••` button may stay visually small (SJButton `xs`, 24 px). On `@media (pointer: coarse)` its invisible hit area extends to 44 px (`--target-min`) without moving the layout. Give it an accessible name that says what it belongs to: “Más opciones de Carrera matutina”.
+**Rule:** An overflow `•••` button may stay visually small (SJButton `xs`, 24 px). On `@media (any-pointer: coarse)` its invisible hit area extends to 44 px (`--target-min`) without moving the layout. Give it an accessible name that says what it belongs to: “Más opciones de Carrera matutina”.
 **Why:** A 24 px box meets WCAG 2.5.8 on its own, but a thumb needs more. The invisible area gives the thumb 44 px and the layout keeps its density. Two compact buttons still need `--space-2` between them (`--space-3` around `xs`) so the areas do not overlap.
 
 ### ✕ Avoid: Overflow and other compact icon buttons
@@ -169,7 +169,7 @@ On a phone the thumb rests on the lower half of the screen. The one action that 
 **Rule:** Do not make the visible glyph bigger just to reach 44 px, and do not let the hit area shrink to the glyph.
 **Why:** A big glyph breaks the visual hierarchy of the row, and a glyph-sized target is missed by a thumb.
 
-*Sources: W3C Understanding SC 2.5.8 and SC 2.4.11; web.dev, Accessible tap targets; Apple, UI Design Dos and Don’ts; NN/g, Touch Target Size and Mobile UX. The research file notes web.dev uses `any-pointer: coarse` where the DS uses `pointer: coarse`, and that there is no primary source for “full width” itself.*
+*Sources: W3C Understanding SC 2.5.8 and SC 2.4.11; web.dev, Accessible tap targets; Apple, UI Design Dos and Don’ts; NN/g, Touch Target Size and Mobile UX. The research file notes that there is no primary source for “full width” itself.*
 
 Try it. Storybook: Patterns/Demos/Overflow Button.
 

@@ -51,9 +51,10 @@ softened.
    article does not discuss a centre/FAB action. Apple's tab-bar page and Material's navigation-bar
    page returned only a short summary or title (see Not verified), so "filled icon for the active
    tab" and "3-5 destinations" are confirmed only by NN/g (about 5 max) and the Material summary line.
-7. Small icon buttons (item 5): the media query. web.dev uses `any-pointer: coarse`; the decision says
-   `@media (pointer: coarse)`. On hybrid devices (touch laptop, tablet with trackpad) the primary
-   pointer can be fine while touch is still used, so `pointer: coarse` can miss touch users. Also
+7. Small icon buttons (item 5): the media query. The first decision said `@media (pointer: coarse)`, but
+   `pointer` reports only the primary input. On hybrid devices (touch laptop, tablet with trackpad) the
+   primary pointer can be fine while touch is still used, so `pointer: coarse` misses touch users. Resolved:
+   the DS uses `@media (any-pointer: coarse)`, as web.dev does. Also
    note WCAG 2.5.8 only requires 24px (or spacing); 44px is the AAA 2.5.5 level and 48px is web.dev
    and Android's figure, so "44" is a design choice at the strict end, not a WCAG requirement.
 8. One hero figure (item 1): NN/g's visual-hierarchy article is page-level and says to limit large
@@ -230,7 +231,7 @@ are DS implementation. The 3-4 ratio is illustrative only.
 
 ## 7. Input height (48px, 56px coarse)
 
-Decision: default 48px; 56px under `@media (pointer: coarse)`; fields taller than compact buttons.
+Decision: default 48px; 56px under `@media (any-pointer: coarse)`; fields taller than compact buttons.
 
 Recommended: fields at or above the strict touch minimum, taller on touch.
 Rule: text inputs are at least 44px on any pointer and larger on coarse pointers.
@@ -312,6 +313,10 @@ Verdict: CONFIRMS the principle. The exact "1 de 3" plus segmented bar format is
 progress article is about wait indicators, so cite it for the "X of Y" text idea only.
 
 ## 10. Grouped display formatting (account, card, phone numbers)
+
+Update (dark-theme PR): the owner chose to follow GOV.UK for every editable number. Nothing is reformatted while the
+user types; the grouped display appears on blur and in read-only views; the submitted value is raw digits.
+The earlier "auto-format card numbers as typed" half (Baymard) is superseded.
 
 Decision: grouped display (`0123 4567`), display only; the submitted value is unchanged; ties to
 ADR-007 kinds.

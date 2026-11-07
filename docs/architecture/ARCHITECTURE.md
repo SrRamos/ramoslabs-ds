@@ -684,7 +684,7 @@ never the only route, drag always has a single-pointer alternative (2.5.7). A se
 serves dense desktop layouts; touch usability is never shrunk to fit.
 
 *Amendment (SJButton Direction B).* The visual box may be as small as 24 CSS px; under
-`(pointer: coarse)` an invisible `::before` hit area extends the effective target to the 44 px
+`(any-pointer: coarse)` an invisible `::before` hit area extends the effective target to the 44 px
 `--target-min` token without changing layout. This is the one sanctioned pseudo-element hit area,
 and adjacent compact buttons on touch keep a gap of at least (44 - height) / 2 so the areas do not
 reach a neighbour's visible box.

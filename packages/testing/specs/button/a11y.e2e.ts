@@ -153,7 +153,7 @@ for (const adapter of ADAPTERS) {
 }
 
 // 2.5.8 Target Size (AA): the visual box is at least 24 CSS px at every size (the floor), md is 36. The 44px touch
-// target is a pointer: coarse hit area, asserted in touch.e2e.ts.
+// target is an any-pointer: coarse hit area, asserted in touch.e2e.ts.
 for (const adapter of ADAPTERS) {
   for (const fixture of FIXTURE_NAMES.filter((f) => f !== 'disabled')) {
     test(`@pr 2.5.8 | button ${adapter} | ${fixture} | measured bounds >= 24px (visual floor)`, async ({

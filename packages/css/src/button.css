@@ -68,7 +68,7 @@
 
   /* Touch hit area: invisible, centred on the box, never changes layout. Only on a coarse pointer; a fine
      pointer keeps the compact 24px+ target (WCAG 2.5.8 AA). Margins, not translate, so it is RTL-safe. */
-  @media (pointer: coarse) {
+  @media (any-pointer: coarse) {
     :is(.sj-button__root, .sj-button__link)::before {
       content: '';
       position: absolute;

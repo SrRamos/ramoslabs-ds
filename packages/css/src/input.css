@@ -49,7 +49,7 @@
   }
 
   /* Coarse pointer: the taller 56 px field. The textarea follows through the same custom property. */
-  @media (pointer: coarse) {
+  @media (any-pointer: coarse) {
     .sj-input__control {
       --sj-field-height: var(--control-height-field-coarse);
     }
