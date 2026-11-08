@@ -61,14 +61,19 @@ test.describe('fine pointer: 48px field', () => {
 // Hybrid device: fine primary pointer with a touchscreen attached. `hasTouch` flips pointer AND any-pointer, so the
 // hybrid case is built with Blink's pointer settings, which only Chromium has (documented limit for Firefox, WebKit).
 test.describe('hybrid device: fine primary pointer, touch also available', () => {
-  test.skip(
-    ({ browserName }) => browserName !== 'chromium',
-    'hybrid pointer emulation is Chromium-only',
-  );
-
   for (const adapter of ADAPTERS) {
-    test(`@pr touch | field ${adapter} | hybrid: any-pointer is coarse, so the input is 56px although the primary pointer is fine`, async () => {
+    test(`@pr touch | field ${adapter} | hybrid: any-pointer is coarse, so the input is 56px although the primary pointer is fine`, async ({
+      browserName,
+    }) => {
       const testInfo = test.info();
+      if (browserName !== 'chromium') {
+        // Blink-only pointer settings: no hybrid switch exists in Firefox or WebKit (documented limit, not a skip).
+        testInfo.annotations.push({
+          type: 'limit',
+          description: 'hybrid pointer emulation is Chromium-only',
+        });
+        return;
+      }
       const browser = await chromium.launch({
         args: ['--blink-settings=availablePointerTypes=6,primaryPointerType=4'],
       });
