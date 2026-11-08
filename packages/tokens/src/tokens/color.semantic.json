@@ -470,7 +470,7 @@
     },
     "control-border-dark": {
       "$value": "{color.slate.500}",
-      "$description": "Unchecked checkbox box and off switch track on dark surfaces (3.75:1 on slate 900, 4.3:1 on slate 950)."
+      "$description": "Unchecked checkbox box and off switch track on dark surfaces (3.75:1 on slate 900, 4.24:1 on slate 950)."
     },
     "control-fill-dark": {
       "$value": "{color.indigo.400}",
@@ -478,7 +478,7 @@
     },
     "control-glyph-dark": {
       "$value": "{color.slate.900}",
-      "$description": "Check, dash and switch knob drawn on control-fill-dark or control-border-dark (6.0:1 on indigo 400, 3.75:1 on slate 500)."
+      "$description": "Check, dash and switch knob drawn on control-fill-dark or control-border-dark (5.98:1 on indigo 400, 3.75:1 on slate 500)."
     },
     "control-field-dark": {
       "$value": "{color.slate.900}",

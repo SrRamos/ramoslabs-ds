@@ -133,7 +133,7 @@
 
   /* Dark surfaces: any ancestor with data-theme='dark'. Same anatomy, semantic dark roles. The unchecked boundary is
      slate 500 (3.75:1 on slate 900), the checked box is indigo 400 (5.98:1; indigo 600 is 2.83:1) and the glyph is
-     drawn in slate 900 on it (6.0:1). :where() keeps the specificity of the light rules; these come later in the layer. */
+     drawn in slate 900 on it (5.98:1). :where() keeps the specificity of the light rules; these come later in the layer. */
   :where([data-theme='dark']) .sj-checkbox__root {
     color: var(--color-text-body-dark);
   }
