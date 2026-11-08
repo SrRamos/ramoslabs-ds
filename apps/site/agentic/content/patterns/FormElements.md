@@ -204,7 +204,7 @@ A text field is read, tapped and corrected. A button is only tapped. So the fiel
 
 ### ✓ Recommended: Field height
 
-**Rule:** Set a text field to **48 px** by default (`--control-height-field`) and **56 px** under `@media (pointer: coarse)` (`--control-height-field-coarse`). A textarea is twice that, so it scales with it. The invalid state keeps the same height.
+**Rule:** Set a text field to **48 px** by default (`--control-height-field`) and **56 px** under `@media (any-pointer: coarse)` (`--control-height-field-coarse`). A textarea is twice that, so it scales with it. The invalid state keeps the same height.
 **Why:** The field is where people read what they typed, tap into it and fix a mistake, so it earns more room than a button. It also clears the 24 px floor of WCAG 2.5.8 and the 44 px touch target, and a taller field is easier to hit with a thumb.
 
 ### ✕ Avoid: Field height
@@ -220,15 +220,15 @@ Account, card and phone numbers are checked against a source: a card, a statemen
 
 ### ✓ Recommended: Grouped display
 
-**Rule:** Show long digit strings in groups of four (`0123 4567 8901`) wherever they are read: review screens, receipts, lists. In an input, auto-group card numbers and accept the value with or without spaces. Submit the raw digits.
-**Why:** Groups are easier to compare with the original and to read aloud. A card field that allows and formats spaces lowers entry errors (Baymard). Formatting the display must not change the stored value, or search and matching break.
+**Rule:** Show long digit strings in groups of four (`0123 4567 8901`) wherever they are read: review screens, receipts, lists. In an input, do not reformat while the user types: accept the value with or without spaces, show the grouped version when the field loses focus, and submit the raw digits.
+**Why:** Groups are easier to compare with the original and to read aloud. GOV.UK advises against reformatting a value while it is typed, because the text moves under the caret and fights paste and autofill; grouping on blur gives the reading benefit without that. A field that accepts spaces lowers entry errors (Baymard). Formatting the display must not change the stored value, or search and matching break.
 
 ### ✕ Avoid: Grouped display
 
-**Rule:** Do not mask a phone number as the user types, do not reformat it after entry, and do not use `maxlength` to force a format.
-**Why:** GOV.UK advises against it: a mask fights paste, autofill and international numbers, and cuts off a valid value. Group for display, validate on submit.
+**Rule:** Do not mask or reformat a phone, account or card number while the user types, and do not use `maxlength` to force a format.
+**Why:** GOV.UK advises against it: a mask or live formatting fights paste, autofill and international numbers, and cuts off a valid value. Group for display, validate on submit.
 
-*Sources: Baymard, The Credit Card Number Field Must Allow and Auto-Format Spaces; GOV.UK Design System, Telephone numbers and Text input; MDN, autocomplete. See item 10 in the research file, which flags that no primary source covers account-number grouping.*
+*Sources: Baymard, The Credit Card Number Field Must Allow and Auto-Format Spaces (we take the allow-spaces half; live auto-formatting is replaced by grouping on blur, per GOV.UK); GOV.UK Design System, Telephone numbers and Text input; MDN, autocomplete. See item 10 in the research file, which flags that no primary source covers account-number grouping.*
 
 Try it. Storybook: Patterns/Demos/Send Money (grouped account and amount, 48 and 56 px fields).
 

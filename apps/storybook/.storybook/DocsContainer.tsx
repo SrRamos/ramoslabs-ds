@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { themes } from 'storybook/theming';
 import { DocsContainer as BaseDocsContainer } from '@storybook/addon-docs/blocks';
 import type { DocsContainerProps } from '@storybook/addon-docs/blocks';
 
@@ -57,6 +58,23 @@ const footerStyles = `
     outline-offset: 2px;
     text-decoration: underline;
   }
+  [data-theme='dark'] .rl-docs-footer {
+    border-top-color: var(--color-border-dark);
+    color: var(--color-text-muted-dark);
+  }
+  [data-theme='dark'] .rl-docs-footer__brand {
+    color: var(--color-text-heading-dark);
+  }
+  [data-theme='dark'] .rl-docs-footer__line,
+  [data-theme='dark'] .rl-docs-footer__sep {
+    color: var(--color-text-muted-dark);
+  }
+  [data-theme='dark'] .rl-docs-footer__link {
+    color: var(--color-primary-text-dark);
+  }
+  [data-theme='dark'] .rl-docs-footer__link:focus-visible {
+    outline-color: var(--color-focus-dark);
+  }
 `;
 
 const DocsFooter = () => (
@@ -102,12 +120,41 @@ const DocsFooter = () => (
   </footer>
 );
 
+/** The theme toolbar value in the iframe URL (`globals=theme:dark`), the first paint before any channel event. */
+const themeFromUrl = (): 'light' | 'dark' =>
+  /(^|;)theme:dark(;|$)/.test(new URLSearchParams(window.location.search).get('globals') ?? '')
+    ? 'dark'
+    : 'light';
+
+/**
+ * Only the Components docs (their stories, their review guide) are built from the dark roles. The Foundations and Patterns
+ * pages are long hand-styled MDX with their own light palette, so they stay light whatever the toolbar says.
+ */
+const followsToolbar = (): boolean =>
+  (new URLSearchParams(window.location.search).get('id') ?? '').startsWith('components-');
+
 export const DocsContainer = ({
   children,
   context,
-}: React.PropsWithChildren<DocsContainerProps>) => (
-  <BaseDocsContainer context={context}>
-    {children}
-    <DocsFooter />
-  </BaseDocsContainer>
-);
+}: React.PropsWithChildren<DocsContainerProps>) => {
+  const [theme, setTheme] = useState<'light' | 'dark'>(themeFromUrl);
+  useEffect(() => {
+    const onGlobals = ({ globals }: { globals?: { theme?: string } }) =>
+      setTheme(globals?.theme === 'dark' ? 'dark' : 'light');
+    context.channel.on('globalsUpdated', onGlobals);
+    return () => context.channel.off('globalsUpdated', onGlobals);
+  }, [context]);
+  const dark = theme === 'dark' && followsToolbar();
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    document.body.style.backgroundColor = dark
+      ? 'var(--color-background-dark)'
+      : 'var(--color-background)';
+  }, [dark]);
+  return (
+    <BaseDocsContainer context={context} theme={dark ? themes.dark : themes.light}>
+      {children}
+      <DocsFooter />
+    </BaseDocsContainer>
+  );
+};

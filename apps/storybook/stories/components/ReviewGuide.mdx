@@ -10,22 +10,26 @@ Try every component by hand. Each story’s description says what to press and w
 
 - **Tab** reaches it (unless disabled) and a clear focus ring shows.
 - Works with keyboard alone; the mouse is optional.
-- Look is styled and readable; state is never shown by colour alone.
+- Look is styled and readable in light and in dark (toolbar Theme); state is never shown by colour alone.
 - The **RTL** story mirrors correctly.
 - Zoom to 200%: nothing is clipped or overlaps.
 
 ## What is covered
 
-| Component | Stories | Specific things to check |
-| --- | --- | --- |
-| Button | Playground, Variants And Tones, Sizes, Disabled, As Anchor, Link, Icon Only, Inside Form, RTL | Enter/Space press; an anchor ignores Space; the Link variant is inline text, underlined, with a visible focus ring; Sizes show 24 / 32 / 36 / 44 px and, on touch, a 44 px hit area; a plain button never submits; `target=_blank` adds `rel`. |
-| Switch | Playground, Uncontrolled, Controlled, Controlled Rejecting, Disabled, In Form, RTL | Space toggles; a rejecting owner snaps it back; form data only when on. |
-| Checkbox | Playground, Uncontrolled, Indeterminate, Select All Controller, Controlled, Controlled Rejecting, Disabled, In Form, RTL | Mixed state read as "mixed"; parent/child select-all; clicking mixed checks it. |
-| Disclosure | Playground, Closed And Open, Disabled, Long Title, Exclusive Group, Controlled, Controlled Rejecting, Controlled Group, RTL | Enter/Space toggle; opening one closes its `name` peers; RTL chevron direction. |
-| State | Playground, First Use, No Results, Cleared, Loading, Error, Interrupting Error, All Variants, RTL | Each variant reads as text; polite announce once; `interrupt` is assertive. |
-| Field | Playground, Default, With Hint, Invalid, Invalid With Errormessage, Required, Long Label, Disabled, Live Validation, RTL | Label click focuses; hint and error read on focus; error announced once. |
-| Input | Playground, All Kinds, Otp, Textarea, Disabled, Standalone, RTL | The attribute readout per ADR-007 kind; right mobile keyboard; password masked. |
-| Form | Playground, Enter Key Hint, Enter Key Hint Textarea Last, Enter Variants And Done, User Invalid, Server Errors, Otp Auto Submit, Value Preservation, RTL | No error on tab-through; error after change or failed submit; Reset clears; `autoSubmit` gives `go`. |
+<table>
+  <thead><tr><th>Component</th><th>Stories</th><th>Specific things to check</th></tr></thead>
+  <tbody>
+    <tr><td>Button</td><td>Playground, Variants And Tones, Sizes, Disabled, As Anchor, Link, Icon Only, Inside Form, RTL</td><td>Enter/Space press; an anchor ignores Space; the Link variant is inline text, underlined, with a visible focus ring; Sizes show 24 / 32 / 36 / 44 px and, on touch, a 44 px hit area; a plain button never submits; <code>target=_blank</code> adds <code>rel</code>.</td></tr>
+    <tr><td>Switch</td><td>Playground, Uncontrolled, Controlled, Controlled Rejecting, Disabled, In Form, RTL</td><td>Space toggles; a rejecting owner snaps it back; form data only when on.</td></tr>
+    <tr><td>Checkbox</td><td>Playground, Uncontrolled, Indeterminate, Select All Controller, Controlled, Controlled Rejecting, Disabled, In Form, RTL</td><td>Mixed state read as "mixed"; parent/child select-all; clicking mixed checks it.</td></tr>
+    <tr><td>Disclosure</td><td>Playground, Closed And Open, Disabled, Long Title, Exclusive Group, Controlled, Controlled Rejecting, Controlled Group, RTL</td><td>Enter/Space toggle; opening one closes its <code>name</code> peers; RTL chevron direction.</td></tr>
+    <tr><td>State</td><td>Playground, First Use, No Results, Cleared, Loading, Error, Interrupting Error, All Variants, RTL</td><td>Each variant reads as text; polite announce once; <code>interrupt</code> is assertive.</td></tr>
+    <tr><td>Field</td><td>Playground, Default, With Hint, Invalid, Invalid With Errormessage, Required, Long Label, Disabled, Live Validation, RTL</td><td>Label click focuses; hint and error read on focus; error announced once.</td></tr>
+    <tr><td>Input</td><td>Playground, All Kinds, Otp, Textarea, Disabled, Standalone, RTL</td><td>The attribute readout per ADR-007 kind; right mobile keyboard; password masked.</td></tr>
+    <tr><td>Form</td><td>Playground, Enter Key Hint, Enter Key Hint Textarea Last, Enter Variants And Done, User Invalid, Server Errors, Otp Auto Submit, Value Preservation, RTL</td><td>No error on tab-through; error after change or failed submit; Reset clears; <code>autoSubmit</code> gives <code>go</code>.</td></tr>
+    <tr><td>Skeleton</td><td>Playground, Text, Avatar, Media, Card Skeleton To Loaded, List Feed, Inside SJState, Fast Load, Reduced Motion, RTL</td><td>The placeholder is hidden from screen readers and the loading text carries the meaning; nothing shows on a fast load (300 ms delay); reduced motion and forced colors drop the sweep; the swap shifts no layout.</td></tr>
+  </tbody>
+</table>
 
 ## Not available to review
 

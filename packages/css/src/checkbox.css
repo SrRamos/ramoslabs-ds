@@ -131,6 +131,35 @@
     background-color: var(--color-slate-300);
   }
 
+  /* Dark surfaces: any ancestor with data-theme='dark'. Same anatomy, semantic dark roles. The unchecked boundary is
+     slate 500 (3.75:1 on slate 900), the checked box is indigo 400 (5.98:1; indigo 600 is 2.83:1) and the glyph is
+     drawn in slate 900 on it (5.98:1). :where() keeps the specificity of the light rules; these come later in the layer. */
+  :where([data-theme='dark']) .sj-checkbox__root {
+    color: var(--color-text-body-dark);
+  }
+
+  :where([data-theme='dark']) .sj-checkbox__indicator[data-state='unchecked'] {
+    background-color: var(--color-control-border-dark);
+  }
+
+  :where([data-theme='dark']) .sj-checkbox__indicator[data-state='checked'],
+  :where([data-theme='dark']) .sj-checkbox__indicator[data-state='indeterminate'] {
+    background-color: var(--color-control-fill-dark);
+  }
+
+  :where([data-theme='dark']) .sj-checkbox__indicator::before {
+    background-color: var(--color-control-field-dark);
+  }
+
+  :where([data-theme='dark']) .sj-checkbox__indicator::after {
+    border-color: var(--color-control-glyph-dark);
+  }
+
+  :where([data-theme='dark'])
+    .sj-checkbox__indicator[data-state][data-disabled]:not([data-disabled='false']) {
+    background-color: var(--color-control-disabled-dark);
+  }
+
   /* Forced colors drops backgrounds, so the box and the glyphs get a system-colour border. The state is
      carried by the glyph (check, dash or empty), not by the fill. */
   @media (forced-colors: active) {

@@ -1,9 +1,9 @@
 // Touch target, RTL and motion for SJButton (Direction B). The visual box is 24 / 32 / 36 / 44 CSS px; under
-// `pointer: coarse` an invisible ::before extends the hit area to the 44px --target-min token (WCAG 2.5.8 AA
-// floor visually, 44px effectively on touch) without moving layout. `hasTouch` makes `pointer: coarse` match in
+// `any-pointer: coarse` an invisible ::before extends the hit area to the 44px --target-min token (WCAG 2.5.8 AA
+// floor visually, 44px effectively on touch) without moving layout. `hasTouch` makes `any-pointer: coarse` match in
 // all three engines. Hit areas are measured the way a finger would hit them: `elementFromPoint` at the edges.
 // Titles do not follow the parity-matrix format on purpose (not matrix rows).
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, chromium, type Page } from '@playwright/test';
 import { SIZE_PX } from './fixtures';
 import { ADAPTERS } from './matrix';
 import { control, mountButton, openHost } from './open';
@@ -66,7 +66,7 @@ test.describe('coarse pointer: 44px hit area', () => {
           page,
         }) => {
           const errors = await mount(page, adapter, fixture, { size });
-          expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
+          expect(await page.evaluate(() => matchMedia('(any-pointer: coarse)').matches)).toBe(true);
           const p = await probe(page);
           // Layout is unchanged by the extension: the box is still the visual height.
           expect(Math.round(p.h)).toBe(px);
@@ -89,7 +89,7 @@ test.describe('coarse pointer: 44px hit area', () => {
       const context = await browser.newContext({ hasTouch: false });
       const page = await context.newPage();
       await mount(page, adapter, 'default', { size: 'xs' });
-      expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(false);
+      expect(await page.evaluate(() => matchMedia('(any-pointer: coarse)').matches)).toBe(false);
       const p = await probe(page);
       expect(Math.round(p.h)).toBe(SIZE_PX['xs']);
       expect([p.top, p.bottom]).toEqual([false, false]);
@@ -132,6 +132,48 @@ test.describe('coarse pointer: 44px hit area', () => {
         false,
         false,
       ]);
+    });
+  }
+});
+
+/**
+ * A hybrid device (touch laptop, iPad with a trackpad): the primary pointer is fine, a touchscreen is also attached.
+ * `pointer: coarse` misses it, `any-pointer: coarse` catches it, which is why the DS keys on any-pointer.
+ * Playwright's `hasTouch` flips BOTH `pointer` and `any-pointer` to coarse in every engine, so it cannot express this;
+ * Chromium can be launched with Blink's pointer settings (primaryPointerType=4 fine, availablePointerTypes=6 fine+coarse).
+ * Firefox and WebKit have no equivalent switch, so the hybrid case is Chromium-only (documented limit; the any-pointer
+ * query itself is the same engine-independent media feature, covered by the hasTouch tests above in all three).
+ */
+test.describe('hybrid device: fine primary pointer, touch also available', () => {
+  for (const adapter of ADAPTERS) {
+    test(`@pr touch | button ${adapter} | hybrid: pointer is fine, any-pointer is coarse, and the hit area still reaches 44px`, async ({
+      browserName,
+    }) => {
+      const testInfo = test.info();
+      if (browserName !== 'chromium') {
+        // Blink-only pointer settings: no hybrid switch exists in Firefox or WebKit (documented limit, not a skip).
+        testInfo.annotations.push({
+          type: 'limit',
+          description: 'hybrid pointer emulation is Chromium-only',
+        });
+        return;
+      }
+      const browser = await chromium.launch({
+        args: ['--blink-settings=availablePointerTypes=6,primaryPointerType=4'],
+      });
+      const context = await browser.newContext({ baseURL: testInfo.project.use.baseURL });
+      const page = await context.newPage();
+      await mount(page, adapter, 'default', { size: 'xs' });
+      const m = await page.evaluate(() => ({
+        primaryFine: matchMedia('(pointer: fine)').matches,
+        primaryCoarse: matchMedia('(pointer: coarse)').matches,
+        anyCoarse: matchMedia('(any-pointer: coarse)').matches,
+      }));
+      expect(m).toEqual({ primaryFine: true, primaryCoarse: false, anyCoarse: true });
+      const p = await probe(page);
+      expect(Math.round(p.h)).toBe(SIZE_PX['xs']);
+      expect([p.top, p.bottom], 'hybrid vertical hit area').toEqual([true, true]);
+      await browser.close();
     });
   }
 });

@@ -103,7 +103,7 @@ describe('contrast matrix (light theme)', () => {
         expect(
           pairs.some(
             (p) =>
-              p.id.startsWith(`${c}/`) &&
+              p.id.replace(/^dark\//, '').startsWith(`${c}/`) &&
               /\/(component|state|variant)\/(text|border)-on-/.test(p.id),
           ),
         ).toBe(true);
@@ -197,9 +197,9 @@ describe('status palette and dark theme (Harmonic, docs/research/status-tones-20
     expect(failures.map(formatFailure)).toEqual([]);
   });
 
-  it('reads the dark button, field, input and state rules and checks them on the dark surfaces', () => {
+  it('reads the dark button, field, input, state, checkbox, switch and disclosure rules and checks them on the dark surfaces', () => {
     const dark = pairs.filter((p) => p.id.startsWith('dark/'));
-    for (const c of ['button', 'field', 'input', 'state'])
+    for (const c of ['button', 'field', 'input', 'state', 'checkbox', 'switch', 'disclosure'])
       expect(
         dark.some((p) => p.id.startsWith(`dark/${c}/`)),
         c,
@@ -208,6 +208,22 @@ describe('status palette and dark theme (Harmonic, docs/research/status-tones-20
     expect(
       dark.some((p) => p.id === 'dark/button/outline/primary/text-on-color-surface-dark'),
     ).toBe(true);
+  });
+
+  it('reads the dark drawn fills (checkbox box, switch track) at 3:1 and the dark focus ring, and fails a weak one', () => {
+    const ids = pairs.map((p) => p.id);
+    for (const id of [
+      'dark/checkbox/indicator/checked/ui-on-color-surface-dark',
+      'dark/switch/root::before/on/ui-on-color-background-dark',
+      'focus/ring-dark-on-color-surface-dark',
+      'dark/skeleton/base-on-surface-dark',
+    ])
+      expect(ids, id).toContain(id);
+    const weak = checkContrastMatrix(
+      { ...tokens, 'color-focus-dark': tokens['color-primary'] },
+      { css },
+    ).failures.map((f) => f.id);
+    expect(weak).toContain('focus/ring-dark-on-color-surface-dark');
   });
 
   it('dark extraction keeps light-only components out and lets dark rules win over light ones', () => {

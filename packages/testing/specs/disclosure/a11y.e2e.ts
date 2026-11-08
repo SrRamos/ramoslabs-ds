@@ -12,8 +12,16 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collectFocusAppearance, collectTargets } from '../../a11y/collectors.js';
 import { applyAxeTriage, focusAppearance, targetSize, type Triage } from '../../a11y/verdicts.js';
+import { contrastRatio } from '../../contrast/wcag.js';
 import { ADAPTERS, FIXTURES, type Adapter } from './fixtures';
 import { ROOT, TRIGGER } from './open';
+
+const hex = (rgb: string): string =>
+  '#' +
+  (rgb.match(/\d+/g) ?? ['0', '0', '0'])
+    .slice(0, 3)
+    .map((n) => Number(n).toString(16).padStart(2, '0'))
+    .join('');
 
 const here = dirname(fileURLToPath(import.meta.url));
 const triage: Triage = JSON.parse(
@@ -45,6 +53,18 @@ async function focusTrigger(page: Page, browserName: string): Promise<void> {
   await page.keyboard.press('Tab');
   if (browserName === 'webkit') await page.locator(TRIGGER).first().focus();
   expect(await page.evaluate(() => document.activeElement?.localName)).toBe('summary');
+}
+
+/** The dark theme as the toolbar sets it: data-theme on the root and the dark page surface behind the control. */
+async function setDark(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.body.style.backgroundColor = getComputedStyle(document.documentElement)
+      .getPropertyValue('--color-surface-dark')
+      .trim();
+  });
+  // Let the colour transition (--sj-duration-fast) finish before measuring.
+  await page.waitForTimeout(300);
 }
 
 const STATES = [
@@ -105,6 +125,25 @@ for (const adapter of ADAPTERS) {
     await focusTrigger(page, browserName);
     const m = await page.evaluate(collectFocusAppearance);
     expect(focusAppearance(m).failures).toEqual([]);
+  });
+
+  test(`@pr dark | disclosure ${adapter} | text 4.5:1, ring >= 2px and >= 3:1 on a dark surface`, async ({
+    page,
+    browserName,
+  }) => {
+    await mount(page, adapter, 'closed');
+    await setDark(page);
+    const dark = await page.evaluate(() => ({
+      bg: getComputedStyle(document.body).backgroundColor,
+      fg: getComputedStyle(document.querySelector('[data-part="trigger"]')!).color,
+    }));
+    expect(
+      contrastRatio(hex(dark.fg), hex(dark.bg)),
+      'label on the dark page',
+    ).toBeGreaterThanOrEqual(4.5);
+    await focusTrigger(page, browserName);
+    const v = focusAppearance(await page.evaluate(collectFocusAppearance));
+    expect(v.failures).toEqual([]);
   });
 
   test(`@pr 2.5.8 | disclosure ${adapter} | the summary is at least 24px, the design target 44px`, async ({

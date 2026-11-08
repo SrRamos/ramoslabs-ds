@@ -468,3 +468,103 @@
 .pat-route {
   stroke-width: var(--space-1);
 }
+
+/* ---------- Dark theme (Storybook toolbar sets data-theme='dark' on <html>) ----------
+   Semantic dark roles only (4.5:1 for text, 3:1 for UI on slate 900 and 950). :where() keeps the specificity of the rules above;
+   these come later, so they win at equal specificity. The progress bar and the hit-area overlay are not the only carrier of meaning. */
+:where([data-theme='dark']) .pat-stage {
+  color: var(--color-text-body-dark);
+}
+:where([data-theme='dark']) .pat-verdict__tag--ok {
+  color: var(--color-success-text-dark);
+}
+:where([data-theme='dark']) .pat-verdict__tag--no {
+  color: var(--color-error-text-dark);
+}
+:where([data-theme='dark']) .pat-verdict__why,
+:where([data-theme='dark']) .pat-meta,
+:where([data-theme='dark']) .pat-label,
+:where([data-theme='dark']) .pat-unit {
+  color: var(--color-text-muted-dark);
+}
+:where([data-theme='dark']) .pat-try {
+  color: var(--color-text-body-dark);
+  background: var(--color-primary-surface-dark);
+  border-inline-start-color: var(--color-primary-outline-dark);
+}
+:where([data-theme='dark']) .pat-card,
+:where([data-theme='dark']) .pat-phone,
+:where([data-theme='dark']) .pat-list,
+:where([data-theme='dark']) .pat-tabbar,
+:where([data-theme='dark']) .pat-cta {
+  background: var(--color-surface-dark);
+  border-color: var(--color-border-dark);
+}
+:where([data-theme='dark']) .pat-screen {
+  background: var(--color-background-dark);
+  border-color: var(--color-border-dark);
+}
+:where([data-theme='dark']) .pat-list__item + .pat-list__item {
+  border-block-start-color: var(--color-border-dark);
+}
+:where([data-theme='dark']) .pat-card__title,
+:where([data-theme='dark']) .pat-num,
+:where([data-theme='dark']) .pat-step__q,
+:where([data-theme='dark']) .pat-screen__title,
+:where([data-theme='dark']) .pat-chip {
+  color: var(--color-text-heading-dark);
+}
+:where([data-theme='dark']) .pat-map {
+  background: var(--color-surface-hover-dark);
+}
+:where([data-theme='dark']) .pat-map > svg {
+  color: var(--color-primary-text-dark);
+}
+:where([data-theme='dark']) .pat-chip {
+  background: var(--color-surface-dark);
+  border-color: var(--color-border-dark);
+}
+:where([data-theme='dark']) .pat-steps__label,
+:where([data-theme='dark']) .pat-readout {
+  color: var(--color-text-body-dark);
+}
+:where([data-theme='dark']) .pat-readout {
+  background: var(--color-surface-hover-dark);
+}
+:where([data-theme='dark']) .pat-steps__seg {
+  background: var(--color-border-dark);
+}
+:where([data-theme='dark']) .pat-steps__seg[data-state='done'],
+:where([data-theme='dark']) .pat-steps__seg[data-state='current'] {
+  background: var(--color-control-fill-dark);
+}
+:where([data-theme='dark']) .pat-step__q:focus-visible {
+  outline-color: var(--color-focus-dark);
+}
+:where([data-theme='dark']) .pat-tab > a,
+:where([data-theme='dark']) .pat-tab > button {
+  color: var(--color-text-muted-dark);
+}
+:where([data-theme='dark']) .pat-tab > a[aria-current='page'],
+:where([data-theme='dark']) .pat-tab--center > button {
+  color: var(--color-primary-text-dark);
+}
+:where([data-theme='dark']) .pat-tab > a:hover,
+:where([data-theme='dark']) .pat-tab > button:hover {
+  background: var(--color-surface-hover-dark);
+}
+:where([data-theme='dark']) .pat-tab > a:focus-visible,
+:where([data-theme='dark']) .pat-tab > button:focus-visible {
+  outline-color: var(--color-focus-dark);
+}
+:where([data-theme='dark']) .pat-tab--center > button:hover {
+  background: none;
+}
+:where([data-theme='dark']) .pat-tab__fab {
+  color: var(--color-control-glyph-dark);
+  background: var(--color-control-fill-dark);
+}
+:where([data-theme='dark']) .pat-show-hit .sj-button__root::before {
+  outline-color: var(--color-primary-outline-dark);
+  background: var(--color-primary-surface-dark);
+}

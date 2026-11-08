@@ -83,28 +83,3 @@ export const groupDigits = (digits: string, size = 4): string =>
 /** Thousands grouping for COP, `1.250.000` (es-CO), display only. */
 export const groupAmount = (digits: string): string =>
   digits ? new Intl.NumberFormat('es-CO').format(Number(digits)) : '';
-
-/**
- * Re-formats a text input in place and keeps the caret next to the same digit, so typing in the middle
- * does not jump to the end. `format` receives the raw digits and returns the display string.
- */
-export function reformat(input: HTMLInputElement, format: (digits: string) => string): string {
-  const before = input.value.slice(0, input.selectionStart ?? input.value.length);
-  const digitsBefore = digitsOf(before).length;
-  const digits = digitsOf(input.value);
-  const shown = format(digits);
-  input.value = shown;
-  let seen = 0;
-  let pos = shown.length;
-  if (digitsBefore === 0) pos = 0;
-  else
-    for (let i = 0; i < shown.length; i++) {
-      if (/\d/.test(shown[i] ?? '')) seen++;
-      if (seen === digitsBefore) {
-        pos = i + 1;
-        break;
-      }
-    }
-  input.setSelectionRange(pos, pos);
-  return digits;
-}

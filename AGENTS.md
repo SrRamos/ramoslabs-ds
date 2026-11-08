@@ -81,7 +81,7 @@ then apply it. Do not restyle it as generic "do and don't" advice.
 - Text contrast at least 4.5:1. Large text and UI components at least 3:1.
 - Muted text has a floor: never lighter than `#64748b` (slate 500) on white. Slate 400 or
   lighter fails on white and is not allowed for text.
-- Target size: the visual floor is 24px (WCAG 2.5.8 AA, SJButton xs). On a coarse pointer (`@media (pointer: coarse)`) every control's effective touch target is at least 44px (`--target-min`), by an invisible hit area that never changes layout. On touch, keep adjacent compact buttons at least `--space-2` apart (`--space-3` around xs) so hit areas do not reach a neighbour.
+- Target size: the visual floor is 24px (WCAG 2.5.8 AA, SJButton xs). On a coarse pointer (`@media (any-pointer: coarse)`) every control's effective touch target is at least 44px (`--target-min`), by an invisible hit area that never changes layout. On touch, keep adjacent compact buttons at least `--space-2` apart (`--space-3` around xs) so hit areas do not reach a neighbour.
 - Every interactive element is keyboard reachable, with a visible focus state. Never remove
   the focus outline without an equivalent replacement.
 - Never carry meaning by color alone. Pair it with text, an icon, or a shape.

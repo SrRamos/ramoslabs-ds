@@ -38,7 +38,7 @@ A long form is a mountain; a sequence of single questions is a path. This page s
 
 ## Display and submit are two different values
 
-Account numbers and amounts are shown in groups (`0123 4567 8901`, `1.250.000`). The submitted value stays raw digits. The demo reads the form data on submit and prints exactly what would be sent. The rule and its caveats (do not mask phone numbers) are on the Form Elements page.
+Account numbers and amounts are shown in groups (`0123 4567 8901`, `1.250.000`). The groups appear when the field loses focus (and on the review screen); nothing is reformatted while the person types, and the submitted value stays raw digits. The demo reads the form data on submit and prints exactly what would be sent. The rule and its caveats (do not mask phone numbers) are on the Form Elements page.
 
 ## The primary action stays in reach
 

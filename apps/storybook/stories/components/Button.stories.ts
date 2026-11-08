@@ -13,7 +13,7 @@ const meta: Meta<typeof SJButton> = {
   tags: ['autodocs'],
   parameters: about(`
 SJButton renders a native \`<button>\` (or an \`<a>\` when \`href\` is set). Variant x tone x size are data attributes styled by \`@ramoslabs/css\`. A button never submits a form unless \`type="submit"\`.
-The visual height runs 24 / 32 / 36 / 44 px (xs / sm / md / lg), never below the 24 px WCAG 2.5.8 floor. On a touch screen (\`pointer: coarse\`) an invisible hit area extends every size to 44 px without moving the layout. Space adjacent compact buttons by at least \`--space-2\` (\`--space-3\` around xs) so a finger cannot land on the wrong one.
+The visual height runs 24 / 32 / 36 / 44 px (xs / sm / md / lg), never below the 24 px WCAG 2.5.8 floor. On a touch screen (\`any-pointer: coarse\`) an invisible hit area extends every size to 44 px without moving the layout. Space adjacent compact buttons by at least \`--space-2\` (\`--space-3\` around xs) so a finger cannot land on the wrong one.
   `),
   argTypes: {
     variant: { control: 'select', options: variants },

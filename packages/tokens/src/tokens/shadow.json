@@ -122,6 +122,13 @@
         { "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "4px", "color": "#4f46e5" }
       ],
       "$description": "Focus ring. Pairs with :focus-visible. A two-tone ring, a 2px white gap inside a 2px indigo edge, so one layer always clears 3:1 against the surface behind it, light or brand. Not an elevation level, never decorative."
+    },
+    "focus-dark": {
+      "$value": [
+        { "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "2px", "color": "#0f172a" },
+        { "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "4px", "color": "#818cf8" }
+      ],
+      "$description": "Focus ring on dark surfaces. A 2px slate 900 gap inside a 2px indigo 400 edge (5.98:1 on slate 900, 6.76:1 on slate 950). Pairs with :focus-visible under a [data-theme='dark'] ancestor."
     }
   }
 }

@@ -13,10 +13,10 @@
     "at-support": "https://design.ramoslabs.com/schema/at-support.v1.json"
   },
   "tokens": {
-    "total": 439,
+    "total": 447,
     "byCategory": {
       "breakpoint": 5,
-      "color": 285,
+      "color": 290,
       "target": 2,
       "focus": 2,
       "control": 26,
@@ -31,8 +31,8 @@
       "motion": 4,
       "overlay": 4,
       "radius": 9,
-      "shadow": 8,
-      "skeleton": 9,
+      "shadow": 9,
+      "skeleton": 11,
       "space": 17,
       "state": 4,
       "font": 21,

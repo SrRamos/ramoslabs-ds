@@ -468,6 +468,26 @@
       "$value": "{color.indigo.400}",
       "$description": "Focus ring on dark surfaces (indigo 600 is below 3:1 on slate 900)."
     },
+    "control-border-dark": {
+      "$value": "{color.slate.500}",
+      "$description": "Unchecked checkbox box and off switch track on dark surfaces (3.75:1 on slate 900, 4.24:1 on slate 950)."
+    },
+    "control-fill-dark": {
+      "$value": "{color.indigo.400}",
+      "$description": "Checked checkbox box and on switch track on dark surfaces. Indigo 600 is 2.83:1 on slate 900; indigo 400 is 5.98:1."
+    },
+    "control-glyph-dark": {
+      "$value": "{color.slate.900}",
+      "$description": "Check, dash and switch knob drawn on control-fill-dark or control-border-dark (5.98:1 on indigo 400, 3.75:1 on slate 500)."
+    },
+    "control-field-dark": {
+      "$value": "{color.slate.900}",
+      "$description": "The inside of an unchecked checkbox box on dark surfaces."
+    },
+    "control-disabled-dark": {
+      "$value": "{color.slate.700}",
+      "$description": "Disabled checkbox box and switch track on dark surfaces. Inactive component, exempt from 1.4.11."
+    },
     "surface-dark": {
       "$value": "{color.slate.900}",
       "$description": "Dark page and card surface. Every *-dark pair is checked against it."
